@@ -1,0 +1,62 @@
+import styled, { createGlobalStyle } from 'styled-components'
+
+const GalaxyFold3DeviceSize = 320;
+const GalaxyDeviceSize = 360;
+const iPhone12DeviceSize = 390;
+const iPhone12ProMaxDeviceSize = 430;
+
+export const GlobalStyle = createGlobalStyle`
+html {
+  @media all and (max-width: ${GalaxyFold3DeviceSize}px) {
+    font-size: 15px;
+  }
+  @media all and (min-width: ${
+    GalaxyFold3DeviceSize + 1
+  }px) and (max-width: ${GalaxyDeviceSize}px) {
+    font-size: 16px;
+  }
+  @media all and (min-width: ${GalaxyDeviceSize + 1}px) and (max-width: ${iPhone12DeviceSize}px) {
+    font-size: 17px;
+  }
+  @media all and (min-width: ${
+    iPhone12DeviceSize + 1
+  }px) and (max-width: ${iPhone12ProMaxDeviceSize}px) {
+    font-size: 18px;
+  }
+  @media all and (min-width: ${iPhone12ProMaxDeviceSize + 1}px) {
+    font-size: 19px;
+  }
+}
+
+body {
+  background: gray;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, sans-serif, Roboto;
+  box-sizing: border-box;
+
+  // outline:0; // 기본 outline 스타일을 제거
+  // appearance:none; // HTML 폼 요소(button, checkbox, radio, select 등)의 기본 스타일을 제거
+  // border:0; // 기본 테두리(border) 스타일을 제거
+
+  -ms-user-select: none;
+	-moz-user-select: -moz-none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+  user-select: none; // 클릭이나 드래그로 텍스트 선택 불가
+
+	-webkit-tap-highlight-color: transparent; // 모바일 기기에서 터치 이벤트 발생 시, 해당 요소 주위에 나타나는 하이라이트 색상을 투명색으로 지정
+}
+`
+
+export const Root = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 800px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background-color: white;
+  overflow: hidden;
+`
