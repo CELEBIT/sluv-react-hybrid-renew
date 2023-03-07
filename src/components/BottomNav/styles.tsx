@@ -1,6 +1,7 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const BottomNavRoot = styled.div`
+export const Root = styled.div`
   z-index: 50;
   position: fixed;
   bottom: 0;
@@ -8,7 +9,15 @@ export const BottomNavRoot = styled.div`
   right: 0;
 
   display: flex;
+  justify-content: space-between;
 
   border: 1px red solid;
-  background-color: blue;
 `
+
+export const BottomNavItemLink = styled(Link)`
+  text-decoration: none;
+`;
+
+export const BottomNavLabel = styled.span`
+  
+`;
