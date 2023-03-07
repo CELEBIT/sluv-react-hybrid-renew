@@ -7,7 +7,7 @@ export type BottomNavItemData = {
 };
 
 export const BOTTOM_NAV_ITEM_DATA: Array<BottomNavItemData> = [
-  { path: '/home', label: '홈' },
+  { path: '/', label: '홈' },
   { path: '/community', label: '커뮤니티' },
   { path: '/temp1', label: '임시1' },
   { path: '/closet', label: '옷장' },
