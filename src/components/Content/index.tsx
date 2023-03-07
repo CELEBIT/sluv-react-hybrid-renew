@@ -22,11 +22,10 @@ const AppContent = () => {
         </Routes>
       )}
       <BottomNav
-        // items={bottomNavItems} 
         // defaultSelected={0} 
       />
     </>
   )
 }
 
-export default React.memo(AppContent);
+export default AppContent;
