@@ -21,6 +21,15 @@ export const Root = styled.div<{ isOpen: boolean }>`
 
 export const BottomNavItemLink = styled(Link)`
   text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+
+
+  margin: 0 5px;
+  background-color: yellow;
 `;
 
 export const BottomNavLabel = styled.span`
