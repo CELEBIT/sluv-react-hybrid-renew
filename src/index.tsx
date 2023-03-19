@@ -4,9 +4,11 @@ import ReactDOM from 'react-dom/client'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { RecoilRoot } from 'recoil'
+import { Global } from '@emotion/react'
 // 상대 경로 파일 
 import App from './App'
-import { GlobalStyle } from './components/styles'
+import { reset } from './components/styles'
+
 
 
 const queryClient = new QueryClient();
@@ -17,7 +19,7 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen />
       <RecoilRoot>
-        <GlobalStyle />
+        <Global styles={reset}/>
         <App />
       </RecoilRoot>
     </QueryClientProvider>
