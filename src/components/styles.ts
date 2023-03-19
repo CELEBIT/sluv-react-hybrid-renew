@@ -1,6 +1,14 @@
 import styled from '@emotion/styled'
 import { css } from '@emotion/react'
 
+interface IPretendard {
+  size: number
+  weight: number
+  color: string
+  lineHeight?: number
+  letterSpacing?: 0 | 4 | 6
+}
+
 const GalaxyFold3DeviceSize = 320
 const GalaxyDeviceSize = 360
 const iPhone12DeviceSize = 390
@@ -89,3 +97,9 @@ export const Root = styled.div`
   overflow: hidden;
 `
 
+export const Pretendard = (props: IPretendard) => css`
+  font-family: 'Pretendard';
+  font-size: ${props.size * 0.0625}rem;
+  font-weight: ${props.weight};
+  color: ${props.color};
+`
