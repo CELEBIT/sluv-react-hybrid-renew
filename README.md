@@ -36,15 +36,17 @@ npm i
 ## 실행방법
 
 ```sh
-npm run start # 로컬에서 실행 
+npm run start # 로컬에서 실행
 ```
 
 ## 빌드방법
+
 ```sh
 
 ```
 
 ## 프로젝트 구조
+
 ```text
 > .husky                    # git hook 을 실행시켜주는 폴더 (수정X)
 > public
@@ -56,7 +58,7 @@ npm run start # 로컬에서 실행
         > core
             > index.ts      # axios 사용시 request, response 설정 파일
         > businessModel.ts  # 리소스 단위로 파일을 만들어서 API 를 호출하도록 관리
-    > assets                # jpg, png, svg 등 이미지 에셋 폴더  
+    > assets                # jpg, png, svg 등 이미지 에셋 폴더
         > ...
     > components            # 반복적으로 쓰이는 컴포넌트 폴더
         > ...
@@ -84,12 +86,15 @@ tsconfig.json               # typescript 를 javascript 로 변환하는 설정 
 ```
 
 # 커밋 컨벤션
+
 **제목**
+
 - [#이슈번호] <타입> : <제목> 의 형식으로 제목 작성
 - 제목은 50자 이내 / 변경사항이 "무엇"인지 명확히 작성 / 끝에 마침표 금지
 - 예) [#7] feat : 로그인 기능 추가
-  
+
 **커밋 타입**
+
 - feat : 새로운 기능 추가
 - fix : 버그 수정
 - docs : 문서 수정

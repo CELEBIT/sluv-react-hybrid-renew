@@ -1,9 +1,7 @@
 import React from 'react'
 
 const ItemCreate = () => {
-  return (
-    <div>ItemCreate</div>
-  )
+  return <div>ItemCreate</div>
 }
 
-export default ItemCreate;
+export default ItemCreate

@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 
 export const Root = styled.div<{ isOpen: boolean }>`
   z-index: 50;
@@ -27,11 +27,8 @@ export const BottomNavItemLink = styled(Link)`
   align-items: center;
   justify-content: center;
 
-
   margin: 0 5px;
   background-color: yellow;
-`;
+`
 
-export const BottomNavLabel = styled.span`
-  
-`;
+export const BottomNavLabel = styled.span``
