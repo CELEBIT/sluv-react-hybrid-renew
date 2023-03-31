@@ -62,21 +62,21 @@ export const reset = css`
 
 export const Common = {
   colors: {
-    PRI : '#5E2AB9',
-    SEC : '#6C47FF',
-    COMPLETE : '#454381',
-    BG : '#F8F6FF',
-    LINE : '#5E2AB9',
+    PRI: '#5E2AB9',
+    SEC: '#6C47FF',
+    COMPLETE: '#454381',
+    BG: '#F8F6FF',
+    LINE: '#5E2AB9',
 
-    BK : '#212529',
-    GR600 : '#7B8894',
-    GR500 : '#AEB5BC',
-    GR400 : '#D6D8DA',
-    GR300 : '#C7CED4',
-    GR200 : '#EAECEF',
-    GR100 : '#F4F5F6',
-    
-    ERROR : '#FA5252',
+    BK: '#212529',
+    GR600: '#7B8894',
+    GR500: '#AEB5BC',
+    GR400: '#D6D8DA',
+    GR300: '#C7CED4',
+    GR200: '#EAECEF',
+    GR100: '#F4F5F6',
+
+    ERROR: '#FA5252',
   },
   bold: {
     regular: 500,

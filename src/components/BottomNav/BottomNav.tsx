@@ -1,17 +1,16 @@
 import React, { useMemo } from 'react'
-import { useLocation } from 'react-router-dom';
-import Icon from '../Icon/Icon';
-import { BottomNavItemData } from './BottomNav.type';
-import { BOTTOM_NAV_ITEM_DATA, BOTTOM_NAV_PATH_INFO } from './BottomNav.util';
+import { useLocation } from 'react-router-dom'
+import Icon from '../Icon/Icon'
+import { BottomNavItemData } from './BottomNav.type'
+import { BOTTOM_NAV_ITEM_DATA, BOTTOM_NAV_PATH_INFO } from './BottomNav.util'
 import { BottomNavItemLink, BottomNavLabel, Root } from './styles'
 
 const BottomNav = () => {
-
-  const {pathname} = useLocation();
+  const { pathname } = useLocation()
 
   const isOpen = useMemo(() => {
-    return BOTTOM_NAV_PATH_INFO[pathname];
-  },[pathname]);
+    return BOTTOM_NAV_PATH_INFO[pathname]
+  }, [pathname])
 
   return (
     <Root isOpen={isOpen}>
@@ -25,4 +24,4 @@ const BottomNav = () => {
   )
 }
 
-export default BottomNav;
+export default BottomNav
