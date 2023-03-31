@@ -1,4 +1,4 @@
-import { BottomNavItemData, pathInfo } from './BottomNav.type';
+import { BottomNavItemData, pathInfo } from './BottomNav.type'
 
 // BottomNav 데이터 배열
 export const BOTTOM_NAV_ITEM_DATA: Array<BottomNavItemData> = [
@@ -17,4 +17,3 @@ export const BOTTOM_NAV_PATH_INFO: pathInfo = {
   '/closet': true,
   '/user': true,
 }
-

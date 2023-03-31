@@ -1,21 +1,20 @@
 import React, { Suspense } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import BottomNav from './components/BottomNav/BottomNav';
-import * as S from './components/styles';
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import BottomNav from './components/BottomNav/BottomNav'
+import * as S from './components/styles'
 
 const loading = <div>화면을 불러오는 중 입니다.(App)</div>
 
 // 에러 페이지
-const Page404 = React.lazy(() => import('./pages/page404'));
-const Page500 = React.lazy(() => import('./pages/page404'));
+const Page404 = React.lazy(() => import('./pages/page404'))
+const Page500 = React.lazy(() => import('./pages/page404'))
 
 // 하단바 네비게이션 페이지
-const Home = React.lazy(() => import('./pages/home'));
-const Community = React.lazy(() => import('./pages/community'));
-const ItemCreate = React.lazy(() => import('./pages/item/create'));
-const Closet = React.lazy(() => import('./pages/closet'));
+const Home = React.lazy(() => import('./pages/home'))
+const Community = React.lazy(() => import('./pages/community'))
+const ItemCreate = React.lazy(() => import('./pages/item/create'))
+const Closet = React.lazy(() => import('./pages/closet'))
 const User = React.lazy(() => import('./pages/user'))
-
 
 const App = () => {
   return (
