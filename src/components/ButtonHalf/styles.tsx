@@ -11,7 +11,7 @@ export const HalfWrapper = styled.div<{
   align-items: center;
 
   height: 3.5rem;
-  width: 10.1875rem;
+  width: 7.5rem;
   padding: 1.0938rem 0.9rem;
   border-radius: 0.5rem;
 
