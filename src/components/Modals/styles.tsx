@@ -1,5 +1,10 @@
 import styled from '@emotion/styled'
 
+export const Dimmer = styled.div`
+  width: 100%;
+  height: 100vh;
+`
+
 export const Dimmed = styled.div`
   position: absolute;
   display: flex;

@@ -31,9 +31,10 @@ const useModals = () => {
   )
 
   const closeModal = useCallback(
-    <T extends FunctionComponent<any>>(Component: T) => {
+    <T extends FunctionComponent<any>>(Component: T, callbackFunc?: Function) => {
       setModals((modals) => modals.filter((modal) => modal.Component !== Component))
-      history.back()
+      if (callbackFunc) callbackFunc()
+      else history.back()
     },
     [setModals],
   )
