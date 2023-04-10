@@ -20,6 +20,7 @@ export const InputWrapper = styled.div`
 `
 
 export const InputField = styled.input`
+  display: inline-flex;
   align-items: center;
   height: 1.25rem;
   width: 100%;
