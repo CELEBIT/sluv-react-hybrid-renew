@@ -5,12 +5,13 @@ interface HalfButtonProps {
   text: string
   type: string
   // type = 'confirm' | 'cancel'
+  isbottom?: boolean
   onClick: () => void
 }
 
-const ButtonHalf = ({ text, type, onClick }: HalfButtonProps) => {
+const ButtonHalf = ({ text, type, isbottom, onClick }: HalfButtonProps) => {
   return (
-    <HalfWrapper type={type} onClick={onClick}>
+    <HalfWrapper type={type} isbottom={isbottom} onClick={onClick}>
       <p>{text}</p>
     </HalfWrapper>
   )
