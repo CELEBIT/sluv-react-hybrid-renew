@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import BottomNav from './components/BottomNav/BottomNav'
+import Modals from './components/Modals'
 import * as S from './components/styles'
 
 const loading = <div>화면을 불러오는 중 입니다.(App)</div>
@@ -31,7 +32,7 @@ const App = () => {
             <Route path='/user' element={<User />} />
           </Routes>
         </Suspense>
-        {/* <Modals /> */}
+        <Modals />
         <BottomNav />
       </BrowserRouter>
     </S.Root>

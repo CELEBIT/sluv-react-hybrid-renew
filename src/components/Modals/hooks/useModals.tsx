@@ -1,6 +1,5 @@
-import { ComponentProps, FunctionComponent, useCallback, useEffect } from 'react';
 import { atom, useRecoilState } from 'recoil';
-
+import { useCallback, ComponentProps, FunctionComponent, useEffect } from 'react';
 const modalsAtom = atom<
   Array<{
     Component: FunctionComponent<any>;
@@ -20,30 +19,38 @@ const useModals = () => {
     return () => {
       window.removeEventListener('popstate', goBack);
     };
-  },[]);
+  }, [])
 
   const openModal = useCallback(
-    <T extends FunctionComponent<any>>(Component: T, props?: Omit<ComponentProps<T>, 'open'>) => {
-      setModals((modals) => [...modals, { Component, props: { ...props, open: true } }])
-      history.pushState({ page: 'modal' }, document.title)
+    <T extends FunctionComponent<any>>(
+      Component: T,
+      props?: Omit<ComponentProps<T>, 'open'>
+    ): void => {
+      setModals((modals) => [
+        ...modals,
+        { Component, props: { ...props, open: true } },
+      ]);
+      history.pushState({page:'modal'}, document.title);
     },
-    [setModals],
-  )
+    [setModals]
+  );
 
   const closeModal = useCallback(
-    <T extends FunctionComponent<any>>(Component: T, callbackFunc?: Function) => {
-      setModals((modals) => modals.filter((modal) => modal.Component !== Component))
-      if (callbackFunc) callbackFunc()
-      else history.back()
+    <T extends FunctionComponent<any>>(Component: T, callbackFunc?: () => void) => {
+      setModals((modals) =>
+        modals.filter((modal) => modal.Component !== Component)
+      );
+      if (callbackFunc) callbackFunc();
+      else history.back();
     },
-    [setModals],
-  )
+    [setModals]
+  );
 
   return {
     modals,
     openModal,
     closeModal,
-  }
-}
+  };
+};
 
 export default useModals;

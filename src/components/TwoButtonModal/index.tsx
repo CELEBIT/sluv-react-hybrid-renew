@@ -22,7 +22,7 @@ const TwoButtonModal = ({
       {children}
       <div style={{display: 'flex'}}> 
         <ButtonHalf type='cancel' text={leftButtonName} onClick={() => leftButtonOnClick} />
-        <ButtonHalf type='confimr' text={rightButtonName} onClick={() => rightButtonOnClick} />
+        <ButtonHalf type='confirm' text={rightButtonName} onClick={() => rightButtonOnClick} />
       </div>
     </BtnModalContainer>
   )
