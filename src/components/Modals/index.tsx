@@ -1,15 +1,8 @@
-import useModals from "./hooks/useModals";
-import { Dimmed } from "./styles";
-import React from 'react'
-
-interface IDimmer {
-  // onClick: <T>(args: T) => void;
-  children: JSX.Element
-}
-
-const Dimmer = ({ children }: IDimmer) => {
-  return <Dimmed>{children}</Dimmed>
-}
+import useModals from './hooks/useModals';
+import { Dimmed, Dimmer } from './styles';
+import React from 'react';
+// import { ComponentProps, FunctionComponent } from 'react'
+// import loadable from '@loadable/component'
 
 // 모달 관리 객체
 export const modalObj = {
@@ -22,25 +15,32 @@ const Modals = () => {
   return (
     <>
       {modals.map(({ Component, props }, idx) => {
-        const { onSubmit, ...restProps } = props;
-        const onClose = () => {
-          closeModal(Component);
-        };
+        const { onSubmit, ...restProps } = props
+        const clickDimmed = () => {
+          if (props.callbackFunc) {
+            closeModal(Component, props.callbackFunc)
+          } else {
+            closeModal(Component)
+          }
+        }
+        const onClose = (callbackFunc?: Function) => {
+          if (callbackFunc) {
+            closeModal(Component, callbackFunc)
+          } else {
+            closeModal(Component)
+          }
+        }
         const handleSubmit = async () => {
           if (typeof onSubmit === 'function') {
-            await onSubmit();
+            await onSubmit()
           }
-          onClose();
+          onClose()
         }
 
         return (
           <Dimmer key={idx}>
-            <Component 
-              {...restProps}
-              onSubmit={handleSubmit}
-              onClose={onClose}
-              {...props}
-            />
+            <Dimmed onClick={() => clickDimmed()} />
+            <Component {...restProps} onSubmit={handleSubmit} onClose={onClose} {...props} />
           </Dimmer>
         )
       })}
