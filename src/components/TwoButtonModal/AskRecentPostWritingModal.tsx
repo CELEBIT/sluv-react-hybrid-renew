@@ -1,6 +1,6 @@
 import React from 'react'
 import TwoButtonModal from '.';
-import { modalObj } from '../Modals';
+import { modals } from '../Modals'
 import useModals from '../Modals/hooks/useModals';
 import { BtnModalContent } from '../Modals/styles';
 
@@ -11,7 +11,7 @@ const AskRecentPostWritingModal = () => {
     <TwoButtonModal
       leftButtonName='새로 쓰기'
       rightButtonName='이어 쓰기'
-      leftButtonOnClick={() => closeModal(modalObj.AskRecentPostWritingModal)}
+      leftButtonOnClick={() => closeModal(modals.AskRecentPostWritingModal)}
       rightButtonOnClick={() => console.log('이어 쓰기')}
     >
       <BtnModalContent>

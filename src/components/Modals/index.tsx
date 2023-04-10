@@ -1,21 +1,23 @@
 import useModals from './hooks/useModals';
 import { Dimmed, Dimmer } from './styles';
-import React from 'react';
-import { ComponentProps, FunctionComponent } from 'react'
+import React, { ComponentProps, FunctionComponent } from 'react'
 import loadable from '@loadable/component'
+import PropTypes from 'prop-types'
 
-const AskRecentPostWritingModal = loadable(() => import('../TwoButtonModal/AskRecentPostWritingModal'));
+
+const AskRecentPostWritingModal = loadable(
+  () => import('../TwoButtonModal/AskRecentPostWritingModal')
+);
 
 // 모달 관리 객체
-export const modalObj = {
+export const modals = {
   AskRecentPostWritingModal: AskRecentPostWritingModal as FunctionComponent<
     ComponentProps<typeof AskRecentPostWritingModal>
   >
 };
 
 const Modals = () => {
-  const { modals, closeModal } = useModals();
-
+  const { modals, closeModal } = useModals()
   return (
     <>
       {modals.map(({ Component, props }, idx) => {
@@ -27,7 +29,7 @@ const Modals = () => {
             closeModal(Component)
           }
         }
-        const onClose = (callbackFunc?: Function) => {
+        const onClose = (callbackFunc?: () => void) => {
           if (callbackFunc) {
             closeModal(Component, callbackFunc)
           } else {
@@ -54,4 +56,8 @@ const Modals = () => {
 
 export default Modals; 
 
+Modals.propTypes = {
+  onSubmit: PropTypes.func,
+  callbackFunc: PropTypes.func,
+}
 
