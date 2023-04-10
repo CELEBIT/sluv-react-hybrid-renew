@@ -1,12 +1,16 @@
 import useModals from './hooks/useModals';
 import { Dimmed, Dimmer } from './styles';
 import React from 'react';
-// import { ComponentProps, FunctionComponent } from 'react'
-// import loadable from '@loadable/component'
+import { ComponentProps, FunctionComponent } from 'react'
+import loadable from '@loadable/component'
+
+const AskRecentPostWritingModal = loadable(() => import('../TwoButtonModal/AskRecentPostWritingModal'));
 
 // 모달 관리 객체
 export const modalObj = {
-
+  AskRecentPostWritingModal: AskRecentPostWritingModal as FunctionComponent<
+    ComponentProps<typeof AskRecentPostWritingModal>
+  >
 };
 
 const Modals = () => {
