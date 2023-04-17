@@ -28,8 +28,8 @@ export const BtnModalContainer = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #fff;
-  width: 77%;
-  margin: 0 11.5%;
+  width: calc(100% -  5.375rem);
+  margin: 0 2.6875rem;
   padding: 2rem 1.25rem 1.25rem 1.25rem;
   z-index: 30;
   position: absolute;
@@ -43,6 +43,7 @@ export const BtnModalContent = styled.p`
     weight: Common.bold.regular,
     color: Common.colors.BK,
   })};
-  /* line-height: 150%; */
+  margin: 0 0 1rem 0;
+  line-height: 1.5625rem;
   text-align: center;
 `
