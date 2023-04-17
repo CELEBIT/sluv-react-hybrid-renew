@@ -1,18 +1,7 @@
 import React from 'react'
-import { modals } from '../../../components/Modals';
-import useModals from '../../../components/Modals/hooks/useModals'
 
 const ItemCreate = () => {
-  const { openModal } = useModals();
-
-  const test = () => {
-    console.log('test');
-    openModal(modals.AskRecentPostWritingModal, {});
-  }
-
-  return (
-    <div onClick={test}>ItemCreate</div>
-  )
+  return <div>ItemCreate</div>
 }
 
 export default ItemCreate

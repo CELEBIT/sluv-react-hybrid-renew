@@ -1,6 +1,11 @@
 import styled from 'styled-components'
 import { Common } from '../../styles'
 
+export const TextAreaContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
 export const TextAreaWrapper = styled.div`
   display: flex;
   justify-content: space-between;
