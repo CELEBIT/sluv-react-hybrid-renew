@@ -1,6 +1,12 @@
 import styled from 'styled-components'
 import { DatePickerView } from 'antd-mobile'
 
+export const CustomDatePickerWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 20.9375rem;
+`
+
 export const CustomDatePickerView = styled(DatePickerView)`
   .adm-picker-view-column {
     max-width: 4.875rem;
@@ -9,6 +15,7 @@ export const CustomDatePickerView = styled(DatePickerView)`
     background-color: #dad8d8;
     opacity: 0.3;
     border-radius: 0.625rem;
+    width: 100%;
   }
 
   .adm-picker-view-column-item[data-selected='true'] {
