@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { TextAreaWrapper, Textarea } from './styles'
+import { TextAreaContainer, TextAreaWrapper, Textarea } from './styles'
 import { ReactComponent as Delete } from '../../../assets/delete_textfield_24.svg'
 import { ErrorText } from '../DefaultTextfield/styles'
 interface TextAreaProps {
@@ -20,7 +20,7 @@ const TextArea = ({ value, setValue, placeholder, error, errorMsg }: TextAreaPro
     setValue('')
   }
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <TextAreaContainer>
       <TextAreaWrapper onFocus={() => setIsFocused(true)} onBlur={() => setIsFocused(false)}>
         <Textarea
           value={value}
@@ -38,7 +38,7 @@ const TextArea = ({ value, setValue, placeholder, error, errorMsg }: TextAreaPro
         )}
       </TextAreaWrapper>
       {error && <ErrorText>{errorMsg}</ErrorText>}
-    </div>
+    </TextAreaContainer>
   )
 }
 

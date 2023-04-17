@@ -11,6 +11,7 @@ interface IPretendard {
 
 const GalaxyFold3DeviceSize = 320
 const GalaxyDeviceSize = 360
+const StandardSize = 380
 const iPhone12DeviceSize = 390
 const iPhone12ProMaxDeviceSize = 430
 export const supportDeviceSize = 1080
@@ -22,9 +23,12 @@ export const reset = css`
     }
     @media all and (min-width: ${GalaxyFold3DeviceSize +
       1}px) and (max-width: ${GalaxyDeviceSize}px) {
+      font-size: 15.5px;
+    }
+    @media all and (min-width: ${GalaxyDeviceSize + 1}px) and (max-width: ${StandardSize}px) {
       font-size: 16px;
     }
-    @media all and (min-width: ${GalaxyDeviceSize + 1}px) and (max-width: ${iPhone12DeviceSize}px) {
+    @media all and (min-width: ${StandardSize + 1}px) and (max-width: ${iPhone12DeviceSize}px) {
       font-size: 17px;
     }
     @media all and (min-width: ${iPhone12DeviceSize +
