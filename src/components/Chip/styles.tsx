@@ -3,6 +3,7 @@ import { Common } from '../styles'
 
 export const ChipWrapper = styled.div<{ canDelete?: boolean }>`
   display: inline-flex;
+  flex-shrink: 0;
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -14,6 +15,7 @@ export const ChipWrapper = styled.div<{ canDelete?: boolean }>`
 
   background-color: ${Common.colors.BG};
   color: ${Common.colors.SEC};
+  font-family: Pretendard;
   font-weight: 500;
 
   p {

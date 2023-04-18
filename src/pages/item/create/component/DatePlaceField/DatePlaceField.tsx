@@ -10,9 +10,9 @@ export const selectedDateState = atom<Date | undefined>({
   default: undefined,
 })
 
-export const selectedPlaceState = atom<string | null>({
+export const selectedPlaceState = atom<string>({
   key: 'selectedPlaceState',
-  default: null,
+  default: '',
 })
 
 const DatePlaceField = () => {
@@ -32,6 +32,7 @@ const DatePlaceField = () => {
   }
   // 장소 입력 모달
   const onPlaceSelect = () => {
+    openModal(modals.ItemPlaceInputModal)
     console.log('place select Modal')
   }
   return (
