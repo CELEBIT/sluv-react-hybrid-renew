@@ -4,16 +4,16 @@ import { DatePickerView } from 'antd-mobile'
 export const CustomDatePickerWrapper = styled.div`
   display: flex;
   justify-content: center;
-  width: 20.9375rem;
   overflow: hidden;
+  height: 12.8125rem;
   .adm-picker-view {
     width: 80%;
     justify-content: center;
+    height: 13.75rem;
   }
 `
 
 export const CustomDatePickerView = styled(DatePickerView)`
-  max-height: 13.75rem;
   .adm-picker-view-column {
     max-width: 4.875rem;
   }

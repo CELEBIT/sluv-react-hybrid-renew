@@ -28,7 +28,9 @@ const ItemDatePickerModal = () => {
       <button onClick={onCancel}>닫기</button>
       <ModalWrapper>
         <CustomDatepicker date={date} setDate={setDate} />
-        <ButtonLarge text='완료' active={true} onClick={onComplete}></ButtonLarge>
+        <ButtonWrapper>
+          <ButtonLarge text='완료' active={true} onClick={onComplete}></ButtonLarge>
+        </ButtonWrapper>
       </ModalWrapper>
     </BottomSheetModal>
   )
@@ -40,5 +42,9 @@ const ModalWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  margin-bottom: 2.125rem;
+  width: 100%;
+`
+const ButtonWrapper = styled.div`
+  width: 100%;
+  padding: 0.75rem 1.25rem;
 `

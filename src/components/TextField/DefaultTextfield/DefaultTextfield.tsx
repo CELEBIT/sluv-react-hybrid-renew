@@ -7,8 +7,8 @@ interface DefaultTextFieldProps {
   setValue: React.Dispatch<React.SetStateAction<string>>
   onEnter: () => void
   placeholder: string
-  error: boolean
-  errorMsg: string
+  error?: boolean
+  errorMsg?: string
 }
 
 const DefaultTextfield = ({
@@ -26,7 +26,9 @@ const DefaultTextfield = ({
   }
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      onEnter()
+      if (onEnter) {
+        onEnter()
+      }
     }
   }
   const onDelete = () => {
