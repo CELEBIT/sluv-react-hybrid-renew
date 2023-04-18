@@ -7,11 +7,15 @@ import PropTypes from 'prop-types'
 const AskRecentPostWritingModal = loadable(
   () => import('../TwoButtonModal/AskRecentPostWritingModal'),
 )
+const ItemDatePickerModal = loadable(() => import('../BottomSheetModal/ItemDatePickerModal'))
 
 // 모달 관리 객체
 export const modals = {
   AskRecentPostWritingModal: AskRecentPostWritingModal as FunctionComponent<
     ComponentProps<typeof AskRecentPostWritingModal>
+  >,
+  ItemDatePickerModal: ItemDatePickerModal as FunctionComponent<
+    ComponentProps<typeof ItemDatePickerModal>
   >,
 }
 

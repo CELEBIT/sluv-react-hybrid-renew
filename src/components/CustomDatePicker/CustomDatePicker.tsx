@@ -1,16 +1,17 @@
 import React from 'react'
 import { CustomDatePickerWrapper, CustomDatePickerView } from './styles'
+import { SetterOrUpdater } from 'recoil'
 
-interface DatePickerProps {
-  value: Date
-  setValue: React.Dispatch<React.SetStateAction<Date>>
+interface CustomDatepickerProps {
+  date: Date | undefined
+  setDate: SetterOrUpdater<Date | undefined>
 }
 
-const CustomDatepicker = ({ value, setValue }: DatePickerProps) => {
-  const now = new Date()
+const CustomDatepicker = ({ date, setDate }: CustomDatepickerProps) => {
+  const today = new Date()
   const onChangeDate = (date: Date) => {
-    setValue(date)
-    console.log(date)
+    const UTCDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000)
+    setDate(UTCDate)
   }
   const labelRenderer = (type: string, data: number) => {
     switch (type) {
@@ -27,12 +28,11 @@ const CustomDatepicker = ({ value, setValue }: DatePickerProps) => {
   return (
     <CustomDatePickerWrapper>
       <CustomDatePickerView
-        defaultValue={now}
-        max={now}
-        value={value}
+        defaultValue={today}
+        max={today}
+        value={date}
         onChange={onChangeDate}
         renderLabel={labelRenderer}
-        style={{ justifyContent: 'center', width: '80%' }}
       />
     </CustomDatePickerWrapper>
   )
