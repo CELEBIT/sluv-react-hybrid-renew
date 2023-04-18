@@ -20,6 +20,6 @@ const BottomSheetModalContainer = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: white;
-  z-index: 50;
+  z-index: 100;
   border-radius: 20px 20px 0px 0px;
 `
