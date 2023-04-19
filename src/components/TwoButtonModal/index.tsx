@@ -1,7 +1,7 @@
-import { BtnModalContainer } from '../Modals/styles';
-import React from 'react';
-import ButtonHalf from '../ButtonHalf/ButtonHalf';
-import styled from '@emotion/styled';
+import { BtnModalContainer } from '../Modals/styles'
+import React from 'react'
+import ButtonHalf from '../ButtonHalf/ButtonHalf'
+import styled from '@emotion/styled'
 
 interface TwoButtonModalProps {
   leftButtonName: string
@@ -21,7 +21,7 @@ const TwoButtonModal = ({
   return (
     <BtnModalContainer>
       {children}
-      <TwoBtnWrapper> 
+      <TwoBtnWrapper>
         <ButtonHalf type='cancel' text={leftButtonName} onClick={leftButtonOnClick} />
         <ButtonHalf type='confirm' text={rightButtonName} onClick={rightButtonOnClick} />
       </TwoBtnWrapper>
@@ -29,10 +29,9 @@ const TwoButtonModal = ({
   )
 }
 
-export default TwoButtonModal;
+export default TwoButtonModal
 
 const TwoBtnWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 100%;
 `

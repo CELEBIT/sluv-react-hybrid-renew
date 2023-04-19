@@ -1,20 +1,27 @@
-import useModals from './hooks/useModals';
-import { Dimmed, Dimmer } from './styles';
+import useModals from './hooks/useModals'
+import { Dimmed, Dimmer } from './styles'
 import React, { ComponentProps, FunctionComponent } from 'react'
 import loadable from '@loadable/component'
 import PropTypes from 'prop-types'
 
-
 const AskRecentPostWritingModal = loadable(
-  () => import('../TwoButtonModal/AskRecentPostWritingModal')
-);
+  () => import('../TwoButtonModal/AskRecentPostWritingModal'),
+)
+const ItemDatePickerModal = loadable(() => import('../BottomSheetModal/ItemDatePickerModal'))
+const ItemPlaceInputModal = loadable(() => import('../BottomSheetModal/ItemPlaceInputModal'))
 
 // 모달 관리 객체
 export const modals = {
   AskRecentPostWritingModal: AskRecentPostWritingModal as FunctionComponent<
     ComponentProps<typeof AskRecentPostWritingModal>
-  >
-};
+  >,
+  ItemDatePickerModal: ItemDatePickerModal as FunctionComponent<
+    ComponentProps<typeof ItemDatePickerModal>
+  >,
+  ItemPlaceInputModal: ItemPlaceInputModal as FunctionComponent<
+    ComponentProps<typeof ItemPlaceInputModal>
+  >,
+}
 
 const Modals = () => {
   const { modals, closeModal } = useModals()
@@ -54,10 +61,9 @@ const Modals = () => {
   )
 }
 
-export default Modals; 
+export default Modals
 
 Modals.propTypes = {
   onSubmit: PropTypes.func,
   callbackFunc: PropTypes.func,
 }
-
