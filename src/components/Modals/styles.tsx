@@ -28,7 +28,7 @@ export const BtnModalContainer = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #fff;
-  width: calc(100% -  5.375rem);
+  width: calc(100% - 5.375rem);
   margin: 0 2.6875rem;
   padding: 2rem 1.25rem 1.25rem 1.25rem;
   z-index: 30;
