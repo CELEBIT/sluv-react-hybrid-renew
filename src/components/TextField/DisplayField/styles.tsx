@@ -13,10 +13,13 @@ const Field = styled.div<FieldProps>`
   align-items: center;
   background-color: ${({ disabled }) => (disabled ? Common.colors.GR100 : 'white')};
   height: 3.5rem;
-  width: 20.9375rem;
+  width: 100%;
   padding: 0 1.25rem;
   span {
     width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     ${({ disabled }) =>
       disabled
         ? css`
@@ -43,24 +46,13 @@ export const DisplayFieldWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   width: 100%;
 `
 
-export const SingleField = styled.div<FieldProps>`
-  display: flex;
-  flex-direction: row;
-  text-overflow: ellipsis;
-  align-items: center;
-  background-color: ${({ disabled }) => (disabled ? Common.colors.GR100 : 'white')};
-  height: 3.5rem;
-  width: 20.9375rem;
+export const SingleField = styled(Field)<FieldProps>`
   border: 1px solid ${Common.colors.GR200};
   border-radius: 0.5rem;
   padding: 0 1.25rem;
-  span {
-    ${Pretendard({ size: 17, weight: Common.bold.thin, color: Common.colors.GR600 })}
-  }
 `
 
 export const FirstField = styled(Field)<FieldProps>`

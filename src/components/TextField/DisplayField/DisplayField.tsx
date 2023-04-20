@@ -5,17 +5,17 @@ import { ErrorText } from '../DefaultTextfield/styles'
 interface DisplayFieldProps {
   children: React.ReactNode
   disabled?: boolean
-  error?: boolean
+  valid?: boolean
   errorMsg?: string
 }
-const DisplayField = ({ children, disabled, error, errorMsg }: DisplayFieldProps) => {
+const DisplayField = ({ children, disabled, valid, errorMsg }: DisplayFieldProps) => {
   const childrenCount = React.Children.count(children)
 
   if (childrenCount === 1) {
     return (
       <DisplayFieldWrapper>
         <SingleField disabled={disabled}>{children}</SingleField>
-        {error && <ErrorText>{errorMsg}</ErrorText>}
+        {!valid && <ErrorText>{errorMsg}</ErrorText>}
       </DisplayFieldWrapper>
     )
   }
@@ -31,7 +31,7 @@ const DisplayField = ({ children, disabled, error, errorMsg }: DisplayFieldProps
         </MiddleField>
       ))}
       <LastField disabled={disabled}>{childrenArray[childrenCount - 1]}</LastField>
-      {error && <ErrorText>{errorMsg}</ErrorText>}
+      {!valid && <ErrorText>{errorMsg}</ErrorText>}
     </DisplayFieldWrapper>
   )
 }
