@@ -76,7 +76,7 @@ const HotPlaceWrapper = styled.div`
   }
 `
 
-const ChipWrapper = styled.div`
+export const ChipWrapper = styled.div`
   display: flex;
   overflow-x: scroll;
   white-space: nowrap;
