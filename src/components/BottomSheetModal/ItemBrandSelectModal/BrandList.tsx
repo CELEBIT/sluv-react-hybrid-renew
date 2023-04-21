@@ -123,4 +123,5 @@ const BrandEN = styled.span`
   font-weight: 300;
   font-size: 0.9375rem;
   color: ${Common.colors.GR500};
+  margin-top: 0.25rem;
 `
