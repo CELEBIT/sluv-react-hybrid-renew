@@ -99,6 +99,7 @@ const HotBrandWrapper = styled.div`
   overflow-x: scroll;
   width: 100%;
   margin-top: 1.5rem;
+  margin-bottom: 1.25rem;
   span {
     ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.GR600 })}
     margin: 0.5625rem 0 0.5625rem 1.25rem;

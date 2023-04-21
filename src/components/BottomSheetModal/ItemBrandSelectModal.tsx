@@ -7,6 +7,7 @@ import SearchTextfield from '../TextField/SearchTextfield/SearchTextfield'
 import HotBrand from './ItemBrandSelectModal/HotBrand'
 import RecentSearch from './ItemBrandSelectModal/RecentSearch'
 import BrandList from './ItemBrandSelectModal/BrandList'
+import Header from '../Header/Header'
 
 const ItemBrandSelectModal = () => {
   const [searchValue, setSearchValue] = useState('')
@@ -18,12 +19,15 @@ const ItemBrandSelectModal = () => {
   const onSearch = () => {
     console.log('검색')
   }
-  const success = true
+  const success = false
 
   return (
     <BottomSheetModal>
-      <button onClick={onClose}>닫기</button>
       <ModalWrapper>
+        <div className='HeaderPadding' onClick={onClose}>
+          <Header title='브랜드 검색' isModalHeader={true} />
+        </div>
+
         <SearchWrapper>
           <SearchTextfield
             value={searchValue}
@@ -32,7 +36,6 @@ const ItemBrandSelectModal = () => {
             placeholder='브랜드를 검색해주세요'
           ></SearchTextfield>
         </SearchWrapper>
-
         {/* 입력내용 없을 시 */}
         {!searchValue ? (
           <>
@@ -41,7 +44,7 @@ const ItemBrandSelectModal = () => {
           </>
         ) : (
           // 입력내용 존재
-          <>{success ? <BrandList></BrandList> : <>없는 브랜드</>}</>
+          <div className='long'>{success ? <BrandList></BrandList> : <>없는 브랜드</>}</div>
         )}
       </ModalWrapper>
     </BottomSheetModal>
@@ -55,7 +58,22 @@ const ModalWrapper = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
-  padding-bottom: 0.75rem;
+  /* padding-bottom: 3.8125rem; */
+
+  @keyframes slide-up {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+  .HeaderPadding {
+    padding: 0 1.25rem;
+  }
+  .long {
+    height: 34.875rem;
+  }
 `
 const SearchWrapper = styled.div`
   width: 100%;
@@ -67,6 +85,8 @@ export const ChipWrapper = styled.div`
   white-space: nowrap;
   box-sizing: border-box;
   padding: 0.5rem 0 0 1.25rem;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
   gap: 0.5rem;
   & > *:last-child {
     margin-right: 1.25rem;

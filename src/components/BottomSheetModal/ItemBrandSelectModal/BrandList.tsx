@@ -34,6 +34,32 @@ const BrandList = () => {
       brandEn: 'Plac',
       brandImgUrl: 'https://image.msscdn.net/mfile_s01/_brand/free_medium/plac.png?202303131417',
     },
+    {
+      id: 4,
+      brandKr: '피지컬 에듀케이션 디파트먼트',
+      brandEn: 'Physical Education Department',
+      brandImgUrl:
+        'https://image.msscdn.net/mfile_s01/_brand/free_medium/physicaleducation.png?202304121128',
+    },
+    {
+      id: 5,
+      brandKr: '반스',
+      brandEn: 'Vans',
+      brandImgUrl: 'https://image.msscdn.net/mfile_s01/_brand/free_medium/vans.png?202304181156',
+    },
+    {
+      id: 6,
+      brandKr: '무신사 스탠다드',
+      brandEn: ' Musinsa Standard',
+      brandImgUrl:
+        'https://image.msscdn.net/mfile_s01/_brand/free_medium/musinsastandard.png?202304201136',
+    },
+    {
+      id: 7,
+      brandKr: '플랙',
+      brandEn: 'Plac',
+      brandImgUrl: 'https://image.msscdn.net/mfile_s01/_brand/free_medium/plac.png?202303131417',
+    },
   ]
   const setBrand = useSetRecoilState(selectedBrandState)
   const { closeModal } = useModals()
@@ -65,9 +91,11 @@ export default BrandList
 const BrandListWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100%;
   width: 100%;
   margin-top: 1rem;
-  padding: 0 1.25rem;
+  padding: 0 1.25rem 1.25rem 1.25rem;
+  overflow-y: scroll;
 `
 const Brand = styled.div`
   display: flex;
@@ -75,6 +103,7 @@ const Brand = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
+
   width: 100%;
   padding: 0.875rem 0 0.875rem 0;
 `

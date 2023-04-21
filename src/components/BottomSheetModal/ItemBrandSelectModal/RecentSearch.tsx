@@ -67,7 +67,7 @@ const RecentSearch = () => {
   ]
   const setBrand = useSetRecoilState(selectedBrandState)
   const onDeleteAllSearchLog = () => {
-    alert('각각 검색어 삭제')
+    alert('전체 검색어 삭제')
   }
   const onDeleteEachSearchLog = () => {
     alert('각각 검색어 삭제')
@@ -113,17 +113,19 @@ const RecentSearchWrapper = styled.div`
   margin-top: 1.5rem;
   span {
     ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.GR600 })}
-    margin: 0.5625rem 0 0.5625rem 1.25rem;
   }
 `
 const SearchLogWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 0.5625rem 20px 0.5625rem 0;
+  padding: 0.5625rem 1.25rem 0.5625rem 1.25rem;
   width: 100%;
   span {
-    ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.GR600 })}
-    margin: 0.5625rem 0 0.5625rem 1.25rem;
+    ${Pretendard({
+      size: 15,
+      weight: Common.bold.regular,
+      color: Common.colors.GR600,
+    })}
   }
 `
 const DeleteAllText = styled.span`
