@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import BottomSheetModal from '.'
 import styled from '@emotion/styled'
 import useModals from '../Modals/hooks/useModals'
@@ -19,19 +19,24 @@ const ItemBrandSelectModal = () => {
   const onSearch = () => {
     console.log('검색')
   }
-  const success = false
+  const success = true
+  const searchRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    searchRef?.current?.focus()
+  }, [searchRef])
 
   return (
     <BottomSheetModal>
       <ModalWrapper>
-        <div className='HeaderPadding' onClick={onClose}>
+        <div className='Header' onClick={onClose}>
           <Header title='브랜드 검색' isModalHeader={true} />
         </div>
-
         <SearchWrapper>
           <SearchTextfield
             value={searchValue}
             setValue={setSearchValue}
+            ref={searchRef}
             onEnter={onSearch}
             placeholder='브랜드를 검색해주세요'
           ></SearchTextfield>
@@ -58,17 +63,7 @@ const ModalWrapper = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
-  /* padding-bottom: 3.8125rem; */
-
-  @keyframes slide-up {
-    from {
-      transform: translateY(100%);
-    }
-    to {
-      transform: translateY(0);
-    }
-  }
-  .HeaderPadding {
+  .Header {
     padding: 0 1.25rem;
   }
   .long {

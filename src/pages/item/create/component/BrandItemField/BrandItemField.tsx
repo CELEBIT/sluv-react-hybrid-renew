@@ -5,11 +5,18 @@ import { Common } from '../../../../../components/styles'
 import styled from '@emotion/styled'
 import useModals from '../../../../../components/Modals/hooks/useModals'
 import { modals } from '../../../../../components/Modals'
+import BrandLogo from '../../../../../components/BrandLogo/BrandLogo'
 
-export const selectedBrandState = atom<string>({
-  // API 호출 시 null로 변환해서 전달
+export interface Brand {
+  id?: number
+  brandKr?: string
+  brandEn?: string
+  brandImgUrl?: string
+}
+
+export const selectedBrandState = atom<Brand>({
   key: 'selectedBrand',
-  default: '',
+  default: {},
 })
 
 export const itemNameState = atom<string>({
@@ -30,9 +37,12 @@ const BrandItemField = ({ brandValid, itemNameValid }: BrandItemFieldProps) => {
   const onBrandSelect = () => {
     openModal(modals.ItemBrandSelectModal)
   }
+  const onItemNameSelect = () => {
+    openModal(modals.ItemNameInputModal)
+  }
   const brandErrorMsg = '필수 항목입니다'
   const itemErrorMsg = '상품명은 필수 항목입니다'
-  if (!brand && !itemName) {
+  if (!brand.id && !itemName) {
     return (
       <DisplayField valid={brandValid} errorMsg={brandErrorMsg}>
         <PlaceHolder onClick={onBrandSelect}>브랜드를 검색해주세요</PlaceHolder>
@@ -41,15 +51,21 @@ const BrandItemField = ({ brandValid, itemNameValid }: BrandItemFieldProps) => {
   } else if (!itemName) {
     return (
       <DisplayField valid={itemNameValid} errorMsg={itemErrorMsg}>
-        <span onClick={onBrandSelect}>{brand}</span>
-        <PlaceHolder onClick={onBrandSelect}>상품명 예) PRODUCT 123</PlaceHolder>
+        <Brand onClick={onBrandSelect}>
+          <BrandLogo size={32} url={brand.brandImgUrl} />
+          <span>{brand.brandKr}</span>
+        </Brand>
+        <PlaceHolder onClick={onItemNameSelect}>상품명 예) PRODUCT 123</PlaceHolder>
       </DisplayField>
     )
   } else {
     return (
       <DisplayField>
-        <span onClick={onBrandSelect}>{brand}</span>
-        <span onClick={onBrandSelect}>{itemName}</span>
+        <Brand onClick={onBrandSelect}>
+          <BrandLogo size={32} url={brand.brandImgUrl} />
+          <span>{brand.brandKr}</span>
+        </Brand>
+        <span onClick={onItemNameSelect}>{itemName}</span>
       </DisplayField>
     )
   }
@@ -62,4 +78,13 @@ const PlaceHolder = styled.span`
   font-size: 1.0625rem;
   font-weight: 400;
   color: ${Common.colors.GR500} !important;
+`
+
+const Brand = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  span {
+    margin-left: 0.5rem;
+  }
 `
