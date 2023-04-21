@@ -3,7 +3,10 @@ import React from 'react'
 import { Common, Pretendard } from '../../styles'
 import Chip from '../../Chip/Chip'
 import { ChipWrapper } from '../ItemBrandSelectModal'
-import { selectedBrandState } from '../../../pages/item/create/component/BrandItemField/BrandItemField'
+import {
+  Brand,
+  selectedBrandState,
+} from '../../../pages/item/create/component/BrandItemField/BrandItemField'
 import { useSetRecoilState } from 'recoil'
 import useModals from '../../Modals/hooks/useModals'
 import { modals } from '../../Modals'
@@ -75,8 +78,8 @@ const RecentSearch = () => {
 
   const { closeModal } = useModals()
 
-  const onChipClick = (chipText: string) => {
-    setBrand(chipText)
+  const onChipClick = (brand: Brand) => {
+    setBrand(brand)
     closeModal(modals.ItemBrandSelectModal)
   }
 
@@ -87,12 +90,12 @@ const RecentSearch = () => {
         <DeleteAllText onClick={onDeleteAllSearchLog}>전체삭제</DeleteAllText>
       </SearchLogWrapper>
       <ChipWrapper>
-        {chipList.map((chip) => {
+        {chipList.map((brand) => {
           return (
             <Chip
-              key={chip.id}
-              text={chip.brandKr}
-              onClick={() => onChipClick(chip.brandKr)}
+              key={brand.id}
+              text={brand.brandKr}
+              onClick={() => onChipClick(brand)}
               canDelete={true}
               onDelete={onDeleteEachSearchLog}
             ></Chip>

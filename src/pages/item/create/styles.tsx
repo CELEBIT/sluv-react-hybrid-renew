@@ -1,5 +1,3 @@
-import styled from '@emotion/styled';
+import styled from '@emotion/styled'
 
-export const ItemCreatePageStyle = styled.main`
-
-`
+export const ItemCreatePageStyle = styled.main``

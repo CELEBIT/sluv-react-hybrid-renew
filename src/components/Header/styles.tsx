@@ -1,8 +1,8 @@
-import styled from '@emotion/styled';
-import { Common, Pretendard } from '../styles';
+import styled from '@emotion/styled'
+import { Common, Pretendard } from '../styles'
 
 interface IHeaderWrapper {
-  isModalHeader: boolean;
+  isModalHeader: boolean
 }
 
 export const HeaderWrapper = styled.header<IHeaderWrapper>`
