@@ -6,9 +6,10 @@ import Header from '../Header/Header'
 
 const ItemCategoryModal = () => {
   const {
-    getItemCategory: { data },
+    getItemCategory: { data, error },
   } = useItemCategoryQuery()
   console.log(data)
+  console.log(error)
 
   return (
     <BottomSheetModal>
