@@ -40,14 +40,14 @@ const request: AxiosInstance = axios.create({
 //   },
 // )
 
-// // 응답 인터셉터
-// request.interceptors.response.use(
-//   (response) => {
-//     return response.data
-//   },
-//   (error) => {
-//     return Promise.reject(error)
-//   },
-// )
+// 응답 인터셉터
+request.interceptors.response.use(
+  (response) => {
+    return response.data
+  },
+  (error) => {
+    return Promise.reject(error)
+  },
+)
 
 export default request
