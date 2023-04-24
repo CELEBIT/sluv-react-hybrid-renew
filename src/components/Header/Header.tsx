@@ -8,9 +8,10 @@ interface HeaderProps {
   hasArrow?: boolean
   title?: string
   children?: any
+  modalCloseBtnClick?: () => void
 }
 
-const Header = ({ isModalHeader, hasArrow, title, children }: HeaderProps) => {
+const Header = ({ isModalHeader, hasArrow, title, children, modalCloseBtnClick }: HeaderProps) => {
   return (
     <HeaderWrapper role='heading' isModalHeader={isModalHeader}>
       <div className='left'>
@@ -18,7 +19,7 @@ const Header = ({ isModalHeader, hasArrow, title, children }: HeaderProps) => {
         {title && <Title>{title}</Title>}
       </div>
       <div className='right'>
-        {isModalHeader && <Close />}
+        {isModalHeader && <Close onClick={modalCloseBtnClick} />}
         {children}
       </div>
     </HeaderWrapper>
