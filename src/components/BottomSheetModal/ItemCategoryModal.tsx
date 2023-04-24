@@ -3,8 +3,12 @@ import React from 'react'
 import BottomSheetModal from '.'
 import useItemCategoryQuery from '../../apis/item/hooks/useItemCategoryQuery'
 import Header from '../Header/Header'
+import { modals } from '../Modals'
+import useModals from '../Modals/hooks/useModals'
 
 const ItemCategoryModal = () => {
+  const { closeModal } = useModals()
+
   const {
     getItemCategory: { data },
   } = useItemCategoryQuery()
@@ -13,7 +17,11 @@ const ItemCategoryModal = () => {
   return (
     <BottomSheetModal>
       <ModalWrapper>
-        <Header isModalHeader={true} title={'아이템 종류'} />
+        <Header
+          isModalHeader={true}
+          title={'아이템 종류'}
+          modalCloseBtnClick={() => closeModal(modals.ItemCategoryModal)}
+        />
       </ModalWrapper>
     </BottomSheetModal>
   )
