@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { HeaderWrapper, Title } from './styles'
 import { ReactComponent as ArrowBack } from '../../assets/arrow_back_20.svg'
 import { ReactComponent as Close } from '../../assets/close_20.svg'
@@ -26,4 +26,4 @@ const Header = ({ isModalHeader, hasArrow, title, children, modalCloseBtnClick }
   )
 }
 
-export default Header
+export default memo(Header)
