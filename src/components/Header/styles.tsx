@@ -22,9 +22,6 @@ export const HeaderWrapper = styled.header<IHeaderWrapper>`
     display: flex;
     align-items: center;
   }
-
-  /* 삭제예정 */
-  border: 1px solid red;
 `
 
 export const Title = styled.span`
