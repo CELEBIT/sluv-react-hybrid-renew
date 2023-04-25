@@ -9,6 +9,7 @@ import { modals } from '../Modals'
 import DefaultTextfield from '../TextField/DefaultTextfield/DefaultTextfield'
 import Chip from '../Chip/Chip'
 import { Common, Pretendard } from '../styles'
+import Header from '../Header/Header'
 
 const ItemPlaceInputModal = () => {
   const [place, setPlace] = useRecoilState(selectedPlaceState)
@@ -20,20 +21,23 @@ const ItemPlaceInputModal = () => {
   const onComplete = () => {
     closeModal(modals.ItemDatePickerModal)
   }
-  const onCancel = () => {
-    setPlace('')
-    closeModal(modals.ItemDatePickerModal)
-  }
+
   return (
     <BottomSheetModal>
-      <button onClick={onCancel}>닫기</button>
-      <ModalWrapper>
+      <HeaderWrapper>
+        <Header
+          title='착용 장소'
+          isModalHeader={true}
+          modalCloseBtnClick={() => closeModal(modals.ItemDatePickerModal)}
+        />
         <DefaultTextfield
           value={place}
           setValue={setPlace}
           onEnter={onComplete}
           placeholder='셀럽이 착용한 장소를 알려주세요'
         ></DefaultTextfield>
+      </HeaderWrapper>
+      <ModalWrapper>
         <HotPlaceWrapper>
           <span>핫 플레이스</span>
           <ChipWrapper>
@@ -56,10 +60,16 @@ const ItemPlaceInputModal = () => {
 
 export default ItemPlaceInputModal
 
+const HeaderWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0 1.25rem;
+`
+
 const ModalWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   width: 100%;
   height: 100%;
 `
@@ -76,7 +86,7 @@ const HotPlaceWrapper = styled.div`
   }
 `
 
-const ChipWrapper = styled.div`
+export const ChipWrapper = styled.div`
   display: flex;
   overflow-x: scroll;
   white-space: nowrap;
