@@ -16,6 +16,8 @@ const ItemCreate = () => {
     setHasTriedToUpload(true)
     if (!brand) {
       setBrandValid(false)
+      alert('empty brand')
+      console.log('empty brand')
     } else {
       setBrandValid(true)
     }

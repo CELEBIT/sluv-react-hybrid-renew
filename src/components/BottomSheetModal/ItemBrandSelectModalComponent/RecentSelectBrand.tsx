@@ -11,61 +11,59 @@ import { useSetRecoilState } from 'recoil'
 import useModals from '../../Modals/hooks/useModals'
 import { modals } from '../../Modals'
 
-const RecentSearch = () => {
-  const chipList = [
-    {
-      id: 0,
-      brandKr: '무',
-      brandEn: '무신사',
-      brandImgUrl: 'string',
-    },
+const RecentSelectBrand = () => {
+  const brandList = [
     {
       id: 1,
-      brandKr: '에잇세컨즈',
-      brandEn: '에잇세컨즈',
-      brandImgUrl: 'string',
+      brandKr: '피지컬 에듀케이션 디파트먼트',
+      brandEn: 'Physical Education Department',
+      brandImgUrl:
+        'https://image.msscdn.net/mfile_s01/_brand/free_medium/physicaleducation.png?202304121128',
     },
     {
       id: 2,
-      brandKr: '플랙',
-      brandEn: '플랙',
-      brandImgUrl: 'string',
+      brandKr: '반스',
+      brandEn: 'Vans',
+      brandImgUrl: 'https://image.msscdn.net/mfile_s01/_brand/free_medium/vans.png?202304181156',
     },
     {
       id: 3,
-      brandKr: '루이비통',
-      brandEn: '루이비통',
-      brandImgUrl: 'string',
+      brandKr: '무신사 스탠다드',
+      brandEn: ' Musinsa Standard',
+      brandImgUrl:
+        'https://image.msscdn.net/mfile_s01/_brand/free_medium/musinsastandard.png?202304201136',
     },
     {
       id: 4,
-      brandKr: '샤넬',
-      brandEn: '샤넬',
-      brandImgUrl: 'string',
+      brandKr: '플랙',
+      brandEn: 'Plac',
+      brandImgUrl: 'https://image.msscdn.net/mfile_s01/_brand/free_medium/plac.png?202303131417',
     },
     {
       id: 5,
-      brandKr: '프로젝트엠',
-      brandEn: '프로젝트엠',
-      brandImgUrl: 'string',
+      brandKr: '피지컬 에듀케이션 디파트먼트',
+      brandEn: 'Physical Education Department',
+      brandImgUrl:
+        'https://image.msscdn.net/mfile_s01/_brand/free_medium/physicaleducation.png?202304121128',
     },
     {
       id: 6,
-      brandKr: '나이키',
-      brandEn: '나이키',
-      brandImgUrl: 'string',
+      brandKr: '반스',
+      brandEn: 'Vans',
+      brandImgUrl: 'https://image.msscdn.net/mfile_s01/_brand/free_medium/vans.png?202304181156',
     },
     {
       id: 7,
-      brandKr: '아디다스',
-      brandEn: '아디다스',
-      brandImgUrl: 'string',
+      brandKr: '무신사 스탠다드',
+      brandEn: ' Musinsa Standard',
+      brandImgUrl:
+        'https://image.msscdn.net/mfile_s01/_brand/free_medium/musinsastandard.png?202304201136',
     },
     {
       id: 8,
-      brandKr: '뉴발란스',
-      brandEn: '뉴발란스',
-      brandImgUrl: 'string',
+      brandKr: '플랙',
+      brandEn: 'Plac',
+      brandImgUrl: 'https://image.msscdn.net/mfile_s01/_brand/free_medium/plac.png?202303131417',
     },
   ]
   const setBrand = useSetRecoilState(selectedBrandState)
@@ -86,11 +84,11 @@ const RecentSearch = () => {
   return (
     <RecentSearchWrapper>
       <SearchLogWrapper>
-        <span>최근 검색한 브랜드</span>
+        <span>최근 선택한 브랜드</span>
         <DeleteAllText onClick={onDeleteAllSearchLog}>전체삭제</DeleteAllText>
       </SearchLogWrapper>
       <ChipWrapper>
-        {chipList.map((brand) => {
+        {brandList.map((brand) => {
           return (
             <Chip
               key={brand.id}
@@ -106,7 +104,7 @@ const RecentSearch = () => {
   )
 }
 
-export default RecentSearch
+export default RecentSelectBrand
 
 const RecentSearchWrapper = styled.div`
   display: flex;

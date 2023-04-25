@@ -1,16 +1,17 @@
 import styled from '@emotion/styled'
-import React from 'react'
 import { Common, Pretendard } from '../../styles'
+import React from 'react'
+import { useSetRecoilState } from 'recoil'
+import useModals from '../../Modals/hooks/useModals'
+import { modals } from '../../Modals'
+import Chip from '../../Chip/Chip'
+import { ChipWrapper } from '../ItemBrandSelectModal'
 import {
   Brand,
   selectedBrandState,
 } from '../../../pages/item/create/component/BrandItemField/BrandItemField'
-import { useSetRecoilState } from 'recoil'
-import useModals from '../../Modals/hooks/useModals'
-import { modals } from '../../Modals'
-import BrandLogo from '../../BrandLogo/BrandLogo'
 
-const BrandList = () => {
+const HotBrand = () => {
   const brandList = [
     {
       id: 1,
@@ -68,60 +69,36 @@ const BrandList = () => {
   const setBrand = useSetRecoilState(selectedBrandState)
   const { closeModal } = useModals()
 
-  const onSelectBrand = (brand: Brand) => {
+  const onChipClick = (brand: Brand) => {
     setBrand(brand)
     closeModal(modals.ItemBrandSelectModal)
   }
 
   return (
-    <BrandListWrapper>
-      {brandList.map((brand) => {
-        return (
-          <EachBrand key={brand.id} onClick={() => onSelectBrand(brand)}>
-            <TextWrap>
-              <BrandKR>{brand.brandKr}</BrandKR>
-              <BrandEN>{brand.brandEn}</BrandEN>
-            </TextWrap>
-            <BrandLogo size={46} url={brand.brandImgUrl} />
-          </EachBrand>
-        )
-      })}
-    </BrandListWrapper>
+    <HotBrandWrapper>
+      <span>인기 브랜드</span>
+      <ChipWrapper>
+        {brandList.map((brand) => {
+          return (
+            <Chip key={brand.id} text={brand.brandKr} onClick={() => onChipClick(brand)}></Chip>
+          )
+        })}
+      </ChipWrapper>
+    </HotBrandWrapper>
   )
 }
 
-export default BrandList
+export default HotBrand
 
-const BrandListWrapper = styled.div`
+const HotBrandWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
+  overflow-x: scroll;
   width: 100%;
-  margin-top: 1rem;
-  padding: 0 1.25rem 1.25rem 1.25rem;
-  overflow-y: scroll;
-`
-const EachBrand = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  width: 100%;
-  padding: 0.875rem 0 0.875rem 0;
-`
-
-const TextWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-const BrandKR = styled.span`
-  ${Pretendard({ size: 18, weight: Common.bold.regular, color: Common.colors.BK })}
-`
-const BrandEN = styled.span`
-  font-family: 'Pretendard';
-  font-weight: 300;
-  font-size: 0.9375rem;
-  color: ${Common.colors.GR500};
-  margin-top: 0.25rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.25rem;
+  span {
+    ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.GR600 })}
+    margin: 0.5625rem 0 0.5625rem 1.25rem;
+  }
 `

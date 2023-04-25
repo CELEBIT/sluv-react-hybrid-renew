@@ -1,52 +1,47 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import BottomSheetModal from '.'
 import styled from '@emotion/styled'
-import useModals from '../Modals/hooks/useModals'
-import { modals } from '../Modals'
+// import useModals from '../Modals/hooks/useModals'
+// import { modals } from '../Modals'
 import SearchTextfield from '../TextField/SearchTextfield/SearchTextfield'
-import HotBrand from './ItemBrandSelectModal/HotBrand'
-import RecentSearch from './ItemBrandSelectModal/RecentSearch'
-import BrandList from './ItemBrandSelectModal/BrandList'
+import HotBrand from './ItemBrandSelectModalComponent/HotBrand'
+import RecentSearch from './ItemBrandSelectModalComponent/RecentSelectBrand'
+import BrandList from './ItemBrandSelectModalComponent/BrandList'
 import Header from '../Header/Header'
 
 const ItemBrandSelectModal = () => {
-  const [searchValue, setSearchValue] = useState('')
-  const { closeModal } = useModals()
+  const [searchValue, setSearchValue] = useState<string>('')
+  // const { closeModal } = useModals()
 
-  const onClose = () => {
-    closeModal(modals.ItemDatePickerModal)
-  }
+  // const onClose = () => {
+  //   closeModal(modals.ItemDatePickerModal)
+  //   console.log('close modal in itembrand select modal')
+  // }
   const onSearch = () => {
     console.log('검색')
   }
   const success = true
-  const searchRef = useRef<HTMLInputElement>(null)
-
-  useEffect(() => {
-    searchRef?.current?.focus()
-  }, [searchRef])
 
   return (
     <BottomSheetModal>
       <ModalWrapper>
-        <div className='Header' onClick={onClose}>
+        <div className='Header'>
           <Header title='브랜드 검색' isModalHeader={true} />
         </div>
         <SearchWrapper>
           <SearchTextfield
             value={searchValue}
             setValue={setSearchValue}
-            ref={searchRef}
             onEnter={onSearch}
             placeholder='브랜드를 검색해주세요'
           ></SearchTextfield>
         </SearchWrapper>
         {/* 입력내용 없을 시 */}
-        {!searchValue ? (
-          <>
+        {searchValue === '' ? (
+          <div className='long'>
             <RecentSearch></RecentSearch>
             <HotBrand></HotBrand>
-          </>
+          </div>
         ) : (
           // 입력내용 존재
           <div className='long'>{success ? <BrandList></BrandList> : <>없는 브랜드</>}</div>
@@ -72,7 +67,7 @@ const ModalWrapper = styled.div`
 `
 const SearchWrapper = styled.div`
   width: 100%;
-  padding: 0 1.25rem;
+  padding: 0 20px 0 20px;
 `
 export const ChipWrapper = styled.div`
   display: flex;
