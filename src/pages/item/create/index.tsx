@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import BrandItemField, {
   itemNameState,
   selectedBrandState,
-} from './component/BrandItemField/BrandItemField'
+} from './components/BrandItemField/BrandItemField'
 import { useRecoilValue } from 'recoil'
-import DatePlaceField from './component/DatePlaceField/DatePlaceField'
+import DatePlaceField from './components/DatePlaceField/DatePlaceField'
 
 const ItemCreate = () => {
   const [brandValid, setBrandValid] = useState(true)
