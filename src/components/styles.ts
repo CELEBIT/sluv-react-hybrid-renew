@@ -75,14 +75,15 @@ export const Common = {
     BK: '#212529',
     GR600: '#7B8894',
     GR500: '#AEB5BC',
-    GR400: '#D6D8DA',
-    GR300: '#C7CED4',
+    GR400: '#C7CED4',
+    GR300: '#DFE2E6',
     GR200: '#EAECEF',
     GR100: '#F4F5F6',
 
     ERROR: '#FA5252',
   },
   bold: {
+    thin: 400,
     regular: 500,
     semiBold: 600,
     bold: 700,

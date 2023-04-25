@@ -1,13 +1,17 @@
 import styled from 'styled-components'
 import { Common } from '../../styles'
 
+export const InputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`
 export const InputWrapper = styled.div`
   display: flex;
   align-items: center;
 
   background-color: white;
   height: 3.5rem;
-  width: 20.9375rem;
+  width: 100%;
   border: 1px solid ${Common.colors.GR200};
   border-radius: 0.5rem;
   padding: 1rem 1.25rem;

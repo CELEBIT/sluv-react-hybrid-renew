@@ -14,17 +14,18 @@ export const ChipWrapper = styled.div<{ canDelete?: boolean }>`
   border-radius: 1.5625rem;
 
   background-color: ${Common.colors.BG};
-  color: ${Common.colors.SEC};
+  color: ${Common.colors.PRI};
   font-family: Pretendard;
   font-weight: 500;
 
   p {
     margin: 0;
+    white-space: nowrap;
+    margin-right: ${(props) => (props.canDelete ? '4px' : 0)};
   }
 
   div {
     display: flex;
-    margin-left: ${(props) => (props.canDelete ? '4px' : 0)}; /* add margin between text and icon */
   }
 
   :hover {
