@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { ErrorText, InputField, InputWrapper } from './styles'
+import React, { useEffect, useRef, useState, useMemo } from 'react'
+import { ErrorText, InputContainer, InputField, InputWrapper } from './styles'
 import { ReactComponent as Delete } from '../../../assets/delete_textfield_24.svg'
 
 interface DefaultTextFieldProps {
@@ -19,11 +19,13 @@ const DefaultTextfield = ({
   error,
   errorMsg,
 }: DefaultTextFieldProps) => {
-  const [isFocused, setIsFocused] = useState(false)
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value)
-    console.log('value:', value)
-  }
+  const [isFocused, setIsFocused] = useState<boolean>(false)
+  const handleInputChange = useMemo(
+    () => (event: React.ChangeEvent<HTMLInputElement>) => {
+      setValue(event.target.value)
+    },
+    [setValue, value],
+  )
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       if (onEnter) {
@@ -31,15 +33,23 @@ const DefaultTextfield = ({
       }
     }
   }
-  const onDelete = () => {
+  const onDelete = (event: React.MouseEvent<SVGSVGElement>) => {
+    event.stopPropagation()
     setValue('')
   }
+  const inputRef = useRef<HTMLInputElement>(null)
+  useEffect(() => {
+    inputRef?.current?.focus()
+  }, [inputRef])
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <InputContainer>
       <InputWrapper onFocus={() => setIsFocused(true)} onBlur={() => setIsFocused(false)}>
         <InputField
           value={value}
           placeholder={placeholder}
+          ref={inputRef}
+          autoFocus={true}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
         ></InputField>
@@ -48,12 +58,11 @@ const DefaultTextfield = ({
             style={{ marginLeft: '0.625rem' }}
             onClick={onDelete}
             onMouseDown={onDelete}
-            onTouchStart={onDelete}
           ></Delete>
         )}
       </InputWrapper>
       {error && <ErrorText>{errorMsg}</ErrorText>}
-    </div>
+    </InputContainer>
   )
 }
 

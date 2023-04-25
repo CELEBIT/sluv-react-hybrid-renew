@@ -83,6 +83,7 @@ export const Common = {
     ERROR: '#FA5252',
   },
   bold: {
+    thin: 400,
     regular: 500,
     semiBold: 600,
     bold: 700,

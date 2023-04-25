@@ -16,8 +16,8 @@ const Chip = ({ text, canDelete, onClick, onDelete }: ChipProps) => {
     onDelete?.()
   }
   return (
-    <ChipWrapper canDelete={canDelete} onClick={onClick}>
-      <p>{text}</p>
+    <ChipWrapper canDelete={canDelete}>
+      <p onClick={onClick}>{text}</p>
       {canDelete ? (
         <div onClick={handleDeleteClick}>
           <Delete style={{ width: '24px', height: '1.5rem' }} />
