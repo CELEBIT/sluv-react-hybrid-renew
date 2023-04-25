@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import BottomSheetModal from '.'
 import styled from '@emotion/styled'
-// import useModals from '../Modals/hooks/useModals'
-// import { modals } from '../Modals'
+import useModals from '../Modals/hooks/useModals'
+import { modals } from '../Modals'
 import SearchTextfield from '../TextField/SearchTextfield/SearchTextfield'
 import HotBrand from './ItemBrandSelectModalComponent/HotBrand'
 import RecentSearch from './ItemBrandSelectModalComponent/RecentSelectBrand'
@@ -11,12 +11,8 @@ import Header from '../Header/Header'
 
 const ItemBrandSelectModal = () => {
   const [searchValue, setSearchValue] = useState<string>('')
-  // const { closeModal } = useModals()
+  const { closeModal } = useModals()
 
-  // const onClose = () => {
-  //   closeModal(modals.ItemDatePickerModal)
-  //   console.log('close modal in itembrand select modal')
-  // }
   const onSearch = () => {
     console.log('검색')
   }
@@ -26,7 +22,11 @@ const ItemBrandSelectModal = () => {
     <BottomSheetModal>
       <ModalWrapper>
         <div className='Header'>
-          <Header title='브랜드 검색' isModalHeader={true} />
+          <Header
+            title='브랜드 검색'
+            isModalHeader={true}
+            modalCloseBtnClick={() => closeModal(modals.ItemCategoryModal)}
+          />
         </div>
         <SearchWrapper>
           <SearchTextfield

@@ -4,6 +4,7 @@ import BrandItemField, {
   selectedBrandState,
 } from './component/BrandItemField/BrandItemField'
 import { useRecoilValue } from 'recoil'
+import DatePlaceField from './component/DatePlaceField/DatePlaceField'
 
 const ItemCreate = () => {
   const [brandValid, setBrandValid] = useState(true)
@@ -38,6 +39,7 @@ const ItemCreate = () => {
       <button onClick={onCheckValid}>업로드</button>
       <br />
       <br />
+      <DatePlaceField />
       <br />
       <BrandItemField
         brandValid={hasTriedToUpload ? brandValid : true}
