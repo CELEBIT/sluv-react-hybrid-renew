@@ -11,6 +11,8 @@ const ItemDatePickerModal = loadable(() => import('../BottomSheetModal/ItemDateP
 const ItemPlaceInputModal = loadable(() => import('../BottomSheetModal/ItemPlaceInputModal'))
 const ItemBrandSelectModal = loadable(() => import('../BottomSheetModal/ItemBrandSelectModal'))
 const ItemNameInputModal = loadable(() => import('../BottomSheetModal/ItemNameInputModal'))
+const ItemCategoryModal = loadable(() => import('../BottomSheetModal/ItemCategoryModal'))
+
 // 모달 관리 객체
 export const modals = {
   AskRecentPostWritingModal: AskRecentPostWritingModal as FunctionComponent<
@@ -27,6 +29,9 @@ export const modals = {
   >,
   ItemNameInputModal: ItemNameInputModal as FunctionComponent<
     ComponentProps<typeof ItemNameInputModal>
+  >,
+  ItemCategoryModal: ItemCategoryModal as FunctionComponent<
+    ComponentProps<typeof ItemCategoryModal>
   >,
 }
 
