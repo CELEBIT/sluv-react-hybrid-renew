@@ -7,6 +7,7 @@ import { selectedDateState } from '../../pages/item/create/component/DatePlaceFi
 import ButtonLarge from '../ButtonLarge/ButtonLarge'
 import useModals from '../Modals/hooks/useModals'
 import { modals } from '../Modals'
+import Header from '../Header/Header'
 
 const ItemDatePickerModal = () => {
   const [date, setDate] = useRecoilState(selectedDateState)
@@ -25,8 +26,8 @@ const ItemDatePickerModal = () => {
   }
   return (
     <BottomSheetModal>
-      <button onClick={onCancel}>닫기</button>
       <ModalWrapper>
+        <Header title='착용 날짜' isModalHeader={true} modalCloseBtnClick={onCancel} />
         <CustomDatepicker date={date} setDate={setDate} />
         <ButtonWrapper>
           <ButtonLarge text='완료' active={true} onClick={onComplete}></ButtonLarge>
@@ -43,8 +44,9 @@ const ModalWrapper = styled.div`
   flex-direction: column;
   height: 100%;
   width: 100%;
+  padding: 0 1.25rem;
 `
 const ButtonWrapper = styled.div`
   width: 100%;
-  padding: 0.75rem 1.25rem;
+  padding: 0.75rem 0;
 `
