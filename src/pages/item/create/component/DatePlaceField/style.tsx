@@ -17,7 +17,7 @@ export const DateWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-width: 4.75rem;
+  min-width: 5rem;
   height: 2.75rem;
 `
 export const PlaceWrapper = styled.div`
@@ -26,6 +26,7 @@ export const PlaceWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   height: 2.75rem;
+  width: 100%;
 `
 
 export const Line = styled.div`

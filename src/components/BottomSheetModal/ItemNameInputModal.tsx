@@ -29,7 +29,11 @@ const ItemNameInputModal = () => {
   return (
     <BottomSheetModal>
       <ModalWrapper>
-        <Header title='상품명 입력' isModalHeader={true} />
+        <Header
+          title='상품명 입력'
+          isModalHeader={true}
+          modalCloseBtnClick={() => closeModal(modals.ItemCategoryModal)}
+        />
         <div className='ContentWrapper'>
           <DefaultTextfield
             value={inputValue}
