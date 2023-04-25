@@ -22,6 +22,7 @@ export const InputField = styled.input`
   display: inline-flex;
   align-items: center;
   height: 1.25rem;
+  width: 100%;
   font-size: 1.0625rem;
   font-weight: 400;
   font-family: Pretendard;

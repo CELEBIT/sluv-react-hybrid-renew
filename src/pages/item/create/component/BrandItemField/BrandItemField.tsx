@@ -84,6 +84,7 @@ const Brand = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  width: 100%;
   span {
     margin-left: 0.5rem;
   }

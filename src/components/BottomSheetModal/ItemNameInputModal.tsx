@@ -11,7 +11,7 @@ import ButtonLarge from '../ButtonLarge/ButtonLarge'
 
 const ItemNameInputModal = () => {
   const [itemName, setItemName] = useRecoilState(itemNameState)
-  const [inputValue, setInputValue] = useState(itemName)
+  const [inputValue, setInputValue] = useState<string>(itemName)
   const { closeModal } = useModals()
 
   const onSetItemName = (inputValue: string) => {
@@ -34,7 +34,6 @@ const ItemNameInputModal = () => {
           <DefaultTextfield
             value={inputValue}
             setValue={setInputValue}
-            ref={inputRef}
             onEnter={() => onSetItemName(inputValue)}
             placeholder='상품명을 입력해 주세요'
           ></DefaultTextfield>

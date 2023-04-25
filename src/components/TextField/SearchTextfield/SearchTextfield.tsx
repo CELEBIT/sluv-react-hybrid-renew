@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState, useMemo } from 'react'
 import { InputField, InputWrapper } from './styles'
 import { ReactComponent as Delete } from '../../../assets/delete_textfield_24.svg'
 import { ReactComponent as Search } from '../../../assets/search_24.svg'
@@ -6,38 +6,41 @@ import { ReactComponent as Search } from '../../../assets/search_24.svg'
 interface SearchTextFieldProps {
   value: string
   setValue: React.Dispatch<React.SetStateAction<string>>
-  ref?: React.RefObject<HTMLInputElement>
   onEnter: () => void
   placeholder: string
 }
 
-const SearchTextfield = ({ value, setValue, onEnter, placeholder, ref }: SearchTextFieldProps) => {
-  const [isFocused, setIsFocused] = useState(false)
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value)
-    console.log('value:', value)
-  }
+const SearchTextfield = ({ value, setValue, onEnter, placeholder }: SearchTextFieldProps) => {
+  const [isFocused, setIsFocused] = useState<boolean>(false)
+  const handleInputChange = useMemo(
+    () => (event: React.ChangeEvent<HTMLInputElement>) => {
+      setValue(event.target.value)
+    },
+    [setValue, value],
+  )
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      onEnter()
+      if (onEnter) {
+        onEnter()
+      }
     }
   }
-  const onDelete = () => {
+  const onDelete = (event: React.MouseEvent<SVGSVGElement>) => {
+    event.stopPropagation()
     setValue('')
   }
+  const searchRef = useRef<HTMLInputElement>(null)
   useEffect(() => {
-    if (ref && ref.current) {
-      ref.current.focus()
-    }
-  }, [ref])
+    searchRef?.current?.focus()
+  }, [searchRef])
   return (
     <InputWrapper onFocus={() => setIsFocused(true)} onBlur={() => setIsFocused(false)}>
       <Search style={{ marginRight: '0.5rem' }}></Search>
       <InputField
-        ref={ref}
-        autoFocus={true}
         value={value}
         placeholder={placeholder}
+        ref={searchRef}
+        autoFocus={true}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
       ></InputField>
@@ -46,7 +49,6 @@ const SearchTextfield = ({ value, setValue, onEnter, placeholder, ref }: SearchT
           style={{ marginLeft: '0.625rem' }}
           onClick={onDelete}
           onMouseDown={onDelete}
-          onTouchStart={onDelete}
         ></Delete>
       )}
     </InputWrapper>
