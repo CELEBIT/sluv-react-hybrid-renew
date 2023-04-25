@@ -10,8 +10,7 @@ export const HeaderWrap = styled.div`
   padding: 0 1.25rem;
   font-size: 1.0625rem;
   font-weight: ${Common.bold.regular};
-  /* 디자인시스템 colors 수정 후 -> 재수정 */
-  border-bottom: 1px solid red;
+  border-bottom: 1px solid ${Common.colors.GR300};
 `
 
 export const SelectedCtnDiv = styled.div`
