@@ -17,6 +17,9 @@ const ItemCreate = React.lazy(() => import('./pages/item/create'))
 const Closet = React.lazy(() => import('./pages/closet'))
 const User = React.lazy(() => import('./pages/user'))
 
+// 아이템 게시글 작성 관련 페이지
+const TemporaryStorage = React.lazy(() => import('./pages/item/create/temporary-storage'))
+
 const App = () => {
   return (
     <S.Root>
@@ -30,6 +33,7 @@ const App = () => {
             <Route path='/item/create' element={<ItemCreate />} />
             <Route path='/closet' element={<Closet />} />
             <Route path='/user' element={<User />} />
+            <Route path='/item/create/temporary-storage' element={<TemporaryStorage />} />
           </Routes>
         </Suspense>
         <Modals />
