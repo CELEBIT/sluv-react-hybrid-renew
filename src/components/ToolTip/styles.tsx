@@ -1,6 +1,10 @@
 import styled from 'styled-components'
 
-export const TooltipContainer = styled.div<{ left: string; top: string }>`
+export const TooltipContainer = styled.div`
+  position: relative;
+`
+
+export const TooltipWrapper = styled.div<{ left: string; top: string }>`
   position: absolute;
   left: ${(props) => props.left};
   top: ${(props) => props.top};

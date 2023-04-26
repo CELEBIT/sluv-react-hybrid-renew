@@ -1,5 +1,5 @@
 import React from 'react'
-import { Arrow, TooltipContainer } from './styles'
+import { TooltipWrapper, TooltipContainer, Arrow } from './styles'
 
 interface ITooltipProps {
   x: string
@@ -11,14 +11,14 @@ interface ITooltipProps {
 
 const ToolTip = ({ x, y, arrowPosition, text, isVisible }: ITooltipProps) => {
   return (
-    <div style={{ position: 'relative' }}>
+    <TooltipContainer>
       {isVisible && (
-        <TooltipContainer left={x} top={y}>
+        <TooltipWrapper left={x} top={y}>
           <div className='preline'>{text}</div>
           <Arrow arrowPosition={arrowPosition} />
-        </TooltipContainer>
+        </TooltipWrapper>
       )}
-    </div>
+    </TooltipContainer>
   )
 }
 
