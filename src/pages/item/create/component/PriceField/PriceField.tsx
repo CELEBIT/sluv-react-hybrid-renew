@@ -10,6 +10,7 @@ import {
 } from './styles'
 import ButtonSmall from '../../../../../components/ButtonSmall/ButtonSmall'
 import { ReactComponent as Info } from '../../../../../assets/info_18.svg'
+import ToolTip from '../../../../../components/ToolTip/ToolTip'
 
 const MAX_INT = 2147483647
 
@@ -23,6 +24,7 @@ const PriceField = () => {
   const [priceUnknown, setPriceUnknown] = useState<boolean>(false)
   const [displayText, setDisplayText] = useState<string>('')
   const [stringPrice, setStringPrice] = useState('')
+  const [infoVisible, setInfoVisible] = useState<boolean>(false)
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/,/g, '')
@@ -67,13 +69,21 @@ const PriceField = () => {
     setPriceUnknown(!priceUnknown)
     if (itemPrice && itemPrice > 0) {
       setItemPrice(-1)
+      setStringPrice('')
     } else if (itemPrice === -1) {
       setItemPrice(0)
-      // setStringPrice('')
+      setStringPrice('')
     } else {
       setItemPrice(-1)
     }
-    console.log(itemPrice)
+  }
+
+  const onInfoClick = () => {
+    setInfoVisible(true)
+    const intervalId = setInterval(() => {
+      setInfoVisible(false)
+      clearInterval(intervalId)
+    }, 2000)
   }
 
   useEffect(() => {
@@ -137,8 +147,20 @@ const PriceField = () => {
           </>
         )}
       </PriceInputWrapper>
+      {!priceUnknown && (
+        <>
+          <Info onClick={onInfoClick} />
+          <ToolTip
+            x={'-3.0625rem'}
+            y={'-4.375rem'}
+            arrowPosition='bottom-left'
+            text='가격 변동이 있어 
+‘평균 가격대’로 표시돼요'
+            isVisible={infoVisible}
+          />
+        </>
+      )}
 
-      <Info />
       {priceUnknown ? (
         <ButtonSmall text='모르겠어요' icon={true} iconName='check' type='sec' onClick={onClick} />
       ) : (

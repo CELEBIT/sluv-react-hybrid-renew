@@ -17,47 +17,6 @@ export const PriceFieldWrapper = styled.div`
   &:focus-within {
     border: 1px solid ${Common.colors.BK};
   }
-
-  /* 툴팁 기본 스타일 설정 시작 */
-
-  .tooltip {
-    position: relative;
-    display: block;
-    bottom: 50px;
-  }
-
-  .tooltip .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    background-color: ${Common.colors.BK};
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-
-    position: absolute;
-    z-index: 1;
-  }
-
-  .tooltip:hover .tooltiptext {
-    visibility: visible;
-  }
-
-  /* 툴팁 화살표 기본 스타일 설정 시작 */
-
-  .tooltip .tooltip-top {
-    width: 120px;
-    bottom: 150%;
-    left: 50%;
-    margin-left: -60px;
-  }
-
-  .tooltip .tooltip-top::after {
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-color: black transparent transparent transparent;
-  }
 `
 
 export const PriceInputWrapper = styled.div`
