@@ -11,6 +11,7 @@ import {
 import ButtonSmall from '../../../../../components/ButtonSmall/ButtonSmall'
 import { ReactComponent as Info } from '../../../../../assets/info_18.svg'
 import ToolTip from '../../../../../components/ToolTip/ToolTip'
+import { ToolTipVisibility } from '../../../../../components/ToolTip/ToolTip.util'
 
 const MAX_INT = 2147483647
 
@@ -78,14 +79,6 @@ const PriceField = () => {
     }
   }
 
-  const onInfoClick = () => {
-    setInfoVisible(true)
-    const intervalId = setInterval(() => {
-      setInfoVisible(false)
-      clearInterval(intervalId)
-    }, 2000)
-  }
-
   useEffect(() => {
     if (itemPrice) {
       setDisplayText(formatPrice(itemPrice))
@@ -149,7 +142,7 @@ const PriceField = () => {
       </PriceInputWrapper>
       {!priceUnknown && (
         <>
-          <Info onClick={onInfoClick} />
+          <Info onClick={() => ToolTipVisibility(setInfoVisible)} />
           <ToolTip
             x={'-3.0625rem'}
             y={'-4.375rem'}
