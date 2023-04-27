@@ -12,8 +12,7 @@ import ButtonSmall from '../../../../../components/ButtonSmall/ButtonSmall'
 import { ReactComponent as Info } from '../../../../../assets/info_18.svg'
 import ToolTip from '../../../../../components/ToolTip/ToolTip'
 import { ToolTipVisibility } from '../../../../../components/ToolTip/ToolTip.util'
-
-const MAX_INT = 2147483647
+import { MAX_INT, addCommas, formatPrice, sanitizePriceInput } from './price.util'
 
 export const itemPriceState = atom<number | undefined>({
   key: 'itemPriceState',
@@ -28,41 +27,17 @@ const PriceField = () => {
   const [infoVisible, setInfoVisible] = useState<boolean>(false)
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/,/g, '')
+    const value = sanitizePriceInput(e.target.value)
     if (!isNaN(Number(value)) && Number(value) <= MAX_INT) {
-      if (Number(value) > 0) setStringPrice(value.replace(/\B(?=(\d{3})+(?!\d))/g, ','))
+      if (Number(value) > 0) setStringPrice(addCommas(value))
       setItemPrice(Number(value))
     } else if (Number(value) > MAX_INT) {
-      setStringPrice(MAX_INT.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','))
+      setStringPrice(addCommas(MAX_INT.toString()))
       setItemPrice(MAX_INT)
     }
     if (e.target.value === '') {
       setStringPrice('')
       setItemPrice(0)
-    }
-    console.log(itemPrice)
-  }
-  const formatPrice = (price: number | undefined) => {
-    if (!price) {
-      return '-'
-    }
-    if (price < 1000) {
-      return `${price.toLocaleString()}원`
-    } else if (price < 10000) {
-      const amount = Math.floor(price / 1000)
-      return `${amount.toLocaleString()}천원`
-    } else if (price < 100000000) {
-      const amount = Math.floor(price / 10000)
-      return `${amount.toLocaleString()}만원`
-    } else if (price < 1000000000) {
-      const tenMillionWon = Math.floor((price % 100000000) / 10000000)
-      const billionWon = Math.floor(price / 100000000)
-      const tenMillionWonText = tenMillionWon > 0 ? `${tenMillionWon}천만` : ''
-      const billionWonText = `${billionWon}억`
-      return `${billionWonText} ${tenMillionWonText}원`
-    } else {
-      const amount = Math.floor(price / 100000000)
-      return `${amount.toLocaleString()}억원`
     }
   }
 
