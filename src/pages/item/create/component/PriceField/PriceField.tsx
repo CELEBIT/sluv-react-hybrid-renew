@@ -20,11 +20,16 @@ export const itemPriceState = atom<number | undefined>({
   default: 0,
 })
 
+export const stringPriceState = atom<string>({
+  key: 'stringPriceState',
+  default: '',
+})
+
 const PriceField = () => {
   const [itemPrice, setItemPrice] = useRecoilState(itemPriceState)
   const [priceUnknown, setPriceUnknown] = useState<boolean>(false)
   const [displayText, setDisplayText] = useState<string>('')
-  const [stringPrice, setStringPrice] = useState('')
+  const [stringPrice, setStringPrice] = useRecoilState(stringPriceState)
   const [infoVisible, setInfoVisible] = useState<boolean>(false)
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {

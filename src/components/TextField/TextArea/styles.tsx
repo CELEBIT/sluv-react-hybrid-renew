@@ -13,8 +13,8 @@ export const TextAreaWrapper = styled.div`
 
   text-align: left;
 
-  height: 13.75rem;
-  width: 20.9375rem;
+  height: auto;
+  max-width: 20.9375rem;
   border: 1px solid ${Common.colors.GR200};
   border-radius: 0.5rem;
   padding: 1rem;
@@ -39,5 +39,8 @@ export const Textarea = styled.textarea`
   resize: none;
   &::-webkit-scrollbar {
     display: none;
+  }
+  ::placeholder {
+    color: ${Common.colors.GR500};
   }
 `
