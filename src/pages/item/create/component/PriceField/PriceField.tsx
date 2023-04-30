@@ -10,8 +10,10 @@ import {
 } from './styles'
 import ButtonSmall from '../../../../../components/ButtonSmall/ButtonSmall'
 import { ReactComponent as Info } from '../../../../../assets/info_18.svg'
-import { MAX_INT } from '../../../../../config/constant'
+import ToolTip from '../../../../../components/ToolTip/ToolTip'
+import { ToolTipVisibility } from '../../../../../components/ToolTip/ToolTip.util'
 import { addCommas, formatPrice, sanitizePriceInput } from './price.util'
+import { MAX_INT } from '../../../../../config/constant'
 
 export const itemPriceState = atom<number | undefined>({
   key: 'itemPriceState',
@@ -22,6 +24,7 @@ const PriceField = () => {
   const [itemPrice, setItemPrice] = useRecoilState(itemPriceState)
   const [priceUnknown, setPriceUnknown] = useState<boolean>(false)
   const [stringPrice, setStringPrice] = useState('')
+  const [infoVisible, setInfoVisible] = useState<boolean>(false)
   const displayText = useMemo(() => {
     return formatPrice(itemPrice)
   }, [itemPrice])
@@ -45,6 +48,7 @@ const PriceField = () => {
     setPriceUnknown(!priceUnknown)
     if (itemPrice && itemPrice > 0) {
       setItemPrice(-1)
+      setStringPrice('')
     } else if (itemPrice === -1) {
       setItemPrice(0)
       setStringPrice('')
@@ -108,8 +112,21 @@ const PriceField = () => {
           </>
         )}
       </PriceInputWrapper>
+      {!priceUnknown && (
+        <>
+          <Info onClick={() => ToolTipVisibility(setInfoVisible)} />
+          <ToolTip
+            x={'-3.0625rem'}
+            y={'-4.375rem'}
+            arrowPosition='bottom-left'
+            isVisible={infoVisible}
+          >
+            가격 변동이 있어 <br />
+            ‘평균 가격대’로 표시돼요
+          </ToolTip>
+        </>
+      )}
 
-      <Info />
       {priceUnknown ? (
         <ButtonSmall text='모르겠어요' icon={true} iconName='check' type='sec' onClick={onClick} />
       ) : (
