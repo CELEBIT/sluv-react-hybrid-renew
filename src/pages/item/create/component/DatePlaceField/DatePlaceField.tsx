@@ -3,6 +3,7 @@ import { DatePlaceWrapper, DateWrapper, PlaceWrapper, Title, Line, ValueText } f
 import { atom, useRecoilValue } from 'recoil'
 import useModals from '../../../../../components/Modals/hooks/useModals'
 import { modals } from '../../../../../components/Modals'
+import { formatDate, getFormattedTodayDate } from './date.util'
 
 export const selectedDateState = atom<Date | undefined>({
   // API 호출 시 null로 변환해서 전달
@@ -19,8 +20,7 @@ const DatePlaceField = () => {
   const { openModal } = useModals()
 
   // 날짜 형식 UTC 기준 한국시간
-  const today = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000)
-  const formattedTodayDate = today.toISOString().substring(2, 10).replaceAll('-', '. ')
+  const formattedTodayDate = getFormattedTodayDate()
 
   const selectedDate = useRecoilValue(selectedDateState)
   const selectedPlace = useRecoilValue(selectedPlaceState)
@@ -42,7 +42,7 @@ const DatePlaceField = () => {
         {selectedDate ? (
           <ValueText>
             {/* YYYY.MM.DD 형식 */}
-            {selectedDate.toISOString().substring(2, 10).replaceAll('-', '. ')}
+            {formatDate(selectedDate)}
           </ValueText>
         ) : (
           // 날짜 미입력시 현재 날짜로 placeholder 지정
