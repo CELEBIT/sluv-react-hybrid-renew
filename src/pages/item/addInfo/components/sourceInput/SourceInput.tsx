@@ -3,7 +3,6 @@ import { useRecoilState } from 'recoil'
 import styled from '@emotion/styled'
 import { ReactComponent as Delete } from '../../../../../assets/delete_textfield_24.svg'
 import { ReactComponent as Link } from '../../../../../assets/link_add_20.svg'
-// import { InputContainer } from '../../../../../components/TextField/DefaultTextfield/styles'
 import { Common, Pretendard } from '../../../../../components/styles'
 import { infoSourceState } from '../../Atoms/atoms'
 
@@ -29,7 +28,6 @@ const SourceInput = () => {
       <InputField
         value={source}
         placeholder={'출처가 있다면 여기에 남겨주세요'}
-        autoFocus={true}
         onChange={handleInputChange}
       ></InputField>
       {source.length !== 0 && isFocused && (
@@ -45,11 +43,12 @@ const SourceInput = () => {
 
 const InputWrapper = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  background-color: white;
   height: 3.5rem;
   width: 100%;
-  padding: 1rem 1.25rem;
+  padding: 1rem 1.25rem 1rem 1.25rem;
+
   .linkWrapper {
     display: flex;
     align-items: center;
@@ -65,7 +64,7 @@ export const InputField = styled.input`
   display: inline-flex;
   align-items: center;
   height: 1.25rem;
-  width: 100%;
+  width: 90%;
   padding: 0;
   outline: none;
   border: none;
