@@ -1,6 +1,5 @@
-export const MAX_INT = 2147483647
-
 export const formatPrice = (price: number | undefined) => {
+  // ~ 원대 로 format하는 함수입니다
   if (!price) {
     return '-'
   }
