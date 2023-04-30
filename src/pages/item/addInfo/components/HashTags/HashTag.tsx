@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
+import { useRecoilState } from 'recoil'
+import { hashTagState } from '../../Atoms/atoms'
 
 const HashtagInput = () => {
   const [inputValue, setInputValue] = useState('')
-  const [hashtags, setHashtags] = useState<string[]>([])
+  const [hashtags, setHashtags] = useRecoilState(hashTagState)
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value
