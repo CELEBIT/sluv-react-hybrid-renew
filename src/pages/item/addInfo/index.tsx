@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react'
 import Header from '../../../components/Header/Header'
 import { AddInfoContainer, HashTagWrapper, HeaderWrapper, TextFieldWrapper } from './styles'
 import TextArea from '../../../components/TextField/TextArea/TextArea'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import SourceInput from './components/sourceInput/SourceInput'
-import { addInfoTextState } from './Atoms/atoms'
+import { addInfoTextState, hashTagState } from './Atoms/atoms'
 import HashtagInput from './components/HashTags/HashTag'
 
 const AddInfo = () => {
   const [addInfoText, setAddInfoText] = useRecoilState(addInfoTextState)
   //   const infoSource = useRecoilValue(infoSourceState)
+  const setHashTags = useSetRecoilState(hashTagState)
   const [infoValid, setInfoValid] = useState(true)
   const [hasSubmitted, setHasSubmitted] = useState(false)
   const onSubmit = () => {
@@ -20,6 +21,7 @@ const AddInfo = () => {
       setInfoValid(false)
     }
   }
+
   useEffect(() => {
     if (hasSubmitted) {
       if (addInfoText) {
@@ -49,14 +51,10 @@ const AddInfo = () => {
         ></TextArea>
       </TextFieldWrapper>
       <HashTagWrapper>
-        <div className='hashtag'>
-          <span>#hashtag</span>
-        </div>
+        <HashtagInput placeholder='#애착템 #최애템 #추천템' onChange={setHashTags} />
         <div className='hashtag'>#hastag</div>
       </HashTagWrapper>
       <SourceInput></SourceInput>
-      <br />
-      <HashtagInput></HashtagInput>
     </AddInfoContainer>
   )
 }
