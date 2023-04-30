@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useMemo } from 'react'
 import { atom, useRecoilState } from 'recoil'
 import {
   InputFieldWrapper,
@@ -12,7 +12,8 @@ import ButtonSmall from '../../../../../components/ButtonSmall/ButtonSmall'
 import { ReactComponent as Info } from '../../../../../assets/info_18.svg'
 import ToolTip from '../../../../../components/ToolTip/ToolTip'
 import { ToolTipVisibility } from '../../../../../components/ToolTip/ToolTip.util'
-import { MAX_INT, addCommas, formatPrice, sanitizePriceInput } from './price.util'
+import { addCommas, formatPrice, sanitizePriceInput } from './price.util'
+import { MAX_INT } from '../../../../../config/constant'
 
 export const itemPriceState = atom<number | undefined>({
   key: 'itemPriceState',
@@ -27,16 +28,18 @@ export const stringPriceState = atom<string>({
 const PriceField = () => {
   const [itemPrice, setItemPrice] = useRecoilState(itemPriceState)
   const [priceUnknown, setPriceUnknown] = useState<boolean>(false)
-  const [displayText, setDisplayText] = useState<string>('')
   const [stringPrice, setStringPrice] = useRecoilState(stringPriceState)
   const [infoVisible, setInfoVisible] = useState<boolean>(false)
+  const displayText = useMemo(() => {
+    return formatPrice(itemPrice)
+  }, [itemPrice])
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = sanitizePriceInput(e.target.value)
-    if (!isNaN(Number(value)) && Number(value) <= MAX_INT) {
-      if (Number(value) > 0) setStringPrice(addCommas(value))
-      setItemPrice(Number(value))
-    } else if (Number(value) > MAX_INT) {
+    const value = Number(sanitizePriceInput(e.target.value))
+    if (!isNaN(value) && value <= MAX_INT) {
+      if (value > 0) setStringPrice(addCommas(sanitizePriceInput(e.target.value)))
+      setItemPrice(value)
+    } else if (value > MAX_INT) {
       setStringPrice(addCommas(MAX_INT.toString()))
       setItemPrice(MAX_INT)
     }
@@ -58,12 +61,6 @@ const PriceField = () => {
       setItemPrice(-1)
     }
   }
-
-  useEffect(() => {
-    if (itemPrice) {
-      setDisplayText(formatPrice(itemPrice))
-    }
-  }, [itemPrice])
 
   return (
     <PriceFieldWrapper>
@@ -91,7 +88,7 @@ const PriceField = () => {
             </>
           )}
         </InputFieldWrapper>
-        {itemPrice === undefined || itemPrice === 0 ? (
+        {!itemPrice ? (
           <LabelWrapper>
             <span className='valueText'>~ 원&nbsp;</span>
             <span className='labelText'>대로 표시돼요</span>
@@ -127,10 +124,11 @@ const PriceField = () => {
             x={'-3.0625rem'}
             y={'-4.375rem'}
             arrowPosition='bottom-left'
-            text='가격 변동이 있어 
-‘평균 가격대’로 표시돼요'
             isVisible={infoVisible}
-          />
+          >
+            가격 변동이 있어 <br />
+            ‘평균 가격대’로 표시돼요
+          </ToolTip>
         </>
       )}
 

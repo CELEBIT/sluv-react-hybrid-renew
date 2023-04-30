@@ -13,19 +13,13 @@ export const TooltipWrapper = styled.div<{ left: string; top: string }>`
   color: white;
   font-family: 'Pretendard';
   font-weight: 200;
-  font-size: 13px;
+  font-size: 0.8125rem;
   line-height: 1.3;
-  padding: 8px 12px;
-  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
   z-index: 1;
-  min-width: 150px;
-  max-width: max-content;
+  min-width: 9.375rem;
   max-height: 3.25rem;
-  overflow-wrap: break-word;
-
-  .preline {
-    white-space: pre-line;
-  }
 `
 
 export const Arrow = styled.div<{

@@ -5,16 +5,16 @@ interface ITooltipProps {
   x: string
   y: string
   arrowPosition: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
-  text: string
   isVisible: boolean
+  children?: any
 }
 
-const ToolTip = ({ x, y, arrowPosition, text, isVisible }: ITooltipProps) => {
+const ToolTip = ({ x, y, arrowPosition, isVisible, children }: ITooltipProps) => {
   return (
     <TooltipContainer>
       {isVisible && (
         <TooltipWrapper left={x} top={y}>
-          <div className='preline'>{text}</div>
+          <span>{children}</span>
           <Arrow arrowPosition={arrowPosition} />
         </TooltipWrapper>
       )}
