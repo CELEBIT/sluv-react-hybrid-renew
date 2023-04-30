@@ -5,6 +5,7 @@ import BrandItemField, {
 } from './component/BrandItemField/BrandItemField'
 import { useRecoilValue } from 'recoil'
 import DatePlaceField from './component/DatePlaceField/DatePlaceField'
+import PriceField, { itemPriceState } from './component/PriceField/PriceField'
 
 const ItemCreate = () => {
   const [brandValid, setBrandValid] = useState(true)
@@ -12,7 +13,7 @@ const ItemCreate = () => {
   const brand = useRecoilValue(selectedBrandState)
   const itemName = useRecoilValue(itemNameState)
   const [hasTriedToUpload, setHasTriedToUpload] = useState(false)
-
+  const itemPrice = useRecoilValue(itemPriceState)
   const onCheckValid = () => {
     setHasTriedToUpload(true)
     if (!brand) {
@@ -31,6 +32,9 @@ const ItemCreate = () => {
       alert('success')
     }
   }
+  const onClick = () => {
+    alert(itemPrice)
+  }
 
   return (
     <div>
@@ -39,12 +43,15 @@ const ItemCreate = () => {
       <button onClick={onCheckValid}>업로드</button>
       <br />
       <br />
+      <button onClick={onClick}>아이템 가격 확인</button>
       <DatePlaceField />
       <br />
       <BrandItemField
         brandValid={hasTriedToUpload ? brandValid : true}
         itemNameValid={hasTriedToUpload ? itemValid : true}
       ></BrandItemField>
+      <br />
+      <PriceField></PriceField>
     </div>
   )
 }
