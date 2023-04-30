@@ -119,10 +119,11 @@ const PriceField = () => {
             x={'-3.0625rem'}
             y={'-4.375rem'}
             arrowPosition='bottom-left'
-            text='가격 변동이 있어 
-‘평균 가격대’로 표시돼요'
             isVisible={infoVisible}
-          />
+          >
+            가격 변동이 있어 <br />
+            ‘평균 가격대’로 표시돼요
+          </ToolTip>
         </>
       )}
 
