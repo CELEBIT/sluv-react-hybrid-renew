@@ -1,20 +1,18 @@
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import { useRecoilState } from 'recoil'
 import styled from '@emotion/styled'
 import { ReactComponent as Delete } from '../../../../../assets/delete_textfield_24.svg'
 import { ReactComponent as Link } from '../../../../../assets/link_add_20.svg'
 import { Common, Pretendard } from '../../../../../components/styles'
-import { infoSourceState } from '../../Atoms/atoms'
+import { infoSourceState } from '../../../../../config/atomKeys'
 
 const SourceInput = () => {
   const [source, setSource] = useRecoilState(infoSourceState)
   const [isFocused, setIsFocused] = useState<boolean>(false)
-  const handleInputChange = useMemo(
-    () => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setSource(event.target.value)
-    },
-    [setSource, source],
-  )
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSource(event.target.value)
+  }
 
   const onDelete = (event: React.MouseEvent<SVGSVGElement>) => {
     event.stopPropagation()
