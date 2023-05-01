@@ -4,7 +4,7 @@ import { AddInfoContainer, HashTagWrapper, HeaderWrapper, TextFieldWrapper } fro
 import TextArea from '../../../components/TextField/TextArea/TextArea'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import SourceInput from './components/sourceInput/SourceInput'
-import { addInfoTextState, hashTagState } from './Atoms/atoms'
+import { addInfoTextState, hashTagState } from '../../../config/atomKeys'
 import HashtagInput from './components/HashTags/HashTag'
 
 const AddInfo = () => {

@@ -3,7 +3,7 @@ import { HashTagInput } from './styles'
 import debounce from 'lodash/debounce'
 import { parseHashTags } from './Hashtag.util'
 import { useRecoilValue } from 'recoil'
-import { hashTagState } from '../../Atoms/atoms'
+import { hashTagState } from '../../../../../config/atomKeys'
 
 interface HashtagInputProps {
   placeholder: string

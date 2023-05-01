@@ -16,7 +16,7 @@ const ItemCreate = () => {
   const [hasTriedToUpload, setHasTriedToUpload] = useState(false)
   const itemPrice = useRecoilValue(itemPriceState)
 
-  const Navigate = useNavigate()
+  const navigate = useNavigate()
   const onCheckValid = () => {
     setHasTriedToUpload(true)
     if (!brand) {
@@ -45,7 +45,7 @@ const ItemCreate = () => {
       <br />
       <button onClick={onCheckValid}>업로드</button>
       <br />
-      <button onClick={() => Navigate('/item/create/addInfo')}>추가 정보</button>
+      <button onClick={() => navigate('/item/create/addInfo')}>추가 정보</button>
       <button onClick={onClick}>아이템 가격 확인</button>
       <DatePlaceField />
       <br />
