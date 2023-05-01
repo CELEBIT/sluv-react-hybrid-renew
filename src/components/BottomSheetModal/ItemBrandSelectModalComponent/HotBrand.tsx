@@ -6,8 +6,8 @@ import useModals from '../../Modals/hooks/useModals'
 import { modals } from '../../Modals'
 import Chip from '../../Chip/Chip'
 import { ChipWrapper } from '../ItemBrandSelectModal'
-import {} from '../../../pages/item/create/components/BrandItemField/BrandItemField'
-import { Brand, selectedBrandState } from '../../../config/atomKeys'
+import { Brand } from '../../../pages/item/create/components/BrandItemField/BrandItemField'
+import { selectedBrandState } from '../../../config/atomKeys'
 
 const HotBrand = () => {
   const brandList = [

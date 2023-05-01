@@ -1,4 +1,5 @@
 import { atom } from 'recoil'
+import { Brand } from '../pages/item/create/components/BrandItemField/BrandItemField'
 
 // 날짜, 장소 Atoms //
 export const selectedDateState = atom<Date | undefined>({
@@ -13,12 +14,6 @@ export const selectedPlaceState = atom<string>({
 })
 
 // 브랜드, 제품명 Atoms //
-export interface Brand {
-  id?: number
-  brandKr?: string
-  brandEn?: string
-  brandImgUrl?: string
-}
 
 export const selectedBrandState = atom<Brand>({
   key: 'selectedBrand',
