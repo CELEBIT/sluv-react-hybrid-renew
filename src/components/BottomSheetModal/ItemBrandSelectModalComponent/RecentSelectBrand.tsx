@@ -6,7 +6,7 @@ import { ChipWrapper } from '../ItemBrandSelectModal'
 import {
   Brand,
   selectedBrandState,
-} from '../../../pages/item/create/components/BrandItemField/BrandItemField'
+} from '../../../pages/item/create/component/BrandItemField/BrandItemField'
 import { useSetRecoilState } from 'recoil'
 import useModals from '../../Modals/hooks/useModals'
 import { modals } from '../../Modals'

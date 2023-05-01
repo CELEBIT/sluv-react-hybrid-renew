@@ -7,7 +7,7 @@ import { modals } from '../../Modals'
 import {
   Brand,
   selectedBrandState,
-} from '../../../pages/item/create/components/BrandItemField/BrandItemField'
+} from '../../../pages/item/create/component/BrandItemField/BrandItemField'
 import BrandLogo from '../../BrandLogo/BrandLogo'
 
 const BrandList = () => {
