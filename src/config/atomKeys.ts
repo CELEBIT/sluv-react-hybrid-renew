@@ -14,7 +14,6 @@ export const selectedPlaceState = atom<string>({
 })
 
 // 브랜드, 제품명 Atoms //
-
 export const selectedBrandState = atom<Brand>({
   key: 'selectedBrand',
   default: {},
@@ -25,7 +24,7 @@ export const itemNameState = atom<string>({
   default: '',
 })
 
-// 아이템 가격 Atoms
+// 아이템 가격 Atoms //
 export const itemPriceState = atom<number | undefined>({
   key: 'itemPriceState',
   default: 0,
