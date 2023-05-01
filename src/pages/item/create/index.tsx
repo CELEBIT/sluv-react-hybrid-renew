@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
-import BrandItemField, {
-  itemNameState,
-  selectedBrandState,
-} from './components/BrandItemField/BrandItemField'
+import BrandItemField from './components/BrandItemField/BrandItemField'
 import { useRecoilValue } from 'recoil'
 import DatePlaceField from './components/DatePlaceField/DatePlaceField'
-import PriceField, { itemPriceState } from './components/PriceField/PriceField'
+import PriceField from './components/PriceField/PriceField'
 import { useNavigate } from 'react-router-dom'
+import { itemNameState, itemPriceState, selectedBrandState } from '../../../config/atomKeys'
 
 const ItemCreate = () => {
   const [brandValid, setBrandValid] = useState(true)

@@ -3,13 +3,11 @@ import React from 'react'
 import { Common, Pretendard } from '../../styles'
 import Chip from '../../Chip/Chip'
 import { ChipWrapper } from '../ItemBrandSelectModal'
-import {
-  Brand,
-  selectedBrandState,
-} from '../../../pages/item/create/components/BrandItemField/BrandItemField'
+import {} from '../../../pages/item/create/components/BrandItemField/BrandItemField'
 import { useSetRecoilState } from 'recoil'
 import useModals from '../../Modals/hooks/useModals'
 import { modals } from '../../Modals'
+import { Brand, selectedBrandState } from '../../../config/atomKeys'
 
 const RecentSelectBrand = () => {
   const brandList = [
