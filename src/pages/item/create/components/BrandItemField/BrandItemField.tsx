@@ -12,6 +12,12 @@ interface BrandItemFieldProps {
   brandValid: boolean
   itemNameValid: boolean
 }
+export interface Brand {
+  id?: number
+  brandKr?: string
+  brandEn?: string
+  brandImgUrl?: string
+}
 
 const BrandItemField = ({ brandValid, itemNameValid }: BrandItemFieldProps) => {
   const { openModal } = useModals()
