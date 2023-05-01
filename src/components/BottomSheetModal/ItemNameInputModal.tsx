@@ -2,12 +2,12 @@ import React, { useEffect, useRef, useState } from 'react'
 import styled from '@emotion/styled'
 import useModals from '../Modals/hooks/useModals'
 import { modals } from '../Modals'
-import { itemNameState } from '../../pages/item/create/components/BrandItemField/BrandItemField'
 import { useRecoilState } from 'recoil'
 import BottomSheetModal from '.'
 import Header from '../Header/Header'
 import DefaultTextfield from '../TextField/DefaultTextfield/DefaultTextfield'
 import ButtonLarge from '../ButtonLarge/ButtonLarge'
+import { itemNameState } from '../../config/atomKeys'
 
 const ItemNameInputModal = () => {
   const [itemName, setItemName] = useRecoilState(itemNameState)

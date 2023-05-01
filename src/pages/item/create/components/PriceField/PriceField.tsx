@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react'
-import { atom, useRecoilState } from 'recoil'
+import { useRecoilState } from 'recoil'
 import {
   InputFieldWrapper,
   LabelWrapper,
@@ -14,37 +14,31 @@ import ToolTip from '../../../../../components/ToolTip/ToolTip'
 import { ToolTipVisibility } from '../../../../../components/ToolTip/ToolTip.util'
 import { addCommas, formatPrice, sanitizePriceInput } from './price.util'
 import { MAX_INT } from '../../../../../config/constant'
-
-export const itemPriceState = atom<number | undefined>({
-  key: 'itemPriceState',
-  default: 0,
-})
-
-export const stringPriceState = atom<string>({
-  key: 'stringPriceState',
-  default: '',
-})
+import { itemPriceState } from '../../../../../config/atomKeys'
 
 const PriceField = () => {
   const [itemPrice, setItemPrice] = useRecoilState(itemPriceState)
   const [priceUnknown, setPriceUnknown] = useState<boolean>(false)
-  const [stringPrice, setStringPrice] = useRecoilState(stringPriceState)
   const [infoVisible, setInfoVisible] = useState<boolean>(false)
   const displayText = useMemo(() => {
     return formatPrice(itemPrice)
   }, [itemPrice])
 
+  const stringPrice = useMemo(() => {
+    if (itemPrice === 0 || typeof itemPrice === 'undefined') {
+      return undefined
+    }
+    return addCommas(itemPrice.toString())
+  }, [itemPrice])
+
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(sanitizePriceInput(e.target.value))
     if (!isNaN(value) && value <= MAX_INT) {
-      if (value > 0) setStringPrice(addCommas(sanitizePriceInput(e.target.value)))
-      setItemPrice(value)
+      if (value > 0) setItemPrice(value)
     } else if (value > MAX_INT) {
-      setStringPrice(addCommas(MAX_INT.toString()))
       setItemPrice(MAX_INT)
     }
     if (e.target.value === '') {
-      setStringPrice('')
       setItemPrice(0)
     }
   }
@@ -53,10 +47,8 @@ const PriceField = () => {
     setPriceUnknown(!priceUnknown)
     if (itemPrice && itemPrice > 0) {
       setItemPrice(-1)
-      setStringPrice('')
     } else if (itemPrice === -1) {
       setItemPrice(0)
-      setStringPrice('')
     } else {
       setItemPrice(-1)
     }

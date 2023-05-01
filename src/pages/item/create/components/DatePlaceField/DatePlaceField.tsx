@@ -1,20 +1,10 @@
 import React from 'react'
 import { DatePlaceWrapper, DateWrapper, PlaceWrapper, Title, Line, ValueText } from './style'
-import { atom, useRecoilValue } from 'recoil'
+import { useRecoilValue } from 'recoil'
 import useModals from '../../../../../components/Modals/hooks/useModals'
 import { modals } from '../../../../../components/Modals'
 import { formatDate, getFormattedTodayDate } from './date.util'
-
-export const selectedDateState = atom<Date | undefined>({
-  // API 호출 시 null로 변환해서 전달
-  key: 'selectedDateState',
-  default: undefined,
-})
-
-export const selectedPlaceState = atom<string>({
-  key: 'selectedPlaceState',
-  default: '',
-})
+import { selectedDateState, selectedPlaceState } from '../../../../../config/atomKeys'
 
 const DatePlaceField = () => {
   const { openModal } = useModals()
