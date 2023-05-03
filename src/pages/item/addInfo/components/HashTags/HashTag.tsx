@@ -2,13 +2,18 @@ import React, { useEffect, useRef, useState } from 'react'
 import { HashTagInput } from './styles'
 import debounce from 'lodash/debounce'
 import { parseHashTags } from './Hashtag.util'
-import { useRecoilValue } from 'recoil'
-import { hashTagState } from '../../../../../config/atomKeys'
+import { atom, useRecoilValue } from 'recoil'
+import { atomKeys } from '../../../../../config/atomKeys'
 
 interface HashtagInputProps {
   placeholder: string
   onChange: (hashtags: string[]) => void
 }
+
+export const hashTagState = atom<Array<string>>({
+  key: atomKeys.hashTagState,
+  default: [],
+})
 
 const HashtagInput: React.FC<HashtagInputProps> = ({ placeholder, onChange }) => {
   const hashTag = useRecoilValue(hashTagState)
