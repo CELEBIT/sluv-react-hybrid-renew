@@ -19,6 +19,7 @@ const User = React.lazy(() => import('./pages/user'))
 
 // 아이템 업로드 상세 페이지
 const AddInfo = React.lazy(() => import('./pages/item/addInfo'))
+const AddLink = React.lazy(() => import('./pages/item/addLink'))
 
 const App = () => {
   return (
@@ -32,6 +33,7 @@ const App = () => {
             <Route path='/community' element={<Community />} />
             <Route path='/item/create' element={<ItemCreate />} />
             <Route path='/item/create/addinfo' element={<AddInfo />} />
+            <Route path='/item/create/addlink' element={<AddLink />} />
             <Route path='/closet' element={<Closet />} />
             <Route path='/user' element={<User />} />
           </Routes>
