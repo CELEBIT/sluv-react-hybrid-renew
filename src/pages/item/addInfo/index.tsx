@@ -2,10 +2,15 @@ import React, { useEffect, useState } from 'react'
 import Header from '../../../components/Header/Header'
 import { AddInfoContainer, HashTagWrapper, HeaderWrapper, TextFieldWrapper } from './styles'
 import TextArea from '../../../components/TextField/TextArea/TextArea'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { atom, useRecoilState, useSetRecoilState } from 'recoil'
+import { atomKeys } from '../../../config/atomKeys'
 import SourceInput from './components/sourceInput/SourceInput'
-import { addInfoTextState, hashTagState } from '../../../config/atomKeys'
-import HashtagInput from './components/HashTags/HashTag'
+import HashtagInput, { hashTagState } from './components/HashTags/HashTag'
+
+export const addInfoTextState = atom<string>({
+  key: atomKeys.addInfoTextState,
+  default: '',
+})
 
 const AddInfo = () => {
   const [addInfoText, setAddInfoText] = useRecoilState(addInfoTextState)

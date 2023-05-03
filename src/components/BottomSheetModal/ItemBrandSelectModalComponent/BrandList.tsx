@@ -4,9 +4,11 @@ import React from 'react'
 import { useSetRecoilState } from 'recoil'
 import useModals from '../../Modals/hooks/useModals'
 import { modals } from '../../Modals'
-import { Brand } from '../../../pages/item/create/components/BrandItemField/BrandItemField'
+import {
+  Brand,
+  selectedBrandState,
+} from '../../../pages/item/create/components/BrandItemField/BrandItemField'
 import BrandLogo from '../../BrandLogo/BrandLogo'
-import { selectedBrandState } from '../../../config/atomKeys'
 
 const BrandList = () => {
   const brandList = [

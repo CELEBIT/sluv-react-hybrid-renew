@@ -7,7 +7,7 @@ import BottomSheetModal from '.'
 import Header from '../Header/Header'
 import DefaultTextfield from '../TextField/DefaultTextfield/DefaultTextfield'
 import ButtonLarge from '../ButtonLarge/ButtonLarge'
-import { itemNameState } from '../../config/atomKeys'
+import { itemNameState } from '../../pages/item/create/components/BrandItemField/BrandItemField'
 
 const ItemNameInputModal = () => {
   const [itemName, setItemName] = useRecoilState(itemNameState)
