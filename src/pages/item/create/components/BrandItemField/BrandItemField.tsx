@@ -1,13 +1,12 @@
 import React from 'react'
-import { useRecoilValue } from 'recoil'
+import { atom, useRecoilValue } from 'recoil'
 import DisplayField from '../../../../../components/TextField/DisplayField/DisplayField'
 import { Common } from '../../../../../components/styles'
 import styled from '@emotion/styled'
 import useModals from '../../../../../components/Modals/hooks/useModals'
 import { modals } from '../../../../../components/Modals'
 import BrandLogo from '../../../../../components/BrandLogo/BrandLogo'
-import { itemNameState, selectedBrandState } from '../../../../../config/atomKeys'
-
+import { atomKeys } from '../../../../../config/atomKeys'
 interface BrandItemFieldProps {
   brandValid: boolean
   itemNameValid: boolean
@@ -18,6 +17,17 @@ export interface Brand {
   brandEn?: string
   brandImgUrl?: string
 }
+
+// 브랜드, 제품명 Atoms //
+export const selectedBrandState = atom<Brand>({
+  key: atomKeys.selectedBrandState,
+  default: {},
+})
+
+export const itemNameState = atom<string>({
+  key: atomKeys.itemNameState,
+  default: '',
+})
 
 const BrandItemField = ({ brandValid, itemNameValid }: BrandItemFieldProps) => {
   const { openModal } = useModals()

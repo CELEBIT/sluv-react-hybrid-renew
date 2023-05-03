@@ -1,10 +1,15 @@
 import React, { useState } from 'react'
-import { useRecoilState } from 'recoil'
+import { atom, useRecoilState } from 'recoil'
 import styled from '@emotion/styled'
 import { ReactComponent as Delete } from '../../../../../assets/delete_textfield_24.svg'
 import { ReactComponent as Link } from '../../../../../assets/link_add_20.svg'
 import { Common, Pretendard } from '../../../../../components/styles'
-import { infoSourceState } from '../../../../../config/atomKeys'
+import { atomKeys } from '../../../../../config/atomKeys'
+
+export const infoSourceState = atom<string>({
+  key: atomKeys.infoSourceState,
+  default: '',
+})
 
 const SourceInput = () => {
   const [source, setSource] = useRecoilState(infoSourceState)
