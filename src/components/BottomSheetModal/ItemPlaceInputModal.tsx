@@ -9,7 +9,7 @@ import DefaultTextfield from '../TextField/DefaultTextfield/DefaultTextfield'
 import Chip from '../Chip/Chip'
 import { Common, Pretendard } from '../styles'
 import Header from '../Header/Header'
-import { selectedPlaceState } from '../../config/atomKeys'
+import { selectedPlaceState } from '../../pages/item/create/components/DatePlaceField'
 
 const ItemPlaceInputModal = () => {
   const [place, setPlace] = useRecoilState(selectedPlaceState)

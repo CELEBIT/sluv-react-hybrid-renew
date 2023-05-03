@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react'
-import { useRecoilState } from 'recoil'
+import { atom, useRecoilState } from 'recoil'
 import {
   InputFieldWrapper,
   LabelWrapper,
@@ -14,7 +14,13 @@ import ToolTip from '../../../../../components/ToolTip/ToolTip'
 import { ToolTipVisibility } from '../../../../../components/ToolTip/ToolTip.util'
 import { addCommas, formatPrice, sanitizePriceInput } from './price.util'
 import { MAX_INT } from '../../../../../config/constant'
-import { itemPriceState } from '../../../../../config/atomKeys'
+import { atomKeys } from '../../../../../config/atomKeys'
+
+// 아이템 가격 Atoms //
+export const itemPriceState = atom<number | undefined>({
+  key: atomKeys.itemPriceState,
+  default: 0,
+})
 
 const PriceField = () => {
   const [itemPrice, setItemPrice] = useRecoilState(itemPriceState)

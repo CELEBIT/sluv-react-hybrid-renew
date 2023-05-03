@@ -7,7 +7,7 @@ import ButtonLarge from '../ButtonLarge/ButtonLarge'
 import useModals from '../Modals/hooks/useModals'
 import { modals } from '../Modals'
 import Header from '../Header/Header'
-import { selectedDateState } from '../../config/atomKeys'
+import { selectedDateState } from '../../pages/item/create/components/DatePlaceField'
 
 const ItemDatePickerModal = () => {
   const [date, setDate] = useRecoilState(selectedDateState)
