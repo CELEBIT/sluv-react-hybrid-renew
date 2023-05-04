@@ -3,11 +3,11 @@ import BottomSheetModal from '.'
 import styled from '@emotion/styled'
 import CustomDatepicker from '../CustomDatePicker/CustomDatePicker'
 import { useRecoilState } from 'recoil'
-import { selectedDateState } from '../../pages/item/create/component/DatePlaceField'
 import ButtonLarge from '../ButtonLarge/ButtonLarge'
 import useModals from '../Modals/hooks/useModals'
 import { modals } from '../Modals'
 import Header from '../Header/Header'
+import { selectedDateState } from '../../pages/item/create/components/DatePlaceField'
 
 const ItemDatePickerModal = () => {
   const [date, setDate] = useRecoilState(selectedDateState)
