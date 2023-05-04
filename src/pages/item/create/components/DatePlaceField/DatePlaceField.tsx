@@ -4,15 +4,17 @@ import { atom, useRecoilValue } from 'recoil'
 import useModals from '../../../../../components/Modals/hooks/useModals'
 import { modals } from '../../../../../components/Modals'
 import { formatDate, getFormattedTodayDate } from './date.util'
+import { atomKeys } from '../../../../../config/atomKeys'
 
+// 날짜, 장소 Atoms //
 export const selectedDateState = atom<Date | undefined>({
   // API 호출 시 null로 변환해서 전달
-  key: 'selectedDateState',
+  key: atomKeys.selectedDateState,
   default: undefined,
 })
 
 export const selectedPlaceState = atom<string>({
-  key: 'selectedPlaceState',
+  key: atomKeys.selectedPlaceState,
   default: '',
 })
 

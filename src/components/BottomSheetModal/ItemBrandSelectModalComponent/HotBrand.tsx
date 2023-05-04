@@ -9,7 +9,7 @@ import { ChipWrapper } from '../ItemBrandSelectModal'
 import {
   Brand,
   selectedBrandState,
-} from '../../../pages/item/create/component/BrandItemField/BrandItemField'
+} from '../../../pages/item/create/components/BrandItemField/BrandItemField'
 
 const HotBrand = () => {
   const brandList = [

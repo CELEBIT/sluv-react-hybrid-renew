@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import BrandItemField, {
   itemNameState,
   selectedBrandState,
-} from './component/BrandItemField/BrandItemField'
+} from './components/BrandItemField/BrandItemField'
 import { useRecoilValue } from 'recoil'
-import DatePlaceField from './component/DatePlaceField/DatePlaceField'
-import PriceField, { itemPriceState } from './component/PriceField/PriceField'
+import DatePlaceField from './components/DatePlaceField/DatePlaceField'
+import PriceField, { itemPriceState } from './components/PriceField/PriceField'
+import { useNavigate } from 'react-router-dom'
 
 const ItemCreate = () => {
   const [brandValid, setBrandValid] = useState(true)
@@ -14,6 +15,8 @@ const ItemCreate = () => {
   const itemName = useRecoilValue(itemNameState)
   const [hasTriedToUpload, setHasTriedToUpload] = useState(false)
   const itemPrice = useRecoilValue(itemPriceState)
+
+  const navigate = useNavigate()
   const onCheckValid = () => {
     setHasTriedToUpload(true)
     if (!brand) {
@@ -42,7 +45,7 @@ const ItemCreate = () => {
       <br />
       <button onClick={onCheckValid}>업로드</button>
       <br />
-      <br />
+      <button onClick={() => navigate('/item/create/addInfo')}>추가 정보</button>
       <button onClick={onClick}>아이템 가격 확인</button>
       <DatePlaceField />
       <br />

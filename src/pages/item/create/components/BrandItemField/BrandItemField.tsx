@@ -6,7 +6,11 @@ import styled from '@emotion/styled'
 import useModals from '../../../../../components/Modals/hooks/useModals'
 import { modals } from '../../../../../components/Modals'
 import BrandLogo from '../../../../../components/BrandLogo/BrandLogo'
-
+import { atomKeys } from '../../../../../config/atomKeys'
+interface BrandItemFieldProps {
+  brandValid: boolean
+  itemNameValid: boolean
+}
 export interface Brand {
   id?: number
   brandKr?: string
@@ -14,20 +18,16 @@ export interface Brand {
   brandImgUrl?: string
 }
 
+// 브랜드, 제품명 Atoms //
 export const selectedBrandState = atom<Brand>({
-  key: 'selectedBrand',
+  key: atomKeys.selectedBrandState,
   default: {},
 })
 
 export const itemNameState = atom<string>({
-  key: 'itemName',
+  key: atomKeys.itemNameState,
   default: '',
 })
-
-interface BrandItemFieldProps {
-  brandValid: boolean
-  itemNameValid: boolean
-}
 
 const BrandItemField = ({ brandValid, itemNameValid }: BrandItemFieldProps) => {
   const { openModal } = useModals()
