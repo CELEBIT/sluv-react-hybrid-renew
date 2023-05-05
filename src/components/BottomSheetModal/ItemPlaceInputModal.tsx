@@ -101,7 +101,7 @@ export const ChipWrapper = styled.div`
     display: none;
   }
 `
-const ButtonWrapper = styled.div`
+export const ButtonWrapper = styled.div`
   width: 100%;
   padding: 0.75rem 1.25rem;
 `
