@@ -16,31 +16,31 @@ const Itzy = {
   celebNameKr: '있지',
   subCelebList: [
     {
-      id: 0,
+      id: 1,
       celebNameKr: '예지',
     },
     {
-      id: 1,
+      id: 2,
       celebNameKr: '리아',
     },
     {
-      id: 2,
+      id: 3,
       celebNameKr: '류진',
     },
     {
-      id: 3,
+      id: 4,
       celebNameKr: '채령',
     },
     {
-      id: 4,
+      id: 5,
       celebNameKr: '유나',
     },
     {
-      id: 5,
+      id: 6,
       celebNameKr: '레미콘',
     },
     {
-      id: 6,
+      id: 7,
       celebNameKr: '유진',
     },
   ],
@@ -84,6 +84,9 @@ const ItemCreate = () => {
     openModal(modals.ItemCelebSelectModal)
     setSelectedGroup(group)
   }
+  const onSearchSelect = () => {
+    openModal(modals.ItemCelebSearchModal)
+  }
 
   return (
     <div>
@@ -91,7 +94,9 @@ const ItemCreate = () => {
       <br />
       <button onClick={onCheckValid}>업로드</button>
       <br />
-      <button onClick={() => onGroupSelect(Itzy)}>예지</button>
+      <button onClick={() => onGroupSelect(Itzy)}>있지</button>
+      <br />
+      <button onClick={() => onSearchSelect()}>검색</button>
       <br />
       <button onClick={() => navigate('/item/create/addInfo')}>추가 정보</button>
       <br />

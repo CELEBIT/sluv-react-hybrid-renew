@@ -3,9 +3,9 @@ import { atom } from 'recoil'
 import { atomKeys } from '../../config/atomKeys'
 
 export interface CelebData {
-  id: number
-  celebNameKr: string
-  subCelebList: {
+  id?: number
+  celebNameKr?: string
+  subCelebList?: {
     id: number
     celebNameKr: string
   }[]
@@ -20,9 +20,9 @@ export const selectedGroupState = atom<CelebData>({
   default: { id: 0, celebNameKr: '', subCelebList: [] },
 })
 
-export const selectedCelebState = atom<Celeb>({
+export const selectedCelebState = atom<number | undefined>({
   key: atomKeys.selectedCelebState,
-  default: { id: 0, celebNameKr: '' },
+  default: 0,
 })
 const SelectCeleb = () => {
   return <div>SelectCeleb</div>

@@ -20,7 +20,7 @@ const ItemCelebSelectModal = () => {
   const [selectedCeleb, setSelectedCeleb] = useRecoilState(selectedCelebState)
   const { closeModal } = useModals()
   const onClose = () => {
-    setSelectedCeleb({ id: 0, celebNameKr: '' })
+    setSelectedCeleb(0)
     closeModal(modals.ItemCategoryModal)
   }
   const onComplete = () => {
@@ -36,26 +36,23 @@ const ItemCelebSelectModal = () => {
         <SelectWrapper>
           <span className='GroupName'>{selectedGroup.celebNameKr}</span>
           <MemberWrapper>
-            {selectedGroup.subCelebList.map((celeb) => {
-              return (
-                <ButtonMedium
-                  key={celeb.id}
-                  text={celeb.celebNameKr}
-                  type='pri'
-                  active={selectedCeleb === celeb}
-                  onClick={() => setSelectedCeleb(celeb)}
-                ></ButtonMedium>
-              )
-            })}
+            {selectedGroup.subCelebList &&
+              selectedGroup.subCelebList.map((celeb) => {
+                return (
+                  <ButtonMedium
+                    key={celeb.id}
+                    text={celeb.celebNameKr}
+                    type='pri'
+                    active={selectedCeleb === celeb.id}
+                    onClick={() => setSelectedCeleb(celeb.id)}
+                  ></ButtonMedium>
+                )
+              })}
           </MemberWrapper>
           <ChipWrapper></ChipWrapper>
         </SelectWrapper>
         <ButtonWrapper>
-          <ButtonLarge
-            text='완료'
-            active={selectedCeleb.celebNameKr !== ''}
-            onClick={onComplete}
-          ></ButtonLarge>
+          <ButtonLarge text='완료' active={selectedCeleb !== 0} onClick={onComplete}></ButtonLarge>
         </ButtonWrapper>
       </ModalWrapper>
     </BottomSheetModal>
@@ -79,19 +76,22 @@ const ModalWrapper = styled.div`
 const SelectWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  overflow-x: scroll;
   width: 100%;
   margin-bottom: 1.25rem;
+  padding: 0.5625rem 1.25rem;
   .GroupName {
-    ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.BK })}
-    margin: 0.5625rem 0 0.5625rem 1.25rem;
+    ${Pretendard({
+      size: 18,
+      weight: Common.bold.regular,
+      color: Common.colors.BK,
+    })}
+    margin: 0 0 0.875rem 0;
   }
 `
 
-const MemberWrapper = styled.div`
+export const MemberWrapper = styled.div`
   display: flex;
   width: 100%;
-  padding: 0 1.25rem;
   flex-wrap: wrap;
   gap: 0.5rem;
 `
