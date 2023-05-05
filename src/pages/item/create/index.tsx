@@ -47,6 +47,7 @@ const ItemCreate = () => {
       <br />
       <button onClick={() => navigate('/item/create/addInfo')}>추가 정보</button>
       <button onClick={onClick}>아이템 가격 확인</button>
+      <button onClick={() => navigate('/item/create/addlink')}>링크추가</button>
       <DatePlaceField />
       <br />
       <BrandItemField
