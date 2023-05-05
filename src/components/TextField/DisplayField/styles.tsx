@@ -38,7 +38,6 @@ const Field = styled.div<FieldProps>`
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    border: 5px solid red;
   }
 `
 
@@ -47,28 +46,31 @@ export const DisplayFieldWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   width: 100%;
+  &:focus-within > * {
+    border-color: ${Common.colors.BK};
+  }
 `
 
 export const SingleField = styled(Field)<FieldProps>`
-  border: 1px solid ${Common.colors.GR200};
+  border: 0.0625rem solid ${Common.colors.GR200};
   border-radius: 0.5rem;
   padding: 0 1.25rem;
 `
 
 export const FirstField = styled(Field)<FieldProps>`
-  border-radius: 8px 8px 0 0;
-  border-top: 1px solid ${Common.colors.GR200};
-  border-left: 1px solid ${Common.colors.GR200};
-  border-right: 1px solid ${Common.colors.GR200};
+  border-radius: 0.5rem 0.5rem 0 0;
+  border-top: 0.0625rem solid ${Common.colors.GR200};
+  border-left: 0.0625rem solid ${Common.colors.GR200};
+  border-right: 0.0625rem solid ${Common.colors.GR200};
 `
 
 export const MiddleField = styled(Field)<FieldProps>`
-  border-top: 1px solid ${Common.colors.GR200};
-  border-left: 1px solid ${Common.colors.GR200};
-  border-right: 1px solid ${Common.colors.GR200};
+  border-top: 0.0625rem solid ${Common.colors.GR200};
+  border-left: 0.0625rem solid ${Common.colors.GR200};
+  border-right: 0.0625rem solid ${Common.colors.GR200};
 `
 
 export const LastField = styled(Field)<FieldProps>`
-  border: 1px solid ${Common.colors.GR200};
-  border-radius: 0 0 8px 8px;
+  border: 0.0625rem solid ${Common.colors.GR200};
+  border-radius: 0 0 0.5rem 0.5rem;
 `

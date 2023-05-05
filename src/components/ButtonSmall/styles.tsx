@@ -14,6 +14,7 @@ export const SmallWrapper = styled.div<{
 
   height: 1.875rem;
   min-width: ${(props) => (props.icon ? '3.5625rem' : '3.125rem')};
+  width: auto;
   padding: ${(props) => (props.icon ? '0.375rem 0.375rem 0.375rem 0.75rem' : '0.375rem 0.75rem')};
   border-radius: 0.375rem;
 
