@@ -10,7 +10,7 @@ export const SelectCelebWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0.5rem 1.25rem 0 1.25rem;
+    padding: 0 1.25rem;
     width: 100vw;
     margin-left: calc(-50vw + 50%);
   }
@@ -35,6 +35,5 @@ export const SelectCelebWrapper = styled.div`
   }
 `
 export const Label = styled.span`
-  padding-left: 1.25rem;
   ${Pretendard({ size: 18, weight: Common.bold.regular, color: Common.colors.BK })}
 `
