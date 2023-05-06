@@ -11,4 +11,5 @@ export const queryKeys = {
   itemCategory: ['itemCategory'] as const,
   brandRecentSelected: ['brandRecentSelected'] as const,
   brandTop: ['brandTop'] as const,
+  tempItem: ['tempItem'] as const,
 }
