@@ -9,7 +9,9 @@ const AskRecentPostWritingModal = loadable(
 )
 const ItemDatePickerModal = loadable(() => import('../BottomSheetModal/ItemDatePickerModal'))
 const ItemPlaceInputModal = loadable(() => import('../BottomSheetModal/ItemPlaceInputModal'))
-const ItemBrandSelectModal = loadable(() => import('../BottomSheetModal/ItemBrandSelectModal'))
+const ItemBrandSelectModal = loadable(
+  () => import('../BottomSheetModal/ItemBrandSelectModal/ItemBrandSelectModal'),
+)
 const ItemNameInputModal = loadable(() => import('../BottomSheetModal/ItemNameInputModal'))
 const ItemCategoryModal = loadable(() => import('../BottomSheetModal/ItemCategoryModal'))
 const ItemCelebSelectModal = loadable(() => import('../BottomSheetModal/ItemCelebSelectModal'))

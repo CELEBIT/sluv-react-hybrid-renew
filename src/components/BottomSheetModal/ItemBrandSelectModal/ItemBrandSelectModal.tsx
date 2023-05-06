@@ -1,17 +1,23 @@
 import React, { useState } from 'react'
-import BottomSheetModal from '.'
+import BottomSheetModal from '..'
 import styled from '@emotion/styled'
-import useModals from '../Modals/hooks/useModals'
-import { modals } from '../Modals'
-import SearchTextfield from '../TextField/SearchTextfield/SearchTextfield'
-import HotBrand from './ItemBrandSelectModalComponent/HotBrand'
-import RecentSearch from './ItemBrandSelectModalComponent/RecentSelectBrand'
-import BrandList from './ItemBrandSelectModalComponent/BrandList'
-import Header from '../Header/Header'
+import useModals from '../../Modals/hooks/useModals'
+import { modals } from '../../Modals'
+import SearchTextfield from '../../TextField/SearchTextfield/SearchTextfield'
+import HotBrand from './HotBrand'
+import RecentSearch from './RecentSelectBrand'
+import BrandList from './BrandList'
+import Header from '../../Header/Header'
+import useRecentBrandQuery from '../../../apis/brand/hooks/useRecentBrandQuery'
 
 const ItemBrandSelectModal = () => {
   const [searchValue, setSearchValue] = useState<string>('')
   const { closeModal } = useModals()
+
+  const {
+    getBrandRecentSelected: { data: recentBrandData },
+  } = useRecentBrandQuery()
+  console.log('최근 선택한 브랜드', recentBrandData)
 
   const onSearch = () => {
     console.log('검색')
@@ -39,7 +45,9 @@ const ItemBrandSelectModal = () => {
         {/* 입력내용 없을 시 */}
         {searchValue === '' ? (
           <div className='long'>
-            <RecentSearch></RecentSearch>
+            {(recentBrandData?.length ?? 0) > 0 && (
+              <RecentSearch data={recentBrandData}></RecentSearch>
+            )}
             <HotBrand></HotBrand>
           </div>
         ) : (
