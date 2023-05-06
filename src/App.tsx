@@ -20,7 +20,7 @@ const Closet = React.lazy(() => import('./pages/closet'))
 const User = React.lazy(() => import('./pages/user'))
 
 // 아이템 게시글 작성 관련 페이지
-const TemporaryStorage = React.lazy(() => import('./pages/item/create/temporary-storage'))
+const TemporaryStorage = React.lazy(() => import('./pages/item/temporary-storage'))
 
 // 아이템 업로드 상세 페이지
 const AddInfo = React.lazy(() => import('./pages/item/addInfo'))

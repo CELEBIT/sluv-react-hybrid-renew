@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Header from '../../../../components/Header/Header'
+import Header from '../../../components/Header/Header'
 import { HeaderWrap, ListWrap, SelectedCtnDiv, TStoragePageStyle } from './styles'
 
 const TemporaryStorage = () => {
