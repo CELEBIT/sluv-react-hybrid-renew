@@ -25,6 +25,9 @@ const AddLink = React.lazy(() => import('./pages/item/addLink'))
 
 const App = () => {
   useLayoutEffect(() => {
+    console.log(window.location.search)
+    console.log(window.location.hash)
+    console.log(window.location.search.split('?'))
     const payload = {
       ...queryToObject(window.location.search.split('?')[1]),
       ...queryToObject(window.location.hash.split('#')[1]),
