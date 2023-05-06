@@ -92,11 +92,17 @@ const ItemCreate = () => {
     openModal(modals.ItemCelebSearchModal)
   }
 
+  const onCategorySelect = () => {
+    openModal(modals.ItemCategoryModal)
+  }
+
   return (
     <div>
       Item Create
       <br />
       <button onClick={onCheckValid}>업로드</button>
+      <br />
+      <button onClick={onCategorySelect}>카테고리 모달</button>
       <br />
       <button onClick={() => onGroupSelect(Itzy)}>있지</button>
       <br />

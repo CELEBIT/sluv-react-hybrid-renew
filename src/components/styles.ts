@@ -100,6 +100,9 @@ export const Root = styled.div`
   transform: translate(-50%, 0);
   background-color: white;
   overflow: hidden;
+  padding: 20px;
+
+  border: 1px solid red;
 `
 
 export const Pretendard = (props: IPretendard) => css`
