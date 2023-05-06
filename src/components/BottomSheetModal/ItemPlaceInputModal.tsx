@@ -2,7 +2,6 @@ import React from 'react'
 import BottomSheetModal from '.'
 import styled from '@emotion/styled'
 import { useRecoilState } from 'recoil'
-import { selectedPlaceState } from '../../pages/item/create/component/DatePlaceField'
 import ButtonLarge from '../ButtonLarge/ButtonLarge'
 import useModals from '../Modals/hooks/useModals'
 import { modals } from '../Modals'
@@ -10,6 +9,7 @@ import DefaultTextfield from '../TextField/DefaultTextfield/DefaultTextfield'
 import Chip from '../Chip/Chip'
 import { Common, Pretendard } from '../styles'
 import Header from '../Header/Header'
+import { selectedPlaceState } from '../../pages/item/create/components/DatePlaceField'
 
 const ItemPlaceInputModal = () => {
   const [place, setPlace] = useRecoilState(selectedPlaceState)
@@ -101,7 +101,7 @@ export const ChipWrapper = styled.div`
     display: none;
   }
 `
-const ButtonWrapper = styled.div`
+export const ButtonWrapper = styled.div`
   width: 100%;
   padding: 0.75rem 1.25rem;
 `

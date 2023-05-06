@@ -1,8 +1,10 @@
-import React, { Suspense } from 'react'
+import React, { Suspense, useLayoutEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import BottomNav from './components/BottomNav/BottomNav'
 import Modals from './components/Modals'
 import * as S from './components/styles'
+import { queryToObject } from './utils/utility'
+import storage from './utils/storage'
 
 const loading = <div>화면을 불러오는 중 입니다.(App)</div>
 
@@ -20,7 +22,27 @@ const User = React.lazy(() => import('./pages/user'))
 // 아이템 게시글 작성 관련 페이지
 const TemporaryStorage = React.lazy(() => import('./pages/item/create/temporary-storage'))
 
+// 아이템 업로드 상세 페이지
+const AddInfo = React.lazy(() => import('./pages/item/addInfo'))
+const AddLink = React.lazy(() => import('./pages/item/addLink'))
+
 const App = () => {
+  useLayoutEffect(() => {
+    console.log(window.location.search)
+    console.log(window.location.hash)
+    console.log(window.location.search.split('?'))
+    const payload = {
+      ...queryToObject(window.location.search.split('?')[1]),
+      ...queryToObject(window.location.hash.split('#')[1]),
+    }
+    console.log('payload', payload)
+    if (payload.AccessToken) {
+      storage.set('accessToken', payload.AccessToken)
+      storage.set('device', payload.device)
+      storage.set('version', payload.VersionNumber)
+    }
+  }, [])
+
   return (
     <S.Root>
       <BrowserRouter>
@@ -31,6 +53,8 @@ const App = () => {
             <Route path='/' element={<Home />} />
             <Route path='/community' element={<Community />} />
             <Route path='/item/create' element={<ItemCreate />} />
+            <Route path='/item/create/addinfo' element={<AddInfo />} />
+            <Route path='/item/create/addlink' element={<AddLink />} />
             <Route path='/closet' element={<Closet />} />
             <Route path='/user' element={<User />} />
             <Route path='/item/create/temporary-storage' element={<TemporaryStorage />} />

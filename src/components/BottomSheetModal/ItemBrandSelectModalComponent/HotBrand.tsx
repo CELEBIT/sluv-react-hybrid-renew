@@ -9,7 +9,7 @@ import { ChipWrapper } from '../ItemBrandSelectModal'
 import {
   Brand,
   selectedBrandState,
-} from '../../../pages/item/create/component/BrandItemField/BrandItemField'
+} from '../../../pages/item/create/components/BrandItemField/BrandItemField'
 
 const HotBrand = () => {
   const brandList = [
@@ -75,7 +75,7 @@ const HotBrand = () => {
   }
 
   return (
-    <HotBrandWrapper>
+    <HotWrapper>
       <span>인기 브랜드</span>
       <ChipWrapper>
         {brandList.map((brand) => {
@@ -84,13 +84,13 @@ const HotBrand = () => {
           )
         })}
       </ChipWrapper>
-    </HotBrandWrapper>
+    </HotWrapper>
   )
 }
 
 export default HotBrand
 
-const HotBrandWrapper = styled.div`
+export const HotWrapper = styled.div`
   display: flex;
   flex-direction: column;
   overflow-x: scroll;
