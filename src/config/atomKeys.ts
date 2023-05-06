@@ -7,4 +7,7 @@ export const atomKeys = {
   addInfoTextState: 'addInfoTextState' as const,
   infoSourceState: 'infoSourceState' as const,
   hashTagState: 'hashTagState' as const,
+  selectedGroupState: 'selectedGroupState' as const,
+  selectedCelebState: 'selectedCelebState' as const,
+  selectedNewCelebState: 'selectedNewCelebState' as const,
 }
