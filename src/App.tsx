@@ -1,8 +1,10 @@
-import React, { Suspense } from 'react'
+import React, { Suspense, useLayoutEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import BottomNav from './components/BottomNav/BottomNav'
 import Modals from './components/Modals'
 import * as S from './components/styles'
+import { queryToObject } from './utils/utility'
+import storage from './utils/storage'
 
 const loading = <div>화면을 불러오는 중 입니다.(App)</div>
 
@@ -22,6 +24,19 @@ const AddInfo = React.lazy(() => import('./pages/item/addInfo'))
 const AddLink = React.lazy(() => import('./pages/item/addLink'))
 
 const App = () => {
+  useLayoutEffect(() => {
+    const payload = {
+      ...queryToObject(window.location.search.split('?')[1]),
+      ...queryToObject(window.location.hash.split('#')[1]),
+    }
+    console.log('payload', payload)
+    if (payload.AccessToken) {
+      storage.set('accessToken', payload.AccessToken)
+      storage.set('device', payload.device)
+      storage.set('version', payload.VersionNumber)
+    }
+  }, [])
+
   return (
     <S.Root>
       <BrowserRouter>

@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios'
-// import { JWT_KEY } from '../../config/constant'
+import { ACCESS_TOKEN } from '../../config/constant'
 // import * as jsonwebtoken from 'jsonwebtoken'
 // import { JwtPayload } from 'jsonwebtoken'
 
@@ -16,7 +16,7 @@ const request: AxiosInstance = axios.create({
 
   headers: {
     accept: 'application/json',
-    // Authorization: `Bearer ${window.localStorage.getItem(JWT_KEY)}`,
+    Authorization: `Bearer ${window.localStorage.getItem(ACCESS_TOKEN)}`,
   },
 })
 
