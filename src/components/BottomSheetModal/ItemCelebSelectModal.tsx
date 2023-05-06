@@ -20,11 +20,10 @@ const ItemCelebSelectModal = () => {
   const [selectedCeleb, setSelectedCeleb] = useRecoilState(selectedCelebState)
   const { closeModal } = useModals()
   const onClose = () => {
-    setSelectedCeleb(0)
+    setSelectedCeleb({ id: 0, celebNameKr: '' })
     closeModal(modals.ItemCategoryModal)
   }
   const onComplete = () => {
-    console.log(selectedCeleb)
     closeModal(modals.ItemCategoryModal)
   }
   return (
@@ -34,17 +33,17 @@ const ItemCelebSelectModal = () => {
           <Header title='셀럽선택' isModalHeader={true} modalCloseBtnClick={onClose} />
         </div>
         <SelectWrapper>
-          <span className='GroupName'>{selectedGroup.celebNameKr}</span>
+          <span className='GroupName'>{selectedGroup?.celebNameKr}</span>
           <MemberWrapper>
-            {selectedGroup.subCelebList &&
-              selectedGroup.subCelebList.map((celeb) => {
+            {selectedGroup?.subCelebList &&
+              selectedGroup?.subCelebList.map((celeb) => {
                 return (
                   <ButtonMedium
                     key={celeb.id}
                     text={celeb.celebNameKr}
                     type='pri'
-                    active={selectedCeleb === celeb.id}
-                    onClick={() => setSelectedCeleb(celeb.id)}
+                    active={selectedCeleb === celeb}
+                    onClick={() => setSelectedCeleb(celeb)}
                   ></ButtonMedium>
                 )
               })}
@@ -52,7 +51,11 @@ const ItemCelebSelectModal = () => {
           <ChipWrapper></ChipWrapper>
         </SelectWrapper>
         <ButtonWrapper>
-          <ButtonLarge text='완료' active={selectedCeleb !== 0} onClick={onComplete}></ButtonLarge>
+          <ButtonLarge
+            text='완료'
+            active={selectedCeleb.id !== 0}
+            onClick={onComplete}
+          ></ButtonLarge>
         </ButtonWrapper>
       </ModalWrapper>
     </BottomSheetModal>

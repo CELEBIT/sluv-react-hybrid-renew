@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
 import { InputField, InputWrapper } from './styles'
 import { ReactComponent as Delete } from '../../../assets/delete_textfield_24.svg'
 import { ReactComponent as Search } from '../../../assets/search_24.svg'
@@ -29,18 +29,18 @@ const SearchTextfield = ({ value, setValue, onEnter, placeholder }: SearchTextFi
     event.stopPropagation()
     setValue('')
   }
-  const searchRef = useRef<HTMLInputElement>(null)
-  useEffect(() => {
-    searchRef?.current?.focus()
-  }, [searchRef])
+  // const searchRef = useRef<HTMLInputElement>(null)
+  // useEffect(() => {
+  //   searchRef?.current?.focus()
+  // }, [searchRef])
   return (
     <InputWrapper onFocus={() => setIsFocused(true)} onBlur={() => setIsFocused(false)}>
       <Search style={{ marginRight: '0.5rem' }}></Search>
       <InputField
         value={value}
         placeholder={placeholder}
-        ref={searchRef}
-        autoFocus={true}
+        // ref={searchRef}
+        autoFocus={false}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
       ></InputField>

@@ -9,4 +9,5 @@ export const atomKeys = {
   hashTagState: 'hashTagState' as const,
   selectedGroupState: 'selectedGroupState' as const,
   selectedCelebState: 'selectedCelebState' as const,
+  selectedNewCelebState: 'selectedNewCelebState' as const,
 }
