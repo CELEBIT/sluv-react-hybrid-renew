@@ -82,7 +82,7 @@ const MyCeleb = () => {
     },
     {
       id: 4,
-      celebNameKr: '있지',
+      celebNameKr: '소녀시대',
       subCelebList: [
         {
           id: 41,
@@ -116,7 +116,7 @@ const MyCeleb = () => {
     },
     {
       id: 5,
-      celebNameKr: '르세라핌',
+      celebNameKr: '핑클',
       subCelebList: [
         {
           id: 51,
@@ -150,7 +150,7 @@ const MyCeleb = () => {
     },
     {
       id: 6,
-      celebNameKr: '르세라핌',
+      celebNameKr: 'SES',
       subCelebList: [
         {
           id: 61,
@@ -184,7 +184,7 @@ const MyCeleb = () => {
     },
     {
       id: 7,
-      celebNameKr: '르세라핌',
+      celebNameKr: 'AOA',
       subCelebList: [
         {
           id: 71,
@@ -216,6 +216,10 @@ const MyCeleb = () => {
         },
       ],
     },
+    {
+      id: 8,
+      celebNameKr: '현아',
+    },
   ]
   const [selectedCeleb, setSelectedCeleb] = useRecoilState(selectedCelebState)
   const [selectedGroup, setSelectedGroup] = useRecoilState(selectedGroupState)
@@ -223,9 +227,9 @@ const MyCeleb = () => {
   const onClickCeleb = (celeb: CelebData) => {
     if (celeb.subCelebList) {
       setSelectedGroup(celeb)
-      setSelectedCeleb(0)
+      setSelectedCeleb({ id: 0, celebNameKr: '' })
     } else {
-      setSelectedCeleb(celeb.id)
+      setSelectedCeleb(celeb)
       setSelectedGroup({ id: 0, celebNameKr: '', subCelebList: [] })
     }
     console.log(selectedCeleb)
@@ -238,13 +242,13 @@ const MyCeleb = () => {
       {MyCelebList.map((celeb) => {
         return (
           <div key={celeb.id} className='flex'>
-            {selectedCeleb === 0 && !selectedGroup.id ? (
+            {selectedCeleb.id === 0 && selectedGroup.id === 0 ? (
               <CelebName onClick={() => onClickCeleb(celeb)}>{celeb.celebNameKr}</CelebName>
             ) : (
               <CelebName
                 onClick={() => onClickCeleb(celeb)}
                 match={
-                  celeb.subCelebList ? celeb.id === selectedGroup.id : celeb.id === selectedCeleb
+                  celeb.subCelebList ? celeb.id === selectedGroup.id : celeb.id === selectedCeleb.id
                 }
               >
                 {celeb.celebNameKr}
@@ -261,8 +265,8 @@ const MyCeleb = () => {
                           key={member.id}
                           text={member.celebNameKr}
                           type='pri'
-                          active={selectedCeleb === member.id}
-                          onClick={() => setSelectedCeleb(member.id)}
+                          active={selectedCeleb === member}
+                          onClick={() => setSelectedCeleb(member)}
                         ></ButtonMedium>
                       )
                     })}

@@ -9,7 +9,10 @@ import PriceField, { itemPriceState } from './components/PriceField/PriceField'
 import { useNavigate } from 'react-router-dom'
 import { modals } from '../../../components/Modals'
 import useModals from '../../../components/Modals/hooks/useModals'
-import { CelebData, selectedGroupState } from '../../../components/SelectCeleb/SelectCeleb'
+import SelectCeleb, {
+  CelebData,
+  selectedGroupState,
+} from '../../../components/SelectCeleb/SelectCeleb'
 
 const Itzy = {
   id: 0,
@@ -57,6 +60,7 @@ const ItemCreate = () => {
   const [hasTriedToUpload, setHasTriedToUpload] = useState(false)
   const itemPrice = useRecoilValue(itemPriceState)
 
+  // const selectedCeleb = useRecoilValue(selectedCelebState)
   const setSelectedGroup = useSetRecoilState(selectedGroupState)
 
   const onCheckValid = () => {
@@ -105,12 +109,14 @@ const ItemCreate = () => {
       <button onClick={() => navigate('/item/create/addlink')}>링크추가</button>
       <DatePlaceField />
       <br />
+      {/* <span>{selectedCeleb.celebNameKr}</span> */}
       <BrandItemField
         brandValid={hasTriedToUpload ? brandValid : true}
         itemNameValid={hasTriedToUpload ? itemValid : true}
       ></BrandItemField>
       <br />
       <PriceField></PriceField>
+      <SelectCeleb></SelectCeleb>
     </div>
   )
 }
