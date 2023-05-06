@@ -19,6 +19,9 @@ const ItemCreate = React.lazy(() => import('./pages/item/create'))
 const Closet = React.lazy(() => import('./pages/closet'))
 const User = React.lazy(() => import('./pages/user'))
 
+// 아이템 게시글 작성 관련 페이지
+const TemporaryStorage = React.lazy(() => import('./pages/item/temporary-storage'))
+
 // 아이템 업로드 상세 페이지
 const AddInfo = React.lazy(() => import('./pages/item/addInfo'))
 const AddLink = React.lazy(() => import('./pages/item/addLink'))
@@ -37,6 +40,11 @@ const App = () => {
       storage.set('accessToken', payload.AccessToken)
       storage.set('device', payload.device)
       storage.set('version', payload.VersionNumber)
+    } else {
+      storage.set(
+        'accessToken',
+        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5IiwiaWF0IjoxNjgzMzM4MzM1LCJleHAiOjE3MTQ4NzQzMzV9.O8s4xP1x5Tus60HqUt9HFrlJ7Ua2PefR2O3ED0NMTKg',
+      )
     }
   }, [])
 
@@ -54,6 +62,7 @@ const App = () => {
             <Route path='/item/create/addlink' element={<AddLink />} />
             <Route path='/closet' element={<Closet />} />
             <Route path='/user' element={<User />} />
+            <Route path='/item/create/temporary-storage' element={<TemporaryStorage />} />
           </Routes>
         </Suspense>
         <Modals />
