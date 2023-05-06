@@ -2,45 +2,22 @@ import styled from '@emotion/styled'
 import React from 'react'
 import { Common, Pretendard } from '../../styles'
 import Chip from '../../Chip/Chip'
-import { ChipWrapper } from '../ItemBrandSelectModal/ItemBrandSelectModal'
+import { ChipWrapper } from './ItemBrandSelectModal'
+import {
+  Brand,
+  selectedBrandState,
+} from '../../../pages/item/create/components/BrandItemField/BrandItemField'
 import { useSetRecoilState } from 'recoil'
 import useModals from '../../Modals/hooks/useModals'
 import { modals } from '../../Modals'
-import { CelebData, selectedCelebState, selectedGroupState } from '../../SelectCeleb/SelectCeleb'
+import { RecentBrandResult } from '../../../apis/brand/brandService'
 
-const RecentSelectCeleb = () => {
-  const RecenCelebList = [
-    {
-      id: 61,
-      celebNameKr: '있지 예지',
-    },
-    {
-      id: 62,
-      celebNameKr: '있지 리나',
-    },
-    {
-      id: 63,
-      celebNameKr: '르세라핌 민니',
-    },
-    {
-      id: 64,
-      celebNameKr: '소녀시대 태연',
-    },
-    {
-      id: 65,
-      celebNameKr: '아이유',
-    },
-    {
-      id: 66,
-      celebNameKr: '블랙핑크 로제',
-    },
-    {
-      id: 67,
-      celebNameKr: '안보현',
-    },
-  ]
-  const setSelectedCelebState = useSetRecoilState(selectedCelebState)
-  const setSelectedGroupState = useSetRecoilState(selectedGroupState)
+interface RecentSelectBrandProps {
+  data?: Array<RecentBrandResult>
+}
+
+const RecentSelectBrand = ({ data }: RecentSelectBrandProps) => {
+  const setBrand = useSetRecoilState(selectedBrandState)
   const onDeleteAllSearchLog = () => {
     alert('전체 검색어 삭제')
   }
@@ -50,36 +27,36 @@ const RecentSelectCeleb = () => {
 
   const { closeModal } = useModals()
 
-  const onChipClick = (celeb: CelebData) => {
-    setSelectedCelebState(celeb)
-    setSelectedGroupState({ id: 0, celebNameKr: '' })
-    closeModal(modals.ItemCelebSearchModal)
+  const onChipClick = (brand: Brand) => {
+    setBrand(brand)
+    closeModal(modals.ItemBrandSelectModal)
   }
 
   return (
     <RecentSearchWrapper>
       <SearchLogWrapper>
-        <span>최근 선택한 셀럽</span>
+        <span>최근 선택한 브랜드</span>
         <DeleteAllText onClick={onDeleteAllSearchLog}>전체삭제</DeleteAllText>
       </SearchLogWrapper>
       <ChipWrapper>
-        {RecenCelebList.map((celeb) => {
-          return (
-            <Chip
-              key={celeb.id}
-              text={celeb.celebNameKr}
-              onClick={() => onChipClick(celeb)}
-              canDelete={true}
-              onDelete={onDeleteEachSearchLog}
-            ></Chip>
-          )
-        })}
+        {(data?.length ?? 0) > 0 &&
+          data?.map((brand) => {
+            return (
+              <Chip
+                key={brand.id}
+                text={brand.brandName}
+                onClick={() => onChipClick(brand)}
+                canDelete={true}
+                onDelete={onDeleteEachSearchLog}
+              ></Chip>
+            )
+          })}
       </ChipWrapper>
     </RecentSearchWrapper>
   )
 }
 
-export default RecentSelectCeleb
+export default RecentSelectBrand
 
 const RecentSearchWrapper = styled.div`
   display: flex;
