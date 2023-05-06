@@ -37,6 +37,11 @@ const App = () => {
       storage.set('accessToken', payload.AccessToken)
       storage.set('device', payload.device)
       storage.set('version', payload.VersionNumber)
+    } else {
+      storage.set(
+        'accessToken',
+        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5IiwiaWF0IjoxNjgzMzM4MzM1LCJleHAiOjE3MTQ4NzQzMzV9.O8s4xP1x5Tus60HqUt9HFrlJ7Ua2PefR2O3ED0NMTKg',
+      )
     }
   }, [])
 
