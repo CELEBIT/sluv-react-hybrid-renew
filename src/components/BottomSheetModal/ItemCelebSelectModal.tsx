@@ -8,7 +8,7 @@ import useModals from '../Modals/hooks/useModals'
 
 import { Common, Pretendard } from '../styles'
 
-import { ChipWrapper } from './ItemBrandSelectModal'
+import { ChipWrapper } from './ItemBrandSelectModal/ItemBrandSelectModal'
 import { ButtonWrapper } from './ItemPlaceInputModal'
 import Header from '../Header/Header'
 import ButtonMedium from '../ButtonMedium/ButtonMedium'

@@ -3,9 +3,9 @@ import { useSetRecoilState } from 'recoil'
 import useModals from '../../Modals/hooks/useModals'
 import { modals } from '../../Modals'
 import Chip from '../../Chip/Chip'
-import { ChipWrapper } from '../ItemBrandSelectModal'
+import { ChipWrapper } from '../ItemBrandSelectModal/ItemBrandSelectModal'
 import { CelebData, selectedCelebState, selectedGroupState } from '../../SelectCeleb/SelectCeleb'
-import { HotWrapper } from '../ItemBrandSelectModalComponent/HotBrand'
+import { HotWrapper } from '../ItemBrandSelectModal/HotBrand'
 
 const HotCeleb = () => {
   const hotCelebList = [

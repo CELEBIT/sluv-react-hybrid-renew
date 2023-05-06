@@ -27,7 +27,7 @@ const HotBrand = () => {
   }
 
   return (
-    <HotBrandWrapper>
+    <HotWrapper>
       <span>인기 브랜드</span>
       <ChipWrapper>
         {(data?.length ?? 0) > 0 &&
@@ -37,13 +37,13 @@ const HotBrand = () => {
             )
           })}
       </ChipWrapper>
-    </HotBrandWrapper>
+    </HotWrapper>
   )
 }
 
 export default HotBrand
 
-const HotBrandWrapper = styled.div`
+export const HotWrapper = styled.div`
   display: flex;
   flex-direction: column;
   overflow-x: scroll;
