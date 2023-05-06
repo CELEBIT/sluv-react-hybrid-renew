@@ -4,10 +4,7 @@ import { queryKeys } from '../../../config/queryKeys'
 
 const useItemCategoryQuery = () => {
   const item = new ItemService()
-  const getItemCategory = useQuery(queryKeys.itemCategory, () => item.getItemCategory(), {
-    staleTime: 1000 * 60 * 60,
-    refetchOnWindowFocus: false,
-  })
+  const getItemCategory = useQuery(queryKeys.itemCategory, () => item.getItemCategory())
   return { getItemCategory }
 }
 
