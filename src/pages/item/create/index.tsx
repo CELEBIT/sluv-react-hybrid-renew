@@ -13,6 +13,7 @@ import SelectCeleb, {
   CelebData,
   selectedGroupState,
 } from '../../../components/SelectCeleb/SelectCeleb'
+import SelectCategory from './components/SelectCategory/SelectCategory'
 
 const Itzy = {
   id: 0,
@@ -116,6 +117,7 @@ const ItemCreate = () => {
       <DatePlaceField />
       <br />
       {/* <span>{selectedCeleb.celebNameKr}</span> */}
+      <SelectCategory />
       <BrandItemField
         brandValid={hasTriedToUpload ? brandValid : true}
         itemNameValid={hasTriedToUpload ? itemValid : true}
