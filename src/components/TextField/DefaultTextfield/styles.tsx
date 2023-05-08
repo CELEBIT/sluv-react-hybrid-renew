@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import { Common } from '../../styles'
 
 export const InputContainer = styled.div`
