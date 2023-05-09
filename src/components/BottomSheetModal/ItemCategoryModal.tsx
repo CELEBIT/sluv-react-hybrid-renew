@@ -65,17 +65,14 @@ const ItemCategoryModal = () => {
       id: 0,
       name: '',
     })
-    console.log('상위', category)
   }
   const onSubClick = (category: Category) => {
     setSelectedSubCategory(category)
-    console.log('하위', category)
   }
 
   const {
     getItemCategory: { data },
   } = useItemCategoryQuery()
-  console.log(data)
 
   const subCategories = selectedParentCategory?.subCategoryList || []
   const activeCategoryRef = useRef<HTMLDivElement>(null)

@@ -45,11 +45,16 @@ const SelectCategory = () => {
 
   useEffect(() => {
     if (data) {
+      console.log('parent', selectedParentCategory)
       const updatedList = data.filter((category) => category.id !== selectedParentCategory.id)
+      console.log('updatedList', updatedList)
       if (selectedParentCategory.id !== 9) {
         const newDisplayItem = {
           id: selectedParentCategory.id,
-          name: selectedParentCategory.name + '>' + selectedSubCategory.name,
+          name:
+            data?.find((category) => category.id === selectedParentCategory.id)?.name +
+            '>' +
+            selectedSubCategory.name,
           subCategoryList: selectedParentCategory.subCategoryList,
         }
         setCategoryDisplayList([newDisplayItem, ...updatedList])
