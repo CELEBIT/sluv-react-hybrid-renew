@@ -16,3 +16,7 @@ export const ChipWrapper = styled.div`
     display: none;
   }
 `
+export const SelectCategoryWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`

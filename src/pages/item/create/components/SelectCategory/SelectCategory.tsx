@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { modals } from '../../../../../components/Modals'
 import useModals from '../../../../../components/Modals/hooks/useModals'
-import { Label, SelectCelebWrapper } from '../../../../../components/SelectCeleb/styles'
 import useItemCategoryQuery from '../../../../../apis/item/hooks/useItemCategoryQuery'
 import ButtonMedium from '../../../../../components/ButtonMedium/ButtonMedium'
 import {
@@ -11,7 +10,7 @@ import {
   selectedSubCategoryState,
 } from '../../../../../components/BottomSheetModal/ItemCategoryModal'
 import { useRecoilState } from 'recoil'
-import { ChipWrapper } from './styles'
+import { ChipWrapper, SelectCategoryWrapper } from './styles'
 
 const SelectCategory = () => {
   const { openModal } = useModals()
@@ -69,8 +68,7 @@ const SelectCategory = () => {
   }, [selectedParentCategory, selectedSubCategory])
 
   return (
-    <SelectCelebWrapper>
-      <Label>어떤 아이템인가요?</Label>
+    <SelectCategoryWrapper>
       <ChipWrapper ref={selectRef}>
         {selectedParentCategory.id !== 0 && selectedSubCategory.id !== 0 ? (
           <>
@@ -129,7 +127,7 @@ const SelectCategory = () => {
           </>
         )}
       </ChipWrapper>
-    </SelectCelebWrapper>
+    </SelectCategoryWrapper>
   )
 }
 

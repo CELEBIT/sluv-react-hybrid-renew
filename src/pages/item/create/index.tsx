@@ -14,6 +14,7 @@ import SelectCeleb, {
   selectedGroupState,
 } from '../../../components/SelectCeleb/SelectCeleb'
 import SelectCategory from './components/SelectCategory/SelectCategory'
+import Header from '../../../components/Header/Header'
 
 const Itzy = {
   id: 0,
@@ -64,7 +65,7 @@ const ItemCreate = () => {
   // const selectedCeleb = useRecoilValue(selectedCelebState)
   const setSelectedGroup = useSetRecoilState(selectedGroupState)
 
-  const onCheckValid = () => {
+  const onSubmit = () => {
     setHasTriedToUpload(true)
     if (!brand) {
       setBrandValid(false)
@@ -98,11 +99,13 @@ const ItemCreate = () => {
   }
 
   return (
-    <div>
-      Item Create
-      <br />
-      <button onClick={onCheckValid}>업로드</button>
-      <br />
+    <>
+      <Header isModalHeader={false} title='정보 공유하기' hasArrow={true}>
+        <span className='submit' onClick={onSubmit}>
+          완료
+        </span>
+      </Header>
+      <SelectCeleb></SelectCeleb>
       <button onClick={onCategorySelect}>카테고리 모달</button>
       <br />
       <button onClick={() => onGroupSelect(Itzy)}>있지</button>
@@ -124,8 +127,7 @@ const ItemCreate = () => {
       ></BrandItemField>
       <br />
       <PriceField></PriceField>
-      <SelectCeleb></SelectCeleb>
-    </div>
+    </>
   )
 }
 
