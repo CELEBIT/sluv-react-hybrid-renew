@@ -3,17 +3,12 @@ import { Common, Pretendard } from '../styles'
 
 export const SelectCelebWrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1.25rem;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
 
-  .selectSearch {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 1.25rem;
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
-  }
   .select {
     display: flex;
     position: relative;
