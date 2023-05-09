@@ -10,7 +10,7 @@ import {
   selectedSubCategoryState,
 } from '../../../../../components/BottomSheetModal/ItemCategoryModal'
 import { useRecoilState } from 'recoil'
-import { ChipWrapper, SelectCategoryWrapper } from './styles'
+import { ChipWrapper } from './styles'
 
 const SelectCategory = () => {
   const { openModal } = useModals()
@@ -68,66 +68,66 @@ const SelectCategory = () => {
   }, [selectedParentCategory, selectedSubCategory])
 
   return (
-    <SelectCategoryWrapper>
-      <ChipWrapper ref={selectRef}>
-        {selectedParentCategory.id !== 0 && selectedSubCategory.id !== 0 ? (
-          <>
-            {categoryDisplayList?.map((category) => {
-              return (
-                <ButtonMedium
-                  key={category.id}
-                  text={category.name}
-                  icon={true}
-                  type='pri'
-                  active={selectedParentCategory.id === category.id && selectedSubCategory.id !== 0}
-                  onClick={() => onCategoryClick(category)}
-                ></ButtonMedium>
-              )
-            })}
-          </>
-        ) : (
-          <>
-            {selectedParentCategory.id === 9 ? (
-              <>
-                {categoryDisplayList?.map((category) => {
+    // <SelectCategoryWrapper>
+    <ChipWrapper ref={selectRef}>
+      {selectedParentCategory.id !== 0 && selectedSubCategory.id !== 0 ? (
+        <>
+          {categoryDisplayList?.map((category) => {
+            return (
+              <ButtonMedium
+                key={category.id}
+                text={category.name}
+                icon={true}
+                type='pri'
+                active={selectedParentCategory.id === category.id && selectedSubCategory.id !== 0}
+                onClick={() => onCategoryClick(category)}
+              ></ButtonMedium>
+            )
+          })}
+        </>
+      ) : (
+        <>
+          {selectedParentCategory.id === 9 ? (
+            <>
+              {categoryDisplayList?.map((category) => {
+                return (
+                  <ButtonMedium
+                    key={category.id}
+                    text={category.name}
+                    icon={true}
+                    type='pri'
+                    active={selectedParentCategory.id === category.id}
+                    onClick={() => onCategoryClick(category)}
+                  ></ButtonMedium>
+                )
+              })}
+            </>
+          ) : (
+            <>
+              {(data?.length ?? 0) > 0 &&
+                data?.map((category) => {
                   return (
                     <ButtonMedium
                       key={category.id}
                       text={category.name}
                       icon={true}
                       type='pri'
-                      active={selectedParentCategory.id === category.id}
+                      active={
+                        selectedParentCategory.id === 9
+                          ? true
+                          : selectedParentCategory.id === category.id &&
+                            selectedSubCategory.id !== 0
+                      }
                       onClick={() => onCategoryClick(category)}
                     ></ButtonMedium>
                   )
                 })}
-              </>
-            ) : (
-              <>
-                {(data?.length ?? 0) > 0 &&
-                  data?.map((category) => {
-                    return (
-                      <ButtonMedium
-                        key={category.id}
-                        text={category.name}
-                        icon={true}
-                        type='pri'
-                        active={
-                          selectedParentCategory.id === 9
-                            ? true
-                            : selectedParentCategory.id === category.id &&
-                              selectedSubCategory.id !== 0
-                        }
-                        onClick={() => onCategoryClick(category)}
-                      ></ButtonMedium>
-                    )
-                  })}
-              </>
-            )}
-          </>
-        )}
-      </ChipWrapper>
-    </SelectCategoryWrapper>
+            </>
+          )}
+        </>
+      )}
+    </ChipWrapper>
+    // </SelectCategoryWrapper>
   )
 }
 

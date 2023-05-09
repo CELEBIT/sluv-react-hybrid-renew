@@ -49,9 +49,10 @@ const InputWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 3.5rem;
-  width: 100%;
-  padding: 1rem 1.25rem 1rem 1.25rem;
+  width: 100vw;
   border-top: 1px solid ${Common.colors.GR200};
+  margin-left: calc(-1.25rem);
+  padding: 1.25rem;
   .linkWrapper {
     display: flex;
     align-items: center;
@@ -68,7 +69,6 @@ export const InputField = styled.input`
   align-items: center;
   height: 1.25rem;
   width: 90%;
-  padding: 0;
   outline: none;
   border: none;
   ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.GR600 })}
