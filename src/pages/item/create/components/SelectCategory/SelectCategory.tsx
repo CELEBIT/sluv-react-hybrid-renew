@@ -29,7 +29,11 @@ const SelectCategory = () => {
   const onCategoryClick = (category: Category) => {
     openModal(modals.ItemCategoryModal)
     setSelectedParentCategory(category)
-    setSelectedSubCategory({ id: 0, name: '' })
+    if (category.id === 9) {
+      setSelectedSubCategory({ id: 9, name: '기타' })
+    } else {
+      setSelectedSubCategory({ id: 0, name: '' })
+    }
   }
   useEffect(() => {
     if (selectRef.current) {
@@ -44,9 +48,7 @@ const SelectCategory = () => {
 
   useEffect(() => {
     if (data) {
-      console.log('parent', selectedParentCategory)
       const updatedList = data.filter((category) => category.id !== selectedParentCategory.id)
-      console.log('updatedList', updatedList)
       if (selectedParentCategory.id !== 9) {
         const newDisplayItem = {
           id: selectedParentCategory.id,
@@ -63,6 +65,7 @@ const SelectCategory = () => {
           name: selectedParentCategory.name,
         }
         setCategoryDisplayList([newDisplayItem, ...updatedList])
+        // setSelectedSubCategory(newDisplayItem)
       }
     }
   }, [selectedParentCategory, selectedSubCategory])
