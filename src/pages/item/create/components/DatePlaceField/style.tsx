@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Common } from '../../../../../components/styles'
+import { Common, Pretendard } from '../../../../../components/styles'
 
 export const DatePlaceWrapper = styled.div`
   display: flex;
@@ -10,7 +10,6 @@ export const DatePlaceWrapper = styled.div`
   border-radius: 0.5rem;
   padding: 0.625rem 1.25rem;
   border: 0.0625rem solid ${Common.colors.GR200};
-  font-family: 'Pretendard';
 `
 
 export const DateWrapper = styled.div`
@@ -38,17 +37,22 @@ export const Line = styled.div`
 
 export const Title = styled.span`
   margin: 0;
-  font-weight: 500;
-  font-size: 0.9375rem;
-  color: ${Common.colors.GR600};
+  ${Pretendard({
+    size: 15,
+    weight: Common.bold.regular,
+    color: Common.colors.GR600,
+  })}
 `
 export const ValueText = styled.span<{
   isEmpty?: boolean
 }>`
   margin: 0;
-  font-weight: 400;
-  font-size: 1.0625rem;
-  color: ${Common.colors.BK};
+  ${Pretendard({
+    size: 17,
+    weight: Common.bold.thin,
+    color: Common.colors.BK,
+  })}
+
   ${({ isEmpty }) =>
     isEmpty &&
     `
