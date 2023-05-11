@@ -9,7 +9,7 @@ export const AddInfoContainer = styled.div`
 `
 
 export const HeaderWrapper = styled.div`
-  /* padding: 0 1.25rem; */
+  padding: 0 1.25rem;
   .submit {
     ${Pretendard({
       size: 17,

@@ -126,7 +126,6 @@ const ItemCreate = () => {
           </span>
         </Header>
       </HeaderWrapper>
-
       <ComponentContainer>
         <ComponentWrapper>
           {/* <ImageField error={false}></ImageField> */}
@@ -143,7 +142,9 @@ const ItemCreate = () => {
           )}
         </ComponentWrapper>
         <ComponentWrapper>
-          <Label>언제 어디서 착용했나요?</Label>
+          <LabelContainer>
+            <Label>언제 어디서 착용했나요?</Label>
+          </LabelContainer>
           <DatePlaceField />
         </ComponentWrapper>
         <ComponentWrapper>
@@ -168,22 +169,22 @@ const ItemCreate = () => {
             </>
           )}
         </ComponentWrapper>
-        <BottomBar>
-          <div className='left'>
-            <div className='button' onClick={() => navigate('/item/create/addInfo')}>
-              <InfoAddOff></InfoAddOff>
-              <span>추가 정보</span>
-            </div>
-            <div className='button' onClick={() => navigate('/item/create/addlink')}>
-              <LinkAddOff></LinkAddOff>
-              <span>구매 링크</span>
-            </div>
-          </div>
-          <div className='right'>
-            <StorageOff onClick={() => navigate('/item/create/temporary-storage')}></StorageOff>
-          </div>
-        </BottomBar>
       </ComponentContainer>
+      <BottomBar>
+        <div className='left'>
+          <div className='button' onClick={() => navigate('/item/create/addInfo')}>
+            <InfoAddOff></InfoAddOff>
+            <span>추가 정보</span>
+          </div>
+          <div className='button' onClick={() => navigate('/item/create/addlink')}>
+            <LinkAddOff></LinkAddOff>
+            <span>구매 링크</span>
+          </div>
+        </div>
+        <div className='right'>
+          <StorageOff onClick={() => navigate('/item/create/temporary-storage')}></StorageOff>
+        </div>
+      </BottomBar>
     </ItemCreatePageStyle>
   )
 }
