@@ -1,11 +1,12 @@
 import request from '../core'
-import { GetResponseType } from '../core/type'
+import { GetPaginationResult, GetResponseType } from '../core/type'
 
 export interface RecentBrandResult {
   id: number
   brandName: string
   flag: string
 }
+// [인기 브랜드 조회, 브랜드 검색] 에서 사용 중
 export interface TopBrandResult {
   id: number
   brandKr: string
@@ -35,14 +36,17 @@ export default class BrandService {
     return data.result
   }
   // 브랜드 검색
-  // async searchBrand() {
-  //   const data: GetResponseType<Array<>> = await request.get(
-  //     `${this.brandUrl}/search`,
-  //     {
-  //       params: {
-
-  //       }
-  //     }
-  //   )
-  // }
+  async searchBrand(brandName: string, page: number) {
+    const data: GetResponseType<GetPaginationResult<TopBrandResult>> = await request.get(
+      `${this.brandUrl}/search`,
+      {
+        params: {
+          brandName,
+          page,
+          size: 20,
+        },
+      },
+    )
+    return data.result
+  }
 }
