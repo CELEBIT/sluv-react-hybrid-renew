@@ -8,9 +8,10 @@ import { LinkContianer, LinkWrapper } from './styles'
 import { ReactComponent as DeleteList } from '../../../../../assets/delete_list_24.svg'
 
 import { ErrorText } from '../../../../../components/TextField/DefaultTextfield/styles'
+import { atomKeys } from '../../../../../config/atomKeys'
 
 export const linksState = atom<Link[]>({
-  key: 'linksState',
+  key: atomKeys.linksState,
   default: [{ linkName: '', url: '' }],
 })
 
@@ -47,6 +48,9 @@ const LinkInput = ({ hasError }: LinkInputProps) => {
     updatedLinks.splice(index, 1)
     setLinks(updatedLinks)
   }
+  const handleRemoveData = () => {
+    setLinks([{ linkName: '', url: '' }])
+  }
   const handleLinkChange = (index: number, field: keyof Link, value: string) => {
     setLinks((prevLinks) => {
       const updatedLinks = [...prevLinks]
@@ -70,6 +74,11 @@ const LinkInput = ({ hasError }: LinkInputProps) => {
             onFocus={() => setFocusedInputIndex(index)}
             onBlur={() => setFocusedInputIndex(null)}
           >
+            {link.linkName && links.length === 1 && index !== focusedInputIndex && (
+              <div className='delete'>
+                <DeleteList onClick={() => handleRemoveData()}></DeleteList>
+              </div>
+            )}
             {links.length !== 1 && index !== focusedInputIndex && (
               <div className='delete'>
                 <DeleteList onClick={() => handleRemoveLink(index)}></DeleteList>

@@ -1,19 +1,11 @@
 import styled from '@emotion/styled'
-import { Common, Pretendard } from '../styles'
 
 export const SelectCelebWrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  justify-content: center;
+  align-items: center;
 
-  .selectSearch {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 1.25rem;
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
-  }
+  width: 100%;
   .select {
     display: flex;
     position: relative;
@@ -23,17 +15,16 @@ export const SelectCelebWrapper = styled.div`
     padding-right: 1.25rem;
     gap: 0.5rem;
     & > *:last-child {
-      margin-right: 5.625rem;
+      margin-right: 4.375rem;
     }
     ::-webkit-scrollbar {
       display: none;
     }
   }
   .search {
-    position: fixed;
-    right: 1.25rem;
+    position: absolute;
+    right: 0;
+    overflow-wrap: 0;
+    /* margin-right: calc(1.25rem); */
   }
-`
-export const Label = styled.span`
-  ${Pretendard({ size: 18, weight: Common.bold.regular, color: Common.colors.BK })}
 `

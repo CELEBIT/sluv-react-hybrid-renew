@@ -205,7 +205,7 @@ const ModalWrapper = styled.div`
     padding: 0 1.25rem;
   }
   .long {
-    height: 38.375rem !important;
+    height: 75vh !important;
     overflow: scroll;
   }
   .default {

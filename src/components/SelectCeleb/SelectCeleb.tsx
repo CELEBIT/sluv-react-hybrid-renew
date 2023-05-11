@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { atom, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { atomKeys } from '../../config/atomKeys'
-import { Label, SelectCelebWrapper } from './styles'
+import { SelectCelebWrapper } from './styles'
 import ButtonMedium from '../ButtonMedium/ButtonMedium'
 import useModals from '../Modals/hooks/useModals'
 import { modals } from '../Modals'
@@ -317,37 +317,34 @@ const SelectCeleb = () => {
 
   return (
     <SelectCelebWrapper>
-      <Label>누가 착용 했나요?</Label>
-      <div className='selectSearch'>
-        <div className='select' ref={selectRef}>
-          {/* 관심셀럽 리스트 */}
-          {displayList.map((celeb, index) => {
-            if (!newCeleb.newCelebName) {
-              return (
-                <ButtonMedium
-                  key={index}
-                  text={celeb.celebNameKr}
-                  type='pri'
-                  active={selectedCeleb.id === celeb.id}
-                  onClick={() => onClickCeleb(celeb)}
-                ></ButtonMedium>
-              )
-            } else {
-              return (
-                <ButtonMedium
-                  key={index}
-                  text={celeb.celebNameKr}
-                  type='pri'
-                  active={newCeleb.newCelebName === celeb.celebNameKr}
-                  onClick={() => onClickCeleb(celeb)}
-                ></ButtonMedium>
-              )
-            }
-          })}
-        </div>
-        <div className='search'>
-          <ButtonMedium text='검색' type='sec' icon={true} onClick={onSearchSelect}></ButtonMedium>
-        </div>
+      <div className='select' ref={selectRef}>
+        {/* 관심셀럽 리스트 */}
+        {displayList.map((celeb, index) => {
+          if (!newCeleb.newCelebName) {
+            return (
+              <ButtonMedium
+                key={index}
+                text={celeb.celebNameKr}
+                type='pri'
+                active={selectedCeleb.id === celeb.id}
+                onClick={() => onClickCeleb(celeb)}
+              ></ButtonMedium>
+            )
+          } else {
+            return (
+              <ButtonMedium
+                key={index}
+                text={celeb.celebNameKr}
+                type='pri'
+                active={newCeleb.newCelebName === celeb.celebNameKr}
+                onClick={() => onClickCeleb(celeb)}
+              ></ButtonMedium>
+            )
+          }
+        })}
+      </div>
+      <div className='search'>
+        <ButtonMedium text='검색' type='sec' icon={true} onClick={onSearchSelect}></ButtonMedium>
       </div>
     </SelectCelebWrapper>
   )

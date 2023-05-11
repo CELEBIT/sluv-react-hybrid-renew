@@ -70,7 +70,7 @@ export const ModalWrapper = styled.div`
     padding: 0 1.25rem;
   }
   .long {
-    height: 34.875rem;
+    height: 75vh !important;
   }
 `
 const SearchWrapper = styled.div`

@@ -9,7 +9,7 @@ export const AddInfoContainer = styled.div`
 `
 
 export const HeaderWrapper = styled.div`
-  padding: 0 1.25rem;
+  /* padding: 0 1.25rem; */
   .submit {
     ${Pretendard({
       size: 17,
@@ -22,7 +22,7 @@ export const HeaderWrapper = styled.div`
 export const TextFieldWrapper = styled.div`
   width: 100%;
   height: auto;
-  padding: 1.25rem;
+  padding: 1rem 0;
 `
 export const HashTagWrapper = styled.div`
   display: flex;
@@ -54,7 +54,7 @@ export const SourceWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   width: 100%;
-  padding: 1.25rem;
+  /* padding: 1.25rem; */
   margin-top: 0.5rem;
   border-top: 1px solid ${Common.colors.GR200};
 `

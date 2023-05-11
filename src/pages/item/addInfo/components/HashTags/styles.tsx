@@ -5,7 +5,6 @@ export const HashTagInput = styled.textarea`
   outline: none;
   font-family: 'Pretendard';
   font-size: 1rem;
-  padding: 0 1.25rem;
   width: 100%;
   background-color: transparent;
   word-wrap: break-word;

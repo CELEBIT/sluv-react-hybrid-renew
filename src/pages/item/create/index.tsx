@@ -3,129 +3,183 @@ import BrandItemField, {
   itemNameState,
   selectedBrandState,
 } from './components/BrandItemField/BrandItemField'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
-import DatePlaceField from './components/DatePlaceField/DatePlaceField'
+import { useRecoilValue } from 'recoil'
+import DatePlaceField, {
+  selectedDateState,
+  selectedPlaceState,
+} from './components/DatePlaceField/DatePlaceField'
 import PriceField, { itemPriceState } from './components/PriceField/PriceField'
 import { useNavigate } from 'react-router-dom'
-import { modals } from '../../../components/Modals'
-import useModals from '../../../components/Modals/hooks/useModals'
-import SelectCeleb, {
-  CelebData,
-  selectedGroupState,
-} from '../../../components/SelectCeleb/SelectCeleb'
+import SelectCeleb, { selectedCelebState } from '../../../components/SelectCeleb/SelectCeleb'
 import SelectCategory from './components/SelectCategory/SelectCategory'
-
-const Itzy = {
-  id: 0,
-  celebNameKr: '있지',
-  subCelebList: [
-    {
-      id: 1,
-      celebNameKr: '예지',
-    },
-    {
-      id: 2,
-      celebNameKr: '리아',
-    },
-    {
-      id: 3,
-      celebNameKr: '류진',
-    },
-    {
-      id: 4,
-      celebNameKr: '채령',
-    },
-    {
-      id: 5,
-      celebNameKr: '유나',
-    },
-    {
-      id: 6,
-      celebNameKr: '레미콘',
-    },
-    {
-      id: 7,
-      celebNameKr: '유진',
-    },
-  ],
-}
+import Header from '../../../components/Header/Header'
+import {
+  BottomBar,
+  ComponentContainer,
+  ComponentWrapper,
+  ItemCreatePageStyle,
+  Label,
+  LabelContainer,
+} from './styles'
+import { ReactComponent as Error } from '../../../assets/error_20.svg'
+// import { ReactComponent as LinkAddOn } from '../../../assets/link_add_on_20.svg'
+import { ReactComponent as LinkAddOff } from '../../../assets/link_add_off_20.svg'
+// import { ReactComponent as InfoAddOn } from '../../../assets/info_add_on_20.svg'
+import { ReactComponent as InfoAddOff } from '../../../assets/info_add_off_20.svg'
+// import { ReactComponent as StorageOn } from '../../../assets/storage_on_20.svg'
+import { ReactComponent as StorageOff } from '../../../assets/storage_off_20.svg'
+import { HeaderWrapper } from '../addInfo/styles'
+import { ErrorText } from '../../../components/TextField/DefaultTextfield/styles'
+import { selectedSubCategoryState } from '../../../components/BottomSheetModal/ItemCategoryModal'
+import { addInfoTextState } from '../addInfo'
+import { linksState } from '../addLink/components/LinkInput/LinkInput'
+import { infoSourceState } from '../addInfo/components/sourceInput/SourceInput'
+// const Itzy = {
+//   id: 0,
+//   celebNameKr: '있지',
+//   subCelebList: [
+//     {
+//       id: 1,
+//       celebNameKr: '예지',
+//     },
+//     {
+//       id: 2,
+//       celebNameKr: '리아',
+//     },
+//     {
+//       id: 3,
+//       celebNameKr: '류진',
+//     },
+//     {
+//       id: 4,
+//       celebNameKr: '채령',
+//     },
+//     {
+//       id: 5,
+//       celebNameKr: '유나',
+//     },
+//     {
+//       id: 6,
+//       celebNameKr: '레미콘',
+//     },
+//     {
+//       id: 7,
+//       celebNameKr: '유진',
+//     },
+//   ],
+// }
 
 const ItemCreate = () => {
-  const { openModal } = useModals()
   const navigate = useNavigate()
-
-  const [brandValid, setBrandValid] = useState(true)
-  const [itemValid, setItemValid] = useState(true)
+  const celeb = useRecoilValue(selectedCelebState)
+  const date = useRecoilValue(selectedDateState)
+  const place = useRecoilValue(selectedPlaceState)
+  const category = useRecoilValue(selectedSubCategoryState)
   const brand = useRecoilValue(selectedBrandState)
   const itemName = useRecoilValue(itemNameState)
+  const price = useRecoilValue(itemPriceState)
+  const additionalInfo = useRecoilValue(addInfoTextState)
+  const infoSource = useRecoilValue(infoSourceState)
+  const links = useRecoilValue(linksState)
   const [hasTriedToUpload, setHasTriedToUpload] = useState(false)
-  const itemPrice = useRecoilValue(itemPriceState)
 
-  // const selectedCeleb = useRecoilValue(selectedCelebState)
-  const setSelectedGroup = useSetRecoilState(selectedGroupState)
-
-  const onCheckValid = () => {
+  const onSubmit = () => {
     setHasTriedToUpload(true)
-    if (!brand) {
-      setBrandValid(false)
-      alert('empty brand')
-      console.log('empty brand')
-    } else {
-      setBrandValid(true)
-    }
-    if (!itemName) {
-      setItemValid(false)
-    } else {
-      setItemValid(true)
-    }
-    if (brand && itemName) {
+    if (celeb.id && category.id && brand.id && itemName && price) {
       alert('success')
+    } else {
+      alert('fail')
     }
-  }
-  const onClick = () => {
-    alert(itemPrice)
-  }
-  const onGroupSelect = (group: CelebData) => {
-    openModal(modals.ItemCelebSelectModal)
-    setSelectedGroup(group)
-  }
-  const onSearchSelect = () => {
-    openModal(modals.ItemCelebSearchModal)
-  }
-
-  const onCategorySelect = () => {
-    openModal(modals.ItemCategoryModal)
+    const newItem = {
+      id: 0,
+      imgList: [
+        {
+          imgUrl: 'string',
+          representFlag: true,
+        },
+      ],
+      celebId: celeb.id,
+      whenDiscovery: date ? date.toISOString() : null,
+      whereDiscovery: place ? place : null,
+      categoryId: category.id,
+      brandId: brand.id,
+      itemName: itemName,
+      price: price !== 0 ? price : null,
+      color: null,
+      additionalInfo: additionalInfo ? additionalInfo : null,
+      hashTagIdList: [0],
+      linkList: links[0].linkName ? links : null,
+      infoSource: infoSource ? infoSource : null,
+      newCelebId: 0,
+      newBrandId: 0,
+    }
+    console.log(newItem)
   }
 
   return (
-    <div>
-      Item Create
-      <br />
-      <button onClick={onCheckValid}>업로드</button>
-      <br />
-      <button onClick={onCategorySelect}>카테고리 모달</button>
-      <br />
-      <button onClick={() => onGroupSelect(Itzy)}>있지</button>
-      <br />
-      <button onClick={() => onSearchSelect()}>검색</button>
-      <br />
-      <button onClick={() => navigate('/item/create/addInfo')}>추가 정보</button>
-      <br />
-      <button onClick={onClick}>아이템 가격 확인</button>
-      <br />
-      <button onClick={() => navigate('/item/create/addlink')}>링크추가</button>
-      <DatePlaceField />
-      <br />
-      {/* <span>{selectedCeleb.celebNameKr}</span> */}
-      <SelectCategory />
-      <BrandItemField
-        brandValid={hasTriedToUpload ? brandValid : true}
-        itemNameValid={hasTriedToUpload ? itemValid : true}
-      ></BrandItemField>
-      <br />
-      <PriceField></PriceField>
-      <SelectCeleb></SelectCeleb>
-    </div>
+    <ItemCreatePageStyle>
+      <HeaderWrapper>
+        <Header isModalHeader={false} title='정보 공유하기' hasArrow={true}>
+          <span className='submit' onClick={onSubmit}>
+            등록
+          </span>
+        </Header>
+      </HeaderWrapper>
+
+      <ComponentContainer>
+        <ComponentWrapper>
+          <LabelContainer>
+            {hasTriedToUpload && !celeb.id && <Error></Error>}
+            <Label>누가 착용했나요?</Label>
+          </LabelContainer>
+          <SelectCeleb></SelectCeleb>
+          {hasTriedToUpload && !celeb.id && (
+            <ErrorText className='error'>필수 항목입니다</ErrorText>
+          )}
+        </ComponentWrapper>
+        <ComponentWrapper>
+          <Label>언제 어디서 착용했나요?</Label>
+          <DatePlaceField />
+        </ComponentWrapper>
+        <ComponentWrapper>
+          <LabelContainer>
+            {hasTriedToUpload && (!category.id || !brand || !itemName || !price) && <Error></Error>}
+            <Label>어떤 아이템인가요?</Label>
+          </LabelContainer>
+          <SelectCategory />
+          {hasTriedToUpload && !category.id && (
+            <ErrorText className='error'>필수 항목입니다</ErrorText>
+          )}
+          <BrandItemField
+            brandValid={hasTriedToUpload ? !brand : true}
+            itemNameValid={hasTriedToUpload ? itemName !== '' : true}
+          ></BrandItemField>
+          {brand.id && (
+            <>
+              <PriceField></PriceField>
+              {hasTriedToUpload && !price && (
+                <ErrorText className='error'>필수 항목입니다</ErrorText>
+              )}
+            </>
+          )}
+        </ComponentWrapper>
+        <BottomBar>
+          <div className='left'>
+            <div className='button' onClick={() => navigate('/item/create/addInfo')}>
+              <InfoAddOff></InfoAddOff>
+              <span>추가 정보</span>
+            </div>
+            <div className='button' onClick={() => navigate('/item/create/addlink')}>
+              <LinkAddOff></LinkAddOff>
+              <span>구매 링크</span>
+            </div>
+          </div>
+          <div className='right'>
+            <StorageOff onClick={() => navigate('/item/create/temporary-storage')}></StorageOff>
+          </div>
+        </BottomBar>
+      </ComponentContainer>
+    </ItemCreatePageStyle>
   )
 }
 
