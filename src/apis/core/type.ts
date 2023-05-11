@@ -1,4 +1,4 @@
-export interface GetResponseType<T> {
+export interface ResponseType<T = unknown> {
   isSuccess: boolean
   code: number
   message: string
@@ -10,3 +10,5 @@ export interface GetPaginationResult<T> {
   page: number
   content: Array<T>
 }
+
+export type BrandFlag = 'Y' | 'N'
