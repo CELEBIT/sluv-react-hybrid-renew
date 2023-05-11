@@ -12,69 +12,17 @@ import BrandLogo from '../../BrandLogo/BrandLogo'
 import useBrandSearchQuery from '../../../apis/brand/hooks/useBrandSearchQuery'
 import { brandNameSearchState } from './ItemBrandSelectModal'
 import { useObserver } from '../../../hooks/useObserver'
+import { useDebounce } from 'use-debounce'
 
 const BrandList = () => {
-  // const brandList = [
-  //   {
-  //     id: 1,
-  //     brandKr: '피지컬 에듀케이션 디파트먼트',
-  //     brandEn: 'Physical Education Department',
-  //     brandImgUrl:
-  //       'https://image.msscdn.net/mfile_s01/_brand/free_medium/physicaleducation.png?202304121128',
-  //   },
-  //   {
-  //     id: 2,
-  //     brandKr: '반스',
-  //     brandEn: 'Vans',
-  //     brandImgUrl: 'https://image.msscdn.net/mfile_s01/_brand/free_medium/vans.png?202304181156',
-  //   },
-  //   {
-  //     id: 3,
-  //     brandKr: '무신사 스탠다드',
-  //     brandEn: ' Musinsa Standard',
-  //     brandImgUrl:
-  //       'https://image.msscdn.net/mfile_s01/_brand/free_medium/musinsastandard.png?202304201136',
-  //   },
-  //   {
-  //     id: 4,
-  //     brandKr: '플랙',
-  //     brandEn: 'Plac',
-  //     brandImgUrl: 'https://image.msscdn.net/mfile_s01/_brand/free_medium/plac.png?202303131417',
-  //   },
-  //   {
-  //     id: 5,
-  //     brandKr: '피지컬 에듀케이션 디파트먼트',
-  //     brandEn: 'Physical Education Department',
-  //     brandImgUrl:
-  //       'https://image.msscdn.net/mfile_s01/_brand/free_medium/physicaleducation.png?202304121128',
-  //   },
-  //   {
-  //     id: 6,
-  //     brandKr: '반스',
-  //     brandEn: 'Vans',
-  //     brandImgUrl: 'https://image.msscdn.net/mfile_s01/_brand/free_medium/vans.png?202304181156',
-  //   },
-  //   {
-  //     id: 7,
-  //     brandKr: '무신사 스탠다드',
-  //     brandEn: ' Musinsa Standard',
-  //     brandImgUrl:
-  //       'https://image.msscdn.net/mfile_s01/_brand/free_medium/musinsastandard.png?202304201136',
-  //   },
-  //   {
-  //     id: 8,
-  //     brandKr: '플랙',
-  //     brandEn: 'Plac',
-  //     brandImgUrl: 'https://image.msscdn.net/mfile_s01/_brand/free_medium/plac.png?202303131417',
-  //   },
-  // ]
   const setBrand = useSetRecoilState(selectedBrandState)
   const brandName = useRecoilValue(brandNameSearchState)
+  const [debouncedBrandName] = useDebounce(brandName, 300)
 
   const { closeModal } = useModals()
   const { searchBrand } = useBrandSearchQuery()
   const { data, error, fetchNextPage, status, isFetching, isFetchingNextPage } =
-    searchBrand(brandName)
+    searchBrand(debouncedBrandName)
   const bottom = useRef(null)
 
   const onIntersect = ([entry]: IntersectionObserverEntry[]) =>
