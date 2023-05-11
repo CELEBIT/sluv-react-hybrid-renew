@@ -22,8 +22,13 @@ const useRecentBrandQuery = () => {
       },
     },
   )
+  const deleteAllRecentBrands = useMutation(() => brand.deleteAllRecentBrands(), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(queryKeys.brandRecentSelected)
+    },
+  })
 
-  return { getBrandRecentSelected, deleteRecentBrand }
+  return { getBrandRecentSelected, deleteRecentBrand, deleteAllRecentBrands }
 }
 
 export default useRecentBrandQuery
