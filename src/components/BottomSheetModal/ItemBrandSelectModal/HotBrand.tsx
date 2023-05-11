@@ -16,7 +16,7 @@ const HotBrand = () => {
   const {
     getTopBrand: { data },
   } = useTopBrandQuery()
-  console.log(data)
+  console.log('인기 브랜드', data)
 
   const setBrand = useSetRecoilState(selectedBrandState)
   const { closeModal } = useModals()
