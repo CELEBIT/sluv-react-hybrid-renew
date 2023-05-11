@@ -11,6 +11,7 @@ import useModals from '../../Modals/hooks/useModals'
 import { modals } from '../../Modals'
 import { RecentBrandResult } from '../../../apis/brand/brandService'
 import RecentBrandChip from './RecentBrandChip'
+import useRecentBrandQuery from '../../../apis/brand/hooks/useRecentBrandQuery'
 
 interface RecentSelectBrandProps {
   data?: Array<RecentBrandResult>
@@ -18,9 +19,12 @@ interface RecentSelectBrandProps {
 
 const RecentSelectBrand = ({ data }: RecentSelectBrandProps) => {
   const setBrand = useSetRecoilState(selectedBrandState)
+  const {
+    deleteAllRecentBrands: { mutate },
+  } = useRecentBrandQuery()
 
   const onDeleteAllSearchLog = () => {
-    alert('전체 검색어 삭제')
+    mutate()
   }
 
   const { closeModal } = useModals()
@@ -45,13 +49,6 @@ const RecentSelectBrand = ({ data }: RecentSelectBrandProps) => {
                 brandData={brand}
                 onClick={() => onChipClick(brand)}
               />
-              // <Chip
-              //   key={brand.id}
-              //   text={brand.brandName}
-              //   onClick={() => onChipClick(brand)}
-              //   canDelete={true}
-              //   onDelete={onDeleteEachSearchLog}
-              // ></Chip>
             )
           })}
       </ChipWrapper>

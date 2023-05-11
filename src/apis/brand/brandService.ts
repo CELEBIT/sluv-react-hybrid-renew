@@ -38,6 +38,12 @@ export default class BrandService {
     })
     return data
   }
+  // 최근 선택한 브랜드 [모두] 삭제
+  async deleteAllRecentBrands() {
+    const data: ResponseType = await request.delete(`${this.recentBrandUrl}`)
+    return data
+  }
+
   // 인기 브랜드 조회
   async getBrandTop() {
     const data: ResponseType<Array<TopBrandResult>> = await request.get(`${this.brandUrl}/top`)
