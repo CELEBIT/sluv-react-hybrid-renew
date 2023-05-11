@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import BottomSheetModal from '..'
 import styled from '@emotion/styled'
 import useModals from '../../Modals/hooks/useModals'
@@ -9,9 +9,16 @@ import RecentSearch from './RecentSelectBrand'
 import BrandList from './BrandList'
 import Header from '../../Header/Header'
 import useRecentBrandQuery from '../../../apis/brand/hooks/useRecentBrandQuery'
+import { atom, useRecoilState } from 'recoil'
+import { atomKeys } from '../../../config/atomKeys'
+
+export const brandNameSearchState = atom<string>({
+  key: atomKeys.brandNameSearchState,
+  default: '',
+})
 
 const ItemBrandSelectModal = () => {
-  const [searchValue, setSearchValue] = useState<string>('')
+  const [searchValue, setSearchValue] = useRecoilState<string>(brandNameSearchState)
   const { closeModal } = useModals()
 
   const {
@@ -52,7 +59,7 @@ const ItemBrandSelectModal = () => {
           </div>
         ) : (
           // 입력내용 존재
-          <div className='long'>{success ? <BrandList></BrandList> : <>없는 브랜드</>}</div>
+          <div className='long'>{success ? <BrandList /> : <>없는 브랜드</>}</div>
         )}
       </ModalWrapper>
     </BottomSheetModal>
