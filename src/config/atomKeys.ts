@@ -10,4 +10,7 @@ export const atomKeys = {
   selectedGroupState: 'selectedGroupState' as const,
   selectedCelebState: 'selectedCelebState' as const,
   selectedNewCelebState: 'selectedNewCelebState' as const,
+  CategoryListState: 'CategoryListState' as const,
+  selectedParentCategoryIdState: 'selectedParentCategoryIdState' as const,
+  selectedSubCategoryIdState: 'selectedCategoryIdState' as const,
 }

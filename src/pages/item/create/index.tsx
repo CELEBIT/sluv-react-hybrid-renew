@@ -13,6 +13,7 @@ import SelectCeleb, {
   CelebData,
   selectedGroupState,
 } from '../../../components/SelectCeleb/SelectCeleb'
+import SelectCategory from './components/SelectCategory/SelectCategory'
 
 const Itzy = {
   id: 0,
@@ -92,11 +93,17 @@ const ItemCreate = () => {
     openModal(modals.ItemCelebSearchModal)
   }
 
+  const onCategorySelect = () => {
+    openModal(modals.ItemCategoryModal)
+  }
+
   return (
     <div>
       Item Create
       <br />
       <button onClick={onCheckValid}>업로드</button>
+      <br />
+      <button onClick={onCategorySelect}>카테고리 모달</button>
       <br />
       <button onClick={() => onGroupSelect(Itzy)}>있지</button>
       <br />
@@ -110,6 +117,7 @@ const ItemCreate = () => {
       <DatePlaceField />
       <br />
       {/* <span>{selectedCeleb.celebNameKr}</span> */}
+      <SelectCategory />
       <BrandItemField
         brandValid={hasTriedToUpload ? brandValid : true}
         itemNameValid={hasTriedToUpload ? itemValid : true}

@@ -61,7 +61,7 @@ const ItemBrandSelectModal = () => {
 
 export default ItemBrandSelectModal
 
-const ModalWrapper = styled.div`
+export const ModalWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
