@@ -34,6 +34,7 @@ import { selectedSubCategoryState } from '../../../components/BottomSheetModal/I
 import { addInfoTextState } from '../addInfo'
 import { linksState } from '../addLink/components/LinkInput/LinkInput'
 import { infoSourceState } from '../addInfo/components/sourceInput/SourceInput'
+import ImageField from './components/ImageField/ImageField'
 // const Itzy = {
 //   id: 0,
 //   celebNameKr: '있지',
@@ -127,6 +128,10 @@ const ItemCreate = () => {
       </HeaderWrapper>
 
       <ComponentContainer>
+        <ComponentWrapper>
+          {/* <ImageField error={false}></ImageField> */}
+          <ImageField hasTriedToUpload={hasTriedToUpload}></ImageField>
+        </ComponentWrapper>
         <ComponentWrapper>
           <LabelContainer>
             {hasTriedToUpload && !celeb.id && <Error></Error>}
