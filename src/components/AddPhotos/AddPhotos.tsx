@@ -33,11 +33,11 @@ export const imgListState = atom<Image[]>({
         'https://as1.ftcdn.net/v2/jpg/03/24/14/46/1000_F_324144671_M7MHvhiUyIbLLyiaSHIAjhRpijdHK9eW.jpg',
       representFlag: false,
     },
-    {
-      imgUrl:
-        'https://as1.ftcdn.net/v2/jpg/03/24/14/46/1000_F_324144671_M7MHvhiUyIbLLyiaSHIAjhRpijdHK9eW.jpg',
-      representFlag: false,
-    },
+    // {
+    //   imgUrl:
+    //     'https://as1.ftcdn.net/v2/jpg/03/24/14/46/1000_F_324144671_M7MHvhiUyIbLLyiaSHIAjhRpijdHK9eW.jpg',
+    //   representFlag: false,
+    // },
   ],
 })
 
@@ -45,7 +45,7 @@ const AddPhotos = () => {
   const imgList = useRecoilValue(imgListState)
   return (
     <AddPhotosWrapper>
-      <AddButton itemCnt={imgList.length}></AddButton>
+      {imgList.length < 5 && <AddButton itemCnt={imgList.length}></AddButton>}
       {imgList.map((img, index) => {
         return (
           <Photo

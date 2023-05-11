@@ -7,6 +7,9 @@ export const AddPhotosWrapper = styled.div`
   overflow-x: scroll;
   padding-top: 1rem;
   gap: 0.75rem;
+
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
   ::-webkit-scrollbar {
     display: hidden;
     height: 0;

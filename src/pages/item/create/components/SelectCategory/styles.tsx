@@ -6,9 +6,10 @@ export const ChipWrapper = styled.div`
   box-sizing: border-box;
   gap: 1.0625rem;
   height: auto;
-  & > *:last-child {
+  padding: 0 1.25rem;
+  /* & > *:last-child {
     margin-right: 1.25rem;
-  }
+  } */
   ::-webkit-scrollbar {
     display: none;
   }
