@@ -1,5 +1,5 @@
 import request from '../core'
-import { GetResponseType } from '../core/type'
+import { ResponseType } from '../core/type'
 
 export interface ParentCategoryResult {
   id: number
@@ -74,7 +74,7 @@ export default class ItemService {
 
   // 아이템 카테고리 조회
   async getItemCategory() {
-    const data: GetResponseType<Array<ParentCategoryResult>> = await request.get(
+    const data: ResponseType<Array<ParentCategoryResult>> = await request.get(
       `${this.itemUrl}/category`,
     )
 
@@ -82,7 +82,7 @@ export default class ItemService {
   }
   // 임시저장 아이템 게시글 조회
   async getTempItem() {
-    const data: GetResponseType<Array<TempItemResult>> = await request.get(`${this.tempItemUrl}`, {
+    const data: ResponseType<Array<TempItemResult>> = await request.get(`${this.tempItemUrl}`, {
       params: {},
     })
     return data.result
