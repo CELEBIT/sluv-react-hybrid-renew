@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { modals } from '../../../../../components/Modals'
 import useModals from '../../../../../components/Modals/hooks/useModals'
-import { Label, SelectCelebWrapper } from '../../../../../components/SelectCeleb/styles'
 import useItemCategoryQuery from '../../../../../apis/item/hooks/useItemCategoryQuery'
 import ButtonMedium from '../../../../../components/ButtonMedium/ButtonMedium'
 import {
@@ -30,7 +29,11 @@ const SelectCategory = () => {
   const onCategoryClick = (category: Category) => {
     openModal(modals.ItemCategoryModal)
     setSelectedParentCategory(category)
-    setSelectedSubCategory({ id: 0, name: '' })
+    if (category.id === 9) {
+      setSelectedSubCategory({ id: 9, name: '기타' })
+    } else {
+      setSelectedSubCategory({ id: 0, name: '' })
+    }
   }
   useEffect(() => {
     if (selectRef.current) {
@@ -45,9 +48,7 @@ const SelectCategory = () => {
 
   useEffect(() => {
     if (data) {
-      console.log('parent', selectedParentCategory)
       const updatedList = data.filter((category) => category.id !== selectedParentCategory.id)
-      console.log('updatedList', updatedList)
       if (selectedParentCategory.id !== 9) {
         const newDisplayItem = {
           id: selectedParentCategory.id,
@@ -64,72 +65,72 @@ const SelectCategory = () => {
           name: selectedParentCategory.name,
         }
         setCategoryDisplayList([newDisplayItem, ...updatedList])
+        // setSelectedSubCategory(newDisplayItem)
       }
     }
   }, [selectedParentCategory, selectedSubCategory])
 
   return (
-    <SelectCelebWrapper>
-      <Label>어떤 아이템인가요?</Label>
-      <ChipWrapper ref={selectRef}>
-        {selectedParentCategory.id !== 0 && selectedSubCategory.id !== 0 ? (
-          <>
-            {categoryDisplayList?.map((category) => {
-              return (
-                <ButtonMedium
-                  key={category.id}
-                  text={category.name}
-                  icon={true}
-                  type='pri'
-                  active={selectedParentCategory.id === category.id && selectedSubCategory.id !== 0}
-                  onClick={() => onCategoryClick(category)}
-                ></ButtonMedium>
-              )
-            })}
-          </>
-        ) : (
-          <>
-            {selectedParentCategory.id === 9 ? (
-              <>
-                {categoryDisplayList?.map((category) => {
+    // <SelectCategoryWrapper>
+    <ChipWrapper ref={selectRef}>
+      {selectedParentCategory.id !== 0 && selectedSubCategory.id !== 0 ? (
+        <>
+          {categoryDisplayList?.map((category) => {
+            return (
+              <ButtonMedium
+                key={category.id}
+                text={category.name}
+                icon={true}
+                type='pri'
+                active={selectedParentCategory.id === category.id && selectedSubCategory.id !== 0}
+                onClick={() => onCategoryClick(category)}
+              ></ButtonMedium>
+            )
+          })}
+        </>
+      ) : (
+        <>
+          {selectedParentCategory.id === 9 ? (
+            <>
+              {categoryDisplayList?.map((category) => {
+                return (
+                  <ButtonMedium
+                    key={category.id}
+                    text={category.name}
+                    icon={true}
+                    type='pri'
+                    active={selectedParentCategory.id === category.id}
+                    onClick={() => onCategoryClick(category)}
+                  ></ButtonMedium>
+                )
+              })}
+            </>
+          ) : (
+            <>
+              {(data?.length ?? 0) > 0 &&
+                data?.map((category) => {
                   return (
                     <ButtonMedium
                       key={category.id}
                       text={category.name}
                       icon={true}
                       type='pri'
-                      active={selectedParentCategory.id === category.id}
+                      active={
+                        selectedParentCategory.id === 9
+                          ? true
+                          : selectedParentCategory.id === category.id &&
+                            selectedSubCategory.id !== 0
+                      }
                       onClick={() => onCategoryClick(category)}
                     ></ButtonMedium>
                   )
                 })}
-              </>
-            ) : (
-              <>
-                {(data?.length ?? 0) > 0 &&
-                  data?.map((category) => {
-                    return (
-                      <ButtonMedium
-                        key={category.id}
-                        text={category.name}
-                        icon={true}
-                        type='pri'
-                        active={
-                          selectedParentCategory.id === 9
-                            ? true
-                            : selectedParentCategory.id === category.id &&
-                              selectedSubCategory.id !== 0
-                        }
-                        onClick={() => onCategoryClick(category)}
-                      ></ButtonMedium>
-                    )
-                  })}
-              </>
-            )}
-          </>
-        )}
-      </ChipWrapper>
-    </SelectCelebWrapper>
+            </>
+          )}
+        </>
+      )}
+    </ChipWrapper>
+    // </SelectCategoryWrapper>
   )
 }
 
