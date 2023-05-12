@@ -8,13 +8,14 @@ interface PhotoProps {
   borderRadius: number
   imgUrl: string
   candelete?: boolean // 정보 공유하기 -> 삭제 여부를 위해 존재
+  onDelete?: () => void
   representFlag?: boolean // 정보 공유하기 -> 대표사진 여부를 위해 존재
 }
 
-const Photo = ({ size, borderRadius, imgUrl, candelete, representFlag }: PhotoProps) => {
+const Photo = ({ size, borderRadius, imgUrl, candelete, onDelete, representFlag }: PhotoProps) => {
   return (
     <Img size={size} borderRadius={borderRadius} imgUrl={imgUrl}>
-      {candelete && <DeleteList className='delete'></DeleteList>}
+      {candelete && <DeleteList className='delete' onClick={onDelete}></DeleteList>}
       {representFlag && <Represent className='represent'></Represent>}
     </Img>
   )
