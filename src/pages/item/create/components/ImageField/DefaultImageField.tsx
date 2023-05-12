@@ -28,9 +28,8 @@ const DefaultImageFieldWrapper = styled.div<{ error: boolean }>`
   justify-content: center;
   align-items: center;
   gap: 0.25rem;
-  margin-top: 1rem;
+  margin: 1rem 1.25rem 0 1.25rem;
   height: 4.625rem;
-  width: 100%;
   border: 1px solid ${Common.colors.GR200};
   border-radius: 0.5rem;
   ${Pretendard({

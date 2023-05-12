@@ -15,4 +15,10 @@ export const AddPhotosWrapper = styled.div`
     height: 0;
     width: 0;
   }
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    gap: 0.75rem;
+  }
 `
