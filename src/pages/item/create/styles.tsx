@@ -4,13 +4,20 @@ import { Common, Pretendard } from '../../../components/styles'
 export const ItemCreatePageStyle = styled.div`
   display: flex;
   flex-direction: column;
+  margin-left: -1.25rem;
+  width: 100vw;
   height: 100vh;
+  padding-left: 0;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 export const LabelContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  padding-left: 1.25rem;
   gap: 0.25rem;
 `
 
@@ -22,10 +29,11 @@ export const ComponentContainer = styled.div`
   flex-direction: column;
   position: relative;
   gap: 2.5rem;
-  height: 100vh;
+  height: 100%;
   width: 100%;
   overflow-y: scroll;
-  padding-bottom: 5.625rem;
+  padding-bottom: 1.25rem;
+  /* padding-bottom: 5.625rem; */
   ::-webkit-scrollbar {
     display: none;
   }
@@ -43,14 +51,13 @@ export const ComponentWrapper = styled.div`
 
 export const BottomBar = styled.div`
   display: flex;
-  position: fixed;
+  position: relative;
   justify-content: space-between;
   bottom: 0;
   padding: 0 1rem;
   background-color: white;
   border-top: 1px solid ${Common.colors.GR300};
   width: 100%;
-  margin-left: calc(-1.25rem);
   .left {
     display: flex;
     justify-content: center;

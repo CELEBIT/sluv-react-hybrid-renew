@@ -46,6 +46,7 @@ export const DisplayFieldWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   width: 100%;
+  padding: 0 1.25rem;
   &:focus-within > * {
     border-color: ${Common.colors.BK};
   }
