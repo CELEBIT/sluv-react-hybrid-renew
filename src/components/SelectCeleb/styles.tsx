@@ -4,15 +4,15 @@ export const SelectCelebWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
   width: 100%;
+  padding-right: 1.25rem;
   .select {
     display: flex;
     position: relative;
     overflow-x: scroll;
     white-space: nowrap;
     box-sizing: border-box;
-    padding-right: 1.25rem;
+    padding: 0 1.25rem;
     gap: 0.5rem;
     & > *:last-child {
       margin-right: 4.375rem;
@@ -25,6 +25,6 @@ export const SelectCelebWrapper = styled.div`
     position: absolute;
     right: 0;
     overflow-wrap: 0;
-    /* margin-right: calc(1.25rem); */
+    padding-right: 1.25rem;
   }
 `

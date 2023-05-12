@@ -6,9 +6,10 @@ export const DatePlaceWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   height: 5.375rem;
-  width: 100%;
+  width: calc(100%-1.25rem);
   border-radius: 0.5rem;
   padding: 0.625rem 1.25rem;
+  margin: 0 1.25rem;
   border: 0.0625rem solid ${Common.colors.GR200};
 `
 

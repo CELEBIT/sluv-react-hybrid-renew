@@ -5,8 +5,9 @@ export const PriceFieldWrapper = styled.div`
   display: flex;
   align-items: center;
   height: 4.1875rem;
-  width: 100%;
+  width: calc(100%-1.25rem);
   gap: 0.6875rem;
+  margin: 0 1.25rem;
   background-color: white;
   border: 1px solid ${Common.colors.GR200};
   border-radius: 0.5rem;
