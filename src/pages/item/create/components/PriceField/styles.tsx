@@ -18,12 +18,16 @@ export const PriceFieldWrapper = styled.div`
   &:focus-within {
     border: 1px solid ${Common.colors.BK};
   }
+  .Info {
+    flex-shrink: 0;
+  }
 `
 
 export const PriceInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  white-space: nowrap;
   flex-grow: 1;
   .valueText {
     ${Pretendard({
