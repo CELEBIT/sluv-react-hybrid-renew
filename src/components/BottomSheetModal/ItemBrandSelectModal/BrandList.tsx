@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Common, Pretendard } from '../../styles'
+import { Common } from '../../styles'
 import React, { useRef } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import {
@@ -63,8 +63,18 @@ const BrandList = () => {
               return (
                 <EachBrand key={brand.id} onClick={() => onSelectBrand(brand)}>
                   <TextWrap>
-                    <BrandKR>{brand.brandKr}</BrandKR>
-                    <BrandEN>{brand.brandEn}</BrandEN>
+                    <HighlightedText
+                      searchText={brandName}
+                      text={brand.brandKr}
+                      fontSize={1.125}
+                      fontWeight={Common.bold.regular}
+                    ></HighlightedText>
+                    <HighlightedText
+                      searchText={brandName}
+                      text={brand.brandEn}
+                      fontSize={0.9375}
+                      fontWeight={Common.bold.thin}
+                    ></HighlightedText>
                   </TextWrap>
                   <BrandLogo size={46} url={brand.brandImgUrl} />
                 </EachBrand>
@@ -115,14 +125,4 @@ const EachBrand = styled.div`
 const TextWrap = styled.div`
   display: flex;
   flex-direction: column;
-`
-const BrandKR = styled.span`
-  ${Pretendard({ size: 18, weight: Common.bold.regular, color: Common.colors.BK })}
-`
-const BrandEN = styled.span`
-  font-family: 'Pretendard';
-  font-weight: 300;
-  font-size: 0.9375rem;
-  color: ${Common.colors.GR500};
-  margin-top: 0.25rem;
 `
