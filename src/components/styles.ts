@@ -81,6 +81,17 @@ export const Common = {
     GR100: '#F4F5F6',
 
     ERROR: '#FA5252',
+
+    PK: '#F06595',
+    PKBg: '#FCF0F6',
+    ORG: '#FF7C51',
+    ORGBG: '#FFEDE7',
+    YL: '#D89B00',
+    YLBG: '#FFFBDC',
+    GRN: '#72B16D',
+    GRNBG: '#E9FEE8',
+    BL: '#4DABF7',
+    BLBG: '#E7F5FF',
   },
   bold: {
     thin: 400,

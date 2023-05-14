@@ -1,7 +1,7 @@
 import React from 'react'
 import { atom, useRecoilValue } from 'recoil'
 import DisplayField from '../../../../../components/TextField/DisplayField/DisplayField'
-import { Common } from '../../../../../components/styles'
+import { Common, Pretendard } from '../../../../../components/styles'
 import styled from '@emotion/styled'
 import useModals from '../../../../../components/Modals/hooks/useModals'
 import { modals } from '../../../../../components/Modals'
@@ -82,12 +82,13 @@ const PlaceHolder = styled.span`
   color: ${Common.colors.GR500} !important;
 `
 
-const Brand = styled.div`
+export const Brand = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   width: 100%;
   span {
     margin-left: 0.5rem;
+    ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.GR600 })}
   }
 `
