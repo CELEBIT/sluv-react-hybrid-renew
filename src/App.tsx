@@ -25,6 +25,7 @@ const TemporaryStorage = React.lazy(() => import('./pages/item/temporary-storage
 // 아이템 업로드 상세 페이지
 const AddInfo = React.lazy(() => import('./pages/item/addInfo'))
 const AddLink = React.lazy(() => import('./pages/item/addLink'))
+const ItemDetail = React.lazy(() => import('./pages/item/detail'))
 
 const App = () => {
   useLayoutEffect(() => {
@@ -63,6 +64,7 @@ const App = () => {
             <Route path='/closet' element={<Closet />} />
             <Route path='/user' element={<User />} />
             <Route path='/item/create/temporary-storage' element={<TemporaryStorage />} />
+            <Route path='/item/detail/:id' element={<ItemDetail />} />
           </Routes>
         </Suspense>
         <Modals />

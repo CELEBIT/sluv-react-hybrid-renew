@@ -2,6 +2,8 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { ReactComponent as Represent } from '../../assets/represent_24.svg'
 import { ReactComponent as DeleteList } from '../../assets/delete_list_24.svg'
+import { ReactComponent as StorageOff } from '../../assets/storage_list_off_24.svg'
+import { ReactComponent as StorageOn } from '../../assets/storage_on_24.svg'
 
 interface PhotoProps {
   size: number
@@ -10,13 +12,31 @@ interface PhotoProps {
   candelete?: boolean // 정보 공유하기 -> 삭제 여부를 위해 존재
   onDelete?: () => void
   representFlag?: boolean // 정보 공유하기 -> 대표사진 여부를 위해 존재
+  storageFlag?: boolean // 아이템 상세 -> 바인더 저장여부
 }
 
-const Photo = ({ size, borderRadius, imgUrl, candelete, onDelete, representFlag }: PhotoProps) => {
+const Photo = ({
+  size,
+  borderRadius,
+  imgUrl,
+  candelete,
+  onDelete,
+  representFlag,
+  storageFlag,
+}: PhotoProps) => {
   return (
     <Img size={size} borderRadius={borderRadius} imgUrl={imgUrl}>
       {candelete && <DeleteList className='delete' onClick={onDelete}></DeleteList>}
       {representFlag && <Represent className='represent'></Represent>}
+      {storageFlag !== undefined && (
+        <>
+          {storageFlag ? (
+            <StorageOn className='represent'></StorageOn>
+          ) : (
+            <StorageOff className='represent'></StorageOff>
+          )}
+        </>
+      )}
     </Img>
   )
 }
