@@ -1,0 +1,95 @@
+import React, { useState } from 'react'
+import { useKeenSlider } from 'keen-slider/react'
+import 'keen-slider/keen-slider.min.css'
+import styled from '@emotion/styled'
+
+interface Image {
+  imgUrl: string
+  representFlag: boolean
+}
+
+interface CarouselProps {
+  imgList: Array<Image>
+}
+
+const Carousel = ({ imgList }: CarouselProps) => {
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [loaded, setLoaded] = useState(false)
+  const [sliderRef, instanceRef] = useKeenSlider({
+    initial: 0,
+    slideChanged(slider) {
+      setCurrentSlide(slider.track.details.rel)
+    },
+    created() {
+      setLoaded(true)
+    },
+  })
+  return (
+    <div className='navigation-wrapper' style={{ position: 'relative' }}>
+      <ImageContainer ref={sliderRef} className='keen-slider'>
+        {imgList.map((itemImg: Image, index) => (
+          <Image key={index} url={itemImg.imgUrl} className='keen-slider__slide'></Image>
+        ))}
+      </ImageContainer>
+      {imgList && (
+        <>
+          {loaded && instanceRef.current && (
+            <Dots>
+              {[...Array(instanceRef.current.track.details.slides.length).keys()].map((idx) => {
+                return (
+                  <CarouselDot
+                    key={idx}
+                    className={'dot' + (currentSlide === idx ? ' active' : '')}
+                  ></CarouselDot>
+                )
+              })}
+            </Dots>
+          )}
+        </>
+      )}
+    </div>
+  )
+}
+
+export default Carousel
+
+const ImageContainer = styled.div`
+  display: flex;
+  width: 100%;
+  min-height: 23.4375rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`
+
+const Image = styled.div<{ url: string }>`
+  width: 100%;
+  min-height: 23.4375rem;
+  background-image: url(${(props) => props.url});
+  background-size: cover;
+  background-position: 50%;
+  background-color: lightgray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+const Dots = styled.div`
+  display: flex;
+  position: relative;
+  bottom: 20px;
+  justify-content: center;
+  .active {
+    background: #ffffff;
+  }
+`
+
+const CarouselDot = styled.div`
+  border: none;
+  width: 30px;
+  height: 2px;
+  background: rgba(240, 240, 240, 0.5);
+  margin: 0;
+`

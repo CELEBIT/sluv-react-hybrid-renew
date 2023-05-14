@@ -49,6 +49,7 @@ import ButtonSmall from '../../../components/ButtonSmall/ButtonSmall'
 import { formatPrice } from '../create/components/PriceField/price.util'
 import { HeaderWrapper } from '../addInfo/styles'
 import RecommendedItemList from '../../../components/RecommendedItem/RecommendedItemList'
+import Carousel from './components/Carousel/Carousel'
 
 const ItemDetail = () => {
   const colors = ['gray', 'pink', 'orange', 'yellow', 'green', 'blue']
@@ -153,6 +154,33 @@ const ItemDetail = () => {
       scrapStatus: false,
     },
   ]
+  const imgList = [
+    {
+      imgUrl:
+        'https://images.pexels.com/photos/2893685/pexels-photo-2893685.jpeg?cs=srgb&dl=pexels-oziel-g%C3%B3mez-2893685.jpg&fm=jpg',
+      representFlag: true,
+    },
+    {
+      imgUrl:
+        'https://iso.500px.com/wp-content/uploads/2016/02/stock-photo-114337435-1500x1000.jpg',
+      representFlag: true,
+    },
+    {
+      imgUrl:
+        'https://images.pexels.com/photos/3680219/pexels-photo-3680219.jpeg?cs=srgb&dl=pexels-lukas-rodriguez-3680219.jpg&fm=jpg',
+      representFlag: true,
+    },
+    {
+      imgUrl:
+        'https://plus.unsplash.com/premium_photo-1664701475272-953393050754?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGhvdG98ZW58MHx8MHx8&w=1000&q=80',
+      representFlag: true,
+    },
+    {
+      imgUrl:
+        'https://img.freepik.com/free-photo/colorful-heart-air-balloon-shape-collection-concept-isolated-color-background-beautiful-heart-ball-event_90220-1047.jpg',
+      representFlag: true,
+    },
+  ]
   return (
     <ItemDetailContainer>
       <HeaderWrapper>
@@ -165,6 +193,7 @@ const ItemDetail = () => {
         </Header>
       </HeaderWrapper>
       <ItemWrapper>
+        <Carousel imgList={imgList}></Carousel>
         <BasicInfoWrapper>
           <div className='top'>
             <Badge color='gray'>스트레이키즈 리노</Badge>
