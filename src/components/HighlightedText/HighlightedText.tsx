@@ -5,23 +5,35 @@ import { Common } from '../styles'
 interface HighlightedTextProps {
   searchText: string
   text: string
+  fontSize?: number
+  fontWeight?: number
 }
 
-const HighlightedText = ({ searchText, text }: HighlightedTextProps) => {
+const HighlightedText = ({ searchText, text, fontSize, fontWeight }: HighlightedTextProps) => {
   const regex = new RegExp(`(${searchText})`, 'gi')
   const parts = text.split(regex)
 
   return (
-    <div>
+    <HighlightWrapper fontSize={fontSize} fontWeight={fontWeight}>
       {parts.map((part, i) =>
-        regex.test(part) ? <Highlight key={i}>{part}</Highlight> : <span key={i}>{part}</span>,
+        regex.test(part) ? (
+          <span className='highlighted' key={i}>
+            {part}
+          </span>
+        ) : (
+          <span key={i}>{part}</span>
+        ),
       )}
-    </div>
+    </HighlightWrapper>
   )
 }
+const HighlightWrapper = styled.div<{ fontSize?: number; fontWeight?: number }>`
+  font-family: 'Pretendard';
+  font-size: ${(props) => props.fontSize}rem;
+  font-weight: ${(props) => props.fontWeight};
 
-const Highlight = styled.span`
-  color: ${Common.colors.SEC} !important;
+  .highlighted {
+    color: ${Common.colors.SEC} !important;
+  }
 `
-
 export default HighlightedText

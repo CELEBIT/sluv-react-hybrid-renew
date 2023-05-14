@@ -7,6 +7,7 @@ import useModals from '../../../../../components/Modals/hooks/useModals'
 import { modals } from '../../../../../components/Modals'
 import BrandLogo from '../../../../../components/BrandLogo/BrandLogo'
 import { atomKeys } from '../../../../../config/atomKeys'
+import { BrandFlag } from '../../../../../apis/core/type'
 interface BrandItemFieldProps {
   brandValid: boolean
   itemNameValid: boolean
@@ -16,6 +17,7 @@ export interface Brand {
   brandKr?: string
   brandEn?: string
   brandImgUrl?: string
+  flag?: BrandFlag
 }
 
 // 브랜드, 제품명 Atoms //
