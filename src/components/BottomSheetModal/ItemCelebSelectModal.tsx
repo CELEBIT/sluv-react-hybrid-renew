@@ -9,7 +9,7 @@ import useModals from '../Modals/hooks/useModals'
 import { Common, Pretendard } from '../styles'
 
 import { ChipWrapper } from './ItemBrandSelectModal/ItemBrandSelectModal'
-import { ButtonWrapper } from './ItemPlaceInputModal'
+import { ButtonWrapper } from './ItemPlaceInputModal/ItemPlaceInputModal'
 import Header from '../Header/Header'
 import ButtonMedium from '../ButtonMedium/ButtonMedium'
 import ButtonLarge from '../ButtonLarge/ButtonLarge'

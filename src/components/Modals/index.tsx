@@ -8,7 +8,9 @@ const AskRecentPostWritingModal = loadable(
   () => import('../TwoButtonModal/AskRecentPostWritingModal'),
 )
 const ItemDatePickerModal = loadable(() => import('../BottomSheetModal/ItemDatePickerModal'))
-const ItemPlaceInputModal = loadable(() => import('../BottomSheetModal/ItemPlaceInputModal'))
+const ItemPlaceInputModal = loadable(
+  () => import('../BottomSheetModal/ItemPlaceInputModal/ItemPlaceInputModal'),
+)
 const ItemBrandSelectModal = loadable(
   () => import('../BottomSheetModal/ItemBrandSelectModal/ItemBrandSelectModal'),
 )
