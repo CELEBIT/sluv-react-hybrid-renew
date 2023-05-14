@@ -3,21 +3,37 @@ import Chip from '../../Chip/Chip'
 import { RecentBrandResult } from '../../../apis/brand/brandService'
 import useRecentBrandQuery from '../../../apis/brand/hooks/useRecentBrandQuery'
 import { BrandFlag } from '../../../apis/core/type'
+import { useSetRecoilState } from 'recoil'
+import { selectedBrandState } from '../../../pages/item/create/components/BrandItemField/BrandItemField'
 
 export interface RecentBrandChipProps {
   brandData: RecentBrandResult
-  onClick: () => void
 }
 
-const RecentBrandChip = ({ brandData, onClick }: RecentBrandChipProps) => {
+const RecentBrandChip = ({ brandData }: RecentBrandChipProps) => {
   const {
-    deleteRecentBrand: { mutate },
+    postRecentBrand: { mutate: mutateByPostRecentBrand },
+    deleteRecentBrand: { mutate: mutateByDeleteRecentBrand },
   } = useRecentBrandQuery()
 
+  const setBrand = useSetRecoilState(selectedBrandState)
+
   const onDeleteRecentBrandChip = () => {
-    mutate({
+    mutateByDeleteRecentBrand({
       brandId: brandData.id,
       flag: brandData.flag as BrandFlag,
+    })
+  }
+
+  const onChipClick = (brand: RecentBrandResult) => {
+    mutateByPostRecentBrand({
+      brandId: brand.flag === 'Y' ? brand.id : null,
+      newBrandId: brand.flag === 'N' ? brand.id : null,
+    })
+    setBrand({
+      id: brand.id,
+      brandKr: brand.brandName,
+      flag: brand.flag as BrandFlag,
     })
   }
 
@@ -25,10 +41,10 @@ const RecentBrandChip = ({ brandData, onClick }: RecentBrandChipProps) => {
     <Chip
       key={brandData.id}
       text={brandData.brandName}
-      onClick={onClick}
       canDelete={true}
       onDelete={onDeleteRecentBrandChip}
-    ></Chip>
+      onClick={() => onChipClick(brandData)}
+    />
   )
 }
 

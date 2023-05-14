@@ -29,7 +29,6 @@ const ItemBrandSelectModal = () => {
   const onSearch = () => {
     console.log('검색')
   }
-  const success = true
 
   return (
     <BottomSheetModal>
@@ -59,7 +58,9 @@ const ItemBrandSelectModal = () => {
           </div>
         ) : (
           // 입력내용 존재
-          <div className='long'>{success ? <BrandList /> : <>없는 브랜드</>}</div>
+          <div className='long'>
+            <BrandList />
+          </div>
         )}
       </ModalWrapper>
     </BottomSheetModal>
