@@ -28,10 +28,14 @@ const Photo = ({
     <Img size={size} borderRadius={borderRadius} imgUrl={imgUrl}>
       {candelete && <DeleteList className='delete' onClick={onDelete}></DeleteList>}
       {representFlag && <Represent className='represent'></Represent>}
-      {storageFlag ? (
-        <StorageOn className='represent'></StorageOn>
-      ) : (
-        <StorageOff className='represent'></StorageOff>
+      {storageFlag !== undefined && (
+        <>
+          {storageFlag ? (
+            <StorageOn className='represent'></StorageOn>
+          ) : (
+            <StorageOff className='represent'></StorageOff>
+          )}
+        </>
       )}
     </Img>
   )
