@@ -2,13 +2,6 @@ import styled from '@emotion/styled'
 import React from 'react'
 import { Common, Pretendard } from '../../styles'
 import { ChipWrapper } from './ItemBrandSelectModal'
-import {
-  Brand,
-  selectedBrandState,
-} from '../../../pages/item/create/components/BrandItemField/BrandItemField'
-import { useSetRecoilState } from 'recoil'
-import useModals from '../../Modals/hooks/useModals'
-import { modals } from '../../Modals'
 import { RecentBrandResult } from '../../../apis/brand/brandService'
 import RecentBrandChip from './RecentBrandChip'
 import useRecentBrandQuery from '../../../apis/brand/hooks/useRecentBrandQuery'
@@ -18,20 +11,12 @@ interface RecentSelectBrandProps {
 }
 
 const RecentSelectBrand = ({ data }: RecentSelectBrandProps) => {
-  const setBrand = useSetRecoilState(selectedBrandState)
   const {
     deleteAllRecentBrands: { mutate },
   } = useRecentBrandQuery()
 
   const onDeleteAllSearchLog = () => {
     mutate()
-  }
-
-  const { closeModal } = useModals()
-
-  const onChipClick = (brand: Brand) => {
-    setBrand(brand)
-    closeModal(modals.ItemBrandSelectModal)
   }
 
   return (
@@ -43,13 +28,7 @@ const RecentSelectBrand = ({ data }: RecentSelectBrandProps) => {
       <ChipWrapper>
         {(data?.length ?? 0) > 0 &&
           data?.map((brand) => {
-            return (
-              <RecentBrandChip
-                key={brand.id}
-                brandData={brand}
-                onClick={() => onChipClick(brand)}
-              />
-            )
+            return <RecentBrandChip key={brand.id} brandData={brand} />
           })}
       </ChipWrapper>
     </RecentSearchWrapper>
