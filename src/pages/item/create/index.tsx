@@ -172,6 +172,7 @@ const ItemCreate = () => {
           )}
         </ComponentWrapper>
       </ComponentContainer>
+
       <BottomBar>
         <div className='left'>
           <div className='button' onClick={() => navigate('/item/create/addInfo')}>
