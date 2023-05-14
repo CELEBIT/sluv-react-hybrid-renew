@@ -14,13 +14,20 @@ export interface TopBrandResult {
   brandImgUrl: string
 }
 
+export interface NewBrandResult {
+  newBrandId: number
+  newBrandName: string
+}
+
 export default class BrandService {
   brandUrl: string
   recentBrandUrl: string
+  newBrandUrl: string
 
   constructor() {
     this.brandUrl = '/app/brand'
     this.recentBrandUrl = '/app/brand/recent'
+    this.newBrandUrl = '/app/newBrand'
   }
 
   // 유저가 최근 선택한 브랜드 조회
@@ -43,7 +50,14 @@ export default class BrandService {
     const data: ResponseType = await request.delete(`${this.recentBrandUrl}`)
     return data
   }
-
+  // 최근 선택한 브랜드 등록
+  async postRecentBrand(brandId: number | null, newBrandId: number | null) {
+    const data: ResponseType = await request.post(`${this.recentBrandUrl}`, {
+      brandId,
+      newBrandId,
+    })
+    return data
+  }
   // 인기 브랜드 조회
   async getBrandTop() {
     const data: ResponseType<Array<TopBrandResult>> = await request.get(`${this.brandUrl}/top`)
@@ -62,6 +76,13 @@ export default class BrandService {
         },
       },
     )
+    return data.result
+  }
+  // NewBrand 등록
+  async postNewBrand(newBrandName: string) {
+    const data: ResponseType<NewBrandResult> = await request.post(`${this.newBrandUrl}`, {
+      newBrandName,
+    })
     return data.result
   }
 }

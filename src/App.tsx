@@ -43,7 +43,7 @@ const App = () => {
     } else {
       storage.set(
         'accessToken',
-        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5IiwiaWF0IjoxNjgzMzM4MzM1LCJleHAiOjE3MTQ4NzQzMzV9.O8s4xP1x5Tus60HqUt9HFrlJ7Ua2PefR2O3ED0NMTKg',
+        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjc5ODk4NzE5LCJleHAiOjE3MTE0MzQ3MTl9.jvFrmgt9YVPpqL2k1r9hxTSsMm1sODAdRzroNVx-RAo',
       )
     }
   }, [])
