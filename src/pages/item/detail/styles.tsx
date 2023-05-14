@@ -20,6 +20,9 @@ export const ItemWrapper = styled.div`
   flex-direction: column;
   height: 100%;
   overflow-y: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `
 export const BasicInfoWrapper = styled.div`
   display: flex;
@@ -42,6 +45,7 @@ export const ItemInfo = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  padding-left: 0.25rem;
   .category {
     display: flex;
     align-items: center;
