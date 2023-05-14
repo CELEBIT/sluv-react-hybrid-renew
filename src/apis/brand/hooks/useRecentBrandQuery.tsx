@@ -2,6 +2,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import BrandService from '../brandService'
 import { queryKeys } from '../../../config/queryKeys'
 import { BrandFlag } from '../../core/type'
+import useModals from '../../../components/Modals/hooks/useModals'
+import { modals } from '../../../components/Modals'
 
 interface IDeleteBrand {
   brandId: number
@@ -15,6 +17,7 @@ interface IPostBrand {
 const useRecentBrandQuery = () => {
   const brand = new BrandService()
   const queryClient = useQueryClient()
+  const { closeModal } = useModals()
   const getBrandRecentSelected = useQuery(queryKeys.brandRecentSelected, () =>
     brand.getBrandRecentSelected(),
   )
@@ -36,6 +39,7 @@ const useRecentBrandQuery = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(queryKeys.brandRecentSelected)
+        closeModal(modals.ItemBrandSelectModal)
       },
     },
   )

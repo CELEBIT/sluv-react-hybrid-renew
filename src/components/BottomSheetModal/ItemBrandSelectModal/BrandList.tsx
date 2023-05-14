@@ -2,8 +2,6 @@ import styled from '@emotion/styled'
 import { Common, Pretendard } from '../../styles'
 import React, { useRef } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
-import useModals from '../../Modals/hooks/useModals'
-import { modals } from '../../Modals'
 import {
   Brand,
   selectedBrandState,
@@ -15,16 +13,19 @@ import { useObserver } from '../../../hooks/useObserver'
 import { useDebounce } from 'use-debounce'
 import useRecentBrandQuery from '../../../apis/brand/hooks/useRecentBrandQuery'
 import HighlightedText from '../../HighlightedText/HighlightedText'
+import useNewBrandQuery from '../../../apis/brand/hooks/useNewBrandQuery'
 
 const BrandList = () => {
   const setBrand = useSetRecoilState(selectedBrandState)
   const brandName = useRecoilValue(brandNameSearchState)
   const [debouncedBrandName] = useDebounce(brandName, 300)
 
-  const { closeModal } = useModals()
   const {
     postRecentBrand: { mutate: mutateByPostRecentBrand },
   } = useRecentBrandQuery()
+  const {
+    postNewBrand: { mutate: mutateByPostNewBrand },
+  } = useNewBrandQuery()
   const { searchBrand } = useBrandSearchQuery()
   const { data, error, fetchNextPage, status, isFetching, isFetchingNextPage } =
     searchBrand(debouncedBrandName)
@@ -43,12 +44,13 @@ const BrandList = () => {
       newBrandId: null,
     })
     setBrand(brand)
-    closeModal(modals.ItemBrandSelectModal)
   }
   console.log('브랜드 무한스크롤', data)
 
-  const onSelectNewBrand = (newBrandName: string) => {
-    console.log(newBrandName)
+  const onSelectNewBrand = async (newBrandName: string) => {
+    mutateByPostNewBrand({
+      newBrandName,
+    })
   }
 
   return (
