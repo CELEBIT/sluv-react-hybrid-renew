@@ -27,16 +27,16 @@ export const TextFieldWrapper = styled.div`
 export const HashTagWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   width: 100%;
-  height: auto;
   gap: 0.5rem;
   padding: 0 0 1.25rem 0;
-  .hashtag {
+  ${Pretendard({ size: 16, weight: Common.bold.thin, color: Common.colors.BK })}
+
+  .searchedTags {
     display: flex;
+    flex-shrink: 1;
     overflow-x: scroll;
-    white-space: nowrap;
-    box-sizing: border-box;
+    white-space: wrap;
     padding: 0 0 0 1.25rem;
     width: 100vw;
     margin-left: calc(-50vw + 50%);
@@ -47,6 +47,9 @@ export const HashTagWrapper = styled.div`
     ::-webkit-scrollbar {
       display: none;
     }
+  }
+  .searchedTags {
+    display: flex;
   }
 `
 export const SourceWrapper = styled.div`

@@ -156,10 +156,12 @@ const ItemCreate = () => {
           {hasTriedToUpload && !category.id && (
             <ErrorText className='error'>필수 항목입니다</ErrorText>
           )}
-          <BrandItemField
-            brandValid={hasTriedToUpload ? !brand : true}
-            itemNameValid={hasTriedToUpload ? itemName !== '' : true}
-          ></BrandItemField>
+          <ComponentWrapper className='padding'>
+            <BrandItemField
+              brandValid={hasTriedToUpload ? !brand : true}
+              itemNameValid={hasTriedToUpload ? itemName !== '' : true}
+            ></BrandItemField>
+          </ComponentWrapper>
           {brand.id && (
             <>
               <PriceField></PriceField>

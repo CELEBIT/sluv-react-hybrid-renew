@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../../../components/Header/Header'
-import { AddInfoContainer, HashTagWrapper, HeaderWrapper, TextFieldWrapper } from './styles'
+import { AddInfoContainer, HashTagWrapper, TextFieldWrapper } from './styles'
 import TextArea from '../../../components/TextField/TextArea/TextArea'
 import { atom, useRecoilState, useSetRecoilState } from 'recoil'
 import { atomKeys } from '../../../config/atomKeys'
@@ -18,6 +18,7 @@ const AddInfo = () => {
   const setHashTags = useSetRecoilState(hashTagState)
   const [infoValid, setInfoValid] = useState(true)
   const [hasSubmitted, setHasSubmitted] = useState(false)
+
   const onSubmit = () => {
     setHasSubmitted(true)
     if (addInfoText) {
@@ -38,13 +39,11 @@ const AddInfo = () => {
   }, [addInfoText])
   return (
     <AddInfoContainer>
-      <HeaderWrapper>
-        <Header isModalHeader={false} hasArrow={true} title={'추가 정보'}>
-          <span className='submit' onClick={onSubmit}>
-            완료
-          </span>
-        </Header>
-      </HeaderWrapper>
+      <Header isModalHeader={false} hasArrow={true} title={'추가 정보'}>
+        <span className='submit' onClick={onSubmit}>
+          완료
+        </span>
+      </Header>
       <TextFieldWrapper>
         <TextArea
           value={addInfoText}
@@ -56,8 +55,7 @@ const AddInfo = () => {
         ></TextArea>
       </TextFieldWrapper>
       <HashTagWrapper>
-        <HashtagInput placeholder='#애착템 #최애템 #추천템' onChange={setHashTags} />
-        <div className='hashtag'>#hastag</div>
+        <HashtagInput placeholder='애착템 #최애템 #추천템' onChange={setHashTags} />
       </HashTagWrapper>
       <SourceInput></SourceInput>
     </AddInfoContainer>

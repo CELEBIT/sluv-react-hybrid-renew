@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
-import { AddInfoContainer, HeaderWrapper } from '../addInfo/styles'
+import { AddInfoContainer } from '../addInfo/styles'
 import Header from '../../../components/Header/Header'
 import LinkInput, { Link, linksState } from './components/LinkInput/LinkInput'
 import { AddLinkContainer } from './styles'
@@ -28,13 +28,11 @@ const AddLink = () => {
   }
   return (
     <AddInfoContainer>
-      <HeaderWrapper>
-        <Header isModalHeader={false} hasArrow={true} title={'구매 링크'}>
-          <span className='submit' onClick={() => handleComplete(links)}>
-            완료
-          </span>
-        </Header>
-      </HeaderWrapper>
+      <Header isModalHeader={false} hasArrow={true} title={'구매 링크'}>
+        <span className='submit' onClick={() => handleComplete(links)}>
+          완료
+        </span>
+      </Header>
       <AddLinkContainer>
         <LinkInput hasError={hasError} />
       </AddLinkContainer>
