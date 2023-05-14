@@ -7,6 +7,10 @@ interface IDeleteBrand {
   brandId: number
   flag: BrandFlag
 }
+interface IPostBrand {
+  brandId: number | null
+  newBrandId: number | null
+}
 
 const useRecentBrandQuery = () => {
   const brand = new BrandService()
@@ -27,8 +31,21 @@ const useRecentBrandQuery = () => {
       queryClient.invalidateQueries(queryKeys.brandRecentSelected)
     },
   })
+  const postRecentBrand = useMutation(
+    ({ brandId, newBrandId }: IPostBrand) => brand.postRecentBrand(brandId, newBrandId),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(queryKeys.brandRecentSelected)
+      },
+    },
+  )
 
-  return { getBrandRecentSelected, deleteRecentBrand, deleteAllRecentBrands }
+  return {
+    getBrandRecentSelected,
+    deleteRecentBrand,
+    deleteAllRecentBrands,
+    postRecentBrand,
+  }
 }
 
 export default useRecentBrandQuery

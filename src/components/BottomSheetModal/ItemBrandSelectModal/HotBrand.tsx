@@ -1,16 +1,9 @@
 import styled from '@emotion/styled'
 import { Common, Pretendard } from '../../styles'
 import React from 'react'
-import { useSetRecoilState } from 'recoil'
-import useModals from '../../Modals/hooks/useModals'
-import { modals } from '../../Modals'
-import Chip from '../../Chip/Chip'
 import { ChipWrapper } from './ItemBrandSelectModal'
-import {
-  Brand,
-  selectedBrandState,
-} from '../../../pages/item/create/components/BrandItemField/BrandItemField'
 import useTopBrandQuery from '../../../apis/brand/hooks/useTopBrandQuery'
+import HotBrandChip from './HotBrandChip'
 
 const HotBrand = () => {
   const {
@@ -18,23 +11,13 @@ const HotBrand = () => {
   } = useTopBrandQuery()
   console.log('인기 브랜드', data)
 
-  const setBrand = useSetRecoilState(selectedBrandState)
-  const { closeModal } = useModals()
-
-  const onChipClick = (brand: Brand) => {
-    setBrand(brand)
-    closeModal(modals.ItemBrandSelectModal)
-  }
-
   return (
     <HotWrapper>
       <span>인기 브랜드</span>
       <ChipWrapper>
         {(data?.length ?? 0) > 0 &&
           data?.map((brand) => {
-            return (
-              <Chip key={brand.id} text={brand.brandKr} onClick={() => onChipClick(brand)}></Chip>
-            )
+            return <HotBrandChip key={brand.id} hotBrandData={brand} />
           })}
       </ChipWrapper>
     </HotWrapper>
