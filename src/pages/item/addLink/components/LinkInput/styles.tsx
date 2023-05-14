@@ -5,7 +5,6 @@ export const LinkWrapper = styled.div<{ hasButtonSmall?: boolean }>`
   flex-direction: column;
   position: relative;
   margin-bottom: ${({ hasButtonSmall }) => (hasButtonSmall ? '1rem' : '1.25rem')};
-
   .delete {
     position: absolute;
     top: -0.625rem;

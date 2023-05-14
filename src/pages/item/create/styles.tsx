@@ -37,6 +37,9 @@ export const ComponentContainer = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
+  .padding {
+    padding: 0 1.25rem;
+  }
 `
 
 export const ComponentWrapper = styled.div`
