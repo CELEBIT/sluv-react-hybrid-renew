@@ -13,6 +13,8 @@ import useBrandSearchQuery from '../../../apis/brand/hooks/useBrandSearchQuery'
 import { brandNameSearchState } from './ItemBrandSelectModal'
 import { useObserver } from '../../../hooks/useObserver'
 import { useDebounce } from 'use-debounce'
+import useRecentBrandQuery from '../../../apis/brand/hooks/useRecentBrandQuery'
+import HighlightedText from '../../HighlightedText/HighlightedText'
 
 const BrandList = () => {
   const setBrand = useSetRecoilState(selectedBrandState)
@@ -20,6 +22,9 @@ const BrandList = () => {
   const [debouncedBrandName] = useDebounce(brandName, 300)
 
   const { closeModal } = useModals()
+  const {
+    postRecentBrand: { mutate: mutateByPostRecentBrand },
+  } = useRecentBrandQuery()
   const { searchBrand } = useBrandSearchQuery()
   const { data, error, fetchNextPage, status, isFetching, isFetchingNextPage } =
     searchBrand(debouncedBrandName)
@@ -33,27 +38,46 @@ const BrandList = () => {
   })
 
   const onSelectBrand = (brand: Brand) => {
+    mutateByPostRecentBrand({
+      brandId: brand.id ?? null,
+      newBrandId: null,
+    })
     setBrand(brand)
     closeModal(modals.ItemBrandSelectModal)
   }
   console.log('브랜드 무한스크롤', data)
 
+  const onSelectNewBrand = (newBrandName: string) => {
+    console.log(newBrandName)
+  }
+
   return (
     <BrandListWrapper>
       {status === 'error' && <p>{JSON.stringify(error.response.data)}</p>}
       {status === 'success' &&
-        data?.pages.map((item) =>
-          item.content.map((brand) => {
-            return (
-              <EachBrand key={brand.id} onClick={() => onSelectBrand(brand)}>
-                <TextWrap>
-                  <BrandKR>{brand.brandKr}</BrandKR>
-                  <BrandEN>{brand.brandEn}</BrandEN>
-                </TextWrap>
-                <BrandLogo size={46} url={brand.brandImgUrl} />
-              </EachBrand>
-            )
-          }),
+        data?.pages.map((item, index) =>
+          item.content.length > 0 ? (
+            item.content.map((brand) => {
+              return (
+                <EachBrand key={brand.id} onClick={() => onSelectBrand(brand)}>
+                  <TextWrap>
+                    <BrandKR>{brand.brandKr}</BrandKR>
+                    <BrandEN>{brand.brandEn}</BrandEN>
+                  </TextWrap>
+                  <BrandLogo size={46} url={brand.brandImgUrl} />
+                </EachBrand>
+              )
+            })
+          ) : (
+            <EachBrand key={index} onClick={() => onSelectNewBrand(debouncedBrandName)}>
+              <HighlightedText
+                searchText={debouncedBrandName}
+                text={debouncedBrandName}
+                fontSize={1.125}
+                fontWeight={Common.bold.regular}
+              />
+            </EachBrand>
+          ),
         )}
       <div ref={bottom} />
       {isFetching && !isFetchingNextPage ? (
