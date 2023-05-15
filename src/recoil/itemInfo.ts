@@ -8,12 +8,13 @@ interface ICeleb {
 }
 interface ICategory {
   categoryId: number
-  parentName: string
   childName: string
+  parentCategoryId: number
+  parentName: string
 }
 interface IBrand {
-  brandId: number
-  brandName: string
+  brandId?: number
+  brandName?: string
   brandImgUrl?: string
 }
 interface ILink {
@@ -25,7 +26,7 @@ interface IItemInfo {
   id?: number | null
   imgList?: Array<ImgResult> | null
   celeb?: ICeleb | null
-  whenDiscovery?: string | null
+  whenDiscovery?: string | null | Date
   whereDiscovery?: string | null
   itemCategory?: ICategory | null
   brand?: IBrand | null
@@ -51,7 +52,6 @@ export const itemInfoState = atom<IItemInfo>({
   default: {
     id: null,
     imgList: null,
-    celeb: null,
     whenDiscovery: null,
     whereDiscovery: null,
     itemCategory: null,
@@ -63,7 +63,6 @@ export const itemInfoState = atom<IItemInfo>({
     hashTagList: null,
     linkList: null,
     infoSource: null,
-    newCeleb: null,
     newBrand: null,
   },
 })

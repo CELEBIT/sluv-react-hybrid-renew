@@ -1,11 +1,8 @@
 import styled from '@emotion/styled'
 import { Common } from '../../styles'
 import React, { useRef } from 'react'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
-import {
-  Brand,
-  selectedBrandState,
-} from '../../../pages/item/create/components/BrandItemField/BrandItemField'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { Brand } from '../../../pages/item/create/components/BrandItemField/BrandItemField'
 import BrandLogo from '../../BrandLogo/BrandLogo'
 import useBrandSearchQuery from '../../../apis/brand/hooks/useBrandSearchQuery'
 import { brandNameSearchState } from './ItemBrandSelectModal'
@@ -14,9 +11,10 @@ import { useDebounce } from 'use-debounce'
 import useRecentBrandQuery from '../../../apis/brand/hooks/useRecentBrandQuery'
 import HighlightedText from '../../HighlightedText/HighlightedText'
 import useNewBrandQuery from '../../../apis/brand/hooks/useNewBrandQuery'
+import { itemInfoState } from '../../../recoil/itemInfo'
 
 const BrandList = () => {
-  const setBrand = useSetRecoilState(selectedBrandState)
+  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
   const brandName = useRecoilValue(brandNameSearchState)
   const [debouncedBrandName] = useDebounce(brandName, 300)
 
@@ -43,7 +41,14 @@ const BrandList = () => {
       brandId: brand.id ?? null,
       newBrandId: null,
     })
-    setBrand(brand)
+    setItemInfo({
+      ...itemInfo,
+      brand: {
+        brandId: brand.id,
+        brandName: brand.brandKr,
+        brandImgUrl: brand.brandImgUrl,
+      },
+    })
   }
   console.log('브랜드 무한스크롤', data)
 

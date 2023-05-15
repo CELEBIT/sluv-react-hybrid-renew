@@ -2,8 +2,8 @@ import React from 'react'
 import Chip from '../../Chip/Chip'
 import useRecentPlaceQuery from '../../../apis/place/hooks/useRecentPlaceQuery'
 import usePostPlaceQuery from '../../../apis/place/hooks/usePostPlaceQuery'
-import { useSetRecoilState } from 'recoil'
-import { selectedPlaceState } from '../../../pages/item/create/components/DatePlaceField'
+import { useRecoilState } from 'recoil'
+import { itemInfoState } from '../../../recoil/itemInfo'
 
 interface ItemPlaceChipProps {
   placeName: string
@@ -21,15 +21,17 @@ const ItemPlaceChip = ({ placeName, canDelete }: ItemPlaceChipProps) => {
   const {
     postItemPlace: { mutate: mutateByPostItemPlace },
   } = usePostPlaceQuery()
-  const setPlace = useSetRecoilState(selectedPlaceState)
+  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
 
   const onDeletePlace = () => {
     mutateByDeleteRecentPlace({ placeName })
   }
   const onClickPlace = () => {
     mutateByPostItemPlace({ placeName })
-    setPlace(placeName)
-    console.log(placeName)
+    setItemInfo({
+      ...itemInfo,
+      whereDiscovery: placeName,
+    })
   }
 
   return (

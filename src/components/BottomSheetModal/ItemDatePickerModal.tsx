@@ -1,23 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 import BottomSheetModal from '.'
 import styled from '@emotion/styled'
 import CustomDatepicker from '../CustomDatePicker/CustomDatePicker'
-import { useRecoilState } from 'recoil'
 import ButtonLarge from '../ButtonLarge/ButtonLarge'
 import useModals from '../Modals/hooks/useModals'
 import { modals } from '../Modals'
 import Header from '../Header/Header'
-import { selectedDateState } from '../../pages/item/create/components/DatePlaceField'
+import { convertToUTC } from '../../utils/utility'
+import { useRecoilState } from 'recoil'
+import { itemInfoState } from '../../recoil/itemInfo'
 
 const ItemDatePickerModal = () => {
-  const [date, setDate] = useRecoilState(selectedDateState)
   const { closeModal } = useModals()
+
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const utcToday = convertToUTC(today)
+  const [date, setDate] = useState<Date | undefined>(utcToday)
+  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
+
   const onComplete = () => {
-    if (date === undefined) {
-      const today = new Date()
-      const UTCDate = new Date(today.getTime() - today.getTimezoneOffset() * 60000)
-      setDate(UTCDate)
-    }
+    setItemInfo({
+      ...itemInfo,
+      whenDiscovery: date,
+    })
     closeModal(modals.ItemDatePickerModal)
   }
   const onCancel = () => {
