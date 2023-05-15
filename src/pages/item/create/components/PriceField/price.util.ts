@@ -1,4 +1,4 @@
-export const formatPrice = (price: number | undefined) => {
+export const formatPrice = (price?: number | null) => {
   // ~ 원대 로 format하는 함수입니다
   if (!price) {
     return '-'
