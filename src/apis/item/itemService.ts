@@ -44,6 +44,19 @@ export interface BrandResult {
   brandEn: string
   brandImgUrl: string
 }
+export interface userResult {
+  id: number
+  nickName: string
+  profileImgUrl: string
+}
+export interface recommendItemResult {
+  itemId: number
+  imgUrl: string
+  brandName: string
+  itemName: string
+  celebName: string
+  scrapStatus: boolean
+}
 export interface TempItemResult {
   id: number
   imgList: Array<ImgResult>
@@ -61,6 +74,33 @@ export interface TempItemResult {
   newCelebId: number
   newBrandId: number
   updatedAt: string
+}
+
+export interface ItemResult {
+  imgList: Array<ImgResult>
+  celeb: CelebResult
+  newCelebName: string
+  category: ItemCategoryResult
+  itemName: string
+  brand: BrandResult
+  newBrandName: string
+  likeNum: number
+  likeStatus: boolean
+  scrapNum: number
+  scrapStatus: boolean
+  viewNum: number
+  linkList: LinkResult
+  writer: userResult
+  whenDiscovery: string
+  whereDiscovery: string
+  price: number
+  additionalInfo: string
+  hashTagList: Array<HashTagResult>
+  infoSource: string
+  sameCelebItemList: Array<recommendItemResult>
+  sameBrandItemList: Array<recommendItemResult>
+  color: string
+  followStatus: boolean
 }
 
 export default class ItemService {
@@ -85,6 +125,12 @@ export default class ItemService {
     const data: ResponseType<Array<TempItemResult>> = await request.get(`${this.tempItemUrl}`, {
       params: {},
     })
+    return data.result
+  }
+
+  async getItemDetail(itemId: number | null) {
+    const data: ResponseType<Array<ItemResult>> = await request.get(`${this.itemUrl}/${itemId}`)
+
     return data.result
   }
 }

@@ -19,4 +19,5 @@ export const queryKeys = {
   hotCeleb: ['hotCeleb'] as const,
   recentCeleb: ['recentCeleb'] as const,
   searchCeleb: (celebName: string) => ['searchCeleb', celebName] as const,
+  itemDetail: ['itemDetail'] as const,
 }
