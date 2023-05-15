@@ -2,27 +2,32 @@ import React, { useEffect, useState } from 'react'
 import Header from '../../../components/Header/Header'
 import { AddInfoContainer, HashTagWrapper, TextFieldWrapper } from './styles'
 import TextArea from '../../../components/TextField/TextArea/TextArea'
-import { atom, useRecoilState, useSetRecoilState } from 'recoil'
-import { atomKeys } from '../../../config/atomKeys'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import SourceInput from './components/sourceInput/SourceInput'
 import HashtagInput, { hashTagState } from './components/HashTags/HashTag'
-
-export const addInfoTextState = atom<string>({
-  key: atomKeys.addInfoTextState,
-  default: '',
-})
+import { itemInfoState } from '../../../recoil/itemInfo'
+import { useNavigate } from 'react-router-dom'
 
 const AddInfo = () => {
-  const [addInfoText, setAddInfoText] = useRecoilState(addInfoTextState)
-  //   const infoSource = useRecoilValue(infoSourceState)
+  const navigate = useNavigate()
+
+  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
+  const [addInfoText, setAddInfoText] = useState<string | null>(itemInfo.additionalInfo)
   const setHashTags = useSetRecoilState(hashTagState)
   const [infoValid, setInfoValid] = useState(true)
   const [hasSubmitted, setHasSubmitted] = useState(false)
 
+  console.log('hasSubmitted', hasSubmitted)
+
   const onSubmit = () => {
     setHasSubmitted(true)
     if (addInfoText) {
+      setItemInfo({
+        ...itemInfo,
+        additionalInfo: addInfoText,
+      })
       setInfoValid(true)
+      navigate('/item/create')
     } else {
       setInfoValid(false)
     }
@@ -37,6 +42,7 @@ const AddInfo = () => {
       }
     }
   }, [addInfoText])
+
   return (
     <AddInfoContainer>
       <Header isModalHeader={false} hasArrow={true} title={'추가 정보'}>
@@ -46,7 +52,7 @@ const AddInfo = () => {
       </Header>
       <TextFieldWrapper>
         <TextArea
-          value={addInfoText}
+          value={addInfoText ?? ''}
           setValue={setAddInfoText}
           placeholder='자유롭게 의견을 적어보세요
 300자 이내'

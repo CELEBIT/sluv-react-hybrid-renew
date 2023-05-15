@@ -25,7 +25,6 @@ import { ReactComponent as StorageOff } from '../../../assets/storage_off_20.svg
 import { HeaderWrapper } from '../addInfo/styles'
 import { ErrorText } from '../../../components/TextField/DefaultTextfield/styles'
 import { selectedSubCategoryState } from '../../../components/BottomSheetModal/ItemCategoryModal'
-import { addInfoTextState } from '../addInfo'
 import { linksState } from '../addLink/components/LinkInput/LinkInput'
 import { infoSourceState } from '../addInfo/components/sourceInput/SourceInput'
 import ImageField from './components/ImageField/ImageField'
@@ -35,7 +34,6 @@ const ItemCreate = () => {
   const navigate = useNavigate()
   const celeb = useRecoilValue(selectedCelebState)
   const category = useRecoilValue(selectedSubCategoryState)
-  const additionalInfo = useRecoilValue(addInfoTextState)
   const infoSource = useRecoilValue(infoSourceState)
   const links = useRecoilValue(linksState)
   const [hasTriedToUpload, setHasTriedToUpload] = useState(false)
@@ -70,7 +68,7 @@ const ItemCreate = () => {
       itemName: itemInfo.itemName,
       price: null,
       color: null,
-      additionalInfo: additionalInfo ? additionalInfo : null,
+      additionalInfo: null,
       hashTagIdList: [0],
       linkList: links[0].linkName ? links : null,
       infoSource: infoSource ? infoSource : null,
