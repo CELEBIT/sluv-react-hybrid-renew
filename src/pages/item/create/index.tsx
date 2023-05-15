@@ -26,7 +26,6 @@ import { HeaderWrapper } from '../addInfo/styles'
 import { ErrorText } from '../../../components/TextField/DefaultTextfield/styles'
 import { selectedSubCategoryState } from '../../../components/BottomSheetModal/ItemCategoryModal'
 import { linksState } from '../addLink/components/LinkInput/LinkInput'
-import { infoSourceState } from '../addInfo/components/sourceInput/SourceInput'
 import ImageField from './components/ImageField/ImageField'
 import { itemInfoState } from '../../../recoil/itemInfo'
 
@@ -34,7 +33,6 @@ const ItemCreate = () => {
   const navigate = useNavigate()
   const celeb = useRecoilValue(selectedCelebState)
   const category = useRecoilValue(selectedSubCategoryState)
-  const infoSource = useRecoilValue(infoSourceState)
   const links = useRecoilValue(linksState)
   const [hasTriedToUpload, setHasTriedToUpload] = useState(false)
   const itemInfo = useRecoilValue(itemInfoState)
@@ -71,7 +69,7 @@ const ItemCreate = () => {
       additionalInfo: null,
       hashTagIdList: [0],
       linkList: links[0].linkName ? links : null,
-      infoSource: infoSource ? infoSource : null,
+      infoSource: null,
       newCelebId: 0,
       newBrandId: 0,
     }

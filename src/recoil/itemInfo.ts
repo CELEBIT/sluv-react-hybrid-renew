@@ -36,7 +36,7 @@ interface IItemInfo {
   additionalInfo: string | null
   hashTagList?: Array<number> | null
   linkList?: Array<ILink> | null
-  infoSource?: string | null
+  infoSource: string | null
   newCeleb?: ICeleb | null
   newBrand?: IBrand | null
 }
