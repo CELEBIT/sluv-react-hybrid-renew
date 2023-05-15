@@ -7,66 +7,26 @@ import SearchTextfield from '../../TextField/SearchTextfield/SearchTextfield'
 import Header from '../../Header/Header'
 import HotCeleb from './HotCeleb'
 import ButtonLarge from '../../ButtonLarge/ButtonLarge'
-import {
-  CelebData,
-  selectedCelebState,
-  selectedGroupState,
-  selectedNewCelebState,
-} from '../../SelectCeleb/SelectCeleb'
+import { selectedCelebState, selectedGroupState } from '../../SelectCeleb/SelectCeleb'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import MyCeleb from './MyCeleb'
 import RecentSelectCeleb from './RecentSelectCeleb'
-import HighlightedText from '../../HighlightedText/HighlightedText'
-import { Common, Pretendard } from '../../styles'
+import { celebInfoInItemState } from '../../../recoil/itemInfo'
+import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
+import SearchCelebList from './SearchCelebList'
 
 const ItemCelebSearchModal = () => {
-  const resultList = [
-    {
-      id: 1,
-      celebNameKr: '있지 예지',
-      celebNameEn: 'ITZY Yezi',
-    },
-    {
-      id: 11,
-      celebNameKr: '있지 예나',
-      celebNameEn: 'ITZY Yezi',
-    },
-    {
-      id: 12,
-      celebNameKr: '있지 리아',
-      celebNameEn: 'ITZY Lia',
-    },
-    {
-      id: 13,
-      celebNameKr: '있지 류진',
-      celebNameEn: 'ITZY RyuJin',
-    },
-    {
-      id: 14,
-      celebNameKr: '있지 채령',
-      celebNameEn: 'ITZY ChaeRyoung',
-    },
-    {
-      id: 15,
-      celebNameKr: '있지 유나',
-      celebNameEn: 'ITZY Yuna',
-    },
-    {
-      id: 17,
-      celebNameKr: '있지 유진',
-      celebNameEn: 'ITZY YuJin',
-    },
-    {
-      id: 2,
-      celebNameKr: '아이유',
-      celebNameEn: 'IU',
-    },
-  ]
+  const {
+    postRecentCeleb: { mutate: mutateByPostRecentCeleb },
+  } = useRecentCelebQuery()
+
   const [searchValue, setSearchValue] = useState<string>('')
   const [isFocused, setIsFocused] = useState<boolean>(false)
-  const setNewCeleb = useSetRecoilState(selectedNewCelebState)
+  // const setNewCeleb = useSetRecoilState(selectedNewCelebState)
   const [selectedCeleb, setSelectedCeleb] = useRecoilState(selectedCelebState)
-  const setSelectedGroup = useSetRecoilState(selectedGroupState)
+  const [selectedGroup, setSelectedGroup] = useRecoilState(selectedGroupState)
+  const setCelebInfoInItem = useSetRecoilState(celebInfoInItemState)
+
   const { closeModal } = useModals()
   const defaultRef = useRef<HTMLDivElement>(null)
   const myCelebRef = useRef<HTMLDivElement>(null)
@@ -79,26 +39,54 @@ const ItemCelebSearchModal = () => {
   const onSearch = () => {
     console.log('검색')
   }
-
-  const onClickExistingCeleb = (celeb: CelebData) => {
-    setSelectedCeleb(celeb)
-    setSelectedGroup({ id: 0, celebNameKr: '' })
-    closeModal(modals.ItemCelebSearchModal)
-  }
-  const onClickNewCeleb = (name: string) => {
-    setNewCeleb({ newCelebName: name })
-    setSelectedCeleb({ id: 0, celebNameKr: '' })
-    setSelectedGroup({ id: 0, celebNameKr: '' })
-    closeModal(modals.ItemCelebSearchModal)
-  }
+  // const onClickExistingCeleb = (celebResult: ICelebResult) => {
+  //   setSelectedCeleb(celebResult)
+  //   setSelectedGroup({ id: 0, celebNameKr: '' })
+  //   closeModal(modals.ItemCelebSearchModal)
+  // }
+  // const onClickNewCeleb = (name: string) => {
+  //   setNewCeleb({ newCelebName: name })
+  //   setSelectedCeleb({ id: 0, celebNameKr: '' })
+  //   setSelectedGroup({ id: 0, celebNameKr: '' })
+  //   closeModal(modals.ItemCelebSearchModal)
+  // }
 
   const onClose = () => {
     setSelectedCeleb({ id: 0, celebNameKr: '' })
+    setSelectedGroup({ id: 0, celebNameKr: '' })
     closeModal(modals.ItemCelebSearchModal)
   }
   const onComplete = () => {
-    console.log(selectedCeleb)
-    closeModal(modals.ItemCelebSearchModal)
+    if (selectedCeleb.id && !selectedGroup.id) {
+      // 솔로
+      setCelebInfoInItem({
+        soloId: selectedCeleb.id,
+        soloName: selectedCeleb.celebNameKr,
+        groupId: null,
+        groupName: null,
+      })
+    } else if (selectedCeleb.id && selectedGroup.id) {
+      // 그룹의 멤버
+      setCelebInfoInItem({
+        soloId: selectedCeleb.id,
+        soloName: selectedCeleb.celebNameKr,
+        groupId: selectedGroup.id,
+        groupName: selectedGroup.celebNameKr,
+      })
+    } else {
+      alert('오류')
+    }
+    setSelectedCeleb({ id: 0, celebNameKr: '' })
+    setSelectedGroup({ id: 0, celebNameKr: '' })
+
+    mutateByPostRecentCeleb(
+      { celebId: selectedCeleb.id, newCelebId: null },
+      {
+        onSuccess: () => {
+          closeModal(modals.ItemCelebSearchModal)
+        },
+      },
+    )
   }
 
   //   useEffect(() => {
@@ -170,23 +158,7 @@ const ItemCelebSearchModal = () => {
         ) : (
           // 입력내용 존재,
           <div className='long'>
-            <SearchResult>
-              {resultList.length ? (
-                resultList.map((celeb, index) => (
-                  <ExistingCeleb key={index} onClick={() => onClickExistingCeleb(celeb)}>
-                    <HighlightedText searchText={searchValue} text={celeb.celebNameKr} />
-                    <SubText>
-                      <span>가수 / &nbsp; </span>
-                      <HighlightedText searchText={searchValue} text={celeb.celebNameEn} />
-                    </SubText>
-                  </ExistingCeleb>
-                ))
-              ) : (
-                <NotExistingCeleb onClick={() => onClickNewCeleb(searchValue)}>
-                  <HighlightedText searchText={searchValue} text={searchValue} />
-                </NotExistingCeleb>
-              )}
-            </SearchResult>
+            <SearchCelebList keyword={searchValue} />
           </div>
         )}
       </ModalWrapper>
@@ -214,13 +186,11 @@ const ModalWrapper = styled.div`
     transition: ease-in 0.1s;
   }
   .hotCeleb {
-    border: 1px solid red;
     height: 5.3125rem;
     margin-top: 1.5rem;
     margin-bottom: 2rem;
   }
   .myCeleb {
-    /* border: 1px solid blue; */
     margin-bottom: 4.375rem;
   }
 `
@@ -245,45 +215,10 @@ export const ChipWrapper = styled.div`
   }
 `
 
-const SearchResult = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 1rem 1.25rem;
-`
-
 const ButtonWrapper = styled.div`
   background-color: white;
   position: fixed;
   bottom: 0;
   width: 100%;
   padding: 0.75rem 1.25rem;
-`
-const ExistingCeleb = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 1.25rem 0.75rem 0.875rem 0.75rem;
-  gap: 0.25rem;
-  ${Pretendard({
-    size: 18,
-    weight: Common.bold.regular,
-    color: Common.colors.BK,
-  })}
-`
-const NotExistingCeleb = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 1.25rem 0.75rem 1.25rem 0.75rem;
-  ${Pretendard({
-    size: 18,
-    weight: Common.bold.regular,
-    color: Common.colors.BK,
-  })}
-`
-const SubText = styled.div`
-  display: flex;
-  ${Pretendard({
-    size: 15,
-    weight: Common.bold.regular,
-    color: Common.colors.GR500,
-  })}
 `

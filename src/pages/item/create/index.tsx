@@ -35,40 +35,6 @@ import { addInfoTextState } from '../addInfo'
 import { linksState } from '../addLink/components/LinkInput/LinkInput'
 import { infoSourceState } from '../addInfo/components/sourceInput/SourceInput'
 import ImageField from './components/ImageField/ImageField'
-// const Itzy = {
-//   id: 0,
-//   celebNameKr: '있지',
-//   subCelebList: [
-//     {
-//       id: 1,
-//       celebNameKr: '예지',
-//     },
-//     {
-//       id: 2,
-//       celebNameKr: '리아',
-//     },
-//     {
-//       id: 3,
-//       celebNameKr: '류진',
-//     },
-//     {
-//       id: 4,
-//       celebNameKr: '채령',
-//     },
-//     {
-//       id: 5,
-//       celebNameKr: '유나',
-//     },
-//     {
-//       id: 6,
-//       celebNameKr: '레미콘',
-//     },
-//     {
-//       id: 7,
-//       celebNameKr: '유진',
-//     },
-//   ],
-// }
 
 const ItemCreate = () => {
   const navigate = useNavigate()

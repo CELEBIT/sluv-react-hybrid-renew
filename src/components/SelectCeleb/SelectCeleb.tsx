@@ -5,6 +5,10 @@ import { SelectCelebWrapper } from './styles'
 import ButtonMedium from '../ButtonMedium/ButtonMedium'
 import useModals from '../Modals/hooks/useModals'
 import { modals } from '../Modals'
+import { ICelebResult } from '../../apis/user/userService'
+import { celebInfoInItemState } from '../../recoil/itemInfo'
+import useInterestCelebQuery from '../../apis/user/hooks/useInterestCelebQuery'
+import useRecentCelebQuery from '../../apis/celeb/hooks/useRecentCelebQuery'
 
 export interface CelebData {
   id: number
@@ -37,225 +41,20 @@ export const selectedNewCelebState = atom<NewCeleb>({
 const SelectCeleb = () => {
   const { openModal } = useModals()
 
-  const MyCelebList = [
-    {
-      id: 1,
-      celebNameKr: '있지',
-      subCelebList: [
-        {
-          id: 11,
-          celebNameKr: '예지',
-        },
-        {
-          id: 12,
-          celebNameKr: '리아',
-        },
-        {
-          id: 13,
-          celebNameKr: '류진',
-        },
-        {
-          id: 14,
-          celebNameKr: '채령',
-        },
-        {
-          id: 15,
-          celebNameKr: '유나',
-        },
-        {
-          id: 16,
-          celebNameKr: '레미콘',
-        },
-        {
-          id: 17,
-          celebNameKr: '유진',
-        },
-      ],
-    },
-    {
-      id: 2,
-      celebNameKr: '아이유',
-    },
-    {
-      id: 3,
-      celebNameKr: '르세라핌',
-      subCelebList: [
-        {
-          id: 31,
-          celebNameKr: '예지',
-        },
-        {
-          id: 32,
-          celebNameKr: '리아',
-        },
-        {
-          id: 3,
-          celebNameKr: '류진',
-        },
-        {
-          id: 34,
-          celebNameKr: '채령',
-        },
-        {
-          id: 35,
-          celebNameKr: '유나',
-        },
-        {
-          id: 36,
-          celebNameKr: '레미콘',
-        },
-        {
-          id: 37,
-          celebNameKr: '유진',
-        },
-      ],
-    },
-    {
-      id: 4,
-      celebNameKr: '소녀시대',
-      subCelebList: [
-        {
-          id: 41,
-          celebNameKr: '태연',
-        },
-        {
-          id: 42,
-          celebNameKr: '윤아',
-        },
-        {
-          id: 43,
-          celebNameKr: '서현',
-        },
-        {
-          id: 44,
-          celebNameKr: '제시카',
-        },
-        {
-          id: 45,
-          celebNameKr: '수영',
-        },
-        {
-          id: 46,
-          celebNameKr: '티파니',
-        },
-        {
-          id: 47,
-          celebNameKr: '유리',
-        },
-      ],
-    },
-    {
-      id: 5,
-      celebNameKr: '핑클',
-      subCelebList: [
-        {
-          id: 51,
-          celebNameKr: '예지',
-        },
-        {
-          id: 52,
-          celebNameKr: '리아',
-        },
-        {
-          id: 53,
-          celebNameKr: '류진',
-        },
-        {
-          id: 54,
-          celebNameKr: '채령',
-        },
-        {
-          id: 55,
-          celebNameKr: '유나',
-        },
-        {
-          id: 56,
-          celebNameKr: '레미콘',
-        },
-        {
-          id: 57,
-          celebNameKr: '유진',
-        },
-      ],
-    },
-    {
-      id: 6,
-      celebNameKr: 'SES',
-      subCelebList: [
-        {
-          id: 61,
-          celebNameKr: '예지',
-        },
-        {
-          id: 62,
-          celebNameKr: '리아',
-        },
-        {
-          id: 63,
-          celebNameKr: '류진',
-        },
-        {
-          id: 64,
-          celebNameKr: '채령',
-        },
-        {
-          id: 65,
-          celebNameKr: '유나',
-        },
-        {
-          id: 66,
-          celebNameKr: '레미콘',
-        },
-        {
-          id: 67,
-          celebNameKr: '유진',
-        },
-      ],
-    },
-    {
-      id: 7,
-      celebNameKr: 'AOA',
-      subCelebList: [
-        {
-          id: 71,
-          celebNameKr: '예지',
-        },
-        {
-          id: 72,
-          celebNameKr: '리아',
-        },
-        {
-          id: 73,
-          celebNameKr: '류진',
-        },
-        {
-          id: 74,
-          celebNameKr: '채령',
-        },
-        {
-          id: 75,
-          celebNameKr: '유나',
-        },
-        {
-          id: 76,
-          celebNameKr: '레미콘',
-        },
-        {
-          id: 77,
-          celebNameKr: '유진',
-        },
-      ],
-    },
-    {
-      id: 8,
-      celebNameKr: '현아',
-    },
-  ]
-  const [selectedCeleb, setSelectedCeleb] = useRecoilState(selectedCelebState)
-  const [selectedGroup, setSelectedGroup] = useRecoilState(selectedGroupState)
+  const {
+    getInterestCeleb: { data: interestCelebList },
+  } = useInterestCelebQuery()
+  const {
+    postRecentCeleb: { mutate: mutateByPostRecentCeleb },
+  } = useRecentCelebQuery()
+
+  const [celebInfoInItem, setCelebInfoInItem] = useRecoilState(celebInfoInItemState)
+
+  const setSelectedCeleb = useSetRecoilState(selectedCelebState)
+  const setSelectedGroup = useSetRecoilState(selectedGroupState)
   const setNewCeleb = useSetRecoilState(selectedNewCelebState)
   const newCeleb = useRecoilValue(selectedNewCelebState)
-  const [displayList, setDisplayList] = useState<CelebData[]>([])
+  const [displayList, setDisplayList] = useState<Array<ICelebResult> | null>([])
   const selectRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -266,67 +65,100 @@ const SelectCeleb = () => {
   const onSearchSelect = () => {
     openModal(modals.ItemCelebSearchModal)
   }
-  const onClickCeleb = (celeb: CelebData) => {
-    if (celeb.subCelebList) {
+  const onClickCeleb = (celebResult: ICelebResult) => {
+    if (celebInfoInItem.soloId == celebResult.id || celebInfoInItem.groupId == celebResult.id) {
+      setCelebInfoInItem({
+        groupId: null,
+        groupName: null,
+        soloId: null,
+        soloName: null,
+      })
+      return
+    }
+    if (celebResult.subCelebList) {
       // 그룹
-      setSelectedGroup(celeb)
+      setCelebInfoInItem({
+        soloId: null,
+        soloName: null,
+        groupId: celebResult.id,
+        groupName: celebResult.celebNameKr,
+      })
+      setSelectedGroup(celebResult)
       setSelectedCeleb({ id: 0, celebNameKr: '' })
       openModal(modals.ItemCelebSelectModal)
     } else {
       // 솔로
-      setSelectedCeleb(celeb)
+      setCelebInfoInItem({
+        soloId: celebResult.id,
+        soloName: celebResult.celebNameKr,
+        groupId: null,
+        groupName: null,
+      })
+      setSelectedCeleb(celebResult)
       setSelectedGroup({ id: 0, celebNameKr: '' })
       setNewCeleb({ newCelebName: '' })
+
+      mutateByPostRecentCeleb({ celebId: celebResult.id, newCelebId: null })
     }
-    console.log(celeb)
   }
+
   useEffect(() => {
-    if (!newCeleb.newCelebName) {
-      // 솔로인 경우
-      if (selectedCeleb.id && !selectedGroup.id) {
-        // 기존 CelebList에 있는지 확인 후 존재하면 기존 셀럽 리스트 삭제 후 맨 앞으로 보냄
-        const updatedList = MyCelebList.filter((celeb) => celeb.id !== selectedCeleb.id)
-        const newDisplayItem = {
-          id: selectedCeleb.id,
-          celebNameKr: selectedCeleb.celebNameKr,
-        }
-        setDisplayList([newDisplayItem, ...updatedList])
-      }
-      // 그룹인 경우
-      if (selectedCeleb.id && selectedGroup.id !== 0) {
-        // 기존 CelebList에 있는지 확인 후 존재하면 기존 그룹 리스트 삭제
-        const updatedList = MyCelebList.filter((celeb) => celeb.id !== selectedGroup.id)
-        const newDisplayItem = {
-          id: selectedCeleb.id,
-          celebNameKr: selectedGroup.celebNameKr + ' ' + selectedCeleb.celebNameKr,
-        }
-        setDisplayList([newDisplayItem, ...updatedList])
-      }
-      if (!selectedCeleb.id && !selectedGroup.id) {
-        setDisplayList([...MyCelebList])
-      }
-    } else {
-      const updatedList = MyCelebList.filter((celeb) => celeb.id !== selectedGroup.id)
-      const newDisplayItem = {
-        id: -1,
-        celebNameKr: newCeleb.newCelebName,
-      }
-      setDisplayList([newDisplayItem, ...updatedList])
+    if ((interestCelebList?.length ?? 0) <= 0) {
+      // 관심셀럽이 없으므로 리턴
+      return
     }
-  }, [selectedCeleb, selectedGroup])
+    if (!celebInfoInItem.groupId && !celebInfoInItem.soloId) {
+      // 그룹과 솔로 셀럽 정보 둘다 Atom State에 없다면
+      setDisplayList(interestCelebList ?? null)
+      return
+    }
+    if (celebInfoInItem.soloId && !celebInfoInItem.groupId) {
+      // 선택한 셀럽이 솔로인 경우
+      // 관심셀럽 리스트에 해당 솔로가 있다면
+      // 기존 관심셀럽 리스트에서 삭제 후 리스트 맨 앞으로 보냄
+      const newList = interestCelebList?.filter((celeb) => celeb.id !== celebInfoInItem.soloId)
+      if (newList) {
+        setDisplayList([
+          {
+            id: celebInfoInItem.soloId,
+            celebNameKr: celebInfoInItem.soloName ?? '',
+          },
+          ...newList,
+        ])
+      }
+      return
+    }
+    if (celebInfoInItem.groupId && celebInfoInItem.soloId) {
+      // 선택한 셀럽이 그룹의 멤버인 경우
+      // 관심셀럽 리스트에서 해당 그룹이 있다면
+      // 기존 관심셀럽 리스트에서 삭제 후 리스트 맨 앞으로 보내고
+      // 그룹명 + 멤버명 형태로 보여줌
+      const newList = interestCelebList?.filter((celeb) => celeb.id !== celebInfoInItem.groupId)
+      if (newList) {
+        setDisplayList([
+          {
+            id: celebInfoInItem.soloId,
+            celebNameKr: celebInfoInItem.groupName + ' ' + celebInfoInItem.soloName,
+          },
+          ...newList,
+        ])
+      }
+      return
+    }
+  }, [celebInfoInItem, interestCelebList])
 
   return (
     <SelectCelebWrapper>
       <div className='select' ref={selectRef}>
         {/* 관심셀럽 리스트 */}
-        {displayList.map((celeb, index) => {
+        {displayList?.map((celeb, index) => {
           if (!newCeleb.newCelebName) {
             return (
               <ButtonMedium
                 key={index}
                 text={celeb.celebNameKr}
                 type='pri'
-                active={selectedCeleb.id === celeb.id}
+                active={celebInfoInItem.soloId === celeb.id || celebInfoInItem.groupId === celeb.id}
                 onClick={() => onClickCeleb(celeb)}
               ></ButtonMedium>
             )
