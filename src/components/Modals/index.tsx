@@ -16,9 +16,11 @@ const ItemBrandSelectModal = loadable(
 )
 const ItemNameInputModal = loadable(() => import('../BottomSheetModal/ItemNameInputModal'))
 const ItemCategoryModal = loadable(() => import('../BottomSheetModal/ItemCategoryModal'))
-const ItemCelebSelectModal = loadable(() => import('../BottomSheetModal/ItemCelebSelectModal'))
+const ItemCelebSelectModal = loadable(
+  () => import('../BottomSheetModal/ItemCelebModal/ItemCelebSelectModal'),
+)
 const ItemCelebSearchModal = loadable(
-  () => import('../BottomSheetModal/ItemCelebSearchModalComponent/ItemCelebSearchModal'),
+  () => import('../BottomSheetModal/ItemCelebModal/ItemCelebSearchModal'),
 )
 // 모달 관리 객체
 export const modals = {
