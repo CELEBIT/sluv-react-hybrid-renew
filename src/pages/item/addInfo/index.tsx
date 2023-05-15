@@ -12,7 +12,10 @@ const AddInfo = () => {
   const navigate = useNavigate()
 
   const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
+
   const [addInfoText, setAddInfoText] = useState<string | null>(itemInfo.additionalInfo)
+  const [source, setSource] = useState<string | null>(itemInfo.infoSource)
+
   const setHashTags = useSetRecoilState(hashTagState)
   const [infoValid, setInfoValid] = useState(true)
   const [hasSubmitted, setHasSubmitted] = useState(false)
@@ -21,10 +24,11 @@ const AddInfo = () => {
 
   const onSubmit = () => {
     setHasSubmitted(true)
-    if (addInfoText) {
+    if (addInfoText || source) {
       setItemInfo({
         ...itemInfo,
         additionalInfo: addInfoText,
+        infoSource: source,
       })
       setInfoValid(true)
       navigate('/item/create')
@@ -35,13 +39,13 @@ const AddInfo = () => {
 
   useEffect(() => {
     if (hasSubmitted) {
-      if (addInfoText) {
+      if (addInfoText || source) {
         setInfoValid(true)
       } else {
         setInfoValid(false)
       }
     }
-  }, [addInfoText])
+  }, [addInfoText, source])
 
   return (
     <AddInfoContainer>
@@ -63,7 +67,7 @@ const AddInfo = () => {
       <HashTagWrapper>
         <HashtagInput placeholder='애착템 #최애템 #추천템' onChange={setHashTags} />
       </HashTagWrapper>
-      <SourceInput></SourceInput>
+      <SourceInput source={source} setSource={setSource} />
     </AddInfoContainer>
   )
 }
