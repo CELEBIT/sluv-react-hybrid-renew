@@ -1,26 +1,16 @@
 import React from 'react'
 import { DatePlaceWrapper, DateWrapper, PlaceWrapper, Title, Line, ValueText } from './style'
-import { atom, useRecoilValue } from 'recoil'
+import { useRecoilValue } from 'recoil'
 import useModals from '../../../../../components/Modals/hooks/useModals'
 import { modals } from '../../../../../components/Modals'
 import { formatDate, getFormattedTodayDate } from './date.util'
-import { atomKeys } from '../../../../../config/atomKeys'
 import { itemInfoState } from '../../../../../recoil/itemInfo'
-
-// 날짜, 장소 Atoms //
-
-export const selectedPlaceState = atom<string>({
-  key: atomKeys.selectedPlaceState,
-  default: '',
-})
 
 const DatePlaceField = () => {
   const { openModal } = useModals()
 
   // 날짜 형식 UTC 기준 한국시간
   const formattedTodayDate = getFormattedTodayDate()
-
-  const selectedPlace = useRecoilValue(selectedPlaceState)
   const itemInfo = useRecoilValue(itemInfoState)
 
   // 날짜 선택 모달
@@ -50,8 +40,8 @@ const DatePlaceField = () => {
       <Line />
       <PlaceWrapper onClick={onPlaceSelect}>
         <Title>장소</Title>
-        {selectedPlace ? (
-          <ValueText>{selectedPlace}</ValueText>
+        {itemInfo.whereDiscovery ? (
+          <ValueText>{itemInfo.whereDiscovery}</ValueText>
         ) : (
           // 장소 미입력시 placeholder 지정
           <ValueText isEmpty={true}>예) 인스타그램</ValueText>
