@@ -16,4 +16,6 @@ export const atomKeys = {
   selectedParentCategoryIdState: 'selectedParentCategoryIdState' as const,
   selectedSubCategoryIdState: 'selectedCategoryIdState' as const,
   brandNameSearchState: 'brandNameSearchState' as const,
+  itemInfoState: 'itemInfoState' as const,
+  celebInfoInItemState: 'celebInfoInItemState' as const,
 }
