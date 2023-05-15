@@ -33,7 +33,7 @@ interface IItemInfo {
   itemName?: string | null
   price?: number | null
   color?: string | null
-  additionalInfo?: string | null
+  additionalInfo: string | null
   hashTagList?: Array<number> | null
   linkList?: Array<ILink> | null
   infoSource?: string | null
