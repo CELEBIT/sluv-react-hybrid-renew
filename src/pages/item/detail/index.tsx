@@ -1,4 +1,5 @@
 import React from 'react'
+// import { useParams } from 'react-router-dom'
 import Header from '../../../components/Header/Header'
 import { ReactComponent as Home } from '../../../assets/home_24.svg'
 import { ReactComponent as Search } from '../../../assets/search_24.svg'
@@ -51,7 +52,21 @@ import { HeaderWrapper } from '../addInfo/styles'
 import RecommendedItemList from '../../../components/RecommendedItem/RecommendedItemList'
 import Carousel from './components/Carousel/Carousel'
 
+// import useFollowQuery from '../../../apis/follow/hooks/useFollowQuery'
+// import useItemDetailQuery from '../../../apis/item/hooks/useItemDetailQuery'
+export interface ItemDetailProps {
+  userId: number
+}
+
 const ItemDetail = () => {
+  // const id = useParams()
+  // const {
+  //   followUser: { mutate: mutateByFollow },
+  // } = useFollowQuery()
+  // const {
+  //   getItemDetail: { data },
+  // } = useItemDetailQuery()
+
   const colors = ['gray', 'pink', 'orange', 'yellow', 'green', 'blue']
   const price = 120235
   const additionalInfoText = 'asdfasdf'
@@ -181,6 +196,10 @@ const ItemDetail = () => {
       representFlag: true,
     },
   ]
+
+  const onClickFollow = () => {
+    // mutateByFollow({userId: ???})
+  }
   return (
     <ItemDetailContainer>
       <HeaderWrapper>
@@ -252,7 +271,7 @@ const ItemDetail = () => {
             <UserImg imgUrl='https://images.pexels.com/photos/2893685/pexels-photo-2893685.jpeg?cs=srgb&dl=pexels-oziel-g%C3%B3mez-2893685.jpg&fm=jpg' />
             <span>이리노순둥도리</span>
           </div>
-          <ButtonSmall type='sec' text='팔로우' onClick={() => alert('팔로우')} />
+          <ButtonSmall type='sec' text='팔로우' onClick={onClickFollow} />
         </UploaderInfoWrapper>
         <AdditionalInfoWrapper>
           <span>2023년 1월 1일에</span>

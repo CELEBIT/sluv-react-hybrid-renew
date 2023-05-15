@@ -15,4 +15,5 @@ export const queryKeys = {
   searchBrand: (brandName: string) => ['searchBrand', brandName] as const,
   hotPlace: ['hotPlace'] as const,
   recentPlace: ['recentPlace'] as const,
+  itemDetail: ['itemDetail'] as const,
 }
