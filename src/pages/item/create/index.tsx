@@ -1,8 +1,5 @@
 import React, { useState } from 'react'
-import BrandItemField, {
-  itemNameState,
-  selectedBrandState,
-} from './components/BrandItemField/BrandItemField'
+import BrandItemField, { itemNameState } from './components/BrandItemField/BrandItemField'
 import { useRecoilValue } from 'recoil'
 import DatePlaceField from './components/DatePlaceField/DatePlaceField'
 import PriceField, { itemPriceState } from './components/PriceField/PriceField'
@@ -32,22 +29,29 @@ import { addInfoTextState } from '../addInfo'
 import { linksState } from '../addLink/components/LinkInput/LinkInput'
 import { infoSourceState } from '../addInfo/components/sourceInput/SourceInput'
 import ImageField from './components/ImageField/ImageField'
+import { itemInfoState } from '../../../recoil/itemInfo'
 
 const ItemCreate = () => {
   const navigate = useNavigate()
   const celeb = useRecoilValue(selectedCelebState)
   const category = useRecoilValue(selectedSubCategoryState)
-  const brand = useRecoilValue(selectedBrandState)
   const itemName = useRecoilValue(itemNameState)
   const price = useRecoilValue(itemPriceState)
   const additionalInfo = useRecoilValue(addInfoTextState)
   const infoSource = useRecoilValue(infoSourceState)
   const links = useRecoilValue(linksState)
   const [hasTriedToUpload, setHasTriedToUpload] = useState(false)
+  const itemInfo = useRecoilValue(itemInfoState)
 
   const onSubmit = () => {
     setHasTriedToUpload(true)
-    if (celeb.id && category.id && brand.id && itemName && price) {
+    if (
+      celeb.id &&
+      category.id &&
+      (itemInfo.brand?.brandId || itemInfo.newBrand?.brandId) &&
+      itemName &&
+      price
+    ) {
       alert('success')
     } else {
       alert('fail')
@@ -64,7 +68,7 @@ const ItemCreate = () => {
       whenDiscovery: null,
       whereDiscovery: null,
       categoryId: category.id,
-      brandId: brand.id,
+      brandId: null,
       itemName: itemName,
       price: price !== 0 ? price : null,
       color: null,
@@ -110,7 +114,10 @@ const ItemCreate = () => {
         </ComponentWrapper>
         <ComponentWrapper>
           <LabelContainer>
-            {hasTriedToUpload && (!category.id || !brand || !itemName || !price) && <Error></Error>}
+            {hasTriedToUpload &&
+              (!category.id || !itemInfo.brand || !itemInfo.newBrand || !itemName || !price) && (
+                <Error></Error>
+              )}
             <Label>어떤 아이템인가요?</Label>
           </LabelContainer>
           <SelectCategory />
@@ -119,11 +126,11 @@ const ItemCreate = () => {
           )}
           <ComponentWrapper className='padding'>
             <BrandItemField
-              brandValid={hasTriedToUpload ? !brand : true}
+              brandValid={hasTriedToUpload ? !itemInfo.brand || !itemInfo.newBrand : true}
               itemNameValid={hasTriedToUpload ? itemName !== '' : true}
             ></BrandItemField>
           </ComponentWrapper>
-          {brand.id && (
+          {(itemInfo.brand?.brandId || itemInfo.newBrand?.brandId) && (
             <>
               <PriceField></PriceField>
               {hasTriedToUpload && !price && (

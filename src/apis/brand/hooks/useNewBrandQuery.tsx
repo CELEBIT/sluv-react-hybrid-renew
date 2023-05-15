@@ -1,9 +1,8 @@
 import BrandService from '../brandService'
 import { useMutation } from '@tanstack/react-query'
 import useRecentBrandQuery from './useRecentBrandQuery'
-import { useSetRecoilState } from 'recoil'
-import { selectedBrandState } from '../../../pages/item/create/components/BrandItemField/BrandItemField'
-import { BrandFlag } from '../../core/type'
+import { useRecoilState } from 'recoil'
+import { itemInfoState } from '../../../recoil/itemInfo'
 
 interface INewBrand {
   newBrandName: string
@@ -15,7 +14,7 @@ const useNewBrandQuery = () => {
     postRecentBrand: { mutate: mutateByPostRecentBrand },
   } = useRecentBrandQuery()
 
-  const setBrand = useSetRecoilState(selectedBrandState)
+  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
 
   const postNewBrand = useMutation(
     ({ newBrandName }: INewBrand) => brand.postNewBrand(newBrandName),
@@ -25,10 +24,13 @@ const useNewBrandQuery = () => {
           brandId: null,
           newBrandId: res?.newBrandId ?? null,
         })
-        setBrand({
-          id: res?.newBrandId,
-          brandKr: res?.newBrandName,
-          flag: 'N' as BrandFlag,
+        setItemInfo({
+          ...itemInfo,
+          newBrand: {
+            brandId: res?.newBrandId,
+            brandName: res?.newBrandName,
+            brandImgUrl: '',
+          },
         })
       },
     },

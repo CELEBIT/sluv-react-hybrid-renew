@@ -2,17 +2,17 @@ import React from 'react'
 import Chip from '../../Chip/Chip'
 import { TopBrandResult } from '../../../apis/brand/brandService'
 import useModals from '../../Modals/hooks/useModals'
-import { useSetRecoilState } from 'recoil'
-import { selectedBrandState } from '../../../pages/item/create/components/BrandItemField/BrandItemField'
+import { useRecoilState } from 'recoil'
 import { modals } from '../../Modals'
 import useRecentBrandQuery from '../../../apis/brand/hooks/useRecentBrandQuery'
+import { itemInfoState } from '../../../recoil/itemInfo'
 
 interface HotBrandChipProps {
   hotBrandData: TopBrandResult
 }
 
 const HotBrandChip = ({ hotBrandData }: HotBrandChipProps) => {
-  const setBrand = useSetRecoilState(selectedBrandState)
+  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
   const { closeModal } = useModals()
 
   const {
@@ -24,11 +24,13 @@ const HotBrandChip = ({ hotBrandData }: HotBrandChipProps) => {
       brandId: brand.id,
       newBrandId: null,
     })
-    setBrand({
-      id: brand.id,
-      brandKr: brand.brandKr,
-      brandEn: brand.brandEn,
-      brandImgUrl: brand.brandImgUrl,
+    setItemInfo({
+      ...itemInfo,
+      brand: {
+        brandId: brand.id,
+        brandName: brand.brandKr,
+        brandImgUrl: brand.brandImgUrl,
+      },
     })
     closeModal(modals.ItemBrandSelectModal)
   }
