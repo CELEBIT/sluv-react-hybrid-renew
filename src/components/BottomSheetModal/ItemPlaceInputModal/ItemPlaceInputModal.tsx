@@ -1,21 +1,21 @@
 import React, { useState } from 'react'
 import BottomSheetModal from '..'
 import styled from '@emotion/styled'
-import { useSetRecoilState } from 'recoil'
 import ButtonLarge from '../../ButtonLarge/ButtonLarge'
 import useModals from '../../Modals/hooks/useModals'
 import { modals } from '../../Modals'
 import DefaultTextfield from '../../TextField/DefaultTextfield/DefaultTextfield'
 import { Common, Pretendard } from '../../styles'
 import Header from '../../Header/Header'
-import { selectedPlaceState } from '../../../pages/item/create/components/DatePlaceField'
 import useHotPlaceQuery from '../../../apis/place/hooks/useHotPlaceQuery'
 import useRecentPlaceQuery from '../../../apis/place/hooks/useRecentPlaceQuery'
 import ItemPlaceChip from './ItemPlaceChip'
 import usePostPlaceQuery from '../../../apis/place/hooks/usePostPlaceQuery'
+import { itemInfoState } from '../../../recoil/itemInfo'
+import { useRecoilState } from 'recoil'
 
 const ItemPlaceInputModal = () => {
-  const setPlace = useSetRecoilState(selectedPlaceState)
+  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
   const [placeName, setPlaceName] = useState('')
   const { closeModal } = useModals()
 
@@ -32,7 +32,10 @@ const ItemPlaceInputModal = () => {
 
   const onComplete = () => {
     mutateByPostItemPlace({ placeName })
-    setPlace(placeName)
+    setItemInfo({
+      ...itemInfo,
+      whereDiscovery: placeName,
+    })
   }
   const onDeleteAllSearchLog = () => {
     mutateByDeleteAllRecentPlace()

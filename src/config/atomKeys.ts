@@ -1,6 +1,5 @@
 export const atomKeys = {
   imgListState: 'imgListState' as const,
-  selectedDateState: 'selectedDateState' as const,
   selectedPlaceState: 'selectedPlaceState' as const,
   selectedBrandState: 'selectedBrandState' as const,
   itemNameState: 'itemNameState' as const,
