@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import BrandItemField, { itemNameState } from './components/BrandItemField/BrandItemField'
+import BrandItemField from './components/BrandItemField/BrandItemField'
 import { useRecoilValue } from 'recoil'
 import DatePlaceField from './components/DatePlaceField/DatePlaceField'
 import PriceField, { itemPriceState } from './components/PriceField/PriceField'
@@ -35,7 +35,6 @@ const ItemCreate = () => {
   const navigate = useNavigate()
   const celeb = useRecoilValue(selectedCelebState)
   const category = useRecoilValue(selectedSubCategoryState)
-  const itemName = useRecoilValue(itemNameState)
   const price = useRecoilValue(itemPriceState)
   const additionalInfo = useRecoilValue(addInfoTextState)
   const infoSource = useRecoilValue(infoSourceState)
@@ -49,7 +48,7 @@ const ItemCreate = () => {
       celeb.id &&
       category.id &&
       (itemInfo.brand?.brandId || itemInfo.newBrand?.brandId) &&
-      itemName &&
+      itemInfo.itemName &&
       price
     ) {
       alert('success')
@@ -69,7 +68,7 @@ const ItemCreate = () => {
       whereDiscovery: null,
       categoryId: category.id,
       brandId: null,
-      itemName: itemName,
+      itemName: itemInfo.itemName,
       price: price !== 0 ? price : null,
       color: null,
       additionalInfo: additionalInfo ? additionalInfo : null,
@@ -115,9 +114,11 @@ const ItemCreate = () => {
         <ComponentWrapper>
           <LabelContainer>
             {hasTriedToUpload &&
-              (!category.id || !itemInfo.brand || !itemInfo.newBrand || !itemName || !price) && (
-                <Error></Error>
-              )}
+              (!category.id ||
+                !itemInfo.brand ||
+                !itemInfo.newBrand ||
+                !itemInfo.itemName ||
+                !price) && <Error></Error>}
             <Label>어떤 아이템인가요?</Label>
           </LabelContainer>
           <SelectCategory />
@@ -127,7 +128,7 @@ const ItemCreate = () => {
           <ComponentWrapper className='padding'>
             <BrandItemField
               brandValid={hasTriedToUpload ? !itemInfo.brand || !itemInfo.newBrand : true}
-              itemNameValid={hasTriedToUpload ? itemName !== '' : true}
+              itemNameValid={hasTriedToUpload ? itemInfo.itemName !== '' : true}
             ></BrandItemField>
           </ComponentWrapper>
           {(itemInfo.brand?.brandId || itemInfo.newBrand?.brandId) && (

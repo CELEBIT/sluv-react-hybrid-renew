@@ -53,7 +53,7 @@ const DefaultTextfield = ({
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
         ></InputField>
-        {value.length !== 0 && isFocused && (
+        {value && isFocused && (
           <Delete
             style={{ marginLeft: '0.625rem' }}
             onClick={onDelete}

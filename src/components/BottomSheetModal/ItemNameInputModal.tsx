@@ -2,23 +2,29 @@ import React, { useEffect, useRef, useState } from 'react'
 import styled from '@emotion/styled'
 import useModals from '../Modals/hooks/useModals'
 import { modals } from '../Modals'
-import { useRecoilState } from 'recoil'
 import BottomSheetModal from '.'
 import Header from '../Header/Header'
 import DefaultTextfield from '../TextField/DefaultTextfield/DefaultTextfield'
 import ButtonLarge from '../ButtonLarge/ButtonLarge'
-import { itemNameState } from '../../pages/item/create/components/BrandItemField/BrandItemField'
+import { useRecoilState } from 'recoil'
+import { itemInfoState } from '../../recoil/itemInfo'
 
 const ItemNameInputModal = () => {
-  const [itemName, setItemName] = useRecoilState(itemNameState)
-  const [inputValue, setInputValue] = useState<string>(itemName)
+  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
+  const [inputValue, setInputValue] = useState<string>((itemInfo.itemName as string) || '')
   const { closeModal } = useModals()
 
-  const onSetItemName = (inputValue: string) => {
-    setItemName(inputValue)
+  const onSetItemName = (itemName: string) => {
+    setItemInfo({
+      ...itemInfo,
+      itemName,
+    })
   }
   const onClose = () => {
-    setItemName(inputValue)
+    setItemInfo({
+      ...itemInfo,
+      itemName: inputValue,
+    })
     closeModal(modals.ItemDatePickerModal)
   }
   const inputRef = useRef<HTMLInputElement>(null)
