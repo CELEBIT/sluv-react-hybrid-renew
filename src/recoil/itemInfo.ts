@@ -52,7 +52,6 @@ export const itemInfoState = atom<IItemInfo>({
   default: {
     id: null,
     imgList: null,
-    celeb: null,
     whenDiscovery: null,
     whereDiscovery: null,
     itemCategory: null,
@@ -64,7 +63,6 @@ export const itemInfoState = atom<IItemInfo>({
     hashTagList: null,
     linkList: null,
     infoSource: null,
-    newCeleb: null,
     newBrand: null,
   },
 })
