@@ -3,8 +3,8 @@ import Chip from '../../Chip/Chip'
 import { RecentBrandResult } from '../../../apis/brand/brandService'
 import useRecentBrandQuery from '../../../apis/brand/hooks/useRecentBrandQuery'
 import { BrandFlag } from '../../../apis/core/type'
-import { useSetRecoilState } from 'recoil'
-import { selectedBrandState } from '../../../pages/item/create/components/BrandItemField/BrandItemField'
+import { useRecoilState } from 'recoil'
+import { itemInfoState } from '../../../recoil/itemInfo'
 
 export interface RecentBrandChipProps {
   brandData: RecentBrandResult
@@ -16,7 +16,7 @@ const RecentBrandChip = ({ brandData }: RecentBrandChipProps) => {
     deleteRecentBrand: { mutate: mutateByDeleteRecentBrand },
   } = useRecentBrandQuery()
 
-  const setBrand = useSetRecoilState(selectedBrandState)
+  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
 
   const onDeleteRecentBrandChip = () => {
     mutateByDeleteRecentBrand({
@@ -30,11 +30,27 @@ const RecentBrandChip = ({ brandData }: RecentBrandChipProps) => {
       brandId: brand.flag === 'Y' ? brand.id : null,
       newBrandId: brand.flag === 'N' ? brand.id : null,
     })
-    setBrand({
-      id: brand.id,
-      brandKr: brand.brandName,
-      flag: brand.flag as BrandFlag,
-    })
+    if (brand.flag === 'Y') {
+      // 등록된 브랜드
+      setItemInfo({
+        ...itemInfo,
+        brand: {
+          brandId: brand.id,
+          brandName: brand.brandName,
+          brandImgUrl: '',
+        },
+      })
+    } else {
+      // New 브랜드
+      setItemInfo({
+        ...itemInfo,
+        newBrand: {
+          brandId: brand.id,
+          brandName: brand.brandName,
+          brandImgUrl: '',
+        },
+      })
+    }
   }
 
   return (

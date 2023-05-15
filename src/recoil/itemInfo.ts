@@ -8,12 +8,13 @@ interface ICeleb {
 }
 interface ICategory {
   categoryId: number
-  parentName: string
   childName: string
+  parentCategoryId: number
+  parentName: string
 }
 interface IBrand {
-  brandId: number
-  brandName: string
+  brandId?: number
+  brandName?: string
   brandImgUrl?: string
 }
 interface ILink {
