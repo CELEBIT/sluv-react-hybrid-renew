@@ -1,30 +1,57 @@
 import React from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import styled from '@emotion/styled'
-
-import BottomSheetModal from '.'
-import { modals } from '../Modals'
-import useModals from '../Modals/hooks/useModals'
-
-import { Common, Pretendard } from '../styles'
-
-import { ChipWrapper } from './ItemBrandSelectModal/ItemBrandSelectModal'
-import { ButtonWrapper } from './ItemPlaceInputModal/ItemPlaceInputModal'
-import Header from '../Header/Header'
-import ButtonMedium from '../ButtonMedium/ButtonMedium'
-import ButtonLarge from '../ButtonLarge/ButtonLarge'
-import { selectedCelebState, selectedGroupState } from '../SelectCeleb/SelectCeleb'
+import BottomSheetModal from '..'
+import { modals } from '../../Modals'
+import useModals from '../../Modals/hooks/useModals'
+import { Common, Pretendard } from '../../styles'
+import { ChipWrapper } from '../ItemBrandSelectModal/ItemBrandSelectModal'
+import { ButtonWrapper } from '../ItemPlaceInputModal/ItemPlaceInputModal'
+import Header from '../../Header/Header'
+import ButtonMedium from '../../ButtonMedium/ButtonMedium'
+import ButtonLarge from '../../ButtonLarge/ButtonLarge'
+import { selectedCelebState, selectedGroupState } from '../../SelectCeleb/SelectCeleb'
+import { ICelebResult } from '../../../apis/user/userService'
+import { celebInfoInItemState } from '../../../recoil/itemInfo'
+import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
 
 const ItemCelebSelectModal = () => {
+  const {
+    postRecentCeleb: { mutate: mutateByPostRecentCeleb },
+  } = useRecentCelebQuery()
+
   const selectedGroup = useRecoilValue(selectedGroupState)
   const [selectedCeleb, setSelectedCeleb] = useRecoilState(selectedCelebState)
+  const [celebInfoInItem, setCelebInfoInItem] = useRecoilState(celebInfoInItemState)
+
   const { closeModal } = useModals()
   const onClose = () => {
+    setCelebInfoInItem({
+      groupId: null,
+      groupName: null,
+      soloId: null,
+      soloName: null,
+    })
     setSelectedCeleb({ id: 0, celebNameKr: '' })
-    closeModal(modals.ItemCategoryModal)
+    closeModal(modals.ItemCelebSelectModal)
   }
   const onComplete = () => {
-    closeModal(modals.ItemCategoryModal)
+    mutateByPostRecentCeleb(
+      { celebId: selectedCeleb.id, newCelebId: null },
+      {
+        onSuccess: () => {
+          closeModal(modals.ItemCelebSelectModal)
+        },
+      },
+    )
+  }
+  const onClickMember = (member: ICelebResult) => {
+    setSelectedCeleb(member)
+    setCelebInfoInItem({
+      ...celebInfoInItem,
+      soloId: member.id,
+      soloName: member.celebNameKr,
+    })
   }
   return (
     <BottomSheetModal>
@@ -43,7 +70,7 @@ const ItemCelebSelectModal = () => {
                     text={celeb.celebNameKr}
                     type='pri'
                     active={selectedCeleb === celeb}
-                    onClick={() => setSelectedCeleb(celeb)}
+                    onClick={() => onClickMember(celeb)}
                   ></ButtonMedium>
                 )
               })}
