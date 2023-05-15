@@ -5,13 +5,9 @@ import useModals from '../../../../../components/Modals/hooks/useModals'
 import { modals } from '../../../../../components/Modals'
 import { formatDate, getFormattedTodayDate } from './date.util'
 import { atomKeys } from '../../../../../config/atomKeys'
+import { itemInfoState } from '../../../../../recoil/itemInfo'
 
 // 날짜, 장소 Atoms //
-export const selectedDateState = atom<Date | undefined>({
-  // API 호출 시 null로 변환해서 전달
-  key: atomKeys.selectedDateState,
-  default: undefined,
-})
 
 export const selectedPlaceState = atom<string>({
   key: atomKeys.selectedPlaceState,
@@ -24,8 +20,8 @@ const DatePlaceField = () => {
   // 날짜 형식 UTC 기준 한국시간
   const formattedTodayDate = getFormattedTodayDate()
 
-  const selectedDate = useRecoilValue(selectedDateState)
   const selectedPlace = useRecoilValue(selectedPlaceState)
+  const itemInfo = useRecoilValue(itemInfoState)
 
   // 날짜 선택 모달
   const onDateSelect = () => {
@@ -41,10 +37,10 @@ const DatePlaceField = () => {
     <DatePlaceWrapper>
       <DateWrapper onClick={onDateSelect}>
         <Title>날짜</Title>
-        {selectedDate ? (
+        {itemInfo.whenDiscovery ? (
           <ValueText>
             {/* YYYY.MM.DD 형식 */}
-            {formatDate(selectedDate)}
+            {formatDate(itemInfo.whenDiscovery as Date)}
           </ValueText>
         ) : (
           // 날짜 미입력시 현재 날짜로 placeholder 지정
