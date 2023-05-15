@@ -25,7 +25,7 @@ interface IItemInfo {
   id?: number | null
   imgList?: Array<ImgResult> | null
   celeb?: ICeleb | null
-  whenDiscovery?: string | null
+  whenDiscovery?: string | null | Date
   whereDiscovery?: string | null
   itemCategory?: ICategory | null
   brand?: IBrand | null

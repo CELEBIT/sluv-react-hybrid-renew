@@ -4,10 +4,7 @@ import BrandItemField, {
   selectedBrandState,
 } from './components/BrandItemField/BrandItemField'
 import { useRecoilValue } from 'recoil'
-import DatePlaceField, {
-  selectedDateState,
-  selectedPlaceState,
-} from './components/DatePlaceField/DatePlaceField'
+import DatePlaceField, { selectedPlaceState } from './components/DatePlaceField/DatePlaceField'
 import PriceField, { itemPriceState } from './components/PriceField/PriceField'
 import { useNavigate } from 'react-router-dom'
 import SelectCeleb, { selectedCelebState } from '../../../components/SelectCeleb/SelectCeleb'
@@ -39,7 +36,6 @@ import ImageField from './components/ImageField/ImageField'
 const ItemCreate = () => {
   const navigate = useNavigate()
   const celeb = useRecoilValue(selectedCelebState)
-  const date = useRecoilValue(selectedDateState)
   const place = useRecoilValue(selectedPlaceState)
   const category = useRecoilValue(selectedSubCategoryState)
   const brand = useRecoilValue(selectedBrandState)
@@ -66,7 +62,7 @@ const ItemCreate = () => {
         },
       ],
       celebId: celeb.id,
-      whenDiscovery: date ? date.toISOString() : null,
+      whenDiscovery: null,
       whereDiscovery: place ? place : null,
       categoryId: category.id,
       brandId: brand.id,
