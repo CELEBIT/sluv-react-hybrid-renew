@@ -117,16 +117,16 @@ const PriceField = () => {
       </PriceInputWrapper>
       {!priceUnknown && (
         <div className='Info'>
-          <Info onClick={() => ToolTipVisibility(setInfoVisible)} />
           <ToolTip
-            x={'-3.0625rem'}
-            y={'-4.375rem'}
+            left='-2.375rem'
+            bottom='-0.625rem'
             arrowPosition='bottom-left'
             isVisible={infoVisible}
           >
             가격 변동이 있어 <br />
             ‘평균 가격대’로 표시돼요
           </ToolTip>
+          <Info onClick={() => ToolTipVisibility(setInfoVisible)} />
         </div>
       )}
 

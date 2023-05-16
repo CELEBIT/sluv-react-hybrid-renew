@@ -52,24 +52,15 @@ import { HeaderWrapper } from '../addInfo/styles'
 import RecommendedItemList from '../../../components/RecommendedItem/RecommendedItemList'
 import Carousel from './components/Carousel/Carousel'
 
-// import useFollowQuery from '../../../apis/follow/hooks/useFollowQuery'
-// import useItemDetailQuery from '../../../apis/item/hooks/useItemDetailQuery'
-export interface ItemDetailProps {
-  userId: number
-}
-
 const ItemDetail = () => {
-  // const id = useParams()
-  // const {
-  //   followUser: { mutate: mutateByFollow },
-  // } = useFollowQuery()
+  // const id = 35
   // const {
   //   getItemDetail: { data },
-  // } = useItemDetailQuery()
+  // } = useItemDetailQuery(35)
 
   const colors = ['gray', 'pink', 'orange', 'yellow', 'green', 'blue']
   const price = 120235
-  const additionalInfoText = 'asdfasdf'
+  const additionalInfoText = '공홈보다 무신사가 20% 더 저렴해요😎'
   const HashTagList = [
     {
       hashtagId: 0,
