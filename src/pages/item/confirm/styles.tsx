@@ -47,10 +47,11 @@ export const ItemWrapper = styled.div`
 
 export const ConfirmButtonWrapper = styled.div`
   display: flex;
+  position: relative;
   flex-direction: row;
   justify-content: space-between;
+  gap: 0.5625rem;
   width: 100%;
   background-color: white;
-  border: 1px solid red;
   padding: 0.75rem 1.25rem;
 `

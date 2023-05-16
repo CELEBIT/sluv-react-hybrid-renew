@@ -17,7 +17,7 @@ interface IBrand {
   brandName?: string
   brandImgUrl?: string
 }
-interface ILink {
+export interface ILink {
   itemLinkUrl: string
   linkName: string
 }
