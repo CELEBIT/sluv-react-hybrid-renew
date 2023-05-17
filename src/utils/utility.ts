@@ -7,3 +7,12 @@ export function convertToUTC(date: Date): Date {
   const utcDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000)
   return utcDate
 }
+
+export const convertToKoDate = (date: Date) => {
+  const koreanDate = date.toLocaleDateString('ko-KR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+  return koreanDate
+}
