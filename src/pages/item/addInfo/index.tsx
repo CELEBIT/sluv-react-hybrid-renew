@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../../../components/Header/Header'
-import { AddInfoContainer, HashTagWrapper, TextFieldWrapper } from './styles'
+import { AddInfoContainer, TextFieldWrapper } from './styles'
 import TextArea from '../../../components/TextField/TextArea/TextArea'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import SourceInput from './components/sourceInput/SourceInput'
@@ -64,9 +64,7 @@ const AddInfo = () => {
           errorMsg='추가 정보를 입력해주세요'
         ></TextArea>
       </TextFieldWrapper>
-      <HashTagWrapper>
-        <HashtagInput placeholder='애착템 #최애템 #추천템' onChange={setHashTags} />
-      </HashTagWrapper>
+      <HashtagInput placeholder='애착템 #최애템 #추천템' onChange={setHashTags} />
       <SourceInput source={source} setSource={setSource} />
     </AddInfoContainer>
   )

@@ -12,12 +12,12 @@ import { atomKeys } from '../../../../../config/atomKeys'
 
 export const linksState = atom<Link[]>({
   key: atomKeys.linksState,
-  default: [{ linkName: '', url: '' }],
+  default: [{ linkName: '', itemLinkUrl: '' }],
 })
 
 export interface Link {
   linkName: string
-  url: string
+  itemLinkUrl: string
 }
 
 interface LinkInputProps {
@@ -30,15 +30,15 @@ const LinkInput = ({ hasError }: LinkInputProps) => {
   const [focusedInputIndex, setFocusedInputIndex] = useState<number | null>(null)
   const handleAddLink = () => {
     const isLinkNameEmpty = links.some((link) => link.linkName === '')
-    const isUrlEmpty = links.some((link) => link.url === '')
-    const isUrlValid = links.every((link) => urlRegex.test(link.url))
+    const isUrlEmpty = links.some((link) => link.itemLinkUrl === '')
+    const isUrlValid = links.every((link) => urlRegex.test(link.itemLinkUrl))
     if (isLinkNameEmpty || isUrlEmpty || isUrlValid == false) {
       setLinkAddValid(false)
       return
     }
 
     if (links.length < 3) {
-      setLinks([...links, { linkName: '', url: '' }])
+      setLinks([...links, { linkName: '', itemLinkUrl: '' }])
     }
     setLinkAddValid(true)
   }
@@ -49,7 +49,7 @@ const LinkInput = ({ hasError }: LinkInputProps) => {
     setLinks(updatedLinks)
   }
   const handleRemoveData = () => {
-    setLinks([{ linkName: '', url: '' }])
+    setLinks([{ linkName: '', itemLinkUrl: '' }])
   }
   const handleLinkChange = (index: number, field: keyof Link, value: string) => {
     setLinks((prevLinks) => {
@@ -92,29 +92,29 @@ const LinkInput = ({ hasError }: LinkInputProps) => {
                 placeholder='링크 이름을 입력해 주세요'
               />
               <Input
-                value={link.url}
-                onChange={(value) => handleLinkChange(index, 'url', value)}
-                onDelete={() => handleLinkChange(index, 'url', '')}
+                value={link.itemLinkUrl}
+                onChange={(value) => handleLinkChange(index, 'itemLinkUrl', value)}
+                onDelete={() => handleLinkChange(index, 'itemLinkUrl', '')}
                 placeholder='구매 URL을 입력해 주세요'
               />
             </DisplayField>
-            {link.url !== '' && urlRegex.test(link.url) == false && (
+            {link.itemLinkUrl !== '' && urlRegex.test(link.itemLinkUrl) == false && (
               <ErrorText>구매 URL 정보를 명확하게 입력해주세요</ErrorText>
             )}
-            {linkAddValid == false && (!link.linkName || !link.url) && (
+            {linkAddValid == false && (!link.linkName || !link.itemLinkUrl) && (
               <ErrorText>구매 링크 정보를 모두 입력해야 추가할 수 있어요</ErrorText>
             )}
             {hasError && (
               <>
-                {!link.linkName && !link.url ? (
+                {!link.linkName && !link.itemLinkUrl ? (
                   <ErrorText>구매 링크를 입력해주세요</ErrorText>
                 ) : (
                   <>
-                    {!link.linkName && link.url ? (
+                    {!link.linkName && link.itemLinkUrl ? (
                       <ErrorText>링크 이름을 입력해주세요</ErrorText>
                     ) : (
                       <>
-                        {link.linkName && !link.url && (
+                        {link.linkName && !link.itemLinkUrl && (
                           <ErrorText>구매 URL을 입력해주세요</ErrorText>
                         )}
                       </>
