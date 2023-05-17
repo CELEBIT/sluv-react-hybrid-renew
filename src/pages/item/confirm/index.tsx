@@ -7,25 +7,19 @@ import Photo from '../../../components/AddPhotos/Photo'
 import { ComponentWrapper, Label, LabelContainer } from '../create/styles'
 import DisplayField from '../../../components/TextField/DisplayField/DisplayField'
 
-// import { useRecoilValue } from 'recoil'
+import { useRecoilValue } from 'recoil'
+import { itemInfoState, celebInfoInItemState } from '../../../recoil/itemInfo'
 import ButtonHalf from '../../../components/ButtonHalf/ButtonHalf'
 import { formatDate } from '../create/components/DatePlaceField/date.util'
 import { formatPrice } from '../create/components/PriceField/price.util'
-// import { itemInfoState, celebInfoInItemState } from '../../../recoil/itemInfo'
 import ToolTip from '../../../components/ToolTip/ToolTip'
-import { ILink } from '../../../recoil/itemInfo'
-
-interface IHashTag {
-  hashtagId: number
-  hashtagContent: string
-  count: number | null
-}
+// import { IItemInfo } from '../../../recoil/itemInfo'
 
 const ItemConfirm = () => {
   const navigate = useNavigate()
-  // const itemInfo = useRecoilValue(itemInfoState)
-  // const celebInfo = useRecoilValue(celebInfoInItemState)
-  const celebInfo = { groupId: 1, groupName: '르세라핌', soloId: 12, soloName: '채원' }
+  const itemInfo = useRecoilValue(itemInfoState)
+  const celebInfo = useRecoilValue(celebInfoInItemState)
+
   // const itemInfo = {
   //   id: 1,
   //   imgList: [
@@ -55,86 +49,24 @@ const ItemConfirm = () => {
   //       representFlag: false,
   //     },
   //   ],
-  //   whenDiscovery: '2021-11-20T09:10:20',
-  //   whereDiscovery: '우리집',
+  //   whenDiscovery: null,
+  //   whereDiscovery: null,
   //   itemCategory: {
-  //     categoryId: 12,
-  //     childName: '농구화',
-  //     parentCategoryId: 1,
-  //     parentName: '신발',
+  //     categoryId: null,
+  //     childName: null,
+  //     parentCategoryId: 9,
+  //     parentName: '기타',
   //   },
   //   brand: { brandId: 1, brandName: '나이키', brandImgUrl: '' },
   //   itemName: 'BROCOLLI FAMILY HOODIE',
-  //   price: 89490,
+  //   price: -1,
   //   color: null,
-  //   additionalInfo: '공홈보다 무신사가 20% 더 저렴해요😎',
-  //   hashTagList: [
-  //     {
-  //       hashtagId: 1,
-  //       hashtagContent: '애착템',
-  //       count: null,
-  //     },
-  //     {
-  //       hashtagId: 2,
-  //       hashtagContent: '농구화',
-  //       count: null,
-  //     },
-  //   ],
-  //   linkList: [
-  //     { itemLinkUrl: 'https://www.musinsa.com', linkName: '무신사' },
-  //     { itemLinkUrl: 'https://www.musinsa.com', linkName: '네이버 스마트스토어' },
-  //     { itemLinkUrl: 'https://www.musinsa.com', linkName: '나이키 공식홈페이지' },
-  //   ],
-  //   infoSource: '인스타그램',
+  //   additionalInfo: null,
+  //   hashTagList: null,
+  //   linkList: null,
+  //   infoSource: null,
   //   newBrand: null,
   // }
-  const itemInfo = {
-    id: 1,
-    imgList: [
-      {
-        imgUrl:
-          'https://images.pexels.com/photos/2893685/pexels-photo-2893685.jpeg?cs=srgb&dl=pexels-oziel-g%C3%B3mez-2893685.jpg&fm=jpg',
-        representFlag: true,
-      },
-      {
-        imgUrl:
-          'https://iso.500px.com/wp-content/uploads/2016/02/stock-photo-114337435-1500x1000.jpg',
-        representFlag: false,
-      },
-      {
-        imgUrl:
-          'https://images.pexels.com/photos/3680219/pexels-photo-3680219.jpeg?cs=srgb&dl=pexels-lukas-rodriguez-3680219.jpg&fm=jpg',
-        representFlag: false,
-      },
-      {
-        imgUrl:
-          'https://plus.unsplash.com/premium_photo-1664701475272-953393050754?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGhvdG98ZW58MHx8MHx8&w=1000&q=80',
-        representFlag: false,
-      },
-      {
-        imgUrl:
-          'https://img.freepik.com/free-photo/colorful-heart-air-balloon-shape-collection-concept-isolated-color-background-beautiful-heart-ball-event_90220-1047.jpg',
-        representFlag: false,
-      },
-    ],
-    whenDiscovery: null,
-    whereDiscovery: null,
-    itemCategory: {
-      categoryId: null,
-      childName: null,
-      parentCategoryId: 9,
-      parentName: '기타',
-    },
-    brand: { brandId: 1, brandName: '나이키', brandImgUrl: '' },
-    itemName: 'BROCOLLI FAMILY HOODIE',
-    price: -1,
-    color: null,
-    additionalInfo: null,
-    hashTagList: null,
-    linkList: null,
-    infoSource: null,
-    newBrand: null,
-  }
   return (
     <ConfirmContainer>
       <HeaderWrapper>
@@ -143,17 +75,18 @@ const ItemConfirm = () => {
       <ItemWrapper>
         <ComponentWrapper>
           <PhotosWrapper>
-            {itemInfo.imgList.map((img, index) => {
-              return (
-                <Photo
-                  key={index}
-                  representFlag={img.representFlag}
-                  size={74}
-                  borderRadius={8}
-                  imgUrl={img.imgUrl}
-                ></Photo>
-              )
-            })}
+            {itemInfo?.imgList &&
+              itemInfo?.imgList.map((img, index) => {
+                return (
+                  <Photo
+                    key={index}
+                    representFlag={img.representFlag}
+                    size={74}
+                    borderRadius={8}
+                    imgUrl={img.imgUrl}
+                  ></Photo>
+                )
+              })}
           </PhotosWrapper>
         </ComponentWrapper>
 
@@ -178,10 +111,10 @@ const ItemConfirm = () => {
             </LabelContainer>
             <div className='padding'>
               <DisplayField disabled={true}>
-                {itemInfo.whenDiscovery !== null && (
+                {itemInfo.whenDiscovery && (
                   <span>{formatDate(new Date(itemInfo?.whenDiscovery as string))}</span>
                 )}
-                <span>{itemInfo.whereDiscovery}</span>
+                {itemInfo.whereDiscovery && <span>{itemInfo.whereDiscovery}</span>}
               </DisplayField>
             </div>
           </ComponentWrapper>
@@ -199,12 +132,12 @@ const ItemConfirm = () => {
               </span>
               <span>{itemInfo.brand?.brandName}</span>
               <span>{itemInfo?.itemName}</span>
-              {itemInfo.price !== null && (
+              {itemInfo.price && itemInfo.price !== -1 && (
                 <>
-                  {itemInfo.price !== -1 ? (
-                    <span>{formatPrice(itemInfo?.price)}</span>
+                  {itemInfo?.price > 500000000 ? (
+                    <span>5억원대 이상</span>
                   ) : (
-                    <span>가격은 모르겠어요</span>
+                    <span>{formatPrice(itemInfo?.price)}대</span>
                   )}
                 </>
               )}
@@ -221,11 +154,9 @@ const ItemConfirm = () => {
                 {itemInfo?.additionalInfo && <span>{itemInfo?.additionalInfo}</span>}
                 {itemInfo?.hashTagList && (
                   <span>
-                    {(itemInfo.hashTagList as Array<IHashTag> | null)?.map(
-                      (hashtag, index: number) => {
-                        return <span key={index}>#{hashtag?.hashtagContent}&nbsp;</span>
-                      },
-                    )}
+                    {itemInfo.hashTagList?.map((hashtag, index: number) => {
+                      return <span key={index}>#{hashtag?.hashtagContent}&nbsp;</span>
+                    })}
                   </span>
                 )}
                 {itemInfo?.infoSource && <span>{itemInfo?.infoSource}</span>}
@@ -240,7 +171,7 @@ const ItemConfirm = () => {
             </LabelContainer>
             <div className='padding'>
               <DisplayField disabled={true}>
-                {(itemInfo.linkList as Array<ILink> | null)?.map((link, index) => (
+                {itemInfo.linkList?.map((link, index) => (
                   <span key={index}>{link.linkName}</span>
                 ))}
               </DisplayField>
