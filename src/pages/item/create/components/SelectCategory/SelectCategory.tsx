@@ -31,7 +31,17 @@ const SelectCategory = () => {
 
   const onCategoryClick = (category: Category) => {
     openModal(modals.ItemCategoryModal)
-    setSelectedParentCategory(category)
+    console.log(itemInfo.itemCategory?.parentCategoryId)
+    setSelectedParentCategory({
+      id: itemInfo.itemCategory?.parentCategoryId
+        ? itemInfo.itemCategory?.parentCategoryId
+        : category.id ?? -1,
+      name: itemInfo.itemCategory?.parentName
+        ? itemInfo.itemCategory?.parentName
+        : category.name ?? '오류',
+      subCategoryList: category.subCategoryList,
+    })
+    console.log(category)
     if (category.id === 9) {
       setSelectedSubCategory({ id: 9, name: '기타' })
     } else {
