@@ -51,12 +51,13 @@ import { formatPrice } from '../create/components/PriceField/price.util'
 import { HeaderWrapper } from '../addInfo/styles'
 import RecommendedItemList from '../../../components/RecommendedItem/RecommendedItemList'
 import Carousel from './components/Carousel/Carousel'
+// import useItemDetailQuery from '../../../apis/item/hooks/useItemDetailQuery'
+// import { useParams } from 'react-router-dom'
 
 const ItemDetail = () => {
-  // const id = 35
-  // const {
-  //   getItemDetail: { data },
-  // } = useItemDetailQuery(35)
+  // const { id } = useParams()
+  // const { getItemDetail } = useItemDetailQuery()
+  // const { data } = getItemDetail(Number(id))
 
   const colors = ['gray', 'pink', 'orange', 'yellow', 'green', 'blue']
   const price = 120235
@@ -219,7 +220,7 @@ const ItemDetail = () => {
               <Arrow></Arrow>
               <span>후드티</span>
             </div>
-            <ItemName>BROCCOLI FAMILY HOODIE GRAY</ItemName>
+            <ItemName>KD16</ItemName>
             <Brand>
               <BrandLogo
                 size={32}
