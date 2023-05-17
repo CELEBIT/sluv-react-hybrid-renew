@@ -25,7 +25,7 @@ export interface CelebResult {
 }
 export interface HashTagResult {
   id: number
-  content: string
+  hashtagContent: string
   hashtagStatus: string
 }
 export interface LinkResult {
@@ -89,7 +89,7 @@ export interface ItemDetailResult {
   scrapNum: number
   scrapStatus: boolean
   viewNum: number
-  linkList: LinkResult
+  linkList: Array<LinkResult>
   writer: userResult
   whenDiscovery: string
   whereDiscovery: string

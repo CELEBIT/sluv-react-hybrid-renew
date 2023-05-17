@@ -115,7 +115,7 @@ export const UploaderInfoWrapper = styled.div`
   }
 `
 
-export const UserImg = styled.div<{ imgUrl: string }>`
+export const UserImg = styled.div<{ imgUrl: string | undefined }>`
   flex-shrink: 0;
   width: 2.5rem;
   height: 2.5rem;
