@@ -31,14 +31,9 @@ const SelectCategory = () => {
 
   const onCategoryClick = (category: Category) => {
     openModal(modals.ItemCategoryModal)
-    console.log(itemInfo.itemCategory?.parentCategoryId)
     setSelectedParentCategory({
-      id: itemInfo.itemCategory?.parentCategoryId
-        ? itemInfo.itemCategory?.parentCategoryId
-        : category.id ?? -1,
-      name: itemInfo.itemCategory?.parentName
-        ? itemInfo.itemCategory?.parentName
-        : category.name ?? '오류',
+      id: category.id,
+      name: data?.find((cat) => cat.id === category.id)?.name ?? '오류',
       subCategoryList: category.subCategoryList,
     })
     console.log(category)
