@@ -47,6 +47,7 @@ const ItemCreate = () => {
       itemInfo.price
     ) {
       alert('success')
+      navigate('/item/create/confirm')
     } else {
       alert('fail')
     }
