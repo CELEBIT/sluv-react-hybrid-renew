@@ -76,7 +76,7 @@ export interface TempItemResult {
   updatedAt: string
 }
 
-export interface ItemResult {
+export interface ItemDetailResult {
   imgList: Array<ImgResult>
   celeb: CelebResult
   newCelebName: string
@@ -128,8 +128,8 @@ export default class ItemService {
     return data.result
   }
 
-  async getItemDetail(itemId: number | null) {
-    const data: ResponseType<Array<ItemResult>> = await request.get(`${this.itemUrl}/${itemId}`)
+  async getItemDetail(itemId: number) {
+    const data: ResponseType<ItemDetailResult> = await request.get(`${this.itemUrl}/${itemId}`)
 
     return data.result
   }
