@@ -1,18 +1,15 @@
 import React, { useState } from 'react'
-import { atom, useRecoilState } from 'recoil'
 import styled from '@emotion/styled'
 import { ReactComponent as Delete } from '../../../../../assets/delete_textfield_24.svg'
 import { ReactComponent as Link } from '../../../../../assets/link_add_20.svg'
 import { Common, Pretendard } from '../../../../../components/styles'
-import { atomKeys } from '../../../../../config/atomKeys'
 
-export const infoSourceState = atom<string>({
-  key: atomKeys.infoSourceState,
-  default: '',
-})
+interface SourceInputProps {
+  source: string | null
+  setSource: React.Dispatch<React.SetStateAction<string | null>>
+}
 
-const SourceInput = () => {
-  const [source, setSource] = useRecoilState(infoSourceState)
+const SourceInput = ({ source, setSource }: SourceInputProps) => {
   const [isFocused, setIsFocused] = useState<boolean>(false)
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,11 +26,11 @@ const SourceInput = () => {
         <Link />
       </div>
       <InputField
-        value={source}
+        value={source ?? ''}
         placeholder={'출처가 있다면 여기에 남겨주세요'}
         onChange={handleInputChange}
       ></InputField>
-      {source.length !== 0 && isFocused && (
+      {source && isFocused && (
         <Delete
           style={{ marginLeft: '0.625rem' }}
           onClick={onDelete}

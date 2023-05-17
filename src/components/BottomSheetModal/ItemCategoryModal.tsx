@@ -12,6 +12,7 @@ import ButtonMedium from '../ButtonMedium/ButtonMedium'
 import styled from '@emotion/styled'
 import { Common, Pretendard } from '../styles'
 import ButtonLarge from '../ButtonLarge/ButtonLarge'
+import { itemInfoState } from '../../recoil/itemInfo'
 
 export const CategoryDisplayListState = atom<Category[]>({
   key: atomKeys.CategoryListState,
@@ -55,8 +56,18 @@ const ItemCategoryModal = () => {
     selectedParentCategoryState,
   )
   const [selectedSubCategory, setSelectedSubCategory] = useRecoilState(selectedSubCategoryState)
+  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
 
   const onComplete = () => {
+    setItemInfo({
+      ...itemInfo,
+      itemCategory: {
+        categoryId: selectedSubCategory.id,
+        childName: selectedSubCategory.name,
+        parentCategoryId: selectedParentCategory.id,
+        parentName: selectedParentCategory.name,
+      },
+    })
     closeModal(modals.ItemCategoryModal)
   }
   const onParentClick = (category: Category) => {
@@ -68,6 +79,7 @@ const ItemCategoryModal = () => {
   }
   const onSubClick = (category: Category) => {
     setSelectedSubCategory(category)
+    console.log('sub', category)
   }
 
   const {

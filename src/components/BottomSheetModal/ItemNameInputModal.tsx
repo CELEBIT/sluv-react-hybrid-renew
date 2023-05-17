@@ -19,6 +19,7 @@ const ItemNameInputModal = () => {
       ...itemInfo,
       itemName,
     })
+    closeModal(modals.ItemDatePickerModal)
   }
   const onClose = () => {
     setItemInfo({
