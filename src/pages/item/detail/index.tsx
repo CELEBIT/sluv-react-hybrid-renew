@@ -53,6 +53,7 @@ import RecommendedItemList from '../../../components/RecommendedItem/Recommended
 import Carousel from './components/Carousel/Carousel'
 import useItemDetailQuery from '../../../apis/item/hooks/useItemDetailQuery'
 import { useNavigate, useParams } from 'react-router-dom'
+import { convertToKoDate } from '../../../utils/utility'
 
 const ItemDetail = () => {
   const navigate = useNavigate()
@@ -218,13 +219,13 @@ const ItemDetail = () => {
           </div>
           <ItemInfo>
             <div className='category'>
-              <span>{data?.category.parentName}</span>
-              {data?.category.name && (
+              {data?.category.parentName && (
                 <>
+                  <span>{data?.category.parentName}</span>
                   <Arrow></Arrow>
-                  <span>{data?.category.name}</span>
                 </>
               )}
+              <span>{data?.category.name}</span>
             </div>
             <ItemName>{data?.itemName}</ItemName>
             <Brand>
@@ -274,7 +275,7 @@ const ItemDetail = () => {
           <ButtonSmall type='sec' text='팔로우' onClick={onClickFollow} />
         </UploaderInfoWrapper>
         <AdditionalInfoWrapper>
-          {data?.whenDiscovery && <span>{data?.whenDiscovery}</span>}
+          {data?.whenDiscovery && <span>{convertToKoDate(new Date(data?.whenDiscovery))}</span>}
           {data?.whereDiscovery && <span>{data?.whereDiscovery}에서 착용하였고</span>}
           {data?.price && (
             <>
