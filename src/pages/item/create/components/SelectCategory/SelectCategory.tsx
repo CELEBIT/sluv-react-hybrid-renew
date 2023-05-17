@@ -54,30 +54,6 @@ const SelectCategory = () => {
     }
   }, [data, setCategoryDisplayList])
 
-  // useEffect(() => {
-  //   if (data) {
-  //     const updatedList = data.filter((category) => category.id !== selectedParentCategory.id)
-  //     if (selectedParentCategory.id !== 9) {
-  //       const newDisplayItem = {
-  //         id: selectedParentCategory.id,
-  //         name:
-  //           data?.find((category) => category.id === selectedParentCategory.id)?.name +
-  //           '>' +
-  //           selectedSubCategory.name,
-  //         subCategoryList: selectedParentCategory.subCategoryList,
-  //       }
-  //       setCategoryDisplayList([newDisplayItem, ...updatedList])
-  //     } else {
-  //       const newDisplayItem = {
-  //         id: selectedParentCategory.id,
-  //         name: selectedParentCategory.name,
-  //       }
-  //       setCategoryDisplayList([newDisplayItem, ...updatedList])
-  //       // setSelectedSubCategory(newDisplayItem)
-  //     }
-  //   }
-  // }, [selectedParentCategory, selectedSubCategory])
-
   useEffect(() => {
     if (!data) {
       return

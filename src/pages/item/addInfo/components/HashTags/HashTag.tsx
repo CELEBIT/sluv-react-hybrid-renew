@@ -1,10 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { SearchedHashTag, Tag, TagInput, TagInputContainer } from './styles'
-import debounce from 'lodash/debounce'
+import { Tag, TagInput, TagInputContainer } from './styles'
 import { atom, useRecoilState } from 'recoil'
 import { atomKeys } from '../../../../../config/atomKeys'
 import { HashTagWrapper } from '../../styles'
-import HighlightedText from '../../../../../components/HighlightedText/HighlightedText'
+import HashTagSearchList from './HashTagSearchList'
 
 interface HashtagInputProps {
   placeholder: string
@@ -20,23 +19,7 @@ const HashtagInput: React.FC<HashtagInputProps> = ({ placeholder }) => {
   const [hashTags, setHashtags] = useRecoilState(hashTagState)
 
   const [currentTag, setCurrentTag] = useState<string>('')
-  const searchResult = [
-    {
-      hashtagId: 1,
-      hashtagContent: '애착템',
-      count: 4,
-    },
-    {
-      hashtagId: 2,
-      hashtagContent: '애착템으로',
-      count: 144,
-    },
-    {
-      hashtagId: 3,
-      hashtagContent: '애착템할래',
-      count: 6,
-    },
-  ]
+
   useEffect(() => {
     const handleBackspace = (event: KeyboardEvent) => {
       if (event.key === 'Backspace' && currentTag === '') {
@@ -52,7 +35,6 @@ const HashtagInput: React.FC<HashtagInputProps> = ({ placeholder }) => {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentTag(event.target.value)
-    debouncedSearch(event.target.value)
   }
 
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -74,12 +56,6 @@ const HashtagInput: React.FC<HashtagInputProps> = ({ placeholder }) => {
     }
   }
 
-  const debouncedSearch = useRef(
-    debounce((hashtag: string) => {
-      console.log('Calling search API with hashtag:', hashtag)
-      // replace with actual search API call
-    }, 300),
-  ).current
   return (
     <HashTagWrapper>
       <TagInputContainer>
@@ -99,20 +75,7 @@ const HashtagInput: React.FC<HashtagInputProps> = ({ placeholder }) => {
         </Tag>
       </TagInputContainer>
       {currentTag && (
-        <div className='searchedTags'>
-          {searchResult.map((hashtag) => {
-            return (
-              <SearchedHashTag
-                key={hashtag.hashtagId}
-                onClick={() => onClickSearchedHashtag(hashtag.hashtagContent)}
-              >
-                <span>#</span>
-                <HighlightedText searchText={currentTag} text={hashtag.hashtagContent} />
-                <span>{hashtag.count}</span>
-              </SearchedHashTag>
-            )
-          })}
-        </div>
+        <HashTagSearchList name={currentTag} onClickHashTag={onClickSearchedHashtag} />
       )}
     </HashTagWrapper>
   )
