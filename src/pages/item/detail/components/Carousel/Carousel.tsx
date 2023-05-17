@@ -2,14 +2,10 @@ import React, { useState } from 'react'
 import { useKeenSlider } from 'keen-slider/react'
 import 'keen-slider/keen-slider.min.css'
 import styled from '@emotion/styled'
-
-interface Image {
-  imgUrl: string
-  representFlag: boolean
-}
+import { ImgResult } from '../../../../../apis/item/itemService'
 
 interface CarouselProps {
-  imgList: Array<Image>
+  imgList: Array<ImgResult>
 }
 
 const Carousel = ({ imgList }: CarouselProps) => {
@@ -27,7 +23,7 @@ const Carousel = ({ imgList }: CarouselProps) => {
   return (
     <div className='navigation-wrapper' style={{ position: 'relative' }}>
       <ImageContainer ref={sliderRef} className='keen-slider'>
-        {imgList.map((itemImg: Image, index) => (
+        {imgList.map((itemImg: ImgResult, index) => (
           <Image key={index} url={itemImg.imgUrl} className='keen-slider__slide'></Image>
         ))}
       </ImageContainer>
