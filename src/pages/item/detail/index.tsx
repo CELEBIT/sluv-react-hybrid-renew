@@ -51,25 +51,17 @@ import { formatPrice } from '../create/components/PriceField/price.util'
 import { HeaderWrapper } from '../addInfo/styles'
 import RecommendedItemList from '../../../components/RecommendedItem/RecommendedItemList'
 import Carousel from './components/Carousel/Carousel'
-
-// import useFollowQuery from '../../../apis/follow/hooks/useFollowQuery'
 // import useItemDetailQuery from '../../../apis/item/hooks/useItemDetailQuery'
-export interface ItemDetailProps {
-  userId: number
-}
+// import { useParams } from 'react-router-dom'
 
 const ItemDetail = () => {
-  // const id = useParams()
-  // const {
-  //   followUser: { mutate: mutateByFollow },
-  // } = useFollowQuery()
-  // const {
-  //   getItemDetail: { data },
-  // } = useItemDetailQuery()
+  // const { id } = useParams()
+  // const { getItemDetail } = useItemDetailQuery()
+  // const { data } = getItemDetail(Number(id))
 
   const colors = ['gray', 'pink', 'orange', 'yellow', 'green', 'blue']
   const price = 120235
-  const additionalInfoText = 'asdfasdf'
+  const additionalInfoText = '공홈보다 무신사가 20% 더 저렴해요😎'
   const HashTagList = [
     {
       hashtagId: 0,
@@ -228,7 +220,7 @@ const ItemDetail = () => {
               <Arrow></Arrow>
               <span>후드티</span>
             </div>
-            <ItemName>BROCCOLI FAMILY HOODIE GRAY</ItemName>
+            <ItemName>KD16</ItemName>
             <Brand>
               <BrandLogo
                 size={32}

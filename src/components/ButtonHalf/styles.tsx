@@ -7,12 +7,11 @@ export const HalfWrapper = styled.div<{
 }>`
   display: inline-flex;
   flex-direction: row;
-  flex-shrink: 0;
   justify-content: center;
   align-items: center;
 
   height: 3rem;
-  width: 7.5rem;
+  width: 100%;
   padding: 0.9375rem;
   border-radius: 0.5rem;
 

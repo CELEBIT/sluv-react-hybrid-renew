@@ -9,7 +9,7 @@ interface DisplayFieldProps {
   errorMsg?: string
 }
 const DisplayField = ({ children, disabled, valid, errorMsg }: DisplayFieldProps) => {
-  const childrenCount = React.Children.count(children)
+  const childrenCount = React.Children.toArray(children).length
 
   if (childrenCount === 1) {
     return (
