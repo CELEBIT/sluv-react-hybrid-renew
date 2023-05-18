@@ -21,7 +21,7 @@ interface ILink {
   itemLinkUrl: string
   linkName: string
 }
-interface IHashTag {
+export interface IHashTag {
   hashtagId: number
   hashtagContent: string
 }
@@ -38,7 +38,7 @@ export interface IItemInfo {
   price?: number | null
   color?: string | null
   additionalInfo: string | null
-  hashTagList?: Array<IHashTag> | null
+  hashTagList: Array<IHashTag> | null
   linkList: Array<ILink> | null
   infoSource: string | null
   newCeleb?: ICeleb | null
