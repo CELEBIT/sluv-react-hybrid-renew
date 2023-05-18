@@ -16,7 +16,7 @@ const HighlightedText = ({ searchText, text, fontSize, fontWeight }: Highlighted
   return (
     <HighlightWrapper fontSize={fontSize} fontWeight={fontWeight}>
       {parts.map((part, i) =>
-        regex.test(part) ? (
+        searchText && regex.test(part) ? (
           <span className='highlighted' key={i}>
             {part}
           </span>
