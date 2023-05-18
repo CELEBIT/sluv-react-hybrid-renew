@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Header from '../../../components/Header/Header'
 import { AddInfoContainer, TextFieldWrapper } from './styles'
 import TextArea from '../../../components/TextField/TextArea/TextArea'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import SourceInput from './components/sourceInput/SourceInput'
 import HashtagInput, { hashTagState } from './components/HashTags/HashTag'
 import { itemInfoState } from '../../../recoil/itemInfo'
@@ -15,8 +15,8 @@ const AddInfo = () => {
 
   const [addInfoText, setAddInfoText] = useState<string | null>(itemInfo.additionalInfo)
   const [source, setSource] = useState<string | null>(itemInfo.infoSource)
+  const hashTags = useRecoilValue(hashTagState)
 
-  const setHashTags = useSetRecoilState(hashTagState)
   const [infoValid, setInfoValid] = useState(true)
   const [hasSubmitted, setHasSubmitted] = useState(false)
 
@@ -24,11 +24,12 @@ const AddInfo = () => {
 
   const onSubmit = () => {
     setHasSubmitted(true)
-    if (addInfoText || source) {
+    if (addInfoText || source || hashTags) {
       setItemInfo({
         ...itemInfo,
         additionalInfo: addInfoText,
         infoSource: source,
+        hashTagList: hashTags,
       })
       setInfoValid(true)
       navigate('/item/create')
@@ -39,7 +40,7 @@ const AddInfo = () => {
 
   useEffect(() => {
     if (hasSubmitted) {
-      if (addInfoText || source) {
+      if (addInfoText || source || hashTags) {
         setInfoValid(true)
       } else {
         setInfoValid(false)
@@ -64,7 +65,7 @@ const AddInfo = () => {
           errorMsg='추가 정보를 입력해주세요'
         ></TextArea>
       </TextFieldWrapper>
-      <HashtagInput placeholder='애착템 #최애템 #추천템' onChange={setHashTags} />
+      <HashtagInput placeholder='애착템 #최애템 #추천템' />
       <SourceInput source={source} setSource={setSource} />
     </AddInfoContainer>
   )

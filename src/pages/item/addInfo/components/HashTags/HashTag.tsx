@@ -1,24 +1,38 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Tag, TagInput, TagInputContainer } from './styles'
-import { atom, useRecoilState } from 'recoil'
+import { atom, useRecoilState, useRecoilValue } from 'recoil'
 import { atomKeys } from '../../../../../config/atomKeys'
 import { HashTagWrapper } from '../../styles'
 import HashTagSearchList from './HashTagSearchList'
+import { IHashTag, itemInfoState } from '../../../../../recoil/itemInfo'
+import useItemHashtagQuery from '../../../../../apis/item/hooks/useItemHashtagQuery'
 
 interface HashtagInputProps {
   placeholder: string
-  onChange: (hashtags: string[]) => void
 }
 
-export const hashTagState = atom<string[]>({
+export const hashTagState = atom<IHashTag[]>({
   key: atomKeys.hashTagState,
   default: [],
 })
 
 const HashtagInput: React.FC<HashtagInputProps> = ({ placeholder }) => {
-  const [hashTags, setHashtags] = useRecoilState(hashTagState)
+  const {
+    postHashtag: { mutate: mutateByPostHashtag },
+  } = useItemHashtagQuery()
 
+  const itemInfo = useRecoilValue(itemInfoState)
+  const [hashTags, setHashtags] = useRecoilState(hashTagState)
   const [currentTag, setCurrentTag] = useState<string>('')
+  const [isFocused, setIsFocused] = useState<boolean>(false)
+
+  const tagInputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    if (itemInfo.hashTagList) {
+      setHashtags([...itemInfo.hashTagList])
+    }
+  }, [])
 
   useEffect(() => {
     const handleBackspace = (event: KeyboardEvent) => {
@@ -38,18 +52,17 @@ const HashtagInput: React.FC<HashtagInputProps> = ({ placeholder }) => {
   }
 
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === ' ') {
+    if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault()
       if (currentTag.trim() !== '') {
-        setHashtags((prevTags) => [...prevTags, currentTag.trim()])
+        mutateByPostHashtag({ hashtagContent: currentTag })
         setCurrentTag('')
       }
     }
   }
-  const tagInputRef = useRef<HTMLInputElement>(null)
-  const onClickSearchedHashtag = (hashtagContent: string) => {
-    setCurrentTag(hashtagContent)
-    setHashtags((prevTags) => [...prevTags, hashtagContent.trim()])
+
+  const onClickSearchedHashtag = (tag: IHashTag) => {
+    setHashtags((prevTags) => [...prevTags, tag])
     setCurrentTag('')
     if (tagInputRef.current) {
       tagInputRef.current.focus()
@@ -60,7 +73,7 @@ const HashtagInput: React.FC<HashtagInputProps> = ({ placeholder }) => {
     <HashTagWrapper>
       <TagInputContainer>
         {hashTags.map((tag, index) => (
-          <Tag key={index}>#{tag}</Tag>
+          <Tag key={index}>#{tag.hashtagContent}</Tag>
         ))}
         <Tag>
           #
@@ -70,13 +83,12 @@ const HashtagInput: React.FC<HashtagInputProps> = ({ placeholder }) => {
             ref={tagInputRef}
             placeholder={!hashTags.length ? placeholder : ''}
             onChange={handleInputChange}
+            onClick={() => setIsFocused(true)}
             onKeyDown={handleInputKeyDown}
           />
         </Tag>
       </TagInputContainer>
-      {currentTag && (
-        <HashTagSearchList name={currentTag} onClickHashTag={onClickSearchedHashtag} />
-      )}
+      {isFocused && <HashTagSearchList name={currentTag} onClickHashTag={onClickSearchedHashtag} />}
     </HashTagWrapper>
   )
 }
