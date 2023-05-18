@@ -52,8 +52,10 @@ const HashtagInput: React.FC<HashtagInputProps> = ({ placeholder }) => {
   }
 
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter' || event.key === ' ') {
+    if (event.key === 'Enter' || event.code === 'Space') {
+      if (event.nativeEvent.isComposing) return
       event.preventDefault()
+
       if (currentTag.trim() !== '') {
         mutateByPostHashtag({ hashtagContent: currentTag })
         setCurrentTag('')
