@@ -2,8 +2,6 @@ export const atomKeys = {
   imgListState: 'imgListState' as const,
   selectedPlaceState: 'selectedPlaceState' as const,
   selectedBrandState: 'selectedBrandState' as const,
-  itemNameState: 'itemNameState' as const,
-  itemPriceState: 'itemPriceState' as const,
   addInfoTextState: 'addInfoTextState' as const,
   infoSourceState: 'infoSourceState' as const,
   hashTagState: 'hashTagState' as const,

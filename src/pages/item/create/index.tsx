@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import BrandItemField from './components/BrandItemField/BrandItemField'
 import { useRecoilValue } from 'recoil'
 import DatePlaceField from './components/DatePlaceField/DatePlaceField'
-import PriceField, { itemPriceState } from './components/PriceField/PriceField'
+import PriceField from './components/PriceField/PriceField'
 import { useNavigate } from 'react-router-dom'
 import SelectCeleb, { selectedCelebState } from '../../../components/SelectCeleb/SelectCeleb'
 import SelectCategory from './components/SelectCategory/SelectCategory'
@@ -25,9 +25,7 @@ import { ReactComponent as StorageOff } from '../../../assets/storage_off_20.svg
 import { HeaderWrapper } from '../addInfo/styles'
 import { ErrorText } from '../../../components/TextField/DefaultTextfield/styles'
 import { selectedSubCategoryState } from '../../../components/BottomSheetModal/ItemCategoryModal'
-import { addInfoTextState } from '../addInfo'
 import { linksState } from '../addLink/components/LinkInput/LinkInput'
-import { infoSourceState } from '../addInfo/components/sourceInput/SourceInput'
 import ImageField from './components/ImageField/ImageField'
 import { itemInfoState } from '../../../recoil/itemInfo'
 
@@ -35,9 +33,6 @@ const ItemCreate = () => {
   const navigate = useNavigate()
   const celeb = useRecoilValue(selectedCelebState)
   const category = useRecoilValue(selectedSubCategoryState)
-  const price = useRecoilValue(itemPriceState)
-  const additionalInfo = useRecoilValue(addInfoTextState)
-  const infoSource = useRecoilValue(infoSourceState)
   const links = useRecoilValue(linksState)
   const [hasTriedToUpload, setHasTriedToUpload] = useState(false)
   const itemInfo = useRecoilValue(itemInfoState)
@@ -49,7 +44,7 @@ const ItemCreate = () => {
       category.id &&
       (itemInfo.brand?.brandId || itemInfo.newBrand?.brandId) &&
       itemInfo.itemName &&
-      price
+      itemInfo.price
     ) {
       alert('success')
       navigate('/item/create/confirm')
@@ -70,12 +65,12 @@ const ItemCreate = () => {
       categoryId: category.id,
       brandId: null,
       itemName: itemInfo.itemName,
-      price: price !== 0 ? price : null,
+      price: null,
       color: null,
-      additionalInfo: additionalInfo ? additionalInfo : null,
+      additionalInfo: null,
       hashTagIdList: [0],
       linkList: links[0].linkName ? links : null,
-      infoSource: infoSource ? infoSource : null,
+      infoSource: null,
       newCelebId: 0,
       newBrandId: 0,
     }
@@ -119,7 +114,7 @@ const ItemCreate = () => {
                 !itemInfo.brand ||
                 !itemInfo.newBrand ||
                 !itemInfo.itemName ||
-                !price) && <Error></Error>}
+                !itemInfo.price) && <Error></Error>}
             <Label>어떤 아이템인가요?</Label>
           </LabelContainer>
           <SelectCategory />
@@ -135,7 +130,7 @@ const ItemCreate = () => {
           {(itemInfo.brand?.brandId || itemInfo.newBrand?.brandId) && (
             <>
               <PriceField></PriceField>
-              {hasTriedToUpload && !price && (
+              {hasTriedToUpload && !itemInfo.price && (
                 <ErrorText className='error'>필수 항목입니다</ErrorText>
               )}
             </>
