@@ -1,5 +1,5 @@
 import request from '../core'
-import { ResponseType } from '../core/type'
+import { GetPaginationResult, ResponseType } from '../core/type'
 
 export interface ParentCategoryResult {
   id: number
@@ -102,14 +102,21 @@ export interface ItemDetailResult {
   color: string
   followStatus: boolean
 }
+export interface HashtagContent {
+  hashtagId: number
+  hashtagContent: string
+  count: number
+}
 
 export default class ItemService {
   itemUrl: string
   tempItemUrl: string
+  hashtagUrl: string
 
   constructor() {
     this.itemUrl = '/app/item'
     this.tempItemUrl = '/app/item/temp'
+    this.hashtagUrl = '/app/item/hashtag'
   }
 
   // 아이템 카테고리 조회
@@ -127,10 +134,24 @@ export default class ItemService {
     })
     return data.result
   }
-
+  // 아이템 게시글 상세 조회
   async getItemDetail(itemId: number) {
     const data: ResponseType<ItemDetailResult> = await request.get(`${this.itemUrl}/${itemId}`)
 
     return data.result
+  }
+  // 해시태그 검색
+  async searchHashtag(name: string) {
+    const data: ResponseType<GetPaginationResult<HashtagContent>> = await request.get(
+      `${this.hashtagUrl}`,
+      {
+        params: {
+          name,
+          page: 0,
+          size: 20,
+        },
+      },
+    )
+    return data.result?.content
   }
 }
