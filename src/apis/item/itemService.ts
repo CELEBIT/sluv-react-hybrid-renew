@@ -1,3 +1,4 @@
+import { IHashTag } from '../../recoil/itemInfo'
 import request from '../core'
 import { GetPaginationResult, ResponseType } from '../core/type'
 
@@ -153,5 +154,12 @@ export default class ItemService {
       },
     )
     return data.result?.content
+  }
+  // 해시태그 등록
+  async postHashtag(hashtagContent: string) {
+    const data: ResponseType<IHashTag> = await request.post(`${this.hashtagUrl}`, {
+      hashtagContent,
+    })
+    return data.result
   }
 }

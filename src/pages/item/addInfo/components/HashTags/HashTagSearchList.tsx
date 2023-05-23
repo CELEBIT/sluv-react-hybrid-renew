@@ -4,10 +4,11 @@ import { SearchedHashTag } from './styles'
 import HighlightedText from '../../../../../components/HighlightedText/HighlightedText'
 import useItemHashtagQuery from '../../../../../apis/item/hooks/useItemHashtagQuery'
 import { useDebounce } from 'use-debounce'
+import { IHashTag } from '../../../../../recoil/itemInfo'
 
 interface HashTagSearchListProps {
   name: string
-  onClickHashTag: (content: string) => void
+  onClickHashTag: (tag: IHashTag) => void
 }
 
 const HashTagSearchList = ({ name, onClickHashTag }: HashTagSearchListProps) => {
@@ -19,10 +20,7 @@ const HashTagSearchList = ({ name, onClickHashTag }: HashTagSearchListProps) => 
     <Wrapper>
       {data?.map((hashtag) => {
         return (
-          <SearchedHashTag
-            key={hashtag.hashtagId}
-            onClick={() => onClickHashTag(hashtag.hashtagContent)}
-          >
+          <SearchedHashTag key={hashtag.hashtagId} onClick={() => onClickHashTag(hashtag)}>
             <span className='symbol'>#</span>
             <HighlightedText searchText={debounceName} text={hashtag.hashtagContent} />
             <span className='count'>{hashtag.count}</span>
