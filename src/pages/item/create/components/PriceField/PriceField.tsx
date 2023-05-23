@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import { useRecoilState } from 'recoil'
 import {
   InputFieldWrapper,
@@ -68,6 +68,12 @@ const PriceField = () => {
       })
     }
   }
+
+  useEffect(() => {
+    if (itemInfo.price === -1) {
+      setPriceUnknown(true)
+    }
+  }, [itemInfo.price])
 
   return (
     <PriceFieldWrapper>
