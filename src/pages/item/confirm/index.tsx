@@ -20,53 +20,6 @@ const ItemConfirm = () => {
   const itemInfo = useRecoilValue(itemInfoState)
   const celebInfo = useRecoilValue(celebInfoInItemState)
 
-  // const itemInfo = {
-  //   id: 1,
-  //   imgList: [
-  //     {
-  //       imgUrl:
-  //         'https://images.pexels.com/photos/2893685/pexels-photo-2893685.jpeg?cs=srgb&dl=pexels-oziel-g%C3%B3mez-2893685.jpg&fm=jpg',
-  //       representFlag: true,
-  //     },
-  //     {
-  //       imgUrl:
-  //         'https://iso.500px.com/wp-content/uploads/2016/02/stock-photo-114337435-1500x1000.jpg',
-  //       representFlag: false,
-  //     },
-  //     {
-  //       imgUrl:
-  //         'https://images.pexels.com/photos/3680219/pexels-photo-3680219.jpeg?cs=srgb&dl=pexels-lukas-rodriguez-3680219.jpg&fm=jpg',
-  //       representFlag: false,
-  //     },
-  //     {
-  //       imgUrl:
-  //         'https://plus.unsplash.com/premium_photo-1664701475272-953393050754?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGhvdG98ZW58MHx8MHx8&w=1000&q=80',
-  //       representFlag: false,
-  //     },
-  //     {
-  //       imgUrl:
-  //         'https://img.freepik.com/free-photo/colorful-heart-air-balloon-shape-collection-concept-isolated-color-background-beautiful-heart-ball-event_90220-1047.jpg',
-  //       representFlag: false,
-  //     },
-  //   ],
-  //   whenDiscovery: null,
-  //   whereDiscovery: null,
-  //   itemCategory: {
-  //     categoryId: null,
-  //     childName: null,
-  //     parentCategoryId: 9,
-  //     parentName: '기타',
-  //   },
-  //   brand: { brandId: 1, brandName: '나이키', brandImgUrl: '' },
-  //   itemName: 'BROCOLLI FAMILY HOODIE',
-  //   price: -1,
-  //   color: null,
-  //   additionalInfo: null,
-  //   hashTagList: null,
-  //   linkList: null,
-  //   infoSource: null,
-  //   newBrand: null,
-  // }
   return (
     <ConfirmContainer>
       <HeaderWrapper>
@@ -151,11 +104,13 @@ const ItemConfirm = () => {
             </LabelContainer>
             <div className='padding'>
               <DisplayField disabled={true}>
-                {itemInfo?.additionalInfo && <span>{itemInfo?.additionalInfo}</span>}
-                {itemInfo?.hashTagList && (
+                {itemInfo?.additionalInfo && itemInfo.additionalInfo !== '' && (
+                  <span>{itemInfo?.additionalInfo}</span>
+                )}
+                {itemInfo?.hashTagList && itemInfo.hashTagList.length > 0 && (
                   <span>
-                    {itemInfo.hashTagList?.map((hashtag, index: number) => {
-                      return <span key={index}>#{hashtag?.hashtagContent}&nbsp;</span>
+                    {itemInfo?.hashTagList?.map((hashtag) => {
+                      return `#${hashtag?.hashtagContent} `
                     })}
                   </span>
                 )}
