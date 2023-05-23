@@ -13,66 +13,19 @@ import ButtonHalf from '../../../components/ButtonHalf/ButtonHalf'
 import { formatDate } from '../create/components/DatePlaceField/date.util'
 import { formatPrice } from '../create/components/PriceField/price.util'
 import ToolTip from '../../../components/ToolTip/ToolTip'
-// import { IItemInfo } from '../../../recoil/itemInfo'
 
 const ItemConfirm = () => {
   const navigate = useNavigate()
   const itemInfo = useRecoilValue(itemInfoState)
   const celebInfo = useRecoilValue(celebInfoInItemState)
 
-  // const itemInfo = {
-  //   id: 1,
-  //   imgList: [
-  //     {
-  //       imgUrl:
-  //         'https://images.pexels.com/photos/2893685/pexels-photo-2893685.jpeg?cs=srgb&dl=pexels-oziel-g%C3%B3mez-2893685.jpg&fm=jpg',
-  //       representFlag: true,
-  //     },
-  //     {
-  //       imgUrl:
-  //         'https://iso.500px.com/wp-content/uploads/2016/02/stock-photo-114337435-1500x1000.jpg',
-  //       representFlag: false,
-  //     },
-  //     {
-  //       imgUrl:
-  //         'https://images.pexels.com/photos/3680219/pexels-photo-3680219.jpeg?cs=srgb&dl=pexels-lukas-rodriguez-3680219.jpg&fm=jpg',
-  //       representFlag: false,
-  //     },
-  //     {
-  //       imgUrl:
-  //         'https://plus.unsplash.com/premium_photo-1664701475272-953393050754?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGhvdG98ZW58MHx8MHx8&w=1000&q=80',
-  //       representFlag: false,
-  //     },
-  //     {
-  //       imgUrl:
-  //         'https://img.freepik.com/free-photo/colorful-heart-air-balloon-shape-collection-concept-isolated-color-background-beautiful-heart-ball-event_90220-1047.jpg',
-  //       representFlag: false,
-  //     },
-  //   ],
-  //   whenDiscovery: null,
-  //   whereDiscovery: null,
-  //   itemCategory: {
-  //     categoryId: null,
-  //     childName: null,
-  //     parentCategoryId: 9,
-  //     parentName: '기타',
-  //   },
-  //   brand: { brandId: 1, brandName: '나이키', brandImgUrl: '' },
-  //   itemName: 'BROCOLLI FAMILY HOODIE',
-  //   price: -1,
-  //   color: null,
-  //   additionalInfo: null,
-  //   hashTagList: null,
-  //   linkList: null,
-  //   infoSource: null,
-  //   newBrand: null,
-  // }
   return (
     <ConfirmContainer>
       <HeaderWrapper>
         <Header isModalHeader={false} hasArrow={true} title='정보확인'></Header>
       </HeaderWrapper>
       <ItemWrapper>
+        {/* 업로드 사진 */}
         <ComponentWrapper>
           <PhotosWrapper>
             {itemInfo?.imgList &&
@@ -89,7 +42,7 @@ const ItemConfirm = () => {
               })}
           </PhotosWrapper>
         </ComponentWrapper>
-
+        {/* 선택 셀럽 */}
         <ComponentWrapper>
           <LabelContainer>
             <Label>누가 착용했나요?</Label>
@@ -104,6 +57,7 @@ const ItemConfirm = () => {
             </DisplayField>
           </div>
         </ComponentWrapper>
+        {/* 착용 날짜 & 장소 */}
         {(itemInfo?.whenDiscovery || itemInfo?.whereDiscovery) && (
           <ComponentWrapper>
             <LabelContainer>
@@ -119,6 +73,7 @@ const ItemConfirm = () => {
             </div>
           </ComponentWrapper>
         )}
+        {/* 아이템 정보 (브랜드,제품명, 가격) */}
         <ComponentWrapper>
           <LabelContainer>
             <Label>어떤 아이템인가요?</Label>
@@ -144,6 +99,7 @@ const ItemConfirm = () => {
             </DisplayField>
           </div>
         </ComponentWrapper>
+        {/* 추가정보 (내용, 해시태그, 출처) */}
         {(itemInfo.additionalInfo || itemInfo.hashTagList || itemInfo.infoSource) && (
           <ComponentWrapper>
             <LabelContainer>
@@ -151,11 +107,13 @@ const ItemConfirm = () => {
             </LabelContainer>
             <div className='padding'>
               <DisplayField disabled={true}>
-                {itemInfo?.additionalInfo && <span>{itemInfo?.additionalInfo}</span>}
-                {itemInfo?.hashTagList && (
+                {itemInfo?.additionalInfo && itemInfo.additionalInfo !== '' && (
+                  <span>{itemInfo?.additionalInfo}</span>
+                )}
+                {itemInfo?.hashTagList && itemInfo.hashTagList.length > 0 && (
                   <span>
-                    {itemInfo.hashTagList?.map((hashtag, index: number) => {
-                      return <span key={index}>#{hashtag?.hashtagContent}&nbsp;</span>
+                    {itemInfo?.hashTagList?.map((hashtag) => {
+                      return `#${hashtag?.hashtagContent} `
                     })}
                   </span>
                 )}
@@ -164,6 +122,7 @@ const ItemConfirm = () => {
             </div>
           </ComponentWrapper>
         )}
+        {/* 구매링크 */}
         {itemInfo.linkList !== null && (
           <ComponentWrapper>
             <LabelContainer>
