@@ -2,6 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import Photo from '../AddPhotos/Photo'
 import { Common, Pretendard } from '../styles'
+import { useNavigate } from 'react-router-dom'
 
 export interface IItem {
   itemId: number
@@ -13,8 +14,9 @@ export interface IItem {
 }
 
 const Item = ({ itemId, itemName, imgUrl, brandName, celebName, scrapStatus }: IItem) => {
+  const navigate = useNavigate()
   return (
-    <RecommendItemWrapper key={itemId}>
+    <RecommendItemWrapper key={itemId} onClick={() => navigate(`/item/detail/${itemId}`)}>
       <Photo size={150} borderRadius={12} imgUrl={imgUrl} storageFlag={scrapStatus}></Photo>
       <div className='infoText'>
         <CelebName>{celebName}</CelebName>

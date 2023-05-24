@@ -28,30 +28,32 @@ export const BasicInfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1.5rem 1.25rem 2rem 1.25rem;
-  .top {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-  }
-  .interaction {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 1rem;
-  }
 `
+export const Top = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+`
+export const Interactions = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1rem;
+`
+
 export const ItemInfo = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   padding-left: 0.25rem;
-  .category {
-    display: flex;
-    align-items: center;
-    margin-bottom: 0.5rem;
-    ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.GR600 })}
-  }
+`
+
+export const Category = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.GR600 })}
 `
 
 export const ItemName = styled.span`
@@ -72,11 +74,12 @@ export const Reaction = styled.div`
 `
 
 export const Divider = styled.div`
+  display: flex;
   width: 100%;
-  height: 0.5rem;
-
+  min-height: 0.5rem;
   padding-left: calc(-50vw+50%);
   background-color: ${Common.colors.GR100};
+  box-sizing: content-box;
 `
 
 export const LinkInfoWrapper = styled.div`
@@ -104,12 +107,17 @@ export const UploaderInfoWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  gap: 1.5rem;
   padding: 0.75rem 1.25rem;
   .user {
     display: flex;
     gap: 0.5rem;
     align-items: center;
+    overflow: hidden;
     span {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
       ${Pretendard({ size: 17, weight: Common.bold.regular, color: Common.colors.BK })}
     }
   }

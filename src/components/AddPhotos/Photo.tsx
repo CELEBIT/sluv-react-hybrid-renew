@@ -4,6 +4,7 @@ import { ReactComponent as Represent } from '../../assets/represent_24.svg'
 import { ReactComponent as DeleteList } from '../../assets/delete_list_24.svg'
 import { ReactComponent as StorageOff } from '../../assets/storage_list_off_24.svg'
 import { ReactComponent as StorageOn } from '../../assets/storage_on_24.svg'
+import { Common } from '../styles'
 
 interface PhotoProps {
   size: number
@@ -54,6 +55,7 @@ export const Img = styled.div<{ size: number; borderRadius: number; imgUrl: stri
   background-size: cover;
   background-position: 50%;
   background-image: url(${(props) => props.imgUrl});
+  background-color: ${Common.colors.GR300};
 
   .delete {
     position: absolute;
