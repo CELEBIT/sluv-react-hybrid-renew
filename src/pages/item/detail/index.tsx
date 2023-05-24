@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import Header from '../../../components/Header/Header'
 import { ReactComponent as Home } from '../../../assets/home_24.svg'
@@ -58,14 +58,23 @@ import useItemDetailQuery from '../../../apis/item/hooks/useItemDetailQuery'
 
 import { convertToKoDate } from '../../../utils/utility'
 import useFollowQuery from '../../../apis/user/hooks/useFollowQuery'
+import { useQueryClient } from '@tanstack/react-query'
+import { queryKeys } from '../../../config/queryKeys'
 
 const ItemDetail = () => {
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const { id } = useParams()
   const { getItemDetail } = useItemDetailQuery()
   const { data } = getItemDetail(Number(id))
+  console.log(data)
   const colors = ['gray', 'pink', 'orange', 'yellow', 'green', 'blue']
   const price = 120235
+
+  useEffect(() => {
+    queryClient.refetchQueries(queryKeys.itemDetail(Number(id)))
+    console.log('refetch')
+  }, [id])
 
   const itemList = [
     {
