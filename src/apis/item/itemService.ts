@@ -26,7 +26,7 @@ export interface CelebResult {
 }
 export interface HashTagResult {
   id: number
-  content: string
+  hashtagContent: string
   hashtagStatus: string
 }
 export interface LinkResult {
@@ -77,9 +77,18 @@ export interface TempItemResult {
   updatedAt: string
 }
 
+export interface ItemDetailCeleb {
+  id: number
+  parentId: number
+  celebChildNameKr: string
+  celebParentNameKr: string
+  celebTotalNameEn: string
+  celebTotalNameKr: string
+}
+
 export interface ItemDetailResult {
   imgList: Array<ImgResult>
-  celeb: CelebResult
+  celeb: ItemDetailCeleb
   newCelebName: string
   category: ItemCategoryResult
   itemName: string
@@ -90,7 +99,7 @@ export interface ItemDetailResult {
   scrapNum: number
   scrapStatus: boolean
   viewNum: number
-  linkList: LinkResult
+  linkList: Array<LinkResult>
   writer: userResult
   whenDiscovery: string
   whereDiscovery: string
@@ -161,5 +170,11 @@ export default class ItemService {
       hashtagContent,
     })
     return data.result
+  }
+
+  // 아이템 좋아요
+  async likeItem(itemId: number | null) {
+    const data: ResponseType = await request.post(`${this.itemUrl}/${itemId}/like`)
+    return data
   }
 }

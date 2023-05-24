@@ -1,11 +1,12 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import Item, { IItem } from './Item'
+import Item from './Item'
 import { Common, Pretendard } from '../styles'
+import { recommendItemResult } from '../../apis/item/itemService'
 
 interface RecommendedItemProps {
   title: string
-  list: Array<IItem>
+  list: Array<recommendItemResult> | undefined
 }
 
 const RecommendedItemList = ({ title, list }: RecommendedItemProps) => {
@@ -13,7 +14,7 @@ const RecommendedItemList = ({ title, list }: RecommendedItemProps) => {
     <RecommendedItemListWrapper>
       <TitleText>{title}</TitleText>
       <ItemList>
-        {list.map((item) => {
+        {list?.map((item) => {
           return <Item key={item.itemId} {...item}></Item>
         })}
       </ItemList>

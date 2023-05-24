@@ -3,6 +3,7 @@ import { Common } from '../styles'
 
 export const BadgeWrapper = styled.div<{ color: string }>`
   display: inline-flex;
+  justify-content: center;
   flex-shrink: 0;
   background-color: ${({ color }) =>
     (color === 'gray' && `${Common.colors.GR100}`) ||
