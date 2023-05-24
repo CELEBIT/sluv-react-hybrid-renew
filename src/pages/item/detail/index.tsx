@@ -1,9 +1,13 @@
 import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useSetRecoilState } from 'recoil'
+import useModals from '../../../components/Modals/hooks/useModals'
+import { modals } from '../../../components/Modals'
+
 import Header from '../../../components/Header/Header'
 import { ReactComponent as Home } from '../../../assets/home_24.svg'
 import { ReactComponent as Search } from '../../../assets/search_24.svg'
-import { ReactComponent as Add } from '../../../assets/add_24.svg'
+import { ReactComponent as ShowMore } from '../../../assets/add_24.svg'
 import { ReactComponent as StorageOn } from '../../../assets/storage_on_24.svg'
 import { ReactComponent as StorageOff } from '../../../assets/storage_off_24.svg'
 import { ReactComponent as LikeOn } from '../../../assets/like_on_24.svg'
@@ -58,15 +62,18 @@ import useItemDetailQuery from '../../../apis/item/hooks/useItemDetailQuery'
 
 import { convertToKoDate } from '../../../utils/utility'
 import useFollowQuery from '../../../apis/user/hooks/useFollowQuery'
+import { EditRequestItemState } from '../../../components/BottomSheetModal/ItemEditRequestModal'
 
 const ItemDetail = () => {
   const navigate = useNavigate()
+  const { openModal } = useModals()
   const { id } = useParams()
+
   const { getItemDetail } = useItemDetailQuery()
   const { data } = getItemDetail(Number(id))
+  const setEditReportItemState = useSetRecoilState(EditRequestItemState)
   const colors = ['gray', 'pink', 'orange', 'yellow', 'green', 'blue']
   const price = 120235
-
   const itemList = [
     {
       itemId: 35,
@@ -133,6 +140,16 @@ const ItemDetail = () => {
       scrapStatus: false,
     },
   ]
+
+  const onClickShowMore = () => {
+    openModal(modals.ItemEditRequestModal)
+    setEditReportItemState({
+      itemId: Number(id),
+      itemWriterId: data?.writer.id,
+      itemWriterName: data?.writer.nickName,
+    })
+  }
+
   const {
     followUser: { mutate: mutateByFollow },
   } = useFollowQuery()
@@ -154,7 +171,7 @@ const ItemDetail = () => {
           <div className='headerRight'>
             <Home onClick={() => navigate('/home')} />
             <Search onClick={() => navigate('/search')}></Search>
-            <Add></Add>
+            <ShowMore onClick={onClickShowMore}></ShowMore>
           </div>
         </Header>
       </HeaderWrapper>
