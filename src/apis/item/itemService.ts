@@ -77,9 +77,18 @@ export interface TempItemResult {
   updatedAt: string
 }
 
+export interface ItemDetailCeleb {
+  id: number
+  parentId: number
+  celebChildNameKr: string
+  celebParentNameKr: string
+  celebTotalNameEn: string
+  celebTotalNameKr: string
+}
+
 export interface ItemDetailResult {
   imgList: Array<ImgResult>
-  celeb: CelebResult
+  celeb: ItemDetailCeleb
   newCelebName: string
   category: ItemCategoryResult
   itemName: string
@@ -161,5 +170,11 @@ export default class ItemService {
       hashtagContent,
     })
     return data.result
+  }
+
+  // 아이템 좋아요
+  async likeItem(itemId: number | null) {
+    const data: ResponseType = await request.post(`${this.itemUrl}/${itemId}/like`)
+    return data
   }
 }
