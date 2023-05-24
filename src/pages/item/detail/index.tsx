@@ -1,10 +1,12 @@
 import React from 'react'
-// import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Header from '../../../components/Header/Header'
 import { ReactComponent as Home } from '../../../assets/home_24.svg'
 import { ReactComponent as Search } from '../../../assets/search_24.svg'
 import { ReactComponent as Add } from '../../../assets/add_24.svg'
+import { ReactComponent as StorageOn } from '../../../assets/storage_on_24.svg'
 import { ReactComponent as StorageOff } from '../../../assets/storage_off_24.svg'
+import { ReactComponent as LikeOn } from '../../../assets/like_on_24.svg'
 import { ReactComponent as LikeOff } from '../../../assets/like_off_24.svg'
 import { ReactComponent as Share } from '../../../assets/share_24.svg'
 import { ReactComponent as Arrow } from '../../../assets/arrow_18.svg'
@@ -18,13 +20,13 @@ import { ReactComponent as Kakao } from '../../../assets/share_kakao_40.svg'
 import { ReactComponent as Twitter } from '../../../assets/share_twitter_40.svg'
 import { ReactComponent as ShareAdd } from '../../../assets/share_add_40.svg'
 
-// import { ReactComponent as StorageOn } from '../../../assets/storage_on_24.svg'
-
 import {
   AdditionalInfoWrapper,
   BasicInfoWrapper,
+  Category,
   Divider,
   HashTags,
+  Interactions,
   ItemDetailContainer,
   ItemInfo,
   ItemName,
@@ -37,6 +39,7 @@ import {
   ShareItemWrapper,
   ShareWrapper,
   SourceWrapper,
+  Top,
   UploaderInfoWrapper,
   UserImg,
   WrongInfo,
@@ -51,57 +54,26 @@ import { formatPrice } from '../create/components/PriceField/price.util'
 import { HeaderWrapper } from '../addInfo/styles'
 import RecommendedItemList from '../../../components/RecommendedItem/RecommendedItemList'
 import Carousel from './components/Carousel/Carousel'
-// import useItemDetailQuery from '../../../apis/item/hooks/useItemDetailQuery'
-// import { useParams } from 'react-router-dom'
+import useItemDetailQuery from '../../../apis/item/hooks/useItemDetailQuery'
+
+import { convertToKoDate } from '../../../utils/utility'
+import useFollowQuery from '../../../apis/user/hooks/useFollowQuery'
 
 const ItemDetail = () => {
-  // const { id } = useParams()
-  // const { getItemDetail } = useItemDetailQuery()
-  // const { data } = getItemDetail(Number(id))
-
+  const navigate = useNavigate()
+  const { id } = useParams()
+  const { getItemDetail } = useItemDetailQuery()
+  const { data } = getItemDetail(Number(id))
   const colors = ['gray', 'pink', 'orange', 'yellow', 'green', 'blue']
   const price = 120235
-  const additionalInfoText = '공홈보다 무신사가 20% 더 저렴해요😎'
-  const HashTagList = [
-    {
-      hashtagId: 0,
-      hashtagContent: '애착템',
-      count: 0,
-    },
-    {
-      hashtagId: 1,
-      hashtagContent: '애착템',
-      count: 0,
-    },
-    {
-      hashtagId: 2,
-      hashtagContent: '애착템',
-      count: 0,
-    },
-    {
-      hashtagId: 3,
-      hashtagContent: '애착템',
-      count: 0,
-    },
-    {
-      hashtagId: 4,
-      hashtagContent: '애착템',
-      count: 0,
-    },
-    {
-      hashtagId: 5,
-      hashtagContent: '애착템',
-      count: 0,
-    },
-  ]
-  const SourceInfo = '트위터 리노 팬 계정(@leeee)'
+
   const itemList = [
     {
-      itemId: 0,
+      itemId: 35,
       imgUrl: 'https://img.freepik.com/free-photo/road-mountains-with-cloudy-sky_1340-23022.jpg',
-      brandName: '피지컬 디파트먼트',
+      brandName: '피지컬 디파트먼트라고하면어떻게될까',
       itemName: 'BROCCOLI FAMILY HOODIE GRAY',
-      celebName: '스트레이키즈 리노',
+      celebName: '투모로우바이투게터 휴닝카이',
       scrapStatus: false,
     },
     {
@@ -161,136 +133,140 @@ const ItemDetail = () => {
       scrapStatus: false,
     },
   ]
-  const imgList = [
-    {
-      imgUrl:
-        'https://images.pexels.com/photos/2893685/pexels-photo-2893685.jpeg?cs=srgb&dl=pexels-oziel-g%C3%B3mez-2893685.jpg&fm=jpg',
-      representFlag: true,
-    },
-    {
-      imgUrl:
-        'https://iso.500px.com/wp-content/uploads/2016/02/stock-photo-114337435-1500x1000.jpg',
-      representFlag: true,
-    },
-    {
-      imgUrl:
-        'https://images.pexels.com/photos/3680219/pexels-photo-3680219.jpeg?cs=srgb&dl=pexels-lukas-rodriguez-3680219.jpg&fm=jpg',
-      representFlag: true,
-    },
-    {
-      imgUrl:
-        'https://plus.unsplash.com/premium_photo-1664701475272-953393050754?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGhvdG98ZW58MHx8MHx8&w=1000&q=80',
-      representFlag: true,
-    },
-    {
-      imgUrl:
-        'https://img.freepik.com/free-photo/colorful-heart-air-balloon-shape-collection-concept-isolated-color-background-beautiful-heart-ball-event_90220-1047.jpg',
-      representFlag: true,
-    },
-  ]
-
+  const {
+    followUser: { mutate: mutateByFollow },
+  } = useFollowQuery()
   const onClickFollow = () => {
-    // mutateByFollow({userId: ???})
+    if (data) mutateByFollow(data?.writer.id)
   }
+
+  const {
+    likeItem: { mutate: mutateByLike },
+  } = useItemDetailQuery()
+  const onClickLike = () => {
+    if (data) mutateByLike(Number(id))
+  }
+
   return (
     <ItemDetailContainer>
       <HeaderWrapper>
         <Header isModalHeader={false} hasArrow={true}>
           <div className='headerRight'>
-            <Home />
-            <Search></Search>
+            <Home onClick={() => navigate('/home')} />
+            <Search onClick={() => navigate('/search')}></Search>
             <Add></Add>
           </div>
         </Header>
       </HeaderWrapper>
       <ItemWrapper>
-        <Carousel imgList={imgList}></Carousel>
+        {data?.imgList && <Carousel imgList={data?.imgList}></Carousel>}
+
         <BasicInfoWrapper>
-          <div className='top'>
-            <Badge color='gray'>스트레이키즈 리노</Badge>
-            <div className='interaction'>
-              <StorageOff></StorageOff>
-              <LikeOff></LikeOff>
+          <Top>
+            <Badge color='gray'>{data?.celeb.celebTotalNameKr}</Badge>
+            <Interactions>
+              {data?.scrapStatus ? <StorageOn></StorageOn> : <StorageOff></StorageOff>}
+              {data?.likeStatus ? (
+                <LikeOn onClick={onClickLike}></LikeOn>
+              ) : (
+                <LikeOff onClick={onClickLike}></LikeOff>
+              )}
+
               <Share></Share>
-            </div>
-          </div>
+            </Interactions>
+          </Top>
           <ItemInfo>
-            <div className='category'>
-              <span>상의</span>
-              <Arrow></Arrow>
-              <span>후드티</span>
-            </div>
-            <ItemName>KD16</ItemName>
+            <Category>
+              {data?.category.parentName && (
+                <>
+                  <span>{data?.category.parentName}</span>
+                  <Arrow></Arrow>
+                </>
+              )}
+              <span>{data?.category.name}</span>
+            </Category>
+            <ItemName>{data?.itemName}</ItemName>
             <Brand>
-              <BrandLogo
-                size={32}
-                url='https://image.msscdn.net/mfile_s01/_brand/free_medium/poloralphlauren.png?202304131632'
-              />
-              <span>피지컬 에듀케이션 디파트먼트</span>
+              <BrandLogo size={32} url={data?.brand.brandImgUrl} />
+              <span>{data?.brand.brandEn}</span>
               <Arrow></Arrow>
             </Brand>
           </ItemInfo>
           <ItemReaction>
             <Reaction>
               <LikeSmall></LikeSmall>
-              <span>580</span>
+              <span>{data?.likeNum}</span>
             </Reaction>
             <Reaction>
               <ShareSmall></ShareSmall>
-              <span>580</span>
+              <span>{data?.scrapNum}</span>
             </Reaction>
             <Reaction>
               <View></View>
-              <span>580</span>
+              <span>{data?.viewNum}</span>
             </Reaction>
           </ItemReaction>
         </BasicInfoWrapper>
-        <Divider></Divider>
+        <Divider />
         <LinkInfoWrapper>
           <Label>여기서 구매할 수 있어요!</Label>
           <DisplayField>
-            <Link>
-              <LinkIcon></LinkIcon>
-              <div className='linkinfo'>
-                <span>무신사</span>
-                <ArrowLarge></ArrowLarge>
-              </div>
-            </Link>
+            {data?.linkList &&
+              data?.linkList.map((link, index) => {
+                return (
+                  <Link key={index}>
+                    <LinkIcon></LinkIcon>
+                    <div className='linkinfo'>
+                      <span>{link.linkName}</span>
+                      <ArrowLarge></ArrowLarge>
+                    </div>
+                  </Link>
+                )
+              })}
           </DisplayField>
         </LinkInfoWrapper>
         <UploaderInfoWrapper>
           <div className='user'>
-            <UserImg imgUrl='https://images.pexels.com/photos/2893685/pexels-photo-2893685.jpeg?cs=srgb&dl=pexels-oziel-g%C3%B3mez-2893685.jpg&fm=jpg' />
-            <span>이리노순둥도리</span>
+            <UserImg imgUrl={data?.writer.profileImgUrl} />
+            <span>{data?.writer.nickName}</span>
           </div>
-          <ButtonSmall type='sec' text='팔로우' onClick={onClickFollow} />
+          {data?.followStatus ? (
+            <ButtonSmall type='sec' text='팔로우 하는 중' icon={true} onClick={onClickFollow} />
+          ) : (
+            <ButtonSmall type='sec' text='팔로우' onClick={onClickFollow} />
+          )}
         </UploaderInfoWrapper>
         <AdditionalInfoWrapper>
-          <span>2023년 1월 1일에</span>
-          <span>에서 착용하였고</span>
-          {price >= 500000000 ? (
-            <span>가격은 5억원대 이상이에요</span>
-          ) : (
-            <span>가격은 {formatPrice(price)}대에요</span>
+          {data?.whenDiscovery && <span>{convertToKoDate(new Date(data?.whenDiscovery))}</span>}
+          {data?.whereDiscovery && <span>{data?.whereDiscovery}에서 착용하였고</span>}
+          {data?.price && (
+            <>
+              {price >= 500000000 ? (
+                <span>가격은 5억원대 이상이에요</span>
+              ) : (
+                <span>가격은 {formatPrice(price)}대에요</span>
+              )}
+            </>
           )}
-          {additionalInfoText && <span>{additionalInfoText}</span>}
+
+          {data?.additionalInfo && <span>{data?.additionalInfo}</span>}
         </AdditionalInfoWrapper>
-        {HashTagList && (
+        {data?.hashTagList && (
           <HashTags>
-            {HashTagList.map((hashtag, index) => {
+            {data?.hashTagList.map((hashtag, index) => {
               return (
-                <Badge key={hashtag.hashtagId} color={colors[index % colors.length]}>
-                  #최애템
+                <Badge key={hashtag.id} color={colors[index % colors.length]}>
+                  #{hashtag.hashtagContent}
                 </Badge>
               )
             })}
           </HashTags>
         )}
-        {SourceInfo && (
+        {data?.infoSource && (
           <SourceWrapper>
             <LinkIcon></LinkIcon>
             <span className='label'>출처</span>
-            <span className='source'>{SourceInfo}</span>
+            <span className='source'>{data?.infoSource}</span>
           </SourceWrapper>
         )}
         <WrongInfo>
@@ -301,8 +277,18 @@ const ItemDetail = () => {
           <ArrowLarge></ArrowLarge>
         </WrongInfo>
         <RecommendWrapper>
-          <RecommendedItemList title='같은 셀럽의 아이템' list={itemList}></RecommendedItemList>
-          <RecommendedItemList title='같은 브랜드의 아이템' list={itemList}></RecommendedItemList>
+          {(data?.sameCelebItemList?.length ?? 0) > 0 && (
+            <RecommendedItemList
+              title='같은 셀럽의 아이템'
+              list={data?.sameCelebItemList}
+            ></RecommendedItemList>
+          )}
+          {(data?.sameBrandItemList?.length ?? 0) > 0 && (
+            <RecommendedItemList
+              title='같은 브랜드의 아이템'
+              list={data?.sameBrandItemList}
+            ></RecommendedItemList>
+          )}
           <RecommendedItemList
             title='다른 스러버들이 함께 보관한 아이템'
             list={itemList}
