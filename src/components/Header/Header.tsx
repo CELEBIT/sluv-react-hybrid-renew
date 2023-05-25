@@ -9,16 +9,29 @@ interface HeaderProps {
   hasArrow?: boolean
   title?: string
   children?: any
+  backBtnClick?: () => void
   modalCloseBtnClick?: () => void
 }
 
-const Header = ({ isModalHeader, hasArrow, title, children, modalCloseBtnClick }: HeaderProps) => {
+const Header = ({
+  isModalHeader,
+  hasArrow,
+  title,
+  children,
+  backBtnClick,
+  modalCloseBtnClick,
+}: HeaderProps) => {
   const navigate = useNavigate()
 
   return (
     <HeaderWrapper role='heading' isModalHeader={isModalHeader}>
       <div className='left'>
-        {hasArrow && <ArrowBack onClick={() => navigate(-1)} className='arrow-back' />}
+        {hasArrow && (
+          <ArrowBack
+            onClick={backBtnClick ? backBtnClick : () => navigate(-1)}
+            className='arrow-back'
+          />
+        )}
         {title && <Title>{title}</Title>}
       </div>
       <div className='right'>
