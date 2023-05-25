@@ -64,17 +64,17 @@ import { queryKeys } from '../../../config/queryKeys'
 const ItemDetail = () => {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
-  const { id } = useParams()
+  const { id: itemId } = useParams()
   const { getItemDetail } = useItemDetailQuery()
-  const { data } = getItemDetail(Number(id))
+  const { data } = getItemDetail(Number(itemId))
   console.log(data)
   const colors = ['gray', 'pink', 'orange', 'yellow', 'green', 'blue']
   const price = 120235
 
   useEffect(() => {
-    queryClient.refetchQueries(queryKeys.itemDetail(Number(id)))
+    queryClient.refetchQueries(queryKeys.itemDetail(Number(itemId)))
     console.log('refetch')
-  }, [id])
+  }, [itemId])
 
   const itemList = [
     {
@@ -146,14 +146,14 @@ const ItemDetail = () => {
     followUser: { mutate: mutateByFollow },
   } = useFollowQuery()
   const onClickFollow = () => {
-    if (data) mutateByFollow(data?.writer.id)
+    if (data) mutateByFollow({ userId: data?.writer.id, itemId: Number(itemId) })
   }
 
   const {
     likeItem: { mutate: mutateByLike },
   } = useItemDetailQuery()
   const onClickLike = () => {
-    if (data) mutateByLike(Number(id))
+    if (data) mutateByLike(Number(itemId))
   }
 
   return (
