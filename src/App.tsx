@@ -30,6 +30,7 @@ const ItemConfirm = React.lazy(() => import('./pages/item/confirm'))
 
 // 아이템 신고 / 수정요청
 const EditRequest = React.lazy(() => import('./pages/item/editRequest'))
+const RequestReason = React.lazy(() => import('./pages/item/editRequest/requestReason'))
 
 const App = () => {
   useLayoutEffect(() => {
@@ -70,7 +71,8 @@ const App = () => {
             <Route path='/user' element={<User />} />
             <Route path='/item/create/temporary-storage' element={<TemporaryStorage />} />
             <Route path='/item/detail/:id' element={<ItemDetail />} />
-            <Route path='/item/detail/request/edit' element={<EditRequest />} />
+            <Route path='/item/detail/request-edit' element={<EditRequest />} />
+            <Route path='/item/detail/request-edit/reason' element={<RequestReason />} />
             {/* <Route path='/item/detail/report-item' element={<ItemDetail />} />
             <Route path='/item/detail/report-user' element={<ItemDetail />} /> */}
           </Routes>

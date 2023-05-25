@@ -1,6 +1,5 @@
 import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useSetRecoilState } from 'recoil'
 import useModals from '../../../components/Modals/hooks/useModals'
 import { modals } from '../../../components/Modals'
 
@@ -62,7 +61,8 @@ import useItemDetailQuery from '../../../apis/item/hooks/useItemDetailQuery'
 
 import { convertToKoDate } from '../../../utils/utility'
 import useFollowQuery from '../../../apis/user/hooks/useFollowQuery'
-import { EditRequestItemState } from '../../../components/BottomSheetModal/ItemEditRequestModal'
+import { RequestEditItemState } from '../editRequest'
+import { useSetRecoilState } from 'recoil'
 
 const ItemDetail = () => {
   const navigate = useNavigate()
@@ -71,7 +71,7 @@ const ItemDetail = () => {
 
   const { getItemDetail } = useItemDetailQuery()
   const { data } = getItemDetail(Number(id))
-  const setEditReportItemState = useSetRecoilState(EditRequestItemState)
+  const setEditReportItemState = useSetRecoilState(RequestEditItemState)
   const colors = ['gray', 'pink', 'orange', 'yellow', 'green', 'blue']
   const price = 120235
   const itemList = [
@@ -171,7 +171,7 @@ const ItemDetail = () => {
           <div className='headerRight'>
             <Home onClick={() => navigate('/home')} />
             <Search onClick={() => navigate('/search')}></Search>
-            <ShowMore onClick={onClickShowMore}></ShowMore>
+            <ShowMore onClick={() => onClickShowMore()}></ShowMore>
           </div>
         </Header>
       </HeaderWrapper>
