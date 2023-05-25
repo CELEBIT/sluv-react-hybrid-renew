@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import useModals from '../../../components/Modals/hooks/useModals'
 import { modals } from '../../../components/Modals'
@@ -61,19 +61,29 @@ import useItemDetailQuery from '../../../apis/item/hooks/useItemDetailQuery'
 
 import { convertToKoDate } from '../../../utils/utility'
 import useFollowQuery from '../../../apis/user/hooks/useFollowQuery'
+import { useQueryClient } from '@tanstack/react-query'
+import { queryKeys } from '../../../config/queryKeys'
 import { RequestEditItemState } from '../editRequest'
 import { useSetRecoilState } from 'recoil'
 
 const ItemDetail = () => {
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const { openModal } = useModals()
   const { id } = useParams()
 
   const { getItemDetail } = useItemDetailQuery()
   const { data } = getItemDetail(Number(id))
+  console.log(data)
   const setEditReportItemState = useSetRecoilState(RequestEditItemState)
   const colors = ['gray', 'pink', 'orange', 'yellow', 'green', 'blue']
   const price = 120235
+
+  useEffect(() => {
+    queryClient.refetchQueries(queryKeys.itemDetail(Number(id)))
+    console.log('refetch')
+  }, [id])
+
   const itemList = [
     {
       itemId: 35,

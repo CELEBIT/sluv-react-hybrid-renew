@@ -7,8 +7,9 @@ const useFollowQuery = () => {
   const queryClient = useQueryClient()
 
   const followUser = useMutation((userId: number) => user.followUser(userId), {
-    onSuccess: () => {
-      queryClient.invalidateQueries(queryKeys.itemDetail)
+    onSuccess: (res, itemId) => {
+      console.log(res)
+      queryClient.invalidateQueries(queryKeys.itemDetail(itemId))
     },
   })
 

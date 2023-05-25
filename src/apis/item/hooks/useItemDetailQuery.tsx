@@ -7,12 +7,13 @@ const useItemDetailQuery = () => {
   const queryClient = useQueryClient()
 
   const getItemDetail = (itemId: number) => {
-    return useQuery(queryKeys.itemDetail, () => item.getItemDetail(itemId))
+    return useQuery(queryKeys.itemDetail(itemId), () => item.getItemDetail(itemId))
   }
 
   const likeItem = useMutation((itemId: number) => item.likeItem(itemId), {
-    onSuccess: () => {
-      queryClient.invalidateQueries(queryKeys.itemDetail)
+    onSuccess: (res, itemId) => {
+      console.log(res)
+      queryClient.invalidateQueries(queryKeys.itemDetail(itemId))
     },
   })
 
