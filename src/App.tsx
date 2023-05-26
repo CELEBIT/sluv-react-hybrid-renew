@@ -73,8 +73,10 @@ const App = () => {
             <Route path='/item/detail/:id' element={<ItemDetail />} />
             <Route path='/item/detail/request-edit' element={<EditRequest />} />
             <Route path='/item/detail/request-edit/reason' element={<RequestReason />} />
-            {/* <Route path='/item/detail/report-item' element={<ItemDetail />} />
-            <Route path='/item/detail/report-user' element={<ItemDetail />} /> */}
+            <Route path='/item/detail/report-item' element={<EditRequest />} />
+            <Route path='/item/detail/report-item/reason' element={<RequestReason />} />
+            <Route path='/item/detail/report-user' element={<EditRequest />} />
+            <Route path='/item/detail/report-user/reason' element={<RequestReason />} />
           </Routes>
         </Suspense>
         <Modals />
