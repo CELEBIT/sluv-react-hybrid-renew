@@ -2,30 +2,57 @@ import React, { useEffect, useState } from 'react'
 import { EditReportContainer, ReasonWrapper, Title } from '../styles'
 import Header from '../../../../components/Header/Header'
 import TextArea from '../../../../components/TextField/TextArea/TextArea'
-import { EditRequestReason, RequestEditReasonState } from '..'
-import { useRecoilState } from 'recoil'
-// import useModals from '../../../../components/Modals/hooks/useModals'
+import {
+  EditRequestReason,
+  RequestDisplayState,
+  RequestEditItemState,
+  RequestEditReasonState,
+} from '..'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { useLocation } from 'react-router-dom'
+import useItemDetailQuery from '../../../../apis/item/hooks/useItemDetailQuery'
 
 const RequestReason = () => {
-  //   const { openModal } = useModals()
+  const { pathname } = useLocation()
+
+  const [title, setTitle] = useState<string>('')
+  const [reasonText, setReasonText] = useState<string>('')
+
+  const requestItem = useRecoilValue(RequestEditItemState)
+  // API 용
   const [editRequestReason, setEditRequestReason] =
     useRecoilState<EditRequestReason>(RequestEditReasonState)
-  const [reasonText, setReasonText] = useState<string | null>(editRequestReason.content)
+  // Display 용
+  const requestDisplay = useRecoilValue(RequestDisplayState)
+
   const [infoValid, setInfoValid] = useState(true)
   const [hasSubmitted, setHasSubmitted] = useState(false)
+
+  const {
+    requestEditItem: { mutate: mutateByRequestEditItem },
+    reportItem: { mutate: mutateByReportItem },
+  } = useItemDetailQuery()
 
   const onSubmit = () => {
     setHasSubmitted(true)
     if (reasonText) {
+      setInfoValid(true)
       setEditRequestReason({
         ...editRequestReason,
         content: reasonText,
       })
-      setInfoValid(true)
+      if (pathname === '/item/detail/request-edit/reason') {
+        mutateByRequestEditItem({ itemId: requestItem.itemId, requestContent: editRequestReason })
+      } else if (pathname === '/item/detail/report-item/reason') {
+        mutateByReportItem({ itemId: requestItem.itemId, requestContent: editRequestReason })
+      } else {
+        setTitle('사용자 신고')
+      }
     } else {
       setInfoValid(false)
     }
   }
+  console.log('editRequestReason', editRequestReason)
 
   useEffect(() => {
     if (hasSubmitted) {
@@ -37,15 +64,25 @@ const RequestReason = () => {
     }
   }, [reasonText])
 
+  useEffect(() => {
+    if (pathname === '/item/detail/request-edit/reason') {
+      setTitle('정보 수정 요청')
+    } else if (pathname === '/item/detail/report-item/reason') {
+      setTitle('게시글 신고')
+    } else {
+      setTitle('사용자 신고')
+    }
+  }, [pathname])
+
   return (
     <EditReportContainer>
-      <Header isModalHeader={false} hasArrow={true} title='정보 수정 요청'>
+      <Header isModalHeader={false} hasArrow={true} title={title}>
         <span className='submit' onClick={onSubmit}>
           완료
         </span>
       </Header>
       <ReasonWrapper>
-        <Title>{editRequestReason?.displayText}</Title>
+        <Title>{requestDisplay?.displayText}</Title>
         <TextArea
           value={reasonText ?? ''}
           setValue={setReasonText}

@@ -23,6 +23,9 @@ const ItemCelebSearchModal = loadable(
   () => import('../BottomSheetModal/ItemCelebModal/ItemCelebSearchModal'),
 )
 const ItemEditRequestModal = loadable(() => import('../BottomSheetModal/ItemEditRequestModal'))
+const EditRequestCompleteModal = loadable(
+  () => import('../OneButtonModal/EditRequestCompleteModal'),
+)
 // 모달 관리 객체
 export const modals = {
   AskRecentPostWritingModal: AskRecentPostWritingModal as FunctionComponent<
@@ -51,6 +54,9 @@ export const modals = {
   >,
   ItemEditRequestModal: ItemEditRequestModal as FunctionComponent<
     ComponentProps<typeof ItemEditRequestModal>
+  >,
+  EditRequestCompleteModal: EditRequestCompleteModal as FunctionComponent<
+    ComponentProps<typeof EditRequestCompleteModal>
   >,
 }
 
