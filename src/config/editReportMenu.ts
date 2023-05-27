@@ -25,10 +25,10 @@ export const reportItemReasonList = [
 
 export const reportUserReasonList = [
   { reason: 'SELLER', displayText: '판매업자 활동을 해요' },
-  { reason: 'BAD_MANNOR', displayText: '비매너적인 활동을 해요' },
+  { reason: 'BAD_MANNER', displayText: '비매너적인 활동을 해요' },
   { reason: 'COPY_PASTE', displayText: '반복적으로 똑같은 정보를 도배해요' },
   { reason: 'JUST_BLAME', displayText: '단순 비방으로 불쾌감을 유발해요' },
   { reason: 'SWEARING', displayText: '욕설을 해요' },
-  { reason: 'SEXUAL_HARRASSMENT', displayText: '성희롱을 해요' },
+  { reason: 'SEXUAL_HARASSMENT', displayText: '성희롱을 해요' },
   { reason: 'ETC', displayText: '기타' },
 ]
