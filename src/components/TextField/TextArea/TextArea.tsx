@@ -14,7 +14,6 @@ const TextArea = ({ value, setValue, placeholder, error, errorMsg }: TextAreaPro
   const [isFocused, setIsFocused] = useState(false)
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue(event.target.value)
-    console.log('value:', value)
   }
   const onDelete = () => {
     setValue('')
