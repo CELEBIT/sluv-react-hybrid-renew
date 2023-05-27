@@ -19,7 +19,7 @@ interface EditRequestItem {
 }
 
 export interface EditRequestReason {
-  reportReason: string
+  reason: string
   content: string
 }
 export const RequestEditItemState = atom<EditRequestItem>({
@@ -28,11 +28,11 @@ export const RequestEditItemState = atom<EditRequestItem>({
 })
 export const RequestEditReasonState = atom<EditRequestReason>({
   key: atomKeys.requestEditReasonState,
-  default: { reportReason: '', content: '' },
+  default: { reason: '', content: '' },
 })
 export const RequestDisplayState = atom<reasonList>({
   key: atomKeys.requestDisplayState,
-  default: { reportReason: '', displayText: '' },
+  default: { reason: '', displayText: '' },
 })
 const EditRequest = () => {
   const navigate = useNavigate()
@@ -46,9 +46,9 @@ const EditRequest = () => {
   // 페이지 렌더링용
   const setRequestDisplay = useSetRecoilState<reasonList>(RequestDisplayState)
 
-  const onClickReason = (reportReason: string, displayText: string) => {
-    setRequestReason({ reportReason: reportReason, content: '' })
-    setRequestDisplay({ reportReason: reportReason, displayText: displayText })
+  const onClickReason = (reason: string, displayText: string) => {
+    setRequestReason({ reason: reason, content: '' })
+    setRequestDisplay({ reason: reason, displayText: displayText })
     navigate('./reason')
   }
   useEffect(() => {
@@ -75,8 +75,8 @@ const EditRequest = () => {
           {reasonList.map((reason) => {
             return (
               <DisplayField
-                key={reason.reportReason}
-                onClick={() => onClickReason(reason.reportReason, reason.displayText)}
+                key={reason.reason}
+                onClick={() => onClickReason(reason.reason, reason.displayText)}
               >
                 <span>{reason.displayText}</span>
               </DisplayField>

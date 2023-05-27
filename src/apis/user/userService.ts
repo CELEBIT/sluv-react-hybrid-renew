@@ -9,10 +9,10 @@ export interface ICelebResult {
 
 export default class UserService {
   userCelebUrl: string
-  userFollowUrl: string
+  userUrl: string
   constructor() {
     this.userCelebUrl = '/app/user/celeb'
-    this.userFollowUrl = '/app/user'
+    this.userUrl = '/app/user'
   }
 
   // 유저의 관심셀럽 조회
@@ -23,7 +23,17 @@ export default class UserService {
 
   // 팔로우, 언팔로우
   async followUser(userId: number | null) {
-    const data: ResponseType = await request.post(`${this.userFollowUrl}/${userId}/follow`)
+    const data: ResponseType = await request.post(`${this.userUrl}/${userId}/follow`)
+    return data
+  }
+
+  // 유저 신고
+  async reportUser(userId: number | undefined, reason: string, content: string) {
+    console.log('유저 id', userId)
+    const data: ResponseType = await request.post(`${this.userUrl}/${userId}/report`, {
+      reason,
+      content,
+    })
     return data
   }
 }

@@ -179,16 +179,18 @@ export default class ItemService {
     return data
   }
   // 아이템 수정요청
-  async requsetEditItem(itemId: number, requestContent: EditRequestReason) {
+  async requsetEditItem(itemId: number, reason: string, content: string) {
     const data: ResponseType = await request.post(`${this.itemUrl}/${itemId}/edit-req`, {
-      requestContent,
+      reason,
+      content,
     })
     return data
   }
   // 아이템 신고
-  async reportItem(itemId: number, requestContent: EditRequestReason) {
+  async reportItem(itemId: number, reason: string, content: string) {
     const data: ResponseType = await request.post(`${this.itemUrl}/${itemId}/report`, {
-      requestContent,
+      reason,
+      content,
     })
     return data
   }

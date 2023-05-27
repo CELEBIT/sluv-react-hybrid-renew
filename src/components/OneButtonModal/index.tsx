@@ -15,7 +15,7 @@ const OneButtonModal = ({ buttonName, children, buttonOnClick }: OneButtonModalP
     <BtnModalContainer>
       {children}
       <BtnWrapper>
-        <ButtonLarge active={true} text={buttonName} onClick={() => buttonOnClick} />
+        <ButtonLarge active={true} text={buttonName} onClick={buttonOnClick} />
       </BtnWrapper>
     </BtnModalContainer>
   )
@@ -26,4 +26,5 @@ export default OneButtonModal
 const BtnWrapper = styled.div`
   display: flex;
   justify-content: center;
+  width: 100%;
 `
