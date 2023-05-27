@@ -46,7 +46,6 @@ const useItemDetailQuery = () => {
         }
       },
       onError: (error: any) => {
-        console.log('error 이거야', error)
         if (error.response.data.code === 2011) {
           openModal(modals.DuplicateReportModal)
         }
