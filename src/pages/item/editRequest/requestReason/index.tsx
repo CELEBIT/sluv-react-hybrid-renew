@@ -11,6 +11,7 @@ import {
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { useLocation } from 'react-router-dom'
 import useItemDetailQuery from '../../../../apis/item/hooks/useItemDetailQuery'
+import useReportUserQuery from '../../../../apis/user/hooks/useReportUserQuery'
 
 const RequestReason = () => {
   const { pathname } = useLocation()
@@ -33,26 +34,25 @@ const RequestReason = () => {
     reportItem: { mutate: mutateByReportItem },
   } = useItemDetailQuery()
 
+  const {
+    reportUser: { mutate: mutateByReportUser },
+  } = useReportUserQuery()
+
   const onSubmit = () => {
     setHasSubmitted(true)
     if (reasonText) {
       setInfoValid(true)
-      setEditRequestReason({
-        ...editRequestReason,
-        content: reasonText,
-      })
       if (pathname === '/item/detail/request-edit/reason') {
         mutateByRequestEditItem({ itemId: requestItem.itemId, requestContent: editRequestReason })
       } else if (pathname === '/item/detail/report-item/reason') {
         mutateByReportItem({ itemId: requestItem.itemId, requestContent: editRequestReason })
       } else {
-        setTitle('사용자 신고')
+        mutateByReportUser({ userId: requestItem.itemWriterId, requestContent: editRequestReason })
       }
     } else {
       setInfoValid(false)
     }
   }
-  console.log('editRequestReason', editRequestReason)
 
   useEffect(() => {
     if (hasSubmitted) {
@@ -62,6 +62,10 @@ const RequestReason = () => {
         setInfoValid(false)
       }
     }
+    setEditRequestReason({
+      ...editRequestReason,
+      content: reasonText,
+    })
   }, [reasonText])
 
   useEffect(() => {

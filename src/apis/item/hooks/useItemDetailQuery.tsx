@@ -27,21 +27,29 @@ const useItemDetailQuery = () => {
   })
 
   const requestEditItem = useMutation(
-    ({ itemId, requestContent }: IReportItem) => item.requsetEditItem(itemId, requestContent),
+    ({ itemId, requestContent }: IReportItem) =>
+      item.requsetEditItem(itemId, requestContent.reason, requestContent.content),
     {
       onSuccess: (res) => {
-        console.log(res)
         openModal(modals.EditRequestCompleteModal)
       },
     },
   )
 
   const reportItem = useMutation(
-    ({ itemId, requestContent }: IReportItem) => item.reportItem(itemId, requestContent),
+    ({ itemId, requestContent }: IReportItem) =>
+      item.reportItem(itemId, requestContent.reason, requestContent.content),
     {
       onSuccess: (res) => {
-        console.log(res)
-        openModal(modals.EditRequestCompleteModal)
+        if (res.code == 1000) {
+          openModal(modals.EditRequestCompleteModal)
+        }
+      },
+      onError: (error: any) => {
+        console.log('error 이거야', error)
+        if (error.response.data.code === 2011) {
+          openModal(modals.DuplicateReportModal)
+        }
       },
     },
   )
