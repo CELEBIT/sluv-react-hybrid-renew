@@ -22,6 +22,12 @@ const ItemCelebSelectModal = loadable(
 const ItemCelebSearchModal = loadable(
   () => import('../BottomSheetModal/ItemCelebModal/ItemCelebSearchModal'),
 )
+const ItemEditRequestModal = loadable(() => import('../BottomSheetModal/ItemEditRequestModal'))
+const EditRequestCompleteModal = loadable(
+  () => import('../OneButtonModal/EditRequestCompleteModal'),
+)
+const UserReportCompleteModal = loadable(() => import('../OneButtonModal/UserReportCompleteModal'))
+const DuplicateReportModal = loadable(() => import('../OneButtonModal/DuplicateReportModal'))
 // 모달 관리 객체
 export const modals = {
   AskRecentPostWritingModal: AskRecentPostWritingModal as FunctionComponent<
@@ -47,6 +53,18 @@ export const modals = {
   >,
   ItemCelebSearchModal: ItemCelebSearchModal as FunctionComponent<
     ComponentProps<typeof ItemCelebSearchModal>
+  >,
+  ItemEditRequestModal: ItemEditRequestModal as FunctionComponent<
+    ComponentProps<typeof ItemEditRequestModal>
+  >,
+  EditRequestCompleteModal: EditRequestCompleteModal as FunctionComponent<
+    ComponentProps<typeof EditRequestCompleteModal>
+  >,
+  DuplicateReportModal: DuplicateReportModal as FunctionComponent<
+    ComponentProps<typeof DuplicateReportModal>
+  >,
+  UserReportCompleteModal: UserReportCompleteModal as FunctionComponent<
+    ComponentProps<typeof UserReportCompleteModal>
   >,
 }
 

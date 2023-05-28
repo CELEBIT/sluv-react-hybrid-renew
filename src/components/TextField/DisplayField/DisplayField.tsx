@@ -7,13 +7,14 @@ interface DisplayFieldProps {
   disabled?: boolean
   valid?: boolean
   errorMsg?: string
+  onClick?: () => void
 }
-const DisplayField = ({ children, disabled, valid, errorMsg }: DisplayFieldProps) => {
+const DisplayField = ({ children, disabled, valid, errorMsg, onClick }: DisplayFieldProps) => {
   const childrenCount = React.Children.toArray(children).length
 
   if (childrenCount === 1) {
     return (
-      <DisplayFieldWrapper>
+      <DisplayFieldWrapper onClick={onClick}>
         <SingleField disabled={disabled}>{children}</SingleField>
         {!valid && <ErrorText>{errorMsg}</ErrorText>}
       </DisplayFieldWrapper>

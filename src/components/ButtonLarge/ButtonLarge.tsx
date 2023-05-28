@@ -5,7 +5,7 @@ interface LargeButtonProps {
   text: string
   active: boolean
   color?: string
-  onClick: () => void
+  onClick: any
 }
 
 const ButtonLarge = ({ text, active, color, onClick }: LargeButtonProps) => {
