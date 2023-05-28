@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import useModals from '../../../components/Modals/hooks/useModals'
+import { modals } from '../../../components/Modals'
+
 import Header from '../../../components/Header/Header'
 import { ReactComponent as Home } from '../../../assets/home_24.svg'
 import { ReactComponent as Search } from '../../../assets/search_24.svg'
-import { ReactComponent as Add } from '../../../assets/add_24.svg'
+import { ReactComponent as ShowMore } from '../../../assets/add_24.svg'
 import { ReactComponent as StorageOn } from '../../../assets/storage_on_24.svg'
 import { ReactComponent as StorageOff } from '../../../assets/storage_off_24.svg'
 import { ReactComponent as LikeOn } from '../../../assets/like_on_24.svg'
@@ -60,14 +63,19 @@ import { convertToKoDate } from '../../../utils/utility'
 import useFollowQuery from '../../../apis/user/hooks/useFollowQuery'
 import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '../../../config/queryKeys'
+import { RequestEditItemState } from '../editRequest'
+import { useSetRecoilState } from 'recoil'
 
 const ItemDetail = () => {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
+  const { openModal } = useModals()
   const { id: itemId } = useParams()
+
   const { getItemDetail } = useItemDetailQuery()
   const { data } = getItemDetail(Number(itemId))
   console.log(data)
+  const setEditReportItemState = useSetRecoilState(RequestEditItemState)
   const colors = ['gray', 'pink', 'orange', 'yellow', 'green', 'blue']
   const price = 120235
 
@@ -142,6 +150,16 @@ const ItemDetail = () => {
       scrapStatus: false,
     },
   ]
+
+  const onClickShowMore = () => {
+    openModal(modals.ItemEditRequestModal)
+    setEditReportItemState({
+      itemId: Number(itemId),
+      itemWriterId: data?.writer.id,
+      itemWriterName: data?.writer.nickName,
+    })
+  }
+
   const {
     followUser: { mutate: mutateByFollow },
   } = useFollowQuery()
@@ -163,7 +181,7 @@ const ItemDetail = () => {
           <div className='headerRight'>
             <Home onClick={() => navigate('/home')} />
             <Search onClick={() => navigate('/search')}></Search>
-            <Add></Add>
+            <ShowMore onClick={() => onClickShowMore()}></ShowMore>
           </div>
         </Header>
       </HeaderWrapper>

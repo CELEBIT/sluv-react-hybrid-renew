@@ -1,3 +1,4 @@
+import { EditRequestReason } from '../../pages/item/editRequest'
 import { IHashTag } from '../../recoil/itemInfo'
 import request from '../core'
 import { GetPaginationResult, ResponseType } from '../core/type'
@@ -175,6 +176,22 @@ export default class ItemService {
   // 아이템 좋아요
   async likeItem(itemId: number | null) {
     const data: ResponseType = await request.post(`${this.itemUrl}/${itemId}/like`)
+    return data
+  }
+  // 아이템 수정요청
+  async requsetEditItem(itemId: number, reason: string, content: string) {
+    const data: ResponseType = await request.post(`${this.itemUrl}/${itemId}/edit-req`, {
+      reason,
+      content,
+    })
+    return data
+  }
+  // 아이템 신고
+  async reportItem(itemId: number, reason: string, content: string) {
+    const data: ResponseType = await request.post(`${this.itemUrl}/${itemId}/report`, {
+      reason,
+      content,
+    })
     return data
   }
 }

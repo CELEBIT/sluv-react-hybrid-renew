@@ -15,4 +15,7 @@ export const atomKeys = {
   brandNameSearchState: 'brandNameSearchState' as const,
   itemInfoState: 'itemInfoState' as const,
   celebInfoInItemState: 'celebInfoInItemState' as const,
+  requestEditItemState: 'requestEditItemState' as const,
+  requestEditReasonState: 'requestEditReasonState' as const,
+  requestDisplayState: 'requestDisplayState' as const,
 }
