@@ -5,7 +5,7 @@ import { ReactComponent as Delete } from '../../../assets/delete_textfield_24.sv
 interface DefaultTextFieldProps {
   value: string
   setValue: React.Dispatch<React.SetStateAction<string>>
-  onEnter: () => void
+  onEnter?: () => void
   placeholder: string
   error?: boolean
   errorMsg?: string
