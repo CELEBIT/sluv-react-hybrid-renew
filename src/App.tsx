@@ -32,6 +32,10 @@ const ItemConfirm = React.lazy(() => import('./pages/item/confirm'))
 const EditRequest = React.lazy(() => import('./pages/item/editRequest'))
 const RequestReason = React.lazy(() => import('./pages/item/editRequest/requestReason'))
 
+// 커뮤니티 세부 페이지
+const FindRequest = React.lazy(() => import('./pages/community/findRequest'))
+const Question = React.lazy(() => import('./pages/community/question'))
+
 const App = () => {
   useLayoutEffect(() => {
     console.log(window.location.search)
@@ -63,6 +67,8 @@ const App = () => {
             <Route path='/500' element={<Page500 />} />
             <Route path='/' element={<Home />} />
             <Route path='/community' element={<Community />} />
+            <Route path='/community/find-requset' element={<FindRequest />} />
+            <Route path='/community/question' element={<Question />} />
             <Route path='/item/create' element={<ItemCreate />} />
             <Route path='/item/create/addinfo' element={<AddInfo />} />
             <Route path='/item/create/addlink' element={<AddLink />} />

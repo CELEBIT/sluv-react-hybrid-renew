@@ -19,4 +19,5 @@ export const atomKeys = {
   requestEditReasonState: 'requestEditReasonState' as const,
   requestDisplayState: 'requestDisplayState' as const,
   communityMenuState: 'communityMenuState' as const,
+  findRequestState: 'findRequestState' as const,
 }
