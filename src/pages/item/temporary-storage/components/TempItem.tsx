@@ -5,7 +5,7 @@ import { Img } from '../../../../components/AddPhotos/Photo'
 import { Label } from '../../create/styles'
 import { Common, Pretendard } from '../../../../components/styles'
 import { ReactComponent as Check } from '../../../../assets/check_24.svg'
-import { processTempTitle } from '../../../../utils/utility'
+import { formatUpdatedAt, processTempTitle } from '../../../../utils/utility'
 
 interface TempItemProps {
   data: TempItemResult
@@ -33,7 +33,7 @@ const TempItem = ({ data, isFirst, isEditMode }: TempItemProps) => {
         )}
         <div className='content'>
           <Label>{title}</Label>
-          <span className='time'>3초 전</span>
+          <span className='time'>{formatUpdatedAt(data.updatedAt)}</span>
         </div>
       </div>
       <Img
