@@ -20,6 +20,21 @@ export const HeaderWrap = styled.div`
   background-color: white;
 `
 
+export const EditBtn = styled.button`
+  outline: none;
+  border: none;
+  padding: 0;
+  ${Pretendard({
+    size: 18,
+    weight: Common.bold.semiBold,
+    color: Common.colors.BK,
+  })};
+
+  :disabled {
+    color: ${Common.colors.GR500};
+  }
+`
+
 export const SelectedCtnDiv = styled.div`
   ${Pretendard({
     size: 15,
@@ -71,4 +86,14 @@ export const DeleteFloatingContainer = styled.div`
       transform: rotate(90deg);
     }
   }
+`
+
+export const Info = styled.div`
+  ${Pretendard({
+    size: 15,
+    weight: Common.bold.regular,
+    color: Common.colors.GR600,
+  })}
+  padding: 2.5rem;
+  text-align: center;
 `

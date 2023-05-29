@@ -2,7 +2,9 @@ import React, { useRef, useState } from 'react'
 import Header from '../../../components/Header/Header'
 import {
   DeleteFloatingContainer,
+  EditBtn,
   HeaderWrap,
+  Info,
   ListWrap,
   SelectedCtnDiv,
   TStoragePageStyle,
@@ -10,9 +12,21 @@ import {
 import useTempItemQuery from '../../../apis/item/hooks/useTempItemQuery'
 import { useObserver } from '../../../hooks/useObserver'
 import TempItem from './components/TempItem'
+import { atom, useRecoilValue } from 'recoil'
+import { atomKeys } from '../../../config/atomKeys'
+import useModals from '../../../components/Modals/hooks/useModals'
+import { modals } from '../../../components/Modals'
+
+export const checkListState = atom<Array<number>>({
+  key: atomKeys.checkListState,
+  default: [],
+})
 
 const TemporaryStorage = () => {
+  const { openModal } = useModals()
+
   const [isEditMode, setIsEditMode] = useState(false)
+  const checkedList = useRecoilValue(checkListState)
   const bottom = useRef(null)
 
   const { getTempItem } = useTempItemQuery()
@@ -26,17 +40,27 @@ const TemporaryStorage = () => {
     onIntersect,
   })
 
+  const onDeleteSelected = () => {
+    if (checkedList.length === 0) {
+      alert('삭제할 아이템을 선택해주세요')
+      return
+    }
+    openModal(modals.DeleteTempItemModal, { type: '선택삭제' })
+  }
+  const onDeleteAll = () => {
+    openModal(modals.DeleteTempItemModal, { type: '전체삭제' })
+  }
+
   return (
     <TStoragePageStyle>
       <HeaderWrap>
         <Header isModalHeader={false} title={'임시 보관함'} hasArrow={true}>
-          {isEditMode ? (
-            <span className='complete-btn'>완료</span>
-          ) : (
-            <span className='edit-btn' onClick={() => setIsEditMode(true)}>
-              편집
-            </span>
-          )}
+          <EditBtn
+            onClick={() => setIsEditMode((prev) => !prev)}
+            disabled={(data?.pages[0].content.length ?? 0) < 2}
+          >
+            {isEditMode ? '완료' : '편집'}
+          </EditBtn>
         </Header>
         {isEditMode ? (
           <SelectedCtnDiv>
@@ -56,7 +80,12 @@ const TemporaryStorage = () => {
               item.content.length > 0 &&
               item.content.map((temp, idx) => {
                 return (
-                  <TempItem key={temp.id} data={temp} isFirst={idx === 0} isEditMode={isEditMode} />
+                  <TempItem
+                    key={temp.id}
+                    data={temp}
+                    isFirst={idx === 0 && index === 0}
+                    isEditMode={isEditMode}
+                  />
                 )
               }),
           )}
@@ -67,12 +96,13 @@ const TemporaryStorage = () => {
           </div>
         ) : null}
       </ListWrap>
+      <Info>작성 후 90일 까지 보관돼요</Info>
       {isEditMode && (
         <DeleteFloatingContainer>
           <div className='wrapper'>
-            <button>전체 삭제</button>
+            <button onClick={onDeleteAll}>전체 삭제</button>
             <span className='line'></span>
-            <button>선택 삭제</button>
+            <button onClick={onDeleteSelected}>선택 삭제</button>
           </div>
         </DeleteFloatingContainer>
       )}
