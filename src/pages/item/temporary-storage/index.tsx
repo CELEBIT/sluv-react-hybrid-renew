@@ -1,6 +1,12 @@
 import React, { useRef, useState } from 'react'
 import Header from '../../../components/Header/Header'
-import { HeaderWrap, ListWrap, SelectedCtnDiv, TStoragePageStyle } from './styles'
+import {
+  DeleteFloatingContainer,
+  HeaderWrap,
+  ListWrap,
+  SelectedCtnDiv,
+  TStoragePageStyle,
+} from './styles'
 import useTempItemQuery from '../../../apis/item/hooks/useTempItemQuery'
 import { useObserver } from '../../../hooks/useObserver'
 import TempItem from './components/TempItem'
@@ -61,6 +67,15 @@ const TemporaryStorage = () => {
           </div>
         ) : null}
       </ListWrap>
+      {isEditMode && (
+        <DeleteFloatingContainer>
+          <div className='wrapper'>
+            <button>전체 삭제</button>
+            <span className='line'></span>
+            <button>선택 삭제</button>
+          </div>
+        </DeleteFloatingContainer>
+      )}
     </TStoragePageStyle>
   )
 }
