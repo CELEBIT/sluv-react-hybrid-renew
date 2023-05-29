@@ -16,11 +16,8 @@ import {
   LabelContainer,
 } from './styles'
 import { ReactComponent as Error } from '../../../assets/error_20.svg'
-// import { ReactComponent as LinkAddOn } from '../../../assets/link_add_on_20.svg'
 import { ReactComponent as LinkAddOff } from '../../../assets/link_add_off_20.svg'
-// import { ReactComponent as InfoAddOn } from '../../../assets/info_add_on_20.svg'
 import { ReactComponent as InfoAddOff } from '../../../assets/info_add_off_20.svg'
-// import { ReactComponent as StorageOn } from '../../../assets/storage_on_20.svg'
 import { ReactComponent as StorageOff } from '../../../assets/storage_off_20.svg'
 import { HeaderWrapper } from '../addInfo/styles'
 import { ErrorText } from '../../../components/TextField/DefaultTextfield/styles'
@@ -28,8 +25,11 @@ import { selectedSubCategoryState } from '../../../components/BottomSheetModal/I
 import { linksState } from '../addLink/components/LinkInput/LinkInput'
 import ImageField from './components/ImageField/ImageField'
 import { itemInfoState } from '../../../recoil/itemInfo'
+import useUploadStateObserver from '../../../hooks/useUploadStateObserver'
 
 const ItemCreate = () => {
+  useUploadStateObserver()
+
   const navigate = useNavigate()
   const celeb = useRecoilValue(selectedCelebState)
   const category = useRecoilValue(selectedSubCategoryState)
