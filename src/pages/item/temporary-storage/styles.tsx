@@ -10,7 +10,6 @@ export const HeaderWrap = styled.div`
   padding: 0 1.25rem;
   font-size: 1.0625rem;
   font-weight: ${Common.bold.regular};
-  border-bottom: 1px solid ${Common.colors.GR300};
 `
 
 export const SelectedCtnDiv = styled.div`
