@@ -5,7 +5,8 @@ import { Img } from '../../../../components/AddPhotos/Photo'
 import { Label } from '../../create/styles'
 import { Common, Pretendard } from '../../../../components/styles'
 import { ReactComponent as Check } from '../../../../assets/check_24.svg'
-import { formatUpdatedAt, processTempTitle } from '../../../../utils/utility'
+import { formatUpdatedAt } from '../../../../utils/utility'
+import { filterRepresentImg, processTempTitle } from './TempItem.util'
 
 interface TempItemProps {
   data: TempItemResult
@@ -16,10 +17,13 @@ interface TempItemProps {
 const TempItem = ({ data, isFirst, isEditMode }: TempItemProps) => {
   const [isChecked, setIsChecked] = useState(false)
 
-  console.log(processTempTitle(data))
-
-  const title = useMemo(() => {
-    return String(processTempTitle(data))
+  const [title, imgUrl] = useMemo(() => {
+    const processedTitle = String(processTempTitle(data))
+    if (data.imgList.length < 1) {
+      return [processedTitle, '']
+    } else {
+      return [processedTitle, filterRepresentImg(data.imgList)]
+    }
   }, [data])
 
   return (
@@ -36,13 +40,7 @@ const TempItem = ({ data, isFirst, isEditMode }: TempItemProps) => {
           <span className='time'>{formatUpdatedAt(data.updatedAt)}</span>
         </div>
       </div>
-      <Img
-        size={48}
-        borderRadius={8}
-        imgUrl={
-          'https://newsimg-hams.hankookilbo.com/2022/08/03/8e83bb3f-9e4a-4977-bda5-f08320bf0dbe.jpg'
-        }
-      />
+      {data.imgList.length > 0 && <Img size={48} borderRadius={8} imgUrl={imgUrl} />}
     </TempItemWrap>
   )
 }
