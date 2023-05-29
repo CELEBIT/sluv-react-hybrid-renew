@@ -139,10 +139,16 @@ export default class ItemService {
     return data.result
   }
   // 임시저장 아이템 게시글 조회
-  async getTempItem() {
-    const data: ResponseType<Array<TempItemResult>> = await request.get(`${this.tempItemUrl}`, {
-      params: {},
-    })
+  async getTempItem(page: number) {
+    const data: ResponseType<GetPaginationResult<TempItemResult>> = await request.get(
+      `${this.tempItemUrl}`,
+      {
+        params: {
+          page,
+          size: 20,
+        },
+      },
+    )
     return data.result
   }
   // 아이템 게시글 상세 조회
