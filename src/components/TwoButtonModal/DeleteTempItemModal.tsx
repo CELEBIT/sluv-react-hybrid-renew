@@ -3,6 +3,9 @@ import TwoButtonModal from '.'
 import useModals from '../Modals/hooks/useModals'
 import { modals } from '../Modals'
 import { BtnModalContent } from '../Modals/styles'
+import useTempItemQuery from '../../apis/item/hooks/useTempItemQuery'
+import { useRecoilValue } from 'recoil'
+import { checkListState } from '../../pages/item/temporary-storage'
 
 interface IProps {
   type: string
@@ -10,9 +13,19 @@ interface IProps {
 
 const DeleteTempItemModal = ({ type }: IProps) => {
   const { closeModal } = useModals()
+  const {
+    deleteTempItem: { mutate: mutateItemDeleted },
+    deleteTempItemAll: { mutate: mutateAllItemDeleted },
+  } = useTempItemQuery()
+
+  const checkedList = useRecoilValue(checkListState)
 
   const onDelete = () => {
-    console.log('삭제')
+    if (type === '전체삭제') {
+      mutateAllItemDeleted()
+    } else {
+      mutateItemDeleted(checkedList)
+    }
   }
 
   return (

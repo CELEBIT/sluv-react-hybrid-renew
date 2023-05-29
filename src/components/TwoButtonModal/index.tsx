@@ -35,4 +35,5 @@ const TwoBtnWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
+  gap: 0.5625rem;
 `

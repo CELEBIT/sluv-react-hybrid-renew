@@ -57,14 +57,14 @@ const TemporaryStorage = () => {
         <Header isModalHeader={false} title={'임시 보관함'} hasArrow={true}>
           <EditBtn
             onClick={() => setIsEditMode((prev) => !prev)}
-            disabled={(data?.pages[0].content.length ?? 0) < 2}
+            disabled={!isEditMode && (data?.pages[0].content.length ?? 0) < 2}
           >
             {isEditMode ? '완료' : '편집'}
           </EditBtn>
         </Header>
         {isEditMode ? (
           <SelectedCtnDiv>
-            총<span> 0</span>개 선택됨
+            총<span> {checkedList.length}</span>개 선택됨
           </SelectedCtnDiv>
         ) : (
           <SelectedCtnDiv>
