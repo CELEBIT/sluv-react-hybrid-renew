@@ -28,6 +28,7 @@ const EditRequestCompleteModal = loadable(
 )
 const UserReportCompleteModal = loadable(() => import('../OneButtonModal/UserReportCompleteModal'))
 const DuplicateReportModal = loadable(() => import('../OneButtonModal/DuplicateReportModal'))
+const DeleteTempItemModal = loadable(() => import('../TwoButtonModal/DeleteTempItemModal'))
 // 모달 관리 객체
 export const modals = {
   AskRecentPostWritingModal: AskRecentPostWritingModal as FunctionComponent<
@@ -65,6 +66,9 @@ export const modals = {
   >,
   UserReportCompleteModal: UserReportCompleteModal as FunctionComponent<
     ComponentProps<typeof UserReportCompleteModal>
+  >,
+  DeleteTempItemModal: DeleteTempItemModal as FunctionComponent<
+    ComponentProps<typeof DeleteTempItemModal>
   >,
 }
 

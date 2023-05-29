@@ -2,7 +2,7 @@ import { atom } from 'recoil'
 import { atomKeys } from '../config/atomKeys'
 import { ImgResult } from '../apis/item/itemService'
 
-interface ICeleb {
+export interface ICeleb {
   celebId: number
   celebName: string
 }

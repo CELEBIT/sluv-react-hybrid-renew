@@ -139,10 +139,16 @@ export default class ItemService {
     return data.result
   }
   // 임시저장 아이템 게시글 조회
-  async getTempItem() {
-    const data: ResponseType<Array<TempItemResult>> = await request.get(`${this.tempItemUrl}`, {
-      params: {},
-    })
+  async getTempItem(page: number) {
+    const data: ResponseType<GetPaginationResult<TempItemResult>> = await request.get(
+      `${this.tempItemUrl}`,
+      {
+        params: {
+          page,
+          size: 20,
+        },
+      },
+    )
     return data.result
   }
   // 아이템 게시글 상세 조회
@@ -192,6 +198,21 @@ export default class ItemService {
       reason,
       content,
     })
+    return data
+  }
+  // 임시저장 아이템 선택삭제
+  async deleteTempItem(idArray: Array<number>) {
+    const result = await Promise.allSettled(
+      idArray.map(async (id) => {
+        const data: ResponseType = await request.delete(`${this.tempItemUrl}/${id}`)
+        return data
+      }),
+    )
+    return await result
+  }
+  // 임시저장 아이템 전체삭제
+  async deleteTempItemAll() {
+    const data: ResponseType = await request.delete(`${this.tempItemUrl}`)
     return data
   }
 }
