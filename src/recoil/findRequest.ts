@@ -25,7 +25,7 @@ export interface IitemList {
   representFlag: boolean
 }
 
-export const findRequestState = atom<IFindRequest>({
+export const findRequestInfoState = atom<IFindRequest>({
   key: atomKeys.findRequestState,
   default: {
     id: null,
