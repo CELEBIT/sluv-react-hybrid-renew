@@ -46,6 +46,9 @@ export const ComponentContainer = styled.div`
   .top {
     padding-top: 1.25rem;
   }
+  .noGap {
+    gap: 0;
+  }
 `
 
 export const ComponentWrapper = styled.div`
@@ -55,6 +58,7 @@ export const ComponentWrapper = styled.div`
   width: 100%;
   .error {
     margin-top: -0.5rem;
+    margin-left: 1.25rem;
   }
 `
 

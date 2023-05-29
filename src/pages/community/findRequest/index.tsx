@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FindRequestContainer } from './styles'
 import CommunityHeader from '../../../components/Header/CommunityHeader/CommunityHeader'
 import {
@@ -10,23 +10,48 @@ import {
 import SelectCeleb, { selectedCelebState } from '../../../components/SelectCeleb/SelectCeleb'
 import { ErrorText } from '../../../components/TextField/DefaultTextfield/styles'
 import { ReactComponent as Error } from '../../../assets/error_20.svg'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { HeaderWrapper } from '../../item/addInfo/styles'
 import DefaultTextfield from '../../../components/TextField/DefaultTextfield/DefaultTextfield'
 import TextArea from '../../../components/TextField/TextArea/TextArea'
-import ImageField from '../../item/create/components/ImageField/ImageField'
 import AddPhotos from '../../../components/AddPhotos/AddPhotos'
+import { findRequestInfoState } from '../../../recoil/findRequest'
 
 const FindRequest = () => {
-  const [hasTriedToUpload, setHasTriedToUpload] = useState(false)
+  const [findRequestInfo, setFindRequestInfo] = useRecoilState(findRequestInfoState)
   const celeb = useRecoilValue(selectedCelebState)
-  const [title, setTitle] = useState('')
-  const [content, setContent] = useState('')
+
+  const [hasTriedToUpload, setHasTriedToUpload] = useState(false)
+
+  const [title, setTitle] = useState<string | null>(findRequestInfo.title)
+  const [content, setContent] = useState<string | null>(findRequestInfo.content)
+
+  const onSubmit = () => {
+    setHasTriedToUpload(true)
+    console.log(findRequestInfo)
+    if (
+      celeb.id &&
+      findRequestInfo.title &&
+      findRequestInfo.title.length > 10 &&
+      findRequestInfo.title.length < 60
+    ) {
+      alert('success')
+    }
+  }
+
+  useEffect(() => {
+    setFindRequestInfo({
+      ...findRequestInfo,
+      title: title,
+      content: content,
+    })
+  }, [title, content])
+
   return (
     <FindRequestContainer>
       <HeaderWrapper>
         <CommunityHeader>
-          <span className='submit' onClick={() => alert('submit')}>
+          <span className='submit' onClick={onSubmit}>
             완료
           </span>
         </CommunityHeader>
@@ -46,30 +71,33 @@ const FindRequest = () => {
         {/* 아이템 정보를 물어보세요 */}
         <ComponentWrapper>
           <LabelContainer>
-            {hasTriedToUpload && !celeb.id && <Error></Error>}
+            {hasTriedToUpload && (!title || (title && title.length < 10)) && <Error></Error>}
             <Label>아이템 정보를 물어보세요</Label>
           </LabelContainer>
           <div className='padding'>
             <DefaultTextfield
-              value={title}
+              value={title ?? ''}
               setValue={setTitle}
               placeholder='제목'
             ></DefaultTextfield>
           </div>
+          {hasTriedToUpload && !title && <ErrorText className='error'>필수 항목입니다</ErrorText>}
+          {hasTriedToUpload && title && title.length < 10 && (
+            <ErrorText className='error'>제목을 10자 이상 입력해 주세요</ErrorText>
+          )}
+          {hasTriedToUpload && title && title.length > 60 && (
+            <ErrorText className='error'>제목은 최대 60자까지 입력할 수 있어요</ErrorText>
+          )}
           <div className='padding'>
             <TextArea
-              value={content}
+              value={content ?? ''}
               setValue={setContent}
               placeholder='예)셀럽이 착용한 아이템 이거 어디꺼야?'
             ></TextArea>
           </div>
-          {hasTriedToUpload && !celeb.id && (
-            <ErrorText className='error'>필수 항목입니다</ErrorText>
-          )}
         </ComponentWrapper>
-        <ComponentWrapper>
+        <ComponentWrapper className='noGap'>
           <LabelContainer>
-            {hasTriedToUpload && !celeb.id && <Error></Error>}
             <Label>
               아이템/사진을 올려주세요 <span className='optional'>(선택)</span>
             </Label>
