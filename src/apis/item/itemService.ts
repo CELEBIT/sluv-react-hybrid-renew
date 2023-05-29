@@ -200,4 +200,19 @@ export default class ItemService {
     })
     return data
   }
+  // 임시저장 아이템 선택삭제
+  async deleteTempItem(idArray: Array<number>) {
+    const result = await Promise.allSettled(
+      idArray.map(async (id) => {
+        const data: ResponseType = await request.delete(`${this.tempItemUrl}/${id}`)
+        return data
+      }),
+    )
+    return await result
+  }
+  // 임시저장 아이템 전체삭제
+  async deleteTempItemAll() {
+    const data: ResponseType = await request.delete(`${this.tempItemUrl}`)
+    return data
+  }
 }
