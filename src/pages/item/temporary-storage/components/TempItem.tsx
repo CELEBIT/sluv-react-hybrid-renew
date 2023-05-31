@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { TempItemResult } from '../../../../apis/item/itemService'
 import styled from '@emotion/styled'
 import { Img } from '../../../../components/AddPhotos/Photo'
 import { Label } from '../../create/styles'
@@ -9,6 +8,7 @@ import { formatUpdatedAt } from '../../../../utils/utility'
 import { filterRepresentImg, processTempTitle } from './TempItem.util'
 import { useRecoilState } from 'recoil'
 import { checkListState } from '..'
+import { TempItemResult } from '../../../../apis/item/itemService.type'
 
 interface TempItemProps {
   data: TempItemResult

@@ -1,6 +1,6 @@
 import { atom } from 'recoil'
 import { atomKeys } from '../config/atomKeys'
-import { ImgResult } from '../apis/item/itemService'
+import { ImgResult } from '../apis/item/itemService.type'
 
 export interface ICeleb {
   celebId: number
@@ -27,15 +27,15 @@ export interface IHashTag {
 }
 
 export interface IItemInfo {
-  id?: number | null
-  imgList?: Array<ImgResult> | null
+  id: number | null
+  imgList: Array<ImgResult> | null
   celeb?: ICeleb | null
-  whenDiscovery?: string | null | Date
-  whereDiscovery?: string | null
-  itemCategory?: ICategory | null
+  whenDiscovery: string | null | Date
+  whereDiscovery: string | null
+  itemCategory: ICategory | null
   brand?: IBrand | null
-  itemName?: string | null
-  price?: number | null
+  itemName: string | null
+  price: number | null
   color?: string | null
   additionalInfo: string | null
   hashTagList: Array<IHashTag> | null

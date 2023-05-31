@@ -2,11 +2,11 @@ import React from 'react'
 import styled from '@emotion/styled'
 import Item from './Item'
 import { Common, Pretendard } from '../styles'
-import { recommendItemResult } from '../../apis/item/itemService'
+import { RecommendItemResult } from '../../apis/item/itemService.type'
 
 interface RecommendedItemProps {
   title: string
-  list: Array<recommendItemResult> | undefined
+  list: Array<RecommendItemResult> | undefined
 }
 
 const RecommendedItemList = ({ title, list }: RecommendedItemProps) => {

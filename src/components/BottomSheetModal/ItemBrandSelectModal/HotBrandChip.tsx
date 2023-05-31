@@ -28,6 +28,7 @@ const HotBrandChip = ({ hotBrandData }: HotBrandChipProps) => {
         brandName: brand.brandKr,
         brandImgUrl: brand.brandImgUrl,
       },
+      newBrand: null,
     })
   }
 
