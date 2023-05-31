@@ -31,11 +31,14 @@ const ItemPlaceInputModal = () => {
   } = usePostPlaceQuery()
 
   const onComplete = () => {
-    mutateByPostItemPlace({ placeName })
+    if (placeName) {
+      mutateByPostItemPlace({ placeName })
+    }
     setItemInfo({
       ...itemInfo,
       whereDiscovery: placeName,
     })
+    closeModal(modals.ItemDatePickerModal)
   }
   const onDeleteAllSearchLog = () => {
     mutateByDeleteAllRecentPlace()

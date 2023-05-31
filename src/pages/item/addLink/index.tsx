@@ -24,6 +24,7 @@ const AddLink = () => {
     const isLinkNameEmpty = links.some((link) => link.linkName === '')
     const isUrlEmpty = links.some((link) => link.itemLinkUrl === '')
     const isUrlValid = links.every((link) => urlRegex.test(link.itemLinkUrl))
+
     if (!isLinkNameEmpty && !isUrlEmpty && isUrlValid) {
       setHasError(false)
       setItemInfo({

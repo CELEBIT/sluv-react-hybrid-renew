@@ -48,6 +48,7 @@ const BrandList = () => {
         brandName: brand.brandKr,
         brandImgUrl: brand.brandImgUrl,
       },
+      newBrand: null,
     })
   }
   console.log('브랜드 무한스크롤', data)

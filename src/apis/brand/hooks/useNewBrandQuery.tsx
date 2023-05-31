@@ -31,6 +31,7 @@ const useNewBrandQuery = () => {
             brandName: res?.newBrandName,
             brandImgUrl: '',
           },
+          brand: null,
         })
       },
     },

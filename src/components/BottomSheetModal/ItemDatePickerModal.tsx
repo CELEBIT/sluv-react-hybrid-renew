@@ -6,7 +6,7 @@ import ButtonLarge from '../ButtonLarge/ButtonLarge'
 import useModals from '../Modals/hooks/useModals'
 import { modals } from '../Modals'
 import Header from '../Header/Header'
-import { convertToUTC } from '../../utils/utility'
+import { convertToKoDate, convertToUTC } from '../../utils/utility'
 import { useRecoilState } from 'recoil'
 import { itemInfoState } from '../../recoil/itemInfo'
 
@@ -22,7 +22,7 @@ const ItemDatePickerModal = () => {
   const onComplete = () => {
     setItemInfo({
       ...itemInfo,
-      whenDiscovery: date,
+      whenDiscovery: date ?? null,
     })
     closeModal(modals.ItemDatePickerModal)
   }
