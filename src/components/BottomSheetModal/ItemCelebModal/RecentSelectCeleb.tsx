@@ -6,7 +6,7 @@ import { ChipWrapper } from '../ItemBrandSelectModal/ItemBrandSelectModal'
 import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
 import { IRecentCeleb } from '../../../apis/celeb/CelebService'
 import { useRecoilState } from 'recoil'
-import { celebInfoInItemState } from '../../../recoil/itemInfo'
+import { celebInfoInItemState, itemInfoState } from '../../../recoil/itemInfo'
 import useModals from '../../Modals/hooks/useModals'
 import { modals } from '../../Modals'
 
@@ -19,6 +19,7 @@ const RecentSelectCeleb = () => {
     deleteAllRecentCeleb: { mutate: mutateByDeleteAllRecentCeleb },
   } = useRecentCelebQuery()
   const [celebInfoInItem, setCelebInfoInItem] = useRecoilState(celebInfoInItemState)
+  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
 
   const onDeleteAllSearchLog = () => {
     mutateByDeleteAllRecentCeleb()
@@ -35,6 +36,13 @@ const RecentSelectCeleb = () => {
         groupName: recentCeleb.parentCelebName,
         soloId: recentCeleb.id,
         soloName: recentCeleb.childCelebName,
+      })
+      setItemInfo({
+        ...itemInfo,
+        celeb: {
+          celebId: recentCeleb.id,
+          celebName: recentCeleb.childCelebName,
+        },
       })
       mutateByPostRecentCeleb(
         { celebId: recentCeleb.id, newCelebId: null },

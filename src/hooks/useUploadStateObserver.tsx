@@ -4,6 +4,7 @@ import { useEffect, useMemo } from 'react'
 import { useDebounce } from 'use-debounce'
 import useTempItemQuery from '../apis/item/hooks/useTempItemQuery'
 import { TempItemReq } from '../apis/item/itemService.type'
+import { localStorageKeys } from '../config/localStorageKeys'
 
 const useUploadStateObserver = () => {
   const {
@@ -29,7 +30,6 @@ const useUploadStateObserver = () => {
   useEffect(() => {
     if (
       !(
-        localStorage.getItem('tempItemId') ||
         itemInfo.imgList ||
         itemInfo.celeb ||
         itemInfo.whenDiscovery ||

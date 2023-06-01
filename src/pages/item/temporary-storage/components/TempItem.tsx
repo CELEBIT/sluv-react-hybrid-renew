@@ -9,6 +9,9 @@ import { filterRepresentImg, processTempTitle } from './TempItem.util'
 import { useRecoilState } from 'recoil'
 import { checkListState } from '..'
 import { TempItemResult } from '../../../../apis/item/itemService.type'
+import { useNavigate } from 'react-router-dom'
+import { localStorageKeys } from '../../../../config/localStorageKeys'
+import { IHashTag, itemInfoState } from '../../../../recoil/itemInfo'
 
 interface TempItemProps {
   data: TempItemResult
@@ -17,8 +20,11 @@ interface TempItemProps {
 }
 
 const TempItem = ({ data, isFirst, isEditMode }: TempItemProps) => {
+  const navigate = useNavigate()
+
   const [isChecked, setIsChecked] = useState(false)
   const [checkedList, setCheckedList] = useRecoilState(checkListState)
+  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
 
   const [title, imgUrl] = useMemo(() => {
     const processedTitle = String(processTempTitle(data))
@@ -45,9 +51,65 @@ const TempItem = ({ data, isFirst, isEditMode }: TempItemProps) => {
     }
     setIsChecked((prev) => !prev)
   }
+  const onClickTempItem = () => {
+    if (isEditMode) {
+      return
+    }
+    localStorage.setItem(localStorageKeys.TEMP_ITEM_ID, String(data.id))
+    const hashtags: Array<IHashTag> = []
+    data.hashTagList.length > 0 &&
+      data.hashTagList.map((item) => {
+        hashtags.push({
+          hashtagId: item.id,
+          hashtagContent: item.hashtagContent,
+        })
+      })
+    setItemInfo({
+      ...itemInfo,
+      imgList: data.imgList.length === 0 ? null : data.imgList,
+      celeb: data.celeb && {
+        celebId: data.celeb.id,
+        celebName: data.celeb.celebNameEn,
+      },
+      whenDiscovery: data.whenDiscovery ? new Date(data.whenDiscovery) : null,
+      whereDiscovery: data.whereDiscovery,
+      itemCategory: data.category && {
+        categoryId: data.category.id,
+        childName: data.category.name,
+        parentCategoryId: data.category.parentId,
+        parentName: data.category.parentName,
+      },
+      brand: data.brand && {
+        brandId: data.brand.id,
+        brandName: data.brand.brandKr,
+        brandImgUrl: data.brand.brandImgUrl,
+      },
+      itemName: data.itemName,
+      price: data.price,
+      additionalInfo: data.additionalInfo,
+      hashTagList: hashtags.length === 0 ? null : hashtags,
+      linkList: data.linkList.length === 0 ? null : data.linkList,
+      infoSource: data.infoSource,
+      newCeleb: data.newCeleb && {
+        celebId: data.newCeleb.newCelebId,
+        celebName: data.newCeleb.newCelebName,
+      },
+      newBrand: data.newBrand && {
+        brandId: data.newBrand.newBrandId,
+        brandName: data.newBrand.newBrandName,
+      },
+    })
+
+    navigate(-1)
+  }
 
   return (
-    <TempItemWrap htmlFor={String(data.id)} isGray={isGray} isFirst={isFirst}>
+    <TempItemWrap
+      onClick={onClickTempItem}
+      htmlFor={String(data.id)}
+      isGray={isGray}
+      isFirst={isFirst}
+    >
       <div className='container'>
         {isEditMode && !isFirst && (
           <Checkbox>

@@ -11,12 +11,14 @@ interface IPostItemPlace {
 const usePostPlaceQuery = () => {
   const place = new PlaceService()
   const queryClient = useQueryClient()
+  const { closeModal } = useModals()
 
   const postItemPlace = useMutation(
     ({ placeName }: IPostItemPlace) => place.postItemPlace(placeName),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(queryKeys.recentPlace)
+        closeModal(modals.ItemPlaceInputModal)
       },
     },
   )
