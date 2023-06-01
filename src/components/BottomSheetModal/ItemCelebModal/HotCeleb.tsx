@@ -6,7 +6,7 @@ import { selectedCelebState, selectedGroupState } from '../../SelectCeleb/Select
 import { HotWrapper } from '../ItemBrandSelectModal/HotBrand'
 import useHotCelebQuery from '../../../apis/celeb/hooks/useHotCelebQuery'
 import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
-import { celebInfoInItemState } from '../../../recoil/itemInfo'
+import { celebInfoInItemState, itemInfoState } from '../../../recoil/itemInfo'
 import { IHotCeleb } from '../../../apis/celeb/CelebService'
 import useModals from '../../Modals/hooks/useModals'
 import { modals } from '../../Modals'
@@ -16,6 +16,7 @@ const HotCeleb = () => {
   const setSelectedCeleb = useSetRecoilState(selectedCelebState)
   const setSelectedGroup = useSetRecoilState(selectedGroupState)
   const [celebInfoInItem, setCelebInfoInItem] = useRecoilState(celebInfoInItemState)
+  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
 
   const {
     getHotCeleb: { data },
@@ -34,6 +35,13 @@ const HotCeleb = () => {
         groupId: celebData.parentId,
         groupName: celebData.celebParentNameKr,
       })
+      setItemInfo({
+        ...itemInfo,
+        celeb: {
+          celebId: celebData.id,
+          celebName: celebData.celebChildNameKr,
+        },
+      })
     } else {
       // 선택한 셀럽이 솔로인 경우
       setCelebInfoInItem({
@@ -42,6 +50,13 @@ const HotCeleb = () => {
         soloName: celebData.celebChildNameKr,
         groupId: null,
         groupName: null,
+      })
+      setItemInfo({
+        ...itemInfo,
+        celeb: {
+          celebId: celebData.id,
+          celebName: celebData.celebChildNameKr,
+        },
       })
     }
     mutateByPostRecentCeleb(

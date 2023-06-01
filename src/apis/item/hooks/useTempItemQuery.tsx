@@ -2,7 +2,6 @@ import {
   UseInfiniteQueryResult,
   useInfiniteQuery,
   useMutation,
-  useQuery,
   useQueryClient,
 } from '@tanstack/react-query'
 import ItemService from '../itemService'
@@ -11,14 +10,12 @@ import { GetPaginationResult } from '../../core/type'
 import useModals from '../../../components/Modals/hooks/useModals'
 import { modals } from '../../../components/Modals'
 import { TempItemReq, TempItemResult } from '../itemService.type'
-import { useRecoilState } from 'recoil'
-import { itemInfoState } from '../../../recoil/itemInfo'
+import { localStorageKeys } from '../../../config/localStorageKeys'
 
 const useTempItemQuery = () => {
   const item = new ItemService()
   const queryClient = useQueryClient()
   const { closeModal } = useModals()
-  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
 
   const getTempItem = (): UseInfiniteQueryResult<GetPaginationResult<TempItemResult>, any> => {
     return useInfiniteQuery(
@@ -47,7 +44,7 @@ const useTempItemQuery = () => {
   const postTempItem = useMutation((tempItem: TempItemReq) => item.postTempItem(tempItem), {
     onSuccess: (res) => {
       if (res?.tempItemId) {
-        localStorage.setItem('tempItemId', String(res?.tempItemId))
+        localStorage.setItem(localStorageKeys.TEMP_ITEM_ID, String(res?.tempItemId))
       }
       queryClient.invalidateQueries(queryKeys.tempItem)
     },
