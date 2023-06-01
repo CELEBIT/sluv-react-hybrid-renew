@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import BrandItemField from './components/BrandItemField/BrandItemField'
 import { useRecoilValue } from 'recoil'
 import DatePlaceField from './components/DatePlaceField/DatePlaceField'
@@ -26,16 +26,27 @@ import { linksState } from '../addLink/components/LinkInput/LinkInput'
 import ImageField from './components/ImageField/ImageField'
 import { itemInfoState } from '../../../recoil/itemInfo'
 import useUploadStateObserver from '../../../hooks/useUploadStateObserver'
+import { localStorageKeys } from '../../../config/localStorageKeys'
+import useModals from '../../../components/Modals/hooks/useModals'
+import { modals } from '../../../components/Modals'
 
 const ItemCreate = () => {
   useUploadStateObserver()
 
+  const { openModal } = useModals()
   const navigate = useNavigate()
   const celeb = useRecoilValue(selectedCelebState)
   const category = useRecoilValue(selectedSubCategoryState)
   const links = useRecoilValue(linksState)
-  const [hasTriedToUpload, setHasTriedToUpload] = useState(false)
   const itemInfo = useRecoilValue(itemInfoState)
+  const [hasTriedToUpload, setHasTriedToUpload] = useState(false)
+
+  useEffect(() => {
+    const id = localStorage.getItem(localStorageKeys.TEMP_ITEM_ID)
+    if (id) {
+      openModal(modals.AskRecentPostWritingModal)
+    }
+  }, [])
 
   const onSubmit = () => {
     setHasTriedToUpload(true)

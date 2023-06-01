@@ -9,6 +9,7 @@ export interface GetPaginationResult<T> {
   hasNext: boolean
   page: number
   content: Array<T>
+  count?: number
 }
 
 export type BrandFlag = 'Y' | 'N'

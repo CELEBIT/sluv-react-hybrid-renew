@@ -1,123 +1,14 @@
-import { EditRequestReason } from '../../pages/item/editRequest'
 import { IHashTag } from '../../recoil/itemInfo'
 import request from '../core'
 import { GetPaginationResult, ResponseType } from '../core/type'
-
-export interface ParentCategoryResult {
-  id: number
-  name: string
-  subCategoryList?: Array<SubCategoryResult>
-}
-export interface SubCategoryResult {
-  id: number
-  name: string
-}
-export interface ImgResult {
-  imgUrl: string
-  representFlag: boolean
-}
-export interface CelebResult {
-  id: 0
-  celebNameKr: string
-  celebNameEn: string
-  categoryChild: string
-  categoryParent: string
-  parentCelebNameKr: string
-  parentCelebNameEn: string
-}
-export interface HashTagResult {
-  id: number
-  hashtagContent: string
-  hashtagStatus: string
-}
-export interface LinkResult {
-  itemLinkUrl: string
-  linkName: string
-}
-export interface ItemCategoryResult {
-  id: number
-  parentId: number
-  name: string
-  parentName: string
-}
-export interface BrandResult {
-  id: number
-  brandKr: string
-  brandEn: string
-  brandImgUrl: string
-}
-export interface userResult {
-  id: number
-  nickName: string
-  profileImgUrl: string
-}
-export interface recommendItemResult {
-  itemId: number
-  imgUrl: string
-  brandName: string
-  itemName: string
-  celebName: string
-  scrapStatus: boolean
-}
-export interface TempItemResult {
-  id: number
-  imgList: Array<ImgResult>
-  celeb: CelebResult
-  whenDiscovery: string
-  whereDiscovery: string
-  category: ItemCategoryResult
-  brand: BrandResult
-  itemName: string
-  price: number
-  additionalInfo: string
-  hashTagList: Array<HashTagResult>
-  linkList: Array<LinkResult>
-  infoSource: string
-  newCelebId: number
-  newBrandId: number
-  updatedAt: string
-}
-
-export interface ItemDetailCeleb {
-  id: number
-  parentId: number
-  celebChildNameKr: string
-  celebParentNameKr: string
-  celebTotalNameEn: string
-  celebTotalNameKr: string
-}
-
-export interface ItemDetailResult {
-  imgList: Array<ImgResult>
-  celeb: ItemDetailCeleb
-  newCelebName: string
-  category: ItemCategoryResult
-  itemName: string
-  brand: BrandResult
-  newBrandName: string
-  likeNum: number
-  likeStatus: boolean
-  scrapNum: number
-  scrapStatus: boolean
-  viewNum: number
-  linkList: Array<LinkResult>
-  writer: userResult
-  whenDiscovery: string
-  whereDiscovery: string
-  price: number
-  additionalInfo: string
-  hashTagList: Array<HashTagResult>
-  infoSource: string
-  sameCelebItemList: Array<recommendItemResult>
-  sameBrandItemList: Array<recommendItemResult>
-  color: string
-  followStatus: boolean
-}
-export interface HashtagContent {
-  hashtagId: number
-  hashtagContent: string
-  count: number
-}
+import {
+  HashtagContent,
+  ItemDetailResult,
+  ParentCategoryResult,
+  TempItemId,
+  TempItemReq,
+  TempItemResult,
+} from './itemService.type'
 
 export default class ItemService {
   itemUrl: string
@@ -214,5 +105,10 @@ export default class ItemService {
   async deleteTempItemAll() {
     const data: ResponseType = await request.delete(`${this.tempItemUrl}`)
     return data
+  }
+  // 임시저장 아이템 저장
+  async postTempItem(tempItem: TempItemReq) {
+    const data: ResponseType<TempItemId> = await request.post(`${this.tempItemUrl}`, tempItem)
+    return data.result
   }
 }

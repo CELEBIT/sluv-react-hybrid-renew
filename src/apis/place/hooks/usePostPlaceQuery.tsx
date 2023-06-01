@@ -18,7 +18,7 @@ const usePostPlaceQuery = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(queryKeys.recentPlace)
-        closeModal(modals.ItemDatePickerModal)
+        closeModal(modals.ItemPlaceInputModal)
       },
     },
   )

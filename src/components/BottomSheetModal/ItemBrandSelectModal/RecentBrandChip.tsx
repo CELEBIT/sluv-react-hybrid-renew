@@ -39,6 +39,7 @@ const RecentBrandChip = ({ brandData }: RecentBrandChipProps) => {
           brandName: brand.brandName,
           brandImgUrl: '',
         },
+        newBrand: null,
       })
     } else {
       // New 브랜드
@@ -49,6 +50,7 @@ const RecentBrandChip = ({ brandData }: RecentBrandChipProps) => {
           brandName: brand.brandName,
           brandImgUrl: '',
         },
+        brand: null,
       })
     }
   }
