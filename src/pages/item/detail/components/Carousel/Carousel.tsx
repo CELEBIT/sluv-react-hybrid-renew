@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useKeenSlider } from 'keen-slider/react'
 import 'keen-slider/keen-slider.min.css'
 import styled from '@emotion/styled'
-import { ImgResult } from '../../../../../apis/item/itemService'
+import { ImgResult } from '../../../../../apis/item/itemService.type'
 
 interface CarouselProps {
   imgList: Array<ImgResult>

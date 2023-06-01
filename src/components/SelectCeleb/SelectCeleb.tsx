@@ -6,7 +6,7 @@ import ButtonMedium from '../ButtonMedium/ButtonMedium'
 import useModals from '../Modals/hooks/useModals'
 import { modals } from '../Modals'
 import { ICelebResult } from '../../apis/user/userService'
-import { celebInfoInItemState } from '../../recoil/itemInfo'
+import { celebInfoInItemState, itemInfoState } from '../../recoil/itemInfo'
 import useInterestCelebQuery from '../../apis/user/hooks/useInterestCelebQuery'
 import useRecentCelebQuery from '../../apis/celeb/hooks/useRecentCelebQuery'
 
@@ -49,6 +49,7 @@ const SelectCeleb = () => {
   } = useRecentCelebQuery()
 
   const [celebInfoInItem, setCelebInfoInItem] = useRecoilState(celebInfoInItemState)
+  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
 
   const setSelectedCeleb = useSetRecoilState(selectedCelebState)
   const setSelectedGroup = useSetRecoilState(selectedGroupState)
@@ -73,6 +74,10 @@ const SelectCeleb = () => {
         soloId: null,
         soloName: null,
       })
+      setItemInfo({
+        ...itemInfo,
+        celeb: null,
+      })
       return
     }
     if (celebResult.subCelebList) {
@@ -93,6 +98,13 @@ const SelectCeleb = () => {
         soloName: celebResult.celebNameKr,
         groupId: null,
         groupName: null,
+      })
+      setItemInfo({
+        ...itemInfo,
+        celeb: {
+          celebId: celebResult.id,
+          celebName: celebResult.celebNameKr,
+        },
       })
       setSelectedCeleb(celebResult)
       setSelectedGroup({ id: 0, celebNameKr: '' })

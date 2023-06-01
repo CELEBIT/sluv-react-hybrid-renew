@@ -24,18 +24,28 @@ const AddInfo = () => {
 
   const onSubmit = () => {
     setHasSubmitted(true)
-    if (addInfoText || source || hashTags) {
-      setItemInfo({
-        ...itemInfo,
-        additionalInfo: addInfoText,
-        infoSource: source,
-        hashTagList: hashTags,
-      })
-      setInfoValid(true)
-      navigate('/item/create')
-    } else {
-      setInfoValid(false)
-    }
+
+    setItemInfo({
+      ...itemInfo,
+      additionalInfo: addInfoText === '' ? null : addInfoText,
+      infoSource: source === '' ? null : source,
+      hashTagList: hashTags.length === 0 ? null : hashTags,
+    })
+    setInfoValid(true)
+    navigate('/item/create')
+
+    // if (addInfoText || source || hashTags.length > 0) {
+    //   setItemInfo({
+    //     ...itemInfo,
+    //     additionalInfo: addInfoText,
+    //     infoSource: source,
+    //     hashTagList: hashTags,
+    //   })
+    //   setInfoValid(true)
+    //   navigate('/item/create')
+    // } else {
+    //   setInfoValid(false)
+    // }
   }
 
   useEffect(() => {

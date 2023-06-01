@@ -6,9 +6,9 @@ import { useDebounce } from 'use-debounce'
 import useCelebSearchQuery from '../../../apis/celeb/hooks/useCelebSearchQuery'
 import { useObserver } from '../../../hooks/useObserver'
 import { ISearchCeleb } from '../../../apis/celeb/CelebService'
-import { useSetRecoilState } from 'recoil'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import { selectedCelebState, selectedGroupState } from '../../SelectCeleb/SelectCeleb'
-import { celebInfoInItemState } from '../../../recoil/itemInfo'
+import { celebInfoInItemState, itemInfoState } from '../../../recoil/itemInfo'
 import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
 import useModals from '../../Modals/hooks/useModals'
 import { modals } from '../../Modals'
@@ -37,6 +37,7 @@ const SearchCelebList = ({ keyword }: SearchCelebListProps) => {
   const setSelectedCeleb = useSetRecoilState(selectedCelebState)
   const setSelectedGroup = useSetRecoilState(selectedGroupState)
   const setCelebInfoInItem = useSetRecoilState(celebInfoInItemState)
+  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
   console.log('셀럽 무한스크롤', data)
 
   const onClickExistingCeleb = (celeb: ISearchCeleb) => {
@@ -50,6 +51,13 @@ const SearchCelebList = ({ keyword }: SearchCelebListProps) => {
       soloName: celeb.celebChildNameKr,
       groupId: celeb.parentId,
       groupName: celeb.celebParentNameKr,
+    })
+    setItemInfo({
+      ...itemInfo,
+      celeb: {
+        celebId: celeb.id,
+        celebName: celeb.celebChildNameKr,
+      },
     })
     mutateByPostRecentCeleb(
       { celebId: celeb.id, newCelebId: null },

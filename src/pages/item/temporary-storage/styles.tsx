@@ -29,6 +29,7 @@ export const EditBtn = styled.button`
     weight: Common.bold.semiBold,
     color: Common.colors.BK,
   })};
+  background-color: white;
 
   :disabled {
     color: ${Common.colors.GR500};
