@@ -67,7 +67,7 @@ const App = () => {
             <Route path='/500' element={<Page500 />} />
             <Route path='/' element={<Home />} />
             <Route path='/community' element={<Community />} />
-            <Route path='/community/find-requset' element={<FindRequest />} />
+            <Route path='/community/find-request' element={<FindRequest />} />
             <Route path='/community/question' element={<Question />} />
             <Route path='/item/create' element={<ItemCreate />} />
             <Route path='/item/create/addinfo' element={<AddInfo />} />

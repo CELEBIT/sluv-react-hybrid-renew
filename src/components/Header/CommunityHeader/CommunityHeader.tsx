@@ -1,11 +1,11 @@
-import React, { memo, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { Title } from '../styles'
 import { ReactComponent as ArrowBack } from '../../../assets/arrow_back_20.svg'
 import { ReactComponent as Close } from '../../../assets/close_20.svg'
 import { ReactComponent as ArrowUp } from '../../../assets/arrow_up_18.svg'
 import { ReactComponent as ArrowDown } from '../../../assets/arrow_down_18.svg'
 import { ReactComponent as Add } from '../../../assets/add_18.svg'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { atom, useRecoilState } from 'recoil'
 import { atomKeys } from '../../../config/atomKeys'
 import { HeaderWrapper } from './styles'
@@ -25,12 +25,21 @@ export const communityMenuState = atom<string>({
 
 const CommunityHeader = ({ children, backBtnClick }: HeaderProps) => {
   const navigate = useNavigate()
+  const { pathname } = useLocation()
+
   const [communityMenu, setCommunityMenu] = useRecoilState(communityMenuState)
   const [menuOpen, setMenuOpen] = useState(false)
   const onMenuClick = (menu: CommunityMenu) => {
     setCommunityMenu(menu.name)
     navigate(menu.url)
   }
+  useEffect(() => {
+    if (pathname === '/community/find-request') {
+      setCommunityMenu('찾아주세요')
+    } else {
+      setCommunityMenu('질문해요')
+    }
+  }, [])
   return (
     <HeaderWrapper role='heading'>
       <div className='left' onClick={() => setMenuOpen(!menuOpen)}>

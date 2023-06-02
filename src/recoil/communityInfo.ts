@@ -1,7 +1,7 @@
 import { atom } from 'recoil'
 import { atomKeys } from '../config/atomKeys'
 
-export interface IFindRequest {
+export interface CommunityItem {
   id: number | null
   celebId: number | null
   newCelebId: number | null
@@ -25,8 +25,8 @@ export interface IitemList {
   representFlag: boolean
 }
 
-export const findRequestInfoState = atom<IFindRequest>({
-  key: atomKeys.findRequestState,
+export const communityItemState = atom<CommunityItem>({
+  key: atomKeys.communityItemState,
   default: {
     id: null,
     celebId: null,
@@ -36,4 +36,9 @@ export const findRequestInfoState = atom<IFindRequest>({
     imgList: null,
     itemList: null,
   },
+})
+
+export const communityQuestionMenuState = atom<string>({
+  key: atomKeys.communityQuestionMenuState,
+  default: '이 중에 뭐 살까',
 })
