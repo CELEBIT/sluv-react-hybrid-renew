@@ -15,10 +15,10 @@ import { HeaderWrapper } from '../../item/addInfo/styles'
 import DefaultTextfield from '../../../components/TextField/DefaultTextfield/DefaultTextfield'
 import TextArea from '../../../components/TextField/TextArea/TextArea'
 import AddPhotos from '../../../components/AddPhotos/AddPhotos'
-import { findRequestInfoState } from '../../../recoil/findRequest'
+import { communityItemState } from '../../../recoil/communityInfo'
 
 const FindRequest = () => {
-  const [findRequestInfo, setFindRequestInfo] = useRecoilState(findRequestInfoState)
+  const [findRequestInfo, setFindRequestInfo] = useRecoilState(communityItemState)
   const celeb = useRecoilValue(selectedCelebState)
 
   const [hasTriedToUpload, setHasTriedToUpload] = useState(false)
