@@ -9,6 +9,7 @@ export interface CommunityItem {
   content: string | null
   imgList: Array<IimgList> | null
   itemList: Array<IitemList> | null
+  categoryNameList?: Array<string> | null
 }
 
 export interface IimgList {

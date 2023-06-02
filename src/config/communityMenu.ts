@@ -15,3 +15,14 @@ export const CommunityMenuList = [
 ]
 
 export const QuestionMenuList = ['이 중에 뭐 살까', '이거 어때', '추천해 줘']
+
+export const RecommendCategory = [
+  '애착템',
+  '입문템',
+  '추천템',
+  '가성비템',
+  '후회없템',
+  '선물템',
+  '신박템',
+  '기타',
+]

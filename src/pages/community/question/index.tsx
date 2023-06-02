@@ -14,6 +14,8 @@ import { HeaderWrapper } from '../../item/addInfo/styles'
 import { communityItemState, communityQuestionMenuState } from '../../../recoil/communityInfo'
 import SelectQuestionMenu from './components/selectQuestionMenu'
 import HowAboutThis from './howAboutThis'
+import Recommend from './recommend'
+import SelectRecommendCategory from './components/selectRecommendCategory'
 
 const Question = () => {
   const celeb = useRecoilValue(selectedCelebState)
@@ -49,16 +51,19 @@ const Question = () => {
             <Label>주제를 골라주세요</Label>
           </LabelContainer>
           <SelectQuestionMenu></SelectQuestionMenu>
+          {communityQuestionMenu === '추천해 줘' && (
+            <SelectRecommendCategory></SelectRecommendCategory>
+          )}
         </ComponentWrapper>
         {/* 아이템 정보를 물어보세요 */}
-        {communityQuestionMenu === '이중에 뭐 살까' ? (
+        {communityQuestionMenu === '이 중에 뭐 살까' ? (
           <></>
         ) : (
           <>
             {communityQuestionMenu === '이거 어때' ? (
               <HowAboutThis hasTriedToUpload={hasTriedToUpload}></HowAboutThis>
             ) : (
-              <></>
+              <Recommend hasTriedToUpload={hasTriedToUpload}></Recommend>
             )}
           </>
         )}
