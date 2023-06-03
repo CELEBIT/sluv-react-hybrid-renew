@@ -24,7 +24,7 @@ const FindRequest = () => {
   const [hasTriedToUpload, setHasTriedToUpload] = useState(false)
 
   const [title, setTitle] = useState<string | null>(findRequestInfo.title)
-  const [content, setContent] = useState<string | null>(findRequestInfo.content)
+  const [content, setContent] = useState<string | null | undefined>(findRequestInfo.content)
 
   const onSubmit = () => {
     setHasTriedToUpload(true)

@@ -16,6 +16,7 @@ import SelectQuestionMenu from './components/selectQuestionMenu'
 import HowAboutThis from './howAboutThis'
 import Recommend from './recommend'
 import SelectRecommendCategory from './components/selectRecommendCategory'
+import WhichOne from './whichOne'
 
 const Question = () => {
   const celeb = useRecoilValue(selectedCelebState)
@@ -57,7 +58,7 @@ const Question = () => {
         </ComponentWrapper>
         {/* 아이템 정보를 물어보세요 */}
         {communityQuestionMenu === '이 중에 뭐 살까' ? (
-          <></>
+          <WhichOne hasTriedToUpload={hasTriedToUpload}></WhichOne>
         ) : (
           <>
             {communityQuestionMenu === '이거 어때' ? (

@@ -16,7 +16,7 @@ interface RecommendProps {
 const Recommend = ({ hasTriedToUpload }: RecommendProps) => {
   const [questionInfo, setQuestionInfo] = useRecoilState(communityItemState)
   const [title, setTitle] = useState<string | null>(questionInfo.title)
-  const [content, setContent] = useState<string | null>(questionInfo.content)
+  const [content, setContent] = useState<string | undefined | null>(questionInfo.content)
 
   useEffect(() => {
     setQuestionInfo({

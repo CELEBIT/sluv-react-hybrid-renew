@@ -1,38 +1,33 @@
 import React, { useEffect, useState } from 'react'
+import TwoItemUpload from '../components/twoItemUpload'
+import { SubComponentContainer } from '../howAboutThis/styles'
 import { ComponentWrapper, Label, LabelContainer } from '../../../item/create/styles'
 import DefaultTextfield from '../../../../components/TextField/DefaultTextfield/DefaultTextfield'
-import { ErrorText } from '../../../../components/TextField/DefaultTextfield/styles'
-import TextArea from '../../../../components/TextField/TextArea/TextArea'
-import AddPhotos from '../../../../components/AddPhotos/AddPhotos'
-import { ReactComponent as Error } from '../../../../assets/error_20.svg'
 import { useRecoilState } from 'recoil'
 import { communityItemState } from '../../../../recoil/communityInfo'
-import { SubComponentContainer } from './styles'
+import { ErrorText } from '../../../../components/TextField/DefaultTextfield/styles'
+import { ReactComponent as Error } from '../../../../assets/error_20.svg'
 
-interface HowAboutThisProps {
+interface WhichOneProps {
   hasTriedToUpload: boolean
 }
 
-const HowAboutThis = ({ hasTriedToUpload }: HowAboutThisProps) => {
+const WhichOne = ({ hasTriedToUpload }: WhichOneProps) => {
   const [questionInfo, setQuestionInfo] = useRecoilState(communityItemState)
   const [title, setTitle] = useState<string | null>(questionInfo.title)
-  const [content, setContent] = useState<string | null | undefined>(questionInfo.content)
-
   useEffect(() => {
     setQuestionInfo({
       ...questionInfo,
       title: title,
-      content: content,
     })
     console.log(questionInfo)
-  }, [title, content])
-
+  }, [title])
   return (
     <SubComponentContainer>
       <ComponentWrapper>
         <LabelContainer>
           {hasTriedToUpload && (!title || (title && title.length < 10)) && <Error></Error>}
-          <Label>자유롭게 물어보세요</Label>
+          <Label>아이템 정보를 물어보세요</Label>
         </LabelContainer>
         <div className='padding'>
           <DefaultTextfield
@@ -49,25 +44,18 @@ const HowAboutThis = ({ hasTriedToUpload }: HowAboutThisProps) => {
           <ErrorText className='error'>제목은 최대 60자까지 입력할 수 있어요</ErrorText>
         )}
         <div className='padding'>
-          <TextArea
-            value={content ?? ''}
-            setValue={setContent}
-            placeholder='예) 이거 살까 말까 고민인데, 어때?
-예) 이 프로그램 재밌어? 어때?
-예) 이거 먹어본 적 있어? 어때?'
-          ></TextArea>
+          <TwoItemUpload></TwoItemUpload>
         </div>
       </ComponentWrapper>
-      <ComponentWrapper className='noGap'>
+      {/* <ComponentWrapper className='padding'></ComponentWrapper> */}
+      <ComponentWrapper>
         <LabelContainer>
-          <Label>
-            아이템/사진을 올려주세요 <span className='optional'>(선택)</span>
-          </Label>
+          {hasTriedToUpload && (!title || (title && title.length < 10)) && <Error></Error>}
+          <Label>투표 마감시간을 정해주세요</Label>
         </LabelContainer>
-        <AddPhotos></AddPhotos>
       </ComponentWrapper>
     </SubComponentContainer>
   )
 }
 
-export default HowAboutThis
+export default WhichOne
