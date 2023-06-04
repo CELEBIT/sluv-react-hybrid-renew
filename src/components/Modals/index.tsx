@@ -28,6 +28,11 @@ const EditRequestCompleteModal = loadable(
 )
 const UserReportCompleteModal = loadable(() => import('../OneButtonModal/UserReportCompleteModal'))
 const DuplicateReportModal = loadable(() => import('../OneButtonModal/DuplicateReportModal'))
+
+const QuestionDateTimePickerModal = loadable(
+  () => import('../BottomSheetModal/QuestionDateTimePickerModal'),
+)
+
 // 모달 관리 객체
 export const modals = {
   AskRecentPostWritingModal: AskRecentPostWritingModal as FunctionComponent<
@@ -65,6 +70,9 @@ export const modals = {
   >,
   UserReportCompleteModal: UserReportCompleteModal as FunctionComponent<
     ComponentProps<typeof UserReportCompleteModal>
+  >,
+  QuestionDateTimePickerModal: QuestionDateTimePickerModal as FunctionComponent<
+    ComponentProps<typeof QuestionDateTimePickerModal>
   >,
 }
 

@@ -10,7 +10,7 @@ export interface CommunityItem {
   imgList: Array<IimgList> | null
   itemList: Array<IitemList> | null
   categoryNameList?: Array<string> | null
-  voteEndTime?: string | null
+  voteEndTime?: Date
 }
 
 export interface IimgList {
@@ -38,14 +38,6 @@ export interface IselectedItem {
   brandName?: string | null
   itemName?: string | null
 }
-
-// export interface IexistingItem {
-//   itemId: number
-//   imgUrl: string
-//   celebName: string
-//   brandName: string
-//   itemName: string
-// }
 
 export const communityItemState = atom<CommunityItem>({
   key: atomKeys.communityItemState,
