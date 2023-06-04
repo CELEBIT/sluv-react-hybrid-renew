@@ -7,14 +7,23 @@ import { useRecoilState } from 'recoil'
 import { communityItemState } from '../../../../recoil/communityInfo'
 import { ErrorText } from '../../../../components/TextField/DefaultTextfield/styles'
 import { ReactComponent as Error } from '../../../../assets/error_20.svg'
+import SetVoteDateTime from '../components/setVoteTime'
+import { convertToUTC } from '../../../../utils/utility'
+import useModals from '../../../../components/Modals/hooks/useModals'
+import { modals } from '../../../../components/Modals'
+import VoteDisplayField from '../components/VoteDisplayField'
 
 interface WhichOneProps {
   hasTriedToUpload: boolean
 }
 
 const WhichOne = ({ hasTriedToUpload }: WhichOneProps) => {
+  const { openModal } = useModals()
   const [questionInfo, setQuestionInfo] = useRecoilState(communityItemState)
   const [title, setTitle] = useState<string | null>(questionInfo.title)
+  const today = new Date()
+  const defaultEndDateTime = new Date(new Date().setDate(today.getDate() + 1))
+
   useEffect(() => {
     setQuestionInfo({
       ...questionInfo,
@@ -22,6 +31,13 @@ const WhichOne = ({ hasTriedToUpload }: WhichOneProps) => {
     })
     console.log(questionInfo)
   }, [title])
+
+  useEffect(() => {
+    setQuestionInfo({
+      ...questionInfo,
+      voteEndTime: defaultEndDateTime,
+    })
+  }, [])
   return (
     <SubComponentContainer>
       <ComponentWrapper>
@@ -53,6 +69,9 @@ const WhichOne = ({ hasTriedToUpload }: WhichOneProps) => {
           {hasTriedToUpload && (!title || (title && title.length < 10)) && <Error></Error>}
           <Label>투표 마감시간을 정해주세요</Label>
         </LabelContainer>
+        <div className='padding' onClick={() => openModal(modals.QuestionDateTimePickerModal)}>
+          <VoteDisplayField dateTime={questionInfo?.voteEndTime}></VoteDisplayField>
+        </div>
       </ComponentWrapper>
     </SubComponentContainer>
   )

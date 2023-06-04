@@ -7,34 +7,36 @@ import useModals from '../Modals/hooks/useModals'
 import { modals } from '../Modals'
 import Header from '../Header/Header'
 import { convertToUTC } from '../../utils/utility'
-import { useRecoilState } from 'recoil'
-import { itemInfoState } from '../../recoil/itemInfo'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { communityItemState } from '../../recoil/communityInfo'
+import SetVoteDateTime from '../../pages/community/question/components/setVoteTime'
 
-const ItemDatePickerModal = () => {
+const QuestionDateTimePickerModal = () => {
   const { closeModal } = useModals()
 
   const today = new Date()
-  today.setHours(0, 0, 0, 0)
-  const utcToday = convertToUTC(today)
-  const [date, setDate] = useState<Date | undefined>(utcToday)
-  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
+  const questionInfo = useRecoilValue(communityItemState)
 
   const onComplete = () => {
-    setItemInfo({
-      ...itemInfo,
-      whenDiscovery: date?.toISOString(),
-    })
-    closeModal(modals.ItemDatePickerModal)
+    if (
+      questionInfo.voteEndTime &&
+      questionInfo?.voteEndTime < new Date(new Date().setHours(today.getHours() + 3))
+    ) {
+      console.log(new Date(new Date().setHours(today.getHours() + 3)))
+      alert('마감시간은 지금으로부터 최소 3시간 이후로 설정할 수 있습니다')
+    } else {
+      closeModal(modals.QuestionDateTimePickerModal)
+    }
   }
+
   const onCancel = () => {
-    setDate(undefined)
-    closeModal(modals.ItemDatePickerModal)
+    closeModal(modals.QuestionDateTimePickerModal)
   }
   return (
     <BottomSheetModal>
       <ModalWrapper>
-        <Header title='착용 날짜' isModalHeader={true} modalCloseBtnClick={onCancel} />
-        <CustomDatepicker date={date} setDate={setDate} />
+        <Header title='투표 마감시간' isModalHeader={true} modalCloseBtnClick={onCancel} />
+        <SetVoteDateTime />
         <ButtonWrapper>
           <ButtonLarge text='완료' active={true} onClick={onComplete}></ButtonLarge>
         </ButtonWrapper>
@@ -43,7 +45,7 @@ const ItemDatePickerModal = () => {
   )
 }
 
-export default ItemDatePickerModal
+export default QuestionDateTimePickerModal
 
 const ModalWrapper = styled.div`
   display: flex;
