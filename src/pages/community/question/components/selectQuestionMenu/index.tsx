@@ -1,13 +1,34 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { QuestionMenuList } from '../../../../../config/communityMenu'
-import { useRecoilState } from 'recoil'
-import { communityQuestionMenuState } from '../../../../../recoil/communityInfo'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { communityItemState, communityQuestionMenuState } from '../../../../../recoil/communityInfo'
 import ButtonMedium from '../../../../../components/ButtonMedium/ButtonMedium'
 import { MenuSelectWrapper } from './styles'
+import useModals from '../../../../../components/Modals/hooks/useModals'
+import { modals } from '../../../../../components/Modals'
 const SelectQuestionMenu = () => {
+  const { openModal } = useModals()
   const [communityQuestionMenu, setCommunityQuestionMenu] = useRecoilState(
     communityQuestionMenuState,
   )
+  const questionInfo = useRecoilValue(communityItemState)
+  const onClickMenu = (menu: string) => {
+    if (
+      menu !== communityQuestionMenu &&
+      (questionInfo.id ||
+        questionInfo.celebId ||
+        questionInfo.newCelebId ||
+        questionInfo.title ||
+        questionInfo.content ||
+        questionInfo.imgList ||
+        questionInfo.itemList ||
+        questionInfo.categoryNameList)
+    )
+      openModal(modals.QuestionChangeModal, { changeTo: menu })
+    else {
+      setCommunityQuestionMenu(menu)
+    }
+  }
   return (
     <MenuSelectWrapper>
       {QuestionMenuList.map((menu) => {
@@ -17,7 +38,7 @@ const SelectQuestionMenu = () => {
             type='pri'
             text={menu}
             active={menu === communityQuestionMenu}
-            onClick={() => setCommunityQuestionMenu(menu)}
+            onClick={() => onClickMenu(menu)}
           ></ButtonMedium>
         )
       })}

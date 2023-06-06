@@ -3,6 +3,7 @@ import { Dimmed, Dimmer } from './styles'
 import React, { ComponentProps, FunctionComponent } from 'react'
 import loadable from '@loadable/component'
 import PropTypes from 'prop-types'
+import { QuestionChangeModalProps } from '../TwoButtonModal/QuestionChangeModal'
 
 const AskRecentPostWritingModal = loadable(
   () => import('../TwoButtonModal/AskRecentPostWritingModal'),
@@ -32,6 +33,7 @@ const DuplicateReportModal = loadable(() => import('../OneButtonModal/DuplicateR
 const QuestionDateTimePickerModal = loadable(
   () => import('../BottomSheetModal/QuestionDateTimePickerModal'),
 )
+const QuestionChangeModal = loadable(() => import('../TwoButtonModal/QuestionChangeModal'))
 
 // 모달 관리 객체
 export const modals = {
@@ -74,6 +76,7 @@ export const modals = {
   QuestionDateTimePickerModal: QuestionDateTimePickerModal as FunctionComponent<
     ComponentProps<typeof QuestionDateTimePickerModal>
   >,
+  QuestionChangeModal: QuestionChangeModal as FunctionComponent<QuestionChangeModalProps>,
 }
 
 const Modals = () => {

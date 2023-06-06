@@ -10,7 +10,7 @@ export interface CommunityItem {
   imgList: Array<IimgList> | null
   itemList: Array<IitemList> | null
   categoryNameList?: Array<string> | null
-  voteEndTime?: Date
+  voteEndTime?: Date | undefined
 }
 
 export interface IimgList {
@@ -31,7 +31,7 @@ export interface IselectedItem {
   // 사진 or 스럽 내 아이템 선택
   itemId?: number | null
   imgUrl?: string | null
-  description: string | null | undefined
+  description: string | null
   vote: number | null
   representFlag: boolean | null
   celebName?: string | null
@@ -49,6 +49,7 @@ export const communityItemState = atom<CommunityItem>({
     content: null,
     imgList: null,
     itemList: null,
+    categoryNameList: null,
   },
 })
 
@@ -60,7 +61,7 @@ export const communityQuestionMenuState = atom<string>({
 export const firstItemState = atom<IselectedItem>({
   key: atomKeys.firstItemState,
   default: {
-    imgUrl: 'https://i.pinimg.com/564x/9b/44/4f/9b444ff7485fb5b571b7a7778e9cd72a.jpg',
+    imgUrl: null,
     description: null,
     vote: null,
     representFlag: false,
