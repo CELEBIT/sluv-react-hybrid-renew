@@ -42,10 +42,11 @@ const FindRequest = () => {
   useEffect(() => {
     setFindRequestInfo({
       ...findRequestInfo,
+      celebId: celeb.id,
       title: title,
       content: content,
     })
-  }, [title, content])
+  }, [title, content, celeb])
 
   return (
     <FindRequestContainer>
