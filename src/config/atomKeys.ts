@@ -23,4 +23,5 @@ export const atomKeys = {
   communityQuestionMenuState: 'communityQuestionMenuState' as const,
   firstItemState: 'firstItemState' as const,
   secondItemState: 'secondItemState' as const,
+  checkListState: 'checkListState' as const,
 }
