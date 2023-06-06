@@ -35,6 +35,7 @@ const QuestionDateTimePickerModal = loadable(
 )
 const QuestionChangeModal = loadable(() => import('../TwoButtonModal/QuestionChangeModal'))
 
+const DeleteTempItemModal = loadable(() => import('../TwoButtonModal/DeleteTempItemModal'))
 // 모달 관리 객체
 export const modals = {
   AskRecentPostWritingModal: AskRecentPostWritingModal as FunctionComponent<
@@ -77,6 +78,9 @@ export const modals = {
     ComponentProps<typeof QuestionDateTimePickerModal>
   >,
   QuestionChangeModal: QuestionChangeModal as FunctionComponent<QuestionChangeModalProps>,
+  DeleteTempItemModal: DeleteTempItemModal as FunctionComponent<
+    ComponentProps<typeof DeleteTempItemModal>
+  >,
 }
 
 const Modals = () => {

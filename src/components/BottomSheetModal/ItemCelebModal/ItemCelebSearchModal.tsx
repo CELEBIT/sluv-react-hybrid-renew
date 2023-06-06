@@ -11,7 +11,7 @@ import { selectedCelebState, selectedGroupState } from '../../SelectCeleb/Select
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import MyCeleb from './MyCeleb'
 import RecentSelectCeleb from './RecentSelectCeleb'
-import { celebInfoInItemState } from '../../../recoil/itemInfo'
+import { celebInfoInItemState, itemInfoState } from '../../../recoil/itemInfo'
 import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
 import SearchCelebList from './SearchCelebList'
 
@@ -26,6 +26,7 @@ const ItemCelebSearchModal = () => {
   const [selectedCeleb, setSelectedCeleb] = useRecoilState(selectedCelebState)
   const [selectedGroup, setSelectedGroup] = useRecoilState(selectedGroupState)
   const setCelebInfoInItem = useSetRecoilState(celebInfoInItemState)
+  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
 
   const { closeModal } = useModals()
   const defaultRef = useRef<HTMLDivElement>(null)
@@ -65,6 +66,13 @@ const ItemCelebSearchModal = () => {
         groupId: null,
         groupName: null,
       })
+      setItemInfo({
+        ...itemInfo,
+        celeb: {
+          celebId: selectedCeleb.id,
+          celebName: selectedCeleb.celebNameKr,
+        },
+      })
     } else if (selectedCeleb.id && selectedGroup.id) {
       // 그룹의 멤버
       setCelebInfoInItem({
@@ -72,6 +80,13 @@ const ItemCelebSearchModal = () => {
         soloName: selectedCeleb.celebNameKr,
         groupId: selectedGroup.id,
         groupName: selectedGroup.celebNameKr,
+      })
+      setItemInfo({
+        ...itemInfo,
+        celeb: {
+          celebId: selectedCeleb.id,
+          celebName: selectedCeleb.celebNameKr,
+        },
       })
     } else {
       alert('오류')

@@ -12,7 +12,7 @@ import ButtonMedium from '../../ButtonMedium/ButtonMedium'
 import ButtonLarge from '../../ButtonLarge/ButtonLarge'
 import { selectedCelebState, selectedGroupState } from '../../SelectCeleb/SelectCeleb'
 import { ICelebResult } from '../../../apis/user/userService'
-import { celebInfoInItemState } from '../../../recoil/itemInfo'
+import { celebInfoInItemState, itemInfoState } from '../../../recoil/itemInfo'
 import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
 
 const ItemCelebSelectModal = () => {
@@ -23,6 +23,7 @@ const ItemCelebSelectModal = () => {
   const selectedGroup = useRecoilValue(selectedGroupState)
   const [selectedCeleb, setSelectedCeleb] = useRecoilState(selectedCelebState)
   const [celebInfoInItem, setCelebInfoInItem] = useRecoilState(celebInfoInItemState)
+  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
 
   const { closeModal } = useModals()
   const onClose = () => {
@@ -31,6 +32,10 @@ const ItemCelebSelectModal = () => {
       groupName: null,
       soloId: null,
       soloName: null,
+    })
+    setItemInfo({
+      ...itemInfo,
+      celeb: null,
     })
     setSelectedCeleb({ id: 0, celebNameKr: '' })
     closeModal(modals.ItemCelebSelectModal)
@@ -51,6 +56,13 @@ const ItemCelebSelectModal = () => {
       ...celebInfoInItem,
       soloId: member.id,
       soloName: member.celebNameKr,
+    })
+    setItemInfo({
+      ...itemInfo,
+      celeb: {
+        celebId: selectedCeleb.id,
+        celebName: selectedCeleb.celebNameKr,
+      },
     })
   }
   return (
