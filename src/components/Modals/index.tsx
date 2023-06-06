@@ -4,6 +4,7 @@ import React, { ComponentProps, FunctionComponent } from 'react'
 import loadable from '@loadable/component'
 import PropTypes from 'prop-types'
 import { QuestionChangeModalProps } from '../TwoButtonModal/QuestionChangeModal'
+import { CommunityMenu } from '../../config/communityMenu'
 
 const AskRecentPostWritingModal = loadable(
   () => import('../TwoButtonModal/AskRecentPostWritingModal'),
@@ -34,7 +35,7 @@ const QuestionDateTimePickerModal = loadable(
   () => import('../BottomSheetModal/QuestionDateTimePickerModal'),
 )
 const QuestionChangeModal = loadable(() => import('../TwoButtonModal/QuestionChangeModal'))
-
+const CommunityTabChangeModal = loadable(() => import('../TwoButtonModal/CommunityTabChangeModal'))
 const DeleteTempItemModal = loadable(() => import('../TwoButtonModal/DeleteTempItemModal'))
 // 모달 관리 객체
 export const modals = {
@@ -78,6 +79,7 @@ export const modals = {
     ComponentProps<typeof QuestionDateTimePickerModal>
   >,
   QuestionChangeModal: QuestionChangeModal as FunctionComponent<QuestionChangeModalProps>,
+  CommunityTabChangeModal: CommunityTabChangeModal as FunctionComponent<CommunityMenu>,
   DeleteTempItemModal: DeleteTempItemModal as FunctionComponent<
     ComponentProps<typeof DeleteTempItemModal>
   >,

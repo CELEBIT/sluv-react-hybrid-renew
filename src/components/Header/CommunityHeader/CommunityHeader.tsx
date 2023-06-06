@@ -6,12 +6,15 @@ import { ReactComponent as ArrowUp } from '../../../assets/arrow_up_18.svg'
 import { ReactComponent as ArrowDown } from '../../../assets/arrow_down_18.svg'
 import { ReactComponent as Add } from '../../../assets/add_18.svg'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { atom, useRecoilState } from 'recoil'
+import { atom, useRecoilState, useRecoilValue } from 'recoil'
 import { atomKeys } from '../../../config/atomKeys'
 import { HeaderWrapper } from './styles'
 import DropDownMenu from './DropDownMenu'
 import { Menu } from './DropDownMenu/styles'
 import { CommunityMenu, CommunityMenuList } from '../../../config/communityMenu'
+import { communityItemState } from '../../../recoil/communityInfo'
+import useModals from '../../Modals/hooks/useModals'
+import { modals } from '../../Modals'
 
 interface HeaderProps {
   children?: any
@@ -25,13 +28,29 @@ export const communityMenuState = atom<string>({
 
 const CommunityHeader = ({ children, backBtnClick }: HeaderProps) => {
   const navigate = useNavigate()
+  const { openModal } = useModals()
   const { pathname } = useLocation()
-
+  const questionInfo = useRecoilValue(communityItemState)
   const [communityMenu, setCommunityMenu] = useRecoilState(communityMenuState)
   const [menuOpen, setMenuOpen] = useState(false)
   const onMenuClick = (menu: CommunityMenu) => {
-    setCommunityMenu(menu.name)
-    navigate(menu.url)
+    console.log(questionInfo.celebId)
+    if (
+      menu.name !== communityMenu &&
+      (questionInfo.id ||
+        questionInfo.celebId ||
+        questionInfo.newCelebId ||
+        questionInfo.title ||
+        questionInfo.content ||
+        questionInfo.imgList ||
+        questionInfo.itemList ||
+        questionInfo.categoryNameList)
+    ) {
+      openModal(modals.CommunityTabChangeModal, { name: menu.name, url: menu.url })
+    } else {
+      setCommunityMenu(menu.name)
+      navigate(menu.url)
+    }
   }
   useEffect(() => {
     if (pathname === '/community/find-request') {
