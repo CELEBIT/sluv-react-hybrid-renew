@@ -5,6 +5,8 @@ import {
   HashtagContent,
   ItemDetailResult,
   ParentCategoryResult,
+  RecentViewItemResult,
+  ScrapItemResult,
   TempItemId,
   TempItemReq,
   TempItemResult,
@@ -14,11 +16,15 @@ export default class ItemService {
   itemUrl: string
   tempItemUrl: string
   hashtagUrl: string
+  recentItemUrl: string
+  scrapItemUrl: string
 
   constructor() {
     this.itemUrl = '/app/item'
     this.tempItemUrl = '/app/item/temp'
     this.hashtagUrl = '/app/item/hashtag'
+    this.recentItemUrl = '/app/item/recent'
+    this.scrapItemUrl = '/app/item/scrap'
   }
 
   // 아이템 카테고리 조회
@@ -109,6 +115,34 @@ export default class ItemService {
   // 임시저장 아이템 저장
   async postTempItem(tempItem: TempItemReq) {
     const data: ResponseType<TempItemId> = await request.post(`${this.tempItemUrl}`, tempItem)
+    return data.result
+  }
+
+  // 최근 본 아이템
+  async getRecentViewItem(page: number) {
+    const data: ResponseType<GetPaginationResult<RecentViewItemResult>> = await request.get(
+      `${this.recentItemUrl}`,
+      {
+        params: {
+          page,
+          size: 21,
+        },
+      },
+    )
+    return data.result
+  }
+
+  // 찜한 아이템
+  async getScrapItem(page: number) {
+    const data: ResponseType<GetPaginationResult<ScrapItemResult>> = await request.get(
+      `${this.scrapItemUrl}`,
+      {
+        params: {
+          page,
+          size: 21,
+        },
+      },
+    )
     return data.result
   }
 }

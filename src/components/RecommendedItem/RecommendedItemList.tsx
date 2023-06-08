@@ -1,8 +1,9 @@
 import React from 'react'
-import styled from '@emotion/styled'
 import Item from './Item'
 import { Common, Pretendard } from '../styles'
 import { RecommendItemResult } from '../../apis/item/itemService.type'
+import { useNavigate } from 'react-router-dom'
+import styled from '@emotion/styled'
 
 interface RecommendedItemProps {
   title: string
@@ -10,12 +11,21 @@ interface RecommendedItemProps {
 }
 
 const RecommendedItemList = ({ title, list }: RecommendedItemProps) => {
+  const navigate = useNavigate()
   return (
     <RecommendedItemListWrapper>
       <TitleText>{title}</TitleText>
       <ItemList>
         {list?.map((item) => {
-          return <Item key={item.itemId} {...item}></Item>
+          return (
+            <Item
+              key={item.itemId}
+              {...item}
+              size={150}
+              borderRadius={8}
+              onClick={() => navigate(`/item/detail/${item.itemId}`)}
+            ></Item>
+          )
         })}
       </ItemList>
     </RecommendedItemListWrapper>

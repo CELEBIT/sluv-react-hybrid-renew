@@ -24,4 +24,5 @@ export const atomKeys = {
   firstItemState: 'firstItemState' as const,
   secondItemState: 'secondItemState' as const,
   checkListState: 'checkListState' as const,
+  selectedItemListState: 'selectedItemListState' as const,
 }
