@@ -6,6 +6,7 @@ import {
   ItemDetailResult,
   ParentCategoryResult,
   RecentViewItemResult,
+  RecommendItemResult,
   ScrapItemResult,
   TempItemId,
   TempItemReq,
@@ -18,6 +19,7 @@ export default class ItemService {
   hashtagUrl: string
   recentItemUrl: string
   scrapItemUrl: string
+  hotItemUrl: string
 
   constructor() {
     this.itemUrl = '/app/item'
@@ -25,6 +27,7 @@ export default class ItemService {
     this.hashtagUrl = '/app/item/hashtag'
     this.recentItemUrl = '/app/item/recent'
     this.scrapItemUrl = '/app/item/scrap'
+    this.hotItemUrl = '/app/item/hot'
   }
 
   // 아이템 카테고리 조회
@@ -143,6 +146,13 @@ export default class ItemService {
         },
       },
     )
+    return data.result
+  }
+
+  // 커뮤니티 아이템 선택 인기 아이템 조회
+  async getHotItem() {
+    const data: ResponseType<RecommendItemResult> = await request.get(`${this.hotItemUrl}`)
+
     return data.result
   }
 }

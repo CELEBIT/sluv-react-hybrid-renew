@@ -7,6 +7,8 @@ import useScrapItemQuery from '../../../apis/item/hooks/useScrapItemQuery'
 import { useRecoilState } from 'recoil'
 import { communityItemState } from '../../../recoil/communityInfo'
 import { RecentViewItemResult } from '../../../apis/item/itemService.type'
+import { Divider } from '../../../pages/item/detail/styles'
+import HotItem from '../HotItem'
 
 const ScrapItem = () => {
   const [communityUploadInfo, setCommunityUploadInfo] = useRecoilState(communityItemState)
@@ -35,15 +37,25 @@ const ScrapItem = () => {
           representFlag: null,
         },
       ]
-      setCommunityUploadInfo({ ...communityUploadInfo, itemList: newItemList })
+
+      const newImgList = communityUploadInfo.imgList || []
+
+      if (newItemList.length + newImgList.length > 5) {
+        alert('아이템의 개수가 최대값을 초과하였습니다.')
+      } else {
+        setCommunityUploadInfo({
+          ...communityUploadInfo,
+          itemList: newItemList,
+        })
+      }
     }
   }
 
   const bottom = useRef(null)
   const { getScrapItem } = useScrapItemQuery()
   const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } = getScrapItem()
-  const tempData = data?.pages[0].content[0]
-
+  // const tempData = data?.pages[0].content[0]
+  const tempData = null
   const onIntersect = ([entry]: IntersectionObserverEntry[]) => {
     entry.isIntersecting && fetchNextPage()
   }
@@ -90,11 +102,15 @@ const ScrapItem = () => {
           ) : null}
         </ListWrapper>
       ) : (
-        <EmptyState
-          icon='save'
-          title='저장한 아이템이 없어요'
-          subtitle='다양한 셀럽의 아이템을 저장해 보아요'
-        ></EmptyState>
+        <>
+          <EmptyState
+            icon='save'
+            title='저장한 아이템이 없어요'
+            subtitle='다양한 셀럽의 아이템을 저장해 보아요'
+          ></EmptyState>
+          <Divider className='full'></Divider>
+          <HotItem></HotItem>
+        </>
       )}
     </RecentViewItemContainer>
   )

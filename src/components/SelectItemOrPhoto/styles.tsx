@@ -18,6 +18,7 @@ export const ComponentContainer = styled.div`
   width: 100%;
   overflow-y: scroll;
   padding-bottom: 1.25rem;
+
   ::-webkit-scrollbar {
     display: none;
   }
@@ -37,6 +38,7 @@ export const ComponentWrapper = styled.div`
   flex-direction: column;
   gap: 1rem;
   width: 100%;
+
   .error {
     margin-top: -0.5rem;
     margin-left: 1.25rem;
@@ -62,4 +64,12 @@ export const GalleryButton = styled.div`
   height: 3.5rem;
   border-radius: 0.75rem;
   background-color: ${Common.colors.GR200};
+`
+
+export const Dimmer = styled.div`
+  position: absolute;
+  bottom: 5rem;
+  height: 1.25rem;
+  width: 100%;
+  background: linear-gradient(180deg, transparent, #ffffff 100%);
 `

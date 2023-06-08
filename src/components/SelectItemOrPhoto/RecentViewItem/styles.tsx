@@ -4,6 +4,11 @@ export const RecentViewItemContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1.25rem;
+
+  .full {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+  }
 `
 export const ListWrapper = styled.div`
   display: grid;
