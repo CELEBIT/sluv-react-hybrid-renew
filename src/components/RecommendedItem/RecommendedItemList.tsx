@@ -34,13 +34,13 @@ const RecommendedItemList = ({ title, list }: RecommendedItemProps) => {
 
 export default RecommendedItemList
 
-const RecommendedItemListWrapper = styled.div`
+export const RecommendedItemListWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
 `
 
-const ItemList = styled.div`
+export const ItemList = styled.div`
   display: flex;
   flex-direction: row;
   overflow-x: scroll;
@@ -52,7 +52,7 @@ const ItemList = styled.div`
   }
 `
 
-const TitleText = styled.div`
+export const TitleText = styled.div`
   padding: 0 1.25rem;
-  ${Pretendard({ size: 18, weight: Common.bold.regular, color: Common.colors.BK })}
+  ${Pretendard({ size: 18, weight: Common.bold.semiBold, color: Common.colors.BK })}
 `

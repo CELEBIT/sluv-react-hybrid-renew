@@ -7,6 +7,8 @@ import Item from '../../RecommendedItem/Item'
 import { useRecoilState } from 'recoil'
 import { communityItemState } from '../../../recoil/communityInfo'
 import { RecentViewItemResult } from '../../../apis/item/itemService.type'
+import { Divider } from '../../../pages/item/detail/styles'
+import HotItem from '../HotItem'
 
 const RecentViewItem = () => {
   const [communityUploadInfo, setCommunityUploadInfo] = useRecoilState(communityItemState)
@@ -40,7 +42,17 @@ const RecentViewItem = () => {
           representFlag: null,
         },
       ]
-      setCommunityUploadInfo({ ...communityUploadInfo, itemList: newItemList })
+
+      const newImgList = communityUploadInfo.imgList || []
+
+      if (newItemList.length + newImgList.length > 5) {
+        alert('아이템의 개수가 최대값을 초과하였습니다.')
+      } else {
+        setCommunityUploadInfo({
+          ...communityUploadInfo,
+          itemList: newItemList,
+        })
+      }
     }
   }
 
@@ -90,11 +102,15 @@ const RecentViewItem = () => {
           ) : null}
         </ListWrapper>
       ) : (
-        <EmptyState
-          icon='save'
-          title='저장한 아이템이 없어요'
-          subtitle='다양한 셀럽의 아이템을 저장해 보아요'
-        ></EmptyState>
+        <>
+          <EmptyState
+            icon='clock'
+            title='최근 본 아이템이 없어요'
+            subtitle='다양한 셀럽의 아이템을 구경해 보아요'
+          ></EmptyState>
+          <Divider className='full'></Divider>
+          <HotItem></HotItem>
+        </>
       )}
     </RecentViewItemContainer>
   )
