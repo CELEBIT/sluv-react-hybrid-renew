@@ -5,6 +5,7 @@ import Modals from './components/Modals'
 import * as S from './components/styles'
 import { queryToObject } from './utils/utility'
 import storage from './utils/storage'
+import SelectItemOrPhoto from './components/SelectItemOrPhoto'
 
 const loading = <div>화면을 불러오는 중 입니다.(App)</div>
 
@@ -69,6 +70,7 @@ const App = () => {
             <Route path='/community' element={<Community />} />
             <Route path='/community/find-request' element={<FindRequest />} />
             <Route path='/community/question' element={<Question />} />
+            <Route path='/community/select-item-photo' element={<SelectItemOrPhoto />} />
             <Route path='/item/create' element={<ItemCreate />} />
             <Route path='/item/create/addinfo' element={<AddInfo />} />
             <Route path='/item/create/addlink' element={<AddLink />} />

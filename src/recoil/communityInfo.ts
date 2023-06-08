@@ -15,16 +15,16 @@ export interface CommunityItem {
 
 export interface IimgList {
   imgUrl: string
-  description: string
-  vote: number
-  representFlag: boolean
+  description: string | null
+  vote: number | null
+  representFlag: boolean | null
 }
 
 export interface IitemList {
   itemId: number
-  description: string
-  vote: number
-  representFlag: boolean
+  description: string | null
+  vote: number | null
+  representFlag: boolean | null
 }
 
 export interface IselectedItem {
@@ -75,4 +75,9 @@ export const secondItemState = atom<IselectedItem>({
     vote: null,
     representFlag: false,
   },
+})
+
+export const imgListState = atom<Array<IselectedItem>>({
+  key: atomKeys.imgListState,
+  default: [],
 })
