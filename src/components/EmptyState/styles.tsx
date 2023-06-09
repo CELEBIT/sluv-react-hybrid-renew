@@ -21,5 +21,7 @@ export const Title = styled.span`
   ${Pretendard({ size: 17, weight: Common.bold.regular, color: Common.colors.GR600 })}
 `
 export const SubTitle = styled.span`
+  white-space: pre-wrap;
+  text-align: center;
   ${Pretendard({ size: 13, weight: Common.bold.thin, color: Common.colors.GR500 })}
 `

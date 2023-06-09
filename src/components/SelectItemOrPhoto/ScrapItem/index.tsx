@@ -102,7 +102,7 @@ const ScrapItem = () => {
           ) : null}
         </ListWrapper>
       ) : (
-        <>
+        <div className='full'>
           <EmptyState
             icon='save'
             title='저장한 아이템이 없어요'
@@ -110,7 +110,7 @@ const ScrapItem = () => {
           ></EmptyState>
           <Divider className='full'></Divider>
           <HotItem></HotItem>
-        </>
+        </div>
       )}
     </RecentViewItemContainer>
   )

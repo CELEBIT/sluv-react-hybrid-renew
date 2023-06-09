@@ -22,10 +22,16 @@ import RecentSelectCeleb from '../BottomSheetModal/ItemCelebModal/RecentSelectCe
 import useRecentCelebQuery from '../../apis/celeb/hooks/useRecentCelebQuery'
 import RecentSelectItem from './RecentSearchItem'
 import HotSearchItem from './HotSearchItem'
+import SearchResult from './SearchResult'
+import { brandNameSearchState } from '../BottomSheetModal/ItemBrandSelectModal/ItemBrandSelectModal'
+import BrandList from '../BottomSheetModal/ItemBrandSelectModal/BrandList'
+import { useNavigate } from 'react-router-dom'
 
 const SelectItemOrPhoto = () => {
+  const navigate = useNavigate()
   const [communityUploadInfo, setCommunityUploadInfo] = useRecoilState(communityItemState)
-  const [searchValue, setSearchValue] = useState('')
+  // const [searchValue, setSearchValue] = useState('')
+  const [searchValue, setSearchValue] = useRecoilState<string>(brandNameSearchState)
   const [selectedTab, setSelectedTab] = useState('recent')
   const [isFocused, setIsFocused] = useState<boolean>(false)
   // API나오면 recent search로 수정
@@ -40,6 +46,9 @@ const SelectItemOrPhoto = () => {
     { id: 'recent', tabName: '최근 본 아이템' },
     { id: 'saved', tabName: '찜한 아이템' },
   ]
+  const onComplete = () => {
+    navigate(-1)
+  }
   return (
     <SelectItemOrPhotoContainer>
       <HeaderWrapper>
@@ -59,8 +68,8 @@ const SelectItemOrPhoto = () => {
           ></SearchTextfield>
         </ComponentWrapper>
 
-        {searchValue ? (
-          <></>
+        {searchValue !== '' ? (
+          <SearchResult></SearchResult>
         ) : (
           <>
             {isFocused === false ? (
@@ -94,7 +103,7 @@ const SelectItemOrPhoto = () => {
             1
           }
           color='BK'
-          onClick={() => console.log('click')}
+          onClick={() => onComplete()}
         ></ButtonLarge>
       </BottomWrapper>
     </SelectItemOrPhotoContainer>
