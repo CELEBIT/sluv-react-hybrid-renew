@@ -2,7 +2,7 @@ import React from 'react'
 import { ItemList, TitleText } from '../../RecommendedItem/RecommendedItemList'
 import Item from '../../RecommendedItem/Item'
 import useItemDetailQuery from '../../../apis/item/hooks/useItemDetailQuery'
-import { HotItemListWrapper } from './styles'
+import { HotItemListWrapper, ListWrapper } from './styles'
 import { RecentViewItemResult } from '../../../apis/item/itemService.type'
 import { useRecoilState } from 'recoil'
 import { communityItemState } from '../../../recoil/communityInfo'
@@ -51,7 +51,7 @@ const HotItem = () => {
   return (
     <HotItemListWrapper>
       <TitleText>리노님을 위한 인기 아이템</TitleText>
-      <ItemList>
+      <ListWrapper>
         {data?.sameBrandItemList.map((each) => {
           return (
             <Item
@@ -72,7 +72,7 @@ const HotItem = () => {
             ></Item>
           )
         })}
-      </ItemList>
+      </ListWrapper>
     </HotItemListWrapper>
   )
 }

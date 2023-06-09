@@ -102,7 +102,7 @@ const RecentViewItem = () => {
           ) : null}
         </ListWrapper>
       ) : (
-        <>
+        <div className='full'>
           <EmptyState
             icon='clock'
             title='최근 본 아이템이 없어요'
@@ -110,7 +110,7 @@ const RecentViewItem = () => {
           ></EmptyState>
           <Divider className='full'></Divider>
           <HotItem></HotItem>
-        </>
+        </div>
       )}
     </RecentViewItemContainer>
   )
