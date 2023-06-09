@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import { ReactComponent as Represent } from '../../assets/represent_24.svg'
 import { ReactComponent as DeleteList } from '../../assets/delete_list_24.svg'
@@ -9,7 +9,8 @@ import { Common } from '../styles'
 interface PhotoProps {
   size: number
   borderRadius: number
-  imgUrl: string
+  imgUrl?: string
+  imgFile?: File
   candelete?: boolean // 정보 공유하기 -> 삭제 여부를 위해 존재
   onDelete?: () => void
   representFlag?: boolean // 정보 공유하기 -> 대표사진 여부를 위해 존재
@@ -20,26 +21,58 @@ const Photo = ({
   size,
   borderRadius,
   imgUrl,
+  imgFile,
   candelete,
   onDelete,
   representFlag,
   storageFlag,
 }: PhotoProps) => {
-  return (
-    <Img size={size} borderRadius={borderRadius} imgUrl={imgUrl}>
-      {candelete && <DeleteList className='delete' onClick={onDelete}></DeleteList>}
-      {representFlag && <Represent className='represent'></Represent>}
-      {storageFlag !== undefined && (
-        <>
-          {storageFlag ? (
-            <StorageOn className='represent'></StorageOn>
-          ) : (
-            <StorageOff className='represent'></StorageOff>
-          )}
-        </>
-      )}
-    </Img>
-  )
+  const [previewFile, setPreviewFile] = useState<string>('')
+
+  useEffect(() => {
+    if (imgFile) {
+      const reader = new FileReader()
+      reader.readAsDataURL(imgFile)
+      reader.onloadend = () => {
+        setPreviewFile(reader.result as string)
+      }
+    }
+  }, [])
+
+  if (imgUrl) {
+    return (
+      <Img size={size} borderRadius={borderRadius} imgUrl={imgUrl}>
+        {candelete && <DeleteList className='delete' onClick={onDelete}></DeleteList>}
+        {representFlag && <Represent className='represent'></Represent>}
+        {storageFlag !== undefined && (
+          <>
+            {storageFlag ? (
+              <StorageOn className='represent'></StorageOn>
+            ) : (
+              <StorageOff className='represent'></StorageOff>
+            )}
+          </>
+        )}
+      </Img>
+    )
+  } else {
+    return (
+      <ImgFileWrap size={size} borderRadius={borderRadius}>
+        <img src={previewFile} />
+        {candelete && <DeleteList className='delete' onClick={onDelete}></DeleteList>}
+        {representFlag && <Represent className='represent'></Represent>}
+        {storageFlag !== undefined && (
+          <>
+            {storageFlag ? (
+              <StorageOn className='represent'></StorageOn>
+            ) : (
+              <StorageOff className='represent'></StorageOff>
+            )}
+          </>
+        )}
+      </ImgFileWrap>
+    )
+  }
 }
 
 export default Photo
@@ -56,6 +89,31 @@ export const Img = styled.div<{ size: number; borderRadius: number; imgUrl: stri
   background-position: 50%;
   background-image: url(${(props) => props.imgUrl});
   background-color: ${Common.colors.GR300};
+
+  .delete {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    transform: translate(50%, -50%);
+  }
+
+  .represent {
+    position: absolute;
+    right: 0.25rem;
+    bottom: 0.25rem;
+  }
+`
+const ImgFileWrap = styled.div<{ size: number; borderRadius: number }>`
+  background-color: ${Common.colors.GR300};
+  display: flex;
+  position: relative;
+  flex-shrink: 0;
+
+  img {
+    width: ${(props) => props.size * 0.0625}rem;
+    height: ${(props) => props.size * 0.0625}rem;
+    border-radius: ${(props) => props.borderRadius * 0.0625}rem;
+  }
 
   .delete {
     position: absolute;
