@@ -4,7 +4,11 @@ import { SubComponentContainer } from '../howAboutThis/styles'
 import { ComponentWrapper, Label, LabelContainer } from '../../../item/create/styles'
 import DefaultTextfield from '../../../../components/TextField/DefaultTextfield/DefaultTextfield'
 import { useRecoilState } from 'recoil'
-import { communityItemState } from '../../../../recoil/communityInfo'
+import {
+  communityItemState,
+  firstItemState,
+  secondItemState,
+} from '../../../../recoil/communityInfo'
 import { ErrorText } from '../../../../components/TextField/DefaultTextfield/styles'
 import { ReactComponent as Error } from '../../../../assets/error_20.svg'
 import SetVoteDateTime from '../components/setVoteTime'
@@ -25,7 +29,8 @@ const WhichOne = ({ hasTriedToUpload }: WhichOneProps) => {
   const [title, setTitle] = useState<string | null>(questionInfo.title)
   const today = new Date()
   const defaultEndDateTime = new Date(new Date().setDate(today.getDate() + 1))
-
+  const [firstItem, setFirstItem] = useRecoilState(firstItemState)
+  const [secondItem, setSecondItem] = useRecoilState(secondItemState)
   useEffect(() => {
     setQuestionInfo({
       ...questionInfo,
@@ -64,6 +69,9 @@ const WhichOne = ({ hasTriedToUpload }: WhichOneProps) => {
         <div className='padding'>
           <TwoItemUpload onClick={() => navigate('/community/select-item-photo')}></TwoItemUpload>
         </div>
+        {hasTriedToUpload && (!firstItem.description || !secondItem.description) && (
+          <ErrorText className='error'>필수 항목입니다</ErrorText>
+        )}
       </ComponentWrapper>
       {/* <ComponentWrapper className='padding'></ComponentWrapper> */}
       <ComponentWrapper>

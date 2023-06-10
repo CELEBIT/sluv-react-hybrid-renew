@@ -5,7 +5,6 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { AddPhotosWrapper } from './styles'
 import AddButton from './AddButton'
 import Photo from './Photo'
-import { communityMenuState } from '../Header/CommunityHeader/CommunityHeader'
 
 interface IAddPhotosProps {
   canAddItem?: boolean
