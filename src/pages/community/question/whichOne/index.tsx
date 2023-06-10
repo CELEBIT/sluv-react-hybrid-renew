@@ -12,6 +12,7 @@ import { convertToUTC } from '../../../../utils/utility'
 import useModals from '../../../../components/Modals/hooks/useModals'
 import { modals } from '../../../../components/Modals'
 import VoteDisplayField from '../components/VoteDisplayField'
+import { useNavigate } from 'react-router-dom'
 
 interface WhichOneProps {
   hasTriedToUpload: boolean
@@ -19,6 +20,7 @@ interface WhichOneProps {
 
 const WhichOne = ({ hasTriedToUpload }: WhichOneProps) => {
   const { openModal } = useModals()
+  const navigate = useNavigate()
   const [questionInfo, setQuestionInfo] = useRecoilState(communityItemState)
   const [title, setTitle] = useState<string | null>(questionInfo.title)
   const today = new Date()
@@ -60,18 +62,29 @@ const WhichOne = ({ hasTriedToUpload }: WhichOneProps) => {
           <ErrorText className='error'>제목은 최대 60자까지 입력할 수 있어요</ErrorText>
         )}
         <div className='padding'>
-          <TwoItemUpload></TwoItemUpload>
+          <TwoItemUpload onClick={() => navigate('/community/select-item-photo')}></TwoItemUpload>
         </div>
       </ComponentWrapper>
       {/* <ComponentWrapper className='padding'></ComponentWrapper> */}
       <ComponentWrapper>
         <LabelContainer>
-          {hasTriedToUpload && (!title || (title && title.length < 10)) && <Error></Error>}
+          {hasTriedToUpload &&
+            questionInfo.voteEndTime &&
+            questionInfo.voteEndTime < new Date(new Date().setHours(today.getHours() + 3)) && (
+              <Error></Error>
+            )}
           <Label>투표 마감시간을 정해주세요</Label>
         </LabelContainer>
         <div className='padding' onClick={() => openModal(modals.QuestionDateTimePickerModal)}>
           <VoteDisplayField dateTime={questionInfo?.voteEndTime}></VoteDisplayField>
         </div>
+        {hasTriedToUpload &&
+          questionInfo.voteEndTime &&
+          questionInfo.voteEndTime < new Date(new Date().setHours(today.getHours() + 3)) && (
+            <ErrorText className='error'>
+              마감시간은 지금으로부터 최소 3시간 이후, 최대 7일 이내로 설정할 수 있습니다.
+            </ErrorText>
+          )}
       </ComponentWrapper>
     </SubComponentContainer>
   )

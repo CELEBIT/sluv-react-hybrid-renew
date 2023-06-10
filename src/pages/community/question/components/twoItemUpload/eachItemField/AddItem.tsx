@@ -6,12 +6,13 @@ import { Common, Pretendard } from '../../../../../../components/styles'
 
 interface UploadPhotoProps {
   className?: string
+  onClick: any
 }
 
-const AddItem = ({ className }: UploadPhotoProps) => {
+const AddItem = ({ className, onClick }: UploadPhotoProps) => {
   // 사진/아이템 추가 버튼
   return (
-    <DefaultImageField className={className}>
+    <DefaultImageField className={className} onClick={() => onClick()}>
       <FieldWrapper>
         <Add></Add>
         <span>(0/1)</span>

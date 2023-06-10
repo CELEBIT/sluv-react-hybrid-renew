@@ -3,8 +3,8 @@ import TwoButtonModal from '.'
 import { modals } from '../Modals'
 import useModals from '../Modals/hooks/useModals'
 import { BtnModalContent } from '../Modals/styles'
-import { useSetRecoilState } from 'recoil'
-import { communityItemState } from '../../recoil/communityInfo'
+import { useResetRecoilState, useSetRecoilState } from 'recoil'
+import { communityItemState, firstItemState, secondItemState } from '../../recoil/communityInfo'
 import { communityMenuState } from '../Header/CommunityHeader/CommunityHeader'
 import { CommunityMenu } from '../../config/communityMenu'
 import { useNavigate } from 'react-router-dom'
@@ -24,6 +24,9 @@ const CommunityTabChangeModal = ({ name, url }: CommunityMenu) => {
   const setSelectedGroup = useSetRecoilState(selectedGroupState)
   const setNewCeleb = useSetRecoilState(selectedNewCelebState)
 
+  const resetFirstItem = useResetRecoilState(firstItemState)
+  const resetSecondItem = useResetRecoilState(secondItemState)
+
   const changeMenu = () => {
     setQuestionItem({
       id: null,
@@ -36,6 +39,8 @@ const CommunityTabChangeModal = ({ name, url }: CommunityMenu) => {
       categoryNameList: null,
       voteEndTime: undefined,
     })
+    resetFirstItem()
+    resetSecondItem()
     setCommunityMenu(name)
     setSelectedCeleb({ id: 0, celebNameKr: '' })
     setSelectedGroup({ id: 0, celebNameKr: '' })

@@ -8,12 +8,14 @@ import { ReactComponent as Error } from '../../../../assets/error_20.svg'
 import { useRecoilState } from 'recoil'
 import { communityItemState } from '../../../../recoil/communityInfo'
 import { SubComponentContainer } from '../howAboutThis/styles'
+import { useNavigate } from 'react-router-dom'
 
 interface RecommendProps {
   hasTriedToUpload: boolean
 }
 
 const Recommend = ({ hasTriedToUpload }: RecommendProps) => {
+  const navigate = useNavigate()
   const [questionInfo, setQuestionInfo] = useRecoilState(communityItemState)
   const [title, setTitle] = useState<string | null>(questionInfo.title)
   const [content, setContent] = useState<string | undefined | null>(questionInfo.content)
@@ -64,7 +66,7 @@ const Recommend = ({ hasTriedToUpload }: RecommendProps) => {
             아이템/사진을 올려주세요 <span className='optional'>(선택)</span>
           </Label>
         </LabelContainer>
-        <AddPhotos></AddPhotos>
+        <AddPhotos onClick={() => navigate('/community/select-item-photo')}></AddPhotos>
       </ComponentWrapper>
     </SubComponentContainer>
   )

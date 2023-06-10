@@ -8,8 +8,9 @@ import {
 } from './styles'
 import { ReactComponent as Add } from '../../../../../assets/add_18.svg'
 import ItemNameInput from '../itemNameInput'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 import {
+  IselectedItem,
   communityItemState,
   firstItemState,
   secondItemState,
@@ -17,23 +18,49 @@ import {
 import ExistingItem from './eachItemField/ExistingItem'
 import UploadPhoto from './eachItemField/UploadPhoto'
 import AddItem from './eachItemField/AddItem'
+import { communityMenuState } from '../../../../../components/Header/CommunityHeader/CommunityHeader'
+import { RecentViewItemResult } from '../../../../../apis/item/itemService.type'
 
-const TwoItemUpload = () => {
+interface TwoItemUploadProps {
+  onClick: any
+}
+
+const TwoItemUpload = ({ onClick }: TwoItemUploadProps) => {
   // 로직
   // 1. 사진/아이템 선택 페이지에서 순서대로 firstItem / secondItem에 저장
   // 2. firstItem / secondItem을 questionItem의 imgList / itemList 에 저장
   // 3. 완료 버튼 시 최종 업로드
-  const [questionItem, setQuestionItem] = useRecoilState(communityItemState)
+  const [communityUploadInfo, setCommunityUploadInfo] = useRecoilState(communityItemState)
+
   const [firstItem, setFirstItem] = useRecoilState(firstItemState)
+  const resetFirstItem = useResetRecoilState(firstItemState)
   const [secondItem, setSecondItem] = useRecoilState(secondItemState)
-  const [firstItemName, setFirstItemName] = useState<string>('')
-  const [secondItemName, setSecondItemName] = useState<string>('')
+  const resetSecondItem = useResetRecoilState(secondItemState)
+
+  const [firstItemName, setFirstItemName] = useState<string | null>(firstItem.description)
+  const [secondItemName, setSecondItemName] = useState<string | null>(secondItem.description)
+
+  const onDeleteItem = (item: IselectedItem) => {
+    const newItemList = communityUploadInfo.itemList?.filter(
+      (addedItem) => addedItem.itemId !== item.itemId,
+    )
+    if (firstItem.itemId === item.itemId) {
+      resetFirstItem()
+    }
+    if (secondItem.itemId === item.itemId) {
+      resetSecondItem()
+    }
+    setCommunityUploadInfo({
+      ...communityUploadInfo,
+      itemList: newItemList || null,
+    })
+  }
 
   useEffect(() => {
     setFirstItem({ ...firstItem, description: firstItemName })
-    console.log(firstItem)
+    console.log('firstItem Name change', firstItem)
     setSecondItem({ ...secondItem, description: secondItemName })
-    console.log(secondItem)
+    console.log('second Name change', secondItem)
   }, [firstItemName, secondItemName])
   return (
     <TwoItemUploadWrapper>
@@ -45,7 +72,7 @@ const TwoItemUpload = () => {
             <ExistingItem
               item={firstItem}
               className='left'
-              onDelete={() => alert('삭제')}
+              onDelete={() => onDeleteItem(firstItem)}
             ></ExistingItem>
           ) : (
             <>
@@ -59,13 +86,13 @@ const TwoItemUpload = () => {
               )}
             </>
           )}
-          {!firstItem.imgUrl && <AddItem></AddItem>}
+          {!firstItem.imgUrl && <AddItem onClick={() => onClick()}></AddItem>}
           {/* 2번째 아이템 */}
           {secondItem?.itemId ? (
             <ExistingItem
               item={secondItem}
               className='right'
-              onDelete={() => alert('삭제')}
+              onDelete={() => onDeleteItem(secondItem)}
             ></ExistingItem>
           ) : (
             <>
@@ -79,18 +106,18 @@ const TwoItemUpload = () => {
               )}
             </>
           )}
-          {!secondItem.imgUrl && <AddItem></AddItem>}
+          {!secondItem.imgUrl && <AddItem onClick={() => onClick()}></AddItem>}
         </ImageWrapper>
       ) : (
         // 둘 다 선택 x
-        <DefaultImageField onClick={() => alert('사진/아이템업로드')}>
+        <DefaultImageField onClick={() => onClick()}>
           <Add></Add>아이템/사진을 올려주세요 (0/2)
         </DefaultImageField>
       )}
       <ItemNameWrapper>
         <ItemName className='left'>
           <ItemNameInput
-            value={firstItemName}
+            value={firstItemName ?? ''}
             setValue={setFirstItemName}
             placeholder='항목 이름 입력'
           ></ItemNameInput>
@@ -98,7 +125,7 @@ const TwoItemUpload = () => {
         <div className='divider' />
         <ItemName className='right'>
           <ItemNameInput
-            value={secondItemName}
+            value={secondItemName ?? ''}
             setValue={setSecondItemName}
             placeholder='항목 이름 입력'
           ></ItemNameInput>

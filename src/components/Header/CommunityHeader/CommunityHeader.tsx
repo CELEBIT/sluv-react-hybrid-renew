@@ -34,7 +34,6 @@ const CommunityHeader = ({ children, backBtnClick }: HeaderProps) => {
   const [communityMenu, setCommunityMenu] = useRecoilState(communityMenuState)
   const [menuOpen, setMenuOpen] = useState(false)
   const onMenuClick = (menu: CommunityMenu) => {
-    console.log(questionInfo.celebId)
     if (
       menu.name !== communityMenu &&
       (questionInfo.id ||
