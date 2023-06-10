@@ -3,8 +3,13 @@ import TwoButtonModal from '.'
 import { modals } from '../Modals'
 import useModals from '../Modals/hooks/useModals'
 import { BtnModalContent } from '../Modals/styles'
-import { useSetRecoilState } from 'recoil'
-import { communityItemState, communityQuestionMenuState } from '../../recoil/communityInfo'
+import { useResetRecoilState, useSetRecoilState } from 'recoil'
+import {
+  communityItemState,
+  communityQuestionMenuState,
+  firstItemState,
+  secondItemState,
+} from '../../recoil/communityInfo'
 
 export interface QuestionChangeModalProps {
   changeTo: string
@@ -14,6 +19,8 @@ const QuestionChangeModal = ({ changeTo }: QuestionChangeModalProps) => {
   const { closeModal } = useModals()
   const setQuestionMenu = useSetRecoilState(communityQuestionMenuState)
   const setQuestionItem = useSetRecoilState(communityItemState)
+  const resetFirstItem = useResetRecoilState(firstItemState)
+  const resetSecondItem = useResetRecoilState(secondItemState)
   const changeMenu = () => {
     setQuestionItem({
       id: null,
@@ -25,6 +32,8 @@ const QuestionChangeModal = ({ changeTo }: QuestionChangeModalProps) => {
       itemList: null,
       categoryNameList: null,
     })
+    resetFirstItem()
+    resetSecondItem()
     setQuestionMenu(changeTo)
     closeModal(modals.QuestionChangeModal)
   }

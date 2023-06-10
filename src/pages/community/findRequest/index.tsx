@@ -16,8 +16,10 @@ import DefaultTextfield from '../../../components/TextField/DefaultTextfield/Def
 import TextArea from '../../../components/TextField/TextArea/TextArea'
 import AddPhotos from '../../../components/AddPhotos/AddPhotos'
 import { communityItemState } from '../../../recoil/communityInfo'
+import { useNavigate } from 'react-router-dom'
 
 const FindRequest = () => {
+  const navigate = useNavigate()
   const [findRequestInfo, setFindRequestInfo] = useRecoilState(communityItemState)
   const celeb = useRecoilValue(selectedCelebState)
 
@@ -103,7 +105,7 @@ const FindRequest = () => {
               아이템/사진을 올려주세요 <span className='optional'>(선택)</span>
             </Label>
           </LabelContainer>
-          <AddPhotos></AddPhotos>
+          <AddPhotos onClick={() => navigate('/community/select-item-photo')}></AddPhotos>
         </ComponentWrapper>
       </ComponentContainer>
     </FindRequestContainer>

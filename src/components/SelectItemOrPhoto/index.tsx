@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   BottomWrapper,
   ComponentContainer,
@@ -16,24 +16,42 @@ import Tabs from '../Tabs'
 import ScrapItem from './ScrapItem'
 import ButtonLarge from '../ButtonLarge/ButtonLarge'
 import { ReactComponent as Gallery } from '../../assets/gallery_24.svg'
-import { useRecoilState } from 'recoil'
-import { communityItemState } from '../../recoil/communityInfo'
+import { atom, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import {
+  communityItemState,
+  communityQuestionMenuState,
+  firstItemState,
+  secondItemState,
+} from '../../recoil/communityInfo'
 import RecentSelectCeleb from '../BottomSheetModal/ItemCelebModal/RecentSelectCeleb'
 import useRecentCelebQuery from '../../apis/celeb/hooks/useRecentCelebQuery'
 import RecentSelectItem from './RecentSearchItem'
 import HotSearchItem from './HotSearchItem'
 import SearchResult from './SearchResult'
 import { brandNameSearchState } from '../BottomSheetModal/ItemBrandSelectModal/ItemBrandSelectModal'
-import BrandList from '../BottomSheetModal/ItemBrandSelectModal/BrandList'
 import { useNavigate } from 'react-router-dom'
+import { atomKeys } from '../../config/atomKeys'
+import { communityMenuState } from '../Header/CommunityHeader/CommunityHeader'
+
+export const maxItemPhotoCountState = atom<number>({
+  key: atomKeys.maxItemPhotoCount,
+  default: 0,
+})
 
 const SelectItemOrPhoto = () => {
   const navigate = useNavigate()
   const [communityUploadInfo, setCommunityUploadInfo] = useRecoilState(communityItemState)
-  // const [searchValue, setSearchValue] = useState('')
+  const CommunityMenu = useRecoilValue(communityMenuState)
+  const communityQuestionMenu = useRecoilValue(communityQuestionMenuState)
+  const [maxItemPhotoCount, setMaxItemPhotoCount] = useRecoilState(maxItemPhotoCountState)
   const [searchValue, setSearchValue] = useRecoilState<string>(brandNameSearchState)
   const [selectedTab, setSelectedTab] = useState('recent')
   const [isFocused, setIsFocused] = useState<boolean>(false)
+  // const firstItem = useRecoilValue(firstItemState)
+  // const secondItem = useRecoilValue(secondItemState)
+  // console.log('firstItem', firstItem)
+  // console.log('secondItem', secondItem)
+
   // API나오면 recent search로 수정
   const {
     getRecentCeleb: { data },
@@ -49,6 +67,17 @@ const SelectItemOrPhoto = () => {
   const onComplete = () => {
     navigate(-1)
   }
+  useEffect(() => {
+    if (CommunityMenu === '찾아주세요') {
+      setMaxItemPhotoCount(5)
+    } else {
+      if (communityQuestionMenu === '이 중에 뭐 살까') {
+        setMaxItemPhotoCount(2)
+      } else {
+        setMaxItemPhotoCount(5)
+      }
+    }
+  }, [])
   return (
     <SelectItemOrPhotoContainer>
       <HeaderWrapper>
@@ -95,8 +124,8 @@ const SelectItemOrPhoto = () => {
         </GalleryButton>
         <ButtonLarge
           text={`선택완료(${
-            communityUploadInfo.imgList?.length ?? 0 + (communityUploadInfo.itemList?.length ?? 0)
-          }/5) `}
+            (communityUploadInfo.imgList?.length ?? 0) + (communityUploadInfo.itemList?.length ?? 0)
+          }/${maxItemPhotoCount}) `}
           active={
             (communityUploadInfo.imgList?.length ?? 0) +
               (communityUploadInfo.itemList?.length ?? 0) >=

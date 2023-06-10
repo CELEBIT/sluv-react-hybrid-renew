@@ -1,13 +1,15 @@
 import React from 'react'
 import { atomKeys } from '../../config/atomKeys'
-import { atom, useRecoilState } from 'recoil'
+import { atom, useRecoilState, useRecoilValue } from 'recoil'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { AddPhotosWrapper } from './styles'
 import AddButton from './AddButton'
 import Photo from './Photo'
+import { communityMenuState } from '../Header/CommunityHeader/CommunityHeader'
 
 interface IAddPhotosProps {
   canAddItem?: boolean
+  onClick?: any
 }
 
 interface Image {
@@ -20,8 +22,9 @@ export const imgListState = atom<Image[]>({
   default: [],
 })
 
-const AddPhotos = ({ canAddItem }: IAddPhotosProps) => {
+const AddPhotos = ({ canAddItem, onClick }: IAddPhotosProps) => {
   const [imgList, setImageList] = useRecoilState(imgListState)
+
   const onDragEnd = (result: any) => {
     if (!result.destination) {
       return
@@ -53,7 +56,7 @@ const AddPhotos = ({ canAddItem }: IAddPhotosProps) => {
   }
 
   return (
-    <AddPhotosWrapper>
+    <AddPhotosWrapper onClick={() => onClick()}>
       {imgList.length < 5 && <AddButton itemCnt={imgList.length}></AddButton>}
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable' direction='horizontal'>

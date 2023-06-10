@@ -61,19 +61,21 @@ export const communityQuestionMenuState = atom<string>({
 export const firstItemState = atom<IselectedItem>({
   key: atomKeys.firstItemState,
   default: {
+    itemId: null,
     imgUrl: null,
     description: null,
     vote: null,
-    representFlag: false,
+    representFlag: null,
   },
 })
 export const secondItemState = atom<IselectedItem>({
   key: atomKeys.secondItemState,
   default: {
+    itemId: null,
     imgUrl: null,
     description: null,
     vote: null,
-    representFlag: false,
+    representFlag: null,
   },
 })
 

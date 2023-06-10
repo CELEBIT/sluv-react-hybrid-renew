@@ -4,20 +4,34 @@ import { useObserver } from '../../../hooks/useObserver'
 import EmptyState from '../../EmptyState'
 import { ListWrapper, RecentViewItemContainer } from './styles'
 import Item from '../../RecommendedItem/Item'
-import { useRecoilState } from 'recoil'
-import { communityItemState } from '../../../recoil/communityInfo'
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
+import {
+  IitemList,
+  IselectedItem,
+  communityItemState,
+  communityQuestionMenuState,
+  firstItemState,
+  secondItemState,
+} from '../../../recoil/communityInfo'
 import { RecentViewItemResult } from '../../../apis/item/itemService.type'
 import { Divider } from '../../../pages/item/detail/styles'
 import HotItem from '../HotItem'
+import { maxItemPhotoCountState } from '..'
 
 const RecentViewItem = () => {
   const [communityUploadInfo, setCommunityUploadInfo] = useRecoilState(communityItemState)
+  const maxItemPhotoCount = useRecoilValue(maxItemPhotoCountState)
+  const communityQuestionMenu = useRecoilValue(communityQuestionMenuState)
 
   const bottom = useRef(null)
   const { getRecentViewItem } = useRecentViewItemQuery()
   const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } = getRecentViewItem()
   const tempData = data?.pages[0].content[0]
 
+  const [firstItem, setFirstItem] = useRecoilState(firstItemState)
+  const [secondItem, setSecondItem] = useRecoilState(secondItemState)
+  const resetFirstItem = useResetRecoilState(firstItemState)
+  const resetSecondItem = useResetRecoilState(secondItemState)
   const handleItemClick = (item: RecentViewItemResult) => {
     // 이미 item이 추가되어 있는 경우, communityUploadInfo.itemList에서 삭제
     const isItemAdded = communityUploadInfo.itemList?.some(
@@ -31,8 +45,18 @@ const RecentViewItem = () => {
         ...communityUploadInfo,
         itemList: newItemList || null,
       })
+      if (communityQuestionMenu === '이 중에 뭐 살까') {
+        // 왼쪽 사진/아이템 삭제
+        if (firstItem.itemId === item.itemId) {
+          resetFirstItem()
+        }
+        // 오른쪽 사진/아이템 삭제
+        if (secondItem.itemId === item.itemId) {
+          resetSecondItem()
+        }
+      }
     } else {
-      // communityUploadInfo.itemList에 item 추가
+      // 추가되어있지 않은 아이템 communityUploadInfo.itemList에 item 추가
       const newItemList = [
         ...(communityUploadInfo.itemList || []),
         {
@@ -42,16 +66,35 @@ const RecentViewItem = () => {
           representFlag: null,
         },
       ]
-
-      const newImgList = communityUploadInfo.imgList || []
-
-      if (newItemList.length + newImgList.length > 5) {
+      if (newItemList.length + (communityUploadInfo?.imgList?.length ?? 0) > maxItemPhotoCount) {
         alert('아이템의 개수가 최대값을 초과하였습니다.')
       } else {
         setCommunityUploadInfo({
           ...communityUploadInfo,
           itemList: newItemList,
         })
+        if (communityQuestionMenu === '이 중에 뭐 살까') {
+          const newItem = {
+            itemId: item.itemId,
+            imgUrl: item.imgUrl,
+            celebName: item.celebName,
+            brandName: item.brandName,
+            itemName: item.itemName,
+          }
+          if (firstItem?.itemId === null) {
+            console.log(firstItem)
+            setFirstItem((prevFirstItem) => ({
+              ...prevFirstItem,
+              ...newItem,
+            }))
+          } else if (secondItem?.itemId === null) {
+            console.log(secondItem)
+            setSecondItem((prevSecondItem) => ({
+              ...prevSecondItem,
+              ...newItem,
+            }))
+          }
+        }
       }
     }
   }
