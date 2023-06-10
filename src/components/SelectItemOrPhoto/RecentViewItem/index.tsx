@@ -22,7 +22,6 @@ const RecentViewItem = () => {
   const [communityUploadInfo, setCommunityUploadInfo] = useRecoilState(communityItemState)
   const maxItemPhotoCount = useRecoilValue(maxItemPhotoCountState)
   const communityQuestionMenu = useRecoilValue(communityQuestionMenuState)
-
   const bottom = useRef(null)
   const { getRecentViewItem } = useRecentViewItemQuery()
   const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } = getRecentViewItem()

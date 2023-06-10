@@ -47,10 +47,6 @@ const SelectItemOrPhoto = () => {
   const [searchValue, setSearchValue] = useRecoilState<string>(brandNameSearchState)
   const [selectedTab, setSelectedTab] = useState('recent')
   const [isFocused, setIsFocused] = useState<boolean>(false)
-  // const firstItem = useRecoilValue(firstItemState)
-  // const secondItem = useRecoilValue(secondItemState)
-  // console.log('firstItem', firstItem)
-  // console.log('secondItem', secondItem)
 
   // API나오면 recent search로 수정
   const {
