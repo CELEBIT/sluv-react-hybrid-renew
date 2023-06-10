@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { QuestionContainer } from './styles'
 import CommunityHeader from '../../../components/Header/CommunityHeader/CommunityHeader'
 import {
@@ -35,6 +35,9 @@ const Question = () => {
       alert('success')
     }
   }
+  useEffect(() => {
+    setHasTriedToUpload(false)
+  }, [communityQuestionMenu])
 
   return (
     <QuestionContainer>
