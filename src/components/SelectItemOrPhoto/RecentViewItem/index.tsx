@@ -11,39 +11,43 @@ import {
   communityItemState,
   communityQuestionMenuState,
   firstItemState,
+  imgListState,
   secondItemState,
 } from '../../../recoil/communityInfo'
 import { RecentViewItemResult } from '../../../apis/item/itemService.type'
 import { Divider } from '../../../pages/item/detail/styles'
 import HotItem from '../HotItem'
 import { maxItemPhotoCountState } from '..'
+import { communityMenuState } from '../../Header/CommunityHeader/CommunityHeader'
 
 const RecentViewItem = () => {
+  const bottom = useRef(null)
   const [communityUploadInfo, setCommunityUploadInfo] = useRecoilState(communityItemState)
   const maxItemPhotoCount = useRecoilValue(maxItemPhotoCountState)
   const communityQuestionMenu = useRecoilValue(communityQuestionMenuState)
-  const bottom = useRef(null)
+  const CommunityMenu = useRecoilValue(communityMenuState)
+
+  // 최근 본 아이템 API data
   const { getRecentViewItem } = useRecentViewItemQuery()
   const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } = getRecentViewItem()
   const tempData = data?.pages[0].content[0]
 
+  // 이 중에 뭐살까 추가용
   const [firstItem, setFirstItem] = useRecoilState(firstItemState)
   const [secondItem, setSecondItem] = useRecoilState(secondItemState)
   const resetFirstItem = useResetRecoilState(firstItemState)
   const resetSecondItem = useResetRecoilState(secondItemState)
+
+  const [imgItemList, setImageItemList] = useRecoilState(imgListState)
+
   const handleItemClick = (item: RecentViewItemResult) => {
+    console.log(imgItemList)
     // 이미 item이 추가되어 있는 경우, communityUploadInfo.itemList에서 삭제
-    const isItemAdded = communityUploadInfo.itemList?.some(
-      (addedItem) => addedItem.itemId === item.itemId,
-    )
+    const isItemAdded = imgItemList.some((addedItem) => addedItem.itemId === item.itemId)
     if (isItemAdded) {
-      const newItemList = communityUploadInfo.itemList?.filter(
-        (addedItem) => addedItem.itemId !== item.itemId,
-      )
-      setCommunityUploadInfo({
-        ...communityUploadInfo,
-        itemList: newItemList || null,
-      })
+      const newItemList = imgItemList.filter((addedItem) => addedItem.itemId !== item.itemId)
+      setImageItemList(newItemList)
+
       if (communityQuestionMenu === '이 중에 뭐 살까') {
         // 왼쪽 사진/아이템 삭제
         if (firstItem.itemId === item.itemId) {
@@ -57,7 +61,7 @@ const RecentViewItem = () => {
     } else {
       // 추가되어있지 않은 아이템 communityUploadInfo.itemList에 item 추가
       const newItemList = [
-        ...(communityUploadInfo.itemList || []),
+        ...(imgItemList || []),
         {
           itemId: item.itemId,
           description: null,
@@ -65,14 +69,22 @@ const RecentViewItem = () => {
           representFlag: null,
         },
       ]
-      if (newItemList.length + (communityUploadInfo?.imgList?.length ?? 0) > maxItemPhotoCount) {
+
+      if (imgItemList.length + 1 > maxItemPhotoCount) {
         alert('아이템의 개수가 최대값을 초과하였습니다.')
       } else {
-        setCommunityUploadInfo({
-          ...communityUploadInfo,
-          itemList: newItemList,
-        })
-        if (communityQuestionMenu === '이 중에 뭐 살까') {
+        setImageItemList([
+          ...imgItemList,
+          {
+            itemId: item.itemId,
+            imgUrl: item.imgUrl,
+            description: null,
+            vote: null,
+            representFlag: null,
+          },
+        ])
+
+        if (CommunityMenu === '질문해요' && communityQuestionMenu === '이 중에 뭐 살까') {
           const newItem = {
             itemId: item.itemId,
             imgUrl: item.imgUrl,
@@ -80,13 +92,13 @@ const RecentViewItem = () => {
             brandName: item.brandName,
             itemName: item.itemName,
           }
-          if (firstItem?.itemId === null) {
+          if (firstItem?.itemId === null && firstItem?.imgUrl === null) {
             console.log(firstItem)
             setFirstItem((prevFirstItem) => ({
               ...prevFirstItem,
               ...newItem,
             }))
-          } else if (secondItem?.itemId === null) {
+          } else if (secondItem?.itemId === null && secondItem?.imgUrl === null) {
             console.log(secondItem)
             setSecondItem((prevSecondItem) => ({
               ...prevSecondItem,
@@ -124,10 +136,8 @@ const RecentViewItem = () => {
                       brandName={each.brandName}
                       celebName={each.celebName}
                       isSelected={
-                        communityUploadInfo.itemList
-                          ? communityUploadInfo.itemList?.some(
-                              (item) => item.itemId === each.itemId,
-                            )
+                        imgItemList
+                          ? imgItemList.some((item) => item.itemId === each.itemId)
                           : false
                       }
                       borderRadius={8}

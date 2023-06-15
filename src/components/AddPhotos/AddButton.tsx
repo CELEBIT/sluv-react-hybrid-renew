@@ -5,11 +5,12 @@ import { ReactComponent as Add } from '../../assets/add_18.svg'
 
 type AddButtonProps = {
   itemCnt: number
+  onClick: any
 }
 
-const AddButton = ({ itemCnt }: AddButtonProps) => {
+const AddButton = ({ itemCnt, onClick }: AddButtonProps) => {
   return (
-    <AddPhotoWrapper>
+    <AddPhotoWrapper onClick={() => onClick()}>
       <Add />
       <span>({itemCnt}/5)</span>
     </AddPhotoWrapper>

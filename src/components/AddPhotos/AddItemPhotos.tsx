@@ -1,25 +1,20 @@
 import React from 'react'
-import { atomKeys } from '../../config/atomKeys'
-import { atom, useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { AddPhotosWrapper } from './styles'
 import AddButton from './AddButton'
 import Photo from './Photo'
-import { imgListState } from '../../recoil/communityInfo'
+import { communityItemState, imgListState } from '../../recoil/communityInfo'
 
 interface IAddPhotosProps {
-  canAddItem?: boolean
   onClick?: any
 }
 
-interface Image {
-  imgUrl: string
-  representFlag: boolean
-}
+const AddItemPhotos = ({ onClick }: IAddPhotosProps) => {
+  const [imgItemList, setImgItemList] = useRecoilState(imgListState)
+  const setCommunityUploadInfo = useSetRecoilState(communityItemState)
 
-const AddPhotos = ({ canAddItem, onClick }: IAddPhotosProps) => {
-  const [imgList, setImageList] = useRecoilState(imgListState)
-
+  // drag and drop 완료시
   const onDragEnd = (result: any) => {
     if (!result.destination) {
       return
@@ -27,39 +22,53 @@ const AddPhotos = ({ canAddItem, onClick }: IAddPhotosProps) => {
 
     const startIndex = result.source.index
     const endIndex = result.destination.index
-    const reorderedList = Array.from(imgList)
+    const reorderedList = Array.from(imgItemList)
     const [removed] = reorderedList.splice(startIndex, 1)
     reorderedList.splice(endIndex, 0, removed)
 
-    // Update the representFlag based on the new order
+    // representFlag 수정 -> 최종 업로드때는 imgItemList 통해 확인
     const updatedList = reorderedList.map((img, index) => ({
       ...img,
       representFlag: index === 0,
     }))
-    // Update the state with the reordered and updated list
-    setImageList(updatedList)
+    setImgItemList(updatedList)
   }
+
   const handleRemovePhoto = (index: number) => {
-    const updatedList = [...imgList]
-    updatedList.splice(index, 1)
+    const updatedList = [...imgItemList]
+    const removedItem = updatedList.splice(index, 1)[0]
+    // display(imgItemList)에서 삭제
     const finalList = updatedList.map((img, index) => ({
       ...img,
       representFlag: index === 0,
     }))
-    console.log(finalList)
-    setImageList(finalList)
+    setImgItemList(finalList)
+    // 최종 업로드 data에서 삭제
+    if (removedItem.itemId) {
+      // itemList에서 아이템 삭제
+      setCommunityUploadInfo((prevInfo) => ({
+        ...prevInfo,
+        itemList: prevInfo.itemList?.filter((item) => item.itemId !== removedItem.itemId) || null,
+      }))
+    } else {
+      // imgList에서 사진 삭제
+      setCommunityUploadInfo((prevInfo) => ({
+        ...prevInfo,
+        imgList: prevInfo.imgList?.filter((item) => item.imgUrl !== removedItem.imgUrl) || null,
+      }))
+    }
   }
 
   return (
     <AddPhotosWrapper>
-      {imgList.length < 5 && (
-        <AddButton onClick={() => onClick()} itemCnt={imgList.length}></AddButton>
+      {imgItemList.length < 5 && (
+        <AddButton itemCnt={imgItemList.length} onClick={() => onClick()}></AddButton>
       )}
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable' direction='horizontal'>
           {(provided) => (
             <div className='row' ref={provided.innerRef}>
-              {imgList.map((img, index) => (
+              {imgItemList.map((img, index) => (
                 <Draggable key={index.toString()} draggableId={index.toString()} index={index}>
                   {(provided) => (
                     <div
@@ -71,8 +80,8 @@ const AddPhotos = ({ canAddItem, onClick }: IAddPhotosProps) => {
                         key='image'
                         size={74}
                         borderRadius={8}
-                        imgUrl={img?.imgUrl || ''}
-                        representFlag={img?.representFlag || false}
+                        imgUrl={img.imgUrl || ''}
+                        representFlag={img.representFlag || false}
                         candelete={true}
                         onDelete={() => handleRemovePhoto(index)}
                       ></Photo>
@@ -89,4 +98,4 @@ const AddPhotos = ({ canAddItem, onClick }: IAddPhotosProps) => {
   )
 }
 
-export default AddPhotos
+export default AddItemPhotos

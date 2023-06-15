@@ -12,7 +12,7 @@ const UploadPhoto = ({ imgUrl, className, onDelete }: UploadPhotoProps) => {
   // 유저가 갤러리에서 업로드한 사진 아이템
   return (
     <ImageField imgUrl={imgUrl} className={className}>
-      <Delete className='delete' onClick={onDelete}></Delete>
+      <Delete className='delete' onClick={() => onDelete()}></Delete>
     </ImageField>
   )
 }

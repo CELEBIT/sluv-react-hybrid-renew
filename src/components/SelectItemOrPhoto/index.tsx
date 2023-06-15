@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
   BottomWrapper,
   ComponentContainer,
@@ -18,9 +18,11 @@ import ButtonLarge from '../ButtonLarge/ButtonLarge'
 import { ReactComponent as Gallery } from '../../assets/gallery_24.svg'
 import { atom, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import {
+  IselectedItem,
   communityItemState,
   communityQuestionMenuState,
   firstItemState,
+  imgListState,
   secondItemState,
 } from '../../recoil/communityInfo'
 import RecentSelectCeleb from '../BottomSheetModal/ItemCelebModal/RecentSelectCeleb'
@@ -47,7 +49,7 @@ const SelectItemOrPhoto = () => {
   const [searchValue, setSearchValue] = useRecoilState<string>(brandNameSearchState)
   const [selectedTab, setSelectedTab] = useState('recent')
   const [isFocused, setIsFocused] = useState<boolean>(false)
-
+  const imgInput = useRef<HTMLInputElement>(null)
   // API나오면 recent search로 수정
   const {
     getRecentCeleb: { data },
@@ -61,8 +63,59 @@ const SelectItemOrPhoto = () => {
     { id: 'saved', tabName: '찜한 아이템' },
   ]
   const onComplete = () => {
+    // 대표사진 설정
+    if (imgItemList.length > 0) {
+      setImageItemList((prevList) => {
+        const updatedList = [...prevList]
+        updatedList[0] = {
+          ...updatedList[0],
+          representFlag: true,
+        }
+        return updatedList
+      })
+      // 커뮤니티 아이템 설정
+      setCommunityUploadInfo((prevInfo) => {
+        const { itemList, imgList } = prevInfo
+        const updatedItemList = itemList ? [...itemList] : []
+        const updatedImgList = imgList ? [...imgList] : []
+
+        imgItemList.forEach((item) => {
+          if (
+            item.itemId &&
+            !updatedItemList.some((existingItem) => existingItem.itemId === item.itemId)
+          ) {
+            // 아이템 추가
+            updatedItemList.push({
+              itemId: item.itemId,
+              description: null,
+              vote: null,
+              representFlag: item.representFlag,
+            })
+          } else if (
+            !item.itemId &&
+            item.imgUrl &&
+            !updatedImgList.some((existingItem) => existingItem.imgUrl === item.imgUrl)
+          ) {
+            // 사진 추가
+            updatedImgList.push({
+              imgUrl: item.imgUrl,
+              description: null,
+              vote: null,
+              representFlag: item.representFlag,
+            })
+          }
+        })
+
+        return {
+          ...prevInfo,
+          itemList: updatedItemList.length > 0 ? updatedItemList : null,
+          imgList: updatedImgList.length > 0 ? updatedImgList : null,
+        }
+      })
+    }
     navigate(-1)
   }
+
   useEffect(() => {
     if (CommunityMenu === '찾아주세요') {
       setMaxItemPhotoCount(5)
@@ -74,6 +127,77 @@ const SelectItemOrPhoto = () => {
       }
     }
   }, [])
+
+  // api file upload용
+  const [selectedFileList, setSelectedFileList] = useState<File[]>([])
+  // display
+  const [imgItemList, setImageItemList] = useRecoilState(imgListState)
+  const [firstItem, setFirstItem] = useRecoilState(firstItemState)
+  const [secondItem, setSecondItem] = useRecoilState(secondItemState)
+
+  // imgItemList에 IselectedItem 형태로 추가해줘야함
+  const onChangeImg = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const fileArr = e.target.files
+    if (fileArr) {
+      setSelectedFileList((pre) => [...pre, ...Array.from(fileArr)])
+      for (let i = 0; i < fileArr.length; i++) {
+        const file = fileArr[i]
+        const reader = new FileReader()
+        if (imgItemList.length + i + 1 <= maxItemPhotoCount) {
+          reader.onloadend = () => {
+            const fileSelected: IselectedItem = {
+              imgUrl: reader.result as string,
+              description: null,
+              vote: null,
+              representFlag: !imgItemList && i === 0,
+            }
+            if (CommunityMenu === '질문해요' && communityQuestionMenu === '이 중에 뭐 살까') {
+              if (fileArr[i]) {
+                if (i === 0) {
+                  // firstItem || secondItem 둘중에 하나라도 null 이면 추가 가능
+                  console.log('i==0')
+                  if (firstItem.imgUrl === null) {
+                    // firstItem이 비어있을 때
+                    console.log('first 아이템 null')
+                    setFirstItem((prev) => ({
+                      ...prev,
+                      ...{ imgUrl: reader.result as string },
+                    }))
+                  } else if (firstItem.imgUrl !== null) {
+                    // first가 존재할 때
+                    console.log('seconds 아이템 null')
+                    setSecondItem((prev) => ({
+                      ...prev,
+                      ...{ imgUrl: reader.result as string },
+                    }))
+                  }
+                } else {
+                  // 두번째 사진 -> firstItem, secondItem 둘다 없을 때만 가능
+                  // secondItem에만 추가하면 됨.
+                  console.log('i==1')
+                  if (secondItem.imgUrl === null && secondItem.itemId === null) {
+                    console.log('seconds 아이템 null')
+                    setSecondItem((prev) => ({
+                      ...prev,
+                      ...{ imgUrl: reader.result as string },
+                    }))
+                  }
+                }
+              }
+              setImageItemList((prevList) => [...prevList, fileSelected])
+            } else {
+              setImageItemList((prevList) => [...prevList, fileSelected])
+            }
+          }
+          reader.readAsDataURL(file)
+        } else {
+          alert(`아이템/사진은 ${maxItemPhotoCount}개까지 선택할 수 있어요. `)
+          break
+        }
+      }
+    }
+  }
+
   return (
     <SelectItemOrPhotoContainer>
       <HeaderWrapper>
@@ -115,18 +239,20 @@ const SelectItemOrPhoto = () => {
       </ComponentContainer>
       <Dimmer></Dimmer>
       <BottomWrapper>
-        <GalleryButton>
+        <GalleryButton onClick={() => imgInput.current?.click()}>
+          <input
+            type='file'
+            accept='image/*'
+            ref={imgInput}
+            style={{ display: 'none' }}
+            onChange={onChangeImg}
+            multiple
+          />
           <Gallery></Gallery>
         </GalleryButton>
         <ButtonLarge
-          text={`선택완료(${
-            (communityUploadInfo.imgList?.length ?? 0) + (communityUploadInfo.itemList?.length ?? 0)
-          }/${maxItemPhotoCount}) `}
-          active={
-            (communityUploadInfo.imgList?.length ?? 0) +
-              (communityUploadInfo.itemList?.length ?? 0) >=
-            1
-          }
+          text={`선택완료(${imgItemList?.length}/${maxItemPhotoCount}) `}
+          active={imgItemList?.length > 0}
           color='BK'
           onClick={() => onComplete()}
         ></ButtonLarge>

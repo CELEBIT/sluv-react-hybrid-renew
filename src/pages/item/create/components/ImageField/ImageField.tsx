@@ -1,7 +1,8 @@
 import React from 'react'
-import AddPhotos, { imgListState } from '../../../../../components/AddPhotos/AddPhotos'
+import AddPhotos from '../../../../../components/AddPhotos/AddPhotos'
 import { useRecoilValue } from 'recoil'
 import DefaultImageField from './DefaultImageField'
+import { imgListState } from '../../../../../recoil/communityInfo'
 
 interface ImageFieldProps {
   hasTriedToUpload: boolean

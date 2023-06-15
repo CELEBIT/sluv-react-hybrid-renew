@@ -64,6 +64,9 @@ export const GalleryButton = styled.div`
   height: 3.5rem;
   border-radius: 0.75rem;
   background-color: ${Common.colors.GR200};
+  input {
+    display: 'none';
+  }
 `
 
 export const Dimmer = styled.div`
