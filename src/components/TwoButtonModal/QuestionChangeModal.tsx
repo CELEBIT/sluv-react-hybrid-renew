@@ -8,6 +8,7 @@ import {
   communityItemState,
   communityQuestionMenuState,
   firstItemState,
+  imgListState,
   secondItemState,
 } from '../../recoil/communityInfo'
 
@@ -21,6 +22,8 @@ const QuestionChangeModal = ({ changeTo }: QuestionChangeModalProps) => {
   const setQuestionItem = useSetRecoilState(communityItemState)
   const resetFirstItem = useResetRecoilState(firstItemState)
   const resetSecondItem = useResetRecoilState(secondItemState)
+  const resetImageItemList = useResetRecoilState(imgListState)
+
   const changeMenu = () => {
     setQuestionItem({
       id: null,
@@ -34,6 +37,7 @@ const QuestionChangeModal = ({ changeTo }: QuestionChangeModalProps) => {
     })
     resetFirstItem()
     resetSecondItem()
+    resetImageItemList()
     setQuestionMenu(changeTo)
     closeModal(modals.QuestionChangeModal)
   }

@@ -17,6 +17,7 @@ import TextArea from '../../../components/TextField/TextArea/TextArea'
 import AddPhotos from '../../../components/AddPhotos/AddPhotos'
 import { communityItemState } from '../../../recoil/communityInfo'
 import { useNavigate } from 'react-router-dom'
+import AddItemPhotos from '../../../components/AddPhotos/AddItemPhotos'
 
 const FindRequest = () => {
   const navigate = useNavigate()
@@ -40,7 +41,7 @@ const FindRequest = () => {
       alert('success')
     }
   }
-
+  console.log(findRequestInfo)
   useEffect(() => {
     setFindRequestInfo({
       ...findRequestInfo,
@@ -105,7 +106,7 @@ const FindRequest = () => {
               아이템/사진을 올려주세요 <span className='optional'>(선택)</span>
             </Label>
           </LabelContainer>
-          <AddPhotos onClick={() => navigate('/community/select-item-photo')}></AddPhotos>
+          <AddItemPhotos onClick={() => navigate('/community/select-item-photo')}></AddItemPhotos>
         </ComponentWrapper>
       </ComponentContainer>
     </FindRequestContainer>

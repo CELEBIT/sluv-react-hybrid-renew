@@ -1,7 +1,11 @@
 import React from 'react'
 import { QuestionMenuList } from '../../../../../config/communityMenu'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { communityItemState, communityQuestionMenuState } from '../../../../../recoil/communityInfo'
+import {
+  communityItemState,
+  communityQuestionMenuState,
+  imgListState,
+} from '../../../../../recoil/communityInfo'
 import ButtonMedium from '../../../../../components/ButtonMedium/ButtonMedium'
 import { MenuSelectWrapper } from './styles'
 import useModals from '../../../../../components/Modals/hooks/useModals'
@@ -12,6 +16,8 @@ const SelectQuestionMenu = () => {
     communityQuestionMenuState,
   )
   const questionInfo = useRecoilValue(communityItemState)
+  const [imgItemList] = useRecoilValue(imgListState)
+
   const onClickMenu = (menu: string) => {
     if (
       menu !== communityQuestionMenu &&
@@ -20,9 +26,10 @@ const SelectQuestionMenu = () => {
         questionInfo.newCelebId ||
         questionInfo.title ||
         questionInfo.content ||
-        questionInfo.imgList ||
-        questionInfo.itemList ||
-        questionInfo.categoryNameList)
+        // questionInfo.imgList ||
+        // questionInfo.itemList ||
+        questionInfo.categoryNameList ||
+        imgItemList)
     )
       openModal(modals.QuestionChangeModal, { changeTo: menu })
     else {

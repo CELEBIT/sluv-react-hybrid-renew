@@ -13,6 +13,7 @@ import {
   IselectedItem,
   communityItemState,
   firstItemState,
+  imgListState,
   secondItemState,
 } from '../../../../../recoil/communityInfo'
 import ExistingItem from './eachItemField/ExistingItem'
@@ -31,7 +32,7 @@ const TwoItemUpload = ({ onClick }: TwoItemUploadProps) => {
   // 2. firstItem / secondItem을 questionItem의 imgList / itemList 에 저장
   // 3. 완료 버튼 시 최종 업로드
   const [communityUploadInfo, setCommunityUploadInfo] = useRecoilState(communityItemState)
-
+  const [imgItemList, setImgItemList] = useRecoilState(imgListState)
   const [firstItem, setFirstItem] = useRecoilState(firstItemState)
   const resetFirstItem = useResetRecoilState(firstItemState)
   const [secondItem, setSecondItem] = useRecoilState(secondItemState)
@@ -41,33 +42,61 @@ const TwoItemUpload = ({ onClick }: TwoItemUploadProps) => {
   const [secondItemName, setSecondItemName] = useState<string | null>(secondItem.description)
 
   const onDeleteItem = (item: IselectedItem) => {
-    const newItemList = communityUploadInfo.itemList?.filter(
-      (addedItem) => addedItem.itemId !== item.itemId,
-    )
-    if (firstItem.itemId === item.itemId) {
-      resetFirstItem()
+    let newItemList
+
+    if (item.itemId !== null) {
+      newItemList = communityUploadInfo.itemList?.filter(
+        (addedItem) => addedItem.itemId !== item.itemId,
+      )
+      setCommunityUploadInfo({
+        ...communityUploadInfo,
+        itemList: newItemList || null,
+      })
+
+      const newImgItemList = imgItemList.filter((addedItem) => addedItem.itemId !== item.itemId)
+      setImgItemList(newImgItemList)
+
+      if (firstItem.itemId === item.itemId) {
+        resetFirstItem()
+      }
+      if (secondItem.itemId === item.itemId) {
+        resetSecondItem()
+      }
+    } else {
+      console.log('사진 삭제')
+      newItemList = communityUploadInfo.imgList?.filter(
+        (addedItem) => addedItem.imgUrl !== item.imgUrl,
+      )
+
+      setCommunityUploadInfo({
+        ...communityUploadInfo,
+        imgList: newItemList || null,
+      })
+
+      const newImgItemList = imgItemList.filter((addedItem) => addedItem.imgUrl !== item.imgUrl)
+      setImgItemList(newImgItemList)
+
+      if (firstItem.itemId === null && firstItem.imgUrl === item.imgUrl) {
+        console.log('first 삭제')
+        resetFirstItem()
+      }
+      if (secondItem.itemId === null && secondItem.imgUrl === item.imgUrl) {
+        console.log('first 삭제')
+        resetSecondItem()
+      }
     }
-    if (secondItem.itemId === item.itemId) {
-      resetSecondItem()
-    }
-    setCommunityUploadInfo({
-      ...communityUploadInfo,
-      itemList: newItemList || null,
-    })
   }
 
   useEffect(() => {
     setFirstItem({ ...firstItem, description: firstItemName })
-    console.log('firstItem Name change', firstItem)
     setSecondItem({ ...secondItem, description: secondItemName })
-    console.log('second Name change', secondItem)
   }, [firstItemName, secondItemName])
   return (
     <TwoItemUploadWrapper>
       {/* 둘중에 하나라도 선택 되었을 경우 */}
       {firstItem?.imgUrl || secondItem?.imgUrl ? (
         <ImageWrapper>
-          {firstItem?.itemId ? (
+          {firstItem?.itemId !== null ? (
             // 스럽에 존재하는 아이템 선택
             <ExistingItem
               item={firstItem}
@@ -76,19 +105,19 @@ const TwoItemUpload = ({ onClick }: TwoItemUploadProps) => {
             ></ExistingItem>
           ) : (
             <>
-              {firstItem?.imgUrl && (
+              {firstItem.imgUrl && (
                 // 유저 갤러리에서 선택
                 <UploadPhoto
                   imgUrl={firstItem.imgUrl}
                   className='left'
-                  onDelete={() => alert('삭제')}
+                  onDelete={() => onDeleteItem(firstItem)}
                 ></UploadPhoto>
               )}
             </>
           )}
           {!firstItem.imgUrl && <AddItem onClick={() => onClick()}></AddItem>}
           {/* 2번째 아이템 */}
-          {secondItem?.itemId ? (
+          {secondItem?.itemId !== null ? (
             <ExistingItem
               item={secondItem}
               className='right'
@@ -96,12 +125,12 @@ const TwoItemUpload = ({ onClick }: TwoItemUploadProps) => {
             ></ExistingItem>
           ) : (
             <>
-              {secondItem?.imgUrl && (
+              {secondItem.imgUrl && (
                 // 유저 갤러리에서 선택
                 <UploadPhoto
                   imgUrl={secondItem.imgUrl}
                   className='right'
-                  onDelete={() => alert('삭제')}
+                  onDelete={() => onDeleteItem(secondItem)}
                 ></UploadPhoto>
               )}
             </>

@@ -3,17 +3,19 @@ import { ComponentWrapper, Label, LabelContainer } from '../../../item/create/st
 import DefaultTextfield from '../../../../components/TextField/DefaultTextfield/DefaultTextfield'
 import { ErrorText } from '../../../../components/TextField/DefaultTextfield/styles'
 import TextArea from '../../../../components/TextField/TextArea/TextArea'
-import AddPhotos from '../../../../components/AddPhotos/AddPhotos'
+import AddItemPhotos from '../../../../components/AddPhotos/AddItemPhotos'
 import { ReactComponent as Error } from '../../../../assets/error_20.svg'
 import { useRecoilState } from 'recoil'
 import { communityItemState } from '../../../../recoil/communityInfo'
 import { SubComponentContainer } from './styles'
+import { useNavigate } from 'react-router-dom'
 
 interface HowAboutThisProps {
   hasTriedToUpload: boolean
 }
 
 const HowAboutThis = ({ hasTriedToUpload }: HowAboutThisProps) => {
+  const navigate = useNavigate()
   const [questionInfo, setQuestionInfo] = useRecoilState(communityItemState)
   const [title, setTitle] = useState<string | null>(questionInfo.title)
   const [content, setContent] = useState<string | null | undefined>(questionInfo.content)
@@ -64,7 +66,7 @@ const HowAboutThis = ({ hasTriedToUpload }: HowAboutThisProps) => {
             아이템/사진을 올려주세요 <span className='optional'>(선택)</span>
           </Label>
         </LabelContainer>
-        <AddPhotos></AddPhotos>
+        <AddItemPhotos onClick={() => navigate('/community/select-item-photo')}></AddItemPhotos>
       </ComponentWrapper>
     </SubComponentContainer>
   )

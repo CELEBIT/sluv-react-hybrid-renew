@@ -10,6 +10,7 @@ import {
   communityItemState,
   communityQuestionMenuState,
   firstItemState,
+  imgListState,
   secondItemState,
 } from '../../../recoil/communityInfo'
 import { RecentViewItemResult } from '../../../apis/item/itemService.type'
@@ -26,19 +27,17 @@ const ScrapItem = () => {
   const [secondItem, setSecondItem] = useRecoilState(secondItemState)
   const resetFirstItem = useResetRecoilState(firstItemState)
   const resetSecondItem = useResetRecoilState(secondItemState)
+
+  const [imgItemList, setImageItemList] = useRecoilState(imgListState)
+
   const handleItemClick = (item: RecentViewItemResult) => {
+    console.log(imgItemList)
     // 이미 item이 추가되어 있는 경우, communityUploadInfo.itemList에서 삭제
-    const isItemAdded = communityUploadInfo.itemList?.some(
-      (addedItem) => addedItem.itemId === item.itemId,
-    )
+    const isItemAdded = imgItemList.some((addedItem) => addedItem.itemId === item.itemId)
     if (isItemAdded) {
-      const newItemList = communityUploadInfo.itemList?.filter(
-        (addedItem) => addedItem.itemId !== item.itemId,
-      )
-      setCommunityUploadInfo({
-        ...communityUploadInfo,
-        itemList: newItemList || null,
-      })
+      const newItemList = imgItemList.filter((addedItem) => addedItem.itemId !== item.itemId)
+      setImageItemList(newItemList)
+
       if (communityQuestionMenu === '이 중에 뭐 살까') {
         // 왼쪽 사진/아이템 삭제
         if (firstItem.itemId === item.itemId) {
@@ -52,7 +51,7 @@ const ScrapItem = () => {
     } else {
       // 추가되어있지 않은 아이템 communityUploadInfo.itemList에 item 추가
       const newItemList = [
-        ...(communityUploadInfo.itemList || []),
+        ...(imgItemList || []),
         {
           itemId: item.itemId,
           description: null,
@@ -60,13 +59,21 @@ const ScrapItem = () => {
           representFlag: null,
         },
       ]
-      if (newItemList.length + (communityUploadInfo?.imgList?.length ?? 0) > maxItemPhotoCount) {
+
+      if (imgItemList.length + 1 > maxItemPhotoCount) {
         alert('아이템의 개수가 최대값을 초과하였습니다.')
       } else {
-        setCommunityUploadInfo({
-          ...communityUploadInfo,
-          itemList: newItemList,
-        })
+        setImageItemList([
+          ...imgItemList,
+          {
+            itemId: item.itemId,
+            imgUrl: item.imgUrl,
+            description: null,
+            vote: null,
+            representFlag: null,
+          },
+        ])
+
         if (communityQuestionMenu === '이 중에 뭐 살까') {
           const newItem = {
             itemId: item.itemId,
@@ -76,11 +83,13 @@ const ScrapItem = () => {
             itemName: item.itemName,
           }
           if (firstItem?.itemId === null) {
+            console.log(firstItem)
             setFirstItem((prevFirstItem) => ({
               ...prevFirstItem,
               ...newItem,
             }))
           } else if (secondItem?.itemId === null) {
+            console.log(secondItem)
             setSecondItem((prevSecondItem) => ({
               ...prevSecondItem,
               ...newItem,
@@ -120,10 +129,8 @@ const ScrapItem = () => {
                       brandName={each.brandName}
                       celebName={each.celebName}
                       isSelected={
-                        communityUploadInfo.itemList
-                          ? communityUploadInfo.itemList?.some(
-                              (item) => item.itemId === each.itemId,
-                            )
+                        imgItemList
+                          ? imgItemList.some((item) => item.itemId === each.itemId)
                           : false
                       }
                       borderRadius={8}
