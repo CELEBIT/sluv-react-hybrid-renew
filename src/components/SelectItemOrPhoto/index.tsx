@@ -79,30 +79,68 @@ const SelectItemOrPhoto = () => {
         const updatedItemList = itemList ? [...itemList] : []
         const updatedImgList = imgList ? [...imgList] : []
 
-        imgItemList.forEach((item) => {
+        imgItemList.forEach((item, index) => {
           if (
             item.itemId &&
             !updatedItemList.some((existingItem) => existingItem.itemId === item.itemId)
           ) {
             // 아이템 추가
-            updatedItemList.push({
-              itemId: item.itemId,
-              description: null,
-              vote: null,
-              representFlag: item.representFlag,
-            })
+            if (CommunityMenu === '질문해요' && communityQuestionMenu === '이 중에 뭐 살까') {
+              if (index === 0) {
+                updatedItemList.push({
+                  itemId: item.itemId,
+                  description: firstItem.description,
+                  vote: null,
+                  representFlag: item.representFlag,
+                })
+              } else {
+                updatedItemList.push({
+                  itemId: item.itemId,
+                  description: secondItem.description,
+                  vote: null,
+                  representFlag: item.representFlag,
+                })
+              }
+            } else {
+              updatedItemList.push({
+                itemId: item.itemId,
+                description: item.description,
+                vote: null,
+                representFlag: item.representFlag,
+              })
+            }
           } else if (
             !item.itemId &&
             item.imgUrl &&
             !updatedImgList.some((existingItem) => existingItem.imgUrl === item.imgUrl)
           ) {
             // 사진 추가
-            updatedImgList.push({
-              imgUrl: item.imgUrl,
-              description: null,
-              vote: null,
-              representFlag: item.representFlag,
-            })
+            if (CommunityMenu === '질문해요' && communityQuestionMenu === '이 중에 뭐 살까') {
+              if (index === 0) {
+                // 왼쪽 아이템 사진, 이름 설정
+                updatedImgList.push({
+                  imgUrl: item.imgUrl,
+                  description: firstItem.description,
+                  vote: null,
+                  representFlag: null,
+                })
+              } else {
+                // 오른쪽 아이템 사진, 이름 설정
+                updatedImgList.push({
+                  imgUrl: item.imgUrl,
+                  description: secondItem.description,
+                  vote: null,
+                  representFlag: null,
+                })
+              }
+            } else {
+              updatedImgList.push({
+                imgUrl: item.imgUrl,
+                description: item.description,
+                vote: null,
+                representFlag: item.representFlag,
+              })
+            }
           }
         })
 
@@ -155,17 +193,16 @@ const SelectItemOrPhoto = () => {
               if (fileArr[i]) {
                 if (i === 0) {
                   // firstItem || secondItem 둘중에 하나라도 null 이면 추가 가능
-                  console.log('i==0')
                   if (firstItem.imgUrl === null) {
                     // firstItem이 비어있을 때
-                    console.log('first 아이템 null')
+                    // console.log('first 아이템 null')
                     setFirstItem((prev) => ({
                       ...prev,
                       ...{ imgUrl: reader.result as string },
                     }))
                   } else if (firstItem.imgUrl !== null) {
                     // first가 존재할 때
-                    console.log('seconds 아이템 null')
+                    // console.log('seconds 아이템 null')
                     setSecondItem((prev) => ({
                       ...prev,
                       ...{ imgUrl: reader.result as string },
@@ -176,7 +213,7 @@ const SelectItemOrPhoto = () => {
                   // secondItem에만 추가하면 됨.
                   console.log('i==1')
                   if (secondItem.imgUrl === null && secondItem.itemId === null) {
-                    console.log('seconds 아이템 null')
+                    // console.log('seconds 아이템 null')
                     setSecondItem((prev) => ({
                       ...prev,
                       ...{ imgUrl: reader.result as string },
