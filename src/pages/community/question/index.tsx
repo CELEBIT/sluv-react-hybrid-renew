@@ -110,10 +110,6 @@ const Question = () => {
     setHasTriedToUpload(false)
   }, [communityQuestionMenu])
 
-  useEffect(() => {
-    console.log('questionItem 수정시', questionItem)
-  }, [questionItem])
-
   return (
     <QuestionContainer>
       <HeaderWrapper>
