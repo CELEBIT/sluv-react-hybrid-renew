@@ -31,7 +31,6 @@ const FindRequest = () => {
 
   const onSubmit = () => {
     setHasTriedToUpload(true)
-    console.log(findRequestInfo)
     if (
       celeb.id &&
       findRequestInfo.title &&
@@ -41,7 +40,6 @@ const FindRequest = () => {
       alert('success')
     }
   }
-  console.log(findRequestInfo)
   useEffect(() => {
     setFindRequestInfo({
       ...findRequestInfo,

@@ -36,12 +36,7 @@ const WhichOne = ({ hasTriedToUpload }: WhichOneProps) => {
       ...questionInfo,
       title: title,
     })
-    console.log('title변경 questionInfo', questionInfo)
   }, [title])
-
-  useEffect(() => {
-    console.log('현재 questionInfo', questionInfo)
-  }, [questionInfo.imgList, questionInfo.itemList])
 
   useEffect(() => {
     // 초기 마감시간 설정

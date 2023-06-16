@@ -77,11 +77,9 @@ const TwoItemUpload = ({ onClick }: TwoItemUploadProps) => {
       setImgItemList(newImgItemList)
 
       if (firstItem.itemId === null && firstItem.imgUrl === item.imgUrl) {
-        console.log('first 삭제')
         resetFirstItem()
       }
       if (secondItem.itemId === null && secondItem.imgUrl === item.imgUrl) {
-        console.log('first 삭제')
         resetSecondItem()
       }
     }
