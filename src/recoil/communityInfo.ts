@@ -43,13 +43,10 @@ export const communityItemState = atom<CommunityItem>({
   key: atomKeys.communityItemState,
   default: {
     id: null,
-    celebId: null,
-    newCelebId: null,
     title: null,
     content: null,
     imgList: null,
     itemList: null,
-    categoryNameList: null,
   },
 })
 

@@ -36,10 +36,15 @@ const WhichOne = ({ hasTriedToUpload }: WhichOneProps) => {
       ...questionInfo,
       title: title,
     })
-    console.log(questionInfo)
+    console.log('title변경 questionInfo', questionInfo)
   }, [title])
 
   useEffect(() => {
+    console.log('현재 questionInfo', questionInfo)
+  }, [questionInfo.imgList, questionInfo.itemList])
+
+  useEffect(() => {
+    // 초기 마감시간 설정
     setQuestionInfo({
       ...questionInfo,
       voteEndTime: defaultEndDateTime,
@@ -69,9 +74,11 @@ const WhichOne = ({ hasTriedToUpload }: WhichOneProps) => {
         <div className='padding'>
           <TwoItemUpload onClick={() => navigate('/community/select-item-photo')}></TwoItemUpload>
         </div>
-        {hasTriedToUpload && (!firstItem.description || !secondItem.description) && (
-          <ErrorText className='error'>필수 항목입니다</ErrorText>
-        )}
+        {hasTriedToUpload &&
+          (!firstItem.description ||
+            !secondItem.description ||
+            !firstItem.imgUrl ||
+            !secondItem.imgUrl) && <ErrorText className='error'>필수 항목입니다</ErrorText>}
       </ComponentWrapper>
       {/* <ComponentWrapper className='padding'></ComponentWrapper> */}
       <ComponentWrapper>

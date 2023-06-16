@@ -89,7 +89,9 @@ const TwoItemUpload = ({ onClick }: TwoItemUploadProps) => {
 
   useEffect(() => {
     setFirstItem({ ...firstItem, description: firstItemName })
+    console.log(firstItem)
     setSecondItem({ ...secondItem, description: secondItemName })
+    console.log(secondItem)
   }, [firstItemName, secondItemName])
   return (
     <TwoItemUploadWrapper>
