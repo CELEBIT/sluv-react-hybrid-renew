@@ -1,0 +1,65 @@
+import axios from 'axios'
+import request from '../core'
+import { ResponseType } from '../core/type'
+import { Image } from '../../components/AddPhotos/AddPhotos'
+
+export interface S3Result {
+  preSignedUrl: string
+  key: string
+}
+
+export default class S3Service {
+  presignedUrl: string
+
+  constructor() {
+    this.presignedUrl = '/app/s3/pre-signed-url'
+  }
+
+  async uploadImg(s3Url: string, file: File) {
+    const data: any = await axios({
+      headers: {
+        'Content-Type': `image/${file.type.split('/')[1]}`,
+        'x-amz-acl': 'public-read',
+      },
+      data: file,
+      method: 'PUT',
+      url: s3Url,
+    })
+    return data
+  }
+
+  // 아이템 이미지 업로드
+  async postItemImg(fileList: Array<Image>) {
+    const resultList: Array<Image> = []
+    const data = await Promise.allSettled(
+      fileList.map(async (item) => {
+        const response: ResponseType<S3Result> = await request.post(
+          `${this.presignedUrl}/item`,
+          {},
+          {
+            params: {
+              imgExtension: String(item.imgFile?.type.split('/')[1]).toUpperCase(),
+            },
+          },
+        )
+
+        if (response.isSuccess && response.result?.preSignedUrl && item.imgFile) {
+          try {
+            const data = await this.uploadImg(response.result.preSignedUrl, item.imgFile)
+            if (data.status === 200) {
+              const { preSignedUrl } = response.result
+              resultList.push({
+                representFlag: item.representFlag,
+                imgUrl: preSignedUrl.split('?')[0],
+              })
+            }
+          } catch (err: any) {
+            console.error(err)
+            return err
+          }
+        }
+      }),
+    )
+    return await resultList
+  }
+}

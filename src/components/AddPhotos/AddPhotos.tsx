@@ -5,19 +5,23 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { AddPhotosWrapper } from './styles'
 import AddButton from './AddButton'
 import Photo from './Photo'
-import { imgListState } from '../../recoil/communityInfo'
 
 interface IAddPhotosProps {
-  canAddItem?: boolean
   onClick?: any
 }
 
-interface Image {
-  imgUrl: string
+export interface Image {
+  imgFile?: File
   representFlag: boolean
+  imgUrl?: string
 }
 
-const AddPhotos = ({ canAddItem, onClick }: IAddPhotosProps) => {
+export const imgListState = atom<Image[]>({
+  key: atomKeys.imgListState,
+  default: [],
+})
+
+const AddPhotos = ({ onClick }: IAddPhotosProps) => {
   const [imgList, setImageList] = useRecoilState(imgListState)
 
   const onDragEnd = (result: any) => {
@@ -37,7 +41,7 @@ const AddPhotos = ({ canAddItem, onClick }: IAddPhotosProps) => {
       representFlag: index === 0,
     }))
     // Update the state with the reordered and updated list
-    setImageList(updatedList)
+    setImageList([...updatedList])
   }
   const handleRemovePhoto = (index: number) => {
     const updatedList = [...imgList]
@@ -46,8 +50,7 @@ const AddPhotos = ({ canAddItem, onClick }: IAddPhotosProps) => {
       ...img,
       representFlag: index === 0,
     }))
-    console.log(finalList)
-    setImageList(finalList)
+    setImageList([...finalList])
   }
 
   return (
@@ -71,8 +74,9 @@ const AddPhotos = ({ canAddItem, onClick }: IAddPhotosProps) => {
                         key='image'
                         size={74}
                         borderRadius={8}
-                        imgUrl={img?.imgUrl || ''}
-                        representFlag={img?.representFlag || false}
+                        imgUrl={img.imgUrl}
+                        imgFile={img.imgFile}
+                        representFlag={img.representFlag}
                         candelete={true}
                         onDelete={() => handleRemovePhoto(index)}
                       ></Photo>

@@ -5,14 +5,20 @@ import { useDebounce } from 'use-debounce'
 import useTempItemQuery from '../apis/item/hooks/useTempItemQuery'
 import { TempItemReq } from '../apis/item/itemService.type'
 import { localStorageKeys } from '../config/localStorageKeys'
+import { imgListState } from '../components/AddPhotos/AddPhotos'
+import useItemImgUpload from '../apis/s3/hooks/useItemImgUpload'
 
 const useUploadStateObserver = () => {
   const {
-    postTempItem: { mutate },
+    postTempItem: { mutate: mutateByTempItem },
   } = useTempItemQuery()
+  const {
+    postItemImg: { mutate: mutateByImgUpload },
+  } = useItemImgUpload()
 
   const itemInfo = useRecoilValue(itemInfoState)
   const celebInfo = useRecoilValue(celebInfoInItemState)
+  const imgList = useRecoilValue(imgListState)
   const [debounceItemInfo] = useDebounce(itemInfo, 500)
   const [debounceCelebInfo] = useDebounce(celebInfo, 500)
 
@@ -65,10 +71,16 @@ const useUploadStateObserver = () => {
       newCelebId: itemInfo.newCeleb?.celebId ?? null,
       newBrandId: itemInfo.newBrand?.brandId ?? null,
     }
-    mutate(tempItem)
+    mutateByTempItem(tempItem)
 
     console.log('Recoil 상태 변화 감지')
   }, [debounceItemInfo, debounceCelebInfo])
+
+  useEffect(() => {
+    if (imgList.length > 0) {
+      mutateByImgUpload(imgList)
+    }
+  }, [imgList])
 }
 
 export default useUploadStateObserver
