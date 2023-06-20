@@ -51,7 +51,7 @@ const SearchResult = () => {
   const { searchItem } = useItemSearchQuery()
   const { data, error, fetchNextPage, status, isFetching, isFetchingNextPage } =
     searchItem(debouncedItemName)
-  const tempData = data?.pages[0]
+  const tempData = data?.pages[0].content[0]
   const bottom = useRef(null)
   console.log('tempData', error)
   console.log('itemName', itemName)
