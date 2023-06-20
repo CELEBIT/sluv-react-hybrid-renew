@@ -6,8 +6,8 @@ interface TextAreaProps {
   value: string
   setValue: React.Dispatch<React.SetStateAction<string>>
   placeholder: string
-  error: boolean
-  errorMsg: string
+  error?: boolean
+  errorMsg?: string
 }
 
 const TextArea = ({ value, setValue, placeholder, error, errorMsg }: TextAreaProps) => {

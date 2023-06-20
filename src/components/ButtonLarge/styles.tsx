@@ -7,7 +7,6 @@ export const LargeWrapper = styled.div<{
 }>`
   display: inline-flex;
   flex-direction: row;
-  flex-shrink: 0;
   justify-content: center;
   align-items: center;
 
