@@ -12,7 +12,7 @@ import { HeaderWrapper } from './styles'
 import DropDownMenu from './DropDownMenu'
 import { Menu } from './DropDownMenu/styles'
 import { CommunityMenu, CommunityMenuList } from '../../../config/communityMenu'
-import { communityItemState, imgListState } from '../../../recoil/communityInfo'
+import { communityItemState, imgItemListState } from '../../../recoil/communityInfo'
 import useModals from '../../Modals/hooks/useModals'
 import { modals } from '../../Modals'
 
@@ -32,7 +32,7 @@ const CommunityHeader = ({ children, backBtnClick }: HeaderProps) => {
   const { pathname } = useLocation()
   const questionInfo = useRecoilValue(communityItemState)
   const [communityMenu, setCommunityMenu] = useRecoilState(communityMenuState)
-  const imgItemList = useRecoilValue(imgListState)
+  const imgItemList = useRecoilValue(imgItemListState)
   const [menuOpen, setMenuOpen] = useState(false)
   const onMenuClick = (menu: CommunityMenu) => {
     if (

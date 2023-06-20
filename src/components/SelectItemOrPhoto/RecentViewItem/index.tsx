@@ -11,7 +11,7 @@ import {
   communityItemState,
   communityQuestionMenuState,
   firstItemState,
-  imgListState,
+  imgItemListState,
   secondItemState,
 } from '../../../recoil/communityInfo'
 import { RecentViewItemResult } from '../../../apis/item/itemService.type'
@@ -38,7 +38,7 @@ const RecentViewItem = () => {
   const resetFirstItem = useResetRecoilState(firstItemState)
   const resetSecondItem = useResetRecoilState(secondItemState)
 
-  const [imgItemList, setImageItemList] = useRecoilState(imgListState)
+  const [imgItemList, setImageItemList] = useRecoilState(imgItemListState)
 
   const handleItemClick = (item: RecentViewItemResult) => {
     console.log(imgItemList)

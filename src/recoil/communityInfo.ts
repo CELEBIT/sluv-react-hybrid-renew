@@ -76,7 +76,7 @@ export const secondItemState = atom<IselectedItem>({
   },
 })
 
-export const imgListState = atom<Array<IselectedItem>>({
-  key: atomKeys.imgListState,
+export const imgItemListState = atom<Array<IselectedItem>>({
+  key: atomKeys.imgItemListState,
   default: [],
 })

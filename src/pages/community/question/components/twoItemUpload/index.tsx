@@ -13,7 +13,7 @@ import {
   IselectedItem,
   communityItemState,
   firstItemState,
-  imgListState,
+  imgItemListState,
   secondItemState,
 } from '../../../../../recoil/communityInfo'
 import ExistingItem from './eachItemField/ExistingItem'
@@ -32,7 +32,7 @@ const TwoItemUpload = ({ onClick }: TwoItemUploadProps) => {
   // 2. firstItem / secondItem을 questionItem의 imgList / itemList 에 저장
   // 3. 완료 버튼 시 최종 업로드
   const [communityUploadInfo, setCommunityUploadInfo] = useRecoilState(communityItemState)
-  const [imgItemList, setImgItemList] = useRecoilState(imgListState)
+  const [imgItemList, setImgItemList] = useRecoilState(imgItemListState)
   const [firstItem, setFirstItem] = useRecoilState(firstItemState)
   const resetFirstItem = useResetRecoilState(firstItemState)
   const [secondItem, setSecondItem] = useRecoilState(secondItemState)

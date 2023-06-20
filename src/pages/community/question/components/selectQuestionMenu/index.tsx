@@ -4,7 +4,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import {
   communityItemState,
   communityQuestionMenuState,
-  imgListState,
+  imgItemListState,
 } from '../../../../../recoil/communityInfo'
 import ButtonMedium from '../../../../../components/ButtonMedium/ButtonMedium'
 import { MenuSelectWrapper } from './styles'
@@ -16,7 +16,7 @@ const SelectQuestionMenu = () => {
     communityQuestionMenuState,
   )
   const questionInfo = useRecoilValue(communityItemState)
-  const [imgItemList] = useRecoilValue(imgListState)
+  const [imgItemList] = useRecoilValue(imgItemListState)
 
   const onClickMenu = (menu: string) => {
     if (

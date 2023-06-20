@@ -22,7 +22,7 @@ import {
   communityItemState,
   communityQuestionMenuState,
   firstItemState,
-  imgListState,
+  imgItemListState,
   secondItemState,
 } from '../../recoil/communityInfo'
 import RecentSelectCeleb from '../BottomSheetModal/ItemCelebModal/RecentSelectCeleb'
@@ -169,7 +169,7 @@ const SelectItemOrPhoto = () => {
   // api file upload용
   const [selectedFileList, setSelectedFileList] = useState<File[]>([])
   // display
-  const [imgItemList, setImageItemList] = useRecoilState(imgListState)
+  const [imgItemList, setImageItemList] = useRecoilState(imgItemListState)
   const [firstItem, setFirstItem] = useRecoilState(firstItemState)
   const [secondItem, setSecondItem] = useRecoilState(secondItemState)
 
