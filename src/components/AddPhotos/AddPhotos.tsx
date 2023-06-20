@@ -1,10 +1,14 @@
 import React from 'react'
 import { atomKeys } from '../../config/atomKeys'
-import { atom, useRecoilState } from 'recoil'
+import { atom, useRecoilState, useRecoilValue } from 'recoil'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { AddPhotosWrapper } from './styles'
 import AddButton from './AddButton'
 import Photo from './Photo'
+
+interface IAddPhotosProps {
+  onClick?: any
+}
 
 export interface Image {
   imgFile?: File
@@ -17,8 +21,9 @@ export const imgListState = atom<Image[]>({
   default: [],
 })
 
-const AddPhotos = () => {
+const AddPhotos = ({ onClick }: IAddPhotosProps) => {
   const [imgList, setImageList] = useRecoilState(imgListState)
+
   const onDragEnd = (result: any) => {
     if (!result.destination) {
       return
@@ -50,7 +55,9 @@ const AddPhotos = () => {
 
   return (
     <AddPhotosWrapper>
-      {imgList.length < 5 && <AddButton itemCnt={imgList.length}></AddButton>}
+      {imgList.length < 5 && (
+        <AddButton onClick={() => onClick()} itemCnt={imgList.length}></AddButton>
+      )}
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable' direction='horizontal'>
           {(provided) => (

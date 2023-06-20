@@ -5,6 +5,7 @@ import Modals from './components/Modals'
 import * as S from './components/styles'
 import { queryToObject } from './utils/utility'
 import storage from './utils/storage'
+import SelectItemOrPhoto from './components/SelectItemOrPhoto'
 
 const loading = <div>화면을 불러오는 중 입니다.(App)</div>
 
@@ -31,6 +32,10 @@ const ItemConfirm = React.lazy(() => import('./pages/item/confirm'))
 // 아이템 신고 / 수정요청
 const EditRequest = React.lazy(() => import('./pages/item/editRequest'))
 const RequestReason = React.lazy(() => import('./pages/item/editRequest/requestReason'))
+
+// 커뮤니티 세부 페이지
+const FindRequest = React.lazy(() => import('./pages/community/findRequest'))
+const Question = React.lazy(() => import('./pages/community/question'))
 
 const App = () => {
   useLayoutEffect(() => {
@@ -63,6 +68,9 @@ const App = () => {
             <Route path='/500' element={<Page500 />} />
             <Route path='/' element={<Home />} />
             <Route path='/community' element={<Community />} />
+            <Route path='/community/find-request' element={<FindRequest />} />
+            <Route path='/community/question' element={<Question />} />
+            <Route path='/community/select-item-photo' element={<SelectItemOrPhoto />} />
             <Route path='/item/create' element={<ItemCreate />} />
             <Route path='/item/create/addinfo' element={<AddInfo />} />
             <Route path='/item/create/addlink' element={<AddLink />} />

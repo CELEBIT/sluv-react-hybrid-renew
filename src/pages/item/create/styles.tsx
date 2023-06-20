@@ -23,6 +23,9 @@ export const LabelContainer = styled.div`
 
 export const Label = styled.span`
   ${Pretendard({ size: 18, weight: Common.bold.regular, color: Common.colors.BK })}
+  .optional {
+    ${Pretendard({ size: 18, weight: Common.bold.regular, color: Common.colors.GR500 })}
+  }
 `
 export const ComponentContainer = styled.div`
   display: flex;
@@ -40,6 +43,12 @@ export const ComponentContainer = styled.div`
   .padding {
     padding: 0 1.25rem;
   }
+  .top {
+    padding-top: 1.25rem;
+  }
+  .noGap {
+    gap: 0;
+  }
 `
 
 export const ComponentWrapper = styled.div`
@@ -49,6 +58,7 @@ export const ComponentWrapper = styled.div`
   width: 100%;
   .error {
     margin-top: -0.5rem;
+    margin-left: 1.25rem;
   }
 `
 

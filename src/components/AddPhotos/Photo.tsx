@@ -4,10 +4,12 @@ import { ReactComponent as Represent } from '../../assets/represent_24.svg'
 import { ReactComponent as DeleteList } from '../../assets/delete_list_24.svg'
 import { ReactComponent as StorageOff } from '../../assets/storage_list_off_24.svg'
 import { ReactComponent as StorageOn } from '../../assets/storage_on_24.svg'
+import { ReactComponent as CheckOff } from '../../assets/checkbox_off_32.svg'
+import { ReactComponent as CheckOn } from '../../assets/checkbox_on_32.svg'
 import { Common } from '../styles'
 
 interface PhotoProps {
-  size: number
+  size?: number
   borderRadius: number
   imgUrl?: string
   imgFile?: File
@@ -15,6 +17,7 @@ interface PhotoProps {
   onDelete?: () => void
   representFlag?: boolean // 정보 공유하기 -> 대표사진 여부를 위해 존재
   storageFlag?: boolean // 아이템 상세 -> 바인더 저장여부
+  isSelected?: boolean // 커뮤니티 아이템 선택 -> 아이템 선택 여부
 }
 
 const Photo = ({
@@ -26,6 +29,7 @@ const Photo = ({
   onDelete,
   representFlag,
   storageFlag,
+  isSelected,
 }: PhotoProps) => {
   const [previewFile, setPreviewFile] = useState<string>('')
 
@@ -53,6 +57,15 @@ const Photo = ({
             )}
           </>
         )}
+        {isSelected !== undefined && (
+          <>
+            {isSelected ? (
+              <CheckOn className='select'></CheckOn>
+            ) : (
+              <CheckOff className='select'></CheckOff>
+            )}
+          </>
+        )}
       </Img>
     )
   } else {
@@ -77,12 +90,12 @@ const Photo = ({
 
 export default Photo
 
-export const Img = styled.div<{ size: number; borderRadius: number; imgUrl: string }>`
+export const Img = styled.div<{ size?: number; borderRadius: number; imgUrl: string }>`
   display: flex;
   position: relative;
   flex-shrink: 0;
-  width: ${(props) => props.size * 0.0625}rem;
-  height: ${(props) => props.size * 0.0625}rem;
+  width: ${(props) => (props.size ? `${props.size * 0.0625}rem` : '100%')};
+  padding-top: 100%;
   border-radius: ${(props) => props.borderRadius * 0.0625}rem;
   background-repeat: no-repeat;
   background-size: cover;
@@ -102,16 +115,22 @@ export const Img = styled.div<{ size: number; borderRadius: number; imgUrl: stri
     right: 0.25rem;
     bottom: 0.25rem;
   }
+  .select {
+    position: absolute;
+    right: 0.25rem;
+    top: 0.25rem;
+  }
 `
-const ImgFileWrap = styled.div<{ size: number; borderRadius: number }>`
+const ImgFileWrap = styled.div<{ size?: number; borderRadius: number }>`
   background-color: ${Common.colors.GR300};
   display: flex;
   position: relative;
   flex-shrink: 0;
+  border-radius: ${(props) => props.borderRadius * 0.0625}rem;
 
   img {
-    width: ${(props) => props.size * 0.0625}rem;
-    height: ${(props) => props.size * 0.0625}rem;
+    width: ${(props) => props.size && `${props.size * 0.0625}rem`};
+    height: ${(props) => props.size && `${props.size * 0.0625}rem`};
     border-radius: ${(props) => props.borderRadius * 0.0625}rem;
   }
 

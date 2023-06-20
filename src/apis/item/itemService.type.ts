@@ -139,3 +139,21 @@ export interface TempItemReq {
   newCelebId: number | null
   newBrandId: number | null
 }
+
+export interface RecentViewItemResult {
+  itemId: number
+  imgUrl: string
+  brandName: string
+  itemName: string
+  celebName: string
+  scrapStatus: boolean
+}
+
+export interface ScrapItemResult {
+  itemId: number
+  imgUrl: string
+  brandName: string
+  itemName: string
+  celebName: string
+  scrapStatus: boolean
+}

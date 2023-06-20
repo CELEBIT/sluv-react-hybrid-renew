@@ -5,8 +5,9 @@ import { ReactComponent as Delete } from '../../../assets/delete_textfield_24.sv
 interface DefaultTextFieldProps {
   value: string
   setValue: React.Dispatch<React.SetStateAction<string>>
-  onEnter: () => void
+  onEnter?: () => void
   placeholder: string
+  focusOnAppear?: boolean
   error?: boolean
   errorMsg?: string
 }
@@ -16,6 +17,7 @@ const DefaultTextfield = ({
   setValue,
   onEnter,
   placeholder,
+  focusOnAppear,
   error,
   errorMsg,
 }: DefaultTextFieldProps) => {
@@ -39,7 +41,7 @@ const DefaultTextfield = ({
   }
   const inputRef = useRef<HTMLInputElement>(null)
   useEffect(() => {
-    inputRef?.current?.focus()
+    if (focusOnAppear) inputRef?.current?.focus()
   }, [inputRef])
 
   return (
@@ -49,7 +51,7 @@ const DefaultTextfield = ({
           value={value}
           placeholder={placeholder}
           ref={inputRef}
-          autoFocus={true}
+          autoFocus={false}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
         ></InputField>

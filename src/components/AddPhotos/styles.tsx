@@ -4,6 +4,7 @@ export const AddPhotosWrapper = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
+  /* height: 18.75rem; */
   overflow-x: scroll;
   padding-top: 1rem;
   gap: 0.75rem;

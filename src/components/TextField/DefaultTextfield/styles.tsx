@@ -75,4 +75,5 @@ export const ErrorText = styled.span`
   font-family: Pretendard;
   color: ${Common.colors.ERROR};
   margin-top: 0.5rem;
+  margin-right: 1.25rem;
 `

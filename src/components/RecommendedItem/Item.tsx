@@ -2,7 +2,6 @@ import React from 'react'
 import styled from '@emotion/styled'
 import Photo from '../AddPhotos/Photo'
 import { Common, Pretendard } from '../styles'
-import { useNavigate } from 'react-router-dom'
 
 export interface IItem {
   itemId: number
@@ -10,14 +9,34 @@ export interface IItem {
   brandName: string
   itemName: string
   celebName: string
+  size?: number
+  onClick: any
+  borderRadius: number
   scrapStatus?: boolean
+  isSelected?: boolean
 }
 
-const Item = ({ itemId, itemName, imgUrl, brandName, celebName, scrapStatus }: IItem) => {
-  const navigate = useNavigate()
+const Item = ({
+  itemId,
+  itemName,
+  imgUrl,
+  brandName,
+  celebName,
+  scrapStatus,
+  size,
+  onClick,
+  borderRadius,
+  isSelected,
+}: IItem) => {
   return (
-    <RecommendItemWrapper key={itemId} onClick={() => navigate(`/item/detail/${itemId}`)}>
-      <Photo size={150} borderRadius={12} imgUrl={imgUrl} storageFlag={scrapStatus}></Photo>
+    <RecommendItemWrapper key={itemId} size={size} onClick={() => onClick()}>
+      <Photo
+        size={size}
+        borderRadius={borderRadius}
+        imgUrl={imgUrl}
+        storageFlag={scrapStatus}
+        isSelected={isSelected}
+      ></Photo>
       <div className='infoText'>
         <CelebName>{celebName}</CelebName>
         <div className='itemInfoText'>
@@ -31,11 +50,12 @@ const Item = ({ itemId, itemName, imgUrl, brandName, celebName, scrapStatus }: I
 
 export default Item
 
-const RecommendItemWrapper = styled.div`
+const RecommendItemWrapper = styled.div<{ size?: number }>`
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
   gap: 0.625rem;
-  width: 9.375rem;
+  width: ${(props) => (props.size ? `${props.size * 0.0625}rem` : '100%')};
   .infoText {
     display: flex;
     flex-direction: column;
