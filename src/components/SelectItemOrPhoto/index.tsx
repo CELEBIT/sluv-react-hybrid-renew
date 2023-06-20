@@ -29,7 +29,7 @@ import RecentSelectCeleb from '../BottomSheetModal/ItemCelebModal/RecentSelectCe
 import useRecentCelebQuery from '../../apis/celeb/hooks/useRecentCelebQuery'
 import RecentSelectItem from './RecentSearchItem'
 import HotSearchItem from './HotSearchItem'
-import SearchResult from './SearchResult'
+import SearchResult, { itemNameSearchState } from './SearchResult'
 import { brandNameSearchState } from '../BottomSheetModal/ItemBrandSelectModal/ItemBrandSelectModal'
 import { useNavigate } from 'react-router-dom'
 import { atomKeys } from '../../config/atomKeys'
@@ -46,7 +46,7 @@ const SelectItemOrPhoto = () => {
   const CommunityMenu = useRecoilValue(communityMenuState)
   const communityQuestionMenu = useRecoilValue(communityQuestionMenuState)
   const [maxItemPhotoCount, setMaxItemPhotoCount] = useRecoilState(maxItemPhotoCountState)
-  const [searchValue, setSearchValue] = useRecoilState<string>(brandNameSearchState)
+  const [searchValue, setSearchValue] = useRecoilState<string>(itemNameSearchState)
   const [selectedTab, setSelectedTab] = useState('recent')
   const [isFocused, setIsFocused] = useState<boolean>(false)
   const imgInput = useRef<HTMLInputElement>(null)

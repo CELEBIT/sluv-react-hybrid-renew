@@ -26,4 +26,5 @@ export const atomKeys = {
   checkListState: 'checkListState' as const,
   selectedItemListState: 'selectedItemListState' as const,
   maxItemPhotoCount: 'maxItemPhotoCount' as const,
+  itemNameSearchState: 'itemNameSearchState' as const,
 }

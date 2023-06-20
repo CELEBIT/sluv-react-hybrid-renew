@@ -14,4 +14,5 @@ export const queryKeys = {
   searchHashtag: (name: string) => ['searchHashtag', name] as const,
   recentViewItem: ['recentViewItem'] as const,
   scrapItem: ['scrapItem'] as const,
+  searchItem: (keyword: string) => ['searchItem', keyword] as const,
 }
