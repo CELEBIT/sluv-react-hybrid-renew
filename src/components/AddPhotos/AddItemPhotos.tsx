@@ -4,14 +4,14 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { AddPhotosWrapper } from './styles'
 import AddButton from './AddButton'
 import Photo from './Photo'
-import { communityItemState, imgListState } from '../../recoil/communityInfo'
+import { communityItemState, imgItemListState } from '../../recoil/communityInfo'
 
 interface IAddPhotosProps {
   onClick?: any
 }
 
 const AddItemPhotos = ({ onClick }: IAddPhotosProps) => {
-  const [imgItemList, setImgItemList] = useRecoilState(imgListState)
+  const [imgItemList, setImgItemList] = useRecoilState(imgItemListState)
   const setCommunityUploadInfo = useSetRecoilState(communityItemState)
 
   // drag and drop 완료시

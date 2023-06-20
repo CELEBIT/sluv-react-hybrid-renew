@@ -21,7 +21,7 @@ import Item from '../../RecommendedItem/Item'
 import {
   communityQuestionMenuState,
   firstItemState,
-  imgListState,
+  imgItemListState,
   secondItemState,
 } from '../../../recoil/communityInfo'
 import { RecentViewItemResult } from '../../../apis/item/itemService.type'
@@ -36,7 +36,7 @@ export const itemNameSearchState = atom<string>({
 const SearchResult = () => {
   const itemName = useRecoilValue(itemNameSearchState)
   const [debouncedItemName] = useDebounce(itemName, 300)
-  const [imgItemList, setImageItemList] = useRecoilState(imgListState)
+  const [imgItemList, setImageItemList] = useRecoilState(imgItemListState)
 
   const maxItemPhotoCount = useRecoilValue(maxItemPhotoCountState)
   const communityQuestionMenu = useRecoilValue(communityQuestionMenuState)

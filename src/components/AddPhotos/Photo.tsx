@@ -4,6 +4,8 @@ import { ReactComponent as Represent } from '../../assets/represent_24.svg'
 import { ReactComponent as DeleteList } from '../../assets/delete_list_24.svg'
 import { ReactComponent as StorageOff } from '../../assets/storage_list_off_24.svg'
 import { ReactComponent as StorageOn } from '../../assets/storage_on_24.svg'
+import { ReactComponent as CheckOff } from '../../assets/checkbox_off_32.svg'
+import { ReactComponent as CheckOn } from '../../assets/checkbox_on_32.svg'
 import { Common } from '../styles'
 
 interface PhotoProps {
@@ -52,6 +54,15 @@ const Photo = ({
               <StorageOn className='represent'></StorageOn>
             ) : (
               <StorageOff className='represent'></StorageOff>
+            )}
+          </>
+        )}
+        {isSelected !== undefined && (
+          <>
+            {isSelected ? (
+              <CheckOn className='select'></CheckOn>
+            ) : (
+              <CheckOff className='select'></CheckOff>
             )}
           </>
         )}
@@ -115,35 +126,11 @@ const ImgFileWrap = styled.div<{ size?: number; borderRadius: number }>`
   display: flex;
   position: relative;
   flex-shrink: 0;
+  border-radius: ${(props) => props.borderRadius * 0.0625}rem;
 
   img {
-    width: ${(props) => (props.size ? `${props.size * 0.0625}rem` : '100%')};
-    height: ${(props) => (props.size ? `${props.size * 0.0625}rem` : '100%')};
-    border-radius: ${(props) => props.borderRadius * 0.0625}rem;
-  }
-
-  .delete {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    transform: translate(50%, -50%);
-  }
-
-  .represent {
-    position: absolute;
-    right: 0.25rem;
-    bottom: 0.25rem;
-  }
-`
-const ImgFileWrap = styled.div<{ size?: number; borderRadius: number }>`
-  background-color: ${Common.colors.GR300};
-  display: flex;
-  position: relative;
-  flex-shrink: 0;
-
-  img {
-    width: ${(props) => props.size * 0.0625}rem;
-    height: ${(props) => props.size * 0.0625}rem;
+    width: ${(props) => props.size && `${props.size * 0.0625}rem`};
+    height: ${(props) => props.size && `${props.size * 0.0625}rem`};
     border-radius: ${(props) => props.borderRadius * 0.0625}rem;
   }
 

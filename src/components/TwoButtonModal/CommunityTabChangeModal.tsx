@@ -7,7 +7,7 @@ import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 import {
   communityItemState,
   firstItemState,
-  imgListState,
+  imgItemListState,
   secondItemState,
 } from '../../recoil/communityInfo'
 import { communityMenuState } from '../Header/CommunityHeader/CommunityHeader'
@@ -31,7 +31,7 @@ const CommunityTabChangeModal = ({ name, url }: CommunityMenu) => {
 
   const resetFirstItem = useResetRecoilState(firstItemState)
   const resetSecondItem = useResetRecoilState(secondItemState)
-  const resetImageItemList = useResetRecoilState(imgListState)
+  const resetImageItemList = useResetRecoilState(imgItemListState)
 
   const changeMenu = () => {
     setQuestionItem({
