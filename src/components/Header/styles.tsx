@@ -27,6 +27,7 @@ export const HeaderWrapper = styled.header<IHeaderWrapper>`
   .right {
     display: flex;
     align-items: center;
+    gap: 1.25rem;
   }
 `
 

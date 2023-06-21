@@ -20,7 +20,7 @@ export const BadgeWrapper = styled.div<{ color: string }>`
     (color === 'green' && `${Common.colors.GRN}`) ||
     (color === 'blue' && `${Common.colors.BL}`)};
   font-family: 'Pretendard';
-  font-weight: 400;
+  font-weight: 500;
   font-size: 0.875rem;
   height: 1.8125rem;
   min-width: 3.0625rem;

@@ -29,7 +29,7 @@ export const InputField = styled.input`
   height: 1.25rem;
   width: 100%;
   font-size: 1.0625rem;
-  font-weight: 300;
+  font-weight: 400;
   font-family: 'Pretendard';
   outline: none;
   border: none;

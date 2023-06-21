@@ -15,4 +15,5 @@ export const queryKeys = {
   recentViewItem: ['recentViewItem'] as const,
   scrapItem: ['scrapItem'] as const,
   searchItem: (keyword: string) => ['searchItem', keyword] as const,
+  questionDetail: (questionId: number) => ['questionDetail', questionId] as const,
 }
