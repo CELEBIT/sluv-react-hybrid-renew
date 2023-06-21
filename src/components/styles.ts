@@ -79,6 +79,7 @@ export const Common = {
     GR300: '#DFE2E6',
     GR200: '#EAECEF',
     GR100: '#F4F5F6',
+    GR50: '#F7F7FB',
 
     ERROR: '#FA5252',
 
