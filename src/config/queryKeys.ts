@@ -12,4 +12,7 @@ export const queryKeys = {
   searchCeleb: (celebName: string) => ['searchCeleb', celebName] as const,
   itemDetail: (itemId: number) => ['itemDetail', itemId] as const,
   searchHashtag: (name: string) => ['searchHashtag', name] as const,
+  recentViewItem: ['recentViewItem'] as const,
+  scrapItem: ['scrapItem'] as const,
+  searchItem: (keyword: string) => ['searchItem', keyword] as const,
 }

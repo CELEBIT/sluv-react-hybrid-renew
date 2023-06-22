@@ -1,8 +1,9 @@
 import React from 'react'
-import styled from '@emotion/styled'
 import Item from './Item'
 import { Common, Pretendard } from '../styles'
 import { RecommendItemResult } from '../../apis/item/itemService.type'
+import { useNavigate } from 'react-router-dom'
+import styled from '@emotion/styled'
 
 interface RecommendedItemProps {
   title: string
@@ -10,12 +11,21 @@ interface RecommendedItemProps {
 }
 
 const RecommendedItemList = ({ title, list }: RecommendedItemProps) => {
+  const navigate = useNavigate()
   return (
     <RecommendedItemListWrapper>
       <TitleText>{title}</TitleText>
       <ItemList>
         {list?.map((item) => {
-          return <Item key={item.itemId} {...item}></Item>
+          return (
+            <Item
+              key={item.itemId}
+              {...item}
+              size={150}
+              borderRadius={8}
+              onClick={() => navigate(`/item/detail/${item.itemId}`)}
+            ></Item>
+          )
         })}
       </ItemList>
     </RecommendedItemListWrapper>
@@ -24,13 +34,13 @@ const RecommendedItemList = ({ title, list }: RecommendedItemProps) => {
 
 export default RecommendedItemList
 
-const RecommendedItemListWrapper = styled.div`
+export const RecommendedItemListWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
 `
 
-const ItemList = styled.div`
+export const ItemList = styled.div`
   display: flex;
   flex-direction: row;
   overflow-x: scroll;
@@ -42,7 +52,7 @@ const ItemList = styled.div`
   }
 `
 
-const TitleText = styled.div`
+export const TitleText = styled.div`
   padding: 0 1.25rem;
-  ${Pretendard({ size: 18, weight: Common.bold.regular, color: Common.colors.BK })}
+  ${Pretendard({ size: 18, weight: Common.bold.semiBold, color: Common.colors.BK })}
 `
