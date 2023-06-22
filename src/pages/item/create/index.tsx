@@ -51,8 +51,9 @@ const ItemCreate = () => {
   const onSubmit = () => {
     setHasTriedToUpload(true)
     if (
-      celeb.id &&
-      category.id &&
+      itemInfo.imgList &&
+      (itemInfo.celeb || itemInfo.newCeleb) &&
+      itemInfo.itemCategory &&
       (itemInfo.brand?.brandId || itemInfo.newBrand?.brandId) &&
       itemInfo.itemName &&
       itemInfo.price
