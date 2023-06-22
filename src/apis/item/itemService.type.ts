@@ -22,6 +22,7 @@ export interface TempItemResult {
 export interface ImgResult {
   imgUrl: string
   representFlag: boolean
+  sortOrder: number
 }
 export interface CelebResult {
   id: 0
@@ -138,6 +139,10 @@ export interface TempItemReq {
   infoSource: string | null
   newCelebId: number | null
   newBrandId: number | null
+}
+
+export interface ItemId {
+  itemId: number
 }
 
 export interface RecentViewItemResult {
