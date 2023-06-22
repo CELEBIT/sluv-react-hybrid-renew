@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { Common, Pretendard } from '../styles'
 
-interface IHeaderWrapper {
+export interface IHeaderWrapper {
   isModalHeader: boolean
 }
 

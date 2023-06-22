@@ -258,7 +258,7 @@ const ItemDetail = () => {
             <span>{data?.writer.nickName}</span>
           </div>
           {data?.followStatus ? (
-            <ButtonSmall type='sec' text='팔로우 하는 중' icon={true} onClick={onClickFollow} />
+            <ButtonSmall type='sec' text='팔로잉' icon={true} onClick={onClickFollow} />
           ) : (
             <ButtonSmall type='sec' text='팔로우' onClick={onClickFollow} />
           )}

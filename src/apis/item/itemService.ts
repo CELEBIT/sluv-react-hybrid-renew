@@ -6,6 +6,9 @@ import {
   ItemDetailResult,
   ItemId,
   ParentCategoryResult,
+  RecentViewItemResult,
+  RecommendItemResult,
+  ScrapItemResult,
   TempItemId,
   TempItemReq,
   TempItemResult,
@@ -15,11 +18,17 @@ export default class ItemService {
   itemUrl: string
   tempItemUrl: string
   hashtagUrl: string
+  recentItemUrl: string
+  scrapItemUrl: string
+  hotItemUrl: string
 
   constructor() {
     this.itemUrl = '/app/item'
     this.tempItemUrl = '/app/item/temp'
     this.hashtagUrl = '/app/item/hashtag'
+    this.recentItemUrl = '/app/item/recent'
+    this.scrapItemUrl = '/app/item/scrap'
+    this.hotItemUrl = '/app/item/hot'
   }
 
   // 아이템 카테고리 조회
@@ -115,6 +124,40 @@ export default class ItemService {
   // 아이템 등록 및 수정
   async postItem(item: TempItemReq) {
     const data: ResponseType<ItemId> = await request.post(`${this.itemUrl}`, item)
+    return data.result
+  }
+
+  // 최근 본 아이템
+  async getRecentViewItem(page: number) {
+    const data: ResponseType<GetPaginationResult<RecentViewItemResult>> = await request.get(
+      `${this.recentItemUrl}`,
+      {
+        params: {
+          page,
+          size: 21,
+        },
+      },
+    )
+    return data.result
+  }
+
+  // 찜한 아이템
+  async getScrapItem(page: number) {
+    const data: ResponseType<GetPaginationResult<ScrapItemResult>> = await request.get(
+      `${this.scrapItemUrl}`,
+      {
+        params: {
+          page,
+          size: 21,
+        },
+      },
+    )
+    return data.result
+  }
+
+  // 커뮤니티 아이템 선택 인기 아이템 조회
+  async getHotItem() {
+    const data: ResponseType<RecommendItemResult> = await request.get(`${this.hotItemUrl}`)
     return data.result
   }
 }
