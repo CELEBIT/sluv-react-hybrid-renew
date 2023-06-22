@@ -4,6 +4,7 @@ import { GetPaginationResult, ResponseType } from '../core/type'
 import {
   HashtagContent,
   ItemDetailResult,
+  ItemId,
   ParentCategoryResult,
   TempItemId,
   TempItemReq,
@@ -109,6 +110,11 @@ export default class ItemService {
   // 임시저장 아이템 저장
   async postTempItem(tempItem: TempItemReq) {
     const data: ResponseType<TempItemId> = await request.post(`${this.tempItemUrl}`, tempItem)
+    return data.result
+  }
+  // 아이템 등록 및 수정
+  async postItem(item: TempItemReq) {
+    const data: ResponseType<ItemId> = await request.post(`${this.itemUrl}`, item)
     return data.result
   }
 }
