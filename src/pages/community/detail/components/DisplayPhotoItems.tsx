@@ -14,7 +14,9 @@ interface DisplayPhotoItemsProps {
 }
 
 const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
-  const combinedList = [...(imgList || []), ...(itemList || [])].sort((a, b) => a.order - b.order)
+  const combinedList = [...(imgList || []), ...(itemList || [])].sort(
+    (a, b) => a.sortOrder - b.sortOrder,
+  )
   const isImgItem = (item: Img | Item): item is Img => {
     return (item as Img).imgUrl !== undefined
   }

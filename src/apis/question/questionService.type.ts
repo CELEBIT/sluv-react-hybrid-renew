@@ -1,4 +1,4 @@
-interface User {
+export interface User {
   id: number
   nickName: string
   profileImgUrl: string
@@ -7,16 +7,22 @@ interface User {
 export interface Img {
   imgUrl: string
   representFlag: boolean
-  order: number
+  sortOrder: number
+  description: string
+  voteNum: number
+  votePercent: number
 }
 
 export interface Item {
   item: EachItem
   representFlag: boolean
-  order: number
+  sortOrder: number
+  description: string
+  voteNum: number
+  votePercent: number
 }
 
-interface EachItem {
+export interface EachItem {
   itemId: number
   imgUrl: string
   brandName: string
@@ -24,7 +30,7 @@ interface EachItem {
   celebName: string
   scrapStatus: boolean
 }
-interface Celeb {
+export interface Celeb {
   celebId: number
   celebName: string
 }
@@ -37,6 +43,7 @@ export interface QuestionResult {
   itemList: Array<Item> | null
   searchNum: number
   likeNum: number
+  totalVoteNum: number
   commentNum: number
   createdAt: Date
   hasLike: boolean

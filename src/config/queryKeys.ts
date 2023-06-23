@@ -16,4 +16,5 @@ export const queryKeys = {
   scrapItem: ['scrapItem'] as const,
   searchItem: (keyword: string) => ['searchItem', keyword] as const,
   questionDetail: (questionId: number) => ['questionDetail', questionId] as const,
+  comment: (questionId: number) => ['comment', questionId] as const,
 }

@@ -28,4 +28,6 @@ export const atomKeys = {
   maxItemPhotoCount: 'maxItemPhotoCount' as const,
   itemNameSearchState: 'itemNameSearchState' as const,
   imgItemListState: 'imgItemListState' as const,
+  commentState: 'commentState' as const,
+  commentQuestionId: 'commentQuestionId' as const,
 }
