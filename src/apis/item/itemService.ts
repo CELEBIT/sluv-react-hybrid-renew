@@ -4,6 +4,7 @@ import { GetPaginationResult, ResponseType } from '../core/type'
 import {
   HashtagContent,
   ItemDetailResult,
+  ItemId,
   ParentCategoryResult,
   RecentViewItemResult,
   RecommendItemResult,
@@ -120,6 +121,11 @@ export default class ItemService {
     const data: ResponseType<TempItemId> = await request.post(`${this.tempItemUrl}`, tempItem)
     return data.result
   }
+  // 아이템 등록 및 수정
+  async postItem(item: TempItemReq) {
+    const data: ResponseType<ItemId> = await request.post(`${this.itemUrl}`, item)
+    return data.result
+  }
 
   // 최근 본 아이템
   async getRecentViewItem(page: number) {
@@ -152,7 +158,6 @@ export default class ItemService {
   // 커뮤니티 아이템 선택 인기 아이템 조회
   async getHotItem() {
     const data: ResponseType<RecommendItemResult> = await request.get(`${this.hotItemUrl}`)
-
     return data.result
   }
 }
