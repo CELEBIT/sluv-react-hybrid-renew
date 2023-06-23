@@ -37,6 +37,8 @@ const RequestReason = React.lazy(() => import('./pages/item/editRequest/requestR
 const FindRequest = React.lazy(() => import('./pages/community/findRequest'))
 const Question = React.lazy(() => import('./pages/community/question'))
 const CommunityDetail = React.lazy(() => import('./pages/community/detail/CommunityDetail'))
+const CommentItemPhoto = React.lazy(() => import('./components/SelectItemOrPhoto/CommentItemPhoto'))
+const CommentUpload = React.lazy(() => import('./pages/community/detail/components/CommentUpload'))
 
 const App = () => {
   useLayoutEffect(() => {
@@ -70,9 +72,11 @@ const App = () => {
             <Route path='/' element={<Home />} />
             <Route path='/community' element={<Community />} />
             <Route path='/community/find-request' element={<FindRequest />} />
-            <Route path='/community/find-request/detail/:id' element={<CommunityDetail />} />
+            <Route path='/community/detail/:id' element={<CommunityDetail />} />
             <Route path='/community/question' element={<Question />} />
             <Route path='/community/select-item-photo' element={<SelectItemOrPhoto />} />
+            <Route path='/community/comment/comment-item-photo' element={<CommentItemPhoto />} />
+            <Route path='/community/comment/upload' element={<CommentUpload />} />
             <Route path='/item/create' element={<ItemCreate />} />
             <Route path='/item/create/addinfo' element={<AddInfo />} />
             <Route path='/item/create/addlink' element={<AddLink />} />

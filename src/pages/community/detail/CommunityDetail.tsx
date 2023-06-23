@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
+  CommentContainer,
   CommentWrapper,
   CommunityContent,
   DetailContainer,
@@ -10,6 +11,7 @@ import {
   Line,
   ProfileImg,
   Recommend,
+  RecommendChipWrapper,
   RecommendInfo,
   RecommendListWrapper,
   RecommendPhoto,
@@ -21,7 +23,7 @@ import Header from '../../../components/Header/Header'
 import { ReactComponent as Home } from '../../../assets/home_24.svg'
 import { ReactComponent as Share } from '../../../assets/share_24.svg'
 import { ReactComponent as More } from '../../../assets/add_24.svg'
-import { ReactComponent as Comment } from '../../../assets/comment_18.svg'
+import { ReactComponent as CommentIcon } from '../../../assets/comment_18.svg'
 import { ReactComponent as View } from '../../../assets/page view_18.svg'
 import { ReactComponent as Like } from '../../../assets/like_off_24.svg'
 import { ReactComponent as SubmitOff } from '../../../assets/submit_off_32.svg'
@@ -32,23 +34,82 @@ import { Divider, Reaction } from '../../item/detail/styles'
 import { HeaderWrapper } from '../../item/addInfo/styles'
 import EmptyState from '../../../components/EmptyState'
 import CommentField from '../../../components/TextField/CommentField/CommentField'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import useQuestionDetailQuery from '../../../apis/question/hooks/useQuestionDetailQuery'
 import CountDown from './components/CountDown'
 import DisplayPhotoItems from './components/DisplayPhotoItems'
+import Vote from './components/Vote'
+import useSearchCommentQuery, {
+  IAddComment,
+} from '../../../apis/comment/hooks/useSearchCommentQuery'
+import { NewComment } from '../../../apis/comment/commentService.type'
+import { atomKeys } from '../../../config/atomKeys'
+import {
+  atom,
+  useRecoilState,
+  useRecoilValue,
+  useResetRecoilState,
+  useSetRecoilState,
+} from 'recoil'
+import Comment from './components/Comment/Comment'
+import Chip from '../../../components/Chip/Chip'
+
+export const commentState = atom<NewComment>({
+  key: atomKeys.commentState,
+  default: { content: null, imgList: null, itemList: null },
+})
+
+export const commentQuestionIdState = atom<number>({
+  key: atomKeys.commentQuestionId,
+  default: 0,
+})
 
 const CommunityDetail = () => {
-  const [comment, setComment] = useState<string>('')
-  const submitComment = () => {
-    console.log('댓글 입력됨', comment)
-    setComment('')
-  }
+  const navigate = useNavigate()
+  const [commentObject, setCommentObject] = useRecoilState(commentState)
+  const resetCommentObject = useResetRecoilState(commentState)
+
+  const [commentString, setCommentString] = useState<string>(commentObject.content ?? '')
+  const [isFocused, setIsFocused] = useState(false)
+  const commentWrapperRef = useRef<HTMLDivElement>(null)
 
   const { id: questionId } = useParams()
-  console.log('questionId', questionId)
+  const setCommentQuestionId = useSetRecoilState(commentQuestionIdState)
+  if (questionId) {
+    setCommentQuestionId(Number(questionId))
+  }
+
   const { getQuestionDetail } = useQuestionDetailQuery()
   const { data } = getQuestionDetail(Number(questionId))
-  console.log(data)
+
+  const [isChipClicked, setIsChipClicked] = useState(false)
+  const onBlurHandler = () => {
+    setTimeout(() => {
+      if (!isChipClicked) {
+        setIsFocused(false)
+      }
+    }, 100)
+  }
+
+  const {
+    addComment: { mutate: mutateByAddComment },
+  } = useSearchCommentQuery()
+  const onAddComment = () => {
+    const newComment: IAddComment = {
+      questionId: Number(questionId),
+      content: commentObject.content,
+      imgList: commentObject.imgList,
+      itemList: commentObject.itemList,
+    }
+    mutateByAddComment(newComment)
+  }
+  const submitComment = () => {
+    onAddComment()
+    resetCommentObject()
+  }
+  useEffect(() => {
+    setCommentObject({ ...commentObject, content: commentString })
+  }, [commentString])
 
   return (
     <DetailContainer>
@@ -84,7 +145,7 @@ const CommunityDetail = () => {
             <CountDown voteEndTime={new Date(data?.voteEndTime)}></CountDown>
           )}
           {data?.qtype === 'Buy' ? (
-            <></>
+            <Vote></Vote>
           ) : (
             <DisplayPhotoItems
               imgList={data?.imgList}
@@ -95,7 +156,7 @@ const CommunityDetail = () => {
         <InteractionWrapper>
           <div className='left'>
             <Reaction>
-              <Comment></Comment>
+              <CommentIcon></CommentIcon>
               <span>{data?.commentNum}</span>
             </Reaction>
             <Reaction>
@@ -110,11 +171,7 @@ const CommunityDetail = () => {
         </InteractionWrapper>
       </InfoWrapper>
       <Divider></Divider>
-      <EmptyState
-        icon='comment'
-        title='아직 댓글이 없어요'
-        subtitle='스러버를위해 첫 댓글을 남겨보세요'
-      ></EmptyState>
+      <Comment questionId={Number(questionId)}></Comment>
       <Divider></Divider>
       <RecommendListWrapper>
         <span className='title'>미미 님의 추천을 기다리고 있어요</span>
@@ -156,15 +213,29 @@ const CommunityDetail = () => {
           </RecommendInfo>
         </Recommend>
       </RecommendListWrapper>
-      <CommentWrapper>
-        <CommentField
-          value={comment}
-          setValue={setComment}
-          placeholder='댓글을 남겨주세요'
-          onEnter={submitComment}
-        ></CommentField>
-        {comment ? <SubmitOn></SubmitOn> : <SubmitOff></SubmitOff>}
-      </CommentWrapper>
+      <CommentContainer>
+        {isFocused && (
+          <RecommendChipWrapper>
+            <Chip
+              text='아이템 찾아주기'
+              onClick={() => navigate('/community/comment/comment-item-photo')}
+            ></Chip>
+          </RecommendChipWrapper>
+        )}
+        <CommentWrapper onFocus={() => setIsFocused(true)} onBlur={onBlurHandler}>
+          <CommentField
+            value={commentString}
+            setValue={setCommentString}
+            placeholder='댓글을 남겨주세요'
+            onEnter={() => submitComment()}
+          ></CommentField>
+          {commentString ? (
+            <SubmitOn onClick={() => submitComment()}></SubmitOn>
+          ) : (
+            <SubmitOff></SubmitOff>
+          )}
+        </CommentWrapper>
+      </CommentContainer>
     </DetailContainer>
   )
 }

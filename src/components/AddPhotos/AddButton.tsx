@@ -6,11 +6,12 @@ import { ReactComponent as Add } from '../../assets/add_18.svg'
 type AddButtonProps = {
   itemCnt: number
   onClick: any
+  size?: number
 }
 
-const AddButton = ({ itemCnt, onClick }: AddButtonProps) => {
+const AddButton = ({ itemCnt, onClick, size }: AddButtonProps) => {
   return (
-    <AddPhotoWrapper onClick={() => onClick()}>
+    <AddPhotoWrapper size={size} onClick={() => onClick()}>
       <Add />
       <span>({itemCnt}/5)</span>
     </AddPhotoWrapper>
@@ -19,14 +20,14 @@ const AddButton = ({ itemCnt, onClick }: AddButtonProps) => {
 
 export default AddButton
 
-const AddPhotoWrapper = styled.div`
+const AddPhotoWrapper = styled.div<{ size?: number }>`
   display: flex;
   flex-shrink: 0;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 4.625rem;
-  height: 4.625rem;
+  width: ${(props) => (props.size ? `${props.size * 0.0625}rem` : '4.625rem')};
+  height: ${(props) => (props.size ? `${props.size * 0.0625}rem` : '4.625rem')};
   border: 1px solid ${Common.colors.GR200};
   border-radius: 0.5rem;
   background-color: white;

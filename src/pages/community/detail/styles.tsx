@@ -78,9 +78,12 @@ export const InfoTextWrapper = styled.div`
   white-space: pre-wrap;
 `
 export const CommunityContent = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
   min-height: 15.1875rem;
   margin-bottom: 0.5rem;
+  gap: 1.25rem;
 `
 
 export const InteractionWrapper = styled.div`
@@ -148,17 +151,30 @@ export const Line = styled.div`
   width: 100%;
   border-top: 1px solid ${Common.colors.GR200};
 `
+
+export const CommentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  background-color: white;
+  border-top: 1px solid ${Common.colors.GR300};
+`
+export const RecommendChipWrapper = styled.div`
+  display: flex;
+  padding: 0.75rem 1.25rem 0 1.25rem;
+  border-top: 1px solid ${Common.colors.GR300};
+`
+
 export const CommentWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  position: absolute;
-  bottom: 0;
   height: 56px;
   z-index: 100;
   gap: 1.5625rem;
-  border-top: 1px solid ${Common.colors.GR300};
   box-sizing: border-box;
   background-color: white;
   padding: 0.75rem 1.125rem 0.75rem 1.25rem;
