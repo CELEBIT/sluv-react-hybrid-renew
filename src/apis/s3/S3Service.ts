@@ -19,7 +19,6 @@ export default class S3Service {
     const data: any = await axios({
       headers: {
         'Content-Type': `image/${file.type.split('/')[1]}`,
-        'x-amz-acl': 'public-read',
       },
       data: file,
       method: 'PUT',
