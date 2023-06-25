@@ -1,5 +1,6 @@
 import request from '../core'
-import { ResponseType } from '../core/type'
+import { GetPaginationResult, ResponseType } from '../core/type'
+import { ItemResult } from '../item/itemService.type'
 
 export interface ICelebResult {
   id: number
@@ -35,5 +36,19 @@ export default class UserService {
       content,
     })
     return data
+  }
+
+  // 유저 업로드 게시물 조회
+  async getUserUploadItem(page: number) {
+    const data: ResponseType<GetPaginationResult<ItemResult>> = await request.get(
+      `${this.userUrl}/item`,
+      {
+        params: {
+          page,
+          size: 21,
+        },
+      },
+    )
+    return data.result
   }
 }

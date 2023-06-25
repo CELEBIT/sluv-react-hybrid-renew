@@ -5,10 +5,9 @@ import {
   HashtagContent,
   ItemDetailResult,
   ItemId,
+  ItemResult,
   ParentCategoryResult,
-  RecentViewItemResult,
   RecommendItemResult,
-  ScrapItemResult,
   TempItemId,
   TempItemReq,
   TempItemResult,
@@ -129,7 +128,7 @@ export default class ItemService {
 
   // 최근 본 아이템
   async getRecentViewItem(page: number) {
-    const data: ResponseType<GetPaginationResult<RecentViewItemResult>> = await request.get(
+    const data: ResponseType<GetPaginationResult<ItemResult>> = await request.get(
       `${this.recentItemUrl}`,
       {
         params: {
@@ -143,7 +142,7 @@ export default class ItemService {
 
   // 찜한 아이템
   async getScrapItem(page: number) {
-    const data: ResponseType<GetPaginationResult<ScrapItemResult>> = await request.get(
+    const data: ResponseType<GetPaginationResult<ItemResult>> = await request.get(
       `${this.scrapItemUrl}`,
       {
         params: {

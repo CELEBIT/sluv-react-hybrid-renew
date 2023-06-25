@@ -72,6 +72,7 @@ export const Common = {
     BG: '#F8F6FF',
     LINE: '#5E2AB9',
 
+    WH: '#FFFFFF',
     BK: '#212529',
     GR600: '#7B8894',
     GR500: '#AEB5BC',
@@ -79,6 +80,7 @@ export const Common = {
     GR300: '#DFE2E6',
     GR200: '#EAECEF',
     GR100: '#F4F5F6',
+    GR50: '#F7F7FB',
 
     ERROR: '#FA5252',
 

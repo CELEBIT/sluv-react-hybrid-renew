@@ -14,5 +14,12 @@ export const queryKeys = {
   searchHashtag: (name: string) => ['searchHashtag', name] as const,
   recentViewItem: ['recentViewItem'] as const,
   scrapItem: ['scrapItem'] as const,
+  userUploadItem: ['userUploadItem'] as const,
   searchItem: (keyword: string) => ['searchItem', keyword] as const,
+  questionDetail: (questionId: number) => ['questionDetail', questionId] as const,
+  comment: (questionId: number) => ['comment', questionId] as const,
+  recommendWait: (questionId: number) => ['recommendWait', questionId] as const,
+  howAboutWait: (questionId: number) => ['howAboutWait', questionId] as const,
+  findWait: (questionId: number) => ['findWait', questionId] as const,
+  buyWait: (questionId: number) => ['buyWait', questionId] as const,
 }

@@ -24,7 +24,7 @@ import {
   imgItemListState,
   secondItemState,
 } from '../../../recoil/communityInfo'
-import { RecentViewItemResult } from '../../../apis/item/itemService.type'
+import { ItemResult } from '../../../apis/item/itemService.type'
 import { communityMenuState } from '../../Header/CommunityHeader/CommunityHeader'
 import { maxItemPhotoCountState } from '..'
 
@@ -63,7 +63,7 @@ const SearchResult = () => {
     onIntersect,
   })
 
-  const handleItemClick = (item: RecentViewItemResult) => {
+  const handleItemClick = (item: ItemResult) => {
     console.log(imgItemList)
     // 이미 item이 추가되어 있는 경우, communityUploadInfo.itemList에서 삭제
     const isItemAdded = imgItemList.some((addedItem) => addedItem.itemId === item.itemId)
