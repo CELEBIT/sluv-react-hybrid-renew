@@ -72,6 +72,7 @@ export const Common = {
     BG: '#F8F6FF',
     LINE: '#5E2AB9',
 
+    WH: '#FFFFFF',
     BK: '#212529',
     GR600: '#7B8894',
     GR500: '#AEB5BC',

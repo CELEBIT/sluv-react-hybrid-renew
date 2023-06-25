@@ -145,16 +145,7 @@ export interface ItemId {
   itemId: number
 }
 
-export interface RecentViewItemResult {
-  itemId: number
-  imgUrl: string
-  brandName: string
-  itemName: string
-  celebName: string
-  scrapStatus: boolean
-}
-
-export interface ScrapItemResult {
+export interface ItemResult {
   itemId: number
   imgUrl: string
   brandName: string

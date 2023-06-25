@@ -45,11 +45,29 @@ export interface QuestionResult {
   likeNum: number
   totalVoteNum: number
   commentNum: number
-  createdAt: Date
+  createdAt: string
   hasLike: boolean
   hasMine: boolean
   voteEndTime: string
   celeb: Celeb
   newCeleb: Celeb
   qtype: string
+  recommendCategoryList: Array<string>
+  voteStatus: number
+}
+
+export interface WaitResult {
+  id: number
+  title: string
+  content: string
+  celebName: null
+  imgList: Array<WaitImg>
+  itemImgList: Array<WaitImg>
+  categoryName: Array<string>
+  qtype: string
+}
+
+export interface WaitImg {
+  imgUrl: string
+  sortOrder: number
 }

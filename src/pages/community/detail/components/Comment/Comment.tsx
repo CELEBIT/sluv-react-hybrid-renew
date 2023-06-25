@@ -25,6 +25,7 @@ import {
   UserImg,
   UserInfo,
 } from './styles'
+import { formatUpdatedAt, convertToUTC } from '../../../../../utils/utility'
 
 interface CommentProps {
   questionId: number
@@ -33,7 +34,12 @@ interface CommentProps {
 const Comment = ({ questionId }: CommentProps) => {
   const { getComment } = useSearchCommentQuery()
   const { data } = getComment(Number(questionId))
-  console.log(data)
+
+  function convertToUTC(dateString: string): string {
+    const date = new Date(dateString)
+    date.setHours(date.getHours() + 9)
+    return date.toUTCString()
+  }
 
   if (data && data.length > 0) {
     return (
@@ -49,7 +55,7 @@ const Comment = ({ questionId }: CommentProps) => {
                   <ContentTop>
                     <UserInfo>
                       <NickName>{comment.user.nickName}</NickName>
-                      <Time>{comment.createdAt}</Time>
+                      <Time>{formatUpdatedAt(convertToUTC(comment.createdAt))}</Time>
                     </UserInfo>
                     <ShowMore></ShowMore>
                   </ContentTop>

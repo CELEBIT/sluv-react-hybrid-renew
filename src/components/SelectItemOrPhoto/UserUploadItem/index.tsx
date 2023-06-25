@@ -5,28 +5,15 @@ import Item from '../../RecommendedItem/Item'
 import { ListWrapper, RecentViewItemContainer } from '../RecentViewItem/styles'
 import useScrapItemQuery from '../../../apis/item/hooks/useScrapItemQuery'
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
-import {
-  IselectedItem,
-  communityItemState,
-  communityQuestionMenuState,
-  firstItemState,
-  imgItemListState,
-  secondItemState,
-} from '../../../recoil/communityInfo'
+import { imgItemListState } from '../../../recoil/communityInfo'
 import { ItemResult } from '../../../apis/item/itemService.type'
 import { Divider } from '../../../pages/item/detail/styles'
 import HotItem from '../HotItem'
 import { maxItemPhotoCountState } from '..'
+import useUserItemQuery from '../../../apis/user/hooks/useUserItemQuery'
 
-const ScrapItem = () => {
-  const [communityUploadInfo, setCommunityUploadInfo] = useRecoilState(communityItemState)
+const UserUploadItem = () => {
   const maxItemPhotoCount = useRecoilValue(maxItemPhotoCountState)
-  const communityQuestionMenu = useRecoilValue(communityQuestionMenuState)
-
-  const [firstItem, setFirstItem] = useRecoilState(firstItemState)
-  const [secondItem, setSecondItem] = useRecoilState(secondItemState)
-  const resetFirstItem = useResetRecoilState(firstItemState)
-  const resetSecondItem = useResetRecoilState(secondItemState)
 
   const [imgItemList, setImageItemList] = useRecoilState(imgItemListState)
 
@@ -37,17 +24,6 @@ const ScrapItem = () => {
     if (isItemAdded) {
       const newItemList = imgItemList.filter((addedItem) => addedItem.itemId !== item.itemId)
       setImageItemList(newItemList)
-
-      if (communityQuestionMenu === '이 중에 뭐 살까') {
-        // 왼쪽 사진/아이템 삭제
-        if (firstItem.itemId === item.itemId) {
-          resetFirstItem()
-        }
-        // 오른쪽 사진/아이템 삭제
-        if (secondItem.itemId === item.itemId) {
-          resetSecondItem()
-        }
-      }
     } else {
       // 추가되어있지 않은 아이템 communityUploadInfo.itemList에 item 추가
       const newItemList = [
@@ -73,35 +49,12 @@ const ScrapItem = () => {
             representFlag: null,
           },
         ])
-
-        if (communityQuestionMenu === '이 중에 뭐 살까') {
-          const newItem = {
-            itemId: item.itemId,
-            imgUrl: item.imgUrl,
-            celebName: item.celebName,
-            brandName: item.brandName,
-            itemName: item.itemName,
-          }
-          if (firstItem?.itemId === null) {
-            console.log(firstItem)
-            setFirstItem((prevFirstItem) => ({
-              ...prevFirstItem,
-              ...newItem,
-            }))
-          } else if (secondItem?.itemId === null) {
-            console.log(secondItem)
-            setSecondItem((prevSecondItem) => ({
-              ...prevSecondItem,
-              ...newItem,
-            }))
-          }
-        }
       }
     }
   }
   const bottom = useRef(null)
-  const { getScrapItem } = useScrapItemQuery()
-  const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } = getScrapItem()
+  const { getUserUploadItem } = useUserItemQuery()
+  const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } = getUserUploadItem()
   const tempData = data?.pages[0].content[0]
   const onIntersect = ([entry]: IntersectionObserverEntry[]) => {
     entry.isIntersecting && fetchNextPage()
@@ -149,9 +102,9 @@ const ScrapItem = () => {
       ) : (
         <div className='full'>
           <EmptyState
-            icon='save'
-            title='저장한 아이템이 없어요'
-            subtitle='다양한 셀럽의 아이템을 저장해 보아요'
+            icon='item'
+            title='업로드한 아이템이 없어요'
+            subtitle='셀럽의 아이템 정보를 공유해 보아요'
           ></EmptyState>
           <Divider className='full'></Divider>
           <HotItem></HotItem>
@@ -161,4 +114,4 @@ const ScrapItem = () => {
   )
 }
 
-export default ScrapItem
+export default UserUploadItem

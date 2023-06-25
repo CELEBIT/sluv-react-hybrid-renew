@@ -24,6 +24,7 @@ import ButtonLarge from '../../ButtonLarge/ButtonLarge'
 import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
 import { useNavigate } from 'react-router-dom'
 import ScrapItem from '../ScrapItem'
+import UserUploadItem from '../UserUploadItem'
 
 const CommentItemPhoto = () => {
   const navigate = useNavigate()
@@ -163,7 +164,7 @@ const CommentItemPhoto = () => {
                   setSelectedTab={setSelectedTab}
                 ></Tabs>
                 {selectedTab === 'recent' && <RecentViewItem></RecentViewItem>}
-                {selectedTab === 'myUpload' && <ScrapItem></ScrapItem>}
+                {selectedTab === 'myUpload' && <UserUploadItem></UserUploadItem>}
               </>
             ) : (
               <>{data ? <RecentSearchItem></RecentSearchItem> : <HotSearchItem></HotSearchItem>}</>
