@@ -52,23 +52,23 @@ export const ImageField = styled.div<{ imgUrl: string | null | undefined; dim?: 
   }
 `
 
-const ItemInfoWrapper = styled.div`
+export const ItemInfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: hidden;
 `
 
-const CelebName = styled.span`
-  ${Pretendard({ size: 13, weight: Common.bold.semiBold, color: 'white' })}
+export const CelebName = styled.span`
+  ${Pretendard({ size: 15, weight: Common.bold.semiBold, color: 'white' })}
   white-space: pre-wrap;
 `
-const BrandName = styled.span`
-  ${Pretendard({ size: 13, weight: Common.bold.semiBold, color: 'white' })}
+export const BrandName = styled.span`
+  ${Pretendard({ size: 13, weight: Common.bold.thin, color: 'white' })}
   text-overflow: ellipsis;
   overflow: hidden;
 `
-const ItemName = styled.span`
+export const ItemName = styled.span`
   ${Pretendard({ size: 12, weight: Common.bold.thin, color: 'white' })}
   text-overflow: ellipsis;
   overflow: hidden;

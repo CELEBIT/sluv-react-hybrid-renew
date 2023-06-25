@@ -19,8 +19,6 @@ import {
 import ExistingItem from './eachItemField/ExistingItem'
 import UploadPhoto from './eachItemField/UploadPhoto'
 import AddItem from './eachItemField/AddItem'
-import { communityMenuState } from '../../../../../components/Header/CommunityHeader/CommunityHeader'
-import { RecentViewItemResult } from '../../../../../apis/item/itemService.type'
 
 interface TwoItemUploadProps {
   onClick: any

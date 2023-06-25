@@ -2,15 +2,12 @@ import { UseInfiniteQueryResult, useInfiniteQuery } from '@tanstack/react-query'
 import { GetPaginationResult } from '../../core/type'
 import ItemService from '../itemService'
 import { queryKeys } from '../../../config/queryKeys'
-import { RecentViewItemResult } from '../itemService.type'
+import { ItemResult } from '../itemService.type'
 
 const useRecentViewItemQuery = () => {
   const item = new ItemService()
 
-  const getRecentViewItem = (): UseInfiniteQueryResult<
-    GetPaginationResult<RecentViewItemResult>,
-    any
-  > => {
+  const getRecentViewItem = (): UseInfiniteQueryResult<GetPaginationResult<ItemResult>, any> => {
     return useInfiniteQuery(
       queryKeys.recentViewItem,
       ({ pageParam = 0 }) => item.getRecentViewItem(pageParam),

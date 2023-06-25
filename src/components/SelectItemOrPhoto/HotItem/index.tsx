@@ -3,7 +3,7 @@ import { ItemList, TitleText } from '../../RecommendedItem/RecommendedItemList'
 import Item from '../../RecommendedItem/Item'
 import useItemDetailQuery from '../../../apis/item/hooks/useItemDetailQuery'
 import { HotItemListWrapper, ListWrapper } from './styles'
-import { RecentViewItemResult } from '../../../apis/item/itemService.type'
+import { ItemResult } from '../../../apis/item/itemService.type'
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 import {
   IselectedItem,
@@ -26,7 +26,7 @@ const HotItem = () => {
 
   const [imgItemList, setImageItemList] = useRecoilState(imgItemListState)
 
-  const handleItemClick = (item: RecentViewItemResult) => {
+  const handleItemClick = (item: ItemResult) => {
     console.log(imgItemList)
     // 이미 item이 추가되어 있는 경우, communityUploadInfo.itemList에서 삭제
     const isItemAdded = imgItemList.some((addedItem) => addedItem.itemId === item.itemId)
