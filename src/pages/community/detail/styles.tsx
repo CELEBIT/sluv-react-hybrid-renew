@@ -121,30 +121,55 @@ export const Recommend = styled.div`
 export const RecommendInfo = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   height: 100%;
-  .category {
-    margin-top: 0.375rem;
-    ${Pretendard({ size: 13, weight: Common.bold.thin, color: Common.colors.YL })}
-  }
   .questionTitle {
     ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.BK })}
     line-height: 1.4375rem;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
+    margin-top: 0.625rem;
     -webkit-line-clamp: 2; /* Limit the number of lines to display */
     -webkit-box-orient: vertical; /* Set the text to flow vertically */
   }
 `
 
-export const RecommendPhoto = styled.div`
+export const InfoTop = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+`
+
+export const Category = styled.div<{ color: string }>`
+  margin-top: 0.375rem;
+  ${({ color }) => {
+    if (color === 'yellow') {
+      return Pretendard({ size: 13, weight: Common.bold.thin, color: Common.colors.YL })
+    } else if (color === 'green') {
+      return Pretendard({ size: 13, weight: Common.bold.thin, color: Common.colors.GRN })
+    } else if (color === 'blue') {
+      return Pretendard({ size: 13, weight: Common.bold.thin, color: Common.colors.BL })
+    } else if (color === 'pink') {
+      return Pretendard({ size: 13, weight: Common.bold.thin, color: Common.colors.PK })
+    } else if (color === 'grey') {
+      return Pretendard({ size: 13, weight: Common.bold.thin, color: Common.colors.GR600 })
+    } else {
+      return Pretendard({ size: 13, weight: Common.bold.thin, color: Common.colors.BK })
+    }
+  }}
+`
+
+export const RecommendPhoto = styled.div<{ imgUrl: string }>`
   display: flex;
   flex-shrink: 0;
   width: 4.5rem;
   height: 4.5rem;
   background-color: grey;
   border-radius: 0.5rem;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50%;
+  background-image: url(${(props) => props.imgUrl});
 `
 
 export const Line = styled.div`
@@ -178,4 +203,26 @@ export const CommentWrapper = styled.div`
   box-sizing: border-box;
   background-color: white;
   padding: 0.75rem 1.125rem 0.75rem 1.25rem;
+`
+
+export const RecommendVote = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 4.5rem;
+  height: 4.5rem;
+  gap: 0.125rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+`
+
+export const EachVotePhoto = styled.div<{ imgUrl: string }>`
+  display: flex;
+  flex-shrink: 0;
+  width: 50%;
+  height: 100%;
+  background-color: grey;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50%;
+  background-image: url(${(props) => props.imgUrl});
 `

@@ -53,6 +53,8 @@ import {
 } from 'recoil'
 import Comment from './components/Comment/Comment'
 import Chip from '../../../components/Chip/Chip'
+import { formatUpdatedAt } from '../../../utils/utility'
+import RecommendList from './components/RecommendList'
 
 export const commentState = atom<NewComment>({
   key: atomKeys.commentState,
@@ -81,6 +83,10 @@ const CommunityDetail = () => {
 
   const { getQuestionDetail } = useQuestionDetailQuery()
   const { data } = getQuestionDetail(Number(questionId))
+  console.log('data', data)
+
+  const combinedList = [...(data?.imgList ?? []), ...(data?.itemList ?? [])]
+  const sortedList = combinedList.sort((a, b) => a.sortOrder - b.sortOrder)
 
   const [isChipClicked, setIsChipClicked] = useState(false)
   const onBlurHandler = () => {
@@ -106,6 +112,7 @@ const CommunityDetail = () => {
   const submitComment = () => {
     onAddComment()
     resetCommentObject()
+    setCommentString('')
   }
   useEffect(() => {
     setCommentObject({ ...commentObject, content: commentString })
@@ -128,14 +135,23 @@ const CommunityDetail = () => {
           {data?.qtype === 'Buy' && <Badge color='green'>이 중에 뭐 살까</Badge>}
           {data?.qtype === 'Find' && <Badge color='pink'>찾아주세요</Badge>}
 
-          {data?.qtype === 'Recommend' && <Badge color='gray'>애착템 추천템</Badge>}
+          {data?.qtype === 'Recommend' && (
+            <Badge color='gray'>
+              {data.recommendCategoryList.map((category, index) => (
+                <React.Fragment key={index}>
+                  {index > 0 && '  '}
+                  {category}
+                </React.Fragment>
+              ))}
+            </Badge>
+          )}
           {data?.qtype === 'Find' && <Badge color='gray'>{data.celeb.celebName}</Badge>}
         </InfoChip>
         <UserWrapper>
           <ProfileImg url={data?.user.profileImgUrl}></ProfileImg>
           <UserTextWrapper>
             <span className='username'>{data?.user.nickName}</span>
-            <span className='time'>5분 전</span>
+            {data?.createdAt && <span className='time'>{formatUpdatedAt(data.createdAt)}</span>}
           </UserTextWrapper>
         </UserWrapper>
         <span className='title'>{data?.title}</span>
@@ -145,7 +161,11 @@ const CommunityDetail = () => {
             <CountDown voteEndTime={new Date(data?.voteEndTime)}></CountDown>
           )}
           {data?.qtype === 'Buy' ? (
-            <Vote></Vote>
+            <Vote
+              voteList={sortedList}
+              voteStatus={data.voteStatus}
+              questionId={Number(questionId)}
+            ></Vote>
           ) : (
             <DisplayPhotoItems
               imgList={data?.imgList}
@@ -173,46 +193,13 @@ const CommunityDetail = () => {
       <Divider></Divider>
       <Comment questionId={Number(questionId)}></Comment>
       <Divider></Divider>
-      <RecommendListWrapper>
-        <span className='title'>미미 님의 추천을 기다리고 있어요</span>
-        <Recommend>
-          <RecommendInfo>
-            <span className='category'>이거 어때</span>
-            <span className='questionTitle'>
-              엔시티 드림 팬이면 이건 꼭 봐야한다고 하는데 어때? 너무 길어서 고민이야... 재밌어?
-            </span>
-          </RecommendInfo>
-        </Recommend>
-        <Line></Line>
-        <Recommend>
-          <RecommendInfo>
-            <span className='category'>이거 어때</span>
-            <span className='questionTitle'>
-              엔시티 드림 팬이면 이건 꼭 봐야한다고 하는데 어때? 너무 길어서 고민이야... 재밌어?
-            </span>
-          </RecommendInfo>
-        </Recommend>
-        <Line></Line>
-        <Recommend>
-          <RecommendInfo>
-            <span className='category'>이거 어때</span>
-            <span className='questionTitle'>
-              스테이들아! 이리노 손민수템 중에 가성비 좋은 거 뭐 없을 까? 내가 아직 학생이라 너무
-              비싼건 부담돼
-            </span>
-          </RecommendInfo>
-          <RecommendPhoto></RecommendPhoto>
-        </Recommend>
-        <Line></Line>
-        <Recommend>
-          <RecommendInfo>
-            <span className='category'>이거 어때</span>
-            <span className='questionTitle'>
-              엔시티 드림 팬이면 이건 꼭 봐야한다고 하는데 어때? 너무 길어서 고민이야... 재밌어?
-            </span>
-          </RecommendInfo>
-        </Recommend>
-      </RecommendListWrapper>
+      {data?.qtype && (
+        <RecommendList
+          questionId={Number(questionId)}
+          nickName={data?.user.nickName}
+          qType={data?.qtype}
+        ></RecommendList>
+      )}
       <CommentContainer>
         {isFocused && (
           <RecommendChipWrapper>
