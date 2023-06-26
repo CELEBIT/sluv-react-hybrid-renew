@@ -40,6 +40,9 @@ const CommunityDetail = React.lazy(() => import('./pages/community/detail/Commun
 const CommentItemPhoto = React.lazy(() => import('./components/SelectItemOrPhoto/CommentItemPhoto'))
 const CommentUpload = React.lazy(() => import('./pages/community/detail/components/CommentUpload'))
 
+// 검색
+const Search = React.lazy(() => import('./pages/search'))
+
 const App = () => {
   useLayoutEffect(() => {
     console.log(window.location.search)
@@ -91,6 +94,7 @@ const App = () => {
             <Route path='/item/detail/report-item/reason' element={<RequestReason />} />
             <Route path='/item/detail/report-user' element={<EditRequest />} />
             <Route path='/item/detail/report-user/reason' element={<RequestReason />} />
+            <Route path='/search' element={<Search />} />
           </Routes>
         </Suspense>
         <Modals />
