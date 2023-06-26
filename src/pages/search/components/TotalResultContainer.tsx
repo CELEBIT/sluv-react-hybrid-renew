@@ -44,6 +44,15 @@ const TotalResultContainer = ({ keyword }: TotalResultContainerProps) => {
           <TitleBar>
             <span>커뮤니티</span>
           </TitleBar>
+          <Divider />
+        </>
+      )}
+      {(data?.userList.length ?? 0) > 0 && (
+        <>
+          <TitleBar>
+            <span>사용자</span>
+          </TitleBar>
+          <Divider />
         </>
       )}
     </>

@@ -53,3 +53,22 @@ export const formatUpdatedAt = (updatedAt: string): string => {
     return `${year}.${month < 10 ? '0' : ''}${month}.${day < 10 ? '0' : ''}${day}`
   }
 }
+
+export function getRankingUpdateTime(date: Date): string {
+  const targetTime = new Date(date)
+  targetTime.setHours(17, 0, 0, 0) // 17:00 설정
+
+  const currentTime = new Date()
+  const currentTimeString = currentTime.toLocaleString()
+
+  if (currentTime < targetTime) {
+    // 17:00 전
+    const dateString = currentTime.toLocaleDateString()
+    return `${dateString} 17:00 기준`
+  } else {
+    // 17:00 후
+    const nextDay = new Date(currentTime.getTime() + 24 * 60 * 60 * 1000) // 현재 시간에 1일(24시간)을 더해줌
+    const nextDayString = nextDay.toLocaleDateString()
+    return `${nextDayString} 17:00 기준`
+  }
+}

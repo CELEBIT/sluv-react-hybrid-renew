@@ -7,6 +7,7 @@ import useRecentSearchQuery from '../../apis/search/hooks/useRecentSearchQuery'
 import RecentSearchContainer from './components/RecentSearchContainer'
 import KeywordPreviewContainer from './components/KeywordPreviewContainer'
 import styled from '@emotion/styled'
+import RankContainer from './components/RankContainer'
 
 const Search = () => {
   const [keyword, setKeyword] = useState('')
@@ -23,9 +24,11 @@ const Search = () => {
       <SearchBarWrap>
         <SearchBarContainer keyword={keyword} setKeyword={setKeyword} />
       </SearchBarWrap>
-
       {!keyword ? (
-        <>{(data?.length ?? 0) > 0 && <RecentSearchContainer dataList={data} />}</>
+        <>
+          {(data?.length ?? 0) > 0 && <RecentSearchContainer dataList={data} />}
+          <RankContainer />
+        </>
       ) : (
         <KeywordPreviewContainer keyword={keyword} />
       )}
