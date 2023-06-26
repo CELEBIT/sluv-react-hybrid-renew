@@ -56,5 +56,6 @@ export const ItemCardDim = styled.div`
 `
 
 export const ItemCardName = styled.span`
-  ${Pretendard({ size: 11, weight: Common.bold.thin, color: Common.colors.WH })}
+  z-index: 5;
+  ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.WH })}
 `

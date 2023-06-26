@@ -45,13 +45,20 @@ const CommentUpload = () => {
     addComment: { mutate: mutateByAddComment },
   } = useSearchCommentQuery()
   const onAddComment = () => {
-    const newComment: IAddComment = {
-      questionId: Number(questionId),
-      content: comment,
-      imgList: commentObject.imgList,
-      itemList: commentObject.itemList,
+    const itemsWithImgFile = imgItemList.filter((item) => item.imgFile)
+    if (itemsWithImgFile.length > 0) {
+      // 이미지 업로드 후 댓글 업로드
+    } else {
+      // 바로 댓글 업로드
+      const newComment: IAddComment = {
+        questionId: Number(questionId),
+        content: comment,
+        imgList: null,
+        itemList: commentObject.itemList,
+      }
+
+      mutateByAddComment(newComment)
     }
-    mutateByAddComment(newComment)
   }
 
   useEffect(() => {
