@@ -9,6 +9,9 @@ export interface SearchItemResult {
   celebName: string
   scrapStatus: boolean
 }
+export interface IRecentSearch {
+  keyword: string
+}
 
 export default class SearchService {
   searchUrl: string
@@ -25,6 +28,27 @@ export default class SearchService {
           keyword,
           page,
           size: 30,
+        },
+      },
+    )
+    return data.result
+  }
+  // 최근 검색어 조회
+  async getRecentSearch() {
+    const data: ResponseType<Array<IRecentSearch>> = await request.get(
+      `${this.searchUrl}/recentSearch`,
+    )
+    return data.result
+  }
+  // 검색어 자동완성
+  async getSearchKeywordPreview(keyword: string, page: number) {
+    const data: ResponseType<GetPaginationResult<IRecentSearch>> = await request.get(
+      `${this.searchUrl}/keyword`,
+      {
+        params: {
+          keyword,
+          page,
+          size: 20,
         },
       },
     )
