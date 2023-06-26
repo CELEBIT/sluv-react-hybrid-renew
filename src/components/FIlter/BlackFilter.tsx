@@ -33,8 +33,8 @@ export const FilterWrapper = styled.div<{ isSelected: boolean }>`
     props.isSelected ? `${Common.colors.BK}` : `${Common.colors.WH}`};
   ${(props) =>
     props.isSelected
-      ? Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.WH })
-      : Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.GR600 })}
+      ? Pretendard({ size: 14, weight: Common.bold.regular, color: Common.colors.WH })
+      : Pretendard({ size: 14, weight: Common.bold.regular, color: Common.colors.GR600 })}
 
   border:${(props) =>
     props.isSelected ? '1px solid ${Common.colors.BK}' : `1px solid ${Common.colors.GR300}`};
