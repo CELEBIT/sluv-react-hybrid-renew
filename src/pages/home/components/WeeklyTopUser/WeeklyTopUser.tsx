@@ -14,6 +14,7 @@ const WeeklyTopUser = () => {
       <UserCardListWrapper>
         <UserCard
           rank={1}
+          borderRadius={16}
           imgUrl='https://cdn.topstarnews.net/news/photo/202306/15348452_1127373_1953.jpg'
           followStatus={true}
           userName='이리노순둥도리'
