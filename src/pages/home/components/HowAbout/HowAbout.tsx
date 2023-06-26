@@ -52,7 +52,7 @@ const HowAbout = () => {
         {itemList.map((item, index) => {
           return (
             <>
-              <HowAboutItem>
+              <HowAboutItem key={index}>
                 <CirclePhoto imgUrl={item.imgUrl}></CirclePhoto>
                 <ItemInfoWrapper>
                   <ItemName>{item.celebName}</ItemName>
@@ -88,8 +88,8 @@ export const HowAboutItem = styled.div`
 export const CirclePhoto = styled.div<{ imgUrl: string }>`
   display: flex;
   flex-shrink: 0;
-  width: 70px;
-  height: 70px;
+  width: 4.375rem;
+  height: 4.375rem;
   border-radius: 50%;
   background-repeat: no-repeat;
   background-size: cover;
