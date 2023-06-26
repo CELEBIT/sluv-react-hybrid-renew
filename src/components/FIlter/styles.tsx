@@ -10,14 +10,14 @@ export const FilterWrapper = styled.div<{ isSelected: boolean; isColor?: boolean
   gap: 0.25rem;
   height: 2.625rem;
   min-width: 3.625rem;
-  padding: 0.5rem 0.75rem;
+  padding: 0.5313rem 0.75rem;
   padding: ${(props) => (props.isColor ? '0.75rem 1.25rem' : '0.5rem 0.75rem')};
   border-radius: 1.5625rem;
   background-color: white;
   ${(props) =>
     props.isSelected
-      ? Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.BK })
-      : Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.GR600 })}
+      ? Pretendard({ size: 14, weight: Common.bold.regular, color: Common.colors.BK })
+      : Pretendard({ size: 14, weight: Common.bold.regular, color: Common.colors.GR600 })}
 
   border:${(props) =>
     props.isSelected ? `1px solid ${Common.colors.BK}` : `1px solid ${Common.colors.GR300}`};
