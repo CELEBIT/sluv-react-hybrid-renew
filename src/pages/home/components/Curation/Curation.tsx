@@ -4,6 +4,7 @@ import ItemCard from './components/ItemCard'
 import styled from '@emotion/styled'
 import { ReactComponent as HeartArrow } from '../../../../assets/heart_arrow.svg'
 import { useNavigate } from 'react-router-dom'
+import useCurationItemQuery from '../../../../apis/item/hooks/useCurationItemQuery'
 
 const Curation = () => {
   const navigate = useNavigate()
@@ -73,83 +74,92 @@ const Curation = () => {
       scrapStatus: false,
     },
   ]
+  const getCelebNameWithoutSpace = (celebName: string) => {
+    const spaceIndex = celebName.indexOf(' ')
+    return spaceIndex !== -1 ? celebName.substring(spaceIndex + 1) : celebName
+  }
+  const { getCurationItem } = useCurationItemQuery()
+  const { data } = getCurationItem()
+  console.log('getCurationItem', { data })
   return (
     <ScrollComponentWrapper>
       <HomeTitle className='title'>한눈에 보는 취향 큐레이션</HomeTitle>
-      <ItemListWrapper>
-        <ItemListCol>
-          <ItemCard
-            imgUrl={itemList[0].imgUrl}
-            celebName={itemList[0].celebName}
-            itemId={itemList[0].itemId}
-          ></ItemCard>
-          <ItemCard
-            imgUrl={itemList[1].imgUrl}
-            celebName={itemList[1].celebName}
-            itemId={itemList[1].itemId}
-          ></ItemCard>
-        </ItemListCol>
-        <ItemListCol>
-          <ItemCard
-            imgUrl={itemList[0].imgUrl}
-            celebName={itemList[0].celebName}
-            itemId={itemList[0].itemId}
-          ></ItemCard>
-          <HeartCard>
-            <HeartArrow></HeartArrow>
-          </HeartCard>
-        </ItemListCol>
-        <ItemListCol>
-          <ItemCard></ItemCard>
-          <ItemCard
-            imgUrl={itemList[1].imgUrl}
-            celebName={itemList[1].celebName}
-            itemId={itemList[1].itemId}
-          ></ItemCard>
-        </ItemListCol>
-        <ItemListCol>
-          <ItemCard
-            imgUrl={itemList[0].imgUrl}
-            celebName={itemList[0].celebName}
-            itemId={itemList[0].itemId}
-          ></ItemCard>
-          <ItemCard
-            imgUrl={itemList[1].imgUrl}
-            celebName={itemList[1].celebName}
-            itemId={itemList[1].itemId}
-          ></ItemCard>
-        </ItemListCol>
-        <ItemListCol>
-          <HeartCard>
-            <HeartArrow></HeartArrow>
-          </HeartCard>
-          <ItemCard
-            imgUrl={itemList[1].imgUrl}
-            celebName={itemList[1].celebName}
-            itemId={itemList[1].itemId}
-          ></ItemCard>
-        </ItemListCol>
-        <ItemListCol>
-          <ItemCard
-            imgUrl={itemList[0].imgUrl}
-            celebName={itemList[0].celebName}
-            itemId={itemList[0].itemId}
-          ></ItemCard>
-          <ItemCard
-            imgUrl={itemList[1].imgUrl}
-            celebName={itemList[1].celebName}
-            itemId={itemList[1].itemId}
-          ></ItemCard>
-        </ItemListCol>
-        <ItemListCol>
-          <ItemCard
-            imgUrl={itemList[0].imgUrl}
-            celebName={itemList[0].celebName}
-            itemId={itemList[0].itemId}
-          ></ItemCard>
-          <ItemCard></ItemCard>
-        </ItemListCol>
-      </ItemListWrapper>
+      {data && (
+        <ItemListWrapper>
+          <ItemListCol>
+            <ItemCard
+              imgUrl={data[0].imgUrl}
+              celebName={getCelebNameWithoutSpace(data[0].celebName)}
+              itemId={data[0].itemId}
+            ></ItemCard>
+            <ItemCard
+              imgUrl={data[1].imgUrl}
+              celebName={getCelebNameWithoutSpace(getCelebNameWithoutSpace(data[1].celebName))}
+              itemId={data[1].itemId}
+            ></ItemCard>
+          </ItemListCol>
+          <ItemListCol>
+            <ItemCard
+              imgUrl={data[0].imgUrl}
+              celebName={getCelebNameWithoutSpace(data[0].celebName)}
+              itemId={data[0].itemId}
+            ></ItemCard>
+            <HeartCard>
+              <HeartArrow></HeartArrow>
+            </HeartCard>
+          </ItemListCol>
+          <ItemListCol>
+            <ItemCard></ItemCard>
+            <ItemCard
+              imgUrl={data[1].imgUrl}
+              celebName={getCelebNameWithoutSpace(data[1].celebName)}
+              itemId={data[1].itemId}
+            ></ItemCard>
+          </ItemListCol>
+          <ItemListCol>
+            <ItemCard
+              imgUrl={data[0].imgUrl}
+              celebName={getCelebNameWithoutSpace(data[0].celebName)}
+              itemId={data[0].itemId}
+            ></ItemCard>
+            <ItemCard
+              imgUrl={data[1].imgUrl}
+              celebName={getCelebNameWithoutSpace(data[1].celebName)}
+              itemId={data[1].itemId}
+            ></ItemCard>
+          </ItemListCol>
+          <ItemListCol>
+            <HeartCard>
+              <HeartArrow></HeartArrow>
+            </HeartCard>
+            <ItemCard
+              imgUrl={data[1].imgUrl}
+              celebName={getCelebNameWithoutSpace(data[1].celebName)}
+              itemId={data[1].itemId}
+            ></ItemCard>
+          </ItemListCol>
+          <ItemListCol>
+            <ItemCard
+              imgUrl={data[0].imgUrl}
+              celebName={getCelebNameWithoutSpace(data[0].celebName)}
+              itemId={data[0].itemId}
+            ></ItemCard>
+            <ItemCard
+              imgUrl={data[1].imgUrl}
+              celebName={getCelebNameWithoutSpace(data[1].celebName)}
+              itemId={data[1].itemId}
+            ></ItemCard>
+          </ItemListCol>
+          <ItemListCol>
+            <ItemCard
+              imgUrl={data[0].imgUrl}
+              celebName={getCelebNameWithoutSpace(data[0].celebName)}
+              itemId={data[0].itemId}
+            ></ItemCard>
+            <ItemCard></ItemCard>
+          </ItemListCol>
+        </ItemListWrapper>
+      )}
     </ScrollComponentWrapper>
   )
 }

@@ -4,6 +4,7 @@ import Item from '../../../../components/RecommendedItem/Item'
 import { useNavigate } from 'react-router-dom'
 import styled from '@emotion/styled'
 import { ItemList } from '../../../../components/RecommendedItem/RecommendedItemList'
+import useEfficientItemQuery from '../../../../apis/item/hooks/useEfficientItemQuery'
 
 const PresentItem = () => {
   const navigate = useNavigate()
@@ -73,11 +74,15 @@ const PresentItem = () => {
       scrapStatus: false,
     },
   ]
+  const { getEfficientItem } = useEfficientItemQuery()
+  const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } = getEfficientItem()
+  const tempData = data?.pages[0].content
+  console.log('tempData', tempData)
   return (
     <ScrollComponentWrapper>
       <HomeTitle className='title'>가성비 좋은 선물템</HomeTitle>
       <ItemList gap={10}>
-        {itemList?.map((item) => {
+        {tempData?.map((item) => {
           return (
             <Item
               key={item.itemId}
