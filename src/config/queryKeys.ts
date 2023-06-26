@@ -24,4 +24,5 @@ export const queryKeys = {
   buyWait: (questionId: number) => ['buyWait', questionId] as const,
   recentSearch: ['recentSearch'] as const,
   searchKeywordPreview: (keyword: string) => ['searchKeywordPreview', keyword] as const,
+  searchTotal: (keyword: string) => ['searchTotal', keyword] as const,
 }

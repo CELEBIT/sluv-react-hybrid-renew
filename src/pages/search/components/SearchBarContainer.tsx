@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import React, { useState } from 'react'
 import SearchTextfield from '../../../components/TextField/SearchTextfield/SearchTextfield'
+import { useNavigate } from 'react-router-dom'
 
 interface SearchBarContainerProps {
   keyword: string
@@ -8,20 +9,19 @@ interface SearchBarContainerProps {
 }
 
 const SearchBarContainer = ({ keyword, setKeyword }: SearchBarContainerProps) => {
+  const navigate = useNavigate()
+  const onEnterSearch = () => {
+    navigate(`/search/result?keyword=${keyword}`)
+  }
+
   return (
-    <SearchBarWrap>
-      <SearchTextfield
-        value={keyword}
-        setValue={setKeyword}
-        onEnter={() => console.log('Enter')}
-        placeholder='셀럽의 아이템을 검색해 보세요'
-      />
-    </SearchBarWrap>
+    <SearchTextfield
+      value={keyword}
+      setValue={setKeyword}
+      onEnter={onEnterSearch}
+      placeholder='셀럽의 아이템을 검색해 보세요'
+    />
   )
 }
 
 export default SearchBarContainer
-
-const SearchBarWrap = styled.div`
-  padding: 0 1.25rem;
-`
