@@ -40,11 +40,12 @@ export const RecommendedItemListWrapper = styled.div`
   gap: 1rem;
 `
 
-export const ItemList = styled.div`
+export const ItemList = styled.div<{ gap?: number }>`
   display: flex;
   flex-direction: row;
   overflow-x: scroll;
-  gap: 0.75rem;
+  gap: ${(props) => (props.gap ? `${props.gap * 0.0625}rem` : '0.75rem')};
+
   padding: 0 1.25rem;
   width: 100%;
   ::-webkit-scrollbar {
