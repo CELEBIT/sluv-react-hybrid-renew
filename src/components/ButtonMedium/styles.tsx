@@ -13,7 +13,7 @@ export const MediumWrapper = styled.div<{
   justify-content: center;
   align-items: center;
 
-  height: 2.625rem;
+  /* height: 2.625rem; */
   min-width: 3.625rem;
   padding: 0.625rem 1rem;
   border-radius: 0.5rem;
@@ -40,8 +40,9 @@ export const MediumWrapper = styled.div<{
   ${({ active }) =>
     active &&
     `
+      border: 1px solid#E5E0F6;
       background-color: ${Common.colors.BG};
-      color:${Common.colors.SEC};
+      color: #5E2AB9;
     `}
 
   ${({ error }) =>
