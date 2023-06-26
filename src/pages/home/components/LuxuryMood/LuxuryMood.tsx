@@ -4,6 +4,7 @@ import { ReactComponent as Luxury } from '../../../../assets/badge_title_luxury.
 import { ItemList } from '../../../../components/RecommendedItem/RecommendedItemList'
 import Item from '../../../../components/RecommendedItem/Item'
 import { useNavigate } from 'react-router-dom'
+import useLuxuryItemQuery from '../../../../apis/item/hooks/useLuxuryItemQuery'
 
 const LuxuryMood = () => {
   const navigate = useNavigate()
@@ -74,6 +75,10 @@ const LuxuryMood = () => {
       scrapStatus: false,
     },
   ]
+  const { getLuxuryItem } = useLuxuryItemQuery()
+  const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } = getLuxuryItem()
+  const tempData = data?.pages[0].content
+  console.log('tempData', tempData)
   return (
     <ScrollComponentWrapper>
       <HomeTitleWrapper className='title'>
@@ -81,7 +86,7 @@ const LuxuryMood = () => {
         <HomeTitle>주목해야할 럭셔리 무드</HomeTitle>
       </HomeTitleWrapper>
       <ItemList gap={11}>
-        {itemList?.map((item) => {
+        {tempData?.map((item) => {
           return (
             <Item
               key={item.itemId}

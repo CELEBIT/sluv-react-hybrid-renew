@@ -22,4 +22,7 @@ export const queryKeys = {
   howAboutWait: (questionId: number) => ['howAboutWait', questionId] as const,
   findWait: (questionId: number) => ['findWait', questionId] as const,
   buyWait: (questionId: number) => ['buyWait', questionId] as const,
+  buyNowItem: ['buyNowItem'] as const,
+  luxuryItem: ['luxuryItem'] as const,
+  newItem: ['newItem'] as const,
 }

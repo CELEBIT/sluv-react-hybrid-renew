@@ -113,6 +113,7 @@ const CommentItemPhoto = () => {
         if (imgItemList.length + i + 1 <= maxItemPhotoCount) {
           reader.onloadend = () => {
             const fileSelected: IselectedItem = {
+              imgFile: file,
               imgUrl: reader.result as string,
               description: null,
               vote: null,
