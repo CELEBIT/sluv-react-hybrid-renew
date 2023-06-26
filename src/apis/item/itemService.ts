@@ -159,4 +159,46 @@ export default class ItemService {
     const data: ResponseType<RecommendItemResult> = await request.get(`${this.hotItemUrl}`)
     return data.result
   }
+
+  // 지금 당장 구매 가능한 아이템 조회
+  async getBuyNowItem(page: number) {
+    const data: ResponseType<GetPaginationResult<ItemResult>> = await request.get(
+      `${this.itemUrl}/nowBuy`,
+      {
+        params: {
+          page,
+          size: 10,
+        },
+      },
+    )
+    return data.result
+  }
+
+  // 최신 등록 아이템 조회
+  async getNewItem(page: number) {
+    const data: ResponseType<GetPaginationResult<ItemResult>> = await request.get(
+      `${this.itemUrl}/new`,
+      {
+        params: {
+          page,
+          size: 10,
+        },
+      },
+    )
+    return data.result
+  }
+
+  // 주목해야할 럭셔리 무드 아이템 조회
+  async getLuxuryItem(page: number) {
+    const data: ResponseType<GetPaginationResult<ItemResult>> = await request.get(
+      `${this.itemUrl}/luxury`,
+      {
+        params: {
+          page,
+          size: 10,
+        },
+      },
+    )
+    return data.result
+  }
 }
