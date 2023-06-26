@@ -4,13 +4,27 @@ import { Common, Pretendard } from '../../components/styles'
 export const HomeContainer = styled.div`
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
+  margin-left: -1.25rem;
   width: 100vw;
   height: 100vh;
-  margin-left: calc(-50vw + 50%);
+  padding-left: 0;
+  ::-webkit-scrollbar {
+    display: none;
+  }
   background-color: white;
   padding-bottom: 55px;
 `
+export const ComponentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  gap: 2.5rem;
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+  padding-bottom: 1.25rem;
+`
+
 export const ScrollComponentWrapper = styled.div<{ bgColor?: string }>`
   display: flex;
   flex-direction: column;
@@ -48,5 +62,5 @@ export const HotCelebTitle = styled.div`
   width: 100%;
   justify-content: center;
   align-items: center;
-  ${Pretendard({ size: 22, weight: Common.bold.semiBold, color: Common.colors.BK })}
+  ${Pretendard({ size: 32, weight: Common.bold.semiBold, color: Common.colors.BK })}
 `

@@ -4,6 +4,7 @@ import { HomeTitle, HomeTitleWrapper, ScrollComponentWrapper } from '../../style
 import { useNavigate } from 'react-router-dom'
 import { ItemList } from '../../../../components/RecommendedItem/RecommendedItemList'
 import Item from '../../../../components/RecommendedItem/Item'
+import useBuyNowItemQuery from '../../../../apis/item/hooks/useBuyNowItemQuery'
 
 const BuyNow = () => {
   const navigate = useNavigate()
@@ -74,6 +75,10 @@ const BuyNow = () => {
       scrapStatus: false,
     },
   ]
+  const { getBuyNowItem } = useBuyNowItemQuery()
+  const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } = getBuyNowItem()
+  const tempData = data?.pages[0].content
+  console.log('tempData', tempData)
   return (
     <ScrollComponentWrapper>
       <HomeTitleWrapper className='title shortTop'>
@@ -81,7 +86,7 @@ const BuyNow = () => {
         <HomeTitle>당장 구매할 수 있어요</HomeTitle>
       </HomeTitleWrapper>
       <ItemList gap={11}>
-        {itemList?.map((item) => {
+        {tempData?.map((item) => {
           return (
             <Item
               key={item.itemId}

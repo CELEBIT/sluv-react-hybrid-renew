@@ -29,6 +29,7 @@ export interface IitemList {
 
 export interface IselectedItem {
   // 사진 or 스럽 내 아이템 선택
+  imgFile?: File
   itemId?: number | null
   imgUrl?: string | null
   description: string | null
