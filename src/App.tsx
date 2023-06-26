@@ -42,6 +42,7 @@ const CommentUpload = React.lazy(() => import('./pages/community/detail/componen
 
 // 검색
 const Search = React.lazy(() => import('./pages/search'))
+const SearchResult = React.lazy(() => import('./pages/search/SearchResult'))
 
 const App = () => {
   useLayoutEffect(() => {
@@ -95,6 +96,7 @@ const App = () => {
             <Route path='/item/detail/report-user' element={<EditRequest />} />
             <Route path='/item/detail/report-user/reason' element={<RequestReason />} />
             <Route path='/search' element={<Search />} />
+            <Route path='/search/result' element={<SearchResult />} />
           </Routes>
         </Suspense>
         <Modals />

@@ -6,6 +6,7 @@ import SearchBarContainer from './components/SearchBarContainer'
 import useRecentSearchQuery from '../../apis/search/hooks/useRecentSearchQuery'
 import RecentSearchContainer from './components/RecentSearchContainer'
 import KeywordPreviewContainer from './components/KeywordPreviewContainer'
+import styled from '@emotion/styled'
 
 const Search = () => {
   const [keyword, setKeyword] = useState('')
@@ -19,7 +20,10 @@ const Search = () => {
       <HeaderWrap>
         <Header isModalHeader={false} title={'전체 검색'} hasArrow={true} />
       </HeaderWrap>
-      <SearchBarContainer keyword={keyword} setKeyword={setKeyword} />
+      <SearchBarWrap>
+        <SearchBarContainer keyword={keyword} setKeyword={setKeyword} />
+      </SearchBarWrap>
+
       {!keyword ? (
         <>{(data?.length ?? 0) > 0 && <RecentSearchContainer dataList={data} />}</>
       ) : (
@@ -30,3 +34,7 @@ const Search = () => {
 }
 
 export default Search
+
+const SearchBarWrap = styled.div`
+  padding: 0 1.25rem;
+`

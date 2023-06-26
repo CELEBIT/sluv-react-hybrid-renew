@@ -9,8 +9,34 @@ export interface SearchItemResult {
   celebName: string
   scrapStatus: boolean
 }
+export interface QuestionImg {
+  imgUrl: string
+  sortOrder: number
+}
+
+export interface SearchQuestionResult {
+  id: number
+  title: string
+  content: string
+  celebName: string
+  imgList: Array<QuestionImg> | null
+  itemImgList: Array<QuestionImg> | null
+  categoryName: Array<string> | null
+  qtype: string
+}
+export interface SearchUserResult {
+  id: number
+  nickname: string
+  profileImgUrl: string
+  followStatus: boolean
+}
 export interface IRecentSearch {
   keyword: string
+}
+export interface ITotalSearch {
+  itemList: Array<SearchItemResult>
+  questionList: Array<SearchQuestionResult>
+  userList: Array<SearchUserResult>
 }
 
 export default class SearchService {
@@ -52,6 +78,16 @@ export default class SearchService {
         },
       },
     )
+    return data.result
+  }
+  // 통합 검색
+  async searchTotal(keyword: string) {
+    const data: ResponseType<ITotalSearch> = await request.get(`${this.searchUrl}/total`, {
+      params: {
+        keyword,
+      },
+      timeout: 5000,
+    })
     return data.result
   }
 }
