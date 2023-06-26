@@ -201,4 +201,40 @@ export default class ItemService {
     )
     return data.result
   }
+
+  // 가성비 좋은 선물템 조회
+  async getEfficientItem(page: number) {
+    const data: ResponseType<GetPaginationResult<ItemResult>> = await request.get(
+      `${this.itemUrl}/efficient`,
+      {
+        params: {
+          page,
+          size: 10,
+        },
+      },
+    )
+    return data.result
+  }
+
+  // Hot Celeb Item 조회
+  async getHotCelebItem(standard: string) {
+    const data: ResponseType<Array<ItemResult>> = await request.get(`${this.itemUrl}/hotItem`, {
+      params: {
+        standard: standard,
+      },
+    })
+    return data.result
+  }
+
+  // 한눈에 보는 취향 큐레이션 조회
+  async getCurationItem() {
+    const data: ResponseType<Array<ItemResult>> = await request.get(`${this.itemUrl}/curation`)
+    return data.result
+  }
+
+  //
+  async getHowAboutItem() {
+    const data: ResponseType<Array<ItemResult>> = await request.get(`${this.itemUrl}/howabout`)
+    return data.result
+  }
 }

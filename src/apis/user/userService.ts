@@ -8,6 +8,13 @@ export interface ICelebResult {
   subCelebList?: Array<ICelebResult>
 }
 
+export interface IUserResult {
+  id: number
+  nickName: string
+  profileImgUrl: string
+  followStatus: boolean
+}
+
 export default class UserService {
   userCelebUrl: string
   userUrl: string
@@ -49,6 +56,15 @@ export default class UserService {
         },
       },
     )
+    return data.result
+  }
+
+  async getHotSluver(celebId: number | undefined) {
+    const data: ResponseType<Array<IUserResult>> = await request.get(`${this.userUrl}/hotSluver`, {
+      params: {
+        celebId: celebId,
+      },
+    })
     return data.result
   }
 }
