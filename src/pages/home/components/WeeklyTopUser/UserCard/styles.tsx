@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { Common, Pretendard } from '../../../../../components/styles'
 
-export const UserCardWrapper = styled.div`
+export const UserCardWrapper = styled.div<{ borderRadius?: number }>`
   display: flex;
   position: relative;
   flex-shrink: 0;
@@ -10,8 +10,7 @@ export const UserCardWrapper = styled.div`
   width: 9rem;
   padding: 1.25rem 0.8125rem 1rem 0.8125rem;
   background-color: white;
-  border-radius: 1rem;
-
+  border-radius: ${({ borderRadius }) => (borderRadius ? `${borderRadius * 0.0625}rem` : 'none')};
   .rank {
     position: absolute;
     top: -0.25rem;
