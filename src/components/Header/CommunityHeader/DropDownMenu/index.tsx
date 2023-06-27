@@ -4,8 +4,9 @@ import { DropDownContainer, FirstField, LastField, MiddleField, SingleField } fr
 interface DropDownMenuProps {
   children: React.ReactNode
   onClick?: () => void
+  top?: number
 }
-const DropDownMenu = ({ children, onClick }: DropDownMenuProps) => {
+const DropDownMenu = ({ children, onClick, top }: DropDownMenuProps) => {
   const childrenCount = React.Children.toArray(children).length
 
   if (childrenCount === 1) {
@@ -19,7 +20,7 @@ const DropDownMenu = ({ children, onClick }: DropDownMenuProps) => {
   const childrenArray = React.Children.toArray(children)
 
   return (
-    <DropDownContainer>
+    <DropDownContainer top={top}>
       <FirstField>{childrenArray[0]}</FirstField>
       {React.Children.map(childrenArray.slice(1, childrenCount - 1), (child, index) => (
         <MiddleField key={index}>{child}</MiddleField>
