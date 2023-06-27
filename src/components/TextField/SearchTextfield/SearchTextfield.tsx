@@ -35,7 +35,7 @@ const SearchTextfield = ({ value, setValue, onEnter, placeholder }: SearchTextFi
   // }, [searchRef])
   return (
     <InputWrapper onFocus={() => setIsFocused(true)} onBlur={() => setIsFocused(false)}>
-      <Search style={{ marginRight: '0.5rem' }}></Search>
+      <Search style={{ marginRight: '0.5rem' }} fill='#7B8894'></Search>
       <InputField
         value={value}
         placeholder={placeholder}
