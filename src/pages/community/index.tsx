@@ -33,7 +33,7 @@ const Community = () => {
     <CommunityContainer>
       <HeaderWrapper>
         <Header isModalHeader={false} title='커뮤니티' hasArrow={false}>
-          <Search fill='black'></Search>
+          <Search fill='black' onClick={() => navigate('/search')}></Search>
         </Header>
       </HeaderWrapper>
       <ScrollTabs
