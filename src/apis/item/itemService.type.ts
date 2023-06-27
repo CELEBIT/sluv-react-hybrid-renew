@@ -115,6 +115,7 @@ export interface ItemDetailResult {
   infoSource: string
   sameCelebItemList: Array<RecommendItemResult>
   sameBrandItemList: Array<RecommendItemResult>
+  otherSluverItemList: Array<RecommendItemResult>
   color: string
   followStatus: boolean
 }
