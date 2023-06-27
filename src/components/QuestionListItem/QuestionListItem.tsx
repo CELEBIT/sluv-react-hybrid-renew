@@ -63,7 +63,7 @@ const QuestionListItem = ({ item }: QuestionItemProps) => {
               </>
             )}
           </InfoTop>
-          <span className='questionTitle'>{item.content}</span>
+          <span className='questionTitle'>{item.title}</span>
         </RecommendInfo>
 
         {item.qtype !== 'Buy' ? (
