@@ -47,6 +47,7 @@ const CommunityHeader = ({ children, backBtnClick }: HeaderProps) => {
         questionInfo.categoryNameList ||
         imgItemList)
     ) {
+      setMenuOpen(!menuOpen)
       openModal(modals.CommunityTabChangeModal, { name: menu.name, url: menu.url })
     } else {
       setCommunityMenu(menu.name)
@@ -62,10 +63,10 @@ const CommunityHeader = ({ children, backBtnClick }: HeaderProps) => {
   }, [])
   return (
     <HeaderWrapper role='heading'>
-      <div className='left' onClick={() => setMenuOpen(!menuOpen)}>
+      <div className='left'>
         <ArrowBack onClick={backBtnClick} className='arrow-back' />
-        <Title>{communityMenu}</Title>
-        {menuOpen ? <ArrowUp /> : <ArrowDown />}
+        <Title onClick={() => setMenuOpen(!menuOpen)}>{communityMenu}</Title>
+        {menuOpen ? <ArrowUp stroke='black' /> : <ArrowDown stroke='black' />}
 
         {menuOpen === true && (
           <DropDownMenu>

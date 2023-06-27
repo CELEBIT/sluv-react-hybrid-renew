@@ -7,6 +7,7 @@ import { Common, Pretendard } from '../../../../components/styles'
 
 import { ReactComponent as StorageOff } from '../../../../assets/storage_off_24.svg'
 import { ReactComponent as StorageOn } from '../../../../assets/storage_on_24.svg'
+import useHowAboutItemQuery from '../../../../apis/item/hooks/useHowAboutItemQuery'
 
 const HowAbout = () => {
   const navigate = useNavigate()
@@ -45,26 +46,31 @@ const HowAbout = () => {
       scrapStatus: false,
     },
   ]
+
+  const { getHowAboutItem } = useHowAboutItemQuery()
+  const { data } = getHowAboutItem()
+  console.log('getHowAboutItem', { data })
   return (
     <ScrollComponentWrapper>
       <HomeTitle className='title'>이 아이템은 어때요?</HomeTitle>
       <HowAboutList>
-        {itemList.map((item, index) => {
-          return (
-            <>
-              <HowAboutItem key={index}>
-                <CirclePhoto imgUrl={item.imgUrl}></CirclePhoto>
-                <ItemInfoWrapper>
-                  <ItemName>{item.celebName}</ItemName>
-                  <ItemText>{item.brandName}</ItemText>
-                  <ItemText>{item.itemName}</ItemText>
-                </ItemInfoWrapper>
-                {item.scrapStatus ? <StorageOn /> : <StorageOff />}
-              </HowAboutItem>
-              {index !== itemList.length - 1 && <Line></Line>}
-            </>
-          )
-        })}
+        {data &&
+          data.map((item, index) => {
+            return (
+              <>
+                <HowAboutItem key={index}>
+                  <CirclePhoto imgUrl={item.imgUrl}></CirclePhoto>
+                  <ItemInfoWrapper>
+                    <ItemName>{item.celebName}</ItemName>
+                    <ItemText>{item.brandName}</ItemText>
+                    <ItemText>{item.itemName}</ItemText>
+                  </ItemInfoWrapper>
+                  {item.scrapStatus ? <StorageOn /> : <StorageOff />}
+                </HowAboutItem>
+                {index !== itemList.length - 1 && <Line></Line>}
+              </>
+            )
+          })}
       </HowAboutList>
     </ScrollComponentWrapper>
   )

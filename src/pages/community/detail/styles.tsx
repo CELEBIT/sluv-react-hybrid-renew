@@ -208,6 +208,7 @@ export const CommentWrapper = styled.div`
 export const RecommendVote = styled.div`
   display: flex;
   flex-direction: row;
+  flex-shrink: 0;
   width: 4.5rem;
   height: 4.5rem;
   gap: 0.125rem;

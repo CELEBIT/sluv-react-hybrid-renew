@@ -3,20 +3,20 @@ import { UserCardWrapper, UserNickName, UserPhoto } from './styles'
 import { ReactComponent as RankFirst } from '../../../../../assets/rank_1.svg'
 import { ReactComponent as RankSecond } from '../../../../../assets/rank_2.svg'
 import { ReactComponent as RankThird } from '../../../../../assets/rank_3.svg'
-import ButtonMedium from '../../../../../components/ButtonMedium/ButtonMedium'
 import FollowMediumButton from '../../../../../components/ButtonMedium/FollowMediumButton'
 
 interface UserCardProps {
-  rank: number
+  rank?: number
   imgUrl: string
-  userName?: string
+  userName: string
   followStatus?: boolean
+  borderRadius?: number
 }
 
-const UserCard = ({ rank, imgUrl, followStatus, userName }: UserCardProps) => {
+const UserCard = ({ rank, imgUrl, followStatus, userName, borderRadius }: UserCardProps) => {
   return (
-    <UserCardWrapper>
-      {rank <= 3 && (
+    <UserCardWrapper borderRadius={borderRadius}>
+      {rank && rank <= 3 && (
         <div className='rank'>
           {rank === 1 ? (
             <RankFirst></RankFirst>

@@ -18,7 +18,6 @@ export const ComponentContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  gap: 2.5rem;
   height: 100%;
   width: 100%;
   overflow-y: scroll;
@@ -30,7 +29,7 @@ export const ScrollComponentWrapper = styled.div<{ bgColor?: string }>`
   flex-direction: column;
   position: relative;
   gap: 1rem;
-  padding: 3rem 0;
+  padding: 48px 0;
   background-color: ${(props) => props.bgColor == 'gray' && Common.colors.GR100};
   width: 100%;
   ::-webkit-scrollbar {

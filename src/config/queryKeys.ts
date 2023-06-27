@@ -26,6 +26,12 @@ export const queryKeys = {
   searchKeywordPreview: (keyword: string) => ['searchKeywordPreview', keyword] as const,
   searchTotal: (keyword: string) => ['searchTotal', keyword] as const,
   buyNowItem: ['buyNowItem'] as const,
+  curationItem: ['curationItem'] as const,
+  howAboutItem: ['howAboutItem'] as const,
   luxuryItem: ['luxuryItem'] as const,
   newItem: ['newItem'] as const,
+  efficientItem: ['efficientItem'] as const,
+  hotCelebItem: (standard: string) => ['hotCelebItem', standard] as const,
+  getHotSluver: (celebId?: number) => ['getHotSluver', celebId] as const,
+  getQuestionList: (qtype?: string) => ['getQuestionList', qtype] as const,
 }

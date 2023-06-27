@@ -65,6 +65,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '../../../config/queryKeys'
 import { RequestEditItemState } from '../editRequest'
 import { useSetRecoilState } from 'recoil'
+import { Common } from '../../../components/styles'
 
 const ItemDetail = () => {
   const navigate = useNavigate()
@@ -179,8 +180,8 @@ const ItemDetail = () => {
       <HeaderWrapper>
         <Header isModalHeader={false} hasArrow={true}>
           <div className='headerRight'>
-            <Home onClick={() => navigate('/home')} />
-            <Search onClick={() => navigate('/search')}></Search>
+            <Home onClick={() => navigate('/')} />
+            <Search fill={Common.colors.BK} onClick={() => navigate('/search')}></Search>
             <ShowMore onClick={() => onClickShowMore()}></ShowMore>
           </div>
         </Header>
@@ -235,23 +236,25 @@ const ItemDetail = () => {
           </ItemReaction>
         </BasicInfoWrapper>
         <Divider />
-        <LinkInfoWrapper>
-          <Label>여기서 구매할 수 있어요!</Label>
-          <DisplayField>
-            {data?.linkList &&
-              data?.linkList.map((link, index) => {
-                return (
-                  <Link key={index}>
-                    <LinkIcon></LinkIcon>
-                    <div className='linkinfo'>
-                      <span>{link.linkName}</span>
-                      <ArrowLarge></ArrowLarge>
-                    </div>
-                  </Link>
-                )
-              })}
-          </DisplayField>
-        </LinkInfoWrapper>
+        {(data?.linkList.length ?? 0) > 0 && (
+          <LinkInfoWrapper>
+            <Label>여기서 구매할 수 있어요!</Label>
+            <DisplayField>
+              {(data?.linkList.length ?? 0) > 0 &&
+                data?.linkList.map((link, index) => {
+                  return (
+                    <Link key={index}>
+                      <LinkIcon></LinkIcon>
+                      <div className='linkinfo'>
+                        <span>{link.linkName}</span>
+                        <ArrowLarge></ArrowLarge>
+                      </div>
+                    </Link>
+                  )
+                })}
+            </DisplayField>
+          </LinkInfoWrapper>
+        )}
         <UploaderInfoWrapper>
           <div className='user'>
             <UserImg imgUrl={data?.writer.profileImgUrl} />
@@ -316,10 +319,12 @@ const ItemDetail = () => {
               list={data?.sameBrandItemList}
             ></RecommendedItemList>
           )}
-          <RecommendedItemList
-            title='다른 스러버들이 함께 보관한 아이템'
-            list={itemList}
-          ></RecommendedItemList>
+          {(data?.otherSluverItemList?.length ?? 0) > 0 && (
+            <RecommendedItemList
+              title='다른 스러버들이 함께 보관한 아이템'
+              list={data?.otherSluverItemList}
+            ></RecommendedItemList>
+          )}
         </RecommendWrapper>
         <ShareItemWrapper>
           <ShareWrapper>

@@ -7,7 +7,10 @@ import {
   ComponentWrapper,
   Label,
 } from '../../item/create/styles'
-import SelectCeleb, { selectedCelebState } from '../../../components/SelectCeleb/SelectCeleb'
+import SelectCeleb, {
+  selectedCelebState,
+  selectedNewCelebState,
+} from '../../../components/SelectCeleb/SelectCeleb'
 import { ErrorText } from '../../../components/TextField/DefaultTextfield/styles'
 import { ReactComponent as Error } from '../../../assets/error_20.svg'
 import { useRecoilState, useRecoilValue } from 'recoil'
@@ -18,26 +21,35 @@ import AddPhotos from '../../../components/AddPhotos/AddPhotos'
 import { communityItemState } from '../../../recoil/communityInfo'
 import { useNavigate } from 'react-router-dom'
 import AddItemPhotos from '../../../components/AddPhotos/AddItemPhotos'
+import useUploadQuestionQuery from '../../../apis/question/hooks/useUploadQuestionQuery'
 
 const FindRequest = () => {
   const navigate = useNavigate()
   const [findRequestInfo, setFindRequestInfo] = useRecoilState(communityItemState)
   const celeb = useRecoilValue(selectedCelebState)
+  const newCeleb = useRecoilValue(selectedNewCelebState)
 
   const [hasTriedToUpload, setHasTriedToUpload] = useState(false)
 
   const [title, setTitle] = useState<string | null>(findRequestInfo.title)
   const [content, setContent] = useState<string | null>(findRequestInfo.content ?? null)
 
+  const {
+    postFindRequest: { mutate },
+  } = useUploadQuestionQuery()
+
   const onSubmit = () => {
     setHasTriedToUpload(true)
     if (
-      celeb.id &&
+      (celeb.id || newCeleb) &&
       findRequestInfo.title &&
       findRequestInfo.title.length > 10 &&
       findRequestInfo.title.length < 60
     ) {
       alert('success')
+      console.log('findRequestInfo', findRequestInfo)
+      setFindRequestInfo({ ...findRequestInfo, newCelebId: null })
+      mutate({ ...findRequestInfo, newCelebId: null })
     }
   }
   useEffect(() => {
@@ -52,7 +64,7 @@ const FindRequest = () => {
   return (
     <FindRequestContainer>
       <HeaderWrapper>
-        <CommunityHeader>
+        <CommunityHeader backBtnClick={() => navigate('/community')}>
           <span className='submit' onClick={onSubmit}>
             완료
           </span>

@@ -75,11 +75,16 @@ const SelectItemOrPhoto = () => {
       })
       // 커뮤니티 아이템 설정
       setCommunityUploadInfo((prevInfo) => {
+        const updatedList = [...imgItemList]
+        updatedList[0] = {
+          ...updatedList[0],
+          representFlag: true,
+        }
         const { itemList, imgList } = prevInfo
         const updatedItemList = itemList ? [...itemList] : []
         const updatedImgList = imgList ? [...imgList] : []
 
-        imgItemList.forEach((item, index) => {
+        updatedList.forEach((item, index) => {
           if (
             item.itemId &&
             !updatedItemList.some((existingItem) => existingItem.itemId === item.itemId)
@@ -90,14 +95,16 @@ const SelectItemOrPhoto = () => {
                 updatedItemList.push({
                   itemId: item.itemId,
                   description: firstItem.description,
-                  vote: null,
+                  sortOrder: index,
+                  // vote: null,
                   representFlag: item.representFlag,
                 })
               } else {
                 updatedItemList.push({
                   itemId: item.itemId,
                   description: secondItem.description,
-                  vote: null,
+                  sortOrder: index,
+                  // vote: null,
                   representFlag: item.representFlag,
                 })
               }
@@ -105,7 +112,8 @@ const SelectItemOrPhoto = () => {
               updatedItemList.push({
                 itemId: item.itemId,
                 description: item.description,
-                vote: null,
+                sortOrder: index,
+                // vote: null,
                 representFlag: item.representFlag,
               })
             }
@@ -121,23 +129,26 @@ const SelectItemOrPhoto = () => {
                 updatedImgList.push({
                   imgUrl: item.imgUrl,
                   description: firstItem.description,
-                  vote: null,
-                  representFlag: null,
+                  sortOrder: index,
+                  // vote: null,
+                  representFlag: true,
                 })
               } else {
                 // 오른쪽 아이템 사진, 이름 설정
                 updatedImgList.push({
                   imgUrl: item.imgUrl,
                   description: secondItem.description,
-                  vote: null,
-                  representFlag: null,
+                  sortOrder: index,
+                  // vote: null,
+                  representFlag: true,
                 })
               }
             } else {
               updatedImgList.push({
                 imgUrl: item.imgUrl,
                 description: item.description,
-                vote: null,
+                sortOrder: index,
+                // vote: null,
                 representFlag: item.representFlag,
               })
             }
@@ -184,6 +195,7 @@ const SelectItemOrPhoto = () => {
         if (imgItemList.length + i + 1 <= maxItemPhotoCount) {
           reader.onloadend = () => {
             const fileSelected: IselectedItem = {
+              imgFile: file,
               imgUrl: reader.result as string,
               description: null,
               vote: null,
