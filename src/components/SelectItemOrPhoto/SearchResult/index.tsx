@@ -27,6 +27,7 @@ import {
 import { ItemResult } from '../../../apis/item/itemService.type'
 import { communityMenuState } from '../../Header/CommunityHeader/CommunityHeader'
 import { maxItemPhotoCountState } from '..'
+import Loading from '../../Loading'
 
 export const itemNameSearchState = atom<string>({
   key: atomKeys.itemNameSearchState,
@@ -162,7 +163,7 @@ const SearchResult = () => {
           <div ref={bottom} />
           {isFetching && !isFetchingNextPage ? (
             <div className='spinner'>
-              <div>Loading</div>
+              <Loading />
             </div>
           ) : null}
         </ListWrapper>

@@ -7,7 +7,8 @@ import { queryToObject } from './utils/utility'
 import storage from './utils/storage'
 import SelectItemOrPhoto from './components/SelectItemOrPhoto'
 
-const loading = <div>화면을 불러오는 중 입니다.(App)</div>
+import Loading from './components/Loading'
+const loading = <Loading />
 
 // 에러 페이지
 const Page404 = React.lazy(() => import('./pages/page404'))

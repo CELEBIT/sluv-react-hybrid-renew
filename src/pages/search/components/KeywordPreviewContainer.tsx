@@ -5,6 +5,7 @@ import { useObserver } from '../../../hooks/useObserver'
 import HighlightedText from '../../../components/HighlightedText/HighlightedText'
 import { useDebounce } from 'use-debounce'
 import { Common, Pretendard } from '../../../components/styles'
+import Loading from '../../../components/Loading'
 
 interface KeywordPreviewContainerProps {
   keyword: string
@@ -45,7 +46,7 @@ const KeywordPreviewContainer = ({ keyword }: KeywordPreviewContainerProps) => {
       <div ref={bottom} />
       {isFetching && !isFetchingNextPage ? (
         <div className='spinner'>
-          <div>Loading</div>
+          <Loading />
         </div>
       ) : null}
     </KeywordPreviewWrap>
