@@ -17,7 +17,8 @@ export const HeaderWrap = styled.div`
 export const SearchResultPageStyle = styled.main`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
   height: 100%;
   overflow-y: scroll;
 `

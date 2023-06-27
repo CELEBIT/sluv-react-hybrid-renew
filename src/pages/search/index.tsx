@@ -27,7 +27,7 @@ const Search = () => {
       {!keyword ? (
         <>
           {(data?.length ?? 0) > 0 && <RecentSearchContainer dataList={data} />}
-          <RankContainer />
+          {/* <RankContainer /> */}
         </>
       ) : (
         <KeywordPreviewContainer keyword={keyword} />

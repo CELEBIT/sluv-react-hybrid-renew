@@ -4,6 +4,8 @@ import styled from '@emotion/styled'
 import { Common, Pretendard } from '../../../components/styles'
 import Item from '../../../components/RecommendedItem/Item'
 import { useNavigate } from 'react-router-dom'
+import QuestionListItem from '../../../components/QuestionListItem/QuestionListItem'
+import UserCard from '../../home/components/WeeklyTopUser/UserCard/UserCard'
 
 interface TotalResultContainerProps {
   keyword: string
@@ -44,6 +46,9 @@ const TotalResultContainer = ({ keyword }: TotalResultContainerProps) => {
           <TitleBar>
             <span>커뮤니티</span>
           </TitleBar>
+          {data?.questionList.map((q) => (
+            <QuestionListItem key={q.id} item={q} />
+          ))}
           <Divider />
         </>
       )}
@@ -52,6 +57,17 @@ const TotalResultContainer = ({ keyword }: TotalResultContainerProps) => {
           <TitleBar>
             <span>사용자</span>
           </TitleBar>
+          <UserListWrap>
+            {data?.userList.map((user) => (
+              <UserCard
+                key={user.id}
+                imgUrl={user.profileImgUrl}
+                userName={user.nickname}
+                followStatus={user.followStatus}
+              />
+            ))}
+          </UserListWrap>
+
           <Divider />
         </>
       )}
@@ -63,7 +79,7 @@ export default TotalResultContainer
 
 const TitleBar = styled.div`
   display: flex;
-  padding: 0.5rem 0;
+  padding: 0.5rem 1.25rem;
   margin-bottom: 1rem;
 
   span {
@@ -83,6 +99,7 @@ const GridListWrap = styled.div`
   grid-auto-rows: minmax(0, auto);
   row-gap: 1.5rem;
   column-gap: 0.625rem;
+  padding: 0 1.25rem;
 
   > div {
     text-overflow: ellipsis;
@@ -97,4 +114,8 @@ const Divider = styled.div`
   background-color: ${Common.colors.GR100};
   margin-top: 2.5rem;
   margin-bottom: 1.25rem;
+`
+
+const UserListWrap = styled.div`
+  display: flex;
 `
