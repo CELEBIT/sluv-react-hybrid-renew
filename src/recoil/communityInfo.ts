@@ -16,15 +16,17 @@ export interface CommunityItem {
 export interface IimgList {
   imgUrl: string
   description: string | null
-  vote: number | null
+  // vote: number | null
   representFlag: boolean | null
+  sortOrder: number
 }
 
 export interface IitemList {
   itemId: number
   description: string | null
-  vote: number | null
+  // vote: number | null
   representFlag: boolean | null
+  sortOrder: number
 }
 
 export interface IselectedItem {
@@ -45,7 +47,6 @@ export const communityItemState = atom<CommunityItem>({
   default: {
     id: null,
     title: null,
-    content: null,
     imgList: null,
     itemList: null,
   },

@@ -18,7 +18,6 @@ export const ComponentContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  gap: 2.5rem;
   height: 100%;
   width: 100%;
   overflow-y: scroll;

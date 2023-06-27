@@ -52,7 +52,7 @@ const HowAbout = () => {
   console.log('getHowAboutItem', { data })
   return (
     <ScrollComponentWrapper>
-      <HomeTitle className='title shortTop'>이 아이템은 어때요?</HomeTitle>
+      <HomeTitle className='title'>이 아이템은 어때요?</HomeTitle>
       <HowAboutList>
         {data &&
           data.map((item, index) => {
