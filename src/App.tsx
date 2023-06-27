@@ -7,7 +7,8 @@ import { queryToObject } from './utils/utility'
 import storage from './utils/storage'
 import SelectItemOrPhoto from './components/SelectItemOrPhoto'
 
-const loading = <div>화면을 불러오는 중 입니다.(App)</div>
+import Loading from './components/Loading'
+const loading = <Loading />
 
 // 에러 페이지
 const Page404 = React.lazy(() => import('./pages/page404'))
@@ -39,6 +40,10 @@ const Question = React.lazy(() => import('./pages/community/question'))
 const CommunityDetail = React.lazy(() => import('./pages/community/detail/CommunityDetail'))
 const CommentItemPhoto = React.lazy(() => import('./components/SelectItemOrPhoto/CommentItemPhoto'))
 const CommentUpload = React.lazy(() => import('./pages/community/detail/components/CommentUpload'))
+
+// 검색
+const Search = React.lazy(() => import('./pages/search'))
+const SearchResult = React.lazy(() => import('./pages/search/SearchResult'))
 
 const App = () => {
   useLayoutEffect(() => {
@@ -91,6 +96,8 @@ const App = () => {
             <Route path='/item/detail/report-item/reason' element={<RequestReason />} />
             <Route path='/item/detail/report-user' element={<EditRequest />} />
             <Route path='/item/detail/report-user/reason' element={<RequestReason />} />
+            <Route path='/search' element={<Search />} />
+            <Route path='/search/result' element={<SearchResult />} />
           </Routes>
         </Suspense>
         <Modals />

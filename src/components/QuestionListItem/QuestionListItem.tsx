@@ -10,9 +10,10 @@ import {
   RecommendVote,
 } from '../../pages/community/detail/styles'
 import { useNavigate } from 'react-router-dom'
+import { SearchQuestionResult } from '../../apis/search/searchService'
 
 interface QuestionItemProps {
-  item: WaitResult
+  item: WaitResult | SearchQuestionResult
 }
 
 const QuestionListItem = ({ item }: QuestionItemProps) => {
