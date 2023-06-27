@@ -4,6 +4,9 @@ import Icon from '../Icon/Icon'
 import { BottomNavItemData } from './BottomNav.type'
 import { BOTTOM_NAV_ITEM_DATA, BOTTOM_NAV_PATH_INFO } from './BottomNav.util'
 import { BottomNavItemLink, BottomNavLabel, Root } from './styles'
+import { ReactComponent as Home } from './../../assets/home_gray_24.svg'
+import { ReactComponent as Community } from './../../assets/community_gray_24.svg'
+import { ReactComponent as Upload } from './../../assets/upload_gray_24.svg'
 
 const BottomNav = () => {
   const { pathname } = useLocation()
@@ -14,12 +17,18 @@ const BottomNav = () => {
 
   return (
     <Root isOpen={isOpen}>
-      {BOTTOM_NAV_ITEM_DATA.map((item: BottomNavItemData) => (
-        <BottomNavItemLink key={item.path} to={item.path}>
-          <Icon size={20} color='#3221BF' icon='camera' />
-          <BottomNavLabel>{item.label}</BottomNavLabel>
-        </BottomNavItemLink>
-      ))}
+      <BottomNavItemLink key={BOTTOM_NAV_ITEM_DATA[0].path} to={BOTTOM_NAV_ITEM_DATA[0].path}>
+        <Home />
+        <BottomNavLabel>{BOTTOM_NAV_ITEM_DATA[0].label}</BottomNavLabel>
+      </BottomNavItemLink>
+      <BottomNavItemLink key={BOTTOM_NAV_ITEM_DATA[1].path} to={BOTTOM_NAV_ITEM_DATA[1].path}>
+        <Community />
+        <BottomNavLabel>{BOTTOM_NAV_ITEM_DATA[0].label}</BottomNavLabel>
+      </BottomNavItemLink>
+      <BottomNavItemLink key={BOTTOM_NAV_ITEM_DATA[2].path} to={BOTTOM_NAV_ITEM_DATA[2].path}>
+        <Upload />
+        <BottomNavLabel>{BOTTOM_NAV_ITEM_DATA[2].label}</BottomNavLabel>
+      </BottomNavItemLink>
     </Root>
   )
 }
