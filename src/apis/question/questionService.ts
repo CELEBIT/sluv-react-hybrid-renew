@@ -67,4 +67,19 @@ export default class QuestionService {
     )
     return data.result
   }
+
+  // 커뮤니티 아이템 검색(qtype으로 구별)
+  async getQuestionList(page: number, qType?: string | undefined) {
+    const data: ResponseType<GetPaginationResult<WaitResult>> = await request.get(
+      `${this.questionUrl}/list`,
+      {
+        params: {
+          page,
+          qType,
+          size: 20,
+        },
+      },
+    )
+    return data.result
+  }
 }
