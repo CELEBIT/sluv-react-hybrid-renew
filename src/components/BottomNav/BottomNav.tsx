@@ -23,7 +23,7 @@ const BottomNav = () => {
       </BottomNavItemLink>
       <BottomNavItemLink key={BOTTOM_NAV_ITEM_DATA[1].path} to={BOTTOM_NAV_ITEM_DATA[1].path}>
         <Community />
-        <BottomNavLabel>{BOTTOM_NAV_ITEM_DATA[0].label}</BottomNavLabel>
+        <BottomNavLabel>{BOTTOM_NAV_ITEM_DATA[1].label}</BottomNavLabel>
       </BottomNavItemLink>
       <BottomNavItemLink key={BOTTOM_NAV_ITEM_DATA[2].path} to={BOTTOM_NAV_ITEM_DATA[2].path}>
         <Upload />
