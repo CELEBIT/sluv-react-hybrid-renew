@@ -7,6 +7,7 @@ export const HomeContainer = styled.div`
   margin-left: -1.25rem;
   width: 100vw;
   height: 100vh;
+  overflow-x: hidden;
   padding-left: 0;
   ::-webkit-scrollbar {
     display: none;
@@ -21,6 +22,7 @@ export const ComponentContainer = styled.div`
   height: 100%;
   width: 100%;
   overflow-y: scroll;
+  overflow-x: hidden;
   padding-bottom: 1.25rem;
 `
 
