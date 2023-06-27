@@ -8,6 +8,7 @@ import ScrollTabs from '../../components/Tabs/ScrollTabs/ScrollTabs'
 import useQuestionListQuery from '../../apis/question/hooks/useQuestionListQuery'
 import QuestionListItem from '../../components/QuestionListItem/QuestionListItem'
 import { Line } from './detail/styles'
+import WriteCommunityItemButton from './components/WriteCommunityItemButton/WriteCommunityItemButton'
 
 const Community = () => {
   const navigate = useNavigate()
@@ -50,6 +51,7 @@ const Community = () => {
           )
         })}
       </QuestionListWrapper>
+      <WriteCommunityItemButton></WriteCommunityItemButton>
     </CommunityContainer>
   )
 }
