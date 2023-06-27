@@ -25,12 +25,14 @@ const SearchResult = () => {
 
   return (
     <SearchResultPageStyle>
-      <Header
-        isModalHeader={false}
-        title={'검색 결과'}
-        hasArrow={true}
-        backBtnClick={() => navigate('/search')}
-      />
+      <HeaderWrap>
+        <Header
+          isModalHeader={false}
+          title={'검색 결과'}
+          hasArrow={true}
+          backBtnClick={() => navigate('/search')}
+        />
+      </HeaderWrap>
       <SearchBarWrap>
         <SearchBarContainer keyword={keyword} setKeyword={setKeyword} />
       </SearchBarWrap>
@@ -45,4 +47,8 @@ export default SearchResult
 const SearchBarWrap = styled.div`
   margin-top: 1rem;
   margin-bottom: 0.62rem;
+  padding: 0 1.25rem;
+`
+const HeaderWrap = styled.div`
+  padding: 0 1.25rem;
 `
