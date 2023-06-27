@@ -9,6 +9,7 @@ import { useRecoilState } from 'recoil'
 import { communityItemState } from '../../../../recoil/communityInfo'
 import { SubComponentContainer } from '../howAboutThis/styles'
 import { useNavigate } from 'react-router-dom'
+import AddItemPhotos from '../../../../components/AddPhotos/AddItemPhotos'
 
 interface RecommendProps {
   hasTriedToUpload: boolean
@@ -66,7 +67,7 @@ const Recommend = ({ hasTriedToUpload }: RecommendProps) => {
             아이템/사진을 올려주세요 <span className='optional'>(선택)</span>
           </Label>
         </LabelContainer>
-        <AddPhotos onClick={() => navigate('/community/select-item-photo')}></AddPhotos>
+        <AddItemPhotos onClick={() => navigate('/community/select-item-photo')}></AddItemPhotos>
       </ComponentWrapper>
     </SubComponentContainer>
   )
