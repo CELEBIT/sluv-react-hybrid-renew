@@ -56,7 +56,7 @@ const ScrapItem = () => {
           itemId: item.itemId,
           description: null,
           vote: null,
-          representFlag: null,
+          representFlag: false,
         },
       ]
 
@@ -70,7 +70,7 @@ const ScrapItem = () => {
             imgUrl: item.imgUrl,
             description: null,
             vote: null,
-            representFlag: null,
+            representFlag: false,
           },
         ])
 

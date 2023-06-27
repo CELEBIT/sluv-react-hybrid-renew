@@ -7,7 +7,7 @@ import {
   ComponentWrapper,
   Label,
 } from '../../item/create/styles'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 import { HeaderWrapper } from '../../item/addInfo/styles'
 import {
   IimgList,
@@ -22,13 +22,22 @@ import HowAboutThis from './howAboutThis'
 import Recommend from './recommend'
 import SelectRecommendCategory from './components/selectRecommendCategory'
 import WhichOne from './whichOne'
+import useUploadQuestionQuery from '../../../apis/question/hooks/useUploadQuestionQuery'
+import { ErrorText } from '../../../components/TextField/DefaultTextfield/styles'
 
 const Question = () => {
   const [questionItem, setQuestionItem] = useRecoilState(communityItemState)
+  const resetQuestionItem = useResetRecoilState(communityItemState)
   const [hasTriedToUpload, setHasTriedToUpload] = useState<boolean>(false)
   const communityQuestionMenu = useRecoilValue(communityQuestionMenuState)
   const firstItem = useRecoilValue(firstItemState)
   const secondItem = useRecoilValue(secondItemState)
+
+  const {
+    postBuyRequest: { mutate: MutateByBuyRequest },
+    postHowAboutRequest: { mutate: MutateByHowAboutRequest },
+    postRecommendRequest: { mutate: MutateByRecommendRequest },
+  } = useUploadQuestionQuery()
 
   const updateDescription = (
     list: Array<IimgList | IitemList> | null,
@@ -97,12 +106,26 @@ const Question = () => {
             imgList: finalImgList as IimgList[],
             itemList: finalItemList as IitemList[],
           })
-          alert('success')
+          const {
+            postBuyRequest: { mutate },
+          } = useUploadQuestionQuery()
+          MutateByBuyRequest({
+            ...questionItem,
+            imgList: finalImgList as IimgList[],
+            itemList: finalItemList as IitemList[],
+          })
+          resetQuestionItem()
         }
       } else if (communityQuestionMenu === '이거 어때') {
-        alert('success')
+        console.log(questionItem)
+        MutateByHowAboutRequest(questionItem)
+        resetQuestionItem()
       } else {
-        alert('success')
+        console.log(questionItem)
+        if (questionItem.categoryNameList?.length ?? 0 > 0) {
+          MutateByRecommendRequest(questionItem)
+          resetQuestionItem()
+        }
       }
     }
   }
@@ -127,7 +150,12 @@ const Question = () => {
           </LabelContainer>
           <SelectQuestionMenu></SelectQuestionMenu>
           {communityQuestionMenu === '추천해 줘' && (
-            <SelectRecommendCategory></SelectRecommendCategory>
+            <>
+              <SelectRecommendCategory></SelectRecommendCategory>
+              {hasTriedToUpload && (questionItem.categoryNameList?.length ?? 0) == 0 && (
+                <ErrorText className='error'>카테고리는 필수 사항입니다</ErrorText>
+              )}
+            </>
           )}
         </ComponentWrapper>
         {/* 아이템 정보를 물어보세요 */}

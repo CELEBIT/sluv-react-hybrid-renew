@@ -89,7 +89,7 @@ const SearchResult = () => {
           itemId: item.itemId,
           description: null,
           vote: null,
-          representFlag: null,
+          representFlag: false,
         },
       ]
 
@@ -103,7 +103,7 @@ const SearchResult = () => {
             imgUrl: item.imgUrl,
             description: null,
             vote: null,
-            representFlag: null,
+            representFlag: false,
           },
         ])
 

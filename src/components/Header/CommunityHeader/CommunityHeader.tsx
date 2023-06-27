@@ -65,7 +65,7 @@ const CommunityHeader = ({ children, backBtnClick }: HeaderProps) => {
       <div className='left' onClick={() => setMenuOpen(!menuOpen)}>
         <ArrowBack onClick={backBtnClick} className='arrow-back' />
         <Title>{communityMenu}</Title>
-        {menuOpen ? <ArrowUp /> : <ArrowDown />}
+        {menuOpen ? <ArrowUp stroke='black' /> : <ArrowDown stroke='black' />}
 
         {menuOpen === true && (
           <DropDownMenu>
