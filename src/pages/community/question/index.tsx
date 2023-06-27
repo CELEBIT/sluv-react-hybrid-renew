@@ -24,8 +24,10 @@ import SelectRecommendCategory from './components/selectRecommendCategory'
 import WhichOne from './whichOne'
 import useUploadQuestionQuery from '../../../apis/question/hooks/useUploadQuestionQuery'
 import { ErrorText } from '../../../components/TextField/DefaultTextfield/styles'
+import { useNavigate } from 'react-router-dom'
 
 const Question = () => {
+  const navigate = useNavigate()
   const [questionItem, setQuestionItem] = useRecoilState(communityItemState)
   const resetQuestionItem = useResetRecoilState(communityItemState)
   const [hasTriedToUpload, setHasTriedToUpload] = useState<boolean>(false)
@@ -136,7 +138,7 @@ const Question = () => {
   return (
     <QuestionContainer>
       <HeaderWrapper>
-        <CommunityHeader>
+        <CommunityHeader backBtnClick={() => navigate('/community')}>
           <span className='submit' onClick={onSubmit}>
             완료
           </span>
