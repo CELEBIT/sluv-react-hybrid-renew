@@ -4,6 +4,7 @@ import { Common, Pretendard } from '../../components/styles'
 export const CommunityContainer = styled.div`
   display: flex;
   flex-direction: column;
+  position: relative;
   margin-left: -1.25rem;
   width: 100vw;
   height: 100vh;
@@ -16,6 +17,7 @@ export const CommunityContainer = styled.div`
 export const QuestionListWrapper = styled.div`
   display: flex;
   flex-direction: column;
+
   padding-bottom: 4rem;
   overflow-y: scroll;
   .title {

@@ -64,7 +64,7 @@ const FindRequest = () => {
   return (
     <FindRequestContainer>
       <HeaderWrapper>
-        <CommunityHeader>
+        <CommunityHeader backBtnClick={() => navigate('/community')}>
           <span className='submit' onClick={onSubmit}>
             완료
           </span>

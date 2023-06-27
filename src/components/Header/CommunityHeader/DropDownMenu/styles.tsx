@@ -27,10 +27,10 @@ export const Menu = styled.div`
   flex-shrink: none;
 `
 
-export const DropDownContainer = styled.div`
+export const DropDownContainer = styled.div<{ position?: string; top?: number }>`
   display: flex;
   position: absolute;
-  top: 3.125rem;
+  top: ${(props) => (props.top ? `${props.top * 0.0625}rem` : '3.125rem')};
   flex-direction: column;
   justify-content: center;
   width: 10rem;
