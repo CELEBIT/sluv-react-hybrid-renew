@@ -30,4 +30,5 @@ export const queryKeys = {
   efficientItem: ['efficientItem'] as const,
   hotCelebItem: (standard: string) => ['hotCelebItem', standard] as const,
   getHotSluver: (celebId?: number) => ['getHotSluver', celebId] as const,
+  getQuestionList: (qtype?: string) => ['getQuestionList', qtype] as const,
 }
