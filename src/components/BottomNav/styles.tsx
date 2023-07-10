@@ -8,7 +8,7 @@ export const Root = styled.div<{ isOpen: boolean }>`
   bottom: ${(props) => (props.isOpen ? '0' : '-50px')};
   left: 0;
   right: 0;
-  height: 50px;
+  height: 3.625rem;
 
   display: flex;
   justify-content: space-between;
@@ -28,8 +28,14 @@ export const BottomNavItemLink = styled(Link)`
   flex: 1;
   align-items: center;
   justify-content: center;
-
-  margin: 0 5px;
+  gap: 0.1875rem;
+  .active {
+    ${Pretendard({
+      size: 12,
+      weight: Common.bold.regular,
+      color: Common.colors.COMPLETE,
+    })};
+  }
 `
 
 export const BottomNavLabel = styled.span`
