@@ -5,8 +5,8 @@ export const BOTTOM_NAV_ITEM_DATA: Array<BottomNavItemData> = [
   { path: '/', label: '홈' },
   { path: '/community', label: '커뮤니티' },
   { path: '/item/create', label: '정보공유' },
-  // { path: '/closet', label: '옷장' },
-  // { path: '/user', label: 'MY' },
+  { path: '/closet', label: '옷장' },
+  { path: '/user', label: '마이' },
 ]
 
 // 특정 path에서 BottomNav Open 여부 데이터 객체
