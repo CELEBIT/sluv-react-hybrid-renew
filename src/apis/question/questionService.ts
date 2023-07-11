@@ -82,4 +82,13 @@ export default class QuestionService {
     )
     return data.result
   }
+
+  // 커뮤니티 게시글 신고
+  async reportQuestion(questionId: number, reason: string, content: string) {
+    const data: ResponseType = await request.post(`${this.questionUrl}/${questionId}/report`, {
+      reason,
+      content,
+    })
+    return data
+  }
 }

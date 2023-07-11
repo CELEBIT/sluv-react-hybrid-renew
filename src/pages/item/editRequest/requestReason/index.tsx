@@ -12,10 +12,10 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { useLocation } from 'react-router-dom'
 import useItemDetailQuery from '../../../../apis/item/hooks/useItemDetailQuery'
 import useReportUserQuery from '../../../../apis/user/hooks/useReportUserQuery'
+import useQuestionDetailQuery from '../../../../apis/question/hooks/useQuestionDetailQuery'
 
 const RequestReason = () => {
   const { pathname } = useLocation()
-
   const [title, setTitle] = useState<string>('')
   const [reasonText, setReasonText] = useState<string>('')
 
@@ -35,6 +35,10 @@ const RequestReason = () => {
   } = useItemDetailQuery()
 
   const {
+    reportQuestion: { mutate: mutateByReportQuestion },
+  } = useQuestionDetailQuery()
+
+  const {
     reportUser: { mutate: mutateByReportUser },
   } = useReportUserQuery()
 
@@ -46,6 +50,11 @@ const RequestReason = () => {
         mutateByRequestEditItem({ itemId: requestItem.itemId, requestContent: editRequestReason })
       } else if (pathname === '/item/detail/report-item/reason') {
         mutateByReportItem({ itemId: requestItem.itemId, requestContent: editRequestReason })
+      } else if (pathname === '/community/detail/report-question/reason') {
+        mutateByReportQuestion({
+          questionId: requestItem.itemId,
+          requestContent: editRequestReason,
+        })
       } else {
         mutateByReportUser({ userId: requestItem.itemWriterId, requestContent: editRequestReason })
       }
@@ -71,7 +80,10 @@ const RequestReason = () => {
   useEffect(() => {
     if (pathname === '/item/detail/request-edit/reason') {
       setTitle('정보 수정 요청')
-    } else if (pathname === '/item/detail/report-item/reason') {
+    } else if (
+      pathname === '/item/detail/report-item/reason' ||
+      pathname === '/community/detail/report-question/reason'
+    ) {
       setTitle('게시글 신고')
     } else {
       setTitle('사용자 신고')
