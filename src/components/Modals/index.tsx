@@ -36,7 +36,12 @@ const QuestionDateTimePickerModal = loadable(
 )
 const QuestionChangeModal = loadable(() => import('../TwoButtonModal/QuestionChangeModal'))
 const CommunityTabChangeModal = loadable(() => import('../TwoButtonModal/CommunityTabChangeModal'))
+const QuestionReportModal = loadable(() => import('../BottomSheetModal/QuestionReportModal'))
+const ReportQuestionCompleteModal = loadable(
+  () => import('../OneButtonModal/ReportQuestionCompleteModal'),
+)
 const DeleteTempItemModal = loadable(() => import('../TwoButtonModal/DeleteTempItemModal'))
+
 // 모달 관리 객체
 export const modals = {
   AskRecentPostWritingModal: AskRecentPostWritingModal as FunctionComponent<
@@ -82,6 +87,12 @@ export const modals = {
   CommunityTabChangeModal: CommunityTabChangeModal as FunctionComponent<CommunityMenu>,
   DeleteTempItemModal: DeleteTempItemModal as FunctionComponent<
     ComponentProps<typeof DeleteTempItemModal>
+  >,
+  QuestionReportModal: QuestionReportModal as FunctionComponent<
+    ComponentProps<typeof QuestionReportModal>
+  >,
+  ReportQuestionCompleteModal: ReportQuestionCompleteModal as FunctionComponent<
+    ComponentProps<typeof ReportQuestionCompleteModal>
   >,
 }
 

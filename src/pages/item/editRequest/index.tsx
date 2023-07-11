@@ -56,7 +56,10 @@ const EditRequest = () => {
       setPageName('정보 수정 요청')
       setTitle('정보 수정을 요청하는 이유를 알려주세요')
       setReasonList(editReasonList)
-    } else if (pathname === '/item/detail/report-item') {
+    } else if (
+      pathname === '/item/detail/report-item' ||
+      pathname === '/community/detail/report-question'
+    ) {
       setPageName('게시글 신고')
       setTitle('게시글을 신고하는 이유를 알려주세요')
       setReasonList(reportItemReasonList)

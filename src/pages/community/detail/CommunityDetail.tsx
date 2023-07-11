@@ -55,6 +55,10 @@ import Comment from './components/Comment/Comment'
 import Chip from '../../../components/Chip/Chip'
 import { formatUpdatedAt } from '../../../utils/utility'
 import RecommendList from './components/RecommendList'
+import { Common } from '../../../components/styles'
+import useModals from '../../../components/Modals/hooks/useModals'
+import { modals } from '../../../components/Modals'
+import { RequestEditItemState } from '../../item/editRequest'
 
 export const commentState = atom<NewComment>({
   key: atomKeys.commentState,
@@ -68,7 +72,9 @@ export const commentQuestionIdState = atom<number>({
 
 const CommunityDetail = () => {
   const navigate = useNavigate()
+  const { openModal } = useModals()
   const [commentObject, setCommentObject] = useRecoilState(commentState)
+  const setEditReportItemState = useSetRecoilState(RequestEditItemState)
   const resetCommentObject = useResetRecoilState(commentState)
 
   const [commentString, setCommentString] = useState<string>(commentObject.content ?? '')
@@ -114,6 +120,16 @@ const CommunityDetail = () => {
     resetCommentObject()
     setCommentString('')
   }
+
+  const onClickShowMore = () => {
+    openModal(modals.QuestionReportModal)
+    setEditReportItemState({
+      itemId: Number(questionId),
+      itemWriterId: data?.user.id,
+      itemWriterName: data?.user.nickName,
+    })
+  }
+
   useEffect(() => {
     setCommentObject({ ...commentObject, content: commentString })
   }, [commentString])
@@ -123,8 +139,8 @@ const CommunityDetail = () => {
       <HeaderWrapper>
         <Header isModalHeader={false} hasArrow={true}>
           <Home />
-          <Share />
-          <More />
+          <Share stroke={Common.colors.BK} />
+          <More onClick={() => onClickShowMore()} />
         </Header>
       </HeaderWrapper>
 
