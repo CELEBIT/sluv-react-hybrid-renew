@@ -67,7 +67,21 @@ const useQuestionDetailQuery = () => {
     },
   })
 
-  return { getQuestionDetail, getWaitQuestion, voteItem, reportQuestion, deleteQuestion }
+  const likeQuestion = useMutation((questionId: number) => question.likeQusetion(questionId), {
+    onSuccess: (res, questionId) => {
+      console.log(res)
+      queryClient.invalidateQueries(queryKeys.questionDetail(questionId))
+    },
+  })
+
+  return {
+    getQuestionDetail,
+    getWaitQuestion,
+    voteItem,
+    reportQuestion,
+    deleteQuestion,
+    likeQuestion,
+  }
 }
 
 export default useQuestionDetailQuery
