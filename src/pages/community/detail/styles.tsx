@@ -81,7 +81,7 @@ export const CommunityContent = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: 15.1875rem;
+
   margin-bottom: 0.5rem;
   gap: 1.25rem;
 `
@@ -198,7 +198,6 @@ export const CommentWrapper = styled.div`
   align-items: center;
   width: 100%;
   height: 56px;
-  z-index: 100;
   gap: 1.5625rem;
   box-sizing: border-box;
   background-color: white;

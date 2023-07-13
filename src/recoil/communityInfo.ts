@@ -16,7 +16,6 @@ export interface CommunityItem {
 export interface IimgList {
   imgUrl: string
   description: string | null
-  // vote: number | null
   representFlag: boolean | null
   sortOrder: number
 }
@@ -24,14 +23,13 @@ export interface IimgList {
 export interface IitemList {
   itemId: number
   description: string | null
-  // vote: number | null
   representFlag: boolean | null
   sortOrder: number
 }
 
 export interface IselectedItem {
   // 사진 or 스럽 내 아이템 선택
-  imgFile?: File
+  imgFile?: File | null
   itemId?: number | null
   imgUrl?: string | null
   description: string | null

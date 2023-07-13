@@ -79,7 +79,9 @@ const App = () => {
             {/* 커뮤니티 */}
             <Route path='/community' element={<Community />} />
             <Route path='/community/find-request' element={<FindRequest />} />
+            <Route path='/community/find-request/edit' element={<FindRequest />} />
             <Route path='/community/question' element={<Question />} />
+            <Route path='/community/question/edit' element={<Question />} />
             <Route path='/community/select-item-photo' element={<SelectItemOrPhoto />} />
             <Route path='/community/comment/comment-item-photo' element={<CommentItemPhoto />} />
             <Route path='/community/comment/upload' element={<CommentUpload />} />

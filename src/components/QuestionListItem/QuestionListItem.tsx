@@ -20,12 +20,12 @@ const QuestionListItem = ({ item }: QuestionItemProps) => {
   const navigate = useNavigate()
   const [color, setColor] = useState<string>('')
   const [questionType, setQuestionType] = useState<string>('')
-  console.log('item', item)
+
   useEffect(() => {
     if (item.qtype === 'Recommend') {
       setQuestionType('추천해 줘')
       setColor('blue')
-    } else if (item.qtype === 'How') {
+    } else if (item.qtype === 'Howabout') {
       setQuestionType('이거 어때')
       setColor('yellow')
     } else if (item.qtype === 'Find') {
@@ -41,9 +41,8 @@ const QuestionListItem = ({ item }: QuestionItemProps) => {
     ...(item?.imgList?.filter((item) => item !== null) ?? []),
     ...(item?.itemImgList?.filter((item) => item !== null) ?? []),
   ]
-  console.log(combinedList)
   const sortedList = combinedList.sort((a, b) => a.sortOrder - b.sortOrder)
-  console.log('sortedList', sortedList)
+
   return (
     <>
       <Recommend key={item.id} onClick={() => navigate(`/community/detail/${item.id}`)}>
