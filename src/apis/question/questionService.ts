@@ -68,6 +68,12 @@ export default class QuestionService {
     return data.result
   }
 
+  // 아이템 좋아요
+  async likeQusetion(questionId: number | null) {
+    const data: ResponseType = await request.post(`${this.questionUrl}/${questionId}/like`)
+    return data
+  }
+
   // 커뮤니티 아이템 검색(qtype으로 구별)
   async getQuestionList(page: number, qType?: string | undefined) {
     const data: ResponseType<GetPaginationResult<WaitResult>> = await request.get(

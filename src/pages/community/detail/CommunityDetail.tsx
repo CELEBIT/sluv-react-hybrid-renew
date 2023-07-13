@@ -25,7 +25,8 @@ import { ReactComponent as Share } from '../../../assets/share_24.svg'
 import { ReactComponent as More } from '../../../assets/add_24.svg'
 import { ReactComponent as CommentIcon } from '../../../assets/comment_18.svg'
 import { ReactComponent as View } from '../../../assets/page view_18.svg'
-import { ReactComponent as Like } from '../../../assets/like_off_24.svg'
+import { ReactComponent as LikeOn } from '../../../assets/like_on_24.svg'
+import { ReactComponent as LikeOff } from '../../../assets/like_off_24.svg'
 import { ReactComponent as SubmitOff } from '../../../assets/submit_off_32.svg'
 import { ReactComponent as SubmitOn } from '../../../assets/submit_on_32.svg'
 
@@ -170,6 +171,13 @@ const CommunityDetail = () => {
     }
   }
 
+  const {
+    likeQuestion: { mutate: mutateByLike },
+  } = useQuestionDetailQuery()
+  const onClickLike = () => {
+    if (data) mutateByLike(Number(questionId))
+  }
+
   useEffect(() => {
     setCommentObject({ ...commentObject, content: commentString })
   }, [commentString])
@@ -242,7 +250,11 @@ const CommunityDetail = () => {
           </div>
           <Reaction>
             <span>{data?.likeNum}</span>
-            <Like></Like>
+            {data?.hasLike ? (
+              <LikeOn onClick={onClickLike}></LikeOn>
+            ) : (
+              <LikeOff onClick={onClickLike}></LikeOff>
+            )}
           </Reaction>
         </InteractionWrapper>
       </InfoWrapper>
