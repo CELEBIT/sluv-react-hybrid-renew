@@ -59,6 +59,9 @@ import { Common } from '../../../components/styles'
 import useModals from '../../../components/Modals/hooks/useModals'
 import { modals } from '../../../components/Modals'
 import { RequestEditItemState } from '../../item/editRequest'
+import { IselectedItem, communityItemState, imgItemListState } from '../../../recoil/communityInfo'
+import { questionTypeState } from '../../../components/BottomSheetModal/QuestionEditDeleteModal'
+import { selectedCelebState } from '../../../components/SelectCeleb/SelectCeleb'
 
 export const commentState = atom<NewComment>({
   key: atomKeys.commentState,
@@ -76,10 +79,12 @@ const CommunityDetail = () => {
   const [commentObject, setCommentObject] = useRecoilState(commentState)
   const setEditReportItemState = useSetRecoilState(RequestEditItemState)
   const resetCommentObject = useResetRecoilState(commentState)
-
+  const [questionInfo, setQuestionInfo] = useRecoilState(communityItemState)
   const [commentString, setCommentString] = useState<string>(commentObject.content ?? '')
   const [isFocused, setIsFocused] = useState(false)
-  const commentWrapperRef = useRef<HTMLDivElement>(null)
+  const setQuestionType = useSetRecoilState(questionTypeState)
+  const [imgItemList, setImgItemList] = useRecoilState(imgItemListState)
+  const setSelectedCeleb = useSetRecoilState(selectedCelebState)
 
   const { id: questionId } = useParams()
   const setCommentQuestionId = useSetRecoilState(commentQuestionIdState)
@@ -122,12 +127,47 @@ const CommunityDetail = () => {
   }
 
   const onClickShowMore = () => {
-    openModal(modals.QuestionReportModal)
     setEditReportItemState({
       itemId: Number(questionId),
       itemWriterId: data?.user.id,
       itemWriterName: data?.user.nickName,
     })
+    // 내 게시글인 경우(수정,삭제)
+    if (data?.hasMine) {
+      setQuestionInfo({
+        id: Number(questionId),
+        celebId: data?.celeb?.celebId ?? null,
+        newCelebId: data?.newCeleb?.celebId ?? null,
+        title: data.title,
+        content: data.content,
+        imgList: data.imgList,
+        itemList:
+          data.itemList?.map((item) => ({
+            itemId: item.item.itemId,
+            description: item.description ?? null,
+            representFlag: item.representFlag ?? null,
+            sortOrder: item.sortOrder,
+          })) ?? null,
+        categoryNameList: data.recommendCategoryList,
+        voteEndTime: new Date(data.voteEndTime),
+      })
+      setQuestionType(data.qtype)
+      const convertedList: IselectedItem[] = sortedList.map((item) => {
+        if ('item' in item) {
+          const { item: selectedItem, ...rest } = item
+          return { ...selectedItem, ...rest, vote: null }
+        } else {
+          const { imgUrl, ...rest } = item
+          return { imgFile: null, itemId: null, imgUrl, ...rest, vote: null }
+        }
+      })
+      setImgItemList(convertedList)
+      openModal(modals.QuestionEditDeleteModal)
+    }
+    // 다른 유저의 게시글(신고)
+    else {
+      openModal(modals.QuestionReportModal)
+    }
   }
 
   useEffect(() => {

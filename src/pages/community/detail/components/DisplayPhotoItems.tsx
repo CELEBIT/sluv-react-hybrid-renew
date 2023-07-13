@@ -17,10 +17,12 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
   const combinedList = [...(imgList || []), ...(itemList || [])].sort(
     (a, b) => a.sortOrder - b.sortOrder,
   )
+  console.log('combinedList', combinedList)
   const isImgItem = (item: Img | Item): item is Img => {
     return (item as Img).imgUrl !== undefined
   }
   if (combinedList.length === 0) {
+    console.log('combined list is null')
     return null
   } else if (combinedList.length === 1) {
     return (
@@ -229,7 +231,7 @@ const DisplayPhotoItemWrapper = styled.div`
   flex-direction: row;
   gap: 0.1875rem;
   width: 100%;
-  height: 100%;
+  min-height: 15.1875rem;
   border-radius: 0.5rem;
   overflow: hidden;
 

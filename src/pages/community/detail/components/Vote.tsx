@@ -76,7 +76,7 @@ const Vote = ({ voteList, voteStatus, questionId }: VoteProps) => {
                       draw={isDraw}
                     ></PercentageIndicator>
                     {voteStatus !== null && voteStatus === index && (
-                      <Voted style={{ zIndex: '100' }}></Voted>
+                      <Voted style={{ zIndex: '10' }}></Voted>
                     )}
                     <VoteItemName>{each.description}</VoteItemName>
                     <VotePercentage win={isWin}>
@@ -161,18 +161,18 @@ export const VoteInfo = styled.div`
   justify-content: center;
 `
 export const VoteItemName = styled.span`
-  z-index: 100;
+  z-index: 10;
   ${Pretendard({ size: 17, weight: Common.bold.regular, color: Common.colors.BK })}
 `
 
 export const VoteButtonText = styled.span`
-  z-index: 100;
+  z-index: 10;
   margin-top: 0.75rem;
   ${Pretendard({ size: 17, weight: Common.bold.regular, color: Common.colors.SEC })}
 `
 
 export const VotePercentage = styled.span<{ win: boolean }>`
-  z-index: 100;
+  z-index: 10;
   margin-top: 0.75rem;
   ${(props) =>
     Pretendard({

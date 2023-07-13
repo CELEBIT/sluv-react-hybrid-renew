@@ -40,8 +40,12 @@ const QuestionReportModal = loadable(() => import('../BottomSheetModal/QuestionR
 const ReportQuestionCompleteModal = loadable(
   () => import('../OneButtonModal/ReportQuestionCompleteModal'),
 )
-const DeleteTempItemModal = loadable(() => import('../TwoButtonModal/DeleteTempItemModal'))
+const QuestionEditDeleteModal = loadable(
+  () => import('../BottomSheetModal/QuestionEditDeleteModal'),
+)
 
+const DeleteTempItemModal = loadable(() => import('../TwoButtonModal/DeleteTempItemModal'))
+const DeleteQuestionModal = loadable(() => import('../TwoButtonModal/DeleteQuestionModal'))
 // 모달 관리 객체
 export const modals = {
   AskRecentPostWritingModal: AskRecentPostWritingModal as FunctionComponent<
@@ -93,6 +97,12 @@ export const modals = {
   >,
   ReportQuestionCompleteModal: ReportQuestionCompleteModal as FunctionComponent<
     ComponentProps<typeof ReportQuestionCompleteModal>
+  >,
+  QuestionEditDeleteModal: QuestionEditDeleteModal as FunctionComponent<
+    ComponentProps<typeof QuestionEditDeleteModal>
+  >,
+  DeleteQuestionModal: DeleteQuestionModal as FunctionComponent<
+    ComponentProps<typeof DeleteQuestionModal>
   >,
 }
 

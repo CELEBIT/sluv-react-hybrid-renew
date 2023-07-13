@@ -4,6 +4,7 @@ import { queryKeys } from '../../../config/queryKeys'
 import { EditRequestReason } from '../../../pages/item/editRequest'
 import useModals from '../../../components/Modals/hooks/useModals'
 import { modals } from '../../../components/Modals'
+import { useNavigate } from 'react-router-dom'
 
 export interface IVote {
   questionId: number
@@ -18,6 +19,7 @@ interface IReportQuestion {
 const useQuestionDetailQuery = () => {
   const question = new QuestionService()
   const queryClient = useQueryClient()
+  const navigate = useNavigate()
   const { openModal } = useModals()
 
   const getQuestionDetail = (questionId: number) => {
@@ -58,7 +60,14 @@ const useQuestionDetailQuery = () => {
     },
   )
 
-  return { getQuestionDetail, getWaitQuestion, voteItem, reportQuestion }
+  const deleteQuestion = useMutation((questionId: number) => question.deleteQuestion(questionId), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(queryKeys.getQuestionList('Total'))
+      navigate('/community')
+    },
+  })
+
+  return { getQuestionDetail, getWaitQuestion, voteItem, reportQuestion, deleteQuestion }
 }
 
 export default useQuestionDetailQuery

@@ -9,7 +9,7 @@ interface ButtonMediumProps {
   type: string
   active?: boolean
   error?: boolean
-  onClick: () => void
+  onClick?: () => void
 }
 
 const ButtonMedium = forwardRef<HTMLDivElement, ButtonMediumProps>(

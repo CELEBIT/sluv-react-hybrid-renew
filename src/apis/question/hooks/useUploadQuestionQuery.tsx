@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { localStorageKeys } from '../../../config/localStorageKeys'
 import QuestionService from '../questionService'
 import { CommunityItem } from '../../../recoil/communityInfo'
+import { queryKeys } from '../../../config/queryKeys'
 
 const useUploadQuestionQuery = () => {
   const question = new QuestionService()
@@ -13,6 +14,7 @@ const useUploadQuestionQuery = () => {
   const postFindRequest = useMutation((item: CommunityItem) => question.postFindRequest(item), {
     onSuccess: (res) => {
       if (res?.id) {
+        queryClient.invalidateQueries(queryKeys.questionDetail(res.id))
         navigate(`/community/detail/${res.id}`)
       }
     },
@@ -31,6 +33,7 @@ const useUploadQuestionQuery = () => {
     {
       onSuccess: (res) => {
         if (res?.id) {
+          queryClient.invalidateQueries(queryKeys.questionDetail(res.id))
           navigate(`/community/detail/${res.id}`)
         }
       },
@@ -42,6 +45,7 @@ const useUploadQuestionQuery = () => {
     {
       onSuccess: (res) => {
         if (res?.id) {
+          queryClient.invalidateQueries(queryKeys.questionDetail(res.id))
           navigate(`/community/detail/${res.id}`)
         }
       },
