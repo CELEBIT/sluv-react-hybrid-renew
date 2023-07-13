@@ -37,4 +37,34 @@ export default class CommentService {
     })
     return data
   }
+
+  // 질문 게시글 답글 조회
+  async getSubComment(commentId: number) {
+    const data: ResponseType<GetPaginationResult<CommentResult>> = await request.get(
+      `${this.commentUrl}/${commentId}/subcomment`,
+      {
+        params: {
+          page: 0,
+          size: 2,
+        },
+      },
+    )
+    return data.result
+  }
+
+  // 답글 등록
+  async addSubComment(
+    questionId: number,
+    commentId: number,
+    content: string | null,
+    imgList: Array<Img> | null,
+    itemList: Array<ItemPost> | null,
+  ) {
+    const data: ResponseType = await request.post(`${this.commentUrl}/${questionId}/${commentId}`, {
+      content,
+      imgList,
+      itemList,
+    })
+    return data
+  }
 }

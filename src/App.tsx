@@ -86,6 +86,7 @@ const App = () => {
             <Route path='/community/comment/comment-item-photo' element={<CommentItemPhoto />} />
             <Route path='/community/comment/upload' element={<CommentUpload />} />
             <Route path='/community/detail/:id' element={<CommunityDetail />} />
+            <Route path='/community/detail/:id/comment/:commentid' element={<CommunityDetail />} />
             <Route path='/community/detail/report-question' element={<EditRequest />} />
             <Route path='/community/detail/report-question/reason' element={<RequestReason />} />
             <Route path='/community/detail/report-user' element={<EditRequest />} />

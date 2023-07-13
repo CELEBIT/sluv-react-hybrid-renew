@@ -10,6 +10,20 @@ export interface CommentResult {
   likeNum: number
   likeStatus: boolean
   hasMine: boolean
+  modifyStatus: boolean
+}
+
+export interface SubCommentResult {
+  id: number
+  user: User
+  content: string
+  imgUrlList: Array<Img> | null
+  itemList: Array<Item> | null
+  createdAt: string
+  likeNum: number
+  likeStatus: boolean
+  hasMine: boolean
+  modifyStatus: boolean
 }
 
 interface Item {

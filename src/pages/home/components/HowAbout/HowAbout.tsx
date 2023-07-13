@@ -12,41 +12,6 @@ import useHowAboutItemQuery from '../../../../apis/item/hooks/useHowAboutItemQue
 const HowAbout = () => {
   const navigate = useNavigate()
 
-  const itemList = [
-    {
-      itemId: 35,
-      imgUrl: 'https://img.freepik.com/free-photo/road-mountains-with-cloudy-sky_1340-23022.jpg',
-      brandName: '피지컬 디파트먼트라고하면어떻게될까',
-      itemName: 'BROCCOLI FAMILY HOODIE GRAY',
-      celebName: '휴닝카이',
-      scrapStatus: true,
-    },
-    {
-      itemId: 1,
-      imgUrl: 'https://img.freepik.com/free-photo/road-mountains-with-cloudy-sky_1340-23022.jpg',
-      brandName: '피지컬 디파트먼트',
-      itemName: 'BROCCOLI FAMILY HOODIE GRAY',
-      celebName: '스트레이키즈 리노',
-      scrapStatus: false,
-    },
-    {
-      itemId: 2,
-      imgUrl: 'https://img.freepik.com/free-photo/road-mountains-with-cloudy-sky_1340-23022.jpg',
-      brandName: '피지컬 디파트먼트',
-      itemName: 'BROCCOLI FAMILY HOODIE GRAY',
-      celebName: '스트레이키즈 리노',
-      scrapStatus: false,
-    },
-    {
-      itemId: 3,
-      imgUrl: 'https://img.freepik.com/free-photo/road-mountains-with-cloudy-sky_1340-23022.jpg',
-      brandName: '피지컬 디파트먼트',
-      itemName: 'BROCCOLI FAMILY HOODIE GRAY',
-      celebName: '스트레이키즈 리노',
-      scrapStatus: false,
-    },
-  ]
-
   const { getHowAboutItem } = useHowAboutItemQuery()
   const { data } = getHowAboutItem()
   console.log('getHowAboutItem', { data })
@@ -60,14 +25,16 @@ const HowAbout = () => {
               <>
                 <HowAboutItem key={index}>
                   <CirclePhoto imgUrl={item.imgUrl}></CirclePhoto>
-                  <ItemInfoWrapper>
-                    <ItemName>{item.celebName}</ItemName>
-                    <ItemText>{item.brandName}</ItemText>
-                    <ItemText>{item.itemName}</ItemText>
-                  </ItemInfoWrapper>
-                  {item.scrapStatus ? <StorageOn /> : <StorageOff />}
+                  <RightWrapper>
+                    <ItemInfoWrapper>
+                      <ItemName>{item.celebName}</ItemName>
+                      <ItemText>{item.brandName}</ItemText>
+                      <ItemText>{item.itemName}</ItemText>
+                    </ItemInfoWrapper>
+                    {item.scrapStatus ? <StorageOn /> : <StorageOff />}
+                  </RightWrapper>
                 </HowAboutItem>
-                {index !== itemList.length - 1 && <Line></Line>}
+                {index !== data.length - 1 && <Line></Line>}
               </>
             )
           })}
@@ -88,7 +55,7 @@ export const HowAboutList = styled.div`
 export const HowAboutItem = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  align-items: center;
 `
 
 export const CirclePhoto = styled.div<{ imgUrl: string }>`
@@ -103,6 +70,14 @@ export const CirclePhoto = styled.div<{ imgUrl: string }>`
   background-image: url(${(props) => props.imgUrl});
   background-color: ${Common.colors.GR300};
 `
+
+export const RightWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-left: 0.75rem;
+`
+
 export const ItemInfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
