@@ -25,7 +25,8 @@ import {
   UserImg,
   UserInfo,
 } from './styles'
-import { formatUpdatedAt, convertToUTC } from '../../../../../utils/utility'
+import { formatUpdatedAt } from '../../../../../utils/utility'
+import SubCommentList from '../SubCommentList/SubCommentList'
 
 interface CommentProps {
   questionId: number
@@ -34,7 +35,7 @@ interface CommentProps {
 const Comment = ({ questionId }: CommentProps) => {
   const { getComment } = useSearchCommentQuery()
   const { data } = getComment(Number(questionId))
-
+  console.log('comment', data)
   function convertToUTC(dateString: string): string {
     const date = new Date(dateString)
     date.setHours(date.getHours() + 9)
@@ -62,7 +63,6 @@ const Comment = ({ questionId }: CommentProps) => {
                   <CommentContent>{comment.content}</CommentContent>
                 </ContentRight>
               </ContentWrapper>
-
               {comment.itemList && comment.itemList.length > 0 && (
                 <ItemWrapper>
                   {comment.itemList.map((each) => {
@@ -85,6 +85,7 @@ const Comment = ({ questionId }: CommentProps) => {
                   })}
                 </ItemWrapper>
               )}
+              <SubCommentList commentId={comment.id}></SubCommentList>
             </CommentWrapper>
           )
         })}
