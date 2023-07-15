@@ -67,4 +67,10 @@ export default class CommentService {
     })
     return data
   }
+
+  // 댓글/대댓글 좋아요
+  async likeComment(commentId: number) {
+    const data: ResponseType = await request.post(`${this.commentUrl}/${commentId}/like`)
+    return data
+  }
 }

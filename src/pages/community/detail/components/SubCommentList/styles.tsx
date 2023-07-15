@@ -153,6 +153,7 @@ export const ExpressionWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
   margin-top: 1.25rem;
   span {
     ${Pretendard({ size: 13, weight: Common.bold.regular, color: Common.colors.GR600 })}

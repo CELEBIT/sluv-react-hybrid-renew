@@ -32,16 +32,27 @@ import { ReactComponent as StorageOn } from '../../../../../assets/storage_on_24
 import { ReactComponent as LikeOff } from '../../../../../assets/like_off_18.svg'
 import { ReactComponent as LikeOn } from '../../../../../assets/like_on_18.svg'
 import { ReactComponent as SubCommentArrow } from '../../../../../assets/arrow_comment_18.svg'
+import useSearchSubCommentQuery from '../../../../../apis/comment/hooks/useSearchSubCommentQuery'
 interface SubCommentProps {
   subcomment: SubCommentResult
+  commentId: number
 }
 
-const SubComment = ({ subcomment }: SubCommentProps) => {
+const SubComment = ({ subcomment, commentId }: SubCommentProps) => {
   function convertToUTC(dateString: string): string {
     const date = new Date(dateString)
     date.setHours(date.getHours() + 9)
     return date.toUTCString()
   }
+
+  const {
+    likeSubComment: { mutate: mutateByLike },
+  } = useSearchSubCommentQuery()
+  const onClickLike = (commentId: number, subCommentId: number) => {
+    console.log('clicked')
+    mutateByLike({ commentId, subCommentId })
+  }
+
   return (
     <SubCommentContainer>
       <SubCommentLeft>
@@ -91,7 +102,11 @@ const SubComment = ({ subcomment }: SubCommentProps) => {
           <span>답글 달기</span>
           <LikeWrapper>
             <span>{subcomment.likeNum}</span>
-            {subcomment.likeStatus ? <LikeOn></LikeOn> : <LikeOff></LikeOff>}
+            {subcomment.likeStatus ? (
+              <LikeOn onClick={() => onClickLike(commentId, subcomment.id)}></LikeOn>
+            ) : (
+              <LikeOff onClick={() => onClickLike(commentId, subcomment.id)}></LikeOff>
+            )}
           </LikeWrapper>
         </ExpressionWrapper>
       </SubCommentRight>

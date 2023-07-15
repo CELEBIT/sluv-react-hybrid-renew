@@ -3,7 +3,9 @@ import {
   CommentContainer,
   CommentWrapper,
   CommunityContent,
+  CommunityWrapper,
   DetailContainer,
+  FindItemButton,
   InfoChip,
   InfoTextWrapper,
   InfoWrapper,
@@ -186,111 +188,115 @@ const CommunityDetail = () => {
     <DetailContainer>
       <HeaderWrapper>
         <Header isModalHeader={false} hasArrow={true}>
-          <Home />
+          <Home onClick={() => navigate('/')} />
           <Share stroke={Common.colors.BK} />
           <More onClick={() => onClickShowMore()} />
         </Header>
       </HeaderWrapper>
+      <CommunityWrapper>
+        <InfoWrapper>
+          <InfoChip>
+            {data?.qtype === 'Recommend' && <Badge color='blue'>추천해 줘</Badge>}
+            {data?.qtype === 'How' && <Badge color='yellow'>이거 어때</Badge>}
+            {data?.qtype === 'Buy' && <Badge color='green'>이 중에 뭐 살까</Badge>}
+            {data?.qtype === 'Find' && <Badge color='pink'>찾아주세요</Badge>}
 
-      <InfoWrapper>
-        <InfoChip>
-          {data?.qtype === 'Recommend' && <Badge color='blue'>추천해 줘</Badge>}
-          {data?.qtype === 'How' && <Badge color='yellow'>이거 어때</Badge>}
-          {data?.qtype === 'Buy' && <Badge color='green'>이 중에 뭐 살까</Badge>}
-          {data?.qtype === 'Find' && <Badge color='pink'>찾아주세요</Badge>}
-
-          {data?.qtype === 'Recommend' && (
-            <Badge color='gray'>
-              {data.recommendCategoryList.map((category, index) => (
-                <React.Fragment key={index}>
-                  {index > 0 && '  '}
-                  {category}
-                </React.Fragment>
-              ))}
-            </Badge>
-          )}
-          {data?.qtype === 'Find' && <Badge color='gray'>{data.celeb.celebName}</Badge>}
-        </InfoChip>
-        <UserWrapper>
-          <ProfileImg url={data?.user.profileImgUrl}></ProfileImg>
-          <UserTextWrapper>
-            <span className='username'>{data?.user.nickName}</span>
-            {data?.createdAt && <span className='time'>{formatUpdatedAt(data.createdAt)}</span>}
-          </UserTextWrapper>
-        </UserWrapper>
-        <span className='title'>{data?.title}</span>
-        <span className='content'>{data?.content}</span>
-        <CommunityContent>
-          {data?.qtype === 'Buy' && new Date(data?.voteEndTime) > new Date() && (
-            <CountDown voteEndTime={new Date(data?.voteEndTime)}></CountDown>
-          )}
-          {data?.qtype === 'Buy' ? (
-            <Vote
-              voteList={sortedList}
-              voteStatus={data.voteStatus}
-              questionId={Number(questionId)}
-            ></Vote>
-          ) : (
-            <DisplayPhotoItems
-              imgList={data?.imgList}
-              itemList={data?.itemList}
-            ></DisplayPhotoItems>
-          )}
-        </CommunityContent>
-        <InteractionWrapper>
-          <div className='left'>
-            <Reaction>
-              <CommentIcon></CommentIcon>
-              <span>{data?.commentNum}</span>
-            </Reaction>
-            <Reaction>
-              <View></View>
-              <span>{data?.searchNum}</span>
-            </Reaction>
-          </div>
-          <Reaction>
-            <span>{data?.likeNum}</span>
-            {data?.hasLike ? (
-              <LikeOn onClick={onClickLike}></LikeOn>
-            ) : (
-              <LikeOff onClick={onClickLike}></LikeOff>
+            {data?.qtype === 'Recommend' && (
+              <Badge color='gray'>
+                {data.recommendCategoryList.map((category, index) => (
+                  <React.Fragment key={index}>
+                    {index > 0 && '  '}
+                    {category}
+                  </React.Fragment>
+                ))}
+              </Badge>
             )}
-          </Reaction>
-        </InteractionWrapper>
-      </InfoWrapper>
-      <Divider></Divider>
-      <Comment questionId={Number(questionId)}></Comment>
-      <Divider></Divider>
-      {data?.qtype && (
-        <RecommendList
-          questionId={Number(questionId)}
-          nickName={data?.user.nickName}
-          qType={data?.qtype}
-        ></RecommendList>
-      )}
-      <CommentContainer>
-        {isFocused && (
-          <RecommendChipWrapper>
-            <Chip
-              text='아이템 찾아주기'
-              onClick={() => navigate('/community/comment/comment-item-photo')}
-            ></Chip>
-          </RecommendChipWrapper>
+            {data?.qtype === 'Find' && <Badge color='gray'>{data.celeb.celebName}</Badge>}
+          </InfoChip>
+          <UserWrapper>
+            <ProfileImg url={data?.user.profileImgUrl}></ProfileImg>
+            <UserTextWrapper>
+              <span className='username'>{data?.user.nickName}</span>
+              {data?.createdAt && <span className='time'>{formatUpdatedAt(data.createdAt)}</span>}
+            </UserTextWrapper>
+          </UserWrapper>
+          <span className='title'>{data?.title}</span>
+          <span className='content'>{data?.content}</span>
+          <CommunityContent>
+            {data?.qtype === 'Buy' && new Date(data?.voteEndTime) > new Date() && (
+              <CountDown voteEndTime={new Date(data?.voteEndTime)}></CountDown>
+            )}
+            {data?.qtype === 'Buy' ? (
+              <Vote
+                voteList={sortedList}
+                voteStatus={data.voteStatus}
+                questionId={Number(questionId)}
+              ></Vote>
+            ) : (
+              <DisplayPhotoItems
+                imgList={data?.imgList}
+                itemList={data?.itemList}
+              ></DisplayPhotoItems>
+            )}
+            {data?.qtype === 'Find' && !data.hasMine && (
+              <FindItemButton>아이템 찾아주기</FindItemButton>
+            )}
+          </CommunityContent>
+          <InteractionWrapper>
+            <div className='left'>
+              <Reaction>
+                <CommentIcon></CommentIcon>
+                <span>{data?.commentNum}</span>
+              </Reaction>
+              <Reaction>
+                <View></View>
+                <span>{data?.searchNum}</span>
+              </Reaction>
+            </div>
+            <Reaction>
+              <span>{data?.likeNum}</span>
+              {data?.hasLike ? (
+                <LikeOn onClick={onClickLike}></LikeOn>
+              ) : (
+                <LikeOff onClick={onClickLike}></LikeOff>
+              )}
+            </Reaction>
+          </InteractionWrapper>
+        </InfoWrapper>
+        <Divider></Divider>
+        <Comment questionId={Number(questionId)}></Comment>
+        <Divider></Divider>
+        {data?.qtype && (
+          <RecommendList
+            questionId={Number(questionId)}
+            nickName={data?.user.nickName}
+            qType={data?.qtype}
+          ></RecommendList>
         )}
-        <CommentWrapper onFocus={() => setIsFocused(true)} onBlur={onBlurHandler}>
-          <CommentField
-            value={commentString}
-            setValue={setCommentString}
-            placeholder='댓글을 남겨주세요'
-            onEnter={() => submitComment()}
-          ></CommentField>
-          {commentString ? (
-            <SubmitOn onClick={() => submitComment()}></SubmitOn>
-          ) : (
-            <SubmitOff></SubmitOff>
+        <CommentContainer>
+          {isFocused && (
+            <RecommendChipWrapper>
+              <Chip
+                text='아이템 찾아주기'
+                onClick={() => navigate('/community/comment/comment-item-photo')}
+              ></Chip>
+            </RecommendChipWrapper>
           )}
-        </CommentWrapper>
-      </CommentContainer>
+          <CommentWrapper onFocus={() => setIsFocused(true)} onBlur={onBlurHandler}>
+            <CommentField
+              value={commentString}
+              setValue={setCommentString}
+              placeholder='댓글을 남겨주세요'
+              onEnter={() => submitComment()}
+            ></CommentField>
+            {commentString ? (
+              <SubmitOn onClick={() => submitComment()}></SubmitOn>
+            ) : (
+              <SubmitOff></SubmitOff>
+            )}
+          </CommentWrapper>
+        </CommentContainer>
+      </CommunityWrapper>
     </DetailContainer>
   )
 }
