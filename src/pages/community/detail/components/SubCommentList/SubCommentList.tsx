@@ -7,9 +7,10 @@ import { ReactComponent as ArrowDown } from '../../../../../assets/arrow_down_13
 
 interface SubcommentProps {
   commentId: number
+  questionId: number
 }
 
-const SubCommentList = ({ commentId }: SubcommentProps) => {
+const SubCommentList = ({ commentId, questionId }: SubcommentProps) => {
   const { getSubComment } = useSearchSubCommentQuery()
   const { data } = getSubComment(Number(commentId))
   console.log('subcomment', data)
@@ -23,7 +24,13 @@ const SubCommentList = ({ commentId }: SubcommentProps) => {
     return (
       <SubCommentListContainer>
         {data.content.map((subcomment) => {
-          return <SubComment subcomment={subcomment} key={subcomment.id}></SubComment>
+          return (
+            <SubComment
+              subcomment={subcomment}
+              commentId={commentId}
+              key={subcomment.id}
+            ></SubComment>
+          )
         })}
         {showRestComment && (
           <ShowMoreSubCommentWrapper>

@@ -10,6 +10,7 @@ import {
   CelebName,
   CommentContainer,
   CommentContent,
+  CommentExpression,
   CommentWrapper,
   ContentLeft,
   ContentRight,
@@ -27,19 +28,28 @@ import {
 } from './styles'
 import { formatUpdatedAt } from '../../../../../utils/utility'
 import SubCommentList from '../SubCommentList/SubCommentList'
-
+import { ExpressionWrapper, LikeWrapper } from '../SubCommentList/styles'
+import { ReactComponent as LikeOff } from '../../../../../assets/like_off_18.svg'
+import { ReactComponent as LikeOn } from '../../../../../assets/like_on_18.svg'
 interface CommentProps {
   questionId: number
 }
 
 const Comment = ({ questionId }: CommentProps) => {
   const { getComment } = useSearchCommentQuery()
-  const { data } = getComment(Number(questionId))
+  const { data } = getComment(questionId)
   console.log('comment', data)
   function convertToUTC(dateString: string): string {
     const date = new Date(dateString)
     date.setHours(date.getHours() + 9)
     return date.toUTCString()
+  }
+
+  const {
+    likeComment: { mutate: mutateByLike },
+  } = useSearchCommentQuery()
+  const onClickLike = (commentId: number, questionId: number) => {
+    mutateByLike({ commentId, questionId })
   }
 
   if (data && data.length > 0) {
@@ -85,7 +95,20 @@ const Comment = ({ questionId }: CommentProps) => {
                   })}
                 </ItemWrapper>
               )}
-              <SubCommentList commentId={comment.id}></SubCommentList>
+              <CommentExpression>
+                <ExpressionWrapper>
+                  <span>답글 달기</span>
+                  <LikeWrapper>
+                    <span>{comment.likeNum}</span>
+                    {comment.likeStatus ? (
+                      <LikeOn onClick={() => onClickLike(comment.id, questionId)}></LikeOn>
+                    ) : (
+                      <LikeOff onClick={() => onClickLike(comment.id, questionId)}></LikeOff>
+                    )}
+                  </LikeWrapper>
+                </ExpressionWrapper>
+              </CommentExpression>
+              <SubCommentList commentId={comment.id} questionId={questionId}></SubCommentList>
             </CommentWrapper>
           )
         })}

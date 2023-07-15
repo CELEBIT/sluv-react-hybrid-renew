@@ -5,6 +5,7 @@ export const CommentContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  border-bottom: 1px solid ${Common.colors.GR200};
 `
 
 export const CommentWrapper = styled.div`
@@ -17,8 +18,14 @@ export const CommentWrapper = styled.div`
 export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 1.5rem;
+  padding: 1.5rem 1.5rem 0 1.5rem;
   gap: 0.5rem;
+`
+
+export const CommentExpression = styled.div`
+  display: flex;
+  padding: 0 1.25rem 1.5rem 1.25rem;
+  border-bottom: 1px solid ${Common.colors.GR200};
 `
 
 export const ContentLeft = styled.div`

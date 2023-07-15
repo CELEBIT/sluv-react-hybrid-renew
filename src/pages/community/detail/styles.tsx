@@ -15,10 +15,16 @@ export const DetailContainer = styled.div`
     display: none;
   }
 `
+export const CommunityWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+`
 
 export const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
+
   width: 100%;
   margin-top: 0.5rem;
   gap: 1rem;
@@ -225,4 +231,16 @@ export const EachVotePhoto = styled.div<{ imgUrl: string }>`
   background-size: cover;
   background-position: 50%;
   background-image: url(${(props) => props.imgUrl});
+`
+
+export const FindItemButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 1.0625rem;
+  background-color: ${Common.colors.BG};
+  border-radius: 0.75rem;
+  border: 1px solid #e5e0f6;
+  ${Pretendard({ size: 18, weight: Common.bold.regular, color: Common.colors.PRI })}
 `
