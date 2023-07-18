@@ -5,6 +5,7 @@ export const SubCommentListContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding-bottom: 1.25rem;
+  border-top: 1px solid ${Common.colors.GR200};
 `
 // 대댓글
 export const SubCommentContainer = styled.div`
@@ -88,7 +89,6 @@ export const ItemWrapper = styled.div`
   width: 100%;
   overflow-x: scroll;
   padding: 1.25rem;
-  border: 1px solid orange;
 `
 
 export const Item = styled.div`
