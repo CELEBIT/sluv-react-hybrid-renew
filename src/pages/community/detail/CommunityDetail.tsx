@@ -65,6 +65,7 @@ import { RequestEditItemState } from '../../item/editRequest'
 import { IselectedItem, communityItemState, imgItemListState } from '../../../recoil/communityInfo'
 import { questionTypeState } from '../../../components/BottomSheetModal/QuestionEditDeleteModal'
 import { selectedCelebState } from '../../../components/SelectCeleb/SelectCeleb'
+import CommentList from './components/Comment/CommentList'
 
 export const commentState = atom<NewComment>({
   key: atomKeys.commentState,
@@ -264,7 +265,7 @@ const CommunityDetail = () => {
           </InteractionWrapper>
         </InfoWrapper>
         <Divider></Divider>
-        <Comment questionId={Number(questionId)}></Comment>
+        <CommentList questionId={Number(questionId)}></CommentList>
         <Divider></Divider>
         {data?.qtype && (
           <RecommendList

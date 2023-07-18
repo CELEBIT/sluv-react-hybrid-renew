@@ -5,7 +5,6 @@ export const CommentContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  border-bottom: 1px solid ${Common.colors.GR200};
 `
 
 export const CommentWrapper = styled.div`
@@ -13,19 +12,19 @@ export const CommentWrapper = styled.div`
   flex-direction: column;
   overflow-x: scroll;
   width: 100%;
-  border-bottom: 1px solid ${Common.colors.GR200};
 `
 export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: row;
   padding: 1.5rem 1.5rem 0 1.5rem;
   gap: 0.5rem;
+  border-top: 1px solid ${Common.colors.GR200};
 `
 
 export const CommentExpression = styled.div`
   display: flex;
   padding: 0 1.25rem 1.5rem 1.25rem;
-  border-bottom: 1px solid ${Common.colors.GR200};
+  /* border-bottom: 1px solid ${Common.colors.GR200}; */
 `
 
 export const ContentLeft = styled.div`
@@ -79,6 +78,7 @@ export const ItemWrapper = styled.div`
   overflow-x: scroll;
   background-color: ${Common.colors.GR50};
   padding: 1.25rem;
+  margin-top: 1.25rem;
 `
 
 export const Item = styled.div`

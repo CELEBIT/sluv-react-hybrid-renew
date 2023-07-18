@@ -165,19 +165,9 @@ const Question = () => {
         {pathname.includes('edit') ? (
           <ComponentWrapper className='top'>
             <LabelContainer>
-              <Label>주제</Label>
+              <Label>주제를 골라주세요</Label>
             </LabelContainer>
-            <MenuSelectWrapper>
-              <ButtonMedium type='pri' text={communityQuestionMenu} active={true}></ButtonMedium>
-            </MenuSelectWrapper>
-            {communityQuestionMenu === '추천해 줘' && (
-              <>
-                <SelectRecommendCategory></SelectRecommendCategory>
-                {hasTriedToUpload && (questionItem.categoryNameList?.length ?? 0) == 0 && (
-                  <ErrorText className='error'>카테고리는 필수 사항입니다</ErrorText>
-                )}
-              </>
-            )}
+            <SelectQuestionMenu></SelectQuestionMenu>
           </ComponentWrapper>
         ) : (
           <ComponentWrapper className='top'>

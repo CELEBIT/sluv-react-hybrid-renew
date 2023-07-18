@@ -39,13 +39,13 @@ export default class CommentService {
   }
 
   // 질문 게시글 답글 조회
-  async getSubComment(commentId: number) {
+  async getSubComment(commentId: number, size?: number) {
     const data: ResponseType<GetPaginationResult<CommentResult>> = await request.get(
       `${this.commentUrl}/${commentId}/subcomment`,
       {
         params: {
           page: 0,
-          size: 2,
+          size: size || 2,
         },
       },
     )

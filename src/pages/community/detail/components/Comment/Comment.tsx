@@ -1,6 +1,5 @@
 import React from 'react'
 import useSearchCommentQuery from '../../../../../apis/comment/hooks/useSearchCommentQuery'
-import EmptyState from '../../../../../components/EmptyState'
 
 import { ReactComponent as ShowMore } from '../../../../../assets/add_24.svg'
 import { ReactComponent as StorageOff } from '../../../../../assets/storage_list_off_24.svg'
@@ -31,14 +30,15 @@ import SubCommentList from '../SubCommentList/SubCommentList'
 import { ExpressionWrapper, LikeWrapper } from '../SubCommentList/styles'
 import { ReactComponent as LikeOff } from '../../../../../assets/like_off_18.svg'
 import { ReactComponent as LikeOn } from '../../../../../assets/like_on_18.svg'
+import { useNavigate } from 'react-router-dom'
+import { CommentResult } from '../../../../../apis/comment/commentService.type'
 interface CommentProps {
   questionId: number
+  comment: CommentResult
 }
 
-const Comment = ({ questionId }: CommentProps) => {
-  const { getComment } = useSearchCommentQuery()
-  const { data } = getComment(questionId)
-  console.log('comment', data)
+const Comment = ({ questionId, comment }: CommentProps) => {
+  const navigate = useNavigate()
   function convertToUTC(dateString: string): string {
     const date = new Date(dateString)
     date.setHours(date.getHours() + 9)
@@ -52,77 +52,67 @@ const Comment = ({ questionId }: CommentProps) => {
     mutateByLike({ commentId, questionId })
   }
 
-  if (data && data.length > 0) {
-    return (
-      <CommentContainer>
-        {data.map((comment) => {
-          return (
-            <CommentWrapper key={comment.id}>
-              <ContentWrapper>
-                <ContentLeft>
-                  <UserImg imgUrl={comment.user.profileImgUrl}></UserImg>
-                </ContentLeft>
-                <ContentRight>
-                  <ContentTop>
-                    <UserInfo>
-                      <NickName>{comment.user.nickName}</NickName>
-                      <Time>{formatUpdatedAt(convertToUTC(comment.createdAt))}</Time>
-                    </UserInfo>
-                    <ShowMore></ShowMore>
-                  </ContentTop>
-                  <CommentContent>{comment.content}</CommentContent>
-                </ContentRight>
-              </ContentWrapper>
-              {comment.itemList && comment.itemList.length > 0 && (
-                <ItemWrapper>
-                  {comment.itemList.map((each) => {
-                    return (
-                      <Item key={each.item.itemId}>
-                        <Img imgUrl={each.item.imgUrl}>
-                          {each.item.scrapStatus ? (
-                            <StorageOn className='represent'></StorageOn>
-                          ) : (
-                            <StorageOff className='represent'></StorageOff>
-                          )}
-                        </Img>
-                        <ItemTextWrapper>
-                          <CelebName>{each.item.celebName}</CelebName>
-                          <BrandName>{each.item.brandName}</BrandName>
-                          <ItemName>{each.item.itemName}</ItemName>
-                        </ItemTextWrapper>
-                      </Item>
-                    )
-                  })}
-                </ItemWrapper>
-              )}
-              <CommentExpression>
-                <ExpressionWrapper>
-                  <span>답글 달기</span>
-                  <LikeWrapper>
-                    <span>{comment.likeNum}</span>
-                    {comment.likeStatus ? (
-                      <LikeOn onClick={() => onClickLike(comment.id, questionId)}></LikeOn>
-                    ) : (
-                      <LikeOff onClick={() => onClickLike(comment.id, questionId)}></LikeOff>
-                    )}
-                  </LikeWrapper>
-                </ExpressionWrapper>
-              </CommentExpression>
-              <SubCommentList commentId={comment.id} questionId={questionId}></SubCommentList>
-            </CommentWrapper>
-          )
-        })}
-      </CommentContainer>
-    )
-  } else {
-    return (
-      <EmptyState
-        icon='comment'
-        title='아직 댓글이 없어요'
-        subtitle='스러버를위해 첫 댓글을 남겨보세요'
-      ></EmptyState>
-    )
-  }
+  return (
+    <CommentWrapper key={comment.id}>
+      <ContentWrapper>
+        <ContentLeft>
+          <UserImg imgUrl={comment.user.profileImgUrl}></UserImg>
+        </ContentLeft>
+        <ContentRight>
+          <ContentTop>
+            <UserInfo>
+              <NickName>{comment.user.nickName}</NickName>
+              <Time>{formatUpdatedAt(convertToUTC(comment.createdAt))}</Time>
+            </UserInfo>
+            <ShowMore></ShowMore>
+          </ContentTop>
+          <CommentContent>{comment.content}</CommentContent>
+        </ContentRight>
+      </ContentWrapper>
+      {comment.itemList && comment.itemList.length > 0 && (
+        <ItemWrapper>
+          {comment.itemList.map((each) => {
+            return (
+              <Item key={each.item.itemId}>
+                <Img imgUrl={each.item.imgUrl}>
+                  {each.item.scrapStatus ? (
+                    <StorageOn className='represent'></StorageOn>
+                  ) : (
+                    <StorageOff className='represent'></StorageOff>
+                  )}
+                </Img>
+                <ItemTextWrapper>
+                  <CelebName>{each.item.celebName}</CelebName>
+                  <BrandName>{each.item.brandName}</BrandName>
+                  <ItemName>{each.item.itemName}</ItemName>
+                </ItemTextWrapper>
+              </Item>
+            )
+          })}
+        </ItemWrapper>
+      )}
+      <CommentExpression>
+        <ExpressionWrapper>
+          <span
+            onClick={() =>
+              navigate('/community/comment/subcomment', { state: { comment, questionId } })
+            }
+          >
+            답글 달기
+          </span>
+          <LikeWrapper>
+            <span>{comment.likeNum}</span>
+            {comment.likeStatus ? (
+              <LikeOn onClick={() => onClickLike(comment.id, questionId)}></LikeOn>
+            ) : (
+              <LikeOff onClick={() => onClickLike(comment.id, questionId)}></LikeOff>
+            )}
+          </LikeWrapper>
+        </ExpressionWrapper>
+      </CommentExpression>
+      <SubCommentList comment={comment} questionId={questionId}></SubCommentList>
+    </CommentWrapper>
+  )
 }
 
 export default Comment

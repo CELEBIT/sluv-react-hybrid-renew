@@ -40,7 +40,9 @@ const Question = React.lazy(() => import('./pages/community/question'))
 const CommunityDetail = React.lazy(() => import('./pages/community/detail/CommunityDetail'))
 const CommentItemPhoto = React.lazy(() => import('./components/SelectItemOrPhoto/CommentItemPhoto'))
 const CommentUpload = React.lazy(() => import('./pages/community/detail/components/CommentUpload'))
-
+const AddSubComment = React.lazy(
+  () => import('./pages/community/detail/components/AddSubComment/AddSubComment'),
+)
 // 검색
 const Search = React.lazy(() => import('./pages/search'))
 const SearchResult = React.lazy(() => import('./pages/search/SearchResult'))
@@ -85,6 +87,7 @@ const App = () => {
             <Route path='/community/select-item-photo' element={<SelectItemOrPhoto />} />
             <Route path='/community/comment/comment-item-photo' element={<CommentItemPhoto />} />
             <Route path='/community/comment/upload' element={<CommentUpload />} />
+            <Route path='/community/comment/subcomment' element={<AddSubComment />} />
             <Route path='/community/detail/:id' element={<CommunityDetail />} />
             <Route path='/community/detail/:id/comment/:commentid' element={<CommunityDetail />} />
             <Route path='/community/detail/report-question' element={<EditRequest />} />

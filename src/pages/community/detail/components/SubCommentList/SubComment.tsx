@@ -23,7 +23,7 @@ import {
   UserImg,
   UserInfo,
 } from './styles'
-import { SubCommentResult } from '../../../../../apis/comment/commentService.type'
+import { CommentResult, SubCommentResult } from '../../../../../apis/comment/commentService.type'
 import { formatUpdatedAt } from '../../../../../utils/utility'
 
 import { ReactComponent as ShowMore } from '../../../../../assets/add_24.svg'
@@ -33,12 +33,14 @@ import { ReactComponent as LikeOff } from '../../../../../assets/like_off_18.svg
 import { ReactComponent as LikeOn } from '../../../../../assets/like_on_18.svg'
 import { ReactComponent as SubCommentArrow } from '../../../../../assets/arrow_comment_18.svg'
 import useSearchSubCommentQuery from '../../../../../apis/comment/hooks/useSearchSubCommentQuery'
+import { useNavigate } from 'react-router-dom'
 interface SubCommentProps {
   subcomment: SubCommentResult
-  commentId: number
+  comment: CommentResult
 }
 
-const SubComment = ({ subcomment, commentId }: SubCommentProps) => {
+const SubComment = ({ subcomment, comment }: SubCommentProps) => {
+  const navigate = useNavigate()
   function convertToUTC(dateString: string): string {
     const date = new Date(dateString)
     date.setHours(date.getHours() + 9)
@@ -99,13 +101,15 @@ const SubComment = ({ subcomment, commentId }: SubCommentProps) => {
           </ItemWrapper>
         )}
         <ExpressionWrapper>
-          <span>답글 달기</span>
+          <span onClick={() => navigate('/community/comment/subcomment', { state: { comment } })}>
+            답글 달기
+          </span>
           <LikeWrapper>
             <span>{subcomment.likeNum}</span>
             {subcomment.likeStatus ? (
-              <LikeOn onClick={() => onClickLike(commentId, subcomment.id)}></LikeOn>
+              <LikeOn onClick={() => onClickLike(comment.id, subcomment.id)}></LikeOn>
             ) : (
-              <LikeOff onClick={() => onClickLike(commentId, subcomment.id)}></LikeOff>
+              <LikeOff onClick={() => onClickLike(comment.id, subcomment.id)}></LikeOff>
             )}
           </LikeWrapper>
         </ExpressionWrapper>

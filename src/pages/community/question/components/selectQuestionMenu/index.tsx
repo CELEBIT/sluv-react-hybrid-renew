@@ -10,7 +10,9 @@ import ButtonMedium from '../../../../../components/ButtonMedium/ButtonMedium'
 import { MenuSelectWrapper } from './styles'
 import useModals from '../../../../../components/Modals/hooks/useModals'
 import { modals } from '../../../../../components/Modals'
+import { useLocation } from 'react-router-dom'
 const SelectQuestionMenu = () => {
+  const { pathname } = useLocation()
   const { openModal } = useModals()
   const [communityQuestionMenu, setCommunityQuestionMenu] = useRecoilState(
     communityQuestionMenuState,
@@ -38,17 +40,45 @@ const SelectQuestionMenu = () => {
   }
   return (
     <MenuSelectWrapper>
-      {QuestionMenuList.map((menu) => {
-        return (
-          <ButtonMedium
-            key={menu}
-            type='pri'
-            text={menu}
-            active={menu === communityQuestionMenu}
-            onClick={() => onClickMenu(menu)}
-          ></ButtonMedium>
-        )
-      })}
+      {pathname.includes('edit') ? (
+        <>
+          {QuestionMenuList.map((menu) => {
+            if (menu === communityQuestionMenu)
+              return (
+                <ButtonMedium
+                  key={menu}
+                  type='pri'
+                  text={menu}
+                  active={menu === communityQuestionMenu}
+                  onClick={() => onClickMenu(menu)}
+                ></ButtonMedium>
+              )
+            else
+              return (
+                <ButtonMedium
+                  key={menu}
+                  type='disable'
+                  text={menu}
+                  active={menu === communityQuestionMenu}
+                ></ButtonMedium>
+              )
+          })}
+        </>
+      ) : (
+        <>
+          {QuestionMenuList.map((menu) => {
+            return (
+              <ButtonMedium
+                key={menu}
+                type='pri'
+                text={menu}
+                active={menu === communityQuestionMenu}
+                onClick={() => onClickMenu(menu)}
+              ></ButtonMedium>
+            )
+          })}
+        </>
+      )}
     </MenuSelectWrapper>
   )
 }
