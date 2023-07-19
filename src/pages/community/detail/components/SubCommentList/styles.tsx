@@ -1,30 +1,42 @@
 import styled from '@emotion/styled'
 import { Common, Pretendard } from '../../../../../components/styles'
 
-export const CommentContainer = styled.div`
+export const SubCommentListContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  padding-bottom: 1.25rem;
+  border-top: 1px solid ${Common.colors.GR200};
 `
-
-export const CommentWrapper = styled.div`
+// 대댓글
+export const SubCommentContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   overflow-x: scroll;
   width: 100%;
 `
+
+export const SubCommentLeft = styled.div`
+  display: flex;
+  padding: 1.5rem 0 1.5rem 1.25rem;
+`
+export const SubCommentRight = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 1.5rem 1.25rem 1.5rem 0.5rem;
+  border-bottom: 1px solid ${Common.colors.GR200};
+`
+
 export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 1.5rem 1.5rem 0 1.5rem;
   gap: 0.5rem;
-  border-top: 1px solid ${Common.colors.GR200};
 `
 
-export const CommentExpression = styled.div`
+export const Content = styled.div`
   display: flex;
-  padding: 0 1.25rem 1.5rem 1.25rem;
-  /* border-bottom: 1px solid ${Common.colors.GR200}; */
+  width: 100%;
+  gap: 0.5rem;
 `
 
 export const ContentLeft = styled.div`
@@ -61,8 +73,8 @@ export const Time = styled.span`
 `
 
 export const UserImg = styled.div<{ imgUrl: string }>`
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 1.875rem;
+  height: 1.875rem;
   border-radius: 50%;
   background-repeat: no-repeat;
   background-size: cover;
@@ -76,9 +88,7 @@ export const ItemWrapper = styled.div`
   gap: 0.75rem;
   width: 100%;
   overflow-x: scroll;
-  background-color: ${Common.colors.GR50};
   padding: 1.25rem;
-  margin-top: 1.25rem;
 `
 
 export const Item = styled.div`
@@ -136,4 +146,33 @@ export const Img = styled.div<{ imgUrl: string }>`
     right: 0.25rem;
     bottom: 0.25rem;
   }
+`
+
+export const ExpressionWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 1.25rem;
+  span {
+    ${Pretendard({ size: 13, weight: Common.bold.regular, color: Common.colors.GR600 })}
+  }
+`
+
+export const LikeWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+`
+
+export const ShowMoreSubCommentWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.125rem;
+  padding: 1.5rem 1.25rem 0 1.25rem;
+  span {
+    margin-left: 0.375rem;
+  }
+  ${Pretendard({ size: 13, weight: Common.bold.thin, color: Common.colors.BK })}
 `

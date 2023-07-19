@@ -10,6 +10,11 @@ export interface IAddComment {
   itemList: Array<ItemPost> | null
 }
 
+export interface ILikeComment {
+  commentId: number
+  questionId: number
+}
+
 const useSearchCommentQuery = () => {
   const comment = new CommentService()
   const queryClient = useQueryClient()
@@ -29,7 +34,13 @@ const useSearchCommentQuery = () => {
     },
   )
 
-  return { getComment, addComment }
+  const likeComment = useMutation(({ commentId }: ILikeComment) => comment.likeComment(commentId), {
+    onSuccess: (res, { questionId }) => {
+      queryClient.invalidateQueries(queryKeys.comment(questionId))
+    },
+  })
+
+  return { getComment, addComment, likeComment }
 }
 
 export default useSearchCommentQuery

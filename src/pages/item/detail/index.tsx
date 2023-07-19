@@ -200,7 +200,7 @@ const ItemDetail = () => {
                 <LikeOff onClick={onClickLike}></LikeOff>
               )}
 
-              <Share></Share>
+              <Share stroke={Common.colors.GR600}></Share>
             </Interactions>
           </Top>
           <ItemInfo>

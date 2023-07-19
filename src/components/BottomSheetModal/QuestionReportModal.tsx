@@ -12,22 +12,18 @@ import { useNavigate } from 'react-router-dom'
 import { RequestEditItemState } from '../../pages/item/editRequest'
 import { ReactComponent as Share } from '../../assets/share_24.svg'
 
-const ItemEditRequestModal = () => {
+const QuestionReportModal = () => {
   const navigate = useNavigate()
   const { closeModal } = useModals()
-  const onClickEditRequest = () => {
-    closeModal(modals.ItemEditRequestModal, () => {
-      navigate('/item/detail/request-edit')
-    })
-  }
-  const onClickReportItem = () => {
-    closeModal(modals.ItemEditRequestModal, () => {
-      navigate('/item/detail/report-item')
+
+  const onClickReportQuestion = () => {
+    closeModal(modals.QuestionReportModal, () => {
+      navigate('/community/detail/report-question')
     })
   }
   const onClickReportUser = () => {
-    closeModal(modals.ItemEditRequestModal, () => {
-      navigate('/item/detail/report-user')
+    closeModal(modals.QuestionReportModal, () => {
+      navigate('/community/detail/report-user')
     })
   }
   const EditReportItem = useRecoilValue(RequestEditItemState)
@@ -36,13 +32,10 @@ const ItemEditRequestModal = () => {
       <ModalWrapper>
         <Header
           isModalHeader={true}
-          modalCloseBtnClick={() => closeModal(modals.ItemEditRequestModal)}
+          modalCloseBtnClick={() => closeModal(modals.QuestionReportModal)}
         />
         <MenuWrapper>
-          <Menu onClick={onClickEditRequest}>
-            <Share stroke={Common.colors.BK}></Share>정보 수정 요청하기
-          </Menu>
-          <Menu onClick={onClickReportItem}>
+          <Menu onClick={onClickReportQuestion}>
             <Share stroke={Common.colors.BK}></Share>게시글 신고하기
           </Menu>
           <Menu onClick={onClickReportUser}>
@@ -77,4 +70,4 @@ const Menu = styled.div`
   ${Pretendard({ size: 17, weight: Common.bold.regular, color: Common.colors.BK })}
 `
 
-export default ItemEditRequestModal
+export default QuestionReportModal

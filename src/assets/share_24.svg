@@ -1,8 +1,8 @@
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="ico/24x/share">
 <g id="shape">
-<path id="Vector 91" d="M3.5 12V17C3.5 18.1046 4.39543 19 5.5 19H18.5C19.6046 19 20.5 18.1046 20.5 17V12" stroke="#212529" stroke-width="2" stroke-linecap="round"/>
-<path id="Vector 92" d="M8.5 7.38624L12 4M12 4L15.5 7.38624M12 4V14" stroke="#212529" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector 91" d="M3.5 12V17C3.5 18.1046 4.39543 19 5.5 19H18.5C19.6046 19 20.5 18.1046 20.5 17V12" stroke="current" stroke-width="2" stroke-linecap="round"/>
+<path id="Vector 92" d="M8.5 7.38624L12 4M12 4L15.5 7.38624M12 4V14" stroke="current" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 </g>
 </svg>
