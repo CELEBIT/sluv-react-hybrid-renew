@@ -6,7 +6,7 @@ import { ReactComponent as Search } from '../../../assets/search_24.svg'
 interface SearchTextFieldProps {
   value: string
   setValue: React.Dispatch<React.SetStateAction<string>>
-  onEnter: () => void
+  onEnter?: () => void
   placeholder: string
 }
 
