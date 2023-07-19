@@ -28,6 +28,17 @@ export interface ISearchCeleb {
   celebTotalNameEn: string
 }
 
+export interface ISelectCeleb {
+  celebId: number
+  celebName: string
+}
+
+export interface ISelectCelebResult {
+  categoryId: number
+  categoryName: string
+  celebList: Array<ISelectCeleb>
+}
+
 export default class CelebService {
   celebUrl: string
 
@@ -78,6 +89,14 @@ export default class CelebService {
           size: 20,
         },
       },
+    )
+    return data.result
+  }
+
+  // 전체 관심 셀럽 조회 - 관심셀럽 선택
+  async getSelectCelebList() {
+    const data: ResponseType<Array<ISelectCelebResult>> = await request.get(
+      `${this.celebUrl}/category`,
     )
     return data.result
   }

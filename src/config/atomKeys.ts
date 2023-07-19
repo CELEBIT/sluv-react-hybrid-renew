@@ -31,4 +31,5 @@ export const atomKeys = {
   commentState: 'commentState' as const,
   commentQuestionId: 'commentQuestionId' as const,
   selectedInterestCelebState: 'selectedInterestCelebState' as const,
+  questionType: 'questionType' as const,
 }

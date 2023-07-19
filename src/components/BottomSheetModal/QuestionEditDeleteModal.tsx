@@ -2,52 +2,56 @@ import React from 'react'
 import BottomSheetModal from '.'
 import styled from '@emotion/styled'
 
-import { useRecoilValue } from 'recoil'
+import { atom, useRecoilValue } from 'recoil'
 // import { atomKeys } from '../../config/atomKeys'
 import Header from '../Header/Header'
 import useModals from '../Modals/hooks/useModals'
 import { modals } from '../Modals'
 import { Common, Pretendard } from '../styles'
 import { useNavigate } from 'react-router-dom'
-import { RequestEditItemState } from '../../pages/item/editRequest'
 import { ReactComponent as Share } from '../../assets/share_24.svg'
+import { atomKeys } from '../../config/atomKeys'
 
-const ItemEditRequestModal = () => {
+export const questionTypeState = atom<string>({
+  key: atomKeys.questionType,
+  default: '',
+})
+
+const QuestionEditDeleteModal = () => {
   const navigate = useNavigate()
-  const { closeModal } = useModals()
-  const onClickEditRequest = () => {
-    closeModal(modals.ItemEditRequestModal, () => {
-      navigate('/item/detail/request-edit')
+  const { openModal, closeModal } = useModals()
+  const questionType = useRecoilValue(questionTypeState)
+
+  const onClickEditQuestion = () => {
+    console.log('questionType', questionType)
+    closeModal(modals.QuestionEditDeleteModal, () => {
+      if (questionType === 'Find') navigate('/community/find-request/edit')
+      else if (questionType === 'How' || questionType === 'Recommend')
+        navigate('/community/question/edit')
+      else {
+        alert('투표가 시작되어 수정할 수 없어요')
+      }
     })
   }
-  const onClickReportItem = () => {
-    closeModal(modals.ItemEditRequestModal, () => {
-      navigate('/item/detail/report-item')
+  const onClickDeleteQuestion = () => {
+    closeModal(modals.QuestionEditDeleteModal, () => {
+      openModal(modals.DeleteQuestionModal)
     })
   }
-  const onClickReportUser = () => {
-    closeModal(modals.ItemEditRequestModal, () => {
-      navigate('/item/detail/report-user')
-    })
-  }
-  const EditReportItem = useRecoilValue(RequestEditItemState)
   return (
     <BottomSheetModal>
       <ModalWrapper>
         <Header
           isModalHeader={true}
-          modalCloseBtnClick={() => closeModal(modals.ItemEditRequestModal)}
+          modalCloseBtnClick={() => closeModal(modals.QuestionReportModal)}
         />
         <MenuWrapper>
-          <Menu onClick={onClickEditRequest}>
-            <Share stroke={Common.colors.BK}></Share>정보 수정 요청하기
+          <Menu onClick={onClickEditQuestion}>
+            <Share stroke={Common.colors.BK}></Share>게시글 수정하기
           </Menu>
-          <Menu onClick={onClickReportItem}>
-            <Share stroke={Common.colors.BK}></Share>게시글 신고하기
-          </Menu>
-          <Menu onClick={onClickReportUser}>
+          <Menu onClick={onClickDeleteQuestion}>
             <Share stroke={Common.colors.BK}></Share>
-            &apos;{EditReportItem.itemWriterName}&apos;님 신고하기
+            게시글 삭제하기
           </Menu>
         </MenuWrapper>
       </ModalWrapper>
@@ -77,4 +81,4 @@ const Menu = styled.div`
   ${Pretendard({ size: 17, weight: Common.bold.regular, color: Common.colors.BK })}
 `
 
-export default ItemEditRequestModal
+export default QuestionEditDeleteModal

@@ -5,7 +5,7 @@ import { ReactComponent as Close } from '../../../assets/close_20.svg'
 import { ReactComponent as ArrowUp } from '../../../assets/arrow_up_18.svg'
 import { ReactComponent as ArrowDown } from '../../../assets/arrow_down_18.svg'
 import { ReactComponent as Add } from '../../../assets/add_18.svg'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { atom, useRecoilState, useRecoilValue } from 'recoil'
 import { atomKeys } from '../../../config/atomKeys'
 import { HeaderWrapper } from './styles'
@@ -55,7 +55,7 @@ const CommunityHeader = ({ children, backBtnClick }: HeaderProps) => {
     }
   }
   useEffect(() => {
-    if (pathname === '/community/find-request') {
+    if (pathname.includes('/community/find-request')) {
       setCommunityMenu('찾아주세요')
     } else {
       setCommunityMenu('질문해요')
@@ -65,20 +65,26 @@ const CommunityHeader = ({ children, backBtnClick }: HeaderProps) => {
     <HeaderWrapper role='heading'>
       <div className='left'>
         <ArrowBack onClick={backBtnClick} className='arrow-back' />
-        <Title onClick={() => setMenuOpen(!menuOpen)}>{communityMenu}</Title>
-        {menuOpen ? <ArrowUp stroke='black' /> : <ArrowDown stroke='black' />}
+        {pathname.includes('edit') ? (
+          <Title>{communityMenu}</Title>
+        ) : (
+          <>
+            <Title onClick={() => setMenuOpen(!menuOpen)}>{communityMenu}</Title>
+            {menuOpen ? <ArrowUp stroke='black' /> : <ArrowDown stroke='black' />}
 
-        {menuOpen === true && (
-          <DropDownMenu>
-            {CommunityMenuList.map((menu) => {
-              return (
-                <Menu key={menu.name} onClick={() => onMenuClick(menu)}>
-                  <Add></Add>
-                  <span>{menu.name}</span>
-                </Menu>
-              )
-            })}
-          </DropDownMenu>
+            {menuOpen === true && (
+              <DropDownMenu>
+                {CommunityMenuList.map((menu) => {
+                  return (
+                    <Menu key={menu.name} onClick={() => onMenuClick(menu)}>
+                      <Add></Add>
+                      <span>{menu.name}</span>
+                    </Menu>
+                  )
+                })}
+              </DropDownMenu>
+            )}
+          </>
         )}
       </div>
       <div className='right'>{children}</div>

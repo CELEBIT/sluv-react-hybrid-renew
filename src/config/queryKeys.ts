@@ -18,6 +18,7 @@ export const queryKeys = {
   searchItem: (keyword: string) => ['searchItem', keyword] as const,
   questionDetail: (questionId: number) => ['questionDetail', questionId] as const,
   comment: (questionId: number) => ['comment', questionId] as const,
+  subcomment: (commentId: number, size?: number) => ['subcomment', commentId, size] as const,
   recommendWait: (questionId: number) => ['recommendWait', questionId] as const,
   howAboutWait: (questionId: number) => ['howAboutWait', questionId] as const,
   findWait: (questionId: number) => ['findWait', questionId] as const,
@@ -34,4 +35,6 @@ export const queryKeys = {
   hotCelebItem: (standard: string) => ['hotCelebItem', standard] as const,
   getHotSluver: (celebId?: number) => ['getHotSluver', celebId] as const,
   getQuestionList: (qtype?: string) => ['getQuestionList', qtype] as const,
+  deleteQuestion: (questionId?: number) => ['deleteQuestion', questionId] as const,
+  getSelectCelebList: ['getSelectCelebList'] as const,
 }
