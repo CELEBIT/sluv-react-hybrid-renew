@@ -55,9 +55,7 @@ export const ColorChipWrapper = styled.div<{ active: boolean; canDelete?: boolea
             ? '#F1EAD9'
             : props.color === 'green'
             ? '#DBF1D9'
-            : props.color === 'blue'
-            ? '#D9E5F1'
-            : Common.colors.GR100
+            : props.color === 'blue' && '#D9E5F1'
         }`
       : `1px solid ${Common.colors.GR300}`};
 
@@ -71,9 +69,7 @@ export const ColorChipWrapper = styled.div<{ active: boolean; canDelete?: boolea
         ? Common.colors.YL
         : props.color === 'green'
         ? Common.colors.GRN
-        : props.color === 'blue'
-        ? Common.colors.BL
-        : Common.colors.GR600
+        : props.color === 'blue' && Common.colors.BL
       : Common.colors.GR600};
 
   font-family: Pretendard;
