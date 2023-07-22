@@ -35,6 +35,11 @@ export const TitleSearchWrapper = styled.div`
     color: Common.colors.BK,
   })};
 `
+
+export const SearchWrapper = styled.div`
+  display: flex;
+`
+
 export const CelebCategoryWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -56,12 +61,91 @@ export const CategoryTitle = styled.span`
     color: Common.colors.BK,
   })};
 `
-export const CelebListWrapper = styled.div`
+
+export const SideBarWrapper = styled.div<{ size: string }>`
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  right: 0;
+  top: 13.375rem;
+  justify-content: space-around;
+  height: 18.375rem;
+  width: ${(props) => (props.size === 'large' ? '8.5625rem' : '3.5rem')};
+  gap: 1.5rem;
+  transition: 0.3s ease-in-out;
+  background-color: white;
+  padding: 1.1875rem 1rem 1.1875rem 0.75rem;
+  border-radius: 1.25rem 0 0 1.25rem;
+  box-shadow: -2px 2px 24px 0px #c7ced480;
+`
+
+export const SmallSideBar = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: white;
+  position: fixed;
+  right: 0;
+  top: 13.375rem;
+  width: 1.9375rem;
+  height: 7.6875rem;
+  border-radius: 1.25rem 0 0 1.25rem;
+  gap: 0.875rem;
+  transition: 3s ease-in-out;
+  justify-content: center;
+  align-items: center;
+  box-shadow: -2px 2px 24px 0px #c7ced480;
+`
+
+export const SidebarDot = styled.div<{ color: string }>`
+  display: inline-flex;
+  width: 0.4375rem;
+  height: 0.4375rem;
+  background-color: ${(props) => props.color};
+  border-radius: 50%;
+`
+
+export const SidebarRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.75rem;
+  white-space: nowrap;
+  ${Pretendard({
+    size: 15,
+    weight: Common.bold.regular,
+    color: Common.colors.BK,
+  })};
+`
+
+export const CelebListWrapper = styled.div<{ open: boolean }>`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  /* flex-shrink: 0; */
   gap: 1rem 12px;
   padding-bottom: 1rem;
   width: 100%;
-  height: 100%;
+  overflow: hidden;
+  transition: 0.2s ease-in;
+  max-height: ${(props) => (props.open ? '100%' : '14.5rem')};
+`
+export const ShowMoreWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.375rem 3.4375rem 0.375rem 1.25rem;
+  width: 100%;
+  border-bottom: 1px solid ${Common.colors.GR100};
+`
+export const ListButtonWrapper = styled.div`
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 0.75rem;
+  background-color: ${Common.colors.GR200};
 `
