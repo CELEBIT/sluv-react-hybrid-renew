@@ -10,6 +10,7 @@ export const HeaderWrapper = styled.header<IHeaderWrapper>`
   justify-content: space-between;
   align-items: center;
   padding: ${(props) => (props.isModalHeader ? '1rem 0' : '0.6875rem 0')};
+  flex-shrink: 0;
 
   ${Pretendard({
     size: 18,
