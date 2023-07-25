@@ -84,8 +84,7 @@ export const SideBarWrapper = styled.div<{ size: string }>`
   .tooltip {
     display: flex;
     position: absolute;
-    right: 3.75rem;
-    background-color: pink;
+    right: 2.5rem;
   }
 `
 
