@@ -3,12 +3,14 @@ import { Common, Pretendard } from '../../components/styles'
 
 export const SelectCelebContainer = styled.div`
   display: flex;
+  flex-shrink: 0;
   flex-direction: column;
   margin-left: -1.25rem;
   width: 100vw;
-  height: 100vh;
+  max-height: 100vh;
   padding-left: 0;
   background-color: white;
+  /* overflow: hidden; */
 
   ::-webkit-scrollbar {
     display: none;
@@ -20,6 +22,7 @@ export const ContentWrapper = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
+
   overflow-y: scroll;
 `
 
@@ -77,6 +80,13 @@ export const SideBarWrapper = styled.div<{ size: string }>`
   padding: 1.1875rem 1rem 1.1875rem 0.75rem;
   border-radius: 1.25rem 0 0 1.25rem;
   box-shadow: -2px 2px 24px 0px #c7ced480;
+
+  .tooltip {
+    display: flex;
+    position: absolute;
+    right: 3.75rem;
+    background-color: pink;
+  }
 `
 
 export const SmallSideBar = styled.div`
@@ -112,6 +122,7 @@ export const SidebarRow = styled.div`
   align-items: center;
   gap: 0.75rem;
   white-space: nowrap;
+  overflow: hidden;
   ${Pretendard({
     size: 15,
     weight: Common.bold.regular,
@@ -148,4 +159,12 @@ export const ListButtonWrapper = styled.div`
   height: 3.5rem;
   border-radius: 0.75rem;
   background-color: ${Common.colors.GR200};
+`
+export const Dimmer = styled.div`
+  position: absolute;
+  bottom: 5rem;
+  /* border: 1px solid red; */
+  height: 1.25rem;
+  width: 100%;
+  background: linear-gradient(180deg, transparent, #ffffff 100%);
 `
