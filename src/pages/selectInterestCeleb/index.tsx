@@ -40,7 +40,6 @@ import { atomKeys } from '../../config/atomKeys'
 import { atom, useRecoilState } from 'recoil'
 import { ISelectCelebResult } from '../../apis/celeb/CelebService'
 import { Common } from '../../components/styles'
-import Item from 'antd-mobile/es/components/dropdown/item'
 import CelebCategoryTooltip from '../../components/ToolTip/CelebCategoryTooltip/CelebCategoryTooltip'
 
 export const selectInterestCelebState = atom<Array<ISelectCelebResult>>({
@@ -210,11 +209,9 @@ const SelectCeleb = () => {
   const handleScroll = () => {
     setSidebarSize('medium')
     setIsFocused(false)
-    const categoryRef = celebCategoryRefs.current[categoryName]
     // Get the scroll position of the content
     const contentScrollPosition = contentWrapperRef.current?.scrollTop || 0
-    const targetScrollPosition =
-      contentWrapperRef.current?.scrollTop + (categoryRect.top - contentWrapperRect.top)
+
     // Find the CelebCategoryWrapper whose position is closest to the middle of the content
     let closestItem = null
     let closestDistance = Number.MAX_SAFE_INTEGER
@@ -224,7 +221,7 @@ const SelectCeleb = () => {
       if (categoryRef) {
         const rect = categoryRef.getBoundingClientRect()
         const distance = Math.abs(rect.top + rect.bottom / 2 - contentScrollPosition)
-        if (distance < closestDistance) {
+        if (distance <= closestDistance) {
           closestItem = Category.categoryName
           closestDistance = distance
         }
@@ -236,7 +233,6 @@ const SelectCeleb = () => {
 
   useEffect(() => {
     setShowTooltip(true) // Show the tooltip
-
     setTimeout(() => {
       setShowTooltip(false)
     }, 2500)
