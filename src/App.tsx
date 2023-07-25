@@ -22,7 +22,7 @@ const Closet = React.lazy(() => import('./pages/closet'))
 const User = React.lazy(() => import('./pages/user'))
 
 // 관심셀럽 선택 페이지
-const SelectCeleb = React.lazy(() => import('./pages/selectCeleb'))
+const SelectCeleb = React.lazy(() => import('./pages/selectInterestCeleb'))
 
 // 아이템 게시글 작성 관련 페이지
 const TemporaryStorage = React.lazy(() => import('./pages/item/temporary-storage'))
