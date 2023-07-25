@@ -40,7 +40,6 @@ import { atomKeys } from '../../config/atomKeys'
 import { atom, useRecoilState } from 'recoil'
 import { ISelectCelebResult } from '../../apis/celeb/CelebService'
 import { Common } from '../../components/styles'
-import Item from 'antd-mobile/es/components/dropdown/item'
 import CelebCategoryTooltip from '../../components/ToolTip/CelebCategoryTooltip/CelebCategoryTooltip'
 
 export const selectInterestCelebState = atom<Array<ISelectCelebResult>>({
@@ -102,6 +101,7 @@ const SelectCeleb = () => {
   // POST API 용 CelebId List 필요
   const celebIds = getSelectedCelebIds(selectedInterestCeleb)
   console.log('celebIds', celebIds)
+
   // 관심셀럽 선택
   const handleColorChipClick = (categoryId: number, celebId: number, isSelected: boolean) => {
     setSelectedInterestCeleb((prevInterestCelebs) => {
@@ -109,7 +109,7 @@ const SelectCeleb = () => {
         if (category.categoryId === categoryId) {
           const updatedCelebList = isSelected
             ? category.celebList.filter((celeb) => celeb.celebId !== celebId)
-            : [...category.celebList, { celebId, celebName: '' }] // You can provide the appropriate celebName here if available.
+            : [...category.celebList, { celebId, celebName: '' }]
 
           return {
             ...category,
@@ -118,7 +118,6 @@ const SelectCeleb = () => {
         }
         return category
       })
-
       return updatedInterestCelebs
     })
   }
@@ -131,11 +130,6 @@ const SelectCeleb = () => {
   const handleBlur = () => {
     setIsFocused(false)
     setSidebarSize('large')
-  }
-
-  const onScroll = () => {
-    setSidebarSize('medium')
-    setIsFocused(false)
   }
 
   const handlers = useSwipeable({
@@ -173,49 +167,36 @@ const SelectCeleb = () => {
     },
   ]
 
-  // Step 1: Create refs for each CelebCategoryWrapper and store the currently visible category ref
-  const celebCategoryRefs = useRef<{ [key: string]: HTMLDivElement | null }>({}) // Add the type declaration here
+  const [currentViewedItem, setCurrentViewedItem] = useState<string | null>(null)
+  const contentWrapperRef = useRef<HTMLDivElement>(null)
+  const celebCategoryRefs = useRef<{ [key: string]: HTMLDivElement | null }>({})
 
-  // Step 2: Attach the ref of each CelebCategoryWrapper to the corresponding SidebarRow element
   const setCategoryRef = useCallback((categoryName: string, ref: HTMLDivElement | null) => {
     celebCategoryRefs.current[categoryName] = ref
   }, [])
-
-  // Step 3: Handle the click event on the SidebarRow elements to scroll to the selected category
   const handleSidebarRowClick = (categoryName: string) => {
     const categoryRef = celebCategoryRefs.current[categoryName]
     setCurrentViewedItem(categoryName)
     if (categoryRef) {
-      // Scroll to the selected category with 'start' block
-      categoryRef.scrollIntoView({ behavior: 'smooth', block: 'start' })
-
-      // Manually adjust the scroll position to bring the category to the top of the view
       if (contentWrapperRef.current) {
         const contentWrapperRect = contentWrapperRef.current.getBoundingClientRect()
         const categoryRect = categoryRef.getBoundingClientRect()
 
-        // Calculate the target scroll position
+        // scroll position
         const targetScrollPosition =
           contentWrapperRef.current.scrollTop + (categoryRect.top - contentWrapperRect.top)
 
-        // Scroll to the target position immediately (without smooth behavior)
+        // Scroll to the target position
         contentWrapperRef.current.scrollTo({ top: targetScrollPosition, behavior: 'smooth' })
       }
     }
   }
-  const [currentViewedItem, setCurrentViewedItem] = useState<string | null>(null)
-
-  const contentWrapperRef = useRef<HTMLDivElement>(null)
 
   const handleScroll = () => {
     setSidebarSize('medium')
     setIsFocused(false)
-    const categoryRef = celebCategoryRefs.current[categoryName]
-    // Get the scroll position of the content
+
     const contentScrollPosition = contentWrapperRef.current?.scrollTop || 0
-    const targetScrollPosition =
-      contentWrapperRef.current?.scrollTop + (categoryRect.top - contentWrapperRect.top)
-    // Find the CelebCategoryWrapper whose position is closest to the middle of the content
     let closestItem = null
     let closestDistance = Number.MAX_SAFE_INTEGER
 
@@ -224,7 +205,7 @@ const SelectCeleb = () => {
       if (categoryRef) {
         const rect = categoryRef.getBoundingClientRect()
         const distance = Math.abs(rect.top + rect.bottom / 2 - contentScrollPosition)
-        if (distance < closestDistance) {
+        if (distance <= closestDistance) {
           closestItem = Category.categoryName
           closestDistance = distance
         }
@@ -235,8 +216,7 @@ const SelectCeleb = () => {
   }
 
   useEffect(() => {
-    setShowTooltip(true) // Show the tooltip
-
+    setShowTooltip(true)
     setTimeout(() => {
       setShowTooltip(false)
     }, 2500)
