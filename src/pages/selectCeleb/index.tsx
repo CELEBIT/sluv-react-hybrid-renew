@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { useSwipeable } from 'react-swipeable'
 
 import ColorChip from '../../components/Chip/ColorChip'
@@ -8,6 +8,7 @@ import {
   CelebCategoryWrapper,
   CelebListWrapper,
   ContentWrapper,
+  Dimmer,
   ListButtonWrapper,
   SearchWrapper,
   SelectCelebContainer,
@@ -33,12 +34,13 @@ import { ReactComponent as BroadCaster } from '../../assets/ico_broadcaster_32.s
 import { ReactComponent as Sports } from '../../assets/ico_sport_32.svg'
 import { ReactComponent as Influencer } from '../../assets/ico_creator_32.svg'
 
-import { BottomWrapper, Dimmer } from '../../components/SelectItemOrPhoto/styles'
+import { BottomWrapper } from '../../components/SelectItemOrPhoto/styles'
 import ButtonLarge from '../../components/ButtonLarge/ButtonLarge'
 import { atomKeys } from '../../config/atomKeys'
 import { atom, useRecoilState } from 'recoil'
 import { ISelectCelebResult } from '../../apis/celeb/CelebService'
 import { Common } from '../../components/styles'
+import Item from 'antd-mobile/es/components/dropdown/item'
 
 export const selectInterestCelebState = atom<Array<ISelectCelebResult>>({
   key: atomKeys.selectedInterestCeleb,
@@ -72,15 +74,17 @@ export const selectInterestCelebState = atom<Array<ISelectCelebResult>>({
 })
 
 const SelectCeleb = () => {
+  const { getSelectCelebList } = useSelectCelebQuery()
+  const { data } = getSelectCelebList
+  console.log(data)
+
   const [searchValue, setSearchValue] = useState<string>('')
   const [isFocused, setIsFocused] = useState(false)
   const [showSearchField, setShowSearchField] = useState(false)
   const [openCategories, setOpenCategories] = useState<number[]>([])
   const [selectedInterestCeleb, setSelectedInterestCeleb] = useRecoilState(selectInterestCelebState)
   const [sidebarSize, setSidebarSize] = useState<string>('large')
-  const { getSelectCelebList } = useSelectCelebQuery()
-  const { data } = getSelectCelebList
-  console.log(data)
+
   const colorList = ['pink', 'orange', 'yellow', 'green', 'blue']
 
   // 선택한 관심셀럽 확인 및 수정용 Category[{CelebId, CelebName}] List 필요
@@ -144,6 +148,88 @@ const SelectCeleb = () => {
     },
   })
 
+  const [showTooltip, setShowTooltip] = useState<boolean>(false)
+  const sidebarItems = [
+    {
+      icon: <Singer style={{ flexShrink: 0 }} />,
+      name: '가수',
+    },
+    {
+      icon: <Actor style={{ flexShrink: 0 }} />,
+      name: '배우',
+    },
+    {
+      icon: <BroadCaster style={{ flexShrink: 0 }} />,
+      name: '방송인',
+    },
+    {
+      icon: <Sports style={{ flexShrink: 0 }} />,
+      name: '스포츠인',
+    },
+    {
+      icon: <Influencer style={{ flexShrink: 0 }} />,
+      name: '인플루언서',
+    },
+  ]
+
+  // Step 1: Create refs for each CelebCategoryWrapper and store the currently visible category ref
+  const celebCategoryRefs = useRef<{ [key: string]: HTMLDivElement | null }>({}) // Add the type declaration here
+
+  // Step 2: Attach the ref of each CelebCategoryWrapper to the corresponding SidebarRow element
+  const setCategoryRef = useCallback((categoryName: string, ref: HTMLDivElement | null) => {
+    celebCategoryRefs.current[categoryName] = ref
+  }, [])
+
+  // Step 3: Handle the click event on the SidebarRow elements to scroll to the selected category
+  const handleSidebarRowClick = (categoryName: string) => {
+    const categoryRef = celebCategoryRefs.current[categoryName]
+    if (categoryRef) {
+      // Scroll to the selected category with 'start' block
+      categoryRef.scrollIntoView({ behavior: 'smooth', block: 'start' })
+
+      // Manually adjust the scroll position to bring the category to the top of the view
+      if (contentWrapperRef.current) {
+        const contentWrapperRect = contentWrapperRef.current.getBoundingClientRect()
+        const categoryRect = categoryRef.getBoundingClientRect()
+
+        // Calculate the target scroll position
+        const targetScrollPosition =
+          contentWrapperRef.current.scrollTop + (categoryRect.top - contentWrapperRect.top)
+
+        // Scroll to the target position immediately (without smooth behavior)
+        contentWrapperRef.current.scrollTo({ top: targetScrollPosition, behavior: 'smooth' })
+      }
+    }
+  }
+  const [currentViewedItem, setCurrentViewedItem] = useState<string | null>(null)
+
+  const contentWrapperRef = useRef<HTMLDivElement>(null)
+
+  const handleScroll = () => {
+    setSidebarSize('medium')
+    setIsFocused(false)
+    // Get the scroll position of the content
+    const contentScrollPosition = contentWrapperRef.current?.scrollTop || 0
+
+    // Find the CelebCategoryWrapper whose position is closest to the middle of the content
+    let closestItem = null
+    let closestDistance = Number.MAX_SAFE_INTEGER
+
+    data?.forEach((Category) => {
+      const categoryRef = celebCategoryRefs.current[Category.categoryName]
+      if (categoryRef) {
+        const rect = categoryRef.getBoundingClientRect()
+        const distance = Math.abs(rect.top + rect.height / 2 - contentScrollPosition)
+        if (distance < closestDistance) {
+          closestItem = Category.categoryName
+          closestDistance = distance
+        }
+      }
+    })
+
+    setCurrentViewedItem(closestItem)
+  }
+
   return (
     <SelectCelebContainer>
       {!isFocused ? (
@@ -151,9 +237,11 @@ const SelectCeleb = () => {
           <Header isModalHeader={false} hasArrow={true}></Header>
         </HeaderWrapper>
       ) : (
-        <>hello</>
+        <HeaderWrapper>
+          <Header isModalHeader={false} hasArrow={true}></Header>
+        </HeaderWrapper>
       )}
-      <ContentWrapper onScroll={onScroll}>
+      <ContentWrapper onScroll={handleScroll} ref={contentWrapperRef}>
         <TitleSearchWrapper>
           <span>
             관심 있는 셀럽 태그를 <br />
@@ -170,26 +258,16 @@ const SelectCeleb = () => {
 
         {sidebarSize !== 'small' ? (
           <SideBarWrapper size={sidebarSize} {...handlers}>
-            <SidebarRow>
-              <Singer></Singer>
-              {sidebarSize === 'large' && <span>가수</span>}
-            </SidebarRow>
-            <SidebarRow>
-              <Actor></Actor>
-              {sidebarSize === 'large' && <span>배우</span>}
-            </SidebarRow>
-            <SidebarRow>
-              <BroadCaster></BroadCaster>
-              {sidebarSize === 'large' && <span>방송인</span>}
-            </SidebarRow>
-            <SidebarRow>
-              <Sports></Sports>
-              {sidebarSize === 'large' && <span>스포츠인</span>}
-            </SidebarRow>
-            <SidebarRow>
-              <Influencer></Influencer>
-              {sidebarSize === 'large' && <span>인플루언서</span>}
-            </SidebarRow>
+            {sidebarItems.map((item, index) => (
+              <SidebarRow key={item.name} onClick={() => handleSidebarRowClick(item.name)}>
+                {item.icon}
+
+                {sidebarSize === 'large' && <span>{item.name}</span>}
+                {sidebarSize === 'medium' && currentViewedItem === item.name && (
+                  <span className='tooltip'>{item.name}</span>
+                )}
+              </SidebarRow>
+            ))}
           </SideBarWrapper>
         ) : (
           <SmallSideBar>
@@ -203,9 +281,14 @@ const SelectCeleb = () => {
         {data?.map((Category, index) => {
           const isCategoryOpen = openCategories.includes(Category.categoryId)
           return (
-            <CelebCategoryWrapper key={Category.categoryId}>
+            <CelebCategoryWrapper
+              key={Category.categoryId}
+              id={Category.categoryName}
+              ref={(ref) => setCategoryRef(Category.categoryName, ref)}
+            >
               <CategoryContentWrapper>
                 <CategoryTitle>{Category.categoryName}</CategoryTitle>
+
                 <CelebListWrapper open={isCategoryOpen}>
                   {Category.celebList.map((celeb) => {
                     const isSelected = celebIds.includes(celeb.celebId)
