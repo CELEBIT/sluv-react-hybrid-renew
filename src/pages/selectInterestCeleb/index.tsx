@@ -41,6 +41,8 @@ import { atom, useRecoilState } from 'recoil'
 import { ISelectCelebResult } from '../../apis/celeb/CelebService'
 import { Common } from '../../components/styles'
 import CelebCategoryTooltip from '../../components/ToolTip/CelebCategoryTooltip/CelebCategoryTooltip'
+import useModals from '../../components/Modals/hooks/useModals'
+import { modals } from '../../components/Modals'
 
 export const selectInterestCelebState = atom<Array<ISelectCelebResult>>({
   key: atomKeys.selectedInterestCeleb,
@@ -56,13 +58,13 @@ export const selectInterestCelebState = atom<Array<ISelectCelebResult>>({
       celebList: [],
     },
     {
-      categoryId: 4,
-      categoryName: '스포츠인',
+      categoryId: 5,
+      categoryName: '방송인',
       celebList: [],
     },
     {
-      categoryId: 5,
-      categoryName: '방송인',
+      categoryId: 4,
+      categoryName: '스포츠인',
       celebList: [],
     },
     {
@@ -76,6 +78,8 @@ export const selectInterestCelebState = atom<Array<ISelectCelebResult>>({
 const SelectCeleb = () => {
   const { getSelectCelebList } = useSelectCelebQuery()
   const { data } = getSelectCelebList
+  const { openModal } = useModals()
+
   console.log(data)
 
   const [searchValue, setSearchValue] = useState<string>('')
@@ -103,13 +107,18 @@ const SelectCeleb = () => {
   console.log('celebIds', celebIds)
 
   // 관심셀럽 선택
-  const handleColorChipClick = (categoryId: number, celebId: number, isSelected: boolean) => {
+  const handleColorChipClick = (
+    categoryId: number,
+    celebId: number,
+    celebName: string,
+    isSelected: boolean,
+  ) => {
     setSelectedInterestCeleb((prevInterestCelebs) => {
       const updatedInterestCelebs = prevInterestCelebs.map((category) => {
         if (category.categoryId === categoryId) {
           const updatedCelebList = isSelected
             ? category.celebList.filter((celeb) => celeb.celebId !== celebId)
-            : [...category.celebList, { celebId, celebName: '' }]
+            : [...category.celebList, { celebId, celebName }]
 
           return {
             ...category,
@@ -155,11 +164,11 @@ const SelectCeleb = () => {
     },
     {
       icon: <BroadCaster style={{ flexShrink: 0 }} />,
-      name: '스포츠인',
+      name: '방송인',
     },
     {
       icon: <Sports style={{ flexShrink: 0 }} />,
-      name: '방송인',
+      name: '스포츠인',
     },
     {
       icon: <Influencer style={{ flexShrink: 0 }} />,
@@ -221,6 +230,10 @@ const SelectCeleb = () => {
       setShowTooltip(false)
     }, 2500)
   }, [currentViewedItem])
+
+  const onClickSelectedCelebList = () => {
+    openModal(modals.SelectedInterestCelebModal)
+  }
 
   return (
     <SelectCelebContainer>
@@ -292,7 +305,12 @@ const SelectCeleb = () => {
                         color={colorList[index]}
                         active={isSelected}
                         onClick={() =>
-                          handleColorChipClick(Category.categoryId, celeb.celebId, isSelected)
+                          handleColorChipClick(
+                            Category.categoryId,
+                            celeb.celebId,
+                            celeb.celebName,
+                            isSelected,
+                          )
                         }
                       >
                         {celeb.celebName}
@@ -320,7 +338,7 @@ const SelectCeleb = () => {
       <BottomWrapper>
         <ListButtonWrapper>
           {celebIds.length > 0 ? (
-            <CelebrityListActive></CelebrityListActive>
+            <CelebrityListActive onClick={() => onClickSelectedCelebList()}></CelebrityListActive>
           ) : (
             <CelebrityListDefault></CelebrityListDefault>
           )}
