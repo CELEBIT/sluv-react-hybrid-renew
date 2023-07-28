@@ -100,7 +100,6 @@ export const SmallSideBar = styled.div`
   height: 7.6875rem;
   border-radius: 1.25rem 0 0 1.25rem;
   gap: 0.875rem;
-  transition: 3s ease-in-out;
   justify-content: center;
   align-items: center;
   box-shadow: -2px 2px 24px 0px #c7ced480;
