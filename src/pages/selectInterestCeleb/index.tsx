@@ -28,6 +28,7 @@ import { ReactComponent as MoreUp } from '../../assets/more_up_20.svg'
 import { ReactComponent as CelebrityListDefault } from '../../assets/celebrity_list_default_24.svg'
 import { ReactComponent as CelebrityListActive } from '../../assets/celebrity_list_active_24.svg'
 
+import { ReactComponent as Search } from '../../assets/search_24.svg'
 import { ReactComponent as Singer } from '../../assets/ico_singer_32.svg'
 import { ReactComponent as Actor } from '../../assets/ico_actor_32.svg'
 import { ReactComponent as BroadCaster } from '../../assets/ico_broadcaster_32.svg'
@@ -43,6 +44,7 @@ import { Common } from '../../components/styles'
 import CelebCategoryTooltip from '../../components/ToolTip/CelebCategoryTooltip/CelebCategoryTooltip'
 import useModals from '../../components/Modals/hooks/useModals'
 import { modals } from '../../components/Modals'
+import CelebSearchResult from './CelebSearchResult/CelebSearchResult'
 
 export const selectInterestCelebState = atom<Array<ISelectCelebResult>>({
   key: atomKeys.selectedInterestCeleb,
@@ -188,6 +190,7 @@ const SelectCeleb = () => {
   const handleScroll = () => {
     setSidebarSize('medium')
     setIsFocused(false)
+    setShowSearch(false)
     let visibleCategory = ''
     for (const [categoryName, ref] of Object.entries(celebRefs.current)) {
       const rect = ref?.getBoundingClientRect()
@@ -210,15 +213,66 @@ const SelectCeleb = () => {
     openModal(modals.SelectedInterestCelebModal)
   }
 
+  const [isTitleSearchWrapperVisible, setIsTitleSearchWrapperVisible] = useState(true)
+  const titleSearchWrapperRef = useRef(null)
+  const [showSearch, setShowSearch] = useState(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          setIsTitleSearchWrapperVisible(entry.isIntersecting)
+        })
+      },
+      {
+        root: null, // Viewport
+        rootMargin: '0px',
+        threshold: 0.5, // Adjust this threshold value based on your needs
+      },
+    )
+
+    if (titleSearchWrapperRef.current) {
+      observer.observe(titleSearchWrapperRef.current)
+    }
+    return () => {
+      observer.disconnect()
+    }
+  }, [])
+
   return (
     <SelectCelebContainer>
-      {!isFocused ? (
+      {isTitleSearchWrapperVisible ? (
         <HeaderWrapper>
           <Header isModalHeader={false} hasArrow={true}></Header>
         </HeaderWrapper>
       ) : (
         <HeaderWrapper>
-          <Header isModalHeader={false} hasArrow={true}></Header>
+          {!showSearch ? (
+            <Header
+              isModalHeader={false}
+              hasArrow={true}
+              title='관심 있는 셀럽 태그를 선택해 주세요'
+            >
+              <Search
+                fill={Common.colors.GR600}
+                style={{ flexGrow: 0 }}
+                onClick={() => setShowSearch(true)}
+              ></Search>
+            </Header>
+          ) : (
+            <SearchWrapper
+              onFocus={onFocus}
+              onBlur={handleBlur}
+              ref={titleSearchWrapperRef}
+              style={{ marginTop: '0.625rem' }}
+            >
+              <SearchTextfield
+                value={searchValue}
+                setValue={setSearchValue}
+                placeholder='셀럽을 검색해 주세요'
+              ></SearchTextfield>
+            </SearchWrapper>
+          )}
         </HeaderWrapper>
       )}
       <ContentWrapper onScroll={handleScroll}>
@@ -227,7 +281,7 @@ const SelectCeleb = () => {
             관심 있는 셀럽 태그를 <br />
             선택해 주세요
           </span>
-          <SearchWrapper onFocus={onFocus} onBlur={handleBlur}>
+          <SearchWrapper onFocus={onFocus} onBlur={handleBlur} ref={titleSearchWrapperRef}>
             <SearchTextfield
               value={searchValue}
               setValue={setSearchValue}
@@ -260,54 +314,60 @@ const SelectCeleb = () => {
             <SidebarDot color={Common.colors.BL}></SidebarDot>
           </SmallSideBar>
         )}
-        {data?.map((Category, index) => {
-          const isCategoryOpen = openCategories.includes(Category.categoryId)
-          return (
-            <CelebCategoryWrapper
-              key={Category.categoryId}
-              id={Category.categoryName}
-              ref={(ref) => (celebRefs.current[Category.categoryName] = ref)}
-            >
-              <CategoryContentWrapper>
-                <CategoryTitle>{Category.categoryName}</CategoryTitle>
+        {searchValue ? (
+          <CelebSearchResult celebName={searchValue}></CelebSearchResult>
+        ) : (
+          <>
+            {data?.map((Category, index) => {
+              const isCategoryOpen = openCategories.includes(Category.categoryId)
+              return (
+                <CelebCategoryWrapper
+                  key={Category.categoryId}
+                  id={Category.categoryName}
+                  ref={(ref) => (celebRefs.current[Category.categoryName] = ref)}
+                >
+                  <CategoryContentWrapper>
+                    <CategoryTitle>{Category.categoryName}</CategoryTitle>
 
-                <CelebListWrapper open={isCategoryOpen}>
-                  {Category.celebList.map((celeb) => {
-                    const isSelected = celebIds.includes(celeb.celebId)
-                    return (
-                      <ColorChip
-                        key={celeb.celebId}
-                        color={colorList[index]}
-                        active={isSelected}
-                        onClick={() =>
-                          handleColorChipClick(
-                            Category.categoryId,
-                            celeb.celebId,
-                            celeb.celebName,
-                            isSelected,
-                          )
-                        }
-                      >
-                        {celeb.celebName}
-                      </ColorChip>
-                    )
-                  })}
-                </CelebListWrapper>
-              </CategoryContentWrapper>
-              <ShowMoreWrapper
-                onClick={() =>
-                  setOpenCategories((prev) =>
-                    isCategoryOpen
-                      ? prev.filter((id) => id !== Category.categoryId)
-                      : [...prev, Category.categoryId],
-                  )
-                }
-              >
-                {isCategoryOpen ? <MoreUp></MoreUp> : <MoreDown></MoreDown>}
-              </ShowMoreWrapper>
-            </CelebCategoryWrapper>
-          )
-        })}
+                    <CelebListWrapper open={isCategoryOpen}>
+                      {Category.celebList.map((celeb) => {
+                        const isSelected = celebIds.includes(celeb.celebId)
+                        return (
+                          <ColorChip
+                            key={celeb.celebId}
+                            color={colorList[index]}
+                            active={isSelected}
+                            onClick={() =>
+                              handleColorChipClick(
+                                Category.categoryId,
+                                celeb.celebId,
+                                celeb.celebName,
+                                isSelected,
+                              )
+                            }
+                          >
+                            {celeb.celebName}
+                          </ColorChip>
+                        )
+                      })}
+                    </CelebListWrapper>
+                  </CategoryContentWrapper>
+                  <ShowMoreWrapper
+                    onClick={() =>
+                      setOpenCategories((prev) =>
+                        isCategoryOpen
+                          ? prev.filter((id) => id !== Category.categoryId)
+                          : [...prev, Category.categoryId],
+                      )
+                    }
+                  >
+                    {isCategoryOpen ? <MoreUp></MoreUp> : <MoreDown></MoreDown>}
+                  </ShowMoreWrapper>
+                </CelebCategoryWrapper>
+              )
+            })}
+          </>
+        )}
       </ContentWrapper>
       <Dimmer></Dimmer>
       <BottomWrapper>

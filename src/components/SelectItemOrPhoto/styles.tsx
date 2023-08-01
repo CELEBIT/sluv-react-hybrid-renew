@@ -48,11 +48,14 @@ export const ComponentWrapper = styled.div`
 export const BottomWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  position: relative;
+  bottom: 0;
   box-sizing: border-box;
   flex-grow: 0;
   gap: 0.625rem;
   width: 100%;
   padding: 0.75rem 0.9375rem;
+  background-color: white;
 `
 
 export const GalleryButton = styled.div`
