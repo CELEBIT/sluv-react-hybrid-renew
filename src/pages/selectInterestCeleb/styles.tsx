@@ -5,6 +5,7 @@ export const SelectCelebContainer = styled.div`
   display: flex;
   flex-shrink: 0;
   flex-direction: column;
+  justify-content: space-between;
   margin-left: -1.25rem;
   width: 100vw;
   max-height: 100vh;
@@ -79,7 +80,7 @@ export const SideBarWrapper = styled.div<{ size: string }>`
   padding: 1.1875rem 1rem 1.1875rem 12px;
   border-radius: 1.25rem 0 0 1.25rem;
   box-shadow: -2px 2px 24px 0px #c7ced480;
-
+  z-index: 100;
   .tooltip {
     display: flex;
     position: absolute;
@@ -116,6 +117,7 @@ export const SidebarDot = styled.div<{ color: string }>`
 export const SidebarRow = styled.div`
   display: flex;
   flex-direction: row;
+  flex-shrink: 0;
   align-items: center;
   gap: 0.75rem;
   white-space: nowrap;
@@ -164,4 +166,10 @@ export const Dimmer = styled.div`
   height: 1.25rem;
   width: 100%;
   background: linear-gradient(180deg, transparent, #ffffff 100%);
+`
+export const SearchResultContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
 `
