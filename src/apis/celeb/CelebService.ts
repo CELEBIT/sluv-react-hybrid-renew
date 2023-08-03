@@ -39,6 +39,17 @@ export interface ISelectCelebResult {
   celebList: Array<ISelectCeleb>
 }
 
+export interface ISearchCelebResult {
+  id: number
+  celebNameKr: string
+  subCelebList: Array<ISearchCeleb>
+}
+
+export interface ISearchCeleb {
+  id: number
+  celebNameKr: string
+}
+
 export default class CelebService {
   celebUrl: string
 
@@ -97,6 +108,19 @@ export default class CelebService {
   async getSelectCelebList() {
     const data: ResponseType<Array<ISelectCelebResult>> = await request.get(
       `${this.celebUrl}/category`,
+    )
+    return data.result
+  }
+
+  // 관심 셀럽 검색
+  async searchSelectCeleb(celebName: string) {
+    const data: ResponseType<Array<ISearchCelebResult>> = await request.get(
+      `${this.celebUrl}/search/interested`,
+      {
+        params: {
+          celebName,
+        },
+      },
     )
     return data.result
   }

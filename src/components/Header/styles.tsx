@@ -11,6 +11,7 @@ export const HeaderWrapper = styled.header<IHeaderWrapper>`
   align-items: center;
   padding: ${(props) => (props.isModalHeader ? '1rem 0' : '0.6875rem 0')};
   flex-shrink: 0;
+  box-sizing: border-box;
 
   ${Pretendard({
     size: 18,
@@ -32,4 +33,10 @@ export const HeaderWrapper = styled.header<IHeaderWrapper>`
   }
 `
 
-export const Title = styled.span``
+export const Title = styled.span`
+  ${Pretendard({
+    size: 18,
+    weight: Common.bold.semiBold,
+    color: Common.colors.BK,
+  })};
+`

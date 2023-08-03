@@ -5,6 +5,7 @@ export const SelectCelebContainer = styled.div`
   display: flex;
   flex-shrink: 0;
   flex-direction: column;
+  justify-content: space-between;
   margin-left: -1.25rem;
   width: 100vw;
   max-height: 100vh;
@@ -73,14 +74,13 @@ export const SideBarWrapper = styled.div<{ size: string }>`
   top: 13.375rem;
   justify-content: space-around;
   height: 18.375rem;
-  width: ${(props) => (props.size === 'large' ? '8.5625rem' : '3.5rem')};
   gap: 1.5rem;
   transition: 0.3s ease-in-out;
   background-color: white;
-  padding: 1.1875rem 1rem 1.1875rem 0.75rem;
+  padding: 1.1875rem 1rem 1.1875rem 12px;
   border-radius: 1.25rem 0 0 1.25rem;
   box-shadow: -2px 2px 24px 0px #c7ced480;
-
+  z-index: 100;
   .tooltip {
     display: flex;
     position: absolute;
@@ -101,7 +101,6 @@ export const SmallSideBar = styled.div`
   height: 7.6875rem;
   border-radius: 1.25rem 0 0 1.25rem;
   gap: 0.875rem;
-  transition: 3s ease-in-out;
   justify-content: center;
   align-items: center;
   box-shadow: -2px 2px 24px 0px #c7ced480;
@@ -118,6 +117,7 @@ export const SidebarDot = styled.div<{ color: string }>`
 export const SidebarRow = styled.div`
   display: flex;
   flex-direction: row;
+  flex-shrink: 0;
   align-items: center;
   gap: 0.75rem;
   white-space: nowrap;
@@ -129,7 +129,7 @@ export const SidebarRow = styled.div`
   })};
 `
 
-export const CelebListWrapper = styled.div<{ open: boolean }>`
+export const CelebListWrapper = styled.div<{ open?: boolean }>`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -166,4 +166,10 @@ export const Dimmer = styled.div`
   height: 1.25rem;
   width: 100%;
   background: linear-gradient(180deg, transparent, #ffffff 100%);
+`
+export const SearchResultContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
 `
