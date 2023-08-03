@@ -45,6 +45,7 @@ import CelebCategoryTooltip from '../../components/ToolTip/CelebCategoryTooltip/
 import useModals from '../../components/Modals/hooks/useModals'
 import { modals } from '../../components/Modals'
 import CelebSearchResult from './CelebSearchResult/CelebSearchResult'
+import useInterestCelebQuery from '../../apis/user/hooks/useInterestCelebQuery'
 
 export const selectInterestCelebState = atom<Array<ISelectCelebResult>>({
   key: atomKeys.selectedInterestCeleb,
@@ -78,15 +79,16 @@ export const selectInterestCelebState = atom<Array<ISelectCelebResult>>({
 })
 
 const SelectCeleb = () => {
+  const {
+    postInterestCeleb: { mutate: mutateByPostInterestCeleb },
+  } = useInterestCelebQuery()
+
   const { getSelectCelebList } = useSelectCelebQuery()
   const { data } = getSelectCelebList
+
   const { openModal } = useModals()
 
-  console.log(data)
-
   const [searchValue, setSearchValue] = useState<string>('')
-  const [isFocused, setIsFocused] = useState(false)
-  const [showSearchField, setShowSearchField] = useState(false)
   const [openCategories, setOpenCategories] = useState<number[]>([])
   // 선택한 관심셀럽 확인 및 수정용 Category[{CelebId, CelebName}] List
   const [selectedInterestCeleb, setSelectedInterestCeleb] = useRecoilState(selectInterestCelebState)
@@ -115,7 +117,10 @@ const SelectCeleb = () => {
     },
   ]
 
-  // POST API 용 CelebId List 필요
+  const onComplete = () => {
+    mutateByPostInterestCeleb(celebIds)
+  }
+  // POST API 용 CelebId List
   const getSelectedCelebIds = (celebResults: Array<ISelectCelebResult>): Array<number> => {
     const celebIds: Array<number> = []
     for (const celebResult of celebResults) {
@@ -154,12 +159,10 @@ const SelectCeleb = () => {
   }
 
   const onFocus = () => {
-    setIsFocused(true)
     setSidebarSize('small')
   }
 
   const handleBlur = () => {
-    setIsFocused(false)
     setSidebarSize('large')
   }
 
@@ -180,7 +183,7 @@ const SelectCeleb = () => {
     const categoryRef = celebRefs.current[categoryName]
     if (categoryRef) {
       categoryRef.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
-      setIsFocused(false)
+      // setIsFocused(false)
       setTooltipContent(categoryName)
       setTimeout(() => setTooltipContent(''), 3000)
     }
@@ -189,7 +192,7 @@ const SelectCeleb = () => {
   const tooltipTimeoutRef = useRef<number | null>(null)
   const handleScroll = () => {
     setSidebarSize('medium')
-    setIsFocused(false)
+    // setIsFocused(false)
     setShowSearch(false)
     let visibleCategory = ''
     for (const [categoryName, ref] of Object.entries(celebRefs.current)) {
@@ -292,7 +295,7 @@ const SelectCeleb = () => {
 
         {sidebarSize !== 'small' ? (
           <SideBarWrapper size={sidebarSize} {...handlers}>
-            {sidebarItems.map((item, index) => (
+            {sidebarItems.map((item) => (
               <SidebarRow key={item.name} onClick={() => handleSidebarRowClick(item.name)}>
                 {item.icon}
 
@@ -382,7 +385,7 @@ const SelectCeleb = () => {
           text={`${celebIds.length}명 선택`}
           active={celebIds.length > 0}
           color='BK'
-          onClick={() => console.log('complete')}
+          onClick={onComplete}
         ></ButtonLarge>
       </BottomWrapper>
     </SelectCelebContainer>
