@@ -7,6 +7,7 @@ const useSelectCelebQuery = () => {
   const getSelectCelebList = useQuery(queryKeys.getSelectCelebList, () =>
     celeb.getSelectCelebList(),
   )
+
   const searchSelectCeleb = (celebName: string) =>
     useQuery(queryKeys.searchSelectCeleb(celebName), () => celeb.searchSelectCeleb(celebName))
 

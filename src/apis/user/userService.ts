@@ -67,4 +67,12 @@ export default class UserService {
     })
     return data.result
   }
+
+  // 유저 관심 셀럽 등록
+  async postInterestCeleb(celebIdList: Array<number>) {
+    const data: ResponseType = await request.post(`${this.userUrl}/celeb`, {
+      celebIdList,
+    })
+    return data
+  }
 }
