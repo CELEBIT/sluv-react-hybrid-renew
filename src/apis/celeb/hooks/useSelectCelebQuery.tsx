@@ -7,7 +7,11 @@ const useSelectCelebQuery = () => {
   const getSelectCelebList = useQuery(queryKeys.getSelectCelebList, () =>
     celeb.getSelectCelebList(),
   )
-  return { getSelectCelebList }
+
+  const searchSelectCeleb = (celebName: string) =>
+    useQuery(queryKeys.searchSelectCeleb(celebName), () => celeb.searchSelectCeleb(celebName))
+
+  return { getSelectCelebList, searchSelectCeleb }
 }
 
 export default useSelectCelebQuery
