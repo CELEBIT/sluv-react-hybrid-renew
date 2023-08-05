@@ -8,12 +8,21 @@ interface ColorChipProps {
   children: React.ReactNode
   color: string
   active: boolean
+  size?: string
   canDelete?: boolean
   onClick?: () => void
   onDelete?: () => void
 }
 
-const ColorChip = ({ children, active, color, canDelete, onClick, onDelete }: ColorChipProps) => {
+const ColorChip = ({
+  children,
+  active,
+  color,
+  size,
+  canDelete,
+  onClick,
+  onDelete,
+}: ColorChipProps) => {
   const handleDeleteClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation()
     onDelete?.()
@@ -34,7 +43,7 @@ const ColorChip = ({ children, active, color, canDelete, onClick, onDelete }: Co
   })
 
   return (
-    <ColorChipWrapper active={active} canDelete={canDelete} color={color}>
+    <ColorChipWrapper active={active} canDelete={canDelete} color={color} size={size}>
       <p onClick={onClick}>{children}</p>
       {canDelete ? (
         <div onClick={handleDeleteClick}>
