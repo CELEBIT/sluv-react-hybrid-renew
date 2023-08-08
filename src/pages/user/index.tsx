@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react'
 import styled from '@emotion/styled'
 import Header from '../../components/Header/Header'
 import UserProfile from './components/UserProfile/UserProfile'
+import Tabs from '../../components/Tabs'
+import Item from '../../components/RecommendedItem/Item'
+import { useNavigate } from 'react-router-dom'
+import useHotCelebItemQuery from '../../apis/item/hooks/useHotCelebItemQuery'
+import ItemListGrid from '../../components/ItemListGrid/ItemListGrid'
 
 const PageContainer = styled.div`
   display: flex;
@@ -10,6 +15,7 @@ const PageContainer = styled.div`
   justify-content: space-between;
   margin-left: -1.25rem;
   width: 100vw;
+  height: 100%;
   max-height: 100vh;
   padding-left: 0;
   background-color: white;
@@ -26,26 +32,16 @@ const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   overflow-y: auto; /* Enable scrolling for the content */
+  height: 100%;
 `
 
-const ProfileContainer = styled.div`
-  padding: 1rem;
-  background-color: #f7f7f7;
-`
-
-const Profile = styled.div`
-  /* Your profile styling here */
-`
-
-const StickyTabContainer = styled.div<{ isSticky: boolean }>`
+const StickyTabContainer = styled.div`
   display: flex;
   background-color: white;
   width: 100%;
   z-index: 1;
-  position: ${(props) => (props.isSticky ? 'sticky' : 'static')};
-  top: 0;
-  border: 1px solid red;
-  /* Additional styling for sticky and non-sticky states */
+  position: sticky;
+  top: -1px;
 `
 
 const Tab = styled.div`
@@ -56,56 +52,32 @@ const Tab = styled.div`
 const ItemListContainer = styled.div`
   display: flex;
   flex-direction: column;
-  /* Additional styling for the item list container */
+  position: sticky;
+  padding-bottom: 3.75rem;
 `
-
-const Item = styled.div`
-  padding: 1rem;
-  border: 1px solid #ccc;
-  margin: 0.5rem;
-  /* Your item styling here */
-`
-
-// Other styled components...
 
 const User = () => {
-  const [isTabSticky, setIsTabSticky] = useState(false)
-  const itemListData = [1, 2, 3, 45, 6, 7, 8, 8, 8, 9, 10, 11, 12, 123] // Replace with your actual item data
+  const navigate = useNavigate()
+  const [selectedTab, setSelectedTab] = useState('item')
+  const tabList = [
+    { id: 'item', tabName: '아이템' },
+    { id: 'closet', tabName: '옷장' },
+  ]
 
-  const handleScroll = () => {
-    const tabContainer = document.getElementById('tab-container')
-    const contentContainer = document.getElementById('content-container')
-
-    if (tabContainer && contentContainer) {
-      setIsTabSticky(tabContainer.offsetTop <= contentContainer.scrollTop)
-    }
-  }
-
-  useEffect(() => {
-    const contentContainer = document.getElementById('content-container')
-    if (contentContainer) {
-      handleScroll()
-
-      contentContainer.addEventListener('scroll', handleScroll)
-      contentContainer.removeEventListener('scroll', handleScroll)
-    }
-  }, [])
-
+  const { getHotCelebItem } = useHotCelebItemQuery()
+  const { data } = getHotCelebItem('일간')
   return (
     <PageContainer>
       <HeaderWrapper>
         <Header isModalHeader={false} hasArrow={true} />
       </HeaderWrapper>
-      <ContentContainer id='content-container'>
+      <ContentContainer>
         <UserProfile></UserProfile>
-        <StickyTabContainer id='tab-container' isSticky={isTabSticky}>
-          <Tab>Item</Tab>
-          <Tab>옷장</Tab>
+        <StickyTabContainer>
+          <Tabs tabList={tabList} selectedTab={selectedTab} setSelectedTab={setSelectedTab}></Tabs>
         </StickyTabContainer>
         <ItemListContainer>
-          {itemListData.map((item) => (
-            <Item key={item}>Item {item}</Item>
-          ))}
+          <ItemListGrid data={data} canChangeView={true}></ItemListGrid>
         </ItemListContainer>
       </ContentContainer>
     </PageContainer>
