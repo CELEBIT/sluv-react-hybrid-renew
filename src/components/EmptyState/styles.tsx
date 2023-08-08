@@ -6,6 +6,7 @@ export const EmptyStateContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
   gap: 0.8125rem;
   padding: 2.5rem 0 4.375rem 0;
 `

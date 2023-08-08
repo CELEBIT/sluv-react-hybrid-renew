@@ -121,6 +121,7 @@ const App = () => {
             <Route path='/closet' element={<Closet />} />
             {/* 마이페이지 */}
             <Route path='/user' element={<User />} />
+            <Route path='/user/:id' element={<User />} />
             <Route path='/user/select-celeb' element={<SelectCeleb />} />
           </Routes>
         </Suspense>

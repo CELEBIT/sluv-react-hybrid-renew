@@ -32,7 +32,12 @@ export const ChipWrapper = styled.div<{ canDelete?: boolean }>`
     cursor: pointer;
   }
 `
-export const ColorChipWrapper = styled.div<{ active: boolean; canDelete?: boolean; color: string }>`
+export const ColorChipWrapper = styled.div<{
+  active: boolean
+  canDelete?: boolean
+  size?: string
+  color: string
+}>`
   display: inline-flex;
   flex-shrink: 0;
   flex-direction: row;
@@ -41,7 +46,8 @@ export const ColorChipWrapper = styled.div<{ active: boolean; canDelete?: boolea
 
   height: 2.625rem;
   min-width: 3.625rem;
-  padding: 0.75rem 1rem;
+  /* padding: 12px 16px; */
+  padding: ${(props) => (props.size === 'small' ? '0.5rem 0.75rem' : '0.75rem 1rem')};
   border-radius: 1.5625rem;
   background-color: white;
   border: ${(props) =>
@@ -74,6 +80,7 @@ export const ColorChipWrapper = styled.div<{ active: boolean; canDelete?: boolea
 
   font-family: Pretendard;
   font-weight: 500;
+  font-size: ${(props) => (props.size === 'small' ? '0.875rem' : '0.9375rem')};
 
   p {
     margin: 0;

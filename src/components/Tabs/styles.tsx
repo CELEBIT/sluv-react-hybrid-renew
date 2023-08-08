@@ -17,6 +17,7 @@ export const Tab = styled.div`
   align-items: center;
   height: 100%;
   width: 100%;
+  padding: 0.75rem 0;
 `
 export const TabName = styled.span<{ active: boolean }>`
   ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.BK })}
@@ -26,7 +27,7 @@ export const TabIndicator = styled.div<{ active: boolean }>`
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: ${({ active }) => (active ? '0.125rem' : '0.0625rem')};
+  height: ${({ active }) => (active ? '2px' : '1px')};
   background-color: ${({ active }) => (active ? Common.colors.BK : Common.colors.GR200)};
   transition: cubic-bezier(1, 0, 0, 1);
 `
