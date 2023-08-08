@@ -1,5 +1,6 @@
 import React from 'react'
 import {
+  ArrowDim,
   ArrowWrapper,
   ChipWrapper,
   FollowNumber,
@@ -8,6 +9,7 @@ import {
   InfoBottomWrapper,
   InfoRightWrapper,
   InfoTopWrapper,
+  InterestCelebWrapper,
   Line,
   ProfileContainer,
   UserImg,
@@ -45,35 +47,39 @@ const UserProfile = () => {
           </InfoBottomWrapper>
         </InfoRightWrapper>
       </UserInfoWrapper>
-      <ChipWrapper>
-        <ColorChip color='pink' active={true} size='small'>
-          뉴진스
-        </ColorChip>
-        <ColorChip color='pink' active={true} size='small'>
-          정유미A
-        </ColorChip>
-        <ColorChip color='orange' active={true} size='small'>
-          뉴진스
-        </ColorChip>
-        <ColorChip color='orange' active={true} size='small'>
-          뉴진스
-        </ColorChip>
-        <ColorChip color='yellow' active={true} size='small'>
-          뉴진스
-        </ColorChip>
-        <ColorChip color='yellow' active={true} size='small'>
-          뉴진스
-        </ColorChip>
-        <ColorChip color='green' active={true} size='small'>
-          뉴진스
-        </ColorChip>
-        <ColorChip color='blue' active={true} size='small'>
-          뉴진스
-        </ColorChip>
-        <ArrowWrapper>
-          <MoreDown stroke={Common.colors.GR600} style={{ flexShrink: 0 }}></MoreDown>
-        </ArrowWrapper>
-      </ChipWrapper>
+      <InterestCelebWrapper>
+        <ChipWrapper>
+          <ColorChip color='pink' active={true} size='small'>
+            뉴진스
+          </ColorChip>
+          <ColorChip color='pink' active={true} size='small'>
+            정유미A
+          </ColorChip>
+          <ColorChip color='orange' active={true} size='small'>
+            뉴진스
+          </ColorChip>
+          <ColorChip color='orange' active={true} size='small'>
+            뉴진스
+          </ColorChip>
+          <ColorChip color='yellow' active={true} size='small'>
+            뉴진스
+          </ColorChip>
+          <ColorChip color='yellow' active={true} size='small'>
+            뉴진스
+          </ColorChip>
+          <ColorChip color='green' active={true} size='small'>
+            뉴진스
+          </ColorChip>
+          <ColorChip color='blue' active={true} size='small'>
+            뉴진스
+          </ColorChip>
+        </ChipWrapper>
+        <ArrowDim>
+          <ArrowWrapper>
+            <MoreDown stroke={Common.colors.GR600} style={{ flexShrink: 0 }}></MoreDown>
+          </ArrowWrapper>
+        </ArrowDim>
+      </InterestCelebWrapper>
     </ProfileContainer>
   )
 }

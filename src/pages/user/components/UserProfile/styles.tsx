@@ -4,8 +4,7 @@ import { Common, Pretendard } from '../../../../components/styles'
 export const ProfileContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 1.25rem 1.5rem;
-  border: 1px solid red;
+  padding: 1.25rem 0;
   gap: 1.25rem;
 `
 export const UserInfoWrapper = styled.div`
@@ -13,7 +12,7 @@ export const UserInfoWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   gap: 1rem;
-  border: 1px solid orange;
+  padding-left: 1.5rem;
 `
 export const UserImg = styled.div<{ imgUrl: string }>`
   flex-shrink: 0;
@@ -33,7 +32,6 @@ export const InfoRightWrapper = styled.div`
   width: 100%;
   gap: 0.5rem;
   padding: 0.5625rem 0;
-  border: 1px solid blue;
 `
 
 export const InfoTopWrapper = styled.div`
@@ -64,27 +62,39 @@ export const FollowNumber = styled.span`
   ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.BK })}
 `
 
+export const InterestCelebWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100vw;
+`
+
 export const ChipWrapper = styled.div`
   display: flex;
-  position: relative;
-  flex-direction: row;
-  align-items: center;
   gap: 0.5rem;
   width: 100%;
-  overflow-x: scroll;
-  border: 1px solid blue;
+  overflow: scroll;
+  padding: 0 1.5rem;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`
+
+export const ArrowDim = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 1.25rem;
 `
 export const ArrowWrapper = styled.div`
   display: flex;
-  position: sticky;
   background-color: white;
   z-index: 10;
-  right: 0;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
   width: 2.125rem;
   height: 2.125rem;
   border-radius: 50%;
   border: 1px solid ${Common.colors.GR600};
-  align-items: center;
-  justify-content: center;
 `
