@@ -8,7 +8,7 @@ export const ItemListGridContainer = styled.div`
   /* gap: 0.625rem; */
   row-gap: 1.5rem;
   width: 100%;
-  padding: 0 1.25rem 1.25rem 1.25rem;
+  padding: 1.25rem;
 `
 
 export const ViewHeader = styled.div`
@@ -16,7 +16,7 @@ export const ViewHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0.75rem 1.25rem;
+  padding: 0.75rem 1.25rem 0 1.25rem;
 `
 
 export const ViewHeaderLeft = styled.div`
