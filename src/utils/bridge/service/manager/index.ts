@@ -18,4 +18,4 @@ class BridgeServiceManager {
   }
 }
 
-export const bridgeServiceManager = new BridgeServiceManager()
+export default BridgeServiceManager

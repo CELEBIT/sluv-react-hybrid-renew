@@ -1,9 +1,4 @@
-import {
-  BridgeMessage,
-  BridgeMessageHeader,
-  BridgeMessageType,
-  BridgeServiceManager,
-} from '../service'
+import { BridgeMessage, BridgeMessageHeader, BridgeMessageType } from '../service'
 import { generateRandomHash } from '../../hash'
 import {
   BridgeServiceKeys,
@@ -13,10 +8,15 @@ import {
   ReceivePayloadOf,
   RequestPayloadOf,
 } from './types'
+import BridgeServiceManager from '../service/manager'
 
 export class BridgeController {
-  private serviceManager = BridgeServiceManager
+  private serviceManager: BridgeServiceManager
   private observers: MappedObserver<BridgeServiceKeys>[] = []
+
+  constructor(bridgeServiceManager: BridgeServiceManager) {
+    this.serviceManager = bridgeServiceManager
+  }
 
   public subscribe<S extends keyof BridgeServices>(
     serviceName: S,
@@ -39,15 +39,16 @@ export class BridgeController {
     }
   }
 
-  public receiveMessage<TPayload = unknown>(message: BridgeMessage<TPayload>) {
+  public receiveMessage<TPayload = unknown>(message: string) {
+    const parsedMessage: BridgeMessage<TPayload> = JSON.parse(message)
     // code에 따라 특정 서비스를 호출해서 해당 서비스의 receiveMessage를 실행해야 한다.
     this.observers.forEach((obs) => {
-      if (obs.code === message.header.code) {
-        obs.service.receiveMessage(message.header, message.payload)
+      if (obs.code === parsedMessage.header.code) {
+        obs.service.receiveMessage(parsedMessage.header, parsedMessage.payload as any)
       }
     })
 
-    this.notify(message)
+    this.notify(parsedMessage)
   }
 
   private createRequestMessage<S extends BridgeServiceKeys>(
@@ -80,10 +81,4 @@ export class BridgeController {
   }
 }
 
-const bridgeController = new BridgeController()
-
-// android, ios 에서 동일한 인터페이스로 메세지를 전송해줄 수 있도록 설정
-window.AndroidBridge.sendToWebview = bridgeController.receiveMessage
-window.webkit.messageHandlers.IOSBridge.sendToWebview = bridgeController.receiveMessage
-
-export default bridgeController
+export default BridgeController
