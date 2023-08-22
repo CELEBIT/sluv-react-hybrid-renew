@@ -8,7 +8,7 @@ import storage from './utils/storage'
 import SelectItemOrPhoto from './components/SelectItemOrPhoto'
 
 import Loading from './components/Loading'
-import { bridgeProxyAdapter } from './utils/bridge/adapter'
+import { bridgeProxyAdapter } from './utils/bridge'
 
 bridgeProxyAdapter()
 
