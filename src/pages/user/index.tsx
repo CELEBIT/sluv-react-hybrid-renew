@@ -80,7 +80,7 @@ const User = () => {
             <Menu onClick={() => navigate('./like/item')}>
               <Heart></Heart>좋아요한 아이템
             </Menu>
-            <Menu>
+            <Menu onClick={() => navigate('./like/community')}>
               <Heart></Heart>좋아요한 커뮤니티
             </Menu>
           </EachContentWrapper>

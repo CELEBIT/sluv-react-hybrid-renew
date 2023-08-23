@@ -43,6 +43,7 @@ const QuestionListWrapper = styled.div`
   width: 100%;
   height: 100%;
   overflow-y: scroll;
+  padding-bottom: 3.125rem;
 `
 
 export default RecentViewCommunity

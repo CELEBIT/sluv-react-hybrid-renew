@@ -49,4 +49,5 @@ export const queryKeys = {
   userUploadQuestion: ['userUploadQuestion'] as const,
   userUploadComment: ['userUploadComment'] as const,
   recentViewCommunityItem: ['recentViewCommunityItem'] as const,
+  likedComment: ['likedComment'] as const,
 }
