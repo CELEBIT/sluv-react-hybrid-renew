@@ -51,6 +51,14 @@ const AddSubComment = React.lazy(
 const Search = React.lazy(() => import('./pages/search'))
 const SearchResult = React.lazy(() => import('./pages/search/SearchResult'))
 
+// 마이페이지
+const FollowList = React.lazy(() => import('./pages/user/components/FollowList/FollowList'))
+const UserItem = React.lazy(() => import('./pages/user/components/UserItem/UserItem'))
+const UserCommunity = React.lazy(
+  () => import('./pages/user/components/UserCommunity/UserCommunity'),
+)
+const LikeItem = React.lazy(() => import('./pages/user/components/LikeItemList/LikeItemList'))
+const RecentView = React.lazy(() => import('./pages/user/components/RecentView/RecentView'))
 const App = () => {
   useLayoutEffect(() => {
     console.log(window.location.search)
@@ -123,6 +131,13 @@ const App = () => {
             <Route path='/user' element={<User />} />
             <Route path='/user/:id' element={<User />} />
             <Route path='/user/select-celeb' element={<SelectCeleb />} />
+            <Route path='/user/followlist' element={<FollowList />} />
+            <Route path='/user/:id/followlist' element={<FollowList />} />
+            <Route path='/user/item' element={<UserItem />} />
+            <Route path='/user/community' element={<UserCommunity />} />
+            <Route path='/user/recent-view' element={<RecentView />} />
+            <Route path='/user/like/item' element={<LikeItem />} />
+            <Route path='/user/like/community' element={<FollowList />} />
           </Routes>
         </Suspense>
         <Modals />

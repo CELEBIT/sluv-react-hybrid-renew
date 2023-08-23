@@ -5,6 +5,7 @@ export const SmallWrapper = styled.div<{
   icon?: boolean
   type: string
   error?: boolean
+  active?: boolean
 }>`
   display: inline-flex;
   flex-direction: row;
@@ -37,6 +38,13 @@ export const SmallWrapper = styled.div<{
       border: 1px solid ${Common.colors.ERROR};
     `}
 
+  ${({ active }) =>
+    active &&
+    `
+      border: 1px solid#E5E0F6;
+      background-color: ${Common.colors.BG};
+      color: #5E2AB9;
+    `}
   p {
     margin: 0;
   }
