@@ -1,6 +1,7 @@
 import { IHashTag } from '../../recoil/itemInfo'
 import request from '../core'
 import { GetPaginationResult, ResponseType } from '../core/type'
+import { SearchQuestionResult } from '../search/searchService'
 import {
   HashtagContent,
   ItemDetailResult,
@@ -235,6 +236,19 @@ export default class ItemService {
   //
   async getHowAboutItem() {
     const data: ResponseType<Array<ItemResult>> = await request.get(`${this.itemUrl}/howabout`)
+    return data.result
+  }
+
+  // 현재 유저가 최근 본 아이템
+  async getUserRecentViewItem(page: number) {
+    const data: ResponseType<GetPaginationResult<RecommendItemResult>> = await request.get(
+      `${this.itemUrl}/recent`,
+      {
+        params: {
+          page,
+        },
+      },
+    )
     return data.result
   }
 }

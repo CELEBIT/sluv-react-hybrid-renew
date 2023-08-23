@@ -8,15 +8,16 @@ interface ButtonSmallProps {
   text: string
   icon?: boolean
   iconName?: string
+  active?: boolean
   // iconName: add or check
   type: string
   //  type 상태는 pri or sec
   onClick: () => void
 }
 
-const ButtonSmall = ({ text, icon, iconName, type, onClick }: ButtonSmallProps) => {
+const ButtonSmall = ({ text, icon, iconName, active, type, onClick }: ButtonSmallProps) => {
   return (
-    <SmallWrapper icon={icon} type={type} onClick={onClick}>
+    <SmallWrapper icon={icon} type={type} active={active} onClick={onClick}>
       <p>{text}</p>
       {icon ? (
         <div>

@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { TabContainer, Tab, TabName, TabIndicator } from './styles'
+import { SetterOrUpdater } from 'recoil'
 
 interface TabProps {
   tabList: Array<Tab>
   selectedTab: string
-  setSelectedTab: React.Dispatch<React.SetStateAction<string>>
+  setSelectedTab: React.Dispatch<React.SetStateAction<string>> | SetterOrUpdater<string>
 }
 
 interface Tab {
@@ -15,6 +16,7 @@ interface Tab {
 const Tabs = ({ tabList, selectedTab, setSelectedTab }: TabProps) => {
   const onclickTab = (tabName: string) => {
     setSelectedTab(tabName)
+    console.log(selectedTab)
   }
   return (
     <TabContainer>

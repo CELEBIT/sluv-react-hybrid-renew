@@ -133,7 +133,6 @@ export const RecommendInfo = styled.div`
     line-height: 1.4375rem;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: -webkit-box;
     margin-top: 0.625rem;
     -webkit-line-clamp: 2; /* Limit the number of lines to display */
     -webkit-box-orient: vertical; /* Set the text to flow vertically */

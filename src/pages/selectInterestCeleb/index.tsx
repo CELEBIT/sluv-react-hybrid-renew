@@ -83,8 +83,9 @@ const SelectCeleb = () => {
     postInterestCeleb: { mutate: mutateByPostInterestCeleb },
   } = useInterestCelebQuery()
 
-  const { getSelectCelebList } = useSelectCelebQuery()
-  const { data } = getSelectCelebList
+  const {
+    getSelectCelebList: { data },
+  } = useSelectCelebQuery()
 
   const { openModal } = useModals()
 
