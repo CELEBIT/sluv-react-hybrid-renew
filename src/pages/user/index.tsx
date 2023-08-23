@@ -87,10 +87,10 @@ const User = () => {
           <Divider></Divider>
           <EachContentWrapper>
             <ContentTitle>도움</ContentTitle>
-            <Menu>
+            <Menu onClick={() => navigate('/help')}>
               <Heart></Heart>문의하기
             </Menu>
-            <Menu>
+            <Menu onClick={() => navigate('/notice')}>
               <Heart></Heart>공지사항
             </Menu>
           </EachContentWrapper>

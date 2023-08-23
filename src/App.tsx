@@ -62,6 +62,11 @@ const LikeCommunity = React.lazy(
   () => import('./pages/user/components/LikeCommunityList/LIkeCommunityList'),
 )
 const RecentView = React.lazy(() => import('./pages/user/components/RecentView/RecentView'))
+const Help = React.lazy(() => import('./pages/user/components/Help/Help'))
+const Notice = React.lazy(() => import('./pages/user/components/Notice/Notice'))
+const NoticeDetail = React.lazy(
+  () => import('./pages/user/components/Notice/NoticeDetail/NoticeDetail'),
+)
 const App = () => {
   useLayoutEffect(() => {
     console.log(window.location.search)
@@ -136,11 +141,18 @@ const App = () => {
             <Route path='/user/select-celeb' element={<SelectCeleb />} />
             <Route path='/user/followlist' element={<FollowList />} />
             <Route path='/user/:id/followlist' element={<FollowList />} />
+            {/* 마이페이지 나의 게시글 */}
             <Route path='/user/item' element={<UserItem />} />
             <Route path='/user/community' element={<UserCommunity />} />
+            {/* 마이페이지 나의 활동 */}
             <Route path='/user/recent-view' element={<RecentView />} />
             <Route path='/user/like/item' element={<LikeItem />} />
             <Route path='/user/like/community' element={<LikeCommunity />} />
+            {/* 마이페이지 도움 */}
+            <Route path='/help' element={<Help />} />
+            <Route path='/help/detail' element={<User />} />
+            <Route path='/notice' element={<Notice />} />
+            <Route path='/notice/:id' element={<NoticeDetail />} />
           </Routes>
         </Suspense>
         <Modals />
