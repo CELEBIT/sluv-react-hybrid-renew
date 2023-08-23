@@ -83,6 +83,20 @@ const useUserMypageQuery = () => {
     )
   }
 
+  // 좋아요한 커뮤니티 댓글
+  const getLikedComment = (): UseInfiniteQueryResult<GetPaginationResult<ICommentResult>, any> => {
+    return useInfiniteQuery(
+      queryKeys.likedComment,
+      ({ pageParam = 0 }) => user.getUserLikedComment(pageParam),
+      {
+        getNextPageParam: (lastPage) => {
+          if (lastPage?.hasNext) return lastPage.page + 1
+          return undefined
+        },
+      },
+    )
+  }
+
   return {
     getMypageInfo,
     getOtherUserMypageInfo,
@@ -90,6 +104,7 @@ const useUserMypageQuery = () => {
     getUserUploadQuestion,
     getUserUploadComment,
     getRecentViewCommunityItem,
+    getLikedComment,
   }
 }
 

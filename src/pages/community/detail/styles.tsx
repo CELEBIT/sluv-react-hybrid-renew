@@ -114,12 +114,18 @@ export const RecommendListWrapper = styled.div`
   }
 `
 
+export const RecommendContainer = styled.div<{ detail?: boolean }>`
+  display: flex;
+  flex-direction: column;
+  gap: ${(props) => (props.detail ? '0.5rem' : '0')};
+`
+
 export const Recommend = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  height: 6.75rem;
+  /* height: 6.75rem; */
   padding: 0.75rem 1.5rem 1rem 1.5rem;
   gap: 0.625rem;
   text-overflow: ellipsis;
@@ -143,6 +149,25 @@ export const InfoTop = styled.div`
   display: flex;
   flex-direction: row;
   gap: 0.25rem;
+`
+
+export const DetailInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`
+export const DetailLeft = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 0.375rem;
+`
+
+export const DetailRight = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 0.625rem;
 `
 
 export const Category = styled.div<{ color: string }>`

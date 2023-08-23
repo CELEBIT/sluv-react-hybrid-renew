@@ -58,6 +58,9 @@ const UserCommunity = React.lazy(
   () => import('./pages/user/components/UserCommunity/UserCommunity'),
 )
 const LikeItem = React.lazy(() => import('./pages/user/components/LikeItemList/LikeItemList'))
+const LikeCommunity = React.lazy(
+  () => import('./pages/user/components/LikeCommunityList/LIkeCommunityList'),
+)
 const RecentView = React.lazy(() => import('./pages/user/components/RecentView/RecentView'))
 const App = () => {
   useLayoutEffect(() => {
@@ -137,7 +140,7 @@ const App = () => {
             <Route path='/user/community' element={<UserCommunity />} />
             <Route path='/user/recent-view' element={<RecentView />} />
             <Route path='/user/like/item' element={<LikeItem />} />
-            <Route path='/user/like/community' element={<FollowList />} />
+            <Route path='/user/like/community' element={<LikeCommunity />} />
           </Routes>
         </Suspense>
         <Modals />

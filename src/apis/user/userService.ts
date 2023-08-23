@@ -235,4 +235,30 @@ export default class UserService {
     )
     return data.result
   }
+
+  // 현재 유저가 좋아요한 커뮤니티 게시글
+  // async getLikeCommunityQuestion(page: number) {
+  //   const data: ResponseType<GetPaginationResult<SearchQuestionResult>> = await request.get(
+  //     `${this.userUrl}/like/question`,
+  //     {
+  //       params: {
+  //         page,
+  //       },
+  //     },
+  //   )
+  //   return data.result
+  // }
+
+  // 현재 유저가 좋아한 커뮤니티 댓글
+  async getUserLikedComment(page: number) {
+    const data: ResponseType<GetPaginationResult<ICommentResult>> = await request.get(
+      `${this.userUrl}/like/comment`,
+      {
+        params: {
+          page,
+        },
+      },
+    )
+    return data.result
+  }
 }
