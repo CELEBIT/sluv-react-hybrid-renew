@@ -28,6 +28,17 @@ import { ReactComponent as Heart } from '../../assets/like_off_24.svg'
 import useUserMypageQuery from '../../apis/user/hooks/useUserMypageQuery'
 import UserUpload from './components/UserUpload/UserUpload'
 
+import { ReactComponent as Home } from '../../assets/home_24.svg'
+import { ReactComponent as Search } from '../../assets/search_24.svg'
+import { ReactComponent as ShowMore } from '../../assets/add_24.svg'
+import { ReactComponent as Setting } from '../../assets/setting_24.svg'
+import { ReactComponent as Upload } from '../../assets/share_24.svg'
+import { Common } from '../../components/styles'
+import { modals } from '../../components/Modals'
+import useModals from '../../components/Modals/hooks/useModals'
+import { useSetRecoilState } from 'recoil'
+import { RequestEditItemState } from '../item/editRequest'
+
 const User = () => {
   const navigate = useNavigate()
   const { id } = useParams()
@@ -37,11 +48,29 @@ const User = () => {
     { id: 'closet', tabName: '옷장' },
   ]
 
+  const { openModal } = useModals()
+  const setEditReportItemState = useSetRecoilState(RequestEditItemState)
+
+  const onClickShowMore = () => {
+    openModal(modals.ItemEditRequestModal)
+    // setEditReportItemState({
+    //   itemId: Number(itemId),
+    //   itemWriterId: data?.writer.id,
+    //   itemWriterName: data?.writer.nickName,
+    // })
+  }
+
   if (id) {
     return (
       <PageContainer>
         <HeaderWrapper>
-          <Header isModalHeader={false} hasArrow={true} />
+          <Header isModalHeader={false} hasArrow={true}>
+            <div className='headerRight'>
+              <Home onClick={() => navigate('/')} />
+              <Search fill={Common.colors.BK} onClick={() => navigate('/search')}></Search>
+              <ShowMore onClick={() => onClickShowMore()}></ShowMore>
+            </div>
+          </Header>
         </HeaderWrapper>
         <ContentContainer>
           <UserProfile></UserProfile>
@@ -65,7 +94,13 @@ const User = () => {
     return (
       <PageContainer>
         <HeaderWrapper>
-          <Header isModalHeader={false} hasArrow={true} />
+          <Header isModalHeader={false} hasArrow={true} title='마이페이지'>
+            <div className='headerRight'>
+              <Setting onClick={() => navigate('/settings')} />
+              <Upload stroke={Common.colors.BK} onClick={() => navigate('/search')}></Upload>
+              <ShowMore onClick={() => onClickShowMore()}></ShowMore>
+            </div>
+          </Header>
         </HeaderWrapper>
         <ContentContainer>
           <UserProfile></UserProfile>

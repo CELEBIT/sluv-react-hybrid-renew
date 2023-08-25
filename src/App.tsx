@@ -22,7 +22,7 @@ const Closet = React.lazy(() => import('./pages/closet'))
 const User = React.lazy(() => import('./pages/user'))
 
 // 관심셀럽 선택 페이지
-const SelectCeleb = React.lazy(() => import('./pages/selectInterestCeleb'))
+const SelectInterestCeleb = React.lazy(() => import('./pages/selectInterestCeleb'))
 const SignupComplete = React.lazy(() => import('./pages/selectInterestCeleb/SignupComplete'))
 
 // 아이템 게시글 작성 관련 페이지
@@ -67,6 +67,11 @@ const Notice = React.lazy(() => import('./pages/user/components/Notice/Notice'))
 const NoticeDetail = React.lazy(
   () => import('./pages/user/components/Notice/NoticeDetail/NoticeDetail'),
 )
+
+const Settings = React.lazy(() => import('./pages/settings/index'))
+const Privacy = React.lazy(() => import('./pages/settings/components/Privacy/Privacy'))
+const TermsOfUse = React.lazy(() => import('./pages/settings/components/TermsOfUse/TermsOfUse'))
+
 const App = () => {
   useLayoutEffect(() => {
     console.log(window.location.search)
@@ -99,7 +104,7 @@ const App = () => {
             {/* 홈 */}
             <Route path='/' element={<Home />} />
             {/* 홈 */}
-            <Route path='/select-celeb' element={<SelectCeleb />} />
+            <Route path='/select-celeb' element={<SelectInterestCeleb />} />
             <Route path='/select-celeb/complete' element={<SignupComplete />} />
             {/* 커뮤니티 */}
             <Route path='/community' element={<Community />} />
@@ -138,7 +143,7 @@ const App = () => {
             {/* 마이페이지 */}
             <Route path='/user' element={<User />} />
             <Route path='/user/:id' element={<User />} />
-            <Route path='/user/select-celeb' element={<SelectCeleb />} />
+            <Route path='/user/select-celeb' element={<SelectInterestCeleb />} />
             <Route path='/user/followlist' element={<FollowList />} />
             <Route path='/user/:id/followlist' element={<FollowList />} />
             {/* 마이페이지 나의 게시글 */}
@@ -153,6 +158,10 @@ const App = () => {
             <Route path='/help/detail' element={<User />} />
             <Route path='/notice' element={<Notice />} />
             <Route path='/notice/:id' element={<NoticeDetail />} />
+            {/* 마이페이지 설정 */}
+            <Route path='/settings' element={<Settings />} />
+            <Route path='/settings/privacy' element={<Privacy />} />
+            <Route path='/settings/terms' element={<TermsOfUse />} />
           </Routes>
         </Suspense>
         <Modals />

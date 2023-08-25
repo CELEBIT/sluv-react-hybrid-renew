@@ -5,7 +5,7 @@ export const PageContainer = styled.div`
   flex-shrink: 0;
   flex-direction: column;
   justify-content: space-between;
-  margin-left: -1.25rem;
+  margin-left: calc(-50vw + 50%);
   width: 100vw;
   height: 100%;
   max-height: 100vh;
@@ -14,6 +14,13 @@ export const PageContainer = styled.div`
 
   ::-webkit-scrollbar {
     display: none;
+  }
+
+  .headerRight {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.25rem;
   }
 `
 
