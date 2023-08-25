@@ -26,7 +26,6 @@ import { useNavigate, useParams } from 'react-router-dom'
 import useUserMypageQuery from '../../../../apis/user/hooks/useUserMypageQuery'
 import { atom, useRecoilState, useSetRecoilState } from 'recoil'
 import { atomKeys } from '../../../../config/atomKeys'
-import { NavBar } from 'antd-mobile'
 
 interface UserProfileProps {
   userInfo: {
