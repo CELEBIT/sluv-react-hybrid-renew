@@ -1,7 +1,8 @@
 import { CommunityItem } from '../../recoil/communityInfo'
 import request from '../core'
 import { GetPaginationResult, ResponseType } from '../core/type'
-import { QuestionResult, WaitResult } from './questionService.type'
+import { QuestionResult } from './questionService.type'
+import { SearchQuestionResult } from '../search/searchService'
 
 export interface questionUpload {
   id: number
@@ -32,9 +33,12 @@ export default class QuestionService {
 
   // 추천해 줘 기다리는 추천
   async getWaitQusestion(questionId: number, qType: string) {
-    const data: ResponseType<Array<WaitResult>> = await request.get(`${this.questionUrl}/wait`, {
-      params: { questionId: questionId, qType: qType },
-    })
+    const data: ResponseType<Array<SearchQuestionResult>> = await request.get(
+      `${this.questionUrl}/wait`,
+      {
+        params: { questionId: questionId, qType: qType },
+      },
+    )
     return data.result
   }
 
@@ -76,7 +80,7 @@ export default class QuestionService {
 
   // 커뮤니티 아이템 검색(qtype으로 구별)
   async getQuestionList(page: number, qType?: string | undefined) {
-    const data: ResponseType<GetPaginationResult<WaitResult>> = await request.get(
+    const data: ResponseType<GetPaginationResult<SearchQuestionResult>> = await request.get(
       `${this.questionUrl}/list`,
       {
         params: {
