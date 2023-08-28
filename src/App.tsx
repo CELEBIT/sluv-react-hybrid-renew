@@ -8,6 +8,10 @@ import storage from './utils/storage'
 import SelectItemOrPhoto from './components/SelectItemOrPhoto'
 
 import Loading from './components/Loading'
+import { bridgeProxyAdapter } from './utils/bridge'
+
+bridgeProxyAdapter()
+
 const loading = <Loading />
 
 // 에러 페이지
