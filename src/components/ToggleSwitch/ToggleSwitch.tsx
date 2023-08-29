@@ -1,11 +1,14 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent } from 'react'
 import { StyledLabel } from './styles'
 
-const ToggleSwitch = () => {
-  const [switchState, setSwitchState] = useState<boolean>(true)
+interface ToggelSwitchProps {
+  switchState: boolean
+  onClick: any
+}
+
+const ToggleSwitch = ({ switchState, onClick }: ToggelSwitchProps) => {
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log('---', e.target.checked)
-    setSwitchState(!switchState)
+    onClick()
   }
   return (
     <StyledLabel htmlFor='checkbox' checked={switchState}>
