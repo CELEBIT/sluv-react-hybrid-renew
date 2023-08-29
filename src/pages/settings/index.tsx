@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ContentContainer, HeaderWrapper, PageContainer } from '../user/styles'
 import Header from '../../components/Header/Header'
 import { DeleteAccount, Menu, MenuTitle, SettingMenu, UpdateText } from './styles'
@@ -8,6 +8,11 @@ import { useNavigate } from 'react-router-dom'
 
 const Settings = () => {
   const navigate = useNavigate()
+  const [pushAlarmState, setPushAlarmState] = useState(false)
+  const onClickPushAlarm = () => {
+    setPushAlarmState(!pushAlarmState)
+    // api call
+  }
   return (
     <PageContainer>
       <HeaderWrapper>
@@ -28,7 +33,8 @@ const Settings = () => {
         <SettingMenu>
           <MenuTitle>알림</MenuTitle>
           <Menu>
-            푸쉬 알림<ToggleSwitch></ToggleSwitch>
+            푸쉬 알림
+            <ToggleSwitch switchState={pushAlarmState} onClick={onClickPushAlarm}></ToggleSwitch>
           </Menu>
         </SettingMenu>
         <Divider></Divider>

@@ -18,7 +18,7 @@ const LikeCommunityQuestion = () => {
           {tempData?.map((each, index) => {
             return (
               <>
-                <QuestionListItem key={each.id} item={each}></QuestionListItem>
+                <QuestionListItem key={each.id} item={each} detail={true}></QuestionListItem>
                 {index !== tempData.length - 1 && <Line></Line>}
               </>
             )
