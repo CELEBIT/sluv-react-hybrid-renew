@@ -1,18 +1,15 @@
 import React, { ChangeEvent } from 'react'
 import { StyledLabel } from './styles'
 
-interface ToggelSwitchProps {
-  switchState: boolean
-  onClick: any
+export type ToggleSwitchProps = React.HTMLAttributes<ChangeEvent> & {
+  onToggleSwitch: (e: ChangeEvent) => void
+  isToggleOn: boolean
 }
 
-const ToggleSwitch = ({ switchState, onClick }: ToggelSwitchProps) => {
-  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onClick()
-  }
+const ToggleSwitch = ({ isToggleOn, onToggleSwitch }: ToggleSwitchProps) => {
   return (
-    <StyledLabel htmlFor='checkbox' checked={switchState}>
-      <input id='checkbox' type='checkbox' checked={switchState} onChange={handleOnChange} />
+    <StyledLabel htmlFor='checkbox' isToggleOn={isToggleOn}>
+      <input id='checkbox' type='checkbox' checked={isToggleOn} onChange={onToggleSwitch} />
     </StyledLabel>
   )
 }
