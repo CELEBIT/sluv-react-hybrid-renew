@@ -34,7 +34,10 @@ const Settings = () => {
           <MenuTitle>알림</MenuTitle>
           <Menu>
             푸쉬 알림
-            <ToggleSwitch switchState={pushAlarmState} onClick={onClickPushAlarm}></ToggleSwitch>
+            <ToggleSwitch
+              isToggleOn={pushAlarmState}
+              onToggleSwitch={onClickPushAlarm}
+            ></ToggleSwitch>
           </Menu>
         </SettingMenu>
         <Divider></Divider>
