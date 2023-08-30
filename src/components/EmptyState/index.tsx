@@ -5,12 +5,14 @@ import { ReactComponent as Storage } from '../../assets/storage_36.svg'
 import { ReactComponent as Comment } from '../../assets/list_36.svg'
 import { ReactComponent as Item } from '../../assets/item_36.svg'
 import { ReactComponent as Search } from '../../assets/search_36.svg'
+import { ReactComponent as Like } from '../../assets/like_36.svg'
 
 type EmptyStateProps = {
   icon: string
-  // clock, save, comment, item, search
+  // clock, save, comment, item, search, like
   title: string
-  subtitle: string
+  subtitle?: string
+  children?: any
 }
 const getIconComponent = (icon: string) => {
   switch (icon) {
@@ -24,12 +26,14 @@ const getIconComponent = (icon: string) => {
       return <Item />
     case 'search':
       return <Search />
+    case 'like':
+      return <Like />
     default:
       return null
   }
 }
 
-const EmptyState = ({ icon, title, subtitle }: EmptyStateProps) => {
+const EmptyState = ({ icon, title, subtitle, children }: EmptyStateProps) => {
   const iconComponent = getIconComponent(icon)
   return (
     <EmptyStateContainer>
@@ -38,6 +42,7 @@ const EmptyState = ({ icon, title, subtitle }: EmptyStateProps) => {
         <Title>{title}</Title>
         <SubTitle>{subtitle}</SubTitle>
       </TextWrapper>
+      {children}
     </EmptyStateContainer>
   )
 }

@@ -3,9 +3,16 @@ import { Common, Pretendard } from '../styles'
 
 export const ItemListGridContainer = styled.div`
   display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  padding-bottom: 3.125rem;
+`
+
+export const ItemListWrapper = styled.div`
+  display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  /* gap: 0.625rem; */
+  flex-shrink: 0;
+  gap: 0.5rem;
   row-gap: 1.5rem;
   width: 100%;
   padding: 1.25rem;
@@ -20,6 +27,9 @@ export const ViewHeader = styled.div`
 `
 
 export const ViewHeaderLeft = styled.div`
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
   ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.GR600 })}
 `
 export const ViewHeaderRight = styled.div`

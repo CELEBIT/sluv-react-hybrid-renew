@@ -1,6 +1,12 @@
 import React, { useState } from 'react'
 import { RecommendItemResult } from '../../apis/item/itemService.type'
-import { ItemListGridContainer, ViewHeader, ViewHeaderLeft, ViewHeaderRight } from './styles'
+import {
+  ItemListGridContainer,
+  ItemListWrapper,
+  ViewHeader,
+  ViewHeaderLeft,
+  ViewHeaderRight,
+} from './styles'
 import Item from '../RecommendedItem/Item'
 import { useNavigate } from 'react-router-dom'
 import EmptyState from '../EmptyState'
@@ -12,13 +18,22 @@ import { ReactComponent as ViewBigOn } from '../../assets/view_big_on_24.svg'
 interface ItemListGridProps {
   data: Array<RecommendItemResult> | undefined
   canChangeView: boolean
+  emptyIcon?: string
+  emptyTitle?: string
+  emptySubTitle?: string
 }
 
-const ItemListGrid = ({ data, canChangeView }: ItemListGridProps) => {
+const ItemListGrid = ({
+  data,
+  canChangeView,
+  emptyIcon,
+  emptyTitle,
+  emptySubTitle,
+}: ItemListGridProps) => {
   const [viewSize, setViewSize] = useState('small')
   const navigate = useNavigate()
   return (
-    <>
+    <ItemListGridContainer>
       {canChangeView && (
         <ViewHeader>
           <ViewHeaderLeft>전체 {data?.length}</ViewHeaderLeft>
@@ -35,7 +50,7 @@ const ItemListGrid = ({ data, canChangeView }: ItemListGridProps) => {
           )}
         </ViewHeader>
       )}
-      <ItemListGridContainer>
+      <ItemListWrapper>
         {data ? (
           <>
             {data?.map((item) => (
@@ -62,14 +77,18 @@ const ItemListGrid = ({ data, canChangeView }: ItemListGridProps) => {
           </>
         ) : (
           <EmptyState
-            icon='item'
-            title='아이템이 없어요'
-            subtitle='아이템이 업로드 될 때까지
-        조금만 기다려 주세요'
+            icon={emptyIcon ? emptyIcon : 'item'}
+            title={emptyTitle ? emptyTitle : '아이템이 없어요'}
+            subtitle={
+              emptyTitle
+                ? emptyTitle
+                : `아이템이 업로드 될 때까지
+  조금만 기다려 주세요`
+            }
           ></EmptyState>
         )}
-      </ItemListGridContainer>
-    </>
+      </ItemListWrapper>
+    </ItemListGridContainer>
   )
 }
 

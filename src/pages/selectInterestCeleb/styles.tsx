@@ -73,11 +73,10 @@ export const SideBarWrapper = styled.div<{ size: string }>`
   right: 0;
   top: 13.375rem;
   justify-content: space-around;
-  height: 18.375rem;
   gap: 1.5rem;
   transition: 0.3s ease-in-out;
   background-color: white;
-  padding: 1.1875rem 1rem 1.1875rem 12px;
+  padding: 1.1875rem 1rem 1.1875rem 0.75rem;
   border-radius: 1.25rem 0 0 1.25rem;
   box-shadow: -2px 2px 24px 0px #c7ced480;
   z-index: 100;

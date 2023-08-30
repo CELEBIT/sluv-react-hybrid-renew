@@ -78,13 +78,14 @@ export const selectInterestCelebState = atom<Array<ISelectCelebResult>>({
   ],
 })
 
-const SelectCeleb = () => {
+const SelectInterestCeleb = () => {
   const {
     postInterestCeleb: { mutate: mutateByPostInterestCeleb },
   } = useInterestCelebQuery()
 
-  const { getSelectCelebList } = useSelectCelebQuery()
-  const { data } = getSelectCelebList
+  const {
+    getSelectCelebList: { data },
+  } = useSelectCelebQuery()
 
   const { openModal } = useModals()
 
@@ -392,4 +393,4 @@ const SelectCeleb = () => {
   )
 }
 
-export default SelectCeleb
+export default SelectInterestCeleb

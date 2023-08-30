@@ -11,10 +11,11 @@ export const UserInfoWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   gap: 1rem;
   padding-left: 1.5rem;
 `
-export const UserImg = styled.div<{ imgUrl: string }>`
+export const UserImg = styled.div<{ imgUrl?: string }>`
   flex-shrink: 0;
   width: 4.625rem;
   height: 4.625rem;

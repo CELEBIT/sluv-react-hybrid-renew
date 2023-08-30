@@ -47,9 +47,13 @@ const QuestionEditDeleteModal = loadable(
 const DeleteTempItemModal = loadable(() => import('../TwoButtonModal/DeleteTempItemModal'))
 const DeleteQuestionModal = loadable(() => import('../TwoButtonModal/DeleteQuestionModal'))
 
+// 관심셀럽 선택 모달
 const SelectedInterestCelebModal = loadable(
   () => import('../BottomSheetModal/SelectedInterestCelebModal'),
 )
+
+const UserInterestCelebModal = loadable(() => import('../BottomSheetModal/UserInterestCelebModal'))
+
 // 모달 관리 객체
 export const modals = {
   AskRecentPostWritingModal: AskRecentPostWritingModal as FunctionComponent<
@@ -110,6 +114,9 @@ export const modals = {
   >,
   SelectedInterestCelebModal: SelectedInterestCelebModal as FunctionComponent<
     ComponentProps<typeof SelectedInterestCelebModal>
+  >,
+  UserInterestCelebModal: UserInterestCelebModal as FunctionComponent<
+    ComponentProps<typeof UserInterestCelebModal>
   >,
 }
 
