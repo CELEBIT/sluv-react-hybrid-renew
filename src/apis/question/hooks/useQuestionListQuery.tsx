@@ -2,7 +2,7 @@ import { UseInfiniteQueryResult, useInfiniteQuery } from '@tanstack/react-query'
 import QuestionService from '../questionService'
 import { queryKeys } from '../../../config/queryKeys'
 import { GetPaginationResult } from '../../core/type'
-import { WaitResult } from '../questionService.type'
+import { SearchQuestionResult } from '../../search/searchService'
 
 export interface IVote {
   questionId: number
@@ -12,7 +12,10 @@ export interface IVote {
 const useQuestionListQuery = (qType: string | undefined) => {
   const question = new QuestionService()
 
-  const getQuestionList = (): UseInfiniteQueryResult<GetPaginationResult<WaitResult>, any> => {
+  const getQuestionList = (): UseInfiniteQueryResult<
+    GetPaginationResult<SearchQuestionResult>,
+    any
+  > => {
     return useInfiniteQuery(
       queryKeys.getQuestionList(qType),
       ({ pageParam = 0 }) => question.getQuestionList(pageParam, qType),

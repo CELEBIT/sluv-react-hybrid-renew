@@ -20,7 +20,7 @@ const Community = () => {
   const { getQuestionList } = useQuestionListQuery(selectedTab)
   const { data } = getQuestionList()
   const tempData = data?.pages[0].content
-  console.log(tempData)
+  console.log('tempData', tempData)
   const tabList = [
     { id: 'Total', tabName: '전체' },
     { id: 'Find', tabName: '찾아주세요' },

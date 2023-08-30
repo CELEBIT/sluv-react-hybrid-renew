@@ -114,13 +114,20 @@ export const RecommendListWrapper = styled.div`
   }
 `
 
+export const RecommendContainer = styled.div<{ detail?: boolean }>`
+  display: flex;
+  flex-direction: column;
+  gap: ${(props) => (props.detail ? '0.5rem' : '0')};
+  padding-bottom: 1rem;
+`
+
 export const Recommend = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  height: 6.75rem;
-  padding: 0.75rem 1.5rem 1rem 1.5rem;
+  min-height: 5rem;
+  padding: 0.75rem 1.5rem 0 1.5rem;
   gap: 0.625rem;
   text-overflow: ellipsis;
 `
@@ -133,7 +140,6 @@ export const RecommendInfo = styled.div`
     line-height: 1.4375rem;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: -webkit-box;
     margin-top: 0.625rem;
     -webkit-line-clamp: 2; /* Limit the number of lines to display */
     -webkit-box-orient: vertical; /* Set the text to flow vertically */
@@ -144,6 +150,40 @@ export const InfoTop = styled.div`
   display: flex;
   flex-direction: row;
   gap: 0.25rem;
+`
+
+export const DetailInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 1.25rem;
+`
+export const DetailLeft = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.375rem;
+`
+
+export const DetailNickname = styled.span`
+  ${Pretendard({ size: 12, weight: Common.bold.thin, color: Common.colors.GR600 })}
+`
+
+export const DetailRight = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 0.625rem;
+`
+
+export const DetailEach = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.25rem;
+  ${Pretendard({ size: 13, weight: Common.bold.regular, color: Common.colors.GR600 })}
 `
 
 export const Category = styled.div<{ color: string }>`

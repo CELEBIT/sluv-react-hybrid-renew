@@ -12,8 +12,6 @@ import {
   RecommendPhoto,
   RecommendVote,
 } from '../styles'
-import { WaitResult } from '../../../../apis/question/questionService.type'
-import { useNavigate } from 'react-router-dom'
 import QuestionListItem from '../../../../components/QuestionListItem/QuestionListItem'
 
 interface RecommendListProps {
