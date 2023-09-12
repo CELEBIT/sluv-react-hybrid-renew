@@ -46,6 +46,7 @@ import useModals from '../../components/Modals/hooks/useModals'
 import { modals } from '../../components/Modals'
 import CelebSearchResult from './CelebSearchResult/CelebSearchResult'
 import useInterestCelebQuery from '../../apis/user/hooks/useInterestCelebQuery'
+import { colorList } from '../../config/constant'
 
 export const selectInterestCelebState = atom<Array<ISelectCelebResult>>({
   key: atomKeys.selectedInterestCeleb,
@@ -94,7 +95,6 @@ const SelectInterestCeleb = () => {
   // 선택한 관심셀럽 확인 및 수정용 Category[{CelebId, CelebName}] List
   const [selectedInterestCeleb, setSelectedInterestCeleb] = useRecoilState(selectInterestCelebState)
   const [sidebarSize, setSidebarSize] = useState<string>('large')
-  const colorList = ['pink', 'orange', 'yellow', 'green', 'blue']
   const sidebarItems = [
     {
       icon: <Singer style={{ flexShrink: 0 }} />,
