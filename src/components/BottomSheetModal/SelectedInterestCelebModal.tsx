@@ -14,6 +14,7 @@ import {
 } from '../../pages/selectInterestCeleb/styles'
 import ColorChip from '../Chip/ColorChip'
 import { Common } from '../styles'
+import { colorList } from '../../config/constant'
 
 const SelectedInterestCelebModal = () => {
   const { closeModal } = useModals()
@@ -22,8 +23,6 @@ const SelectedInterestCelebModal = () => {
   }
 
   const [selectedCelebList, setSelectedCelebList] = useRecoilState(selectInterestCelebState)
-  const colorList = ['pink', 'orange', 'yellow', 'green', 'blue']
-
   const deleteCeleb = (categoryId: number, celebId: number) => {
     setSelectedCelebList((prevState) =>
       prevState.map((category) =>
