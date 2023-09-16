@@ -19,6 +19,7 @@ const useInterestCelebQuery = () => {
   // 다른 유저의 관심셀럽 리스트
   const getOtherUserInterestCeleb = (userId: number) =>
     useQuery(queryKeys.otherUserInterestCeleb(userId), () => user.getOtherUserInterestCeleb(userId))
+
   const getOtherUserInterestCelebWithCategory = (userId: number) =>
     useQuery(queryKeys.otherUserInterestCelebWithCategory(userId), () =>
       user.getOtherUserInterestCelebWithCategory(userId),
