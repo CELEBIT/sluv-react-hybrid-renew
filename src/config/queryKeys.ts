@@ -7,6 +7,10 @@ export const queryKeys = {
   hotPlace: ['hotPlace'] as const,
   recentPlace: ['recentPlace'] as const,
   interestCeleb: ['interestCeleb'] as const,
+  interestCelebWithCategory: ['interestCelebWithCategory'] as const,
+  otherUserInterestCeleb: (userId: number) => ['otherUserInterestCeleb', userId] as const,
+  otherUserInterestCelebWithCategory: (userId: number) =>
+    ['otherUserInterestCelebWithCategory', userId] as const,
   hotCeleb: ['hotCeleb'] as const,
   recentCeleb: ['recentCeleb'] as const,
   searchCeleb: (celebName: string) => ['searchCeleb', celebName] as const,

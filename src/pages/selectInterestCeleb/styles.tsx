@@ -58,7 +58,7 @@ export const CategoryContentWrapper = styled.div`
   height: 100%;
 `
 export const CategoryTitle = styled.span`
-  padding: 1rem 0.25rem;
+  padding: 0 0.25rem 1rem 0.25rem;
   ${Pretendard({
     size: 15,
     weight: Common.bold.regular,
@@ -133,8 +133,7 @@ export const CelebListWrapper = styled.div<{ open?: boolean }>`
   flex-direction: row;
   flex-wrap: wrap;
   /* flex-shrink: 0; */
-  gap: 1rem 12px;
-  padding-bottom: 1rem;
+  gap: 1rem 0.75rem;
   width: 100%;
   overflow: hidden;
   transition: 0.2s ease-in;

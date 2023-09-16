@@ -65,8 +65,8 @@ export const FollowNumber = styled.span`
 
 export const InterestCelebWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  position: relative;
   width: 100vw;
 `
 
@@ -81,16 +81,35 @@ export const ChipWrapper = styled.div`
   }
 `
 
+export const ArrowRight = styled.div`
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 0;
+  justify-content: center;
+  background-color: #ffffff;
+  z-index: 0;
+  height: 100%;
+  width: 2.3125rem;
+`
 export const ArrowDim = styled.div`
   display: flex;
   align-items: center;
+  position: absolute;
+  right: 2.3125rem;
   justify-content: center;
-  padding-right: 1.25rem;
+  padding-right: 2.125rem;
+  background: linear-gradient(90deg, #ffffff94 10%, #ffffffea 30.18%, #ffffff 79.72%);
+  z-index: 1;
+  height: 100%;
 `
+
 export const ArrowWrapper = styled.div`
   display: flex;
+  position: absolute;
+  right: 1.25rem;
   background-color: white;
-  z-index: 10;
+  z-index: 100;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
