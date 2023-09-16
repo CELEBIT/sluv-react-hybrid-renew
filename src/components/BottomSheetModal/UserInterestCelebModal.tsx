@@ -16,8 +16,11 @@ import useInterestCelebQuery from '../../apis/user/hooks/useInterestCelebQuery'
 import { useParams } from 'react-router-dom'
 import { colorList } from '../../config/constant'
 
-const UserInterstCelebModal = () => {
-  const { id } = useParams()
+export interface userIdProps {
+  id: number
+}
+
+const UserInterestCelebModal = ({ id }: userIdProps) => {
   const { closeModal } = useModals()
   const onClose = () => {
     closeModal(modals.UserInterestCelebModal)
@@ -41,9 +44,7 @@ const UserInterstCelebModal = () => {
     // 다른 유저
     const { getOtherUserInterestCelebWithCategory } = useInterestCelebQuery()
     const { data: interestCelebList } = getOtherUserInterestCelebWithCategory(Number(id))
-    // const {
-    //   getOtherUserInterestCelebWithCategory(id): { data: interestCelebList },
-    // } = useInterestCelebQuery()
+    console.log(interestCelebList)
     useEffect(() => {
       const celebListWrapper = document.getElementById('celebListWrapper')
       if (celebListWrapper) {
@@ -66,7 +67,6 @@ const UserInterstCelebModal = () => {
                       <CategoryTitle>{Category.categoryName}</CategoryTitle>
                       <CelebListWrapper id='celebListWrapper'>
                         {Category.celebList.map((celeb) => {
-                          console.log(celeb)
                           return (
                             <ColorChip
                               key={celeb.id}
@@ -158,4 +158,4 @@ export const CategoryContentWrapper = styled.div`
   height: 100%;
 `
 
-export default UserInterstCelebModal
+export default UserInterestCelebModal

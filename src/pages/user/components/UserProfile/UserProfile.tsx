@@ -1,6 +1,7 @@
 import React from 'react'
 import {
   ArrowDim,
+  ArrowRight,
   ArrowWrapper,
   ChipWrapper,
   FollowNumber,
@@ -38,12 +39,13 @@ export const selectedUserName = atom<string>({
 })
 
 const UserProfile = () => {
+  const { id } = useParams()
   const navigate = useNavigate()
   const { openModal } = useModals()
   const showMoreInterestCeleb = () => {
-    openModal(modals.UserInterestCelebModal)
+    openModal(modals.UserInterestCelebModal, { id: Number(id) })
   }
-  const { id } = useParams()
+
   const setFollowTab = useSetRecoilState(selectedFollowTabState)
   const setSelectedUserName = useSetRecoilState(selectedUserName)
 
@@ -124,11 +126,12 @@ const UserProfile = () => {
         </UserInfoWrapper>
         <InterestCelebWrapper>
           <InterestCelebList></InterestCelebList>
-          <ArrowDim>
+          <ArrowRight>
+            <ArrowDim></ArrowDim>
             <ArrowWrapper onClick={showMoreInterestCeleb}>
               <MoreDown stroke={Common.colors.GR600} style={{ flexShrink: 0 }}></MoreDown>
             </ArrowWrapper>
-          </ArrowDim>
+          </ArrowRight>
         </InterestCelebWrapper>
       </ProfileContainer>
     )
