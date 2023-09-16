@@ -6,7 +6,13 @@ import { SearchQuestionResult } from '../search/searchService'
 export interface ICelebResult {
   id: number
   celebNameKr: string
+  celebCategory?: string
   subCelebList?: Array<ICelebResult>
+}
+
+export interface ICategoryInterestResult {
+  categoryName: string
+  celebList: Array<ICelebResult>
 }
 
 export interface IUserResult {
@@ -33,13 +39,6 @@ export interface IUserMypageInfo {
   followStatus: true
   followerCount: number
   followingCount: number
-  interestedCelebList: [
-    {
-      id: number
-      celebNameKr: string
-      celebCategory: string
-    },
-  ]
   itemCount: number
   imgList: Array<string>
   communityCount: number
@@ -65,6 +64,30 @@ export default class UserService {
   // 유저의 관심셀럽 조회
   async getInterestCeleb() {
     const data: ResponseType<Array<ICelebResult>> = await request.get(`${this.userCelebUrl}`)
+    return data.result
+  }
+
+  // 유저의 관심셀럽 with 카테고리 조회
+  async getInterestCelebWithCategory() {
+    const data: ResponseType<Array<ICategoryInterestResult>> = await request.get(
+      `${this.userCelebUrl}/category`,
+    )
+    return data.result
+  }
+
+  // 다른 유저의 관심셀럽 조회
+  async getOtherUserInterestCeleb(userId: number) {
+    const data: ResponseType<Array<ICelebResult>> = await request.get(
+      `${this.userUrl}/${userId}/celeb`,
+    )
+    return data.result
+  }
+
+  // 다른 유저의 관심셀럽 with 카테고리 조회
+  async getOtherUserInterestCelebWithCategory(userId: number) {
+    const data: ResponseType<Array<ICategoryInterestResult>> = await request.get(
+      `${this.userUrl}/${userId}/celeb/category`,
+    )
     return data.result
   }
 
