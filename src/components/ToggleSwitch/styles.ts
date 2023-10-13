@@ -14,7 +14,7 @@ export const StyledLabel = styled.label<Pick<ToggleSwitchProps, 'isToggleOn'>>`
   &:after {
     content: '';
     position: absolute;
-    left: ${({ isToggleOn }) => (isToggleOn ? '0.125rem' : 'calc(55% - 0.1875rem)')};
+    left: ${({ isToggleOn }) => (isToggleOn ? 'calc(55% - 0.1875rem)' : '0.125rem')};
     top: 0.125rem;
     width: 1.125rem;
     height: 1.125rem;
