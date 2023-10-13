@@ -43,8 +43,8 @@ const EditRequest = React.lazy(() => import('./pages/item/editRequest'))
 const RequestReason = React.lazy(() => import('./pages/item/editRequest/requestReason'))
 
 // 커뮤니티 세부 페이지
-const FindRequest = React.lazy(() => import('./pages/community/findRequest'))
-const Question = React.lazy(() => import('./pages/community/question'))
+const FindRequest = React.lazy(() => import('./pages/community/CreateCommunity/findRequest'))
+const Question = React.lazy(() => import('./pages/community/CreateCommunity/question'))
 const CommunityDetail = React.lazy(() => import('./pages/community/detail/CommunityDetail'))
 const CommentItemPhoto = React.lazy(() => import('./components/SelectItemOrPhoto/CommentItemPhoto'))
 const CommentUpload = React.lazy(() => import('./pages/community/detail/components/CommentUpload'))

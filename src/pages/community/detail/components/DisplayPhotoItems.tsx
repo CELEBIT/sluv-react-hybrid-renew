@@ -5,7 +5,7 @@ import {
   CelebName,
   ItemInfoWrapper,
   ItemName,
-} from '../../question/components/twoItemUpload/eachItemField/ExistingItem'
+} from '../../CreateCommunity/question/components/twoItemUpload/eachItemField/ExistingItem'
 import styled from '@emotion/styled'
 
 interface DisplayPhotoItemsProps {
