@@ -7,7 +7,7 @@ import { modals } from '../Modals'
 import Header from '../Header/Header'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { communityItemState } from '../../recoil/communityInfo'
-import SetVoteDateTime from '../../pages/community/question/components/setVoteTime'
+import SetVoteDateTime from '../../pages/community/CreateCommunity/question/components/setVoteTime'
 
 const QuestionDateTimePickerModal = () => {
   const { closeModal } = useModals()
