@@ -39,7 +39,7 @@ import { BottomWrapper } from '../../components/SelectItemOrPhoto/styles'
 import ButtonLarge from '../../components/ButtonLarge/ButtonLarge'
 import { atomKeys } from '../../config/atomKeys'
 import { atom, useRecoilState } from 'recoil'
-import { ISelectCelebResult } from '../../apis/celeb/CelebService'
+import { ISelectCeleb, ISelectCelebResult } from '../../apis/celeb/CelebService'
 import { Common } from '../../components/styles'
 import CelebCategoryTooltip from '../../components/ToolTip/CelebCategoryTooltip/CelebCategoryTooltip'
 import useModals from '../../components/Modals/hooks/useModals'
@@ -47,6 +47,7 @@ import { modals } from '../../components/Modals'
 import CelebSearchResult from './CelebSearchResult/CelebSearchResult'
 import useInterestCelebQuery from '../../apis/user/hooks/useInterestCelebQuery'
 import { colorList } from '../../config/constant'
+import { useLocation } from 'react-router-dom'
 
 export const selectInterestCelebState = atom<Array<ISelectCelebResult>>({
   key: atomKeys.selectedInterestCeleb,
@@ -80,6 +81,8 @@ export const selectInterestCelebState = atom<Array<ISelectCelebResult>>({
 })
 
 const SelectInterestCeleb = () => {
+  const { pathname } = useLocation()
+
   const {
     postInterestCeleb: { mutate: mutateByPostInterestCeleb },
   } = useInterestCelebQuery()
@@ -242,6 +245,35 @@ const SelectInterestCeleb = () => {
       observer.disconnect()
     }
   }, [])
+
+  const {
+    getInterestCeleb: { data: interestCelebList },
+  } = useInterestCelebQuery()
+  useEffect(() => {
+    if (pathname === '/settings/select-celeb') {
+      console.log(interestCelebList)
+      setSelectedInterestCeleb((prevInterestCelebs) => {
+        const updatedInterestCelebs = prevInterestCelebs.map((category) => {
+          if (interestCelebList) {
+            const updatedCelebList = interestCelebList
+              .filter((celeb) => category.categoryName === celeb.celebCategory)
+              .map((celeb) => ({
+                celebId: celeb.id,
+                celebName: celeb.celebNameKr,
+              }))
+
+            return {
+              ...category,
+              celebList: [...category.celebList, ...updatedCelebList],
+            }
+          } else {
+            return category
+          }
+        })
+        return updatedInterestCelebs
+      })
+    }
+  }, [pathname, interestCelebList])
 
   return (
     <SelectCelebContainer>

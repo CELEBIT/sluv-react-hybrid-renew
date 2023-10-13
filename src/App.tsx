@@ -166,6 +166,7 @@ const App = () => {
             <Route path='/settings' element={<Settings />} />
             <Route path='/settings/privacy' element={<Privacy />} />
             <Route path='/settings/terms' element={<TermsOfUse />} />
+            <Route path='/settings/select-celeb' element={<SelectInterestCeleb />} />
           </Routes>
         </Suspense>
         <Modals />

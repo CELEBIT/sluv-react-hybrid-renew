@@ -5,7 +5,7 @@ import { queryKeys } from '../../../config/queryKeys'
 import { RecommendItemResult } from '../itemService.type'
 import { SearchQuestionResult } from '../../search/searchService'
 
-const useRecentViewItemQuery = () => {
+const useRecentViewItemQuery = (size?: number) => {
   const item = new ItemService()
 
   const getRecentViewItem = (): UseInfiniteQueryResult<
@@ -14,7 +14,7 @@ const useRecentViewItemQuery = () => {
   > => {
     return useInfiniteQuery(
       queryKeys.recentViewItem,
-      ({ pageParam = 0 }) => item.getRecentViewItem(pageParam),
+      ({ pageParam = 0 }) => item.getRecentViewItem(pageParam, size),
       {
         getNextPageParam: (lastPage) => {
           if (lastPage?.hasNext) return lastPage.page + 1

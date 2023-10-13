@@ -13,7 +13,7 @@ const LikeCommunityQuestion = () => {
   console.log(tempData)
   return (
     <>
-      {tempData ? (
+      {tempData && tempData.length > 0 ? (
         <QuestionListWrapper>
           {tempData?.map((each, index) => {
             return (
