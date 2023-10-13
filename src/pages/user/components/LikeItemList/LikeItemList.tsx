@@ -9,6 +9,7 @@ import useUserMypageQuery from '../../../../apis/user/hooks/useUserMypageQuery'
 const LikeItemList = () => {
   const { getUserLikeItem } = useUserMypageQuery()
   const { data } = getUserLikeItem()
+  console.log(data)
   const tempData = data?.pages[0].content
   return (
     <UserItemListContainer>
