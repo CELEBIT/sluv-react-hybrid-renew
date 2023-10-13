@@ -34,7 +34,6 @@ export const ContentContainer = styled.div`
   height: 100%;
   width: 100%;
   padding-bottom: 3.75rem;
-  border: 1px solid red;
   ::-webkit-scrollbar {
     display: none;
   }
