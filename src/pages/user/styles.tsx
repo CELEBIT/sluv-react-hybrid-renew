@@ -30,10 +30,11 @@ export const HeaderWrapper = styled.header`
 export const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  overflow-y: auto; /* Enable scrolling for the content */
+  overflow-y: scroll; /* Enable scrolling for the content */
   height: 100%;
   width: 100%;
   padding-bottom: 3.75rem;
+  border: 1px solid red;
   ::-webkit-scrollbar {
     display: none;
   }

@@ -11,7 +11,7 @@ const RecentViewItem = () => {
   const tempData = data?.pages[0].content
   return (
     <>
-      {tempData ? (
+      {tempData && tempData.length > 0 ? (
         <ItemListGrid data={tempData} canChangeView={true}></ItemListGrid>
       ) : (
         <EmptyStateWrapper>
