@@ -18,7 +18,6 @@ export default class ItemService {
   itemUrl: string
   tempItemUrl: string
   hashtagUrl: string
-  recentItemUrl: string
   scrapItemUrl: string
   hotItemUrl: string
 
@@ -26,7 +25,6 @@ export default class ItemService {
     this.itemUrl = '/app/item'
     this.tempItemUrl = '/app/item/temp'
     this.hashtagUrl = '/app/item/hashtag'
-    this.recentItemUrl = '/app/item/recent'
     this.scrapItemUrl = '/app/item/scrap'
     this.hotItemUrl = '/app/item/hot'
   }
@@ -128,13 +126,13 @@ export default class ItemService {
   }
 
   // 최근 본 아이템
-  async getRecentViewItem(page: number) {
+  async getRecentViewItem(page: number, size?: number) {
     const data: ResponseType<GetPaginationResult<ItemResult>> = await request.get(
-      `${this.recentItemUrl}`,
+      `${this.itemUrl}/recent`,
       {
         params: {
           page,
-          size: 21,
+          size: { size },
         },
       },
     )
@@ -236,19 +234,6 @@ export default class ItemService {
   //
   async getHowAboutItem() {
     const data: ResponseType<Array<ItemResult>> = await request.get(`${this.itemUrl}/howabout`)
-    return data.result
-  }
-
-  // 현재 유저가 최근 본 아이템
-  async getUserRecentViewItem(page: number) {
-    const data: ResponseType<GetPaginationResult<RecommendItemResult>> = await request.get(
-      `${this.itemUrl}/recent`,
-      {
-        params: {
-          page,
-        },
-      },
-    )
     return data.result
   }
 }

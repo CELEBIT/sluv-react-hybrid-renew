@@ -4,7 +4,7 @@ import ItemListGrid from '../../../../components/ItemListGrid/ItemListGrid'
 import useUserItemQuery from '../../../../apis/user/hooks/useUserItemQuery'
 import { useParams } from 'react-router-dom'
 import { UserItemListContainer } from './styles'
-import { ContentContainer, HeaderWrapper } from '../../styles'
+import { ContentContainer, HeaderWrapper, PageContainer } from '../../styles'
 import Header from '../../../../components/Header/Header'
 import { EmptyStateWrapper } from '../FollowList/Follower/Follower'
 import EmptyState from '../../../../components/EmptyState'
@@ -24,12 +24,12 @@ const UserItem = () => {
     const { data } = getUserUploadItem()
     const tempData = data?.pages[0].content
     return (
-      <UserItemListContainer>
+      <PageContainer>
         <HeaderWrapper>
           <Header title='아이템' isModalHeader={false} hasArrow={true}></Header>
         </HeaderWrapper>
         <ContentContainer>
-          {tempData ? (
+          {tempData && tempData.length > 0 ? (
             <ItemListGrid data={tempData} canChangeView={true}></ItemListGrid>
           ) : (
             <EmptyStateWrapper>
@@ -47,7 +47,7 @@ const UserItem = () => {
             </EmptyStateWrapper>
           )}
         </ContentContainer>
-      </UserItemListContainer>
+      </PageContainer>
     )
   }
 }

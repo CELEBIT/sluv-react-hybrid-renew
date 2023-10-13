@@ -34,7 +34,7 @@ const ItemListGrid = ({
   const navigate = useNavigate()
   return (
     <ItemListGridContainer>
-      {canChangeView && (
+      {canChangeView && data && data?.length > 0 && (
         <ViewHeader>
           <ViewHeaderLeft>전체 {data?.length}</ViewHeaderLeft>
           {viewSize === 'small' ? (
@@ -51,7 +51,7 @@ const ItemListGrid = ({
         </ViewHeader>
       )}
       <ItemListWrapper>
-        {data ? (
+        {data && data.length > 0 ? (
           <>
             {data?.map((item) => (
               <>
