@@ -4,11 +4,12 @@ import { CommunityContainer, QuestionListWrapper } from './sytles'
 import { HeaderWrapper } from '../item/addInfo/styles'
 import Header from '../../components/Header/Header'
 import { ReactComponent as Search } from '../../assets/search_24.svg'
-import ScrollTabs from '../../components/Tabs/ScrollTabs/ScrollTabs'
+import { ReactComponent as NoticeOn } from '../../assets/bell_on_24.svg'
+import { ReactComponent as NoticeOff } from '../../assets/bell_off_24.svg'
 import useQuestionListQuery from '../../apis/question/hooks/useQuestionListQuery'
-import QuestionListItem from '../../components/QuestionListItem/QuestionListItem'
-import { Line } from './detail/styles'
 import WriteCommunityItemButton from './components/WriteCommunityItemButton/WriteCommunityItemButton'
+import BannerItemsList from './components/BannerItems/BannerItemsList'
+import Menu from './components/Menu/Menu'
 
 const Community = () => {
   const navigate = useNavigate()
@@ -33,23 +34,11 @@ const Community = () => {
       <HeaderWrapper>
         <Header isModalHeader={false} title='커뮤니티' hasArrow={false}>
           <Search fill='black' onClick={() => navigate('/search')}></Search>
+          <NoticeOff></NoticeOff>
         </Header>
       </HeaderWrapper>
-      <ScrollTabs
-        tabList={tabList}
-        selectedTab={selectedTab}
-        setSelectedTab={setSelectedTab}
-      ></ScrollTabs>
-      <QuestionListWrapper>
-        {tempData?.map((each, index) => {
-          return (
-            <>
-              <QuestionListItem key={each.id} item={each}></QuestionListItem>
-              {index !== tempData.length - 1 && <Line></Line>}
-            </>
-          )
-        })}
-      </QuestionListWrapper>
+      <BannerItemsList></BannerItemsList>
+      <Menu></Menu>
       <WriteCommunityItemButton></WriteCommunityItemButton>
     </CommunityContainer>
   )
