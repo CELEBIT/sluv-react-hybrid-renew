@@ -1,7 +1,7 @@
 import { CommunityItem } from '../../recoil/communityInfo'
 import request from '../core'
 import { GetPaginationResult, ResponseType } from '../core/type'
-import { QuestionResult } from './questionService.type'
+import { CommunityBannerItem, QuestionResult } from './questionService.type'
 import { SearchQuestionResult } from '../search/searchService'
 
 export interface questionUpload {
@@ -107,5 +107,13 @@ export default class QuestionService {
     const data: ResponseType = await request.delete(`${this.questionUrl}/${questionId}`)
     console.log('질문게시글삭제', data)
     return data
+  }
+
+  // 커뮤니티 홈 배너 아이템
+  async getCommunityBannerItems() {
+    const data: ResponseType<Array<CommunityBannerItem>> = await request.get(
+      `${this.questionUrl}/dailyhot`,
+    )
+    return data.result
   }
 }
