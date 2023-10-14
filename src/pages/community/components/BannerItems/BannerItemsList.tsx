@@ -30,10 +30,11 @@ export default BannerItemsList
 export const BannerItemsListContainer = styled.div`
   display: flex;
   flex-direction: row;
+  flex-shrink: 0;
   overflow-x: scroll;
   gap: 0.6875rem;
   margin-top: 1rem;
-  padding: 0 1.25rem;
+  padding: 0 1.25rem 1.375rem 1.25rem;
   width: 100%;
   ::-webkit-scrollbar {
     display: none;

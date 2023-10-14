@@ -30,7 +30,6 @@ const QuestionListItem = ({ item, detail }: QuestionItemProps) => {
   const navigate = useNavigate()
   const [color, setColor] = useState<string>('')
   const [questionType, setQuestionType] = useState<string>('')
-  console.log('item', item.user)
 
   useEffect(() => {
     if (item.qtype === 'Recommend') {
@@ -77,7 +76,10 @@ const QuestionListItem = ({ item, detail }: QuestionItemProps) => {
               </>
             )}
           </InfoTop>
-          <span className='questionTitle'>{item.title}</span>
+          <span className='questionTitle'>
+            {item.title}
+            {item.content}
+          </span>
         </RecommendInfo>
 
         {item.qtype !== 'Buy' ? (
