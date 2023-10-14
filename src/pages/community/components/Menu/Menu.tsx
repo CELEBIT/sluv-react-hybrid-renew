@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { ReactComponent as FindMenu } from '../../../../assets/Find_Menu.svg'
 import { ReactComponent as BuyMenu } from '../../../../assets/Buy_Menu.svg'
 import { ReactComponent as HowAboutMenu } from '../../../../assets/How_Menu.svg'
@@ -11,7 +11,8 @@ const Menu = () => {
     <MenuContainer>
       <EachMenu>
         <FindMenu></FindMenu>
-        <MenuText>찾아주세요</MenuText>
+
+        {<MenuText>찾아주세요</MenuText>}
       </EachMenu>
       <EachMenu>
         <BuyMenu></BuyMenu>
@@ -34,10 +35,12 @@ export default Menu
 const MenuContainer = styled.div`
   display: flex;
   position: sticky;
-  top: 0.625rem;
+  top: 0;
   justify-content: space-evenly;
   gap: 0.6875rem;
-  padding: 2rem 1.25rem;
+  padding: 0.625rem 1.25rem;
+  margin-bottom: 1.5rem;
+  background-color: white;
   border-radius: 0 0 1.875rem 1.875rem;
   box-shadow: 0px 10px 10px 0px rgba(136, 137, 157, 0.15);
 `
