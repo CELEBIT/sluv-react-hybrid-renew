@@ -9,7 +9,6 @@ import SelectItemOrPhoto from './components/SelectItemOrPhoto'
 
 import Loading from './components/Loading'
 import { bridgeProxyAdapter } from './utils/bridge'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 bridgeProxyAdapter()
 
@@ -27,7 +26,7 @@ const Closet = React.lazy(() => import('./pages/closet'))
 const User = React.lazy(() => import('./pages/user'))
 
 // 관심셀럽 선택 페이지
-const SelectCeleb = React.lazy(() => import('./pages/selectInterestCeleb'))
+const SelectInterestCeleb = React.lazy(() => import('./pages/selectInterestCeleb'))
 const SignupComplete = React.lazy(() => import('./pages/selectInterestCeleb/SignupComplete'))
 
 // 아이템 게시글 작성 관련 페이지
@@ -44,8 +43,8 @@ const EditRequest = React.lazy(() => import('./pages/item/editRequest'))
 const RequestReason = React.lazy(() => import('./pages/item/editRequest/requestReason'))
 
 // 커뮤니티 세부 페이지
-const FindRequest = React.lazy(() => import('./pages/community/findRequest'))
-const Question = React.lazy(() => import('./pages/community/question'))
+const FindRequest = React.lazy(() => import('./pages/community/CreateCommunity/findRequest'))
+const Question = React.lazy(() => import('./pages/community/CreateCommunity/question'))
 const CommunityDetail = React.lazy(() => import('./pages/community/detail/CommunityDetail'))
 const CommentItemPhoto = React.lazy(() => import('./components/SelectItemOrPhoto/CommentItemPhoto'))
 const CommentUpload = React.lazy(() => import('./pages/community/detail/components/CommentUpload'))
@@ -55,10 +54,30 @@ const AddSubComment = React.lazy(
 // 검색
 const Search = React.lazy(() => import('./pages/search'))
 const SearchResult = React.lazy(() => import('./pages/search/SearchResult'))
-
 // 옷장
 
 const ClosetCreatePage = React.lazy(() => import('./pages/closet/create'))
+
+// 마이페이지
+const FollowList = React.lazy(() => import('./pages/user/components/FollowList/FollowList'))
+const UserItem = React.lazy(() => import('./pages/user/components/UserItem/UserItem'))
+const UserCommunity = React.lazy(
+  () => import('./pages/user/components/UserCommunity/UserCommunity'),
+)
+const LikeItem = React.lazy(() => import('./pages/user/components/LikeItemList/LikeItemList'))
+const LikeCommunity = React.lazy(
+  () => import('./pages/user/components/LikeCommunityList/LIkeCommunityList'),
+)
+const RecentView = React.lazy(() => import('./pages/user/components/RecentView/RecentView'))
+const Help = React.lazy(() => import('./pages/user/components/Help/Help'))
+const Notice = React.lazy(() => import('./pages/user/components/Notice/Notice'))
+const NoticeDetail = React.lazy(
+  () => import('./pages/user/components/Notice/NoticeDetail/NoticeDetail'),
+)
+
+const Settings = React.lazy(() => import('./pages/settings/index'))
+const Privacy = React.lazy(() => import('./pages/settings/components/Privacy/Privacy'))
+const TermsOfUse = React.lazy(() => import('./pages/settings/components/TermsOfUse/TermsOfUse'))
 
 const App = () => {
   useLayoutEffect(() => {
@@ -92,7 +111,7 @@ const App = () => {
             {/* 홈 */}
             <Route path='/' element={<Home />} />
             {/* 홈 */}
-            <Route path='/select-celeb' element={<SelectCeleb />} />
+            <Route path='/select-celeb' element={<SelectInterestCeleb />} />
             <Route path='/select-celeb/complete' element={<SignupComplete />} />
             {/* 커뮤니티 */}
             <Route path='/community' element={<Community />} />
@@ -128,18 +147,34 @@ const App = () => {
             <Route path='/search/result' element={<SearchResult />} />
             {/* 옷장 */}
             <Route path='/closet' element={<Closet />} />
-            <Route path={'/closet/create'} element={<ClosetCreatePage />} />
-
             {/* 마이페이지 */}
             <Route path='/user' element={<User />} />
             <Route path='/user/:id' element={<User />} />
-            <Route path='/user/select-celeb' element={<SelectCeleb />} />
+            <Route path='/user/select-celeb' element={<SelectInterestCeleb />} />
+            <Route path='/user/followlist' element={<FollowList />} />
+            <Route path='/user/:id/followlist' element={<FollowList />} />
+            {/* 마이페이지 나의 게시글 */}
+            <Route path='/user/item' element={<UserItem />} />
+            <Route path='/user/community' element={<UserCommunity />} />
+            {/* 마이페이지 나의 활동 */}
+            <Route path='/user/recent-view' element={<RecentView />} />
+            <Route path='/user/like/item' element={<LikeItem />} />
+            <Route path='/user/like/community' element={<LikeCommunity />} />
+            {/* 마이페이지 도움 */}
+            <Route path='/help' element={<Help />} />
+            <Route path='/help/detail' element={<User />} />
+            <Route path='/notice' element={<Notice />} />
+            <Route path='/notice/:id' element={<NoticeDetail />} />
+            {/* 마이페이지 설정 */}
+            <Route path='/settings' element={<Settings />} />
+            <Route path='/settings/privacy' element={<Privacy />} />
+            <Route path='/settings/terms' element={<TermsOfUse />} />
+            <Route path='/settings/select-celeb' element={<SelectInterestCeleb />} />
           </Routes>
         </Suspense>
         <Modals />
         <BottomNav />
       </BrowserRouter>
-      <ReactQueryDevtools initialIsOpen={false} />
     </S.Root>
   )
 }

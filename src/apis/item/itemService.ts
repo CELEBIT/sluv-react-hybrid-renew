@@ -1,6 +1,7 @@
 import { IHashTag } from '../../recoil/itemInfo'
 import request from '../core'
 import { GetPaginationResult, ResponseType } from '../core/type'
+import { SearchQuestionResult } from '../search/searchService'
 import {
   HashtagContent,
   ItemDetailResult,
@@ -17,7 +18,6 @@ export default class ItemService {
   itemUrl: string
   tempItemUrl: string
   hashtagUrl: string
-  recentItemUrl: string
   scrapItemUrl: string
   hotItemUrl: string
 
@@ -25,7 +25,6 @@ export default class ItemService {
     this.itemUrl = '/app/item'
     this.tempItemUrl = '/app/item/temp'
     this.hashtagUrl = '/app/item/hashtag'
-    this.recentItemUrl = '/app/item/recent'
     this.scrapItemUrl = '/app/item/scrap'
     this.hotItemUrl = '/app/item/hot'
   }
@@ -127,13 +126,13 @@ export default class ItemService {
   }
 
   // 최근 본 아이템
-  async getRecentViewItem(page: number) {
+  async getRecentViewItem(page: number, size?: number) {
     const data: ResponseType<GetPaginationResult<ItemResult>> = await request.get(
-      `${this.recentItemUrl}`,
+      `${this.itemUrl}/recent`,
       {
         params: {
           page,
-          size: 21,
+          size: { size },
         },
       },
     )

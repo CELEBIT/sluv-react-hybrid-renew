@@ -23,6 +23,14 @@ export interface SearchQuestionResult {
   itemImgList: Array<QuestionImg> | null
   categoryName: Array<string> | null
   qtype: string
+  user?: {
+    id: number
+    nickName: string
+    profileImgUrl: string
+  }
+  likeNum?: number
+  viewNum?: number
+  commentNum?: number
 }
 export interface SearchUserResult {
   id: number

@@ -58,7 +58,7 @@ export const CategoryContentWrapper = styled.div`
   height: 100%;
 `
 export const CategoryTitle = styled.span`
-  padding: 1rem 0.25rem;
+  padding: 0 0.25rem 1rem 0.25rem;
   ${Pretendard({
     size: 15,
     weight: Common.bold.regular,
@@ -73,11 +73,10 @@ export const SideBarWrapper = styled.div<{ size: string }>`
   right: 0;
   top: 13.375rem;
   justify-content: space-around;
-  height: 18.375rem;
   gap: 1.5rem;
   transition: 0.3s ease-in-out;
   background-color: white;
-  padding: 1.1875rem 1rem 1.1875rem 12px;
+  padding: 1.1875rem 1rem 1.1875rem 0.75rem;
   border-radius: 1.25rem 0 0 1.25rem;
   box-shadow: -2px 2px 24px 0px #c7ced480;
   z-index: 100;
@@ -134,8 +133,7 @@ export const CelebListWrapper = styled.div<{ open?: boolean }>`
   flex-direction: row;
   flex-wrap: wrap;
   /* flex-shrink: 0; */
-  gap: 1rem 12px;
-  padding-bottom: 1rem;
+  gap: 1rem 0.75rem;
   width: 100%;
   overflow: hidden;
   transition: 0.2s ease-in;

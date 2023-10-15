@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import { QuestionChangeModalProps } from '../TwoButtonModal/QuestionChangeModal'
 import { CommunityMenu } from '../../config/communityMenu'
 import ClosetBoxBottomSheetModal from '../BottomSheetModal/ClosetBoxBottomSheetModal'
+import { userIdProps } from '../BottomSheetModal/UserInterestCelebModal'
 
 const AskRecentPostWritingModal = loadable(
   () => import('../TwoButtonModal/AskRecentPostWritingModal'),
@@ -48,9 +49,13 @@ const QuestionEditDeleteModal = loadable(
 const DeleteTempItemModal = loadable(() => import('../TwoButtonModal/DeleteTempItemModal'))
 const DeleteQuestionModal = loadable(() => import('../TwoButtonModal/DeleteQuestionModal'))
 
+// 관심셀럽 선택 모달
 const SelectedInterestCelebModal = loadable(
   () => import('../BottomSheetModal/SelectedInterestCelebModal'),
 )
+
+const UserInterestCelebModal = loadable(() => import('../BottomSheetModal/UserInterestCelebModal'))
+
 // 모달 관리 객체
 export const modals = {
   AskRecentPostWritingModal: AskRecentPostWritingModal as FunctionComponent<
@@ -115,6 +120,7 @@ export const modals = {
   ClosetBoxSelectCoverModal: ClosetBoxBottomSheetModal as FunctionComponent<
     ComponentProps<typeof ClosetBoxBottomSheetModal>
   >,
+  UserInterestCelebModal: UserInterestCelebModal as FunctionComponent<userIdProps>,
 }
 
 const Modals = () => {

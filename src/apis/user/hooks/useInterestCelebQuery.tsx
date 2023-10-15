@@ -10,7 +10,20 @@ const useInterestCelebQuery = () => {
   const currentRoute = location.pathname
   const user = new UserService()
 
+  // 현재 유저의 관심셀럽 리스트
   const getInterestCeleb = useQuery(queryKeys.interestCeleb, () => user.getInterestCeleb())
+  const getInterestCelebWithCategory = useQuery(queryKeys.interestCelebWithCategory, () =>
+    user.getInterestCelebWithCategory(),
+  )
+
+  // 다른 유저의 관심셀럽 리스트
+  const getOtherUserInterestCeleb = (userId: number) =>
+    useQuery(queryKeys.otherUserInterestCeleb(userId), () => user.getOtherUserInterestCeleb(userId))
+
+  const getOtherUserInterestCelebWithCategory = (userId: number) =>
+    useQuery(queryKeys.otherUserInterestCelebWithCategory(userId), () =>
+      user.getOtherUserInterestCelebWithCategory(userId),
+    )
 
   const postInterestCeleb = useMutation(
     (celebIdList: Array<number>) => user.postInterestCeleb(celebIdList),
@@ -29,7 +42,13 @@ const useInterestCelebQuery = () => {
       },
     },
   )
-  return { getInterestCeleb, postInterestCeleb }
+  return {
+    getInterestCeleb,
+    getInterestCelebWithCategory,
+    getOtherUserInterestCeleb,
+    getOtherUserInterestCelebWithCategory,
+    postInterestCeleb,
+  }
 }
 
 export default useInterestCelebQuery
