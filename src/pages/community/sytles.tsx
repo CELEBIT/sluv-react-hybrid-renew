@@ -9,7 +9,7 @@ export const CommunityPageContainer = styled.div`
   width: 100vw;
   height: 100vh;
   padding-left: 0;
-  /* overflow-y: scroll; */
+  overflow-y: scroll;
   ::-webkit-scrollbar {
     display: none;
   }
@@ -22,4 +22,11 @@ export const QuestionListWrapper = styled.div`
     padding: 0 1.25rem;
     ${Pretendard({ size: 18, weight: Common.bold.semiBold, color: Common.colors.BK })}
   }
+`
+
+export const TabContainer = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 1.25rem 0.75rem 1.25rem;
+  gap: 0.375rem;
 `
