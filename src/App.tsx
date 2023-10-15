@@ -9,6 +9,7 @@ import SelectItemOrPhoto from './components/SelectItemOrPhoto'
 
 import Loading from './components/Loading'
 import { bridgeProxyAdapter } from './utils/bridge'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 bridgeProxyAdapter()
 
@@ -54,6 +55,10 @@ const AddSubComment = React.lazy(
 // 검색
 const Search = React.lazy(() => import('./pages/search'))
 const SearchResult = React.lazy(() => import('./pages/search/SearchResult'))
+
+// 옷장
+
+const ClosetCreatePage = React.lazy(() => import('./pages/closet/create'))
 
 const App = () => {
   useLayoutEffect(() => {
@@ -123,6 +128,8 @@ const App = () => {
             <Route path='/search/result' element={<SearchResult />} />
             {/* 옷장 */}
             <Route path='/closet' element={<Closet />} />
+            <Route path={'/closet/create'} element={<ClosetCreatePage />} />
+
             {/* 마이페이지 */}
             <Route path='/user' element={<User />} />
             <Route path='/user/:id' element={<User />} />
@@ -132,6 +139,7 @@ const App = () => {
         <Modals />
         <BottomNav />
       </BrowserRouter>
+      <ReactQueryDevtools initialIsOpen={false} />
     </S.Root>
   )
 }
