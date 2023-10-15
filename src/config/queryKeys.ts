@@ -41,7 +41,8 @@ export const queryKeys = {
   efficientItem: ['efficientItem'] as const,
   hotCelebItem: (standard: string) => ['hotCelebItem', standard] as const,
   getHotSluver: (celebId?: number) => ['getHotSluver', celebId] as const,
-  getQuestionList: (qtype?: string) => ['getQuestionList', qtype] as const,
+  getQuestionTotalList: ['getQuestionTotalList'] as const,
+  getQuestionHotList: ['getQuestionHotList'] as const,
   deleteQuestion: (questionId?: number) => ['deleteQuestion', questionId] as const,
   getSelectCelebList: ['getSelectCelebList'] as const,
   searchSelectCeleb: (celebName: string) => ['searchSelectCeleb', celebName] as const,
@@ -56,4 +57,5 @@ export const queryKeys = {
   likedComment: ['likedComment'] as const,
   noticeList: ['noticeList'] as const,
   noticeDetail: (noticeId: number) => ['noticeDetail', noticeId] as const,
+  getCommunityBannerItems: ['getCommunityBannerItems'] as const,
 }

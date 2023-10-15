@@ -9,16 +9,16 @@ export interface IVote {
   voteSortOrder: number
 }
 
-const useQuestionListQuery = (qType: string | undefined) => {
+const useQuestionListQuery = () => {
   const question = new QuestionService()
 
-  const getQuestionList = (): UseInfiniteQueryResult<
+  const getQuestionTotalList = (): UseInfiniteQueryResult<
     GetPaginationResult<SearchQuestionResult>,
     any
   > => {
     return useInfiniteQuery(
-      queryKeys.getQuestionList(qType),
-      ({ pageParam = 0 }) => question.getQuestionList(pageParam, qType),
+      queryKeys.getQuestionTotalList,
+      ({ pageParam = 0 }) => question.getQuestionTotalList(pageParam),
       {
         getNextPageParam: (lastPage) => {
           if (lastPage?.hasNext) return lastPage.page + 1
@@ -28,7 +28,23 @@ const useQuestionListQuery = (qType: string | undefined) => {
     )
   }
 
-  return { getQuestionList }
+  const getQuestionHotList = (): UseInfiniteQueryResult<
+    GetPaginationResult<SearchQuestionResult>,
+    any
+  > => {
+    return useInfiniteQuery(
+      queryKeys.getQuestionHotList,
+      ({ pageParam = 0 }) => question.getQuestionHotList(pageParam),
+      {
+        getNextPageParam: (lastPage) => {
+          if (lastPage?.hasNext) return lastPage.page + 1
+          return undefined
+        },
+      },
+    )
+  }
+
+  return { getQuestionTotalList, getQuestionHotList }
 }
 
 export default useQuestionListQuery
