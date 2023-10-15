@@ -39,13 +39,15 @@ import { BottomWrapper } from '../../components/SelectItemOrPhoto/styles'
 import ButtonLarge from '../../components/ButtonLarge/ButtonLarge'
 import { atomKeys } from '../../config/atomKeys'
 import { atom, useRecoilState } from 'recoil'
-import { ISelectCelebResult } from '../../apis/celeb/CelebService'
+import { ISelectCeleb, ISelectCelebResult } from '../../apis/celeb/CelebService'
 import { Common } from '../../components/styles'
 import CelebCategoryTooltip from '../../components/ToolTip/CelebCategoryTooltip/CelebCategoryTooltip'
 import useModals from '../../components/Modals/hooks/useModals'
 import { modals } from '../../components/Modals'
 import CelebSearchResult from './CelebSearchResult/CelebSearchResult'
 import useInterestCelebQuery from '../../apis/user/hooks/useInterestCelebQuery'
+import { colorList } from '../../config/constant'
+import { useLocation } from 'react-router-dom'
 
 export const selectInterestCelebState = atom<Array<ISelectCelebResult>>({
   key: atomKeys.selectedInterestCeleb,
@@ -78,13 +80,16 @@ export const selectInterestCelebState = atom<Array<ISelectCelebResult>>({
   ],
 })
 
-const SelectCeleb = () => {
+const SelectInterestCeleb = () => {
+  const { pathname } = useLocation()
+
   const {
     postInterestCeleb: { mutate: mutateByPostInterestCeleb },
   } = useInterestCelebQuery()
 
-  const { getSelectCelebList } = useSelectCelebQuery()
-  const { data } = getSelectCelebList
+  const {
+    getSelectCelebList: { data },
+  } = useSelectCelebQuery()
 
   const { openModal } = useModals()
 
@@ -93,7 +98,6 @@ const SelectCeleb = () => {
   // 선택한 관심셀럽 확인 및 수정용 Category[{CelebId, CelebName}] List
   const [selectedInterestCeleb, setSelectedInterestCeleb] = useRecoilState(selectInterestCelebState)
   const [sidebarSize, setSidebarSize] = useState<string>('large')
-  const colorList = ['pink', 'orange', 'yellow', 'green', 'blue']
   const sidebarItems = [
     {
       icon: <Singer style={{ flexShrink: 0 }} />,
@@ -241,6 +245,35 @@ const SelectCeleb = () => {
       observer.disconnect()
     }
   }, [])
+
+  const {
+    getInterestCeleb: { data: interestCelebList },
+  } = useInterestCelebQuery()
+  useEffect(() => {
+    if (pathname === '/settings/select-celeb') {
+      console.log(interestCelebList)
+      setSelectedInterestCeleb((prevInterestCelebs) => {
+        const updatedInterestCelebs = prevInterestCelebs.map((category) => {
+          if (interestCelebList) {
+            const updatedCelebList = interestCelebList
+              .filter((celeb) => category.categoryName === celeb.celebCategory)
+              .map((celeb) => ({
+                celebId: celeb.id,
+                celebName: celeb.celebNameKr,
+              }))
+
+            return {
+              ...category,
+              celebList: [...category.celebList, ...updatedCelebList],
+            }
+          } else {
+            return category
+          }
+        })
+        return updatedInterestCelebs
+      })
+    }
+  }, [pathname, interestCelebList])
 
   return (
     <SelectCelebContainer>
@@ -392,4 +425,4 @@ const SelectCeleb = () => {
   )
 }
 
-export default SelectCeleb
+export default SelectInterestCeleb

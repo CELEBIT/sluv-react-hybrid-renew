@@ -1,25 +1,36 @@
 import React, { useEffect, useState } from 'react'
-import { WaitResult } from '../../apis/question/questionService.type'
 import {
   Category,
+  DetailEach,
+  DetailInfo,
+  DetailLeft,
+  DetailNickname,
+  DetailRight,
   EachVotePhoto,
   InfoTop,
   Recommend,
+  RecommendContainer,
   RecommendInfo,
   RecommendPhoto,
   RecommendVote,
 } from '../../pages/community/detail/styles'
 import { useNavigate } from 'react-router-dom'
 import { SearchQuestionResult } from '../../apis/search/searchService'
+import UserImage from '../UserImage/UserImage'
+import { ReactComponent as Like } from '../../assets/Like_18.svg'
+import { ReactComponent as CommentIcon } from '../../assets/comment_18.svg'
+import { ReactComponent as View } from '../../assets/page view_18.svg'
 
 interface QuestionItemProps {
-  item: WaitResult | SearchQuestionResult
+  item: SearchQuestionResult
+  detail?: boolean
 }
 
-const QuestionListItem = ({ item }: QuestionItemProps) => {
+const QuestionListItem = ({ item, detail }: QuestionItemProps) => {
   const navigate = useNavigate()
   const [color, setColor] = useState<string>('')
   const [questionType, setQuestionType] = useState<string>('')
+  console.log('item', item.user)
 
   useEffect(() => {
     if (item.qtype === 'Recommend') {
@@ -44,8 +55,12 @@ const QuestionListItem = ({ item }: QuestionItemProps) => {
   const sortedList = combinedList.sort((a, b) => a.sortOrder - b.sortOrder)
 
   return (
-    <>
-      <Recommend key={item.id} onClick={() => navigate(`/community/detail/${item.id}`)}>
+    <RecommendContainer
+      detail={detail}
+      key={item.id}
+      onClick={() => navigate(`/community/detail/${item.id}`)}
+    >
+      <Recommend>
         <RecommendInfo>
           <InfoTop>
             <Category color={color}>{questionType}</Category>
@@ -55,7 +70,7 @@ const QuestionListItem = ({ item }: QuestionItemProps) => {
                 {item.categoryName.map((category) => {
                   return (
                     <Category color='grey' key={category}>
-                      {item.categoryName}
+                      {category}
                     </Category>
                   )
                 })}
@@ -95,7 +110,30 @@ const QuestionListItem = ({ item }: QuestionItemProps) => {
           </>
         )}
       </Recommend>
-    </>
+      {detail && (
+        <DetailInfo>
+          <DetailLeft>
+            <UserImage size={20} imgUrl={item.user?.profileImgUrl}></UserImage>
+            <DetailNickname>{item.user?.nickName}</DetailNickname>
+          </DetailLeft>
+          <DetailRight>
+            <DetailEach>
+              <Like></Like>
+              {item.likeNum}
+            </DetailEach>
+            <DetailEach>
+              <CommentIcon></CommentIcon>
+              {item.commentNum}
+            </DetailEach>
+
+            <DetailEach>
+              <View></View>
+              {item.viewNum}
+            </DetailEach>
+          </DetailRight>
+        </DetailInfo>
+      )}
+    </RecommendContainer>
   )
 }
 

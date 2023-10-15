@@ -56,18 +56,26 @@ export interface QuestionResult {
   voteStatus: number
 }
 
-export interface WaitResult {
-  id: number
-  title: string
-  content: string
-  celebName: null
-  imgList: Array<WaitImg>
-  itemImgList: Array<WaitImg>
-  categoryName: Array<string>
-  qtype: string
-}
+// export interface WaitResult {
+//   id: number
+//   title: string
+//   content: string
+//   celebName: null
+//   imgList: Array<WaitImg>
+//   itemImgList: Array<WaitImg>
+//   categoryName: Array<string>
+//   qtype: string
+//   user?: {
+//     id: number
+//     nickName: string
+//     profileImgUrl: string
+//   }
+//   likeNum?: number
+//   viewNum?: number
+//   commentNum?: number
+// }
 
-export interface WaitImg {
-  imgUrl: string
-  sortOrder: number
-}
+// export interface WaitImg {
+//   imgUrl: string
+//   sortOrder: number
+// }

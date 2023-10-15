@@ -19,7 +19,7 @@ export const supportDeviceSize = 1080
 export const reset = css`
   html {
     @media all and (max-width: ${GalaxyFold3DeviceSize}px) {
-      font-size: 15px;
+      font-size: 13.75px;
     }
     @media all and (min-width: ${GalaxyFold3DeviceSize +
       1}px) and (max-width: ${GalaxyDeviceSize}px) {
@@ -29,11 +29,11 @@ export const reset = css`
       font-size: 16px;
     }
     @media all and (min-width: ${StandardSize + 1}px) and (max-width: ${iPhone12DeviceSize}px) {
-      font-size: 17px;
+      font-size: 16.5px;
     }
     @media all and (min-width: ${iPhone12DeviceSize +
       1}px) and (max-width: ${iPhone12ProMaxDeviceSize}px) {
-      font-size: 18px;
+      font-size: 17.75px;
     }
     @media all and (min-width: ${iPhone12ProMaxDeviceSize + 1}px) {
       font-size: 19px;

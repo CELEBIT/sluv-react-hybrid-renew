@@ -1,6 +1,7 @@
 import React from 'react'
 import {
   ArrowDim,
+  ArrowRight,
   ArrowWrapper,
   ChipWrapper,
   FollowNumber,
@@ -15,73 +16,126 @@ import {
   UserImg,
   UserInfoWrapper,
 } from './styles'
-import ColorChip from '../../../../components/Chip/ColorChip'
 import { ReactComponent as MoreDown } from '../../../../assets/arrow_down_18.svg'
+import { ReactComponent as DefaultProfile } from '../../../../assets/profile_medium_74.svg'
+import { ReactComponent as DefaultProfileWithAdd } from '../../../../assets/profile_medium_add_74.svg'
 import { Common } from '../../../../components/styles'
+import useModals from '../../../../components/Modals/hooks/useModals'
+import { modals } from '../../../../components/Modals'
+import { useNavigate, useParams } from 'react-router-dom'
+import useUserMypageQuery from '../../../../apis/user/hooks/useUserMypageQuery'
+import { atom, useSetRecoilState } from 'recoil'
+import { atomKeys } from '../../../../config/atomKeys'
+import InterestCelebList from './InterestCelebList/InterestCelebList'
 
-interface UserProfileProps {
-  userInfo: {
-    id: number
-    nickName: string
-    profileImgUrl: string
-  }
-}
+export const selectedFollowTabState = atom<string>({
+  key: atomKeys.selectedFollowTab,
+  default: 'follower',
+})
+
+export const selectedUserName = atom<string>({
+  key: atomKeys.selectedUserName,
+  default: '',
+})
 
 const UserProfile = () => {
-  return (
-    <ProfileContainer>
-      <UserInfoWrapper>
-        <UserImg imgUrl=''></UserImg>
-        <InfoRightWrapper>
-          <InfoTopWrapper>이리노순둥도리</InfoTopWrapper>
-          <InfoBottomWrapper>
-            <FollowWrapper>
-              <FollowText>팔로워</FollowText>
-              <FollowNumber>10</FollowNumber>
-            </FollowWrapper>
-            <Line></Line>
-            <FollowWrapper>
-              <FollowText>팔로잉</FollowText>
-              <FollowNumber>10</FollowNumber>
-            </FollowWrapper>
-          </InfoBottomWrapper>
-        </InfoRightWrapper>
-      </UserInfoWrapper>
-      <InterestCelebWrapper>
-        <ChipWrapper>
-          <ColorChip color='pink' active={true} size='small'>
-            뉴진스
-          </ColorChip>
-          <ColorChip color='pink' active={true} size='small'>
-            정유미A
-          </ColorChip>
-          <ColorChip color='orange' active={true} size='small'>
-            뉴진스
-          </ColorChip>
-          <ColorChip color='orange' active={true} size='small'>
-            뉴진스
-          </ColorChip>
-          <ColorChip color='yellow' active={true} size='small'>
-            뉴진스
-          </ColorChip>
-          <ColorChip color='yellow' active={true} size='small'>
-            뉴진스
-          </ColorChip>
-          <ColorChip color='green' active={true} size='small'>
-            뉴진스
-          </ColorChip>
-          <ColorChip color='blue' active={true} size='small'>
-            뉴진스
-          </ColorChip>
-        </ChipWrapper>
-        <ArrowDim>
-          <ArrowWrapper>
-            <MoreDown stroke={Common.colors.GR600} style={{ flexShrink: 0 }}></MoreDown>
-          </ArrowWrapper>
-        </ArrowDim>
-      </InterestCelebWrapper>
-    </ProfileContainer>
-  )
+  const { id } = useParams()
+  const navigate = useNavigate()
+  const { openModal } = useModals()
+  const showMoreInterestCeleb = () => {
+    openModal(modals.UserInterestCelebModal, { id: Number(id) })
+  }
+
+  const setFollowTab = useSetRecoilState(selectedFollowTabState)
+  const setSelectedUserName = useSetRecoilState(selectedUserName)
+
+  const onClickFollower = (userName: string) => {
+    setFollowTab('follower')
+    setSelectedUserName(userName)
+    navigate('./followlist')
+  }
+  const onClickFollowing = (userName: string) => {
+    setFollowTab('following')
+    setSelectedUserName(userName)
+    navigate('./followlist')
+  }
+  if (!id) {
+    // 현재 유저의 마이페이지
+    const {
+      getMypageInfo: { data },
+    } = useUserMypageQuery()
+    return (
+      <ProfileContainer>
+        <UserInfoWrapper>
+          {data?.userInfo.profileImgUrl ? (
+            <UserImg imgUrl={data?.userInfo.profileImgUrl}></UserImg>
+          ) : (
+            <DefaultProfileWithAdd style={{ flexShrink: 0 }}></DefaultProfileWithAdd>
+          )}
+          <InfoRightWrapper>
+            <InfoTopWrapper>{data?.userInfo.nickName}</InfoTopWrapper>
+            <InfoBottomWrapper>
+              <FollowWrapper onClick={() => onClickFollower(data?.userInfo.nickName || '')}>
+                <FollowText>팔로워</FollowText>
+                <FollowNumber>{data?.followerCount}</FollowNumber>
+              </FollowWrapper>
+              <Line></Line>
+              <FollowWrapper onClick={() => onClickFollowing(data?.userInfo.nickName || '')}>
+                <FollowText>팔로잉</FollowText>
+                <FollowNumber>{data?.followingCount}</FollowNumber>
+              </FollowWrapper>
+            </InfoBottomWrapper>
+          </InfoRightWrapper>
+        </UserInfoWrapper>
+        <InterestCelebWrapper>
+          <InterestCelebList></InterestCelebList>
+          <ArrowDim>
+            <ArrowWrapper onClick={showMoreInterestCeleb}>
+              <MoreDown stroke={Common.colors.GR600} style={{ flexShrink: 0 }}></MoreDown>
+            </ArrowWrapper>
+          </ArrowDim>
+        </InterestCelebWrapper>
+      </ProfileContainer>
+    )
+  } else {
+    // 다른 유저의 마이페이지
+    const { getOtherUserMypageInfo } = useUserMypageQuery()
+    const { data } = getOtherUserMypageInfo(Number(id))
+    return (
+      <ProfileContainer>
+        <UserInfoWrapper>
+          {data?.userInfo.profileImgUrl ? (
+            <UserImg imgUrl={data?.userInfo.profileImgUrl}></UserImg>
+          ) : (
+            <DefaultProfile style={{ flexShrink: 0 }}></DefaultProfile>
+          )}
+          <InfoRightWrapper>
+            <InfoTopWrapper>{data?.userInfo.nickName}</InfoTopWrapper>
+            <InfoBottomWrapper>
+              <FollowWrapper onClick={() => onClickFollower(data?.userInfo.nickName || '')}>
+                <FollowText>팔로워</FollowText>
+                <FollowNumber>{data?.followerCount}</FollowNumber>
+              </FollowWrapper>
+              <Line></Line>
+              <FollowWrapper onClick={() => onClickFollowing(data?.userInfo.nickName || '')}>
+                <FollowText>팔로잉</FollowText>
+                <FollowNumber>{data?.followingCount}</FollowNumber>
+              </FollowWrapper>
+            </InfoBottomWrapper>
+          </InfoRightWrapper>
+        </UserInfoWrapper>
+        <InterestCelebWrapper>
+          <InterestCelebList></InterestCelebList>
+          <ArrowRight>
+            <ArrowDim></ArrowDim>
+            <ArrowWrapper onClick={showMoreInterestCeleb}>
+              <MoreDown stroke={Common.colors.GR600} style={{ flexShrink: 0 }}></MoreDown>
+            </ArrowWrapper>
+          </ArrowRight>
+        </InterestCelebWrapper>
+      </ProfileContainer>
+    )
+  }
 }
 
 export default UserProfile

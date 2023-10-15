@@ -13,6 +13,7 @@ import ColorChip from '../../../components/Chip/ColorChip'
 import { ISelectCelebResult } from '../../../apis/celeb/CelebService'
 import { useRecoilState } from 'recoil'
 import { selectInterestCelebState } from '..'
+import { colorList } from '../../../config/constant'
 
 interface CelebSearchResultProps {
   celebName: string
@@ -35,7 +36,6 @@ const CelebSearchResult = ({ celebName }: CelebSearchResultProps) => {
   }
   const [selectedInterestCeleb, setSelectedInterestCeleb] = useRecoilState(selectInterestCelebState)
   const celebIds = getSelectedCelebIds(selectedInterestCeleb)
-  const colorList = ['pink', 'orange', 'yellow', 'green', 'blue']
   const handleColorChipClick = (
     categoryId: number,
     celebId: number,
