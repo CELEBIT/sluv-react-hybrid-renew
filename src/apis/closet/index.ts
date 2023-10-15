@@ -1,13 +1,10 @@
 import request from '../core'
 import { ResponseType } from '../core/type'
-export const ClosetService = {}
+import { ClosetBoxModel } from './model'
 
 export interface GetClosetListResult {
-  name: string
-  coverImgUrl: string
-  closetStatus: 'PUBLIC' | 'PRIVATE'
-  color: string
-  itemNum: number
+  closetCount: number
+  closetList: ClosetBoxModel[]
 }
 
 const BASE_PATH = '/app/closet'
@@ -15,8 +12,6 @@ const BASE_PATH = '/app/closet'
 /**
  *  GET /app/closet/list
  */
-export const getClosetList = async () => {
-  const res = await request.get<ResponseType<GetClosetListResult[]>>(`${BASE_PATH}/list`)
-
-  return res.data
+export const getClosetList = async (): Promise<ResponseType<GetClosetListResult>> => {
+  return await request.get(`${BASE_PATH}/list`)
 }
