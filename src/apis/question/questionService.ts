@@ -78,14 +78,27 @@ export default class QuestionService {
     return data
   }
 
-  // 커뮤니티 아이템 검색(qtype으로 구별)
-  async getQuestionList(page: number, qType?: string | undefined) {
+  // 커뮤니티 전체 아이템 검색
+  async getQuestionTotalList(page: number) {
     const data: ResponseType<GetPaginationResult<SearchQuestionResult>> = await request.get(
-      `${this.questionUrl}/list`,
+      `${this.questionUrl}/total`,
       {
         params: {
           page,
-          qType,
+          size: 20,
+        },
+      },
+    )
+    return data.result
+  }
+
+  // 커뮤니티 주간 HOT 아이템 검색
+  async getQuestionHotList(page: number) {
+    const data: ResponseType<GetPaginationResult<SearchQuestionResult>> = await request.get(
+      `${this.questionUrl}/weeklyhot`,
+      {
+        params: {
+          page,
           size: 20,
         },
       },

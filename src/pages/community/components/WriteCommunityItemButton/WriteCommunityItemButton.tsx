@@ -4,11 +4,18 @@ import DropDownMenu from '../../../../components/Header/CommunityHeader/DropDown
 import { Menu } from '../../../../components/Header/CommunityHeader/DropDownMenu/styles'
 import { ReactComponent as Add } from '../../../../assets/add_18.svg'
 import { ReactComponent as Write } from '../../../../assets/writeCommunity_40.svg'
+import { ReactComponent as WriteText } from '../../../../assets/Write_Text.svg'
+import { ReactComponent as WriteIcon } from '../../../../assets/write_community_13.svg'
+
 import { ReactComponent as Close } from '../../../../assets/closeCommunity_40.svg'
 import { useNavigate } from 'react-router-dom'
 import { WriteCommunityItemButtonWrapper } from './styles'
 
-const WriteCommunityItemButton = () => {
+interface WriteButtonProps {
+  isTop: boolean
+}
+
+const WriteCommunityItemButton = ({ isTop }: WriteButtonProps) => {
   const [menuOpen, setMenuOpen] = useState(false)
   const navigate = useNavigate()
   return (
@@ -28,7 +35,13 @@ const WriteCommunityItemButton = () => {
           <Close onClick={() => setMenuOpen(!menuOpen)}></Close>
         </div>
       ) : (
-        <Write onClick={() => setMenuOpen(!menuOpen)}></Write>
+        <>
+          {isTop ? (
+            <WriteText onClick={() => setMenuOpen(!menuOpen)}></WriteText>
+          ) : (
+            <Write onClick={() => setMenuOpen(!menuOpen)}></Write>
+          )}
+        </>
       )}
     </WriteCommunityItemButtonWrapper>
   )

@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { CommunityPageContainer, QuestionListWrapper } from './sytles'
+import { CommunityPageContainer, QuestionListWrapper, TabContainer } from './sytles'
 import { HeaderWrapper } from '../item/addInfo/styles'
 import Header from '../../components/Header/Header'
 import { ReactComponent as Search } from '../../assets/search_24.svg'
@@ -9,25 +9,41 @@ import { ReactComponent as NoticeOff } from '../../assets/bell_off_24.svg'
 import useQuestionListQuery from '../../apis/question/hooks/useQuestionListQuery'
 import WriteCommunityItemButton from './components/WriteCommunityItemButton/WriteCommunityItemButton'
 import BannerItemsList from './components/BannerItems/BannerItemsList'
-import Menu from './components/Menu/Menu'
+import Menu, { EachMenu, MenuContainer, MenuText } from './components/Menu/Menu'
 import QuestionListItem from '../../components/QuestionListItem/QuestionListItem'
 import { Line } from './detail/styles'
 import { ComponentContainer } from '../home/styles'
-import { throttle } from 'lodash'
+import BlackFilter from '../../components/FIlter/BlackFilter'
 
 const Community = () => {
   const navigate = useNavigate()
-  const [selectedTab, setSelectedTab] = useState('Total')
-  const { getQuestionList } = useQuestionListQuery(selectedTab)
-  const { data } = getQuestionList()
-  const tempData = data?.pages[0].content
-  const tabList = [
-    { id: 'Total', tabName: '전체' },
-    { id: 'Find', tabName: '찾아주세요' },
-    { id: 'How', tabName: '이거 어때' },
-    { id: 'Buy', tabName: '이 중에 뭐 살까' },
-    { id: 'Recommend', tabName: '추천해 줘' },
-  ]
+  const [selectedTab, setSelectedTab] = useState('Hot')
+  let data
+  if (selectedTab === 'Hot') {
+    const { getQuestionHotList } = useQuestionListQuery()
+    data = getQuestionHotList()
+  } else {
+    const { getQuestionTotalList } = useQuestionListQuery()
+    data = getQuestionTotalList()
+  }
+  const tempData = data.data?.pages[0].content
+
+  const ComponentContainerRef = useRef<HTMLDivElement>(null)
+  const stickyRef = useRef<HTMLDivElement>(null)
+  const [isStickyAtTop, setIsStickyAtTop] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (stickyRef.current) {
+        const { top } = stickyRef.current.getBoundingClientRect()
+        setIsStickyAtTop(top <= 56)
+      }
+    }
+    ComponentContainerRef.current?.addEventListener('scroll', handleScroll)
+    return () => {
+      ComponentContainerRef.current?.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
 
   return (
     <CommunityPageContainer>
@@ -37,9 +53,17 @@ const Community = () => {
           <NoticeOff></NoticeOff>
         </Header>
       </HeaderWrapper>
-      <ComponentContainer>
+      <ComponentContainer ref={ComponentContainerRef}>
         <BannerItemsList></BannerItemsList>
-        <Menu></Menu>
+        <Menu menuRef={stickyRef} isStickyAtTop={isStickyAtTop}></Menu>
+        <TabContainer>
+          <BlackFilter isSelected={selectedTab === 'Hot'} onClick={() => setSelectedTab('Hot')}>
+            Hot
+          </BlackFilter>
+          <BlackFilter isSelected={selectedTab === 'New'} onClick={() => setSelectedTab('New')}>
+            New
+          </BlackFilter>
+        </TabContainer>
         <QuestionListWrapper>
           {tempData?.map((each, index) => {
             return (
@@ -50,7 +74,7 @@ const Community = () => {
             )
           })}
         </QuestionListWrapper>
-        <WriteCommunityItemButton></WriteCommunityItemButton>
+        <WriteCommunityItemButton isTop={!isStickyAtTop}></WriteCommunityItemButton>
       </ComponentContainer>
     </CommunityPageContainer>
   )
