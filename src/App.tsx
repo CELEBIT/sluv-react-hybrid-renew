@@ -43,8 +43,14 @@ const EditRequest = React.lazy(() => import('./pages/item/editRequest'))
 const RequestReason = React.lazy(() => import('./pages/item/editRequest/requestReason'))
 
 // 커뮤니티 세부 페이지
-const FindRequest = React.lazy(() => import('./pages/community/CreateCommunity/findRequest'))
 const Question = React.lazy(() => import('./pages/community/CreateCommunity/question'))
+const FindHome = React.lazy(() => import('./pages/community/pages/FindHome/FindHome'))
+const HowAboutHome = React.lazy(() => import('./pages/community/pages/HowAboutHome/HowAboutHome'))
+const RecommendHome = React.lazy(
+  () => import('./pages/community/pages/RecommendHome/RecommendHome'),
+)
+const BuyHome = React.lazy(() => import('./pages/community/pages/BuyHome/BuyHome'))
+const FindRequest = React.lazy(() => import('./pages/community/CreateCommunity/findRequest'))
 const CommunityDetail = React.lazy(() => import('./pages/community/detail/CommunityDetail'))
 const CommentItemPhoto = React.lazy(() => import('./components/SelectItemOrPhoto/CommentItemPhoto'))
 const CommentUpload = React.lazy(() => import('./pages/community/detail/components/CommentUpload'))
@@ -112,6 +118,10 @@ const App = () => {
             <Route path='/select-celeb/complete' element={<SignupComplete />} />
             {/* 커뮤니티 */}
             <Route path='/community' element={<Community />} />
+            <Route path='/community/find' element={<FindHome />} />
+            <Route path='/community/howabout' element={<HowAboutHome />} />
+            <Route path='/community/recommend' element={<RecommendHome />} />
+            <Route path='/community/buy' element={<BuyHome />} />
             <Route path='/community/find-request' element={<FindRequest />} />
             <Route path='/community/find-request/edit' element={<FindRequest />} />
             <Route path='/community/question' element={<Question />} />
