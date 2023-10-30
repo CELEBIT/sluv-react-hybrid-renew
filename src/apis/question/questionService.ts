@@ -145,12 +145,12 @@ export default class QuestionService {
     return data.result
   }
   // 이 중에 뭐 살까 홈 아이템 검색
-  async getQuestionBuyList(page: number, celebId?: number) {
+  async getQuestionBuyList(page: number, voteStatus?: string) {
     const data: ResponseType<GetPaginationResult<SearchQuestionResult>> = await request.get(
       `${this.questionUrl}/buy`,
       {
         params: {
-          celebId: celebId,
+          voteStatus: voteStatus,
           page,
           size: 20,
         },
@@ -173,12 +173,12 @@ export default class QuestionService {
     return data.result
   }
   // 추천해줘 홈 아이템 검색
-  async getQuestionRecommendList(page: number, celebId?: number) {
+  async getQuestionRecommendList(page: number, hashtag?: string) {
     const data: ResponseType<GetPaginationResult<SearchQuestionResult>> = await request.get(
       `${this.questionUrl}/recommend`,
       {
         params: {
-          celebId: celebId,
+          hashtag: hashtag,
           page,
           size: 20,
         },

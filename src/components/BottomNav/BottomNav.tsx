@@ -31,8 +31,8 @@ const BottomNav = () => {
         </BottomNavLabel>
       </BottomNavItemLink>
       <BottomNavItemLink key={BOTTOM_NAV_ITEM_DATA[1].path} to={BOTTOM_NAV_ITEM_DATA[1].path}>
-        {pathname === '/community' ? <CommunityActive /> : <Community />}
-        <BottomNavLabel className={pathname === '/community' ? 'active' : ''}>
+        {pathname.includes('/community') ? <CommunityActive /> : <Community />}
+        <BottomNavLabel className={pathname.includes('/community') ? 'active' : ''}>
           {BOTTOM_NAV_ITEM_DATA[1].label}
         </BottomNavLabel>
       </BottomNavItemLink>

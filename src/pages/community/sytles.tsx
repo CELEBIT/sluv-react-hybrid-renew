@@ -27,6 +27,11 @@ export const QuestionListWrapper = styled.div`
 export const TabContainer = styled.div`
   display: flex;
   align-items: center;
+  /* overflow-x: scroll; */
   padding: 1rem 1.25rem 0.75rem 1.25rem;
   gap: 0.375rem;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `
