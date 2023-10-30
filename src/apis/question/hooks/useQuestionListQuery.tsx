@@ -44,7 +44,71 @@ const useQuestionListQuery = () => {
     )
   }
 
-  return { getQuestionTotalList, getQuestionHotList }
+  const getQuestionFindList = (
+    celebId?: number,
+  ): UseInfiniteQueryResult<GetPaginationResult<SearchQuestionResult>, any> => {
+    return useInfiniteQuery(
+      queryKeys.getQuestionFindList(celebId),
+      ({ pageParam = 0 }) => question.getQuestionFindList(pageParam, celebId),
+      {
+        getNextPageParam: (lastPage) => {
+          if (lastPage?.hasNext) return lastPage.page + 1
+          return undefined
+        },
+      },
+    )
+  }
+  const getQuestionHowAboutList = (
+    celebId?: number,
+  ): UseInfiniteQueryResult<GetPaginationResult<SearchQuestionResult>, any> => {
+    return useInfiniteQuery(
+      queryKeys.getQuestionHowAboutList(celebId),
+      ({ pageParam = 0 }) => question.getQuestionHowAboutList(pageParam, celebId),
+      {
+        getNextPageParam: (lastPage) => {
+          if (lastPage?.hasNext) return lastPage.page + 1
+          return undefined
+        },
+      },
+    )
+  }
+  const getQuestionBuyList = (
+    celebId?: number,
+  ): UseInfiniteQueryResult<GetPaginationResult<SearchQuestionResult>, any> => {
+    return useInfiniteQuery(
+      queryKeys.getQuestionBuyList(celebId),
+      ({ pageParam = 0 }) => question.getQuestionBuyList(pageParam, celebId),
+      {
+        getNextPageParam: (lastPage) => {
+          if (lastPage?.hasNext) return lastPage.page + 1
+          return undefined
+        },
+      },
+    )
+  }
+  const getQuestionRecommendList = (
+    celebId?: number,
+  ): UseInfiniteQueryResult<GetPaginationResult<SearchQuestionResult>, any> => {
+    return useInfiniteQuery(
+      queryKeys.getQuestionRecommendList(celebId),
+      ({ pageParam = 0 }) => question.getQuestionRecommendList(pageParam, celebId),
+      {
+        getNextPageParam: (lastPage) => {
+          if (lastPage?.hasNext) return lastPage.page + 1
+          return undefined
+        },
+      },
+    )
+  }
+
+  return {
+    getQuestionTotalList,
+    getQuestionHotList,
+    getQuestionFindList,
+    getQuestionHowAboutList,
+    getQuestionBuyList,
+    getQuestionRecommendList,
+  }
 }
 
 export default useQuestionListQuery
