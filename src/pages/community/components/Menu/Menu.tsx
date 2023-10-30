@@ -9,6 +9,7 @@ import { ReactComponent as BuyMenuSmall } from '../../../../assets/Buy_Menu_Smal
 import { ReactComponent as HowAboutMenuSmall } from '../../../../assets/How_Menu_Small.svg'
 import { ReactComponent as RecommendMenuSmall } from '../../../../assets/Recommend_Menu_Small.svg'
 import { Common, Pretendard } from '../../../../components/styles'
+import { useNavigate } from 'react-router-dom'
 
 interface MenuProps {
   menuRef: React.RefObject<HTMLDivElement>
@@ -16,21 +17,22 @@ interface MenuProps {
 }
 
 const Menu = ({ isStickyAtTop, menuRef }: MenuProps) => {
+  const navigate = useNavigate()
   return (
     <MenuContainer ref={menuRef}>
-      <EachMenu>
+      <EachMenu onClick={() => navigate('./find')}>
         {isStickyAtTop ? <FindMenuSmall></FindMenuSmall> : <FindMenu></FindMenu>}
         {!isStickyAtTop && <MenuText>찾아주세요</MenuText>}
       </EachMenu>
-      <EachMenu>
+      <EachMenu onClick={() => navigate('./buy')}>
         {isStickyAtTop ? <BuyMenuSmall></BuyMenuSmall> : <BuyMenu></BuyMenu>}
         {!isStickyAtTop && <MenuText>이 중에 뭐 살까</MenuText>}
       </EachMenu>
-      <EachMenu>
+      <EachMenu onClick={() => navigate('./howabout')}>
         {isStickyAtTop ? <HowAboutMenuSmall></HowAboutMenuSmall> : <HowAboutMenu></HowAboutMenu>}
         {!isStickyAtTop && <MenuText>이거 어때</MenuText>}
       </EachMenu>
-      <EachMenu>
+      <EachMenu onClick={() => navigate('./recommend')}>
         {isStickyAtTop ? (
           <RecommendMenuSmall></RecommendMenuSmall>
         ) : (
