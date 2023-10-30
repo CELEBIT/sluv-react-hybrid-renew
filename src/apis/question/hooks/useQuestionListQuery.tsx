@@ -73,11 +73,11 @@ const useQuestionListQuery = () => {
     )
   }
   const getQuestionBuyList = (
-    celebId?: number,
+    voteStatus: string,
   ): UseInfiniteQueryResult<GetPaginationResult<SearchQuestionResult>, any> => {
     return useInfiniteQuery(
-      queryKeys.getQuestionBuyList(celebId),
-      ({ pageParam = 0 }) => question.getQuestionBuyList(pageParam, celebId),
+      queryKeys.getQuestionBuyList(voteStatus),
+      ({ pageParam = 0 }) => question.getQuestionBuyList(pageParam, voteStatus),
       {
         getNextPageParam: (lastPage) => {
           if (lastPage?.hasNext) return lastPage.page + 1
@@ -87,11 +87,11 @@ const useQuestionListQuery = () => {
     )
   }
   const getQuestionRecommendList = (
-    celebId?: number,
+    hashtag?: string,
   ): UseInfiniteQueryResult<GetPaginationResult<SearchQuestionResult>, any> => {
     return useInfiniteQuery(
-      queryKeys.getQuestionRecommendList(celebId),
-      ({ pageParam = 0 }) => question.getQuestionRecommendList(pageParam, celebId),
+      queryKeys.getQuestionRecommendList(hashtag),
+      ({ pageParam = 0 }) => question.getQuestionRecommendList(pageParam, hashtag),
       {
         getNextPageParam: (lastPage) => {
           if (lastPage?.hasNext) return lastPage.page + 1

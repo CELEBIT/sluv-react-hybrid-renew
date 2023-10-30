@@ -8,16 +8,16 @@ import WriteCommunityItemButton from '../../components/WriteCommunityItemButton/
 import BlackFilter from '../../../../components/FIlter/BlackFilter'
 import useQuestionListQuery from '../../../../apis/question/hooks/useQuestionListQuery'
 import { Line } from '../../detail/styles'
-import { ReactComponent as BuyHomeBanner } from '../../../../assets/buy_home_bg.svg'
+import { ReactComponent as BuyHomeBanner } from '../../../../assets/CommunityEachBanner/BuyBanner.svg'
 
 const BuyHome = () => {
   const ComponentContainerRef = useRef<HTMLDivElement>(null)
   const stickyRef = useRef<HTMLDivElement>(null)
   const [isStickyAtTop, setIsStickyAtTop] = useState(false)
-  const [selectedTab, setSelectedTab] = useState<string | null>(null)
+  const [selectedTab, setSelectedTab] = useState<string>('전체')
 
   const { getQuestionBuyList } = useQuestionListQuery()
-  const { data } = getQuestionBuyList()
+  const { data } = getQuestionBuyList(selectedTab)
   const tempData = data?.pages[0].content
 
   useEffect(() => {
@@ -39,25 +39,29 @@ const BuyHome = () => {
       <HeaderWrapper>
         <Header
           isModalHeader={false}
-          title={isStickyAtTop ? '찾아주세요' : ''}
+          title={isStickyAtTop ? '이 중에 뭐 살까' : ''}
           hasArrow={true}
         ></Header>
       </HeaderWrapper>
       <ComponentContainer ref={ComponentContainerRef}>
-        <BuyHomeBanner>
-          <span>찾아주세요</span>
-        </BuyHomeBanner>
+        <BuyHomeBanner></BuyHomeBanner>
         <TabContainer ref={stickyRef}>
-          <BlackFilter isSelected={selectedTab === 'Total'} onClick={() => setSelectedTab('Total')}>
+          <BlackFilter isSelected={selectedTab === '전체'} onClick={() => setSelectedTab('전체')}>
             전체
           </BlackFilter>
-          <BlackFilter isSelected={selectedTab === 'New'} onClick={() => setSelectedTab('New')}>
+          <BlackFilter
+            isSelected={selectedTab === '진행 중'}
+            onClick={() => setSelectedTab('진행 중')}
+          >
             진행 중
           </BlackFilter>
-          <BlackFilter isSelected={selectedTab === 'Hot'} onClick={() => setSelectedTab('Hot')}>
+          <BlackFilter
+            isSelected={selectedTab === '종료 임박'}
+            onClick={() => setSelectedTab('종료 임박')}
+          >
             종료 임박
           </BlackFilter>
-          <BlackFilter isSelected={selectedTab === 'New'} onClick={() => setSelectedTab('New')}>
+          <BlackFilter isSelected={selectedTab === '종료'} onClick={() => setSelectedTab('종료')}>
             종료
           </BlackFilter>
         </TabContainer>
