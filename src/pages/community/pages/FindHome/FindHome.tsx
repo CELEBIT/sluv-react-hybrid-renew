@@ -9,15 +9,21 @@ import BlackFilter from '../../../../components/FIlter/BlackFilter'
 import useQuestionListQuery from '../../../../apis/question/hooks/useQuestionListQuery'
 import { Line } from '../../detail/styles'
 import { ReactComponent as FindHomeBanner } from '../../../../assets/CommunityEachBanner/FindBanner.svg'
+import EmptyState from '../../../../components/EmptyState'
+import useInterestCelebQuery from '../../../../apis/user/hooks/useInterestCelebQuery'
 
 const FindHome = () => {
   const ComponentContainerRef = useRef<HTMLDivElement>(null)
   const stickyRef = useRef<HTMLDivElement>(null)
   const [isStickyAtTop, setIsStickyAtTop] = useState(false)
-  const [selectedTab, setSelectedTab] = useState<string>('전체')
+  const [selectedTab, setSelectedTab] = useState<number>(0)
+
+  const { getInterestCeleb } = useInterestCelebQuery()
+  const celebList = getInterestCeleb
+  console.log('celebList', celebList.data)
 
   const { getQuestionFindList } = useQuestionListQuery()
-  const { data } = getQuestionFindList()
+  const { data } = getQuestionFindList(selectedTab ? selectedTab : undefined)
   const tempData = data?.pages[0].content
 
   useEffect(() => {
@@ -44,36 +50,43 @@ const FindHome = () => {
         ></Header>
       </HeaderWrapper>
       <ComponentContainer ref={ComponentContainerRef}>
-        <FindHomeBanner></FindHomeBanner>
+        <FindHomeBanner style={{ flexShrink: 0 }}></FindHomeBanner>
         <TabContainer ref={stickyRef}>
-          <BlackFilter isSelected={selectedTab === '전체'} onClick={() => setSelectedTab('전체')}>
+          <BlackFilter isSelected={selectedTab === 0} onClick={() => setSelectedTab(0)}>
             전체
           </BlackFilter>
-          <BlackFilter
-            isSelected={selectedTab === '진행 중'}
-            onClick={() => setSelectedTab('진행 중')}
-          >
-            진행 중
-          </BlackFilter>
-          <BlackFilter
-            isSelected={selectedTab === '종료 임박'}
-            onClick={() => setSelectedTab('종료 임박')}
-          >
-            종료 임박
-          </BlackFilter>
-          <BlackFilter isSelected={selectedTab === '종료'} onClick={() => setSelectedTab('종료')}>
-            종료
-          </BlackFilter>
-        </TabContainer>
-        <QuestionListWrapper>
-          {tempData?.map((each, index) => {
+          {celebList.data?.map((celeb) => {
             return (
-              <>
-                <QuestionListItem key={each.id} item={each} detail={true}></QuestionListItem>
-                {index !== tempData.length - 1 && <Line></Line>}
-              </>
+              <BlackFilter
+                key={celeb.id}
+                isSelected={selectedTab === celeb.id}
+                onClick={() => setSelectedTab(celeb.id)}
+              >
+                {celeb.celebNameKr}
+              </BlackFilter>
             )
           })}
+        </TabContainer>
+        <QuestionListWrapper>
+          {(tempData?.length ?? 0) > 0 ? (
+            <>
+              {tempData?.map((each, index) => {
+                return (
+                  <>
+                    <QuestionListItem key={each.id} item={each} detail={true}></QuestionListItem>
+                    {index !== tempData.length - 1 && <Line></Line>}
+                  </>
+                )
+              })}
+            </>
+          ) : (
+            <EmptyState
+              icon='comment'
+              title='아직 찾아주세요 글이 없어요'
+              subtitle='궁금한 것을 물어보며
+다양한 의견을 받아보아요.'
+            ></EmptyState>
+          )}
         </QuestionListWrapper>
         <WriteCommunityItemButton isTop={!isStickyAtTop}></WriteCommunityItemButton>
       </ComponentContainer>
