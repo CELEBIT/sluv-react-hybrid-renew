@@ -14,7 +14,10 @@ const BannerItemsList = () => {
             <BannerItem
               key={item.id}
               qtype={item.qtype}
-              imgUrl='https://pbs.twimg.com/media/Flhh_ejakAMHdud?format=jpg&name=medium'
+              imgUrl={
+                item.imgList?.at(0)?.imgUrl ??
+                'https://pbs.twimg.com/media/Flhh_ejakAMHdud?format=jpg&name=medium'
+              }
               title={item.title}
               userImgUrl={item.user.profileImgUrl}
               userName={item.user.nickName}

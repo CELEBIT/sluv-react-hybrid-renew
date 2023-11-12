@@ -86,12 +86,17 @@ const ItemDetail = () => {
   }, [itemId])
 
   const onClickShowMore = () => {
-    openModal(modals.ItemEditRequestModal)
-    setEditReportItemState({
-      itemId: Number(itemId),
-      itemWriterId: data?.writer.id,
-      itemWriterName: data?.writer.nickName,
-    })
+    if (data?.hasMine) {
+      openModal(modals.ItemEditRequestModal)
+    }
+    if (!data?.hasMine) {
+      openModal(modals.ItemEditRequestModal)
+      setEditReportItemState({
+        itemId: Number(itemId),
+        itemWriterId: data?.writer.id,
+        itemWriterName: data?.writer.nickName,
+      })
+    }
   }
 
   const {

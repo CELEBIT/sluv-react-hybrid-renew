@@ -9,6 +9,7 @@ import BlackFilter from '../../../../components/FIlter/BlackFilter'
 import useQuestionListQuery from '../../../../apis/question/hooks/useQuestionListQuery'
 import { Line } from '../../detail/styles'
 import { ReactComponent as HowAboutBanner } from '../../../../assets/CommunityEachBanner/HowAboutBanner.svg'
+import EmptyState from '../../../../components/EmptyState'
 
 const HowAboutHome = () => {
   const ComponentContainerRef = useRef<HTMLDivElement>(null)
@@ -43,16 +44,27 @@ const HowAboutHome = () => {
         ></Header>
       </HeaderWrapper>
       <ComponentContainer ref={ComponentContainerRef}>
-        <HowAboutBanner></HowAboutBanner>
+        <HowAboutBanner style={{ flexShrink: 0 }}></HowAboutBanner>
         <QuestionListWrapper>
-          {tempData?.map((each, index) => {
-            return (
-              <>
-                <QuestionListItem key={each.id} item={each} detail={true}></QuestionListItem>
-                {index !== tempData.length - 1 && <Line></Line>}
-              </>
-            )
-          })}
+          {(tempData?.length ?? 0) > 0 ? (
+            <>
+              {tempData?.map((each, index) => {
+                return (
+                  <>
+                    <QuestionListItem key={each.id} item={each} detail={true}></QuestionListItem>
+                    {index !== tempData.length - 1 && <Line></Line>}
+                  </>
+                )
+              })}
+            </>
+          ) : (
+            <EmptyState
+              icon='comment'
+              title='이거 어때 글이 없어요'
+              subtitle='궁금한 것을 물어보며
+다양한 의견을 받아보아요.'
+            ></EmptyState>
+          )}
         </QuestionListWrapper>
         <WriteCommunityItemButton isTop={!isStickyAtTop}></WriteCommunityItemButton>
       </ComponentContainer>

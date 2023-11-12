@@ -9,17 +9,18 @@ import BlackFilter from '../../../../components/FIlter/BlackFilter'
 import useQuestionListQuery from '../../../../apis/question/hooks/useQuestionListQuery'
 import { Line } from '../../detail/styles'
 import { ReactComponent as RecommendHomeBanner } from '../../../../assets/CommunityEachBanner/RecommendBanner.svg'
+import EmptyState from '../../../../components/EmptyState'
 
 const RecommendItem = () => {
   const ComponentContainerRef = useRef<HTMLDivElement>(null)
   const stickyRef = useRef<HTMLDivElement>(null)
   const [isStickyAtTop, setIsStickyAtTop] = useState(false)
-  const [selectedTab, setSelectedTab] = useState<string>('')
+  const [selectedTab, setSelectedTab] = useState<string | null>(null)
 
   const { getQuestionRecommendList } = useQuestionListQuery()
-  const { data } = getQuestionRecommendList(selectedTab)
+  const { data } = getQuestionRecommendList(selectedTab ? selectedTab : undefined)
   const tempData = data?.pages[0].content
-  console.log(tempData)
+  console.log(tempData, selectedTab)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,9 +46,9 @@ const RecommendItem = () => {
         ></Header>
       </HeaderWrapper>
       <ComponentContainer ref={ComponentContainerRef}>
-        <RecommendHomeBanner></RecommendHomeBanner>
+        <RecommendHomeBanner style={{ flexShrink: 0 }}></RecommendHomeBanner>
         <TabContainer ref={stickyRef}>
-          <BlackFilter isSelected={selectedTab === ''} onClick={() => setSelectedTab('')}>
+          <BlackFilter isSelected={selectedTab === null} onClick={() => setSelectedTab(null)}>
             전체
           </BlackFilter>
           <BlackFilter
@@ -82,14 +83,25 @@ const RecommendItem = () => {
           </BlackFilter>
         </TabContainer>
         <QuestionListWrapper>
-          {tempData?.map((each, index) => {
-            return (
-              <>
-                <QuestionListItem key={each.id} item={each} detail={true}></QuestionListItem>
-                {index !== tempData.length - 1 && <Line></Line>}
-              </>
-            )
-          })}
+          {(tempData?.length ?? 0) > 0 ? (
+            <>
+              {tempData?.map((each, index) => {
+                return (
+                  <>
+                    <QuestionListItem key={each.id} item={each} detail={true}></QuestionListItem>
+                    {index !== tempData.length - 1 && <Line></Line>}
+                  </>
+                )
+              })}
+            </>
+          ) : (
+            <EmptyState
+              icon='comment'
+              title='아직 추천해 줘 글이 없어요'
+              subtitle='궁금한 것을 물어보며
+다양한 의견을 받아보아요.'
+            ></EmptyState>
+          )}
         </QuestionListWrapper>
         <WriteCommunityItemButton isTop={!isStickyAtTop}></WriteCommunityItemButton>
       </ComponentContainer>

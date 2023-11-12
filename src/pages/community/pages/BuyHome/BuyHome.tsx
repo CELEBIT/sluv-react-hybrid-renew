@@ -9,6 +9,8 @@ import BlackFilter from '../../../../components/FIlter/BlackFilter'
 import useQuestionListQuery from '../../../../apis/question/hooks/useQuestionListQuery'
 import { Line } from '../../detail/styles'
 import { ReactComponent as BuyHomeBanner } from '../../../../assets/CommunityEachBanner/BuyBanner.svg'
+import EmptyState from '../../../../components/EmptyState'
+import { EmptyStateWrapper } from '../../../user/components/FollowList/Follower/Follower'
 
 const BuyHome = () => {
   const ComponentContainerRef = useRef<HTMLDivElement>(null)
@@ -44,7 +46,7 @@ const BuyHome = () => {
         ></Header>
       </HeaderWrapper>
       <ComponentContainer ref={ComponentContainerRef}>
-        <BuyHomeBanner></BuyHomeBanner>
+        <BuyHomeBanner style={{ flexShrink: 0 }}></BuyHomeBanner>
         <TabContainer ref={stickyRef}>
           <BlackFilter isSelected={selectedTab === '전체'} onClick={() => setSelectedTab('전체')}>
             전체
@@ -65,16 +67,31 @@ const BuyHome = () => {
             종료
           </BlackFilter>
         </TabContainer>
-        <QuestionListWrapper>
-          {tempData?.map((each, index) => {
-            return (
-              <>
-                <QuestionListItem key={each.id} item={each} detail={true}></QuestionListItem>
-                {index !== tempData.length - 1 && <Line></Line>}
-              </>
-            )
-          })}
-        </QuestionListWrapper>
+
+        {(tempData?.length ?? 0) > 0 ? (
+          <QuestionListWrapper>
+            {tempData?.map((each, index) => {
+              return (
+                <>
+                  <QuestionListItem key={each.id} item={each} detail={true}></QuestionListItem>
+                  {index !== tempData.length - 1 && <Line></Line>}
+                </>
+              )
+            })}
+          </QuestionListWrapper>
+        ) : (
+          <QuestionListWrapper>
+            <EmptyStateWrapper>
+              <EmptyState
+                icon='comment'
+                title='아직 이 중에 뭐 살까 글이 없어요'
+                subtitle='궁금한 것을 물어보며
+다양한 의견을 받아보아요.'
+              ></EmptyState>
+            </EmptyStateWrapper>
+          </QuestionListWrapper>
+        )}
+
         <WriteCommunityItemButton isTop={!isStickyAtTop}></WriteCommunityItemButton>
       </ComponentContainer>
     </CommunityPageContainer>
