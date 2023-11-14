@@ -129,4 +129,61 @@ export default class QuestionService {
     )
     return data.result
   }
+
+  // 찾아주세요 홈 아이템 검색
+  async getQuestionFindList(page: number, celebId?: number) {
+    const data: ResponseType<GetPaginationResult<SearchQuestionResult>> = await request.get(
+      `${this.questionUrl}/find`,
+      {
+        params: {
+          celebId: celebId,
+          page,
+          size: 20,
+        },
+      },
+    )
+    return data.result
+  }
+  // 이 중에 뭐 살까 홈 아이템 검색
+  async getQuestionBuyList(page: number, celebId?: number) {
+    const data: ResponseType<GetPaginationResult<SearchQuestionResult>> = await request.get(
+      `${this.questionUrl}/buy`,
+      {
+        params: {
+          celebId: celebId,
+          page,
+          size: 20,
+        },
+      },
+    )
+    return data.result
+  }
+  // 이거 어때 홈 아이템 검색
+  async getQuestionHowAboutList(page: number, celebId?: number) {
+    const data: ResponseType<GetPaginationResult<SearchQuestionResult>> = await request.get(
+      `${this.questionUrl}/howabout`,
+      {
+        params: {
+          celebId: celebId,
+          page,
+          size: 20,
+        },
+      },
+    )
+    return data.result
+  }
+  // 추천해줘 홈 아이템 검색
+  async getQuestionRecommendList(page: number, celebId?: number) {
+    const data: ResponseType<GetPaginationResult<SearchQuestionResult>> = await request.get(
+      `${this.questionUrl}/recommend`,
+      {
+        params: {
+          celebId: celebId,
+          page,
+          size: 20,
+        },
+      },
+    )
+    return data.result
+  }
 }

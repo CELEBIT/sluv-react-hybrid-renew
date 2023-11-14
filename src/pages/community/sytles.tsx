@@ -27,6 +27,6 @@ export const QuestionListWrapper = styled.div`
 export const TabContainer = styled.div`
   display: flex;
   align-items: center;
-  padding: 0.25rem 1.25rem 0.75rem 1.25rem;
+  padding: 1rem 1.25rem 0.75rem 1.25rem;
   gap: 0.375rem;
 `
