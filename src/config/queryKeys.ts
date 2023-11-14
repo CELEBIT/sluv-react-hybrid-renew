@@ -58,4 +58,5 @@ export const queryKeys = {
   noticeList: ['noticeList'] as const,
   noticeDetail: (noticeId: number) => ['noticeDetail', noticeId] as const,
   getCommunityBannerItems: ['getCommunityBannerItems'] as const,
+  getSearchRank: ['getSearchRank'] as const,
 }
