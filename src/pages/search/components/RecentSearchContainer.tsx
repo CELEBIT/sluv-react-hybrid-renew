@@ -4,20 +4,26 @@ import { Common, Pretendard } from '../../../components/styles'
 import { ChipWrapper } from '../../../components/BottomSheetModal/ItemBrandSelectModal/ItemBrandSelectModal'
 import { IRecentSearch } from '../../../apis/search/searchService'
 import Chip from '../../../components/Chip/Chip'
+import { useNavigate } from 'react-router-dom'
+import useRecentSearchQuery from '../../../apis/search/hooks/useRecentSearchQuery'
 
 interface RecentSearchContainerProps {
   dataList?: Array<IRecentSearch>
 }
 
 const RecentSearchContainer = ({ dataList }: RecentSearchContainerProps) => {
+  const navigate = useNavigate()
+
+  const {deleteRecentSearch: {mutate}} = useRecentSearchQuery(); 
+  
   const onDeleteAllSearchLog = () => {
     alert('전체삭제')
   }
   const onDeleteEachSearchLog = (item: IRecentSearch) => {
-    alert('전체삭제')
+    mutate(item.keyword);
   }
   const onChipClick = (item: IRecentSearch) => {
-    alert('전체삭제')
+    navigate(`/search/result?keyword=${item.keyword}`)
   }
 
   return (

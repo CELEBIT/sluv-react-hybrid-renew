@@ -6,12 +6,15 @@ import HighlightedText from '../../../components/HighlightedText/HighlightedText
 import { useDebounce } from 'use-debounce'
 import { Common, Pretendard } from '../../../components/styles'
 import Loading from '../../../components/Loading'
+import { useNavigate } from 'react-router-dom'
 
 interface KeywordPreviewContainerProps {
   keyword: string
 }
 
 const KeywordPreviewContainer = ({ keyword }: KeywordPreviewContainerProps) => {
+  const navigate = useNavigate(); 
+
   const bottom = useRef(null)
   const [debouncedKeyword] = useDebounce(keyword, 300)
 
@@ -27,6 +30,10 @@ const KeywordPreviewContainer = ({ keyword }: KeywordPreviewContainerProps) => {
     onIntersect,
   })
 
+  const onClickPreviewKeyword = (keyword: string) => {
+    navigate(`/search/result?keyword=${keyword}`)
+  }
+
   return (
     <KeywordPreviewWrap>
       {status === 'error' && <p>{JSON.stringify(error.response.data)}</p>}
@@ -36,7 +43,7 @@ const KeywordPreviewContainer = ({ keyword }: KeywordPreviewContainerProps) => {
             item.content.length > 0 &&
             item.content.map((item, idx) => {
               return (
-                <KeywordItem key={idx}>
+                <KeywordItem key={idx} onClick={() => onClickPreviewKeyword(item.keyword)}>
                   <HighlightedText searchText={debouncedKeyword} text={item.keyword} />
                 </KeywordItem>
               )
