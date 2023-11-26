@@ -44,7 +44,6 @@ const SelectItemOrPhoto = () => {
   const navigate = useNavigate()
   const [communityUploadInfo, setCommunityUploadInfo] = useRecoilState(communityItemState)
   const CommunityMenu = useRecoilValue(communityMenuState)
-  const communityQuestionMenu = useRecoilValue(communityQuestionMenuState)
   const [maxItemPhotoCount, setMaxItemPhotoCount] = useRecoilState(maxItemPhotoCountState)
   const [searchValue, setSearchValue] = useRecoilState<string>(itemNameSearchState)
   const [selectedTab, setSelectedTab] = useState('recent')
@@ -90,7 +89,7 @@ const SelectItemOrPhoto = () => {
             !updatedItemList.some((existingItem) => existingItem.itemId === item.itemId)
           ) {
             // 아이템 추가
-            if (CommunityMenu === '질문해요' && communityQuestionMenu === '이 중에 뭐 살까') {
+            if (CommunityMenu === '이 중에 뭐 살까') {
               if (index === 0) {
                 updatedItemList.push({
                   itemId: item.itemId,
@@ -123,7 +122,8 @@ const SelectItemOrPhoto = () => {
             !updatedImgList.some((existingItem) => existingItem.imgUrl === item.imgUrl)
           ) {
             // 사진 추가
-            if (CommunityMenu === '질문해요' && communityQuestionMenu === '이 중에 뭐 살까') {
+            console.log('사진추가')
+            if (CommunityMenu === '이 중에 뭐 살까') {
               if (index === 0) {
                 // 왼쪽 아이템 사진, 이름 설정
                 updatedImgList.push({
@@ -154,7 +154,7 @@ const SelectItemOrPhoto = () => {
             }
           }
         })
-
+        console.log('updatedItemList', updatedItemList)
         return {
           ...prevInfo,
           itemList: updatedItemList.length > 0 ? updatedItemList : null,
@@ -166,14 +166,10 @@ const SelectItemOrPhoto = () => {
   }
 
   useEffect(() => {
-    if (CommunityMenu === '찾아주세요') {
-      setMaxItemPhotoCount(5)
+    if (CommunityMenu === '이 중에 뭐 살까') {
+      setMaxItemPhotoCount(2)
     } else {
-      if (communityQuestionMenu === '이 중에 뭐 살까') {
-        setMaxItemPhotoCount(2)
-      } else {
-        setMaxItemPhotoCount(5)
-      }
+      setMaxItemPhotoCount(5)
     }
   }, [])
 
@@ -201,7 +197,7 @@ const SelectItemOrPhoto = () => {
               vote: null,
               representFlag: !imgItemList && i === 0,
             }
-            if (CommunityMenu === '질문해요' && communityQuestionMenu === '이 중에 뭐 살까') {
+            if (CommunityMenu === '이 중에 뭐 살까') {
               if (fileArr[i]) {
                 if (i === 0) {
                   // firstItem || secondItem 둘중에 하나라도 null 이면 추가 가능

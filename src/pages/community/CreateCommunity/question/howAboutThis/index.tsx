@@ -5,17 +5,15 @@ import { ErrorText } from '../../../../../components/TextField/DefaultTextfield/
 import TextArea from '../../../../../components/TextField/TextArea/TextArea'
 import AddItemPhotos from '../../../../../components/AddPhotos/AddItemPhotos'
 import { ReactComponent as Error } from '../../../../../assets/error_20.svg'
-import { useRecoilState } from 'recoil'
-import { communityItemState } from '../../../../../recoil/communityInfo'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { communityItemState, hasTriedUpload } from '../../../../../recoil/communityInfo'
 import { SubComponentContainer } from './styles'
 import { useNavigate } from 'react-router-dom'
 
-interface HowAboutThisProps {
-  hasTriedToUpload: boolean
-}
-
-const HowAboutThis = ({ hasTriedToUpload }: HowAboutThisProps) => {
+const HowAboutThis = () => {
   const navigate = useNavigate()
+  const hasTriedToUpload = useRecoilValue<boolean>(hasTriedUpload)
+
   const [questionInfo, setQuestionInfo] = useRecoilState(communityItemState)
   const [title, setTitle] = useState<string | null>(questionInfo.title)
   const [content, setContent] = useState<string | null | undefined>(questionInfo.content)
@@ -31,7 +29,7 @@ const HowAboutThis = ({ hasTriedToUpload }: HowAboutThisProps) => {
 
   return (
     <SubComponentContainer>
-      <ComponentWrapper>
+      <ComponentWrapper className='top'>
         <LabelContainer>
           {hasTriedToUpload && (!title || (title && title.length < 10)) && <Error></Error>}
           <Label>자유롭게 물어보세요</Label>

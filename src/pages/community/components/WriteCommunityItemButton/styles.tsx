@@ -9,7 +9,7 @@ export const WriteCommunityItemButtonWrapper = styled.div`
   display: flex;
   flex-direction: column;
   position: fixed;
-  bottom: 4.375rem;
+  bottom: 70px;
   right: 1.25rem;
 `
 
