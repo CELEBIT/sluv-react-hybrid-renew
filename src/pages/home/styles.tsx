@@ -17,6 +17,7 @@ export const HomeContainer = styled.div`
 `
 export const ComponentContainer = styled.div`
   display: flex;
+  flex-shrink: 0;
   flex-direction: column;
   position: relative;
   height: 100%;

@@ -6,11 +6,19 @@ export interface CommunityMenu {
 export const CommunityMenuList = [
   {
     name: '찾아주세요',
-    url: '/community/find-request',
+    url: '/community/create/find-request',
   },
   {
-    name: '질문해요',
-    url: '/community/question',
+    name: '이 중에 뭐 살까',
+    url: '/community/create/buy',
+  },
+  {
+    name: '이거 어때',
+    url: '/community/create/howabout',
+  },
+  {
+    name: '추천해 줘',
+    url: '/community/create/recommend',
   },
 ]
 

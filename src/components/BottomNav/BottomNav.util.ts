@@ -13,6 +13,10 @@ export const BOTTOM_NAV_ITEM_DATA: Array<BottomNavItemData> = [
 export const BOTTOM_NAV_PATH_INFO: pathInfo = {
   '/': true,
   '/community': true,
+  '/community/find': true,
+  '/community/buy': true,
+  '/community/howabout': true,
+  '/community/recommend': true,
   '/closet': true,
   '/user': true,
 }

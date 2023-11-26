@@ -60,7 +60,7 @@ export const queryKeys = {
   getCommunityBannerItems: ['getCommunityBannerItems'] as const,
   getSearchRank: ['getSearchRank'] as const,
   getQuestionFindList: (celebId?: number) => ['getQuestionFindList', celebId] as const,
-  getQuestionBuyList: (celebId?: number) => ['getQuestionBuyList', celebId] as const,
+  getQuestionBuyList: (voteStatus?: string) => ['getQuestionBuyList', voteStatus] as const,
   getQuestionHowAboutList: (celebId?: number) => ['getQuestionHowAboutList', celebId] as const,
-  getQuestionRecommendList: (celebId?: number) => ['getQuestionRecommendList', celebId] as const,
+  getQuestionRecommendList: (hashtag?: string) => ['getQuestionRecommendList', hashtag] as const,
 }

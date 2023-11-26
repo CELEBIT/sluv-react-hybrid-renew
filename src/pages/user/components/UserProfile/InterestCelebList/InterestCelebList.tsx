@@ -25,6 +25,7 @@ const InterestCelebList = () => {
   if (id) {
     const { getOtherUserInterestCeleb } = useInterestCelebQuery()
     const { data: interestCelebList } = getOtherUserInterestCeleb(Number(id))
+
     return (
       <ChipWrapper>
         {interestCelebList?.map((celeb) => {
