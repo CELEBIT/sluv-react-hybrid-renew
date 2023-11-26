@@ -31,10 +31,14 @@ const Search = () => {
       </SearchBarWrap>
       {!keyword ? (
         <>
-          {(recentSearchData?.length ?? 0) > 0 && <RecentSearchContainer dataList={recentSearchData} />}
+          {(recentSearchData?.length ?? 0) > 0 && (
+            <RecentSearchContainer dataList={recentSearchData} />
+          )}
           <RankContainer />
-          {(recentViewData?.pages[0].content.length ?? 0) > 0 && <RecentItemContainer dataList={recentViewData?.pages[0].content} />}
-        </> 
+          {(recentViewData?.pages[0].content.length ?? 0) > 0 && (
+            <RecentItemContainer dataList={recentViewData?.pages[0].content} />
+          )}
+        </>
       ) : (
         <KeywordPreviewContainer keyword={keyword} />
       )}

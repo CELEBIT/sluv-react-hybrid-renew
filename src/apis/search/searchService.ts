@@ -101,20 +101,17 @@ export default class SearchService {
   // 인기 검색어 조회
   async getSearchRank() {
     const data: ResponseType<Array<IRecentSearch>> = await request.get(
-      `${this.searchUrl}/searchRank`
+      `${this.searchUrl}/searchRank`,
     )
-    return data.result;
+    return data.result
   }
   // 최근 검색어 삭제
   async deleteRecentSearch(keyword: string) {
-    const data: ResponseType = await request.delete(
-      `${this.searchUrl}/recentSearch`,
-      {
-        params: {
-          keyword
-        }
-      }
-    )
-    return data;
+    const data: ResponseType = await request.delete(`${this.searchUrl}/recentSearch`, {
+      params: {
+        keyword,
+      },
+    })
+    return data
   }
 }
