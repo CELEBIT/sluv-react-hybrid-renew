@@ -42,7 +42,7 @@ export const ContentContainer = styled.div`
 export const ContentFullContainer = styled.div`
   display: flex;
   flex-direction: column;
-  /* overflow-y: auto; */
+  overflow-y: scroll;
   height: 100%;
   width: 100%;
   ::-webkit-scrollbar {
