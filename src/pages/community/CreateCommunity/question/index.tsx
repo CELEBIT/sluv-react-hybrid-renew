@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { QuestionContainer } from '../styles'
 import CommunityHeader from '../../../../components/Header/CommunityHeader/CommunityHeader'
-import {
-  ComponentContainer,
-  LabelContainer,
-  ComponentWrapper,
-  Label,
-} from '../../../item/create/styles'
+import { ComponentContainer } from '../../../item/create/styles'
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 import { HeaderWrapper } from '../../../item/addInfo/styles'
 import {
@@ -15,30 +10,23 @@ import {
   communityItemState,
   communityQuestionMenuState,
   firstItemState,
+  hasTriedUpload,
   secondItemState,
 } from '../../../../recoil/communityInfo'
-import SelectQuestionMenu from './components/selectQuestionMenu'
 import HowAboutThis from './howAboutThis'
 import Recommend from './recommend'
-import SelectRecommendCategory from './components/selectRecommendCategory'
 import WhichOne from './whichOne'
 import useUploadQuestionQuery from '../../../../apis/question/hooks/useUploadQuestionQuery'
-import { ErrorText } from '../../../../components/TextField/DefaultTextfield/styles'
-import { useLocation, useNavigate } from 'react-router-dom'
-import ButtonMedium from '../../../../components/ButtonMedium/ButtonMedium'
-import { MenuSelectWrapper } from './components/selectQuestionMenu/styles'
-import { questionTypeState } from '../../../../components/BottomSheetModal/QuestionEditDeleteModal'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 
 const Question = () => {
   const navigate = useNavigate()
-  const { pathname } = useLocation()
   const [questionItem, setQuestionItem] = useRecoilState(communityItemState)
   const resetQuestionItem = useResetRecoilState(communityItemState)
-  const [hasTriedToUpload, setHasTriedToUpload] = useState<boolean>(false)
+  const [hasTriedToUpload, setHasTriedToUpload] = useRecoilState<boolean>(hasTriedUpload)
   const [communityQuestionMenu, setCommunityQuestionMenu] = useRecoilState(
     communityQuestionMenuState,
   )
-  const questionType = useRecoilValue(questionTypeState)
 
   const firstItem = useRecoilValue(firstItemState)
   const secondItem = useRecoilValue(secondItemState)
@@ -143,14 +131,6 @@ const Question = () => {
     setHasTriedToUpload(false)
   }, [communityQuestionMenu])
 
-  useEffect(() => {
-    if (questionType === 'How') {
-      setCommunityQuestionMenu('이거 어때')
-    } else if (questionType === 'Recommend') {
-      setCommunityQuestionMenu('추천해 줘')
-    }
-  })
-
   return (
     <QuestionContainer>
       <HeaderWrapper>
@@ -160,36 +140,8 @@ const Question = () => {
           </span>
         </CommunityHeader>
       </HeaderWrapper>
-      <ComponentContainer>
-        {/* 누가 착용했나요 */}
-        {pathname.includes('edit') ? (
-          <ComponentWrapper className='top'>
-            <LabelContainer>
-              <Label>주제를 골라주세요</Label>
-            </LabelContainer>
-            <SelectQuestionMenu></SelectQuestionMenu>
-          </ComponentWrapper>
-        ) : (
-          <ComponentWrapper className='top'>
-            <LabelContainer>
-              <Label>주제를 골라주세요</Label>
-            </LabelContainer>
-            <SelectQuestionMenu></SelectQuestionMenu>
-          </ComponentWrapper>
-        )}
-
-        {/* 아이템 정보를 물어보세요 */}
-        {communityQuestionMenu === '이 중에 뭐 살까' ? (
-          <WhichOne hasTriedToUpload={hasTriedToUpload}></WhichOne>
-        ) : (
-          <>
-            {communityQuestionMenu === '이거 어때' ? (
-              <HowAboutThis hasTriedToUpload={hasTriedToUpload}></HowAboutThis>
-            ) : (
-              <Recommend hasTriedToUpload={hasTriedToUpload}></Recommend>
-            )}
-          </>
-        )}
+      <ComponentContainer className='top'>
+        <Outlet></Outlet>
       </ComponentContainer>
     </QuestionContainer>
   )

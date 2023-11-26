@@ -3,10 +3,11 @@ import TwoItemUpload from '../components/twoItemUpload'
 import { SubComponentContainer } from '../howAboutThis/styles'
 import { ComponentWrapper, Label, LabelContainer } from '../../../../item/create/styles'
 import DefaultTextfield from '../../../../../components/TextField/DefaultTextfield/DefaultTextfield'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import {
   communityItemState,
   firstItemState,
+  hasTriedUpload,
   secondItemState,
 } from '../../../../../recoil/communityInfo'
 import { ErrorText } from '../../../../../components/TextField/DefaultTextfield/styles'
@@ -18,12 +19,10 @@ import { modals } from '../../../../../components/Modals'
 import VoteDisplayField from '../components/VoteDisplayField'
 import { useNavigate } from 'react-router-dom'
 
-interface WhichOneProps {
-  hasTriedToUpload: boolean
-}
-
-const WhichOne = ({ hasTriedToUpload }: WhichOneProps) => {
+const WhichOne = () => {
   const { openModal } = useModals()
+  const hasTriedToUpload = useRecoilValue<boolean>(hasTriedUpload)
+
   const navigate = useNavigate()
   const [questionInfo, setQuestionInfo] = useRecoilState(communityItemState)
   const [title, setTitle] = useState<string | null>(questionInfo.title)
@@ -47,7 +46,7 @@ const WhichOne = ({ hasTriedToUpload }: WhichOneProps) => {
   }, [])
   return (
     <SubComponentContainer>
-      <ComponentWrapper>
+      <ComponentWrapper className='top'>
         <LabelContainer>
           {hasTriedToUpload && (!title || (title && title.length < 10)) && <Error></Error>}
           <Label>아이템 정보를 물어보세요</Label>
