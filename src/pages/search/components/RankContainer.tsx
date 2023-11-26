@@ -9,7 +9,9 @@ const RankContainer = () => {
   const currentTime = new Date()
   const timeString = getRankingUpdateTime(currentTime)
 
-  const { getSearchRank: {data}} = useSearchRankQuery()
+  const {
+    getSearchRank: { data },
+  } = useSearchRankQuery()
 
   return (
     <RankWrap>
@@ -56,7 +58,6 @@ const RankWrap = styled.section`
   }
 `
 const TitleBar = styled.div`
-
   display: flex;
   align-items: center;
   padding: 0.5625rem 1.25rem 0.5625rem 1.25rem;
@@ -74,4 +75,3 @@ const TitleBar = styled.div`
     margin-left: 0.75rem;
   }
 `
-
