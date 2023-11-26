@@ -16,7 +16,12 @@ const Settings = () => {
   return (
     <PageContainer>
       <HeaderWrapper>
-        <Header title='설정' isModalHeader={false} hasArrow={true}></Header>
+        <Header
+          title='설정'
+          isModalHeader={false}
+          hasArrow={true}
+          backBtnClick={() => navigate('/user')}
+        ></Header>
       </HeaderWrapper>
       <ContentContainer>
         <SettingMenu>
@@ -27,7 +32,7 @@ const Settings = () => {
         <SettingMenu>
           <MenuTitle>나의 정보</MenuTitle>
           <Menu>프로필 수정</Menu>
-          <Menu>관심셀럽 편집</Menu>
+          <Menu onClick={() => navigate('/settings/select-celeb')}>관심셀럽 편집</Menu>
         </SettingMenu>
         <Divider></Divider>
         <SettingMenu>
