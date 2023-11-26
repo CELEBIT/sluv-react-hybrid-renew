@@ -13,7 +13,7 @@ interface KeywordPreviewContainerProps {
 }
 
 const KeywordPreviewContainer = ({ keyword }: KeywordPreviewContainerProps) => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate()
 
   const bottom = useRef(null)
   const [debouncedKeyword] = useDebounce(keyword, 300)

@@ -9,9 +9,7 @@ interface RecentItemProps {
   dataList?: Array<RecommendItemResult>
 }
 
-const RecentItemContainer = ({
-  dataList
-}: RecentItemProps) => {
+const RecentItemContainer = ({ dataList }: RecentItemProps) => {
   const navigate = useNavigate()
 
   return (

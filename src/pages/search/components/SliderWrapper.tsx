@@ -9,9 +9,8 @@ interface SliderWrapperProps {
   data?: Array<IRecentSearch>
 }
 
-const SliderWrapper = ({data}: SliderWrapperProps) => {
-
-const [currentSlide, setCurrentSlide] = React.useState(0)
+const SliderWrapper = ({ data }: SliderWrapperProps) => {
+  const [currentSlide, setCurrentSlide] = React.useState(0)
   const [loaded, setLoaded] = useState(false)
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>(
     {
@@ -23,7 +22,7 @@ const [currentSlide, setCurrentSlide] = React.useState(0)
         setLoaded(true)
       },
       loop: true,
-    }, 
+    },
     [
       (slider) => {
         let timeout: ReturnType<typeof setTimeout>
@@ -53,46 +52,40 @@ const [currentSlide, setCurrentSlide] = React.useState(0)
         slider.on('animationEnded', nextTimeout)
         slider.on('updated', nextTimeout)
       },
-    ]
+    ],
   )
 
   return (
     <>
-        <div className="navigation-wrapper">
-            <div ref={sliderRef} className="keen-slider">
-              <SlideItem className="keen-slider__slide">
-              {data?.slice(0,6).map((item, idx) => {
-                return (
-                  <Rank key={idx} keyword={item.keyword} idx={idx}/>
-                )
-              })}
-              </SlideItem>
-              <SlideItem className="keen-slider__slide">
-              {data?.slice(6,12).map((item, idx) => {
-                return (
-                  <Rank key={idx} keyword={item.keyword} idx={idx+6}/>
-                )
-              })}
-              </SlideItem>
-            </div>
-        </div>
-        {data && loaded && instanceRef.current && (
-          <div className="dots">
-            {[
-              ...Array(instanceRef.current.track.details.slides.length).keys(),
-            ].map((idx) => {
-              return (
-                <button
-                  key={idx}
-                  onClick={() => {
-                    instanceRef.current?.moveToIdx(idx)
-                  }}
-                  className={'dot' + (currentSlide === idx ? ' active' : '')}
-                ></button>
-              )
+      <div className='navigation-wrapper'>
+        <div ref={sliderRef} className='keen-slider'>
+          <SlideItem className='keen-slider__slide'>
+            {data?.slice(0, 6).map((item, idx) => {
+              return <Rank key={idx} keyword={item.keyword} idx={idx} />
             })}
-          </div>
-        )}
+          </SlideItem>
+          <SlideItem className='keen-slider__slide'>
+            {data?.slice(6, 12).map((item, idx) => {
+              return <Rank key={idx} keyword={item.keyword} idx={idx + 6} />
+            })}
+          </SlideItem>
+        </div>
+      </div>
+      {data && loaded && instanceRef.current && (
+        <div className='dots'>
+          {[...Array(instanceRef.current.track.details.slides.length).keys()].map((idx) => {
+            return (
+              <button
+                key={idx}
+                onClick={() => {
+                  instanceRef.current?.moveToIdx(idx)
+                }}
+                className={'dot' + (currentSlide === idx ? ' active' : '')}
+              ></button>
+            )
+          })}
+        </div>
+      )}
     </>
   )
 }
@@ -101,7 +94,7 @@ export default SliderWrapper
 
 const SlideItem = styled.div`
   padding: 1.5rem 1.5rem 1.25rem 1.5rem;
-  display: grid; 
+  display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   grid-auto-flow: column;

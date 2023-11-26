@@ -14,13 +14,15 @@ interface RecentSearchContainerProps {
 const RecentSearchContainer = ({ dataList }: RecentSearchContainerProps) => {
   const navigate = useNavigate()
 
-  const {deleteRecentSearch: {mutate}} = useRecentSearchQuery(); 
-  
+  const {
+    deleteRecentSearch: { mutate },
+  } = useRecentSearchQuery()
+
   const onDeleteAllSearchLog = () => {
     alert('전체삭제')
   }
   const onDeleteEachSearchLog = (item: IRecentSearch) => {
-    mutate(item.keyword);
+    mutate(item.keyword)
   }
   const onChipClick = (item: IRecentSearch) => {
     navigate(`/search/result?keyword=${item.keyword}`)
