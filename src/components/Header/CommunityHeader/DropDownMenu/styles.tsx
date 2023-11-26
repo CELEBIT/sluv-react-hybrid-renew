@@ -48,7 +48,9 @@ export const FirstField = styled(Field)`
   border-radius: 0.75rem 0.75rem 0 0;
 `
 
-export const MiddleField = styled(Field)``
+export const MiddleField = styled(Field)`
+  border-top: 1px solid ${Common.colors.GR300};
+`
 
 export const LastField = styled(Field)`
   border-top: 1px solid ${Common.colors.GR300};

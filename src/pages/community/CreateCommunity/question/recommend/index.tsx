@@ -5,18 +5,21 @@ import { ErrorText } from '../../../../../components/TextField/DefaultTextfield/
 import TextArea from '../../../../../components/TextField/TextArea/TextArea'
 import AddPhotos from '../../../../../components/AddPhotos/AddPhotos'
 import { ReactComponent as Error } from '../../../../../assets/error_20.svg'
-import { useRecoilState } from 'recoil'
-import { communityItemState } from '../../../../../recoil/communityInfo'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { communityItemState, hasTriedUpload } from '../../../../../recoil/communityInfo'
 import { SubComponentContainer } from '../howAboutThis/styles'
 import { useNavigate } from 'react-router-dom'
 import AddItemPhotos from '../../../../../components/AddPhotos/AddItemPhotos'
+import SelectRecommendCategory from '../components/selectRecommendCategory'
 
 interface RecommendProps {
   hasTriedToUpload: boolean
 }
 
-const Recommend = ({ hasTriedToUpload }: RecommendProps) => {
+const Recommend = () => {
   const navigate = useNavigate()
+  const hasTriedToUpload = useRecoilValue<boolean>(hasTriedUpload)
+
   const [questionInfo, setQuestionInfo] = useRecoilState(communityItemState)
   const [title, setTitle] = useState<string | null>(questionInfo.title)
   const [content, setContent] = useState<string | undefined | null>(questionInfo.content)
@@ -32,6 +35,12 @@ const Recommend = ({ hasTriedToUpload }: RecommendProps) => {
 
   return (
     <SubComponentContainer>
+      <ComponentWrapper className='top'>
+        <LabelContainer>
+          <Label>주제를 골라주세요</Label>
+        </LabelContainer>
+        <SelectRecommendCategory></SelectRecommendCategory>
+      </ComponentWrapper>
       <ComponentWrapper>
         <LabelContainer>
           {hasTriedToUpload && (!title || (title && title.length < 10)) && <Error></Error>}

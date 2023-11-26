@@ -38,6 +38,7 @@ export interface IselectedItem {
   celebName?: string | null
   brandName?: string | null
   itemName?: string | null
+  index?: number | null
 }
 
 export const communityItemState = atom<CommunityItem>({
@@ -63,6 +64,7 @@ export const firstItemState = atom<IselectedItem>({
     description: null,
     vote: null,
     representFlag: null,
+    index: null,
   },
 })
 export const secondItemState = atom<IselectedItem>({
@@ -79,4 +81,9 @@ export const secondItemState = atom<IselectedItem>({
 export const imgItemListState = atom<Array<IselectedItem>>({
   key: atomKeys.imgItemListState,
   default: [],
+})
+
+export const hasTriedUpload = atom<boolean>({
+  key: atomKeys.hasTriedUpload,
+  default: false,
 })
