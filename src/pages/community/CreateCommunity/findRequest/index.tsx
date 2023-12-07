@@ -13,7 +13,7 @@ import SelectCeleb, {
 } from '../../../../components/SelectCeleb/SelectCeleb'
 import { ErrorText } from '../../../../components/TextField/DefaultTextfield/styles'
 import { ReactComponent as Error } from '../../../../assets/error_20.svg'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 import { HeaderWrapper } from '../../../item/addInfo/styles'
 import DefaultTextfield from '../../../../components/TextField/DefaultTextfield/DefaultTextfield'
 import TextArea from '../../../../components/TextField/TextArea/TextArea'
@@ -26,6 +26,7 @@ import { communityItemState } from '../../../../recoil/communityInfo'
 const FindRequest = () => {
   const navigate = useNavigate()
   const [findRequestInfo, setFindRequestInfo] = useRecoilState(communityItemState)
+  const resetFindRequestInfo = useResetRecoilState(communityItemState)
   const celeb = useRecoilValue(selectedCelebState)
   const newCeleb = useRecoilValue(selectedNewCelebState)
 
@@ -46,10 +47,10 @@ const FindRequest = () => {
       findRequestInfo.title.length > 10 &&
       findRequestInfo.title.length < 60
     ) {
-      alert('success')
       console.log('findRequestInfo', findRequestInfo)
       setFindRequestInfo({ ...findRequestInfo, newCelebId: null })
       mutate({ ...findRequestInfo, newCelebId: null })
+      resetFindRequestInfo()
     }
   }
   useEffect(() => {
@@ -60,6 +61,10 @@ const FindRequest = () => {
       content: content,
     })
   }, [title, content, celeb])
+
+  useEffect(() => {
+    resetFindRequestInfo
+  })
 
   return (
     <FindRequestContainer>
