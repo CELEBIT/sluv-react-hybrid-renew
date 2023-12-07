@@ -64,6 +64,9 @@ const CreateRecommend = React.lazy(
 const CommunityDetail = React.lazy(() => import('./pages/community/detail/CommunityDetail'))
 const CommentItemPhoto = React.lazy(() => import('./components/SelectItemOrPhoto/CommentItemPhoto'))
 const CommentUpload = React.lazy(() => import('./pages/community/detail/components/CommentUpload'))
+const EditComment = React.lazy(
+  () => import('./pages/community/detail/components/EditComment/EditComment'),
+)
 const AddSubComment = React.lazy(
   () => import('./pages/community/detail/components/AddSubComment/AddSubComment'),
 )
@@ -143,6 +146,7 @@ const App = () => {
             <Route path='/community/select-item-photo' element={<SelectItemOrPhoto />} />
             <Route path='/community/comment/comment-item-photo' element={<CommentItemPhoto />} />
             <Route path='/community/comment/upload' element={<CommentUpload />} />
+            <Route path='/community/comment/edit' element={<EditComment />} />
             <Route path='/community/comment/subcomment' element={<AddSubComment />} />
             <Route path='/community/detail/:id' element={<CommunityDetail />} />
             <Route path='/community/detail/:id/comment/:commentid' element={<CommunityDetail />} />

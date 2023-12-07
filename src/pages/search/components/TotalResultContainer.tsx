@@ -64,6 +64,7 @@ const TotalResultContainer = ({ keyword }: TotalResultContainerProps) => {
                 imgUrl={user.profileImgUrl}
                 userName={user.nickname}
                 followStatus={user.followStatus}
+                onClick={() => navigate(`/user/${user.id}`)}
               />
             ))}
           </UserListWrap>
