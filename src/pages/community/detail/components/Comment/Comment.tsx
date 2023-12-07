@@ -44,7 +44,7 @@ const Comment = ({ questionId, comment }: CommentProps) => {
     date.setHours(date.getHours() + 9)
     return date.toUTCString()
   }
-
+  console.log(comment)
   const {
     likeComment: { mutate: mutateByLike },
   } = useSearchCommentQuery()
@@ -64,7 +64,9 @@ const Comment = ({ questionId, comment }: CommentProps) => {
               <NickName>{comment.user.nickName}</NickName>
               <Time>{formatUpdatedAt(convertToUTC(comment.createdAt))}</Time>
             </UserInfo>
-            <ShowMore></ShowMore>
+            <ShowMore
+              onClick={() => navigate('/community/comment/edit', { state: comment })}
+            ></ShowMore>
           </ContentTop>
           <CommentContent>{comment.content}</CommentContent>
         </ContentRight>

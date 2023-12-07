@@ -49,7 +49,10 @@ const AddItemPhotos = ({ onClick, size }: IAddPhotosProps) => {
     }))
     setImgItemList(finalList)
 
-    if (currentRoute === '/community/comment/upload') {
+    if (
+      currentRoute === '/community/comment/upload' ||
+      currentRoute === '/community/comment/edit'
+    ) {
       if (removedItem.itemId) {
         // Comment itemList에서 아이템 삭제
         setCommentObject((prevObject) => ({

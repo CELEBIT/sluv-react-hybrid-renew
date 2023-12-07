@@ -9,6 +9,7 @@ import InterestCelebList, {
 } from './InterestCelebList/interestCelebList'
 import useGetHotSluverQuery from '../../../../apis/user/hooks/useGetHotSluverQuery'
 import { useRecoilValue } from 'recoil'
+import { useNavigate } from 'react-router-dom'
 
 const WeeklyTopUser = () => {
   const selectedInterestCeleb = useRecoilValue(selectedInterestCelebState)
@@ -16,7 +17,7 @@ const WeeklyTopUser = () => {
     getHotSluver: { data: userList },
   } = useGetHotSluverQuery(selectedInterestCeleb ? selectedInterestCeleb : undefined)
   console.log('userList', userList)
-
+  const navigate = useNavigate()
   return (
     <ScrollComponentWrapper bgColor='gray'>
       <HomeTitle className='title'>이번주 인기 스러버</HomeTitle>
@@ -31,6 +32,7 @@ const WeeklyTopUser = () => {
               imgUrl={user.profileImgUrl}
               followStatus={user.followStatus}
               userName={user.nickName}
+              onClick={() => navigate(`/user/${user.id}`)}
             ></UserCard>
           )
         })}
