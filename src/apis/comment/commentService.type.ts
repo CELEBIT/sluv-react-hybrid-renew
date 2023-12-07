@@ -26,7 +26,7 @@ export interface SubCommentResult {
   modifyStatus: boolean
 }
 
-interface Item {
+export interface Item {
   item: EachItem
   sortOrder: number
 }

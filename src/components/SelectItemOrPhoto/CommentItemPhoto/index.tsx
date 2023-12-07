@@ -22,12 +22,13 @@ import HotSearchItem from '../HotSearchItem'
 import { ReactComponent as Gallery } from '../../../assets/gallery_24.svg'
 import ButtonLarge from '../../ButtonLarge/ButtonLarge'
 import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import ScrapItem from '../ScrapItem'
 import UserUploadItem from '../UserUploadItem'
 
 const CommentItemPhoto = () => {
   const navigate = useNavigate()
+  const location = useLocation()
   const [commentObject, setCommentObject] = useRecoilState(commentState)
   const [maxItemPhotoCount, setMaxItemPhotoCount] = useRecoilState(maxItemPhotoCountState)
   const [imgItemList, setImageItemList] = useRecoilState(imgItemListState)
@@ -99,7 +100,11 @@ const CommentItemPhoto = () => {
         }
       })
     }
-    navigate('/community/comment/upload')
+    if (location.state === 'edit') {
+      navigate(-1)
+    } else {
+      navigate('/community/comment/upload')
+    }
   }
 
   // imgItemList에 IselectedItem 형태로 추가해줘야함

@@ -90,7 +90,6 @@ export const ArrowRight = styled.div`
   right: 0;
   justify-content: center;
   background-color: #ffffff;
-  border: 1px solid blue;
   z-index: 0;
   height: 100%;
   width: 2.3125rem;

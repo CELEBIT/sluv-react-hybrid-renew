@@ -104,9 +104,6 @@ const Question = () => {
             imgList: finalImgList as IimgList[],
             itemList: finalItemList as IitemList[],
           })
-          const {
-            postBuyRequest: { mutate },
-          } = useUploadQuestionQuery()
           MutateByBuyRequest({
             ...questionItem,
             imgList: finalImgList as IimgList[],
