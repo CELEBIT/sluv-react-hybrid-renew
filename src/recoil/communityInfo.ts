@@ -61,6 +61,7 @@ export const firstItemState = atom<IselectedItem>({
   default: {
     itemId: null,
     imgUrl: null,
+    imgFile: null,
     description: null,
     vote: null,
     representFlag: null,
@@ -72,6 +73,7 @@ export const secondItemState = atom<IselectedItem>({
   default: {
     itemId: null,
     imgUrl: null,
+    imgFile: null,
     description: null,
     vote: null,
     representFlag: null,
