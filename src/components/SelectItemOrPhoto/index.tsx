@@ -190,42 +190,46 @@ const SelectItemOrPhoto = () => {
         const reader = new FileReader()
         if (imgItemList.length + i + 1 <= maxItemPhotoCount) {
           reader.onloadend = () => {
-            const fileSelected: IselectedItem = {
+            const fileSelected = {
               imgFile: file,
-              imgUrl: reader.result as string,
               description: null,
               vote: null,
               representFlag: !imgItemList && i === 0,
             }
             if (CommunityMenu === '이 중에 뭐 살까') {
+              console.log('이 중에 뭐 살까 firstItem', firstItem)
+              console.log('이 중에 뭐 살까 secondItem', secondItem)
               if (fileArr[i]) {
                 if (i === 0) {
+                  console.log(firstItem)
                   // firstItem || secondItem 둘중에 하나라도 null 이면 추가 가능
-                  if (firstItem.imgUrl === null) {
+                  if (firstItem.imgFile === null && !firstItem.itemId) {
                     // firstItem이 비어있을 때
-                    // console.log('first 아이템 null')
-                    setFirstItem((prev) => ({
-                      ...prev,
-                      ...{ imgUrl: reader.result as string },
+                    setFirstItem((prevFirstItem) => ({
+                      ...prevFirstItem,
+                      imgFile: fileArr[i],
+                      representFlag: true,
                     }))
-                  } else if (firstItem.imgUrl !== null) {
+                    console.log('firstItem', firstItem)
+                  } else if (firstItem.imgFile || firstItem.itemId) {
                     // first가 존재할 때
                     // console.log('seconds 아이템 null')
                     setSecondItem((prev) => ({
                       ...prev,
-                      ...{ imgUrl: reader.result as string },
+                      ...{ imgFile: fileArr[i] },
                     }))
                   }
                 } else {
                   // 두번째 사진 -> firstItem, secondItem 둘다 없을 때만 가능
                   // secondItem에만 추가하면 됨.
                   console.log('i==1')
-                  if (secondItem.imgUrl === null && secondItem.itemId === null) {
+                  if (secondItem.imgFile === null && secondItem.itemId === null) {
                     // console.log('seconds 아이템 null')
                     setSecondItem((prev) => ({
                       ...prev,
-                      ...{ imgUrl: reader.result as string },
+                      ...{ imgFile: fileArr[i] },
                     }))
+                    console.log('secondItem', secondItem)
                   }
                 }
               }

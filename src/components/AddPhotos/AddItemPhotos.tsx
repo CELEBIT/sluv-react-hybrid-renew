@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { AddPhotosWrapper } from './styles'
@@ -19,71 +19,79 @@ const AddItemPhotos = ({ onClick, size }: IAddPhotosProps) => {
   const setCommunityUploadInfo = useSetRecoilState(communityItemState)
   const setCommentObject = useSetRecoilState(commentState)
 
-  // drag and drop 완료시
-  const onDragEnd = (result: any) => {
-    if (!result.destination) {
-      return
-    }
-
-    const startIndex = result.source.index
-    const endIndex = result.destination.index
-    const reorderedList = Array.from(imgItemList)
-    const [removed] = reorderedList.splice(startIndex, 1)
-    reorderedList.splice(endIndex, 0, removed)
-
-    // representFlag 수정 -> 최종 업로드때는 imgItemList 통해 확인
-    const updatedList = reorderedList.map((img, index) => ({
-      ...img,
-      representFlag: index === 0,
-    }))
-    setImgItemList(updatedList)
-  }
-
-  const handleRemovePhoto = (index: number) => {
-    const updatedList = [...imgItemList]
-    const removedItem = updatedList.splice(index, 1)[0]
-    // display(imgItemList)에서 삭제
-    const finalList = updatedList.map((img, index) => ({
-      ...img,
-      representFlag: index === 0,
-    }))
-    setImgItemList(finalList)
-
-    if (
-      currentRoute === '/community/comment/upload' ||
-      currentRoute === '/community/comment/edit'
-    ) {
-      if (removedItem.itemId) {
-        // Comment itemList에서 아이템 삭제
-        setCommentObject((prevObject) => ({
-          ...prevObject,
-          itemList:
-            prevObject.itemList?.filter((item) => item.itemId !== removedItem.itemId) || null,
-        }))
-      } else {
-        // Comment imgList에서 사진 삭제
-        setCommentObject((prevObject) => ({
-          ...prevObject,
-          imgList: prevObject.imgList?.filter((item) => item.imgUrl !== removedItem.imgUrl) || null,
-        }))
+  const onDragEnd = useCallback(
+    (result: any) => {
+      if (!result.destination) {
+        return
       }
-    } else {
-      // 최종 업로드 data에서 삭제
-      if (removedItem.itemId) {
-        // itemList에서 아이템 삭제
-        setCommunityUploadInfo((prevInfo) => ({
-          ...prevInfo,
-          itemList: prevInfo.itemList?.filter((item) => item.itemId !== removedItem.itemId) || null,
-        }))
+
+      const startIndex = result.source.index
+      const endIndex = result.destination.index
+
+      const reorderedList = Array.from(imgItemList)
+      const [removed] = reorderedList.splice(startIndex, 1)
+      reorderedList.splice(endIndex, 0, removed)
+
+      const updatedList = reorderedList.map((img, index) => ({
+        ...img,
+        representFlag: index === 0,
+      }))
+
+      setImgItemList(updatedList) // Update state with the reordered list
+    },
+    [imgItemList, setImgItemList],
+  )
+
+  const handleRemovePhoto = useCallback(
+    (index: number) => {
+      const updatedList = [...imgItemList]
+      const removedItem = updatedList.splice(index, 1)[0]
+      // display(imgItemList)에서 삭제
+      const finalList = updatedList.map((img, index) => ({
+        ...img,
+        representFlag: index === 0,
+      }))
+      setImgItemList(finalList)
+
+      if (
+        currentRoute === '/community/comment/upload' ||
+        currentRoute === '/community/comment/edit'
+      ) {
+        if (removedItem.itemId) {
+          // Comment itemList에서 아이템 삭제
+          setCommentObject((prevObject) => ({
+            ...prevObject,
+            itemList:
+              prevObject.itemList?.filter((item) => item.itemId !== removedItem.itemId) || null,
+          }))
+        } else {
+          // Comment imgList에서 사진 삭제
+          setCommentObject((prevObject) => ({
+            ...prevObject,
+            imgList:
+              prevObject.imgList?.filter((item) => item.imgUrl !== removedItem.imgUrl) || null,
+          }))
+        }
       } else {
-        // imgList에서 사진 삭제
-        setCommunityUploadInfo((prevInfo) => ({
-          ...prevInfo,
-          imgList: prevInfo.imgList?.filter((item) => item.imgUrl !== removedItem.imgUrl) || null,
-        }))
+        // 최종 업로드 data에서 삭제
+        if (removedItem.itemId) {
+          // itemList에서 아이템 삭제
+          setCommunityUploadInfo((prevInfo) => ({
+            ...prevInfo,
+            itemList:
+              prevInfo.itemList?.filter((item) => item.itemId !== removedItem.itemId) || null,
+          }))
+        } else {
+          // imgList에서 사진 삭제
+          setCommunityUploadInfo((prevInfo) => ({
+            ...prevInfo,
+            imgList: prevInfo.imgList?.filter((item) => item.imgUrl !== removedItem.imgUrl) || null,
+          }))
+        }
       }
-    }
-  }
+    },
+    [currentRoute, imgItemList, setCommentObject, setCommunityUploadInfo],
+  )
 
   return (
     <AddPhotosWrapper>
@@ -107,6 +115,7 @@ const AddItemPhotos = ({ onClick, size }: IAddPhotosProps) => {
                         size={size ? size : 74}
                         borderRadius={8}
                         imgUrl={img.imgUrl || ''}
+                        imgFile={img.imgFile || undefined}
                         representFlag={img.representFlag || false}
                         candelete={true}
                         onDelete={() => handleRemovePhoto(index)}

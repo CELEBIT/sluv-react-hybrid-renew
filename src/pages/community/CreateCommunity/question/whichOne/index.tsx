@@ -72,6 +72,7 @@ const WhichOne = () => {
           (!firstItem.description ||
             !secondItem.description ||
             !firstItem.imgUrl ||
+            !firstItem.imgFile ||
             !secondItem.imgUrl) && <ErrorText className='error'>필수 항목입니다</ErrorText>}
       </ComponentWrapper>
       {/* <ComponentWrapper className='padding'></ComponentWrapper> */}

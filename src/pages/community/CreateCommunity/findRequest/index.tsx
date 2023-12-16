@@ -21,7 +21,7 @@ import TextArea from '../../../../components/TextField/TextArea/TextArea'
 import { useNavigate } from 'react-router-dom'
 import AddItemPhotos from '../../../../components/AddPhotos/AddItemPhotos'
 import useUploadQuestionQuery from '../../../../apis/question/hooks/useUploadQuestionQuery'
-import { communityItemState } from '../../../../recoil/communityInfo'
+import { communityItemState, imgItemListState } from '../../../../recoil/communityInfo'
 
 const FindRequest = () => {
   const navigate = useNavigate()
@@ -29,11 +29,12 @@ const FindRequest = () => {
   const resetFindRequestInfo = useResetRecoilState(communityItemState)
   const celeb = useRecoilValue(selectedCelebState)
   const newCeleb = useRecoilValue(selectedNewCelebState)
-
+  console.log('findRequestInfo', findRequestInfo)
   const [hasTriedToUpload, setHasTriedToUpload] = useState(false)
 
   const [title, setTitle] = useState<string | null>(findRequestInfo.title)
   const [content, setContent] = useState<string | null>(findRequestInfo.content ?? null)
+  const imgItemList = useRecoilValue(imgItemListState)
 
   const {
     postFindRequest: { mutate },
