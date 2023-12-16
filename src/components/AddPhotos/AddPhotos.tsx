@@ -19,6 +19,7 @@ export const imgListState = atom<Image[]>({
 
 const AddPhotos = () => {
   const [imgList, setImageList] = useRecoilState(imgListState)
+
   const fileInputRef = useRef<HTMLInputElement>(null)
   const changeImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.currentTarget
@@ -52,12 +53,11 @@ const AddPhotos = () => {
     const [removed] = reorderedList.splice(startIndex, 1)
     reorderedList.splice(endIndex, 0, removed)
 
-    // Update the representFlag based on the new order
+    // representFlag 수정 -> 최종 업로드때는 imgItemList 통해 확인
     const updatedList = reorderedList.map((img, index) => ({
       ...img,
       representFlag: index === 0,
     }))
-    // Update the state with the reordered and updated list
     setImageList(updatedList)
   }
   const handleRemovePhoto = (index: number) => {

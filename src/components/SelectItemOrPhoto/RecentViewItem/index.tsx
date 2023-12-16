@@ -84,7 +84,7 @@ const RecentViewItem = () => {
           },
         ])
 
-        if (CommunityMenu === '질문해요' && communityQuestionMenu === '이 중에 뭐 살까') {
+        if (CommunityMenu === '이 중에 뭐 살까') {
           const newItem = {
             itemId: item.itemId,
             imgUrl: item.imgUrl,
