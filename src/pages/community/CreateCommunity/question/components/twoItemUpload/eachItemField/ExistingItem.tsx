@@ -24,7 +24,11 @@ const ExistingItem = ({ item, className, onDelete }: ExistingItemProps) => {
   )
 }
 
-export const ImageField = styled.div<{ imgUrl: string | null | undefined; dim?: boolean }>`
+export const ImageField = styled.div<{
+  imgUrl?: string | null | undefined
+  imgFile?: File | null
+  dim?: boolean
+}>`
   display: flex;
   position: relative;
   align-items: flex-end;
@@ -34,11 +38,11 @@ export const ImageField = styled.div<{ imgUrl: string | null | undefined; dim?: 
   background-size: cover;
   background-position: 50%;
 
-  background-image: ${(props) =>
-      props.dim
-        ? 'linear-gradient(360deg, rgba(0, 0, 0, 0.5) 0.45%, rgba(0, 0, 0, 0) 76.51%),'
-        : ''}
-    url(${(props) => props.imgUrl});
+  ${({ imgUrl, imgFile }) =>
+    (imgUrl || imgFile) &&
+    `
+    background-image: url(${imgUrl || (imgFile ? URL.createObjectURL(imgFile) : '')});
+  `}
   padding: 1rem;
   text-overflow: ellipsis;
   white-space: nowrap;

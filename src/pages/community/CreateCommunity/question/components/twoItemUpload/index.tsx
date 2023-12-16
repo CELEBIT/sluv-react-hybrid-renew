@@ -62,22 +62,22 @@ const TwoItemUpload = ({ onClick }: TwoItemUploadProps) => {
       }
     } else {
       console.log('사진 삭제')
-      newItemList = communityUploadInfo.imgList?.filter(
-        (addedItem) => addedItem.imgUrl !== item.imgUrl,
-      )
+      // newItemList = communityUploadInfo.imgList?.filter(
+      //   (addedItem) => addedItem.imgFile !== item.imgFile,
+      // )
 
-      setCommunityUploadInfo({
-        ...communityUploadInfo,
-        imgList: newItemList || null,
-      })
+      // setCommunityUploadInfo({
+      //   ...communityUploadInfo,
+      //   imgList: newItemList || null,
+      // })
 
-      const newImgItemList = imgItemList.filter((addedItem) => addedItem.imgUrl !== item.imgUrl)
+      const newImgItemList = imgItemList.filter((addedItem) => addedItem.imgFile !== item.imgFile)
       setImgItemList(newImgItemList)
 
-      if (firstItem.itemId === null && firstItem.imgUrl === item.imgUrl) {
+      if (firstItem.itemId === null && firstItem.imgFile === item.imgFile) {
         resetFirstItem()
       }
-      if (secondItem.itemId === null && secondItem.imgUrl === item.imgUrl) {
+      if (secondItem.itemId === null && secondItem.imgFile === item.imgFile) {
         resetSecondItem()
       }
     }
@@ -92,9 +92,9 @@ const TwoItemUpload = ({ onClick }: TwoItemUploadProps) => {
   return (
     <TwoItemUploadWrapper>
       {/* 둘중에 하나라도 선택 되었을 경우 */}
-      {firstItem?.imgUrl || secondItem?.imgUrl ? (
+      {firstItem?.imgUrl || secondItem?.imgUrl || firstItem?.imgFile || secondItem?.imgFile ? (
         <ImageWrapper>
-          {firstItem?.itemId !== null ? (
+          {firstItem.itemId ? (
             // 스럽에 존재하는 아이템 선택
             <ExistingItem
               item={firstItem}
@@ -103,17 +103,16 @@ const TwoItemUpload = ({ onClick }: TwoItemUploadProps) => {
             ></ExistingItem>
           ) : (
             <>
-              {firstItem.imgUrl && (
-                // 유저 갤러리에서 선택
+              {firstItem?.imgFile && (
                 <UploadPhoto
-                  imgUrl={firstItem.imgUrl}
+                  imgFile={firstItem.imgFile}
                   className='left'
                   onDelete={() => onDeleteItem(firstItem)}
                 ></UploadPhoto>
               )}
             </>
           )}
-          {!firstItem.imgUrl && <AddItem onClick={() => onClick()}></AddItem>}
+          {!firstItem.imgUrl && !firstItem.imgFile && <AddItem onClick={() => onClick()}></AddItem>}
           {/* 2번째 아이템 */}
           {secondItem?.itemId !== null ? (
             <ExistingItem
@@ -123,17 +122,19 @@ const TwoItemUpload = ({ onClick }: TwoItemUploadProps) => {
             ></ExistingItem>
           ) : (
             <>
-              {secondItem.imgUrl && (
+              {secondItem.imgFile && (
                 // 유저 갤러리에서 선택
                 <UploadPhoto
-                  imgUrl={secondItem.imgUrl}
+                  imgFile={secondItem.imgFile}
                   className='right'
                   onDelete={() => onDeleteItem(secondItem)}
                 ></UploadPhoto>
               )}
             </>
           )}
-          {!secondItem.imgUrl && <AddItem onClick={() => onClick()}></AddItem>}
+          {!secondItem.imgUrl && !secondItem.imgFile && (
+            <AddItem onClick={() => onClick()}></AddItem>
+          )}
         </ImageWrapper>
       ) : (
         // 둘 다 선택 x
