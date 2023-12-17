@@ -39,6 +39,7 @@ export interface IselectedItem {
   brandName?: string | null
   itemName?: string | null
   index?: number | null
+  sortOrder?: number | null
 }
 
 export const communityItemState = atom<CommunityItem>({

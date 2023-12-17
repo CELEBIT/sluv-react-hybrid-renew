@@ -12,10 +12,6 @@ import { useNavigate } from 'react-router-dom'
 import AddItemPhotos from '../../../../../components/AddPhotos/AddItemPhotos'
 import SelectRecommendCategory from '../components/selectRecommendCategory'
 
-interface RecommendProps {
-  hasTriedToUpload: boolean
-}
-
 const Recommend = () => {
   const navigate = useNavigate()
   const hasTriedToUpload = useRecoilValue<boolean>(hasTriedUpload)
