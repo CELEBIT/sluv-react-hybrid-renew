@@ -62,7 +62,7 @@ const CommunityHeader = ({ children, backBtnClick }: HeaderProps) => {
       setCommunityMenu('이 중에 뭐 살까')
     }
     if (pathname.includes('/community/create/howabout')) {
-      setCommunityMenu('이거어때')
+      setCommunityMenu('이거 어때')
     }
     if (pathname.includes('/community/create/recommend')) {
       setCommunityMenu('추천해 줘')

@@ -33,7 +33,7 @@ const useUploadQuestionQuery = () => {
     {
       onSuccess: (res) => {
         if (res?.id) {
-          queryClient.invalidateQueries(queryKeys.questionDetail(res.id))
+          queryClient.invalidateQueries(queryKeys.getQuestionHowAboutList())
           navigate(`/community/detail/${res.id}`)
         }
       },
@@ -45,7 +45,7 @@ const useUploadQuestionQuery = () => {
     {
       onSuccess: (res) => {
         if (res?.id) {
-          queryClient.invalidateQueries(queryKeys.questionDetail(res.id))
+          queryClient.invalidateQueries(queryKeys.getQuestionRecommendList())
           navigate(`/community/detail/${res.id}`)
         }
       },

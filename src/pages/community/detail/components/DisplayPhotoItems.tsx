@@ -30,7 +30,7 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
         {combinedList.map((each, index) => (
           <div className='full' key={index}>
             {isImgItem(each) ? (
-              <ImageField imgUrl={each.imgUrl}></ImageField>
+              <ImageField imgUrl={each.imgUrl}>{each.imgUrl}</ImageField>
             ) : (
               <ImageField imgUrl={each.item.imgUrl} dim={true}>
                 <ItemInfoWrapper>

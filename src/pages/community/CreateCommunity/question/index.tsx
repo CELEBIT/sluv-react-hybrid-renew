@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { QuestionContainer } from '../styles'
-import CommunityHeader from '../../../../components/Header/CommunityHeader/CommunityHeader'
+import CommunityHeader, {
+  communityMenuState,
+} from '../../../../components/Header/CommunityHeader/CommunityHeader'
 import { ComponentContainer } from '../../../item/create/styles'
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 import { HeaderWrapper } from '../../../item/addInfo/styles'
@@ -11,6 +13,7 @@ import {
   communityQuestionMenuState,
   firstItemState,
   hasTriedUpload,
+  imgItemListState,
   secondItemState,
 } from '../../../../recoil/communityInfo'
 import HowAboutThis from './howAboutThis'
@@ -24,6 +27,7 @@ const Question = () => {
   const [questionItem, setQuestionItem] = useRecoilState(communityItemState)
   const resetQuestionItem = useResetRecoilState(communityItemState)
   const [hasTriedToUpload, setHasTriedToUpload] = useRecoilState<boolean>(hasTriedUpload)
+  const CommunityMenu = useRecoilValue(communityMenuState)
   const [communityQuestionMenu, setCommunityQuestionMenu] = useRecoilState(
     communityQuestionMenuState,
   )
@@ -64,7 +68,7 @@ const Question = () => {
     setHasTriedToUpload(true)
     console.log(questionItem)
     if (questionItem.title && questionItem.title.length > 10 && questionItem.title.length < 60) {
-      if (communityQuestionMenu === '이 중에 뭐 살까') {
+      if (CommunityMenu === '이 중에 뭐 살까') {
         if (
           firstItem.imgUrl &&
           secondItem.imgUrl &&
@@ -111,12 +115,12 @@ const Question = () => {
           })
           resetQuestionItem()
         }
-      } else if (communityQuestionMenu === '이거 어때') {
+      } else if (CommunityMenu === '이거 어때') {
         console.log(questionItem)
         MutateByHowAboutRequest(questionItem)
         resetQuestionItem()
       } else {
-        console.log(questionItem)
+        console.log(CommunityMenu)
         if (questionItem.categoryNameList?.length ?? 0 > 0) {
           MutateByRecommendRequest(questionItem)
           resetQuestionItem()
@@ -124,9 +128,65 @@ const Question = () => {
       }
     }
   }
+  // const [imgItemList, setImageItemList] = useRecoilState(imgItemListState)
+  // const onSubmit = async () => {
+  //   const updatedImgItemList = imgItemList.map((item, index) => ({
+  //     ...item,
+  //     sortOrder: index,
+  //   }))
+  //   setImageItemList(updatedImgItemList)
+  //   const imgList = updatedImgItemList
+  //     .filter((item) => item.imgFile)
+  //     .map(({ imgFile, description, sortOrder }) => ({
+  //       imgFile: imgFile,
+  //       description: description,
+  //       representFlag: sortOrder === 0,
+  //       sortOrder: sortOrder,
+  //     }))
+
+  //   const itemList = updatedImgItemList
+  //     .filter((item) => item.itemId !== undefined)
+  //     .map(({ itemId, description, sortOrder }) => ({
+  //       itemId: itemId,
+  //       description: description,
+  //       representFlag: sortOrder === 0,
+  //       sortOrder: sortOrder,
+  //     }))
+  // }
+
+  // 1. imgItemList 에 있는 순서대로 sortOrder를 각각 추가,
+  // 2. img, item으로 분리
+  // 3. img를 presignedUrl 받아서 IimgList의 형식으로 넣기.
+  // 4. 커뮤니티 아이템으로 업데이트
+
+  //   export interface CommunityItem {
+  //   id: number | null
+  //   celebId?: number | null
+  //   newCelebId?: number | null
+  //   title: string | null
+  //   content?: string | null
+  //   imgList: Array<IimgList> | null
+  //   itemList: Array<IitemList> | null
+  //   categoryNameList?: Array<string> | null
+  //   voteEndTime?: Date | undefined
+  // }
+
+  // export interface IimgList {
+  //   imgUrl: string
+  //   description: string | null
+  //   representFlag: boolean | null
+  //   sortOrder: number
+  // }
+
+  // export interface IitemList {
+  //   itemId: number
+  //   description: string | null
+  //   representFlag: boolean | null
+  //   sortOrder: number
+  // }
   useEffect(() => {
     setHasTriedToUpload(false)
-  }, [communityQuestionMenu])
+  }, [CommunityMenu])
 
   return (
     <QuestionContainer>
