@@ -79,3 +79,16 @@ export interface QuestionResult {
 //   imgUrl: string
 //   sortOrder: number
 // }
+
+export interface ItemImg {
+  imgUrl: string
+  sortOrder: number
+}
+
+export interface CommunityBannerItem {
+  id: number
+  title: string
+  user: User
+  imgList: Array<ItemImg>
+  qtype: string
+}

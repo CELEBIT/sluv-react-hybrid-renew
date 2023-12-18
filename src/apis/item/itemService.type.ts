@@ -118,6 +118,7 @@ export interface ItemDetailResult {
   otherSluverItemList: Array<RecommendItemResult>
   color: string
   followStatus: boolean
+  hasMine: boolean
 }
 export interface HashtagContent {
   hashtagId: number

@@ -14,17 +14,17 @@ export interface CommunityItem {
 }
 
 export interface IimgList {
-  imgUrl: string
-  description: string | null
-  representFlag: boolean | null
-  sortOrder: number
+  imgUrl?: string
+  description?: string | null
+  representFlag?: boolean | null
+  sortOrder?: number | null
 }
 
 export interface IitemList {
-  itemId: number
-  description: string | null
-  representFlag: boolean | null
-  sortOrder: number
+  itemId?: number | null
+  description?: string | null
+  representFlag?: boolean | null
+  sortOrder?: number | null
 }
 
 export interface IselectedItem {
@@ -33,11 +33,13 @@ export interface IselectedItem {
   itemId?: number | null
   imgUrl?: string | null
   description: string | null
-  vote: number | null
+  vote?: number | null
   representFlag: boolean | null
   celebName?: string | null
   brandName?: string | null
   itemName?: string | null
+  index?: number | null
+  sortOrder?: number | null
 }
 
 export const communityItemState = atom<CommunityItem>({
@@ -50,6 +52,11 @@ export const communityItemState = atom<CommunityItem>({
   },
 })
 
+export const imgListUpdatedState = atom<boolean>({
+  key: atomKeys.imgListUpdatedState,
+  default: false,
+})
+
 export const communityQuestionMenuState = atom<string>({
   key: atomKeys.communityQuestionMenuState,
   default: '이 중에 뭐 살까',
@@ -60,9 +67,11 @@ export const firstItemState = atom<IselectedItem>({
   default: {
     itemId: null,
     imgUrl: null,
+    imgFile: null,
     description: null,
     vote: null,
     representFlag: null,
+    index: null,
   },
 })
 export const secondItemState = atom<IselectedItem>({
@@ -70,6 +79,7 @@ export const secondItemState = atom<IselectedItem>({
   default: {
     itemId: null,
     imgUrl: null,
+    imgFile: null,
     description: null,
     vote: null,
     representFlag: null,
@@ -79,4 +89,9 @@ export const secondItemState = atom<IselectedItem>({
 export const imgItemListState = atom<Array<IselectedItem>>({
   key: atomKeys.imgItemListState,
   default: [],
+})
+
+export const hasTriedUpload = atom<boolean>({
+  key: atomKeys.hasTriedUpload,
+  default: false,
 })

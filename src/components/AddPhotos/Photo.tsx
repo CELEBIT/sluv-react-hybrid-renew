@@ -71,7 +71,7 @@ const Photo = ({
   } else {
     return (
       <ImgFileWrap size={size} borderRadius={borderRadius}>
-        <img src={previewFile} />
+        {imgFile && <img src={URL.createObjectURL(imgFile)} />}
         {candelete && <DeleteList className='delete' onClick={onDelete}></DeleteList>}
         {representFlag && <Represent className='represent'></Represent>}
         {storageFlag !== undefined && (
@@ -90,7 +90,12 @@ const Photo = ({
 
 export default Photo
 
-export const Img = styled.div<{ size?: number; borderRadius: number; imgUrl: string }>`
+export const Img = styled.div<{
+  size?: number
+  borderRadius: number
+  imgUrl?: string
+  imgFile?: File
+}>`
   display: flex;
   position: relative;
   flex-shrink: 0;
@@ -100,7 +105,8 @@ export const Img = styled.div<{ size?: number; borderRadius: number; imgUrl: str
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50%;
-  background-image: url(${(props) => props.imgUrl});
+  background-image: ${(props) =>
+    props.imgFile ? `url(${URL.createObjectURL(props.imgFile)})` : `url(${props.imgUrl})`};
   background-color: ${Common.colors.GR300};
 
   .delete {

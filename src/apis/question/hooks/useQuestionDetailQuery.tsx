@@ -62,7 +62,7 @@ const useQuestionDetailQuery = () => {
 
   const deleteQuestion = useMutation((questionId: number) => question.deleteQuestion(questionId), {
     onSuccess: () => {
-      queryClient.invalidateQueries(queryKeys.getQuestionList('Total'))
+      queryClient.invalidateQueries(queryKeys.getQuestionTotalList)
       navigate('/community')
     },
   })

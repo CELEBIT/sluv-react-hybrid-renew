@@ -7,13 +7,15 @@ type AddButtonProps = {
   itemCnt: number
   onClick: any
   size?: number
+  children?: any
 }
 
-const AddButton = ({ itemCnt, onClick, size }: AddButtonProps) => {
+const AddButton = ({ itemCnt, onClick, size, children }: AddButtonProps) => {
   return (
     <AddPhotoWrapper size={size} onClick={() => onClick()}>
       <Add />
       <span>({itemCnt}/5)</span>
+      {children}
     </AddPhotoWrapper>
   )
 }

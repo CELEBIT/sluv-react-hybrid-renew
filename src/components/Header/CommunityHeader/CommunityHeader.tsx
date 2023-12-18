@@ -55,10 +55,17 @@ const CommunityHeader = ({ children, backBtnClick }: HeaderProps) => {
     }
   }
   useEffect(() => {
-    if (pathname.includes('/community/find-request')) {
+    if (pathname.includes('/community/create/find-request')) {
       setCommunityMenu('찾아주세요')
-    } else {
-      setCommunityMenu('질문해요')
+    }
+    if (pathname.includes('/community/create/buy')) {
+      setCommunityMenu('이 중에 뭐 살까')
+    }
+    if (pathname.includes('/community/create/howabout')) {
+      setCommunityMenu('이거 어때')
+    }
+    if (pathname.includes('/community/create/recommend')) {
+      setCommunityMenu('추천해 줘')
     }
   }, [])
   return (
