@@ -2,6 +2,8 @@ import axios from 'axios'
 import request from '../core'
 import { ResponseType } from '../core/type'
 import { Image } from '../../components/AddPhotos/AddPhotos'
+import { CommunityItem, IimgList, IselectedItem } from '../../recoil/communityInfo'
+import { SetterOrUpdater } from 'recoil'
 
 export interface S3Result {
   preSignedUrl: string
@@ -60,5 +62,48 @@ export default class S3Service {
       }),
     )
     return await resultList
+  }
+
+  // 커뮤니티 이미지 업로드
+  async postCommunityImg(
+    fileList: Array<IselectedItem>,
+    setCommunityItem: SetterOrUpdater<CommunityItem>,
+  ) {
+    const resultList: Array<IimgList> = []
+    for (const item of fileList) {
+      const response: ResponseType<S3Result> = await request.post(
+        `${this.presignedUrl}/question`,
+        {},
+        {
+          params: {
+            imgExtension: String(item.imgFile?.type.split('/')[1]).toUpperCase(),
+          },
+        },
+      )
+
+      if (response.isSuccess && response.result?.preSignedUrl && item.imgFile) {
+        try {
+          const data = await this.uploadImg(response.result.preSignedUrl, item.imgFile)
+          if (data.status === 200) {
+            const { preSignedUrl } = response.result
+            resultList.push({
+              imgUrl: preSignedUrl.split('?')[0],
+              description: item.description,
+              representFlag: item.representFlag,
+              sortOrder: item.sortOrder,
+            })
+          }
+        } catch (err: any) {
+          console.error(err)
+          return err
+        }
+      }
+    }
+    console.log('resultList', resultList)
+    setCommunityItem((prevCommunityItem) => ({
+      ...prevCommunityItem,
+      imgList: resultList,
+    }))
+    return resultList
   }
 }

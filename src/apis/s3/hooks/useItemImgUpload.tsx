@@ -10,7 +10,6 @@ import { communityItemState } from '../../../recoil/communityInfo'
 const useItemImgUpload = () => {
   const s3 = new S3Service()
   const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
-  const [findRequestInfo, setFindRequestInfo] = useRecoilState(communityItemState)
 
   const postItemImg = useMutation((fileList: Array<Image>) => s3.postItemImg(fileList), {
     onSuccess: (res) => {
