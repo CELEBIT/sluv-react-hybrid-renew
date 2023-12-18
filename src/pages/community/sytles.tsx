@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { Common, Pretendard } from '../../components/styles'
 
-export const CommunityContainer = styled.div`
+export const CommunityPageContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
@@ -17,11 +17,23 @@ export const CommunityContainer = styled.div`
 export const QuestionListWrapper = styled.div`
   display: flex;
   flex-direction: column;
-
-  padding-bottom: 4rem;
-  overflow-y: scroll;
+  height: 100%;
+  padding-bottom: 5rem;
   .title {
     padding: 0 1.25rem;
     ${Pretendard({ size: 18, weight: Common.bold.semiBold, color: Common.colors.BK })}
+  }
+`
+
+export const TabContainer = styled.div`
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  overflow-x: scroll;
+  padding: 1rem 1.25rem 0.75rem 1.25rem;
+  gap: 0.375rem;
+
+  ::-webkit-scrollbar {
+    display: none;
   }
 `

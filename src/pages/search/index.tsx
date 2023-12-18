@@ -8,13 +8,18 @@ import RecentSearchContainer from './components/RecentSearchContainer'
 import KeywordPreviewContainer from './components/KeywordPreviewContainer'
 import styled from '@emotion/styled'
 import RankContainer from './components/RankContainer'
+import RecentItemContainer from './components/RecentItemContainer'
+import useRecentViewItemQuery from '../../apis/item/hooks/useRecentViewItemQuery'
 
 const Search = () => {
   const [keyword, setKeyword] = useState('')
 
   const {
-    getRecentSearch: { data },
+    getRecentSearch: { data: recentSearchData },
   } = useRecentSearchQuery()
+
+  const { getRecentViewItem } = useRecentViewItemQuery()
+  const { data: recentViewData } = getRecentViewItem()
 
   return (
     <SearchPageStyle>
@@ -26,8 +31,13 @@ const Search = () => {
       </SearchBarWrap>
       {!keyword ? (
         <>
-          {(data?.length ?? 0) > 0 && <RecentSearchContainer dataList={data} />}
-          {/* <RankContainer /> */}
+          {(recentSearchData?.length ?? 0) > 0 && (
+            <RecentSearchContainer dataList={recentSearchData} />
+          )}
+          <RankContainer />
+          {(recentViewData?.pages[0].content.length ?? 0) > 0 && (
+            <RecentItemContainer dataList={recentViewData?.pages[0].content} />
+          )}
         </>
       ) : (
         <KeywordPreviewContainer keyword={keyword} />

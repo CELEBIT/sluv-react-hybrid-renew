@@ -13,7 +13,7 @@ import SelectCeleb, {
 } from '../../../../components/SelectCeleb/SelectCeleb'
 import { ErrorText } from '../../../../components/TextField/DefaultTextfield/styles'
 import { ReactComponent as Error } from '../../../../assets/error_20.svg'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 import { HeaderWrapper } from '../../../item/addInfo/styles'
 import DefaultTextfield from '../../../../components/TextField/DefaultTextfield/DefaultTextfield'
 import TextArea from '../../../../components/TextField/TextArea/TextArea'
@@ -21,24 +21,47 @@ import TextArea from '../../../../components/TextField/TextArea/TextArea'
 import { useNavigate } from 'react-router-dom'
 import AddItemPhotos from '../../../../components/AddPhotos/AddItemPhotos'
 import useUploadQuestionQuery from '../../../../apis/question/hooks/useUploadQuestionQuery'
-import { communityItemState } from '../../../../recoil/communityInfo'
+import {
+  communityItemState,
+  imgItemListState,
+  imgListUpdatedState,
+} from '../../../../recoil/communityInfo'
+import useCommunityImgUpload from '../../../../apis/s3/hooks/useCommunityImgUpload'
 
 const FindRequest = () => {
   const navigate = useNavigate()
   const [findRequestInfo, setFindRequestInfo] = useRecoilState(communityItemState)
+  const resetFindRequestInfo = useResetRecoilState(communityItemState)
   const celeb = useRecoilValue(selectedCelebState)
   const newCeleb = useRecoilValue(selectedNewCelebState)
-
   const [hasTriedToUpload, setHasTriedToUpload] = useState(false)
 
   const [title, setTitle] = useState<string | null>(findRequestInfo.title)
   const [content, setContent] = useState<string | null>(findRequestInfo.content ?? null)
+  const [imgItemList, setImageItemList] = useRecoilState(imgItemListState)
 
   const {
-    postFindRequest: { mutate },
-  } = useUploadQuestionQuery()
+    postCommunityImg: { mutate: mutateByImgUpload },
+  } = useCommunityImgUpload()
 
-  const onSubmit = () => {
+  const uploadImg = async () => {
+    const updatedImgItemList = imgItemList.map((item, index) => ({
+      ...item,
+      sortOrder: index,
+    }))
+    setImageItemList(updatedImgItemList)
+    const newImgList = updatedImgItemList
+      .filter((item) => item.imgFile)
+      .map(({ imgFile, description, sortOrder }) => ({
+        imgFile: imgFile,
+        description: description,
+        representFlag: sortOrder === 0,
+        sortOrder: sortOrder,
+      }))
+    await mutateByImgUpload(newImgList)
+  }
+
+  const onSubmit = async () => {
     setHasTriedToUpload(true)
     if (
       (celeb.id || newCeleb) &&
@@ -46,12 +69,14 @@ const FindRequest = () => {
       findRequestInfo.title.length > 10 &&
       findRequestInfo.title.length < 60
     ) {
-      alert('success')
-      console.log('findRequestInfo', findRequestInfo)
       setFindRequestInfo({ ...findRequestInfo, newCelebId: null })
-      mutate({ ...findRequestInfo, newCelebId: null })
+      await uploadImg()
+
+      setTitle('')
+      setContent('')
     }
   }
+
   useEffect(() => {
     setFindRequestInfo({
       ...findRequestInfo,
@@ -60,6 +85,10 @@ const FindRequest = () => {
       content: content,
     })
   }, [title, content, celeb])
+
+  useEffect(() => {
+    resetFindRequestInfo
+  })
 
   return (
     <FindRequestContainer>

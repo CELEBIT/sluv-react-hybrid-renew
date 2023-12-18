@@ -137,3 +137,13 @@ export const Img = styled.div<{ imgUrl: string }>`
     bottom: 0.25rem;
   }
 `
+export const BlockedContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  padding: 20px;
+  background-color: ${Common.colors.GR100};
+  border-radius: 1rem;
+  gap: 0.5rem;
+`
