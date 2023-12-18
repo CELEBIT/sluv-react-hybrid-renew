@@ -14,6 +14,7 @@ import { ClosetBoxService } from '../services'
 import { useLocation, useParams } from 'react-router-dom'
 import OneButtonModal from '../../../components/OneButtonModal'
 import { BtnModalContent } from '../../../components/Modals/styles'
+import S3Service from '../../../apis/s3/S3Service'
 
 type CreateClosetFormContextType = ReturnType<typeof useCreateClosetFormContext>
 export const CreateClosetFormContext = createContext<CreateClosetFormContextType | null>(null)
@@ -73,25 +74,18 @@ const ClosetBoxCreatePage = ({ service, isEditMode = false }: ClosetBoxCreatePag
     })
   }, [])
 
-  const handleChangeFile = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeFile = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     console.log(file)
     if (!file) {
       alert('파일이 없습니다.')
       return
     }
+    const s3 = new S3Service()
+    const imgURL = await s3.postClosetImg(file);
 
-    // 2. 임시 URL생성 -> 진짜 URL생성, 다른 브라우저에서도 접근 가능
-    const fileReader = new FileReader()
-    fileReader.readAsDataURL(file)
-    fileReader.onload = (data) => {
-      // 파일리더의 결과값이 string이 아닐수도 있으니 string일때만 실행되도록
-      if (typeof data.target?.result === 'string') {
-        console.log(data.target?.result)
-        contextValue.handlers.setCoverImgUrl(data.target?.result)
-        contextValue.handlers.setCoverImageMode('IMAGE')
-      }
-    }
+    contextValue.handlers.setCoverImgUrl(imgURL)
+    contextValue.handlers.setCoverImageMode('IMAGE')
   }
 
   return (
