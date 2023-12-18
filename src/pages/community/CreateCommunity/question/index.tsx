@@ -162,7 +162,7 @@ const Question = () => {
       </HeaderWrapper>
       <ComponentContainer>
         {/* 누가 착용했나요 */}
-        {pathname.includes('edit') ? (
+        {pathname.includes('deleteAndSort') ? (
           <ComponentWrapper className='top'>
             <LabelContainer>
               <Label>주제를 골라주세요</Label>

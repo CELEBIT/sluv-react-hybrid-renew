@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { CoverBoxHeader, RootContainer } from '../ClosetCoverBox/ClosetCoverBox.styles'
+import { CoverBoxHeader, RootContainer } from '../ClosetCoverBox/styles'
 
 import { ClosetBoxService } from '../../services'
 import { getClosetBoxBackground } from '../../utils'

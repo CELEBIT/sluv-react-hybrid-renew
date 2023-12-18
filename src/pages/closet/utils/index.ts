@@ -1,8 +1,5 @@
 import { ClosetBoxService } from '../services'
-import {
-  CoverBoxBackgroundConfig,
-  DEFAULT_COVER_COLOR_SET,
-} from '../components/ClosetCoverBox/ClosetCoverBox.consts'
+import { CoverBoxBackgroundConfig, DEFAULT_COVER_COLOR_SET } from './consts'
 import { css } from '@emotion/react'
 
 export const getClosetBoxBackground = (

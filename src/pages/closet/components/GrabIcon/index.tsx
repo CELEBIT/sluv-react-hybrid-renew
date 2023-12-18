@@ -1,6 +1,6 @@
 import React, { HTMLAttributes, ReactElement } from 'react'
 import { CoverImageMode } from '../../../../apis/closet/model'
-import { CoverBoxColorKey, DEFAULT_COVER_COLOR_SET } from '../ClosetCoverBox/ClosetCoverBox.consts'
+import { CoverBoxColorKey, DEFAULT_COVER_COLOR_SET } from '../../utils/consts'
 
 type ClosetBoxGrabIcon = HTMLAttributes<SVGElement> & {
   coverImageMode?: CoverImageMode
