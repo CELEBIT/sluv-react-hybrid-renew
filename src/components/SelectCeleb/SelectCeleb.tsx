@@ -44,7 +44,6 @@ const SelectCeleb = () => {
   const {
     getInterestCeleb: { data: interestCelebList },
   } = useInterestCelebQuery()
-  console.log('interestCelebList', interestCelebList)
   const {
     postRecentCeleb: { mutate: mutateByPostRecentCeleb },
   } = useRecentCelebQuery()

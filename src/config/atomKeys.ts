@@ -35,4 +35,6 @@ export const atomKeys = {
   selectedInterestCeleb: 'selectedInterestCeleb' as const,
   selectedFollowTab: 'selectedFollowTab' as const,
   selectedUserName: 'selectedUserName' as const,
+  hasTriedUpload: 'hasTriedUpload' as const,
+  imgListUpdatedState: 'imgListUpdatedState' as const,
 }

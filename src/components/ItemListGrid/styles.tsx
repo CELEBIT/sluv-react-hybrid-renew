@@ -13,7 +13,6 @@ export const ItemListWrapper = styled.div`
   flex-shrink: 0;
   gap: 0.5rem;
   row-gap: 1.5rem;
-  height: 100%;
   width: 100%;
   padding: 1.25rem;
   align-items: center;

@@ -87,12 +87,16 @@ const SelectInterestCeleb = () => {
     postInterestCeleb: { mutate: mutateByPostInterestCeleb },
   } = useInterestCelebQuery()
 
+  // 관심셀럽 카테고리별 조회
   const {
     getSelectCelebList: { data },
   } = useSelectCelebQuery()
+  // 현재 유저가 선택한 관심셀럽 리스트
+  const {
+    getInterestCeleb: { data: interestCelebList },
+  } = useInterestCelebQuery()
 
   const { openModal } = useModals()
-
   const [searchValue, setSearchValue] = useState<string>('')
   const [openCategories, setOpenCategories] = useState<number[]>([])
   // 선택한 관심셀럽 확인 및 수정용 Category[{CelebId, CelebName}] List
@@ -122,20 +126,20 @@ const SelectInterestCeleb = () => {
   ]
 
   const onComplete = () => {
-    mutateByPostInterestCeleb(celebIds)
+    const updatedIdList = getSelectedCelebIds(selectedInterestCeleb)
+    mutateByPostInterestCeleb(updatedIdList)
   }
   // POST API 용 CelebId List
-  const getSelectedCelebIds = (celebResults: Array<ISelectCelebResult>): Array<number> => {
-    const celebIds: Array<number> = []
-    for (const celebResult of celebResults) {
-      for (const celeb of celebResult.celebList) {
-        celebIds.push(celeb.celebId)
+  const getSelectedCelebIds = (selectedCelebList: Array<ISelectCelebResult>): Array<number> => {
+    const idList = []
+    for (const category of selectedCelebList) {
+      for (const celeb of category.celebList) {
+        idList.push(celeb.celebId)
       }
     }
 
-    return celebIds
+    return idList
   }
-  const celebIds = getSelectedCelebIds(selectedInterestCeleb)
 
   // 관심셀럽 선택
   const handleColorChipClick = (
@@ -246,12 +250,9 @@ const SelectInterestCeleb = () => {
     }
   }, [])
 
-  const {
-    getInterestCeleb: { data: interestCelebList },
-  } = useInterestCelebQuery()
+  // 유저의 기존 관심셀럽 리스트 가져와서 카테고리별로 분류
   useEffect(() => {
     if (pathname === '/settings/select-celeb') {
-      console.log(interestCelebList)
       setSelectedInterestCeleb((prevInterestCelebs) => {
         const updatedInterestCelebs = prevInterestCelebs.map((category) => {
           if (interestCelebList) {
@@ -264,7 +265,7 @@ const SelectInterestCeleb = () => {
 
             return {
               ...category,
-              celebList: [...category.celebList, ...updatedCelebList],
+              celebList: updatedCelebList,
             }
           } else {
             return category
@@ -367,7 +368,11 @@ const SelectInterestCeleb = () => {
 
                     <CelebListWrapper open={isCategoryOpen}>
                       {Category.celebList.map((celeb) => {
-                        const isSelected = celebIds.includes(celeb.celebId)
+                        const isSelected = selectedInterestCeleb.some((category) =>
+                          category.celebList.some(
+                            (selectedCeleb) => selectedCeleb.celebId === celeb.celebId,
+                          ),
+                        )
                         return (
                           <ColorChip
                             key={celeb.celebId}
@@ -408,15 +413,24 @@ const SelectInterestCeleb = () => {
       <Dimmer></Dimmer>
       <BottomWrapper>
         <ListButtonWrapper>
-          {celebIds.length > 0 ? (
+          {selectedInterestCeleb.reduce((total, category) => total + category.celebList.length, 0) >
+          0 ? (
             <CelebrityListActive onClick={() => onClickSelectedCelebList()}></CelebrityListActive>
           ) : (
             <CelebrityListDefault></CelebrityListDefault>
           )}
         </ListButtonWrapper>
         <ButtonLarge
-          text={`${celebIds.length}명 선택`}
-          active={celebIds.length > 0}
+          text={`${selectedInterestCeleb.reduce(
+            (total, category) => total + category.celebList.length,
+            0,
+          )}명 선택`}
+          active={
+            selectedInterestCeleb.reduce(
+              (total, category) => total + category.celebList.length,
+              0,
+            ) > 0
+          }
           color='BK'
           onClick={onComplete}
         ></ButtonLarge>

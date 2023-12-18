@@ -38,22 +38,8 @@ interface CommentListProps {
 }
 
 const CommentList = ({ questionId }: CommentListProps) => {
-  const navigate = useNavigate()
   const { getComment } = useSearchCommentQuery()
   const { data } = getComment(questionId)
-  console.log('comment', data)
-  function convertToUTC(dateString: string): string {
-    const date = new Date(dateString)
-    date.setHours(date.getHours() + 9)
-    return date.toUTCString()
-  }
-
-  const {
-    likeComment: { mutate: mutateByLike },
-  } = useSearchCommentQuery()
-  const onClickLike = (commentId: number, questionId: number) => {
-    mutateByLike({ commentId, questionId })
-  }
 
   if (data && data.length > 0) {
     return (

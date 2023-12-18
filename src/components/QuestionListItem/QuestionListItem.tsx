@@ -30,13 +30,12 @@ const QuestionListItem = ({ item, detail }: QuestionItemProps) => {
   const navigate = useNavigate()
   const [color, setColor] = useState<string>('')
   const [questionType, setQuestionType] = useState<string>('')
-  console.log('item', item.user)
 
   useEffect(() => {
     if (item.qtype === 'Recommend') {
       setQuestionType('추천해 줘')
       setColor('blue')
-    } else if (item.qtype === 'Howabout') {
+    } else if (item.qtype === 'How') {
       setQuestionType('이거 어때')
       setColor('yellow')
     } else if (item.qtype === 'Find') {
@@ -77,7 +76,10 @@ const QuestionListItem = ({ item, detail }: QuestionItemProps) => {
               </>
             )}
           </InfoTop>
-          <span className='questionTitle'>{item.title}</span>
+          <span className='questionTitle'>
+            {item.title}
+            {item.content}
+          </span>
         </RecommendInfo>
 
         {item.qtype !== 'Buy' ? (

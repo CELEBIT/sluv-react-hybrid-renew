@@ -67,6 +67,7 @@ export const InterestCelebWrapper = styled.div`
   display: flex;
   align-items: center;
   position: relative;
+  height: 100%;
   width: 100vw;
 `
 
@@ -79,6 +80,7 @@ export const ChipWrapper = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
+  margin-right: 2.5rem;
 `
 
 export const ArrowRight = styled.div`
@@ -96,12 +98,13 @@ export const ArrowDim = styled.div`
   display: flex;
   align-items: center;
   position: absolute;
-  right: 2.3125rem;
+  right: 0;
   justify-content: center;
   padding-right: 2.125rem;
   background: linear-gradient(90deg, #ffffff94 10%, #ffffffea 30.18%, #ffffff 79.72%);
-  z-index: 1;
   height: 100%;
+  width: 4.375rem;
+  z-index: 1;
 `
 
 export const ArrowWrapper = styled.div`
