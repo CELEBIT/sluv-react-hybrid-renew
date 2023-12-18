@@ -72,14 +72,7 @@ const WhichOne = () => {
         {hasTriedToUpload &&
           (!firstItem.description || (!firstItem.imgUrl && !firstItem.imgFile)) &&
           (!secondItem.description || (!secondItem.imgUrl && !secondItem.imgFile)) && (
-            <ErrorText className='error'>
-              필수 항목입니다{firstItem.description}
-              {secondItem.description}
-              {firstItem.imgUrl}
-              {secondItem.imgUrl}
-              {firstItem.imgFile ? 'true' : 'false'}
-              {secondItem.imgFile ? 'true' : 'false'}
-            </ErrorText>
+            <ErrorText className='error'>필수 항목입니다</ErrorText>
           )}
       </ComponentWrapper>
       {/* <ComponentWrapper className='padding'></ComponentWrapper> */}
