@@ -17,4 +17,15 @@ const SubHeader = ({ leftPaneChildren, rightPaneChildren }: SubHeaderProps) => {
   )
 }
 
+export const PaddingSubHeader = ({ leftPaneChildren, rightPaneChildren }: SubHeaderProps) => {
+  return (
+    <S.PaddedRoot>
+      <S.Layout>
+        <S.LeftPaneContainer>{leftPaneChildren}</S.LeftPaneContainer>
+        <S.RightPaneContainer>{rightPaneChildren}</S.RightPaneContainer>
+      </S.Layout>
+    </S.PaddedRoot>
+  )
+}
+
 export default SubHeader

@@ -119,12 +119,85 @@ const getDefaultImageUrl = (colorScheme: ClosetBoxModel['colorScheme']) => {
 
 export const ContentContainer = styled.div`
   position: absolute;
-  top: 50%; /* 초기에는 .background 아래에 위치 */
+  top: 29%; /* 초기에는 .background 아래에 위치 */
   left: 0;
   width: 100%;
-  min-height: 50%;
+  min-height: 70%;
   background-color: white;
   z-index: 1;
   transition: top 0.5s ease;
   overflow: auto;
+`
+
+export const SubHeaderEditText = styled.p`
+  cursor: pointer;
+  font-weight: 500;
+  font-family: Pretendard;
+  line-height: 18px;
+  font-size: 15px;
+  color: #212529;
+`
+
+export const InnerItemGridContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 세 열을 동일한 크기로 설정 */
+  grid-gap: 24px 10px; /* 행 간 간격 24px, 열 간 간격 10px */
+  width: 100%; /* 필요한 경우 그리드의 너비를 조정 */
+`
+
+export const EditFooter = styled.footer`
+  z-index: 99;
+  position: fixed;
+  bottom: 0;
+  height: 92px;
+  width: 100%;
+  background: #454381;
+`
+export const FooterLayout = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  align-items: flex-start;
+`
+
+export const FooterContentContainer = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 8px;
+  gap: 8px;
+  width: 100%;
+
+  & > p {
+    margin: 0;
+    font-family: Pretendard;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 14px;
+    letter-spacing: 0px;
+    text-align: center;
+    color: #fff;
+  }
+`
+
+export const HeaderWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0 1.25rem;
+`
+
+export const AnotherClosetBodyContainer = styled.section`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  max-height: 400px;
+  gap: 16px;
+  flex-direction: column;
+  margin-bottom: 10px;
+  padding: 14px 24px;
+  overflow-y: scroll;
 `

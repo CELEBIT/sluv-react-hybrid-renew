@@ -6,6 +6,13 @@ export const Root = styled.header`
   box-sizing: border-box;
 `
 
+export const PaddedRoot = styled.header`
+  padding: 12px 24px 12px 24px;
+  height: 50px;
+  width: 100%;
+  box-sizing: border-box;
+`
+
 export const Layout = styled.div`
   display: flex;
   gap: 12px;
@@ -25,4 +32,8 @@ export const RightPaneContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
   flex-grow: 0;
+`
+
+export const InnerItemGrid = styled.div`
+  display: flex;
 `

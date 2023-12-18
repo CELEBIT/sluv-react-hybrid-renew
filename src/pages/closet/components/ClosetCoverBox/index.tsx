@@ -8,12 +8,18 @@ import { useNavigate } from 'react-router-dom'
 export type ClosetCoverBoxProps = {
   service: ClosetBoxService
   editMode?: boolean
+  handleClickBox?: () => void
 }
 
-const ClosetCoverBox = ({ service, editMode = false }: ClosetCoverBoxProps) => {
+const ClosetCoverBox = ({ service, editMode = false, handleClickBox }: ClosetCoverBoxProps) => {
   const navigate = useNavigate()
 
   const handleForwardDetailPage = () => {
+    if (handleClickBox) {
+      console.log('asd')
+      handleClickBox()
+      return
+    }
     navigate(`/closet/detail?id=${service.id}`)
   }
 
@@ -24,7 +30,7 @@ const ClosetCoverBox = ({ service, editMode = false }: ClosetCoverBoxProps) => {
           <NameTag service={{ closetBox: service, editMode }} />
         </S.CoverBoxHeader>
         <S.CoverBoxBody service={service}>
-          {service.coverImgUrl && service.coverImgUrl.length > 0 && (
+          {!(service.coverImgUrl && service.coverImgUrl.length > 0) && (
             <ClosetBoxGrabIcon
               coverBoxColor={service.colorScheme}
               coverImageMode={service.coverImageMode}

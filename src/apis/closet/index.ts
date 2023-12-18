@@ -67,3 +67,25 @@ export const getCloset = async (
   }
   return await request.get(`${BASE_PATH}/${id}`, { params: customPageParams })
 }
+
+export const patchClosetItems = async (
+  from: string,
+  to: string,
+  payload: { itemList: number[] },
+): Promise<ResponseType<undefined>> => {
+  return await request.patch(`${BASE_PATH}/${from}/${to}/items`, payload)
+}
+
+export const patchClosetItemsDelete = async (
+  closetId: string,
+  items: number[],
+): Promise<ResponseType<undefined>> => {
+  return await request.patch(`${BASE_PATH}/${closetId}/items`, { itemList: items })
+}
+
+export const patchClosetScrap = async (
+  itemId: string,
+  closetId: string,
+): Promise<ResponseType<undefined>> => {
+  return await request.post(`${BASE_PATH}/${itemId}/scrap/${closetId}`)
+}
