@@ -11,7 +11,7 @@ import * as S from '../ClosetCreateBox/styles'
 import { CreateClosetFormContext } from '../../create'
 import { useLocation, useNavigate } from 'react-router-dom'
 import NameTag from '../NameTag'
-import { CoverBoxColorKey, DEFAULT_COVER_COLOR_SET } from '../ClosetCoverBox/ClosetCoverBox.consts'
+import { CoverBoxColorKey, DEFAULT_COVER_COLOR_SET } from '../../utils/consts'
 import { CoverImageMode } from '../../../../apis/closet/model'
 import ClosetBoxGrabIcon from '../GrabIcon'
 
@@ -25,7 +25,7 @@ const ClosetCreateBox = ({ onForwardingCreate }: ClosetCreateBoxProps) => {
   const { pathname } = useLocation()
   const ref = createRef<HTMLInputElement>()
 
-  const isOnCreatePage = pathname === '/closet/create'
+  const isOnCreatePage = pathname === '/closet/create' || pathname === '/closet/edit'
 
   if (!context) return <></>
 
@@ -62,6 +62,7 @@ const ClosetCreateBox = ({ onForwardingCreate }: ClosetCreateBoxProps) => {
 
 // 순전히 ui logic 만 담겨야 한다.
 // img -> default -> none 우선순위를 가진다.
+// img : 이미지, default: 색상 커버, none : 배경 없음 및 텍스트 출력
 
 type ClosetCreateBoxContentProps = PropsWithChildren<object>
 
@@ -86,7 +87,9 @@ export const ClosetCreateBoxContent = ({ children }: ClosetCreateBoxContentProps
       {children}
       <S.CreateBoxContent closetBox={context.states}>
         <>
-          <ClosetBoxGrabIcon coverBoxColor={coverBoxColor} coverImageMode={coverImageMode} />
+          {coverImageMode !== 'IMAGE' && (
+            <ClosetBoxGrabIcon coverBoxColor={coverBoxColor} coverImageMode={coverImageMode} />
+          )}
           {showCreateBoxContentText && (
             <S.CreateBoxTitleWrapper>{coverBoxText}</S.CreateBoxTitleWrapper>
           )}

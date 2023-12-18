@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { CoverBoxColorKey, DEFAULT_COVER_COLOR_SET } from '../ClosetCoverBox/ClosetCoverBox.consts'
+import { CoverBoxColorKey, DEFAULT_COVER_COLOR_SET } from '../../utils/consts'
 
 export const Root = styled.div`
   width: 220px;

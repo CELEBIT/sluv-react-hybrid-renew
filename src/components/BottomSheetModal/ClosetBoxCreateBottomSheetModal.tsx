@@ -5,36 +5,33 @@ import Header from '../Header/Header'
 import useModals from '../Modals/hooks/useModals'
 import { ReactComponent as ShareIcon } from '../../assets/share_24.svg'
 
-export interface ListItem {
+export interface ClosetBoxBottomSheetListItem {
   title: string
   callback: (...arg: any) => void
 }
 
 type ClosetBoxBottomSheetModalProps = {
-  items?: ListItem[]
+  items?: ClosetBoxBottomSheetListItem[]
+  title: string
 }
 
-const ClosetBoxBottomSheetModal = ({ items }: ClosetBoxBottomSheetModalProps) => {
+const ClosetBoxCreateBottomSheetModal = ({ items, title }: ClosetBoxBottomSheetModalProps) => {
   const { closeModal } = useModals()
 
   const handleCloseModal = () => {
-    closeModal(ClosetBoxBottomSheetModal)
+    closeModal(ClosetBoxCreateBottomSheetModal)
   }
 
   return (
     <BottomSheetModal>
       <HeaderWrapper>
-        <Header
-          modalCloseBtnClick={handleCloseModal}
-          isModalHeader={true}
-          title={'커버 이미지 선택'}
-        />
+        <Header modalCloseBtnClick={handleCloseModal} isModalHeader={true} title={title} />
       </HeaderWrapper>
       <ModalContentContainer>
         {items?.map((item) => {
           return (
             <ItemContainer key={item.title}>
-              <ShareIcon />
+              <ShareIcon stroke={'black'} />
               <ItemTitle onClick={item.callback}>{item.title}</ItemTitle>
             </ItemContainer>
           )
@@ -77,4 +74,4 @@ const HeaderWrapper = styled.div`
   padding: 0 1.25rem;
 `
 
-export default ClosetBoxBottomSheetModal
+export default ClosetBoxCreateBottomSheetModal

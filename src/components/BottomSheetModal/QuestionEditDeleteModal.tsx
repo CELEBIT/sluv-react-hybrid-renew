@@ -25,9 +25,9 @@ const QuestionEditDeleteModal = () => {
   const onClickEditQuestion = () => {
     console.log('questionType', questionType)
     closeModal(modals.QuestionEditDeleteModal, () => {
-      if (questionType === 'Find') navigate('/community/find-request/edit')
+      if (questionType === 'Find') navigate('/community/find-request/deleteAndSort')
       else if (questionType === 'How' || questionType === 'Recommend')
-        navigate('/community/question/edit')
+        navigate('/community/question/deleteAndSort')
       else {
         alert('투표가 시작되어 수정할 수 없어요')
       }

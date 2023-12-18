@@ -9,6 +9,8 @@ import SelectItemOrPhoto from './components/SelectItemOrPhoto'
 
 import Loading from './components/Loading'
 import { bridgeProxyAdapter } from './utils/bridge'
+import ClosetBoxEditPage from './pages/closet/edit'
+import ClosetDetailPage from './pages/closet/detail'
 
 bridgeProxyAdapter()
 
@@ -55,7 +57,7 @@ const AddSubComment = React.lazy(
 const Search = React.lazy(() => import('./pages/search'))
 const SearchResult = React.lazy(() => import('./pages/search/SearchResult'))
 // 옷장
-
+const ClosetEditAndSortPage = React.lazy(() => import('./pages/closet/deleteAndSort'))
 const ClosetCreatePage = React.lazy(() => import('./pages/closet/create'))
 
 // 마이페이지
@@ -147,6 +149,11 @@ const App = () => {
             <Route path='/search/result' element={<SearchResult />} />
             {/* 옷장 */}
             <Route path='/closet' element={<Closet />} />
+            <Route path={'/closet/create/'} element={<ClosetCreatePage isEditMode={false} />} />
+            <Route path={'/closet/edit'} element={<ClosetBoxEditPage />} />
+            <Route path={'/closet/deleteAndSort/'} element={<ClosetEditAndSortPage />} />
+            <Route path={'/closet/detail'} element={<ClosetDetailPage />} />
+
             {/* 마이페이지 */}
             <Route path='/user' element={<User />} />
             <Route path='/user/:id' element={<User />} />

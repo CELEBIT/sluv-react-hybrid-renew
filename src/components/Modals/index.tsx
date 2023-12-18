@@ -5,7 +5,7 @@ import loadable from '@loadable/component'
 import PropTypes from 'prop-types'
 import { QuestionChangeModalProps } from '../TwoButtonModal/QuestionChangeModal'
 import { CommunityMenu } from '../../config/communityMenu'
-import ClosetBoxBottomSheetModal from '../BottomSheetModal/ClosetBoxBottomSheetModal'
+import ClosetBoxCreateBottomSheetModal from '../BottomSheetModal/ClosetBoxCreateBottomSheetModal'
 import { userIdProps } from '../BottomSheetModal/UserInterestCelebModal'
 
 const AskRecentPostWritingModal = loadable(
@@ -117,8 +117,8 @@ export const modals = {
   SelectedInterestCelebModal: SelectedInterestCelebModal as FunctionComponent<
     ComponentProps<typeof SelectedInterestCelebModal>
   >,
-  ClosetBoxSelectCoverModal: ClosetBoxBottomSheetModal as FunctionComponent<
-    ComponentProps<typeof ClosetBoxBottomSheetModal>
+  ClosetBoxSelectCoverModal: ClosetBoxCreateBottomSheetModal as FunctionComponent<
+    ComponentProps<typeof ClosetBoxCreateBottomSheetModal>
   >,
   UserInterestCelebModal: UserInterestCelebModal as FunctionComponent<userIdProps>,
 }

@@ -1,6 +1,9 @@
-import { ChangeEvent, FocusEvent, useState, MouseEvent } from 'react'
+import { ChangeEvent, FocusEvent, useState, MouseEvent, useContext, useEffect } from 'react'
 import { VALIDATION_ERROR_CASE } from './consts'
 import { NameTagService } from '../../services'
+import { useDebouncedCallback } from 'use-debounce'
+import { getClosetCheckName } from '../../../../apis/closet'
+import { CreateClosetFormContext } from '../../create'
 
 export const validateEditInputText = (text: string): keyof typeof VALIDATION_ERROR_CASE | null => {
   if (text) {
@@ -10,41 +13,53 @@ export const validateEditInputText = (text: string): keyof typeof VALIDATION_ERR
   return null
 }
 
-type UseNameTagProps = Pick<NameTagService, 'onSave'>
+type UseNameTagProps = Pick<NameTagService, 'onSave' | 'closetBox'> & {
+  validators?: (() => boolean)[]
+  editMode: boolean
+}
 
-export const useNameTag = ({ onSave }: UseNameTagProps) => {
-  const [showValidationTooltip, setShowValidationTooltip] = useState<boolean>(false)
+export const useNameTag = ({ onSave, closetBox, editMode }: UseNameTagProps) => {
+  const [showTooltipValidation, setShowTooltipValidation] = useState<boolean>(false)
   const [tooltipText, setTooltipText] = useState<string>('')
+  const [hasValidationError, setHasValidationError] = useState<boolean>(false)
+  const context = useContext(CreateClosetFormContext)
+  const nameText = context?.states.name
+  const setNameText = context?.handlers.setName
 
   const handleFocusOut = (e: FocusEvent<HTMLInputElement>) => {
     e.stopPropagation()
-    setShowValidationTooltip(false)
-    setTooltipText('')
-    onSave?.(e.target.value)
+    setShowTooltipValidation(false)
+    if (nameText != null) {
+      onSave?.(nameText)
+    }
   }
 
   const handleChangeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
-    const errorKey = validateEditInputText(e.target.value)
-    if (errorKey !== null) {
-      setTooltipText(VALIDATION_ERROR_CASE[errorKey])
-      setShowValidationTooltip(true)
-      return
-    }
-    setTooltipText('')
-    setShowValidationTooltip(false)
+    setNameText?.(e.target.value)
   }
 
   const handleFocus = (e: FocusEvent<HTMLInputElement>) => {
     e.stopPropagation()
     e.preventDefault()
-    const errorKey = validateEditInputText(e.target.value)
-    if (errorKey) {
-      setTooltipText(VALIDATION_ERROR_CASE[errorKey])
-    } else {
-      setTooltipText(VALIDATION_ERROR_CASE.initial)
-    }
-    setShowValidationTooltip(true)
+    setShowTooltipValidation(true)
   }
+
+  useEffect(() => {
+    // handleTooltipText
+
+    if (editMode) {
+      if (nameText != null) {
+        const errorKey = validateEditInputText(nameText)
+        if (errorKey) {
+          setTooltipText(VALIDATION_ERROR_CASE[errorKey])
+          setShowTooltipValidation(true)
+        } else {
+          setTooltipText(VALIDATION_ERROR_CASE.initial)
+          setShowTooltipValidation(false)
+        }
+      }
+    }
+  }, [nameText])
 
   // for stop event bubbling to modal
   const handleClick = (e: MouseEvent<HTMLDivElement>) => {
@@ -60,8 +75,9 @@ export const useNameTag = ({ onSave }: UseNameTagProps) => {
       handleClick,
     },
     states: {
-      showValidationTooltip,
+      showTooltipValidation,
       tooltipText,
+      nameText,
     },
   }
 }

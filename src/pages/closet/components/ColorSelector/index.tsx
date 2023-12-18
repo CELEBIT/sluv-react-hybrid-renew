@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import * as S from './styles'
-import { CoverBoxColorKey, DEFAULT_COVER_COLOR_SET } from '../ClosetCoverBox/ClosetCoverBox.consts'
+import { CoverBoxColorKey, DEFAULT_COVER_COLOR_SET } from '../../utils/consts'
 import { CreateClosetFormContext } from '../../create'
 
 const checkDefaultColor = (color: CoverBoxColorKey) => {

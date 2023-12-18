@@ -1,30 +1,57 @@
-import React, { createContext, useCallback, useMemo } from 'react'
+import React, { ChangeEvent, createContext, useCallback, useMemo, useRef } from 'react'
 import { useCreateClosetFormContext } from './hooks'
 import Header from '../../../components/Header/Header'
 
 import * as S from './styles'
-import ClosetCreateBox from '../components/ClosetCreateBox'
+import ClosetCreateBox, { ClosetCreateBoxProps } from '../components/ClosetCreateBox'
 import ColorSelector from '../components/ColorSelector'
 import useModals from '../../../components/Modals/hooks/useModals'
-import ClosetBoxBottomSheetModal, {
-  ListItem,
-} from '../../../components/BottomSheetModal/ClosetBoxBottomSheetModal'
+import ClosetBoxCreateBottomSheetModal, {
+  ClosetBoxBottomSheetListItem,
+} from '../../../components/BottomSheetModal/ClosetBoxCreateBottomSheetModal'
+import ToggleSwitch from '../../../components/ToggleSwitch/ToggleSwitch'
+import { ClosetBoxService } from '../services'
+import { useLocation, useParams } from 'react-router-dom'
+import OneButtonModal from '../../../components/OneButtonModal'
+import { BtnModalContent } from '../../../components/Modals/styles'
 
 type CreateClosetFormContextType = ReturnType<typeof useCreateClosetFormContext>
 export const CreateClosetFormContext = createContext<CreateClosetFormContextType | null>(null)
 
-const ClosetBoxCreatePage = () => {
-  const contextValue = useCreateClosetFormContext()
+type ClosetBoxCreatePageProps = {
+  service?: ClosetBoxService
+  isEditMode: boolean
+}
+
+const DuplicatedModal = () => {
+  const { closeModal } = useModals()
+  return (
+    <OneButtonModal buttonName={'확인'} buttonOnClick={() => closeModal(DuplicatedModal)}>
+      <BtnModalContent>중복된 옷장 이름입니다.</BtnModalContent>
+    </OneButtonModal>
+  )
+}
+
+const ClosetBoxCreatePage = ({ service, isEditMode = false }: ClosetBoxCreatePageProps) => {
+  const coverImageRef = useRef<HTMLInputElement>(null)
 
   const { openModal, closeModal } = useModals()
 
-  const SELECT_COVER_IMAGE_MODAL_ITEMS: ListItem[] = useMemo(
+  const contextValue = useCreateClosetFormContext(
+    service,
+    () => {
+      openModal(DuplicatedModal)
+    },
+    isEditMode,
+  )
+
+  const SELECT_COVER_IMAGE_MODAL_ITEMS: ClosetBoxBottomSheetListItem[] = useMemo(
     () => [
       {
         title: '앨범에서 사진 선택',
         callback: () => {
-          // TODO: 웹뷰 통신
-          console.log('앨범 선택')
+          coverImageRef.current?.click()
+          closeModal(ClosetBoxCreateBottomSheetModal)
         },
       },
       {
@@ -32,7 +59,7 @@ const ClosetBoxCreatePage = () => {
         callback: () => {
           // TODO: 웹뷰 통신
           contextValue.handlers.setCoverImageMode('DEFAULT')
-          closeModal(ClosetBoxBottomSheetModal)
+          closeModal(ClosetBoxCreateBottomSheetModal)
         },
       },
     ],
@@ -40,8 +67,32 @@ const ClosetBoxCreatePage = () => {
   )
 
   const handleOpenSelectCoverModal = useCallback(() => {
-    openModal(ClosetBoxBottomSheetModal, { items: SELECT_COVER_IMAGE_MODAL_ITEMS })
+    openModal(ClosetBoxCreateBottomSheetModal, {
+      items: SELECT_COVER_IMAGE_MODAL_ITEMS,
+      title: '커버 이미지 선택',
+    })
   }, [])
+
+  const handleChangeFile = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    console.log(file)
+    if (!file) {
+      alert('파일이 없습니다.')
+      return
+    }
+
+    // 2. 임시 URL생성 -> 진짜 URL생성, 다른 브라우저에서도 접근 가능
+    const fileReader = new FileReader()
+    fileReader.readAsDataURL(file)
+    fileReader.onload = (data) => {
+      // 파일리더의 결과값이 string이 아닐수도 있으니 string일때만 실행되도록
+      if (typeof data.target?.result === 'string') {
+        console.log(data.target?.result)
+        contextValue.handlers.setCoverImgUrl(data.target?.result)
+        contextValue.handlers.setCoverImageMode('IMAGE')
+      }
+    }
+  }
 
   return (
     <CreateClosetFormContext.Provider value={contextValue}>
@@ -52,8 +103,36 @@ const ClosetBoxCreatePage = () => {
         <S.BodyContainer>
           <ClosetCreateBox onForwardingCreate={handleOpenSelectCoverModal} />
           <ColorSelector />
+          <input
+            type='file'
+            onChange={handleChangeFile}
+            ref={coverImageRef}
+            style={{ display: 'none' }}
+            accept='image/*'
+          />
         </S.BodyContainer>
-        <S.ClosetCreateFooterElementWrapper></S.ClosetCreateFooterElementWrapper>
+        <S.CreateFooter>
+          <S.ClosetCreateFooterElementWrapper>
+            <S.SwitchContainer>
+              <p>공개여부</p>
+              <ToggleSwitch
+                isToggleOn={contextValue.states.closetStatus === 'PUBLIC'}
+                onToggleSwitch={(e) =>
+                  contextValue.handlers.setClosetStatus(e.target.checked ? 'PUBLIC' : 'PRIVATE')
+                }
+              />
+            </S.SwitchContainer>
+          </S.ClosetCreateFooterElementWrapper>
+          <S.ClosetCreateFooterElementWrapper>
+            <S.Button
+              onClick={async () => {
+                await contextValue.handlers.handleCreateNewCloset()
+              }}
+            >
+              완료
+            </S.Button>
+          </S.ClosetCreateFooterElementWrapper>
+        </S.CreateFooter>
       </S.CreateRoot>
     </CreateClosetFormContext.Provider>
   )

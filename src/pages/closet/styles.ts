@@ -21,6 +21,8 @@ export const BodyContainer = styled.section`
   width: 100%;
   gap: 12px;
   flex-direction: column;
+  margin-bottom: 90px;
+  overflow-y: scroll;
 `
 
 export const SubHeader = styled.section`
@@ -38,12 +40,4 @@ export const SubHeaderTitleWrapper = styled.p<{ fontColor?: string }>`
   line-height: 18px;
   font-size: 15px;
   color: ${({ fontColor }) => fontColor ?? '#000000'};
-`
-
-export const SubHeaderEditText = styled.p`
-  font-weight: 500;
-  font-family: Pretendard;
-  line-height: 18px;
-  font-size: 15px;
-  color: #aeb5bc;
 `
