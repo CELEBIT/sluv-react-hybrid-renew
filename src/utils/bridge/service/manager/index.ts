@@ -5,7 +5,7 @@ class BridgeServiceManager {
   readonly bridgeServices = ServiceList
   readonly bridgeServiceKeys = Object.keys(ServiceList) as (keyof typeof ServiceList)[]
 
-  getService<TReqPayload, TResPayload>(serviceName: keyof typeof this.bridgeServices) {
+  getService(serviceName: keyof typeof this.bridgeServices) {
     return this.bridgeServices[serviceName]
   }
 

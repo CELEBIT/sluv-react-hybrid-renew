@@ -40,7 +40,7 @@ const SelectQuestionMenu = () => {
   }
   return (
     <MenuSelectWrapper>
-      {pathname.includes('edit') ? (
+      {pathname.includes('deleteAndSort') ? (
         <>
           {QuestionMenuList.map((menu) => {
             if (menu === communityQuestionMenu)
