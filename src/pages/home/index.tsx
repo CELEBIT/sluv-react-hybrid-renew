@@ -1,5 +1,5 @@
 import React from 'react'
-import { ReactComponent as Banner } from '../../assets/TopBanner.svg'
+import { ReactComponent as Banner } from '../../assets/Top.svg'
 import { ReactComponent as HotCelebBanner } from '../../assets/HotCelebBanner.svg'
 import { ReactComponent as Logo } from '../../assets/logo.svg'
 
