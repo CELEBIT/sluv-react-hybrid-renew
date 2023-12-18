@@ -36,4 +36,5 @@ export const atomKeys = {
   selectedFollowTab: 'selectedFollowTab' as const,
   selectedUserName: 'selectedUserName' as const,
   hasTriedUpload: 'hasTriedUpload' as const,
+  imgListUpdatedState: 'imgListUpdatedState' as const,
 }

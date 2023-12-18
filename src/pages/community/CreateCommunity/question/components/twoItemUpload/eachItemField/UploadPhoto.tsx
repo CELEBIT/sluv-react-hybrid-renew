@@ -3,16 +3,14 @@ import { ReactComponent as Delete } from '../../../../../../../assets/delete_tex
 import { ImageField } from './ExistingItem'
 
 interface UploadPhotoProps {
-  imgFile: File | null | undefined
+  imgFile: File
   className?: string
   onDelete: any
 }
 
 const UploadPhoto = ({ imgFile, className, onDelete }: UploadPhotoProps) => {
-  // 유저가 갤러리에서 업로드한 사진 아이템
-  console.log('imgFile', imgFile)
   return (
-    <ImageField imgFile={imgFile} className={className}>
+    <ImageField imgUrl={URL.createObjectURL(imgFile)} className={className}>
       <Delete className='delete' onClick={() => onDelete()}></Delete>
     </ImageField>
   )
