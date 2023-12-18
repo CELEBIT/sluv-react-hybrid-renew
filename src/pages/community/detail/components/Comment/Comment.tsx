@@ -70,7 +70,7 @@ const Comment = ({ questionId, comment }: CommentProps) => {
               onClick={() => navigate('/community/comment/edit', { state: comment })}
             ></ShowMore>
           </ContentTop>
-          {comment.commentStatus === 'Blocked' ? (
+          {comment.commentStatus === 'ACTIVE' ? (
             <CommentContent>{comment.content}</CommentContent>
           ) : (
             <BlockedContainer>
