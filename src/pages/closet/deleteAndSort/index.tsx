@@ -15,7 +15,7 @@ import { ReactComponent as DeleteIcon } from '../../../assets/delete_list_24.svg
 import { MockedIcon } from '../create/styles'
 import { useNavigate } from 'react-router-dom'
 
-type DeleteRecheckModalParam = {
+export type DeleteRecheckModalParam = {
   handleCancel: (...args: any) => void
   handleConfirm: (...args: any) => void
 }
