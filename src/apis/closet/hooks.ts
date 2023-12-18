@@ -16,7 +16,7 @@ export const closetQueryConfig = {
     mutaionKey: ['put', 'closet'],
   }),
   getCloset: (id: ClosetBoxModel['id']) => ({
-    queryFn: ({ pageParam = 1 }) => getCloset(id, pageParam),
+    queryFn: ({ pageParam = 0 }) => getCloset(id, pageParam),
     queryKey: ['get', 'closet', 'detail'],
   }),
 }

@@ -61,7 +61,7 @@ const ClosetDetailPage = () => {
   console.log(id)
 
   const handleScroll: UIEventHandler<HTMLDivElement> = (e) => {
-    setContentTop('50px')
+    setContentTop('0px')
     console.log('excuted')
   }
 
@@ -84,7 +84,7 @@ const ClosetDetailPage = () => {
           </S.EmptyBoxContainer>
         </S.EmptyPageRoot>
       )}
-      {data?.pages[0].itemNum <= 0 && (
+      {data?.pages[0].itemNum > 0 && (
         <S.Body>
           <S.BackgroundContainer
             colorScheme={data?.pages[0].colorScheme}
