@@ -1,7 +1,7 @@
 import { CommunityItem } from '../../recoil/communityInfo'
 import request from '../core'
 import { GetPaginationResult, ResponseType } from '../core/type'
-import { QuestionResult } from './questionService.type'
+import { CommunityBannerItem, QuestionResult } from './questionService.type'
 import { SearchQuestionResult } from '../search/searchService'
 
 export interface questionUpload {
@@ -78,14 +78,27 @@ export default class QuestionService {
     return data
   }
 
-  // 커뮤니티 아이템 검색(qtype으로 구별)
-  async getQuestionList(page: number, qType?: string | undefined) {
+  // 커뮤니티 전체 아이템 검색
+  async getQuestionTotalList(page: number) {
     const data: ResponseType<GetPaginationResult<SearchQuestionResult>> = await request.get(
-      `${this.questionUrl}/list`,
+      `${this.questionUrl}/total`,
       {
         params: {
           page,
-          qType,
+          size: 20,
+        },
+      },
+    )
+    return data.result
+  }
+
+  // 커뮤니티 주간 HOT 아이템 검색
+  async getQuestionHotList(page: number) {
+    const data: ResponseType<GetPaginationResult<SearchQuestionResult>> = await request.get(
+      `${this.questionUrl}/weeklyhot`,
+      {
+        params: {
+          page,
           size: 20,
         },
       },
@@ -107,5 +120,70 @@ export default class QuestionService {
     const data: ResponseType = await request.delete(`${this.questionUrl}/${questionId}`)
     console.log('질문게시글삭제', data)
     return data
+  }
+
+  // 커뮤니티 홈 배너 아이템
+  async getCommunityBannerItems() {
+    const data: ResponseType<Array<CommunityBannerItem>> = await request.get(
+      `${this.questionUrl}/dailyhot`,
+    )
+    return data.result
+  }
+
+  // 찾아주세요 홈 아이템 검색
+  async getQuestionFindList(page: number, celebId?: number) {
+    const data: ResponseType<GetPaginationResult<SearchQuestionResult>> = await request.get(
+      `${this.questionUrl}/find`,
+      {
+        params: {
+          celebId: celebId,
+          page,
+          size: 20,
+        },
+      },
+    )
+    return data.result
+  }
+  // 이 중에 뭐 살까 홈 아이템 검색
+  async getQuestionBuyList(page: number, voteStatus?: string) {
+    const data: ResponseType<GetPaginationResult<SearchQuestionResult>> = await request.get(
+      `${this.questionUrl}/buy`,
+      {
+        params: {
+          voteStatus: voteStatus,
+          page,
+          size: 20,
+        },
+      },
+    )
+    return data.result
+  }
+  // 이거 어때 홈 아이템 검색
+  async getQuestionHowAboutList(page: number, celebId?: number) {
+    const data: ResponseType<GetPaginationResult<SearchQuestionResult>> = await request.get(
+      `${this.questionUrl}/howabout`,
+      {
+        params: {
+          celebId: celebId,
+          page,
+          size: 20,
+        },
+      },
+    )
+    return data.result
+  }
+  // 추천해줘 홈 아이템 검색
+  async getQuestionRecommendList(page: number, hashtag?: string) {
+    const data: ResponseType<GetPaginationResult<SearchQuestionResult>> = await request.get(
+      `${this.questionUrl}/recommend`,
+      {
+        params: {
+          hashtag: hashtag,
+          page,
+          size: 20,
+        },
+      },
+    )
+    return data.result
   }
 }

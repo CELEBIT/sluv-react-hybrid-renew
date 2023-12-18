@@ -9,16 +9,16 @@ export interface IVote {
   voteSortOrder: number
 }
 
-const useQuestionListQuery = (qType: string | undefined) => {
+const useQuestionListQuery = () => {
   const question = new QuestionService()
 
-  const getQuestionList = (): UseInfiniteQueryResult<
+  const getQuestionTotalList = (): UseInfiniteQueryResult<
     GetPaginationResult<SearchQuestionResult>,
     any
   > => {
     return useInfiniteQuery(
-      queryKeys.getQuestionList(qType),
-      ({ pageParam = 0 }) => question.getQuestionList(pageParam, qType),
+      queryKeys.getQuestionTotalList,
+      ({ pageParam = 0 }) => question.getQuestionTotalList(pageParam),
       {
         getNextPageParam: (lastPage) => {
           if (lastPage?.hasNext) return lastPage.page + 1
@@ -28,7 +28,87 @@ const useQuestionListQuery = (qType: string | undefined) => {
     )
   }
 
-  return { getQuestionList }
+  const getQuestionHotList = (): UseInfiniteQueryResult<
+    GetPaginationResult<SearchQuestionResult>,
+    any
+  > => {
+    return useInfiniteQuery(
+      queryKeys.getQuestionHotList,
+      ({ pageParam = 0 }) => question.getQuestionHotList(pageParam),
+      {
+        getNextPageParam: (lastPage) => {
+          if (lastPage?.hasNext) return lastPage.page + 1
+          return undefined
+        },
+      },
+    )
+  }
+
+  const getQuestionFindList = (
+    celebId?: number,
+  ): UseInfiniteQueryResult<GetPaginationResult<SearchQuestionResult>, any> => {
+    return useInfiniteQuery(
+      queryKeys.getQuestionFindList(celebId),
+      ({ pageParam = 0 }) => question.getQuestionFindList(pageParam, celebId),
+      {
+        getNextPageParam: (lastPage) => {
+          if (lastPage?.hasNext) return lastPage.page + 1
+          return undefined
+        },
+      },
+    )
+  }
+  const getQuestionHowAboutList = (
+    celebId?: number,
+  ): UseInfiniteQueryResult<GetPaginationResult<SearchQuestionResult>, any> => {
+    return useInfiniteQuery(
+      queryKeys.getQuestionHowAboutList(celebId),
+      ({ pageParam = 0 }) => question.getQuestionHowAboutList(pageParam, celebId),
+      {
+        getNextPageParam: (lastPage) => {
+          if (lastPage?.hasNext) return lastPage.page + 1
+          return undefined
+        },
+      },
+    )
+  }
+  const getQuestionBuyList = (
+    voteStatus: string,
+  ): UseInfiniteQueryResult<GetPaginationResult<SearchQuestionResult>, any> => {
+    return useInfiniteQuery(
+      queryKeys.getQuestionBuyList(voteStatus),
+      ({ pageParam = 0 }) => question.getQuestionBuyList(pageParam, voteStatus),
+      {
+        getNextPageParam: (lastPage) => {
+          if (lastPage?.hasNext) return lastPage.page + 1
+          return undefined
+        },
+      },
+    )
+  }
+  const getQuestionRecommendList = (
+    hashtag?: string,
+  ): UseInfiniteQueryResult<GetPaginationResult<SearchQuestionResult>, any> => {
+    return useInfiniteQuery(
+      queryKeys.getQuestionRecommendList(hashtag),
+      ({ pageParam = 0 }) => question.getQuestionRecommendList(pageParam, hashtag),
+      {
+        getNextPageParam: (lastPage) => {
+          if (lastPage?.hasNext) return lastPage.page + 1
+          return undefined
+        },
+      },
+    )
+  }
+
+  return {
+    getQuestionTotalList,
+    getQuestionHotList,
+    getQuestionFindList,
+    getQuestionHowAboutList,
+    getQuestionBuyList,
+    getQuestionRecommendList,
+  }
 }
 
 export default useQuestionListQuery

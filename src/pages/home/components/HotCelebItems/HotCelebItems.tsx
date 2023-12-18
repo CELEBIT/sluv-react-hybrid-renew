@@ -27,6 +27,7 @@ const HotCelebItems = () => {
 
   const { getHotCelebItem } = useHotCelebItemQuery()
   const { data } = getHotCelebItem(tab)
+  console.log('hot', data)
 
   return (
     <ScrollComponentWrapper>

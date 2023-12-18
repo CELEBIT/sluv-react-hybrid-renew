@@ -45,11 +45,30 @@ const EditRequest = React.lazy(() => import('./pages/item/editRequest'))
 const RequestReason = React.lazy(() => import('./pages/item/editRequest/requestReason'))
 
 // 커뮤니티 세부 페이지
+
+const FindHome = React.lazy(() => import('./pages/community/pages/FindHome/FindHome'))
+const HowAboutHome = React.lazy(() => import('./pages/community/pages/HowAboutHome/HowAboutHome'))
+const RecommendHome = React.lazy(
+  () => import('./pages/community/pages/RecommendHome/RecommendHome'),
+)
+const BuyHome = React.lazy(() => import('./pages/community/pages/BuyHome/BuyHome'))
+
 const FindRequest = React.lazy(() => import('./pages/community/CreateCommunity/findRequest'))
 const Question = React.lazy(() => import('./pages/community/CreateCommunity/question'))
+const CreateBuy = React.lazy(() => import('./pages/community/CreateCommunity/question/whichOne'))
+const CreateHowabout = React.lazy(
+  () => import('./pages/community/CreateCommunity/question/howAboutThis'),
+)
+const CreateRecommend = React.lazy(
+  () => import('./pages/community/CreateCommunity/question/recommend'),
+)
+
 const CommunityDetail = React.lazy(() => import('./pages/community/detail/CommunityDetail'))
 const CommentItemPhoto = React.lazy(() => import('./components/SelectItemOrPhoto/CommentItemPhoto'))
 const CommentUpload = React.lazy(() => import('./pages/community/detail/components/CommentUpload'))
+const EditComment = React.lazy(
+  () => import('./pages/community/detail/components/EditComment/EditComment'),
+)
 const AddSubComment = React.lazy(
   () => import('./pages/community/detail/components/AddSubComment/AddSubComment'),
 )
@@ -117,13 +136,22 @@ const App = () => {
             <Route path='/select-celeb/complete' element={<SignupComplete />} />
             {/* 커뮤니티 */}
             <Route path='/community' element={<Community />} />
-            <Route path='/community/find-request' element={<FindRequest />} />
+            <Route path='/community/find' element={<FindHome />} />
+            <Route path='/community/howabout' element={<HowAboutHome />} />
+            <Route path='/community/recommend' element={<RecommendHome />} />
+            <Route path='/community/buy' element={<BuyHome />} />
+            <Route path='/community/create/find-request' element={<FindRequest />} />
             <Route path='/community/find-request/edit' element={<FindRequest />} />
-            <Route path='/community/question' element={<Question />} />
+            <Route path='/community/create' element={<Question />}>
+              <Route path='buy' element={<CreateBuy />} />
+              <Route path='howabout' element={<CreateHowabout />} />
+              <Route path='recommend' element={<CreateRecommend />} />
+            </Route>
             <Route path='/community/question/edit' element={<Question />} />
             <Route path='/community/select-item-photo' element={<SelectItemOrPhoto />} />
             <Route path='/community/comment/comment-item-photo' element={<CommentItemPhoto />} />
             <Route path='/community/comment/upload' element={<CommentUpload />} />
+            <Route path='/community/comment/edit' element={<EditComment />} />
             <Route path='/community/comment/subcomment' element={<AddSubComment />} />
             <Route path='/community/detail/:id' element={<CommunityDetail />} />
             <Route path='/community/detail/:id/comment/:commentid' element={<CommunityDetail />} />

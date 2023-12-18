@@ -44,7 +44,6 @@ const SelectItemOrPhoto = () => {
   const navigate = useNavigate()
   const [communityUploadInfo, setCommunityUploadInfo] = useRecoilState(communityItemState)
   const CommunityMenu = useRecoilValue(communityMenuState)
-  const communityQuestionMenu = useRecoilValue(communityQuestionMenuState)
   const [maxItemPhotoCount, setMaxItemPhotoCount] = useRecoilState(maxItemPhotoCountState)
   const [searchValue, setSearchValue] = useRecoilState<string>(itemNameSearchState)
   const [selectedTab, setSelectedTab] = useState('recent')
@@ -82,7 +81,6 @@ const SelectItemOrPhoto = () => {
         }
         const { itemList, imgList } = prevInfo
         const updatedItemList = itemList ? [...itemList] : []
-        const updatedImgList = imgList ? [...imgList] : []
 
         updatedList.forEach((item, index) => {
           if (
@@ -90,7 +88,7 @@ const SelectItemOrPhoto = () => {
             !updatedItemList.some((existingItem) => existingItem.itemId === item.itemId)
           ) {
             // 아이템 추가
-            if (CommunityMenu === '질문해요' && communityQuestionMenu === '이 중에 뭐 살까') {
+            if (CommunityMenu === '이 중에 뭐 살까') {
               if (index === 0) {
                 updatedItemList.push({
                   itemId: item.itemId,
@@ -117,48 +115,13 @@ const SelectItemOrPhoto = () => {
                 representFlag: item.representFlag,
               })
             }
-          } else if (
-            !item.itemId &&
-            item.imgUrl &&
-            !updatedImgList.some((existingItem) => existingItem.imgUrl === item.imgUrl)
-          ) {
-            // 사진 추가
-            if (CommunityMenu === '질문해요' && communityQuestionMenu === '이 중에 뭐 살까') {
-              if (index === 0) {
-                // 왼쪽 아이템 사진, 이름 설정
-                updatedImgList.push({
-                  imgUrl: item.imgUrl,
-                  description: firstItem.description,
-                  sortOrder: index,
-                  // vote: null,
-                  representFlag: true,
-                })
-              } else {
-                // 오른쪽 아이템 사진, 이름 설정
-                updatedImgList.push({
-                  imgUrl: item.imgUrl,
-                  description: secondItem.description,
-                  sortOrder: index,
-                  // vote: null,
-                  representFlag: true,
-                })
-              }
-            } else {
-              updatedImgList.push({
-                imgUrl: item.imgUrl,
-                description: item.description,
-                sortOrder: index,
-                // vote: null,
-                representFlag: item.representFlag,
-              })
-            }
           }
         })
-
+        console.log('updatedItemList', updatedItemList)
         return {
           ...prevInfo,
           itemList: updatedItemList.length > 0 ? updatedItemList : null,
-          imgList: updatedImgList.length > 0 ? updatedImgList : null,
+          // imgList: updatedImgList.length > 0 ? updatedImgList : null,
         }
       })
     }
@@ -166,14 +129,10 @@ const SelectItemOrPhoto = () => {
   }
 
   useEffect(() => {
-    if (CommunityMenu === '찾아주세요') {
-      setMaxItemPhotoCount(5)
+    if (CommunityMenu === '이 중에 뭐 살까') {
+      setMaxItemPhotoCount(2)
     } else {
-      if (communityQuestionMenu === '이 중에 뭐 살까') {
-        setMaxItemPhotoCount(2)
-      } else {
-        setMaxItemPhotoCount(5)
-      }
+      setMaxItemPhotoCount(5)
     }
   }, [])
 
@@ -194,42 +153,44 @@ const SelectItemOrPhoto = () => {
         const reader = new FileReader()
         if (imgItemList.length + i + 1 <= maxItemPhotoCount) {
           reader.onloadend = () => {
-            const fileSelected: IselectedItem = {
+            const fileSelected = {
               imgFile: file,
-              imgUrl: reader.result as string,
               description: null,
               vote: null,
               representFlag: !imgItemList && i === 0,
             }
-            if (CommunityMenu === '질문해요' && communityQuestionMenu === '이 중에 뭐 살까') {
+            if (CommunityMenu === '이 중에 뭐 살까') {
               if (fileArr[i]) {
                 if (i === 0) {
+                  console.log(firstItem)
                   // firstItem || secondItem 둘중에 하나라도 null 이면 추가 가능
-                  if (firstItem.imgUrl === null) {
+                  if (firstItem.imgFile === null && firstItem.itemId === null) {
                     // firstItem이 비어있을 때
-                    // console.log('first 아이템 null')
+                    console.log('first item 없음')
                     setFirstItem((prev) => ({
                       ...prev,
-                      ...{ imgUrl: reader.result as string },
+                      ...{ imgFile: fileArr[i] },
                     }))
-                  } else if (firstItem.imgUrl !== null) {
+                    console.log('firstItem', firstItem)
+                  } else if (firstItem.imgFile || firstItem.itemId) {
                     // first가 존재할 때
                     // console.log('seconds 아이템 null')
                     setSecondItem((prev) => ({
                       ...prev,
-                      ...{ imgUrl: reader.result as string },
+                      ...{ imgFile: fileArr[i] },
                     }))
                   }
                 } else {
                   // 두번째 사진 -> firstItem, secondItem 둘다 없을 때만 가능
                   // secondItem에만 추가하면 됨.
                   console.log('i==1')
-                  if (secondItem.imgUrl === null && secondItem.itemId === null) {
+                  if (secondItem.imgFile === null && secondItem.itemId === null) {
                     // console.log('seconds 아이템 null')
                     setSecondItem((prev) => ({
                       ...prev,
-                      ...{ imgUrl: reader.result as string },
+                      ...{ imgFile: fileArr[i] },
                     }))
+                    console.log('secondItem', secondItem)
                   }
                 }
               }

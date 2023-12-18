@@ -3,10 +3,11 @@ import TwoItemUpload from '../components/twoItemUpload'
 import { SubComponentContainer } from '../howAboutThis/styles'
 import { ComponentWrapper, Label, LabelContainer } from '../../../../item/create/styles'
 import DefaultTextfield from '../../../../../components/TextField/DefaultTextfield/DefaultTextfield'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import {
   communityItemState,
   firstItemState,
+  hasTriedUpload,
   secondItemState,
 } from '../../../../../recoil/communityInfo'
 import { ErrorText } from '../../../../../components/TextField/DefaultTextfield/styles'
@@ -18,12 +19,10 @@ import { modals } from '../../../../../components/Modals'
 import VoteDisplayField from '../components/VoteDisplayField'
 import { useNavigate } from 'react-router-dom'
 
-interface WhichOneProps {
-  hasTriedToUpload: boolean
-}
-
-const WhichOne = ({ hasTriedToUpload }: WhichOneProps) => {
+const WhichOne = () => {
   const { openModal } = useModals()
+  const hasTriedToUpload = useRecoilValue<boolean>(hasTriedUpload)
+
   const navigate = useNavigate()
   const [questionInfo, setQuestionInfo] = useRecoilState(communityItemState)
   const [title, setTitle] = useState<string | null>(questionInfo.title)
@@ -42,12 +41,13 @@ const WhichOne = ({ hasTriedToUpload }: WhichOneProps) => {
     // 초기 마감시간 설정
     setQuestionInfo({
       ...questionInfo,
+      content: null,
       voteEndTime: defaultEndDateTime,
     })
   }, [])
   return (
     <SubComponentContainer>
-      <ComponentWrapper>
+      <ComponentWrapper className='top'>
         <LabelContainer>
           {hasTriedToUpload && (!title || (title && title.length < 10)) && <Error></Error>}
           <Label>아이템 정보를 물어보세요</Label>
@@ -70,10 +70,10 @@ const WhichOne = ({ hasTriedToUpload }: WhichOneProps) => {
           <TwoItemUpload onClick={() => navigate('/community/select-item-photo')}></TwoItemUpload>
         </div>
         {hasTriedToUpload &&
-          (!firstItem.description ||
-            !secondItem.description ||
-            !firstItem.imgUrl ||
-            !secondItem.imgUrl) && <ErrorText className='error'>필수 항목입니다</ErrorText>}
+          (!firstItem.description || (!firstItem.imgUrl && !firstItem.imgFile)) &&
+          (!secondItem.description || (!secondItem.imgUrl && !secondItem.imgFile)) && (
+            <ErrorText className='error'>필수 항목입니다</ErrorText>
+          )}
       </ComponentWrapper>
       {/* <ComponentWrapper className='padding'></ComponentWrapper> */}
       <ComponentWrapper>
@@ -101,3 +101,26 @@ const WhichOne = ({ hasTriedToUpload }: WhichOneProps) => {
 }
 
 export default WhichOne
+const data = {
+  id: null,
+  title: '김종국 이창섭 옷 중에 뭐가 더 나아?',
+  imgList: [
+    {
+      imgUrl:
+        'https://elasticbeanstalk-ap-northeast-2-931662394917.s3.ap-northeast-2.amazonaws.com/asset/community/post/52b6e750-c4cd-4bec-8b8d-8dca10872f3a.jpeg',
+      description: '김종국',
+      representFlag: true,
+      sortOrder: 0,
+    },
+    {
+      imgUrl:
+        'https://elasticbeanstalk-ap-northeast-2-931662394917.s3.ap-northeast-2.amazonaws.com/asset/community/post/c548aedb-6cc5-4346-a947-2afa42fc2a45.png',
+      description: '이창섭',
+      representFlag: false,
+      sortOrder: 1,
+    },
+  ],
+  itemList: null,
+  content: null,
+  voteEndTime: '2023-12-19T05:15:59.789Z',
+}

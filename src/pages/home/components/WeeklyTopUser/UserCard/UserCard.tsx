@@ -11,11 +11,19 @@ interface UserCardProps {
   userName: string
   followStatus?: boolean
   borderRadius?: number
+  onClick: () => void
 }
 
-const UserCard = ({ rank, imgUrl, followStatus, userName, borderRadius }: UserCardProps) => {
+const UserCard = ({
+  rank,
+  imgUrl,
+  followStatus,
+  userName,
+  borderRadius,
+  onClick,
+}: UserCardProps) => {
   return (
-    <UserCardWrapper borderRadius={borderRadius}>
+    <UserCardWrapper borderRadius={borderRadius} onClick={onClick}>
       {rank && rank <= 3 && (
         <div className='rank'>
           {rank === 1 ? (

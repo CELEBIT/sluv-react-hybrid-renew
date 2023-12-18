@@ -1,14 +1,10 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { atomKeys } from '../../config/atomKeys'
 import { atom, useRecoilState, useRecoilValue } from 'recoil'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { AddPhotosWrapper } from './styles'
 import AddButton from './AddButton'
 import Photo from './Photo'
-
-interface IAddPhotosProps {
-  onClick?: any
-}
 
 export interface Image {
   imgFile?: File
@@ -21,8 +17,30 @@ export const imgListState = atom<Image[]>({
   default: [],
 })
 
-const AddPhotos = ({ onClick }: IAddPhotosProps) => {
+const AddPhotos = () => {
   const [imgList, setImageList] = useRecoilState(imgListState)
+
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const changeImg = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const target = e.currentTarget
+    const imgFileList = target.files as FileList
+
+    const temp: Image[] = []
+    for (let i = 0; i < imgFileList.length; i++) {
+      temp.push({
+        representFlag: i == 0 ? true : false,
+        imgFile: imgFileList[i],
+      })
+    }
+    setImageList([...imgList, ...temp])
+
+    if (fileInputRef.current?.value) fileInputRef.current.value = ''
+  }
+  const onClickOpenGallery = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click()
+    }
+  }
 
   const onDragEnd = (result: any) => {
     if (!result.destination) {
@@ -35,13 +53,12 @@ const AddPhotos = ({ onClick }: IAddPhotosProps) => {
     const [removed] = reorderedList.splice(startIndex, 1)
     reorderedList.splice(endIndex, 0, removed)
 
-    // Update the representFlag based on the new order
+    // representFlag 수정 -> 최종 업로드때는 imgItemList 통해 확인
     const updatedList = reorderedList.map((img, index) => ({
       ...img,
       representFlag: index === 0,
     }))
-    // Update the state with the reordered and updated list
-    setImageList([...updatedList])
+    setImageList(updatedList)
   }
   const handleRemovePhoto = (index: number) => {
     const updatedList = [...imgList]
@@ -50,13 +67,24 @@ const AddPhotos = ({ onClick }: IAddPhotosProps) => {
       ...img,
       representFlag: index === 0,
     }))
-    setImageList([...finalList])
+    setImageList(finalList)
   }
 
   return (
     <AddPhotosWrapper>
       {imgList.length < 5 && (
-        <AddButton onClick={() => onClick()} itemCnt={imgList.length}></AddButton>
+        <AddButton onClick={() => onClickOpenGallery()} itemCnt={imgList.length}>
+          <input
+            id='inputFile'
+            type='file'
+            accept='image/*'
+            onChange={(e) => changeImg(e)}
+            style={{ display: 'none' }}
+            multiple
+            max={5}
+            ref={fileInputRef}
+          ></input>
+        </AddButton>
       )}
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable' direction='horizontal'>
@@ -76,7 +104,7 @@ const AddPhotos = ({ onClick }: IAddPhotosProps) => {
                         borderRadius={8}
                         imgUrl={img.imgUrl}
                         imgFile={img.imgFile}
-                        representFlag={img.representFlag}
+                        representFlag={index === 0}
                         candelete={true}
                         onDelete={() => handleRemovePhoto(index)}
                       ></Photo>
