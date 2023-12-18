@@ -30,7 +30,7 @@ const SearchResult = () => {
           isModalHeader={false}
           title={'검색 결과'}
           hasArrow={true}
-          backBtnClick={() => navigate('/search')}
+          backBtnClick={() => navigate(-1)}
         />
       </HeaderWrap>
       <SearchBarWrap>
