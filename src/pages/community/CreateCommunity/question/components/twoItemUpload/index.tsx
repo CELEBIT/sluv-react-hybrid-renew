@@ -84,11 +84,19 @@ const TwoItemUpload = ({ onClick }: TwoItemUploadProps) => {
   }
 
   useEffect(() => {
-    setFirstItem({ ...firstItem, description: firstItemName })
-    console.log(firstItem)
-    setSecondItem({ ...secondItem, description: secondItemName })
-    console.log(secondItem)
-  }, [firstItemName, secondItemName])
+    setFirstItem((prevFirstItem) => ({
+      ...prevFirstItem,
+      description: firstItemName,
+    }))
+  }, [firstItemName, setFirstItem])
+
+  useEffect(() => {
+    setSecondItem((prevSecondItem) => ({
+      ...prevSecondItem,
+      description: secondItemName,
+    }))
+  }, [secondItemName, setSecondItem])
+
   return (
     <TwoItemUploadWrapper>
       {/* 둘중에 하나라도 선택 되었을 경우 */}

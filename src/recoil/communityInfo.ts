@@ -14,17 +14,17 @@ export interface CommunityItem {
 }
 
 export interface IimgList {
-  imgUrl: string
-  description: string | null
-  representFlag: boolean | null
-  sortOrder: number
+  imgUrl?: string
+  description?: string | null
+  representFlag?: boolean | null
+  sortOrder?: number | null
 }
 
 export interface IitemList {
-  itemId: number
-  description: string | null
-  representFlag: boolean | null
-  sortOrder: number
+  itemId?: number | null
+  description?: string | null
+  representFlag?: boolean | null
+  sortOrder?: number | null
 }
 
 export interface IselectedItem {
@@ -33,7 +33,7 @@ export interface IselectedItem {
   itemId?: number | null
   imgUrl?: string | null
   description: string | null
-  vote: number | null
+  vote?: number | null
   representFlag: boolean | null
   celebName?: string | null
   brandName?: string | null
@@ -50,6 +50,11 @@ export const communityItemState = atom<CommunityItem>({
     imgList: null,
     itemList: null,
   },
+})
+
+export const imgListUpdatedState = atom<boolean>({
+  key: atomKeys.imgListUpdatedState,
+  default: false,
 })
 
 export const communityQuestionMenuState = atom<string>({

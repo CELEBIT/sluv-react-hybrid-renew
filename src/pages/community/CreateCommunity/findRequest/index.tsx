@@ -21,7 +21,12 @@ import TextArea from '../../../../components/TextField/TextArea/TextArea'
 import { useNavigate } from 'react-router-dom'
 import AddItemPhotos from '../../../../components/AddPhotos/AddItemPhotos'
 import useUploadQuestionQuery from '../../../../apis/question/hooks/useUploadQuestionQuery'
-import { communityItemState, imgItemListState } from '../../../../recoil/communityInfo'
+import {
+  communityItemState,
+  imgItemListState,
+  imgListUpdatedState,
+} from '../../../../recoil/communityInfo'
+import useCommunityImgUpload from '../../../../apis/s3/hooks/useCommunityImgUpload'
 
 const FindRequest = () => {
   const navigate = useNavigate()
@@ -29,18 +34,34 @@ const FindRequest = () => {
   const resetFindRequestInfo = useResetRecoilState(communityItemState)
   const celeb = useRecoilValue(selectedCelebState)
   const newCeleb = useRecoilValue(selectedNewCelebState)
-  console.log('findRequestInfo', findRequestInfo)
   const [hasTriedToUpload, setHasTriedToUpload] = useState(false)
 
   const [title, setTitle] = useState<string | null>(findRequestInfo.title)
   const [content, setContent] = useState<string | null>(findRequestInfo.content ?? null)
-  const imgItemList = useRecoilValue(imgItemListState)
+  const [imgItemList, setImageItemList] = useRecoilState(imgItemListState)
 
   const {
-    postFindRequest: { mutate },
-  } = useUploadQuestionQuery()
+    postCommunityImg: { mutate: mutateByImgUpload },
+  } = useCommunityImgUpload()
 
-  const onSubmit = () => {
+  const uploadImg = async () => {
+    const updatedImgItemList = imgItemList.map((item, index) => ({
+      ...item,
+      sortOrder: index,
+    }))
+    setImageItemList(updatedImgItemList)
+    const newImgList = updatedImgItemList
+      .filter((item) => item.imgFile)
+      .map(({ imgFile, description, sortOrder }) => ({
+        imgFile: imgFile,
+        description: description,
+        representFlag: sortOrder === 0,
+        sortOrder: sortOrder,
+      }))
+    await mutateByImgUpload(newImgList)
+  }
+
+  const onSubmit = async () => {
     setHasTriedToUpload(true)
     if (
       (celeb.id || newCeleb) &&
@@ -48,12 +69,14 @@ const FindRequest = () => {
       findRequestInfo.title.length > 10 &&
       findRequestInfo.title.length < 60
     ) {
-      console.log('findRequestInfo', findRequestInfo)
       setFindRequestInfo({ ...findRequestInfo, newCelebId: null })
-      mutate({ ...findRequestInfo, newCelebId: null })
-      resetFindRequestInfo()
+      await uploadImg()
+
+      setTitle('')
+      setContent('')
     }
   }
+
   useEffect(() => {
     setFindRequestInfo({
       ...findRequestInfo,
