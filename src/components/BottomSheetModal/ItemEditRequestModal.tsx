@@ -17,7 +17,7 @@ const ItemEditRequestModal = () => {
   const { closeModal } = useModals()
   const onClickEditRequest = () => {
     closeModal(modals.ItemEditRequestModal, () => {
-      navigate('/item/detail/request-edit')
+      navigate('/item/detail/request-deleteAndSort')
     })
   }
   const onClickReportItem = () => {

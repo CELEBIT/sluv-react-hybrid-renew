@@ -29,7 +29,7 @@ const useModals = () => {
       setModals((modals) => [...modals, { Component, props: { ...props, open: true } }])
       history.pushState({ page: 'modal' }, document.title)
     },
-    [setModals],
+    [],
   )
 
   const closeModal = useCallback(
@@ -38,7 +38,7 @@ const useModals = () => {
       if (callbackFunc) callbackFunc()
       else history.back()
     },
-    [setModals],
+    [],
   )
 
   return {
