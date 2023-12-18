@@ -41,6 +41,7 @@ const WhichOne = () => {
     // 초기 마감시간 설정
     setQuestionInfo({
       ...questionInfo,
+      content: null,
       voteEndTime: defaultEndDateTime,
     })
   }, [])
@@ -69,11 +70,10 @@ const WhichOne = () => {
           <TwoItemUpload onClick={() => navigate('/community/select-item-photo')}></TwoItemUpload>
         </div>
         {hasTriedToUpload &&
-          (!firstItem.description ||
-            !secondItem.description ||
-            !firstItem.imgUrl ||
-            !firstItem.imgFile ||
-            !secondItem.imgUrl) && <ErrorText className='error'>필수 항목입니다</ErrorText>}
+          (!firstItem.description || (!firstItem.imgUrl && !firstItem.imgFile)) &&
+          (!secondItem.description || (!secondItem.imgUrl && !secondItem.imgFile)) && (
+            <ErrorText className='error'>필수 항목입니다</ErrorText>
+          )}
       </ComponentWrapper>
       {/* <ComponentWrapper className='padding'></ComponentWrapper> */}
       <ComponentWrapper>
@@ -101,3 +101,26 @@ const WhichOne = () => {
 }
 
 export default WhichOne
+const data = {
+  id: null,
+  title: '김종국 이창섭 옷 중에 뭐가 더 나아?',
+  imgList: [
+    {
+      imgUrl:
+        'https://elasticbeanstalk-ap-northeast-2-931662394917.s3.ap-northeast-2.amazonaws.com/asset/community/post/52b6e750-c4cd-4bec-8b8d-8dca10872f3a.jpeg',
+      description: '김종국',
+      representFlag: true,
+      sortOrder: 0,
+    },
+    {
+      imgUrl:
+        'https://elasticbeanstalk-ap-northeast-2-931662394917.s3.ap-northeast-2.amazonaws.com/asset/community/post/c548aedb-6cc5-4346-a947-2afa42fc2a45.png',
+      description: '이창섭',
+      representFlag: false,
+      sortOrder: 1,
+    },
+  ],
+  itemList: null,
+  content: null,
+  voteEndTime: '2023-12-19T05:15:59.789Z',
+}

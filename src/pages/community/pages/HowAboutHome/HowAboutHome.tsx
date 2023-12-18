@@ -16,8 +16,9 @@ const HowAboutHome = () => {
   const stickyRef = useRef<HTMLDivElement>(null)
   const [isStickyAtTop, setIsStickyAtTop] = useState(false)
 
-  const { getQuestionBuyList } = useQuestionListQuery()
-  const { data } = getQuestionBuyList('전체')
+  const { getQuestionHowAboutList } = useQuestionListQuery()
+  const { data } = getQuestionHowAboutList()
+  console.log(data)
   const tempData = data?.pages[0].content
 
   useEffect(() => {

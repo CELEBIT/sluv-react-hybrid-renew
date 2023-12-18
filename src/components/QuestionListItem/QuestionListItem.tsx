@@ -35,7 +35,7 @@ const QuestionListItem = ({ item, detail }: QuestionItemProps) => {
     if (item.qtype === 'Recommend') {
       setQuestionType('추천해 줘')
       setColor('blue')
-    } else if (item.qtype === 'Howabout') {
+    } else if (item.qtype === 'How') {
       setQuestionType('이거 어때')
       setColor('yellow')
     } else if (item.qtype === 'Find') {
