@@ -1,8 +1,8 @@
 import React, { ChangeEvent } from 'react'
 import { StyledLabel } from './styles'
 
-export type ToggleSwitchProps = React.HTMLAttributes<ChangeEvent> & {
-  onToggleSwitch?: (e: ChangeEvent) => void
+export type ToggleSwitchProps = React.HTMLAttributes<HTMLInputElement> & {
+  onToggleSwitch?: (e: ChangeEvent<HTMLInputElement>) => void
   isToggleOn: boolean
 }
 

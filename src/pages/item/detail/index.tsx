@@ -66,6 +66,7 @@ import { queryKeys } from '../../../config/queryKeys'
 import { RequestEditItemState } from '../editRequest'
 import { useSetRecoilState } from 'recoil'
 import { Common } from '../../../components/styles'
+import { ItemClosetListModal } from '../../closet/detail'
 
 const ItemDetail = () => {
   const navigate = useNavigate()
@@ -113,6 +114,10 @@ const ItemDetail = () => {
     if (data) mutateByLike(Number(itemId))
   }
 
+  const handleScrapItem = () => {
+    openModal(ItemClosetListModal, { itemId: itemId ?? '' })
+  }
+
   return (
     <ItemDetailContainer>
       <HeaderWrapper>
@@ -131,7 +136,11 @@ const ItemDetail = () => {
           <Top>
             <Badge color='gray'>{data?.celeb.celebTotalNameKr}</Badge>
             <Interactions>
-              {data?.scrapStatus ? <StorageOn></StorageOn> : <StorageOff></StorageOff>}
+              {data?.scrapStatus ? (
+                <StorageOn></StorageOn>
+              ) : (
+                <StorageOff onClick={handleScrapItem}></StorageOff>
+              )}
               {data?.likeStatus ? (
                 <LikeOn onClick={onClickLike}></LikeOn>
               ) : (
