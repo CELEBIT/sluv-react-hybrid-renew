@@ -61,4 +61,11 @@ export default class S3Service {
     )
     return await resultList
   }
+
+  async postClosetImg(img:File){
+    const data: ResponseType<S3Result> = await request.post(`${this.presignedUrl}/closet`, {}, {params:{imgExtension: String(img.type.split('/')[1]).toUpperCase()}})
+    const res = await this.uploadImg(data.result?.preSignedUrl ?? '', img)
+
+    return data.result?.preSignedUrl ?? ''
+  }
 }
