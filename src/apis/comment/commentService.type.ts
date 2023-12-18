@@ -11,6 +11,7 @@ export interface CommentResult {
   likeStatus: boolean
   hasMine: boolean
   modifyStatus: boolean
+  commentStatus: string
 }
 
 export interface SubCommentResult {
