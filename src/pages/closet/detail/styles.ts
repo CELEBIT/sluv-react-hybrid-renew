@@ -142,6 +142,7 @@ export const InnerItemGridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 세 열을 동일한 크기로 설정 */
   grid-gap: 24px 10px; /* 행 간 간격 24px, 열 간 간격 10px */
+  padding: 0 24px;
   width: 100%; /* 필요한 경우 그리드의 너비를 조정 */
 `
 
