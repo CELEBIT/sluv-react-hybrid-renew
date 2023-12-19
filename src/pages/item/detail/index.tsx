@@ -88,7 +88,7 @@ const ItemDetail = () => {
 
   const onClickShowMore = () => {
     if (data?.hasMine) {
-      openModal(modals.ItemEditRequestModal)
+      openModal(modals.ItemEditModal, { itemId: Number(itemId) })
     }
     if (!data?.hasMine) {
       openModal(modals.ItemEditRequestModal)
