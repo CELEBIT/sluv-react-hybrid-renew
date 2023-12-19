@@ -24,10 +24,10 @@ const CheckBox = ({ isSelected, ...rest }: CheckBoxProps) => {
 }
 const ClosetInnerItem = ({ service, isEditMode, onSelectItem }: ClosetInnerItemProps) => {
   const [isSelected, setIsSelected] = useState<boolean>(false)
-  const navigate =useNavigate()
+  const navigate = useNavigate()
 
-  const handleClickCheckBox:MouseEventHandler<HTMLDivElement> = (e) => {
-    e.stopPropagation();
+  const handleClickCheckBox: MouseEventHandler<HTMLDivElement> = (e) => {
+    e.stopPropagation()
     e.preventDefault()
     if (isEditMode) {
       const nextSelectState = !isSelected
@@ -39,7 +39,6 @@ const ClosetInnerItem = ({ service, isEditMode, onSelectItem }: ClosetInnerItemP
   const handleMoveItemDetail = () => {
     navigate(`/item/detail/${service.itemId}`)
   }
-
 
   return (
     <S.Root onClick={handleMoveItemDetail}>
