@@ -31,12 +31,12 @@ export const CoverBoxHeader = styled.div`
 
 export const CoverBoxBody = styled.div<{ service: ClosetBoxService }>`
   height: 100%;
-  min-height: 84px;
+  min-height: 5.25rem;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  ${({ service }) => getClosetBoxBackground(service, 'background')}
+  /* ${({ service }) => getClosetBoxBackground(service, 'background')} */
 `
 
 export const CoverBoxFooter = styled.div`
