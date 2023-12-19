@@ -10,6 +10,7 @@ export interface BannerItemProps {
   userImgUrl: string
   userName: string
   title: string
+  onClick: () => void
 }
 
 const BadgeColors = {
@@ -19,10 +20,10 @@ const BadgeColors = {
   default: 'blue',
 }
 
-const BannerItem = ({ qtype, imgUrl, userImgUrl, userName, title }: BannerItemProps) => {
+const BannerItem = ({ qtype, imgUrl, userImgUrl, userName, title, onClick }: BannerItemProps) => {
   const badgeColor = BadgeColors[qtype as keyof typeof BadgeColors] || BadgeColors.default
   return (
-    <BannerItemContainer imgUrl={imgUrl}>
+    <BannerItemContainer imgUrl={imgUrl} onClick={onClick}>
       <div>
         <Badge color={badgeColor}>
           {qtype === 'Find' ? '찾아주세요' : qtype === 'Buy' ? '이 중에 뭐 살까' : '이거 어때'}

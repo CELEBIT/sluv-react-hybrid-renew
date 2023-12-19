@@ -15,7 +15,6 @@ export const Layout = styled.div`
   align-items: center;
   gap: 8px;
   max-height: 187px;
- 
 `
 
 export const ImageContainer = styled.div`
@@ -45,7 +44,7 @@ export const DescContainer = styled.div`
   gap: 6px;
   font-family: Pretendard;
   max-height: 75px;
-  width:100%;
+  width: 100%;
   text-align: start;
   & > h4 {
     margin: 0;
