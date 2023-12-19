@@ -138,6 +138,7 @@ export default class UserService {
       {
         params: {
           page,
+          size: 100,
         },
       },
     )

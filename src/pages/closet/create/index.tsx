@@ -82,7 +82,7 @@ const ClosetBoxCreatePage = ({ service, isEditMode = false }: ClosetBoxCreatePag
       return
     }
     const s3 = new S3Service()
-    const imgURL = await s3.postClosetImg(file);
+    const imgURL = await s3.postClosetImg(file)
 
     contextValue.handlers.setCoverImgUrl(imgURL)
     contextValue.handlers.setCoverImageMode('IMAGE')

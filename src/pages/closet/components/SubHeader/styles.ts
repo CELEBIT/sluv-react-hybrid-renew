@@ -7,7 +7,7 @@ export const Root = styled.header`
 `
 
 export const PaddedRoot = styled.header`
-  padding: 0 24px; 
+  padding: 0 24px;
   width: 100%;
   box-sizing: border-box;
 `
