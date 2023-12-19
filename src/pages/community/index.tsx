@@ -22,6 +22,7 @@ const Community = () => {
   if (selectedTab === 'Hot') {
     const { getQuestionHotList } = useQuestionListQuery()
     data = getQuestionHotList()
+    console.log(data.data?.pages[0].content)
   } else {
     const { getQuestionTotalList } = useQuestionListQuery()
     data = getQuestionTotalList()

@@ -2,31 +2,27 @@ import styled from '@emotion/styled'
 import React from 'react'
 import BannerItem from './BannerItem/BannerItem'
 import useCommunityHomeQuery from '../../../../apis/question/hooks/useCommunityHomeQuery'
+import { useNavigate } from 'react-router-dom'
 
 const BannerItemsList = () => {
   const { getCommunityBannerItems } = useCommunityHomeQuery()
   const { data } = getCommunityBannerItems()
   console.log('banner data', data)
+  const navigate = useNavigate()
   return (
     <BannerItemsListContainer>
       {data &&
         data.map((item) => {
           return (
-            <>
-              {item.imgList && (
-                <BannerItem
-                  key={item.id}
-                  qtype={item.qtype}
-                  imgUrl={
-                    item.imgList?.at(0)?.imgUrl ??
-                    'https://pbs.twimg.com/media/Flhh_ejakAMHdud?format=jpg&name=medium'
-                  }
-                  title={item.title}
-                  userImgUrl={item.user.profileImgUrl}
-                  userName={item.user.nickName}
-                ></BannerItem>
-              )}
-            </>
+            <BannerItem
+              key={item.id}
+              qtype={item.qtype}
+              imgUrl={item.imgList?.at(0)?.imgUrl ?? ''}
+              title={item.title}
+              userImgUrl={item.user.profileImgUrl}
+              userName={item.user.nickName}
+              onClick={() => navigate(`./detail/${item.id}`)}
+            ></BannerItem>
           )
         })}
     </BannerItemsListContainer>

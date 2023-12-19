@@ -115,6 +115,6 @@ export default class S3Service {
     )
     const res = await this.uploadImg(data.result?.preSignedUrl ?? '', img)
 
-    return data.result?.preSignedUrl ?? ''
+    return data.result?.preSignedUrl.split('?')[0] ?? ''
   }
 }
