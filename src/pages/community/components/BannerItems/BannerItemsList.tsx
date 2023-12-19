@@ -6,22 +6,27 @@ import useCommunityHomeQuery from '../../../../apis/question/hooks/useCommunityH
 const BannerItemsList = () => {
   const { getCommunityBannerItems } = useCommunityHomeQuery()
   const { data } = getCommunityBannerItems()
+  console.log('banner data', data)
   return (
     <BannerItemsListContainer>
       {data &&
         data.map((item) => {
           return (
-            <BannerItem
-              key={item.id}
-              qtype={item.qtype}
-              imgUrl={
-                item.imgList?.at(0)?.imgUrl ??
-                'https://pbs.twimg.com/media/Flhh_ejakAMHdud?format=jpg&name=medium'
-              }
-              title={item.title}
-              userImgUrl={item.user.profileImgUrl}
-              userName={item.user.nickName}
-            ></BannerItem>
+            <>
+              {item.imgList && (
+                <BannerItem
+                  key={item.id}
+                  qtype={item.qtype}
+                  imgUrl={
+                    item.imgList?.at(0)?.imgUrl ??
+                    'https://pbs.twimg.com/media/Flhh_ejakAMHdud?format=jpg&name=medium'
+                  }
+                  title={item.title}
+                  userImgUrl={item.user.profileImgUrl}
+                  userName={item.user.nickName}
+                ></BannerItem>
+              )}
+            </>
           )
         })}
     </BannerItemsListContainer>
