@@ -164,6 +164,7 @@ export default class UserService {
     )
     return data.result
   }
+
   // 타 유저 옷장 아이템 조회
   async getOtherUserClosetList(page: number, userId: number) {
     const data: ResponseType<GetPaginationResult<RecommendItemResult>> = await request.get(
