@@ -12,7 +12,7 @@ const UserCloset = () => {
     const { data } = getOtherUserClosetList(Number(id))
     const tempData = data?.pages[0].content
     console.log('tempData', tempData)
-    return <ItemListGrid data={tempData} canChangeView={false}></ItemListGrid>
+    return <ItemListGrid data={data} canChangeView={false}></ItemListGrid>
   } else {
     const {
       getUserClosetList: { data },

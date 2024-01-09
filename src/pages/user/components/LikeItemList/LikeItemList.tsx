@@ -8,7 +8,7 @@ import useUserMypageQuery from '../../../../apis/user/hooks/useUserMypageQuery'
 
 const LikeItemList = () => {
   const { getUserLikeItem } = useUserMypageQuery()
-  const { data } = getUserLikeItem()
+  const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } = getUserLikeItem()
   console.log(data)
   const tempData = data?.pages[0].content
   return (
@@ -18,8 +18,12 @@ const LikeItemList = () => {
       </HeaderWrapper>
       <ContentFullContainer>
         <ItemListGrid
-          data={tempData}
+          data={data}
           canChangeView={true}
+          isFetching={isFetching}
+          isFetchingNextPage={isFetchingNextPage}
+          fetchNextPage={fetchNextPage}
+          status={status}
           emptyIcon='like'
           emptyTitle='좋아요한 아이템이 없어요'
           emptySubTitle='마음에 드는 아이템에 좋아요해 보아요'

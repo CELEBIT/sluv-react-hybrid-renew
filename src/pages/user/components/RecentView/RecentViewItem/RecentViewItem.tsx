@@ -6,13 +6,20 @@ import EmptyState from '../../../../../components/EmptyState'
 
 const RecentViewItem = () => {
   const { getRecentViewItem } = useRecentViewItemQuery()
-  const { data } = getRecentViewItem()
+  const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } = getRecentViewItem()
   console.log(data)
   const tempData = data?.pages[0].content
   return (
     <>
       {tempData && tempData.length > 0 ? (
-        <ItemListGrid data={tempData} canChangeView={true}></ItemListGrid>
+        <ItemListGrid
+          data={data}
+          canChangeView={true}
+          isFetching={isFetching}
+          isFetchingNextPage={isFetchingNextPage}
+          fetchNextPage={fetchNextPage}
+          status={status}
+        ></ItemListGrid>
       ) : (
         <EmptyStateWrapper>
           <EmptyState

@@ -137,7 +137,7 @@ export default class ItemService {
       {
         params: {
           page,
-          size: { size },
+          size: 21,
         },
       },
     )
@@ -185,7 +185,7 @@ export default class ItemService {
       {
         params: {
           page,
-          size: 10,
+          size: 20,
         },
       },
     )
