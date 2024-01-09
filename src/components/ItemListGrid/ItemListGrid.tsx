@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { RecommendItemResult } from '../../apis/item/itemService.type'
 import {
   ItemListGridContainer,
@@ -14,13 +14,20 @@ import { ReactComponent as ViewSmallOff } from '../../assets/view_small_off_24.s
 import { ReactComponent as ViewSmallOn } from '../../assets/view_small_on_24.svg'
 import { ReactComponent as ViewBigOff } from '../../assets/view_big_off_24.svg'
 import { ReactComponent as ViewBigOn } from '../../assets/view_big_on_24.svg'
+import { useObserver } from '../../hooks/useObserver'
+import { InfiniteData } from '@tanstack/react-query'
+import { GetPaginationResult } from '../../apis/core/type'
 
 interface ItemListGridProps {
-  data: Array<RecommendItemResult> | undefined
+  data: InfiniteData<GetPaginationResult<RecommendItemResult>> | undefined
   canChangeView: boolean
   emptyIcon?: string
   emptyTitle?: string
   emptySubTitle?: string
+  isFetching?: boolean
+  isFetchingNextPage?: boolean
+  fetchNextPage?: any
+  status?: string
 }
 
 const ItemListGrid = ({
@@ -29,14 +36,31 @@ const ItemListGrid = ({
   emptyIcon,
   emptyTitle,
   emptySubTitle,
+  isFetching,
+  isFetchingNextPage,
+  fetchNextPage,
+  status,
 }: ItemListGridProps) => {
   const [viewSize, setViewSize] = useState('small')
   const navigate = useNavigate()
+  const bottom = useRef(null)
+  const onIntersect = ([entry]: IntersectionObserverEntry[]) => {
+    entry.isIntersecting && fetchNextPage()
+  }
+  useObserver({
+    target: bottom,
+    onIntersect,
+  })
+  let totalLength = 0
+  data?.pages.forEach((page) => {
+    totalLength += page.content.length
+  })
+
   return (
     <ItemListGridContainer>
-      {canChangeView && data && data?.length > 0 && (
+      {canChangeView && data && data?.pages[0].content.length && (
         <ViewHeader>
-          <ViewHeaderLeft>전체 {data?.length}</ViewHeaderLeft>
+          <ViewHeaderLeft>전체 {totalLength}</ViewHeaderLeft>
           {viewSize === 'small' ? (
             <ViewHeaderRight>
               <ViewSmallOn></ViewSmallOn>
@@ -51,29 +75,42 @@ const ItemListGrid = ({
         </ViewHeader>
       )}
       <ItemListWrapper>
-        {data && data.length > 0 ? (
+        {status === 'success' && data && data.pages[0].content.length > 0 ? (
           <>
-            {data?.map((item) => (
-              <>
-                {viewSize === 'small' ? (
-                  <Item
-                    key={item.itemId}
-                    {...item}
-                    size={105}
-                    borderRadius={8}
-                    onClick={() => navigate(`/item/detail/${item.itemId}`)}
-                  ></Item>
-                ) : (
-                  <Item
-                    key={item.itemId}
-                    {...item}
-                    size={160}
-                    borderRadius={8}
-                    onClick={() => navigate(`/item/detail/${item.itemId}`)}
-                  ></Item>
-                )}
-              </>
-            ))}
+            {data?.pages.map(
+              (item) =>
+                item.content.length > 0 &&
+                item.content.map((item) => {
+                  return (
+                    <>
+                      {viewSize === 'small' ? (
+                        <Item
+                          key={item.itemId}
+                          {...item}
+                          size={105}
+                          borderRadius={8}
+                          onClick={() => navigate(`/item/detail/${item.itemId}`)}
+                        ></Item>
+                      ) : (
+                        <Item
+                          key={item.itemId}
+                          {...item}
+                          size={160}
+                          borderRadius={8}
+                          onClick={() => navigate(`/item/detail/${item.itemId}`)}
+                        ></Item>
+                      )}
+                    </>
+                  )
+                }),
+            )}
+
+            <div ref={bottom} />
+            {isFetching && !isFetchingNextPage ? (
+              <div className='spinner'>
+                <div>Loading</div>
+              </div>
+            ) : null}
           </>
         ) : (
           <EmptyState

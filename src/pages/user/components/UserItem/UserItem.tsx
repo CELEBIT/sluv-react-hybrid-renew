@@ -9,19 +9,36 @@ import Header from '../../../../components/Header/Header'
 import { EmptyStateWrapper } from '../FollowList/Follower/Follower'
 import EmptyState from '../../../../components/EmptyState'
 import ButtonSmall from '../../../../components/ButtonSmall/ButtonSmall'
+import { useObserver } from '../../../../hooks/useObserver'
 
 const UserItem = () => {
   const { id } = useParams()
   if (id) {
     // 타 유저의 마이페이지
     const { getOtherUserUploadItem } = useUserItemQuery()
-    const { data } = getOtherUserUploadItem(Number(id))
+    const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } =
+      getOtherUserUploadItem(Number(id))
+
     const tempData = data?.pages[0].content
     console.log('tempData', data)
-    return <ItemListGrid data={tempData} canChangeView={true}></ItemListGrid>
+    return (
+      <>
+        {tempData && (
+          <ItemListGrid
+            data={data}
+            canChangeView={true}
+            isFetching={isFetching}
+            isFetchingNextPage={isFetchingNextPage}
+            fetchNextPage={fetchNextPage}
+            status={status}
+          ></ItemListGrid>
+        )}
+      </>
+    )
   } else {
     const { getUserUploadItem } = useUserItemQuery()
-    const { data } = getUserUploadItem()
+    const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } =
+      getUserUploadItem()
     const tempData = data?.pages[0].content
     return (
       <PageContainer>
@@ -30,7 +47,14 @@ const UserItem = () => {
         </HeaderWrapper>
         <ContentContainer>
           {tempData && tempData.length > 0 ? (
-            <ItemListGrid data={tempData} canChangeView={true}></ItemListGrid>
+            <ItemListGrid
+              data={data}
+              canChangeView={true}
+              isFetching={isFetching}
+              isFetchingNextPage={isFetchingNextPage}
+              fetchNextPage={fetchNextPage}
+              status={status}
+            ></ItemListGrid>
           ) : (
             <EmptyStateWrapper>
               <EmptyState

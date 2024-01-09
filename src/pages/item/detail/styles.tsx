@@ -1,6 +1,10 @@
 import styled from '@emotion/styled'
 import { Common, Pretendard } from '../../../components/styles'
 
+interface ColorCircleProps {
+  color?: string
+}
+
 export const ItemDetailContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -15,6 +19,14 @@ export const ItemDetailContainer = styled.div`
     gap: 1.25rem;
   }
 `
+
+export const ColorCircle = styled.div<ColorCircleProps>`
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: ${({ color }) => color};
+`
+
 export const ItemWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -53,7 +65,8 @@ export const Category = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 0.5rem;
-  ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.GR600 })}
+  gap: 8px;
+  ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.GR600 })};
 `
 
 export const ItemName = styled.span`

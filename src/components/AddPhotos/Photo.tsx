@@ -100,7 +100,6 @@ export const Img = styled.div<{
   position: relative;
   width: ${(props) => (props.size ? `${props.size * 0.0625}rem` : '100%')};
   height: ${(props) => (props.size ? `${props.size * 0.0625}rem` : '100%')};
-  /* padding-top: 50%; */
   border-radius: ${(props) => props.borderRadius * 0.0625}rem;
   background-repeat: no-repeat;
   background-size: cover;
