@@ -27,6 +27,9 @@ const ItemCreate = React.lazy(() => import('./pages/item/create'))
 const Closet = React.lazy(() => import('./pages/closet'))
 const User = React.lazy(() => import('./pages/user'))
 
+// 회원가입 페이지
+const SignUp = React.lazy(() => import('./pages/signup/SignUp'))
+
 // 관심셀럽 선택 페이지
 const SelectInterestCeleb = React.lazy(() => import('./pages/selectInterestCeleb'))
 const SignupComplete = React.lazy(() => import('./pages/selectInterestCeleb/SignupComplete'))
@@ -131,7 +134,9 @@ const App = () => {
             <Route path='/500' element={<Page500 />} />
             {/* 홈 */}
             <Route path='/' element={<Home />} />
-            {/* 홈 */}
+            {/* 회원가입 */}
+            <Route path='/signup' element={<SignUp />} />
+            {/* 관심셀럽선택 */}
             <Route path='/select-celeb' element={<SelectInterestCeleb />} />
             <Route path='/select-celeb/complete' element={<SignupComplete />} />
             {/* 커뮤니티 */}
