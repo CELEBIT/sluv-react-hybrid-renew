@@ -1,12 +1,20 @@
-import { UseInfiniteQueryResult, useInfiniteQuery, useQuery } from '@tanstack/react-query'
+import {
+  UseInfiniteQueryResult,
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query'
 import UserService, { ICommentResult } from '../userService'
 import { queryKeys } from '../../../config/queryKeys'
 import { GetPaginationResult } from '../../core/type'
 import { RecommendItemResult } from '../../item/itemService.type'
 import { SearchQuestionResult } from '../../search/searchService'
+import { SignupValues } from '../../../models/signup'
 
 const useUserMypageQuery = () => {
   const user = new UserService()
+  const queryClient = useQueryClient()
 
   const getMypageInfo = useQuery(queryKeys.getMypageInfo, () => user.getUserMypageInfo())
 
@@ -97,6 +105,24 @@ const useUserMypageQuery = () => {
     )
   }
 
+  type IProfile = {
+    nickname: string
+    userImg: string
+  }
+
+  // 프로필 등록 & 수정
+  const uploadProfile = useMutation(
+    ({ nickname, userImg }: IProfile) => user.submitProfile(nickname, userImg),
+    {
+      onSuccess: (res, vars) => {
+        queryClient.invalidateQueries(queryKeys.getMypageInfo)
+      },
+      onError: (res) => {
+        return res
+      },
+    },
+  )
+
   return {
     getMypageInfo,
     getOtherUserMypageInfo,
@@ -105,6 +131,7 @@ const useUserMypageQuery = () => {
     getUserUploadComment,
     getRecentViewCommunityItem,
     getLikedComment,
+    uploadProfile,
   }
 }
 

@@ -287,4 +287,10 @@ export default class UserService {
     )
     return data.result
   }
+
+  // 프로필 등록 / 수정
+  async submitProfile(nickName: string, imgUrl: string) {
+    const data: ResponseType = await request.post(`${this.userUrl}/profile`, { imgUrl, nickName })
+    return data
+  }
 }
