@@ -3,7 +3,7 @@ import Agreement, { MandatoryText } from './Agreement'
 import FixedBottomButton from '../FixedBottomButton/FixedBottomButton'
 
 import { 약관목록 } from '../../config/constant'
-import { SignupValues } from '../../models/terms'
+import { SignupValues } from '../../models/signup'
 import { Line, Title } from '../../pages/signup/styles'
 import Flex from '../Flex'
 // import { ApplyValues } from '@models/apply'

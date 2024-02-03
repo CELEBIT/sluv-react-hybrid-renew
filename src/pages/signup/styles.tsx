@@ -16,7 +16,7 @@ export const Layout = styled.div`
   }
 `
 export const Content = styled.div`
-  padding: 0 16px;
+  padding: 0 20px;
 `
 
 export const Line = styled.div`
