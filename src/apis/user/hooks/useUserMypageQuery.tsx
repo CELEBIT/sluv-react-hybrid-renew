@@ -11,6 +11,7 @@ import { GetPaginationResult } from '../../core/type'
 import { RecommendItemResult } from '../../item/itemService.type'
 import { SearchQuestionResult } from '../../search/searchService'
 import { SignupValues } from '../../../models/signup'
+import { error } from 'console'
 
 const useUserMypageQuery = () => {
   const user = new UserService()
@@ -116,9 +117,6 @@ const useUserMypageQuery = () => {
     {
       onSuccess: (res, vars) => {
         queryClient.invalidateQueries(queryKeys.getMypageInfo)
-      },
-      onError: (res) => {
-        return res
       },
     },
   )
