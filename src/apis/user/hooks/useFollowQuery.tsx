@@ -25,6 +25,7 @@ const useFollowQuery = () => {
         queryClient.invalidateQueries(queryKeys.userFollowerList)
         queryClient.invalidateQueries(queryKeys.userFollowingList)
         queryClient.invalidateQueries(queryKeys.getMypageInfo)
+        queryClient.invalidateQueries(queryKeys.getHotSluver())
       }
     },
   })
