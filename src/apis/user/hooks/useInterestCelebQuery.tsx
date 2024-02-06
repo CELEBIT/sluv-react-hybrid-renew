@@ -29,11 +29,9 @@ const useInterestCelebQuery = () => {
   const postInterestCeleb = useMutation(
     (celebIdList: Array<number>) => user.postInterestCeleb(celebIdList),
     {
-      onSuccess: () => {
-        if (currentRoute === '/select-celeb') {
-          navigate('./complete')
-        } else {
-          queryClient.invalidateQueries(queryKeys.interestCeleb)
+      onSuccess: (res) => {
+        queryClient.invalidateQueries(queryKeys.interestCeleb)
+        if (currentRoute === '/settings/select-celeb') {
           alert('관심셀럽이 수정되었어요')
           navigate('/settings')
         }

@@ -6,8 +6,12 @@ import { HeaderWrap } from '../search/styles'
 import Header from '../../components/Header/Header'
 import * as S from './styles'
 import Profile from '../../components/Profile/Profile'
+import SelectInterestCeleb from '../selectInterestCeleb'
+import { useNavigate } from 'react-router-dom'
+import SignupComplete from '../../components/SignupComplete/SignupComplete'
 
 function SignUp() {
+  const navigate = useNavigate()
   const [signupValues, setSignupValues] = useState<Partial<SignupValues>>(() => {
     return {
       step: 0,
@@ -38,18 +42,35 @@ function SignUp() {
       userImg,
       step: (prevValues.step as number) + 1,
     }))
-    // api call
+  }
+
+  const handleSetCelebs = () => {
+    setSignupValues((prevValues) => ({
+      ...prevValues,
+      step: (prevValues.step as number) + 1,
+    }))
+  }
+
+  const handleSignupComplete = () => {
+    navigate('/')
   }
   console.log(signupValues.terms)
 
   return (
     <S.Layout>
-      <HeaderWrap>
-        <Header isModalHeader={false} hasArrow={true} backBtnClick={handleBackClick} />
-      </HeaderWrap>
+      {signupValues.step !== 2 ? (
+        <HeaderWrap>
+          <Header isModalHeader={false} hasArrow={true} backBtnClick={handleBackClick} />
+        </HeaderWrap>
+      ) : null}
+
       <S.Content>
         {signupValues.step === 0 ? <Terms onNext={handleTermsChange} /> : null}
         {signupValues.step === 1 ? <Profile onNext={handleProfileChange} /> : null}
+        {signupValues.step === 2 ? (
+          <SelectInterestCeleb onNext={handleSetCelebs} backBtnClick={handleBackClick} />
+        ) : null}
+        {signupValues.step === 3 ? <SignupComplete onNext={handleSignupComplete} /> : null}
       </S.Content>
     </S.Layout>
   )

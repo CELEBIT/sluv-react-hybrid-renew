@@ -32,7 +32,6 @@ const SignUp = React.lazy(() => import('./pages/signup/SignUp'))
 
 // 관심셀럽 선택 페이지
 const SelectInterestCeleb = React.lazy(() => import('./pages/selectInterestCeleb'))
-const SignupComplete = React.lazy(() => import('./pages/selectInterestCeleb/SignupComplete'))
 
 // 아이템 게시글 작성 관련 페이지
 const TemporaryStorage = React.lazy(() => import('./pages/item/temporary-storage'))
@@ -137,8 +136,8 @@ const App = () => {
             {/* 회원가입 */}
             <Route path='/signup' element={<SignUp />} />
             {/* 관심셀럽선택 */}
-            <Route path='/select-celeb' element={<SelectInterestCeleb />} />
-            <Route path='/select-celeb/complete' element={<SignupComplete />} />
+            {/* <Route path='/select-celeb' element={<SelectInterestCeleb />} />
+            <Route path='/select-celeb/complete' element={<SignupComplete />} /> */}
             {/* 커뮤니티 */}
             <Route path='/community' element={<Community />} />
             <Route path='/community/find' element={<FindHome />} />
