@@ -1,5 +1,5 @@
 import React from 'react'
-import { QuestionListWrapper } from '../../../../community/sytles'
+import { QuestionListWrapper } from '../../../../community/styles'
 import QuestionListItem from '../../../../../components/QuestionListItem/QuestionListItem'
 import { Line } from '../../../../community/detail/styles'
 import useQuestionListQuery from '../../../../../apis/question/hooks/useQuestionListQuery'
