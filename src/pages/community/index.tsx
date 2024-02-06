@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { CommunityPageContainer, QuestionListWrapper, TabContainer } from './sytles'
+import { CommunityPageContainer, QuestionListWrapper, TabContainer } from './styles'
 import { HeaderWrapper } from '../item/addInfo/styles'
 import Header from '../../components/Header/Header'
 import { ReactComponent as Search } from '../../assets/search_24.svg'
@@ -14,20 +14,49 @@ import QuestionListItem from '../../components/QuestionListItem/QuestionListItem
 import { Line } from './detail/styles'
 import { ComponentContainer } from '../home/styles'
 import BlackFilter from '../../components/FIlter/BlackFilter'
+import { useObserver } from '../../hooks/useObserver'
+import { FetchNextPageOptions, InfiniteQueryObserverResult } from '@tanstack/react-query'
+import { GetPaginationResult } from '../../apis/core/type'
+import { SearchQuestionResult } from '../../apis/search/searchService'
 
 const Community = () => {
   const navigate = useNavigate()
   const [selectedTab, setSelectedTab] = useState('Hot')
-  let data
+  let tempData,
+    isfetching,
+    isfetchingNextPage,
+    fetchnextPage: (
+      options?: FetchNextPageOptions | undefined,
+    ) => Promise<InfiniteQueryObserverResult<GetPaginationResult<SearchQuestionResult>, any>>
+
   if (selectedTab === 'Hot') {
     const { getQuestionHotList } = useQuestionListQuery()
-    data = getQuestionHotList()
-    console.log(data.data?.pages[0].content)
+    const { data, error, fetchNextPage, status, isFetching, isFetchingNextPage } =
+      getQuestionHotList()
+    tempData = data?.pages[0].content
+    isfetching = isFetching
+    isfetchingNextPage = isFetchingNextPage
+    fetchnextPage = fetchNextPage
   } else {
     const { getQuestionTotalList } = useQuestionListQuery()
-    data = getQuestionTotalList()
+    const { data, error, fetchNextPage, status, isFetching, isFetchingNextPage } =
+      getQuestionTotalList()
+    console.log('getQuestionTotalList', data)
+    tempData = data?.pages[0].content
+    isfetching = isFetching
+    isfetchingNextPage = isFetchingNextPage
+    fetchnextPage = fetchNextPage
   }
-  const tempData = data.data?.pages[0].content
+
+  const bottom = useRef(null)
+
+  const onIntersect = ([entry]: IntersectionObserverEntry[]) =>
+    entry.isIntersecting && fetchnextPage()
+  useObserver({
+    target: bottom,
+    onIntersect,
+  })
+  // const tempData = data?.pages[0].content
   const ComponentContainerRef = useRef<HTMLDivElement>(null)
   const stickyRef = useRef<HTMLDivElement>(null)
   const [isStickyAtTop, setIsStickyAtTop] = useState(false)
@@ -73,6 +102,12 @@ const Community = () => {
               </>
             )
           })}
+          <div ref={bottom} />
+          {isfetching && !isfetchingNextPage ? (
+            <div className='spinner'>
+              <div>Loading</div>
+            </div>
+          ) : null}
         </QuestionListWrapper>
         <WriteCommunityItemButton isTop={!isStickyAtTop}></WriteCommunityItemButton>
       </ComponentContainer>
