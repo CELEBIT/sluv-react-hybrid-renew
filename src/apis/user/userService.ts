@@ -138,6 +138,7 @@ export default class UserService {
       {
         params: {
           page,
+          size: 20,
         },
       },
     )
@@ -163,6 +164,7 @@ export default class UserService {
     )
     return data.result
   }
+
   // 타 유저 옷장 아이템 조회
   async getOtherUserClosetList(page: number, userId: number) {
     const data: ResponseType<GetPaginationResult<RecommendItemResult>> = await request.get(
@@ -213,6 +215,7 @@ export default class UserService {
       `${this.userUrl}/like/item`,
       {
         params: {
+          size: 20,
           page,
         },
       },
@@ -283,5 +286,11 @@ export default class UserService {
       },
     )
     return data.result
+  }
+
+  // 프로필 등록 / 수정
+  async submitProfile(nickName: string, imgUrl: string) {
+    const data: ResponseType = await request.post(`${this.userUrl}/profile`, { imgUrl, nickName })
+    return data
   }
 }

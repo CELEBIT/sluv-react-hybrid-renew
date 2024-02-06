@@ -26,7 +26,13 @@ const BannerItem = ({ qtype, imgUrl, userImgUrl, userName, title, onClick }: Ban
     <BannerItemContainer imgUrl={imgUrl} onClick={onClick}>
       <div>
         <Badge color={badgeColor}>
-          {qtype === 'Find' ? '찾아주세요' : qtype === 'Buy' ? '이 중에 뭐 살까' : '이거 어때'}
+          {qtype === 'Find'
+            ? '찾아주세요'
+            : qtype === 'Buy'
+            ? '이 중에 뭐 살까'
+            : qtype === 'How'
+            ? '이거 어때'
+            : '추천해 줘'}
         </Badge>
       </div>
       <ContentBoxContainer>

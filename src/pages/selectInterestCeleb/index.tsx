@@ -80,7 +80,13 @@ export const selectInterestCelebState = atom<Array<ISelectCelebResult>>({
   ],
 })
 
-const SelectInterestCeleb = () => {
+const SelectInterestCeleb = ({
+  onNext,
+  backBtnClick,
+}: {
+  onNext?: () => void
+  backBtnClick?: () => void
+}) => {
   const { pathname } = useLocation()
 
   const {
@@ -127,7 +133,14 @@ const SelectInterestCeleb = () => {
 
   const onComplete = () => {
     const updatedIdList = getSelectedCelebIds(selectedInterestCeleb)
-    mutateByPostInterestCeleb(updatedIdList)
+    const data = mutateByPostInterestCeleb(updatedIdList)
+    console.log('관심셀럽 등록', data)
+    if (onNext !== undefined) {
+      if (pathname == '/signup') {
+        console.log('true')
+        onNext()
+      }
+    }
   }
   // POST API 용 CelebId List
   const getSelectedCelebIds = (selectedCelebList: Array<ISelectCelebResult>): Array<number> => {
@@ -280,7 +293,11 @@ const SelectInterestCeleb = () => {
     <SelectCelebContainer>
       {isTitleSearchWrapperVisible ? (
         <HeaderWrapper>
-          <Header isModalHeader={false} hasArrow={true}></Header>
+          <Header
+            isModalHeader={false}
+            hasArrow={true}
+            backBtnClick={backBtnClick ? backBtnClick : undefined}
+          ></Header>
         </HeaderWrapper>
       ) : (
         <HeaderWrapper>
@@ -288,6 +305,7 @@ const SelectInterestCeleb = () => {
             <Header
               isModalHeader={false}
               hasArrow={true}
+              backBtnClick={backBtnClick ? backBtnClick : undefined}
               title='관심 있는 셀럽 태그를 선택해 주세요'
             >
               <Search

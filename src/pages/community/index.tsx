@@ -28,7 +28,6 @@ const Community = () => {
     data = getQuestionTotalList()
   }
   const tempData = data.data?.pages[0].content
-
   const ComponentContainerRef = useRef<HTMLDivElement>(null)
   const stickyRef = useRef<HTMLDivElement>(null)
   const [isStickyAtTop, setIsStickyAtTop] = useState(false)

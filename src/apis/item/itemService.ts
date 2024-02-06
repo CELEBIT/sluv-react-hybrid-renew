@@ -83,6 +83,11 @@ export default class ItemService {
     const data: ResponseType = await request.post(`${this.itemUrl}/${itemId}/like`)
     return data
   }
+  // 아이템 삭제
+  async deleteItem(itemId: number | null) {
+    const data: ResponseType = await request.delete(`${this.itemUrl}/${itemId}`)
+    return data
+  }
   // 아이템 수정요청
   async requsetEditItem(itemId: number, reason: string, content: string) {
     const data: ResponseType = await request.post(`${this.itemUrl}/${itemId}/edit-req`, {
@@ -132,7 +137,7 @@ export default class ItemService {
       {
         params: {
           page,
-          size: { size },
+          size: 21,
         },
       },
     )
@@ -180,7 +185,7 @@ export default class ItemService {
       {
         params: {
           page,
-          size: 10,
+          size: 20,
         },
       },
     )

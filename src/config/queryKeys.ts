@@ -20,6 +20,7 @@ export const queryKeys = {
   scrapItem: ['scrapItem'] as const,
   userUploadItem: ['userUploadItem'] as const,
   otherUserUploadItem: (userId: number) => ['otherUserUploadItem', userId] as const,
+  getOtherUserClosetList: (userId: number) => ['otherUserClosetList', userId] as const,
   userClosetList: ['userClosetList'] as const,
   otherUserClosetList: (userId: number) => ['otherUserClosetList', userId] as const,
   searchItem: (keyword: string) => ['searchItem', keyword] as const,

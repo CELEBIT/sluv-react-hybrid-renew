@@ -26,6 +26,7 @@ const ItemCelebSelectModal = loadable(
 const ItemCelebSearchModal = loadable(
   () => import('../BottomSheetModal/ItemCelebModal/ItemCelebSearchModal'),
 )
+const ItemEditModal = loadable(() => import('../BottomSheetModal/ItemEditModal'))
 const ItemEditRequestModal = loadable(() => import('../BottomSheetModal/ItemEditRequestModal'))
 const EditRequestCompleteModal = loadable(
   () => import('../OneButtonModal/EditRequestCompleteModal'),
@@ -45,7 +46,7 @@ const ReportQuestionCompleteModal = loadable(
 const QuestionEditDeleteModal = loadable(
   () => import('../BottomSheetModal/QuestionEditDeleteModal'),
 )
-
+const DeleteItemModal = loadable(() => import('../TwoButtonModal/DeleteItemModal'))
 const DeleteTempItemModal = loadable(() => import('../TwoButtonModal/DeleteTempItemModal'))
 const DeleteQuestionModal = loadable(() => import('../TwoButtonModal/DeleteQuestionModal'))
 
@@ -85,6 +86,8 @@ export const modals = {
   ItemEditRequestModal: ItemEditRequestModal as FunctionComponent<
     ComponentProps<typeof ItemEditRequestModal>
   >,
+  ItemEditModal: ItemEditModal as FunctionComponent<ComponentProps<typeof ItemEditModal>>,
+  DeleteItemModal: DeleteItemModal as FunctionComponent<ComponentProps<typeof DeleteItemModal>>,
   EditRequestCompleteModal: EditRequestCompleteModal as FunctionComponent<
     ComponentProps<typeof EditRequestCompleteModal>
   >,
