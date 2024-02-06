@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom'
 const BannerItemsList = () => {
   const { getCommunityBannerItems } = useCommunityHomeQuery()
   const { data } = getCommunityBannerItems()
-  console.log('banner data', data)
   const navigate = useNavigate()
   return (
     <BannerItemsListContainer>
