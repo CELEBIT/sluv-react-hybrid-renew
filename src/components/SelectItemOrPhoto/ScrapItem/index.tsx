@@ -128,6 +128,7 @@ const ScrapItem = () => {
                       imgUrl={each.imgUrl}
                       brandName={each.brandName}
                       celebName={each.celebName}
+                      size={105}
                       isSelected={
                         imgItemList
                           ? imgItemList.some((item) => item.itemId === each.itemId)

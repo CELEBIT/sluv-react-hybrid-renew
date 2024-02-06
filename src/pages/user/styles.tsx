@@ -69,6 +69,8 @@ export const ItemListContainer = styled.div`
   flex-direction: column;
   position: sticky;
   padding-bottom: 3.75rem;
+  width: 100%;
+  height: 100%;
 `
 
 export const EachContentWrapper = styled.div`

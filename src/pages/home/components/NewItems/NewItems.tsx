@@ -12,7 +12,6 @@ const NewItems = () => {
   const { getNewItem } = useNewItemQuery()
   const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } = getNewItem()
   const tempData = data?.pages[0].content
-  console.log('tempData', tempData)
 
   return (
     <ScrollComponentWrapper>

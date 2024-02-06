@@ -27,6 +27,7 @@ import {
   AdditionalInfoWrapper,
   BasicInfoWrapper,
   Category,
+  ColorCircle,
   Divider,
   HashTags,
   Interactions,
@@ -88,7 +89,7 @@ const ItemDetail = () => {
 
   const onClickShowMore = () => {
     if (data?.hasMine) {
-      openModal(modals.ItemEditRequestModal)
+      openModal(modals.ItemEditModal, { itemId: Number(itemId) })
     }
     if (!data?.hasMine) {
       openModal(modals.ItemEditRequestModal)
@@ -135,6 +136,7 @@ const ItemDetail = () => {
         <BasicInfoWrapper>
           <Top>
             <Badge color='gray'>{data?.celeb.celebTotalNameKr}</Badge>
+
             <Interactions>
               {data?.scrapStatus ? (
                 <StorageOn></StorageOn>
@@ -159,6 +161,7 @@ const ItemDetail = () => {
                 </>
               )}
               <span>{data?.category.name}</span>
+              {data?.color && <ColorCircle color={data.color}></ColorCircle>}
             </Category>
             <ItemName>{data?.itemName}</ItemName>
             <Brand>

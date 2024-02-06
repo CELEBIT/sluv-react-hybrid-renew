@@ -1,24 +1,36 @@
 import React from 'react'
-import ItemListGrid from '../../../../components/ItemListGrid/ItemListGrid'
-import useHotCelebItemQuery from '../../../../apis/item/hooks/useHotCelebItemQuery'
 import { useParams } from 'react-router-dom'
-import useUserClosetQuery from '../../../../apis/user/hooks/useUserClosetQuery'
-
+import * as S from '../../../closet/styles'
+import ClosetList from '../../../closet/components/ClosetList'
+import EmptyState from '../../../../components/EmptyState'
+import { Root, ScrollRoot } from './styles'
+import useGetOtherUserClosetQuery from '../../../../apis/user/hooks/useGetOtherUserClosetQuery'
 const UserCloset = () => {
   const { id } = useParams()
-  if (id) {
-    // 타 유저의 마이페이지
-    const { getOtherUserClosetList } = useUserClosetQuery()
-    const { data } = getOtherUserClosetList(Number(id))
-    const tempData = data?.pages[0].content
-    console.log('tempData', tempData)
-    return <ItemListGrid data={tempData} canChangeView={false}></ItemListGrid>
-  } else {
-    const {
-      getUserClosetList: { data },
-    } = useUserClosetQuery()
-    return <ItemListGrid data={data} canChangeView={false}></ItemListGrid>
+  const { getOtherUserClosetList } = useGetOtherUserClosetQuery()
+  const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } =
+    getOtherUserClosetList(Number(id))
+  console.log('closet Data', data)
+  if (!data?.pages[0].content) {
+    return (
+      <Root>
+        <EmptyState
+          title='옷장이 없어요'
+          subtitle='옷장이 만들어 질 때까지
+조금만 기다려주세요'
+          icon='item'
+        />
+      </Root>
+    )
   }
+
+  return (
+    <ScrollRoot>
+      {/* <S.BodyContainer> */}
+      <ClosetList data={data?.pages[0].content} />
+      {/* </S.BodyContainer> */}
+    </ScrollRoot>
+  )
 }
 
 export default UserCloset

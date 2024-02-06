@@ -26,6 +26,14 @@ const useItemDetailQuery = () => {
     },
   })
 
+  const deleteItem = useMutation((itemId: number) => item.deleteItem(itemId), {
+    onSuccess: (res) => {
+      console.log(res)
+      queryClient.invalidateQueries(queryKeys.userUploadItem)
+      queryClient.invalidateQueries(queryKeys.getMypageInfo)
+    },
+  })
+
   const requestEditItem = useMutation(
     ({ itemId, requestContent }: IReportItem) =>
       item.requsetEditItem(itemId, requestContent.reason, requestContent.content),
@@ -53,7 +61,7 @@ const useItemDetailQuery = () => {
     },
   )
 
-  return { getItemDetail, likeItem, reportItem, requestEditItem }
+  return { getItemDetail, likeItem, deleteItem, reportItem, requestEditItem }
 }
 
 export default useItemDetailQuery
