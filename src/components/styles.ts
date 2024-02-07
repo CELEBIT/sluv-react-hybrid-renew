@@ -11,6 +11,7 @@ interface IPretendard {
 
 const GalaxyFold3DeviceSize = 320
 const GalaxyDeviceSize = 360
+const StandardSize = 380
 const iPhone12DeviceSize = 390
 const iPhone12ProMaxDeviceSize = 430
 export const supportDeviceSize = 1080
@@ -18,18 +19,21 @@ export const supportDeviceSize = 1080
 export const reset = css`
   html {
     @media all and (max-width: ${GalaxyFold3DeviceSize}px) {
-      font-size: 15px;
+      font-size: 13.75px;
     }
     @media all and (min-width: ${GalaxyFold3DeviceSize +
       1}px) and (max-width: ${GalaxyDeviceSize}px) {
+      font-size: 15.5px;
+    }
+    @media all and (min-width: ${GalaxyDeviceSize + 1}px) and (max-width: ${StandardSize}px) {
       font-size: 16px;
     }
-    @media all and (min-width: ${GalaxyDeviceSize + 1}px) and (max-width: ${iPhone12DeviceSize}px) {
-      font-size: 17px;
+    @media all and (min-width: ${StandardSize + 1}px) and (max-width: ${iPhone12DeviceSize}px) {
+      font-size: 16.5px;
     }
     @media all and (min-width: ${iPhone12DeviceSize +
       1}px) and (max-width: ${iPhone12ProMaxDeviceSize}px) {
-      font-size: 18px;
+      font-size: 17.75px;
     }
     @media all and (min-width: ${iPhone12ProMaxDeviceSize + 1}px) {
       font-size: 19px;
@@ -57,28 +61,47 @@ export const reset = css`
     * {
       box-sizing: border-box;
     }
+
+    ul {
+      padding: 0;
+      margin: 0;
+    }
   }
 `
 
 export const Common = {
   colors: {
-    PRI : '#5E2AB9',
-    SEC : '#6C47FF',
-    COMPLETE : '#454381',
-    BG : '#F8F6FF',
-    LINE : '#5E2AB9',
+    PRI: '#5E2AB9',
+    SEC: '#6C47FF',
+    COMPLETE: '#454381',
+    BG: '#F8F6FF',
+    LINE: '#5E2AB9',
 
-    BK : '#212529',
-    GR600 : '#7B8894',
-    GR500 : '#AEB5BC',
-    GR400 : '#D6D8DA',
-    GR300 : '#C7CED4',
-    GR200 : '#EAECEF',
-    GR100 : '#F4F5F6',
-    
-    ERROR : '#FA5252',
+    WH: '#FFFFFF',
+    BK: '#212529',
+    GR600: '#7B8894',
+    GR500: '#AEB5BC',
+    GR400: '#C7CED4',
+    GR300: '#DFE2E6',
+    GR200: '#EAECEF',
+    GR100: '#F4F5F6',
+    GR50: '#F7F7FB',
+
+    ERROR: '#FA5252',
+
+    PK: '#F06595',
+    PKBg: '#FCF0F6',
+    ORG: '#FF7C51',
+    ORGBG: '#FFEDE7',
+    YL: '#D89B00',
+    YLBG: '#FFFBDC',
+    GRN: '#72B16D',
+    GRNBG: '#E9FEE8',
+    BL: '#4DABF7',
+    BLBG: '#E7F5FF',
   },
   bold: {
+    thin: 400,
     regular: 500,
     semiBold: 600,
     bold: 700,
@@ -95,6 +118,7 @@ export const Root = styled.div`
   transform: translate(-50%, 0);
   background-color: white;
   overflow: hidden;
+  padding: 0 1.25rem;
 `
 
 export const Pretendard = (props: IPretendard) => css`
