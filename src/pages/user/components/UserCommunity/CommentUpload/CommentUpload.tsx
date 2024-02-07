@@ -1,6 +1,6 @@
 import React from 'react'
 import useUserMypageQuery from '../../../../../apis/user/hooks/useUserMypageQuery'
-import { QuestionListWrapper } from '../../../../community/sytles'
+import { QuestionListWrapper } from '../../../../community/styles'
 import CommentListItem from '../../../../../components/CommentListItem/CommentListItem'
 import { Line } from '../../../../community/detail/styles'
 

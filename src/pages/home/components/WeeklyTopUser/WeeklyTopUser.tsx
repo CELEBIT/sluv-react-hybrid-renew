@@ -31,9 +31,9 @@ const WeeklyTopUser = () => {
               borderRadius={16}
               imgUrl={user.profileImgUrl}
               followStatus={user.followStatus}
-              userName={user.nickName}
+              user={user}
               onClick={() => navigate(`/user/${user.id}`)}
-            ></UserCard>
+            />
           )
         })}
       </UserCardListWrapper>

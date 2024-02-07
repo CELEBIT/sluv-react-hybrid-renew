@@ -39,7 +39,7 @@ const ItemEditModal = ({ itemId }: IProps) => {
           modalCloseBtnClick={() => closeModal(modals.ItemEditRequestModal)}
         />
         <MenuWrapper>
-          <Menu>
+          <Menu onClick={onClickEdit}>
             <Share stroke={Common.colors.BK}></Share>게시글 수정하기
           </Menu>
           <Menu onClick={onClickDeleteItem}>

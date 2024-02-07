@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { CommunityPageContainer, QuestionListWrapper, TabContainer } from '../../sytles'
+import { CommunityPageContainer, QuestionListWrapper, TabContainer } from '../../styles'
 import { HeaderWrapper } from '../../../user/styles'
 import Header from '../../../../components/Header/Header'
 import { ComponentContainer } from '../../../home/styles'
