@@ -8,7 +8,7 @@ interface ButtonMediumProps {
   children: any
   icon?: boolean
   active: boolean
-  onClick: () => void
+  onClick: (e: any) => void
 }
 
 const FollowMediumButton = forwardRef<HTMLDivElement, ButtonMediumProps>(

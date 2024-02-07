@@ -1,5 +1,6 @@
 import request from '../core'
 import { GetPaginationResult, ResponseType } from '../core/type'
+import { IUserResult } from '../user/userService'
 
 export interface SearchItemResult {
   itemId: number
@@ -32,19 +33,19 @@ export interface SearchQuestionResult {
   viewNum?: number
   commentNum?: number
 }
-export interface SearchUserResult {
-  id: number
-  nickname: string
-  profileImgUrl: string
-  followStatus: boolean
-}
+// export interface SearchUserResult {
+//   id: number
+//   nickname: string
+//   profileImgUrl: string
+//   followStatus: boolean
+// }
 export interface IRecentSearch {
   keyword: string
 }
 export interface ITotalSearch {
   itemList: Array<SearchItemResult>
   questionList: Array<SearchQuestionResult>
-  userList: Array<SearchUserResult>
+  userList: Array<IUserResult>
 }
 
 export default class SearchService {

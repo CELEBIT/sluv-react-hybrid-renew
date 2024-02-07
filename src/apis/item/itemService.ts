@@ -241,4 +241,41 @@ export default class ItemService {
     const data: ResponseType<Array<ItemResult>> = await request.get(`${this.itemUrl}/howabout`)
     return data.result
   }
+
+  // 같은 셀럽 아이템
+  async getSameCelebItem(itemId: number) {
+    const data: ResponseType<RecommendItemResult[]> = await request.get(
+      `${this.itemUrl}/sameCelebItem`,
+      {
+        params: {
+          itemId,
+        },
+      },
+    )
+    return data.result
+  }
+  // 같은 브랜드 아이템
+  async getSameBrandItem(itemId: number) {
+    const data: ResponseType<RecommendItemResult[]> = await request.get(
+      `${this.itemUrl}/sameBrandItem`,
+      {
+        params: {
+          itemId,
+        },
+      },
+    )
+    return data.result
+  }
+  // 같은 셀럽 아이템
+  async getSameScrapItem(itemId: number) {
+    const data: ResponseType<RecommendItemResult[]> = await request.get(
+      `${this.itemUrl}/togetherScrap`,
+      {
+        params: {
+          itemId,
+        },
+      },
+    )
+    return data.result
+  }
 }

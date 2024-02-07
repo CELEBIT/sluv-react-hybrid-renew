@@ -18,6 +18,15 @@ const useItemDetailQuery = () => {
   const getItemDetail = (itemId: number) => {
     return useQuery(queryKeys.itemDetail(itemId), () => item.getItemDetail(itemId))
   }
+  const getSameCelebItem = (itemId: number) => {
+    return useQuery(queryKeys.sameCelebItem(itemId), () => item.getSameCelebItem(itemId))
+  }
+  const getSameBrandItem = (itemId: number) => {
+    return useQuery(queryKeys.sameBrandItem(itemId), () => item.getSameBrandItem(itemId))
+  }
+  const getSameScrapItem = (itemId: number) => {
+    return useQuery(queryKeys.sameScrapItem(itemId), () => item.getSameScrapItem(itemId))
+  }
 
   const likeItem = useMutation((itemId: number) => item.likeItem(itemId), {
     onSuccess: (res, itemId) => {
@@ -61,7 +70,16 @@ const useItemDetailQuery = () => {
     },
   )
 
-  return { getItemDetail, likeItem, deleteItem, reportItem, requestEditItem }
+  return {
+    getItemDetail,
+    likeItem,
+    deleteItem,
+    reportItem,
+    requestEditItem,
+    getSameCelebItem,
+    getSameBrandItem,
+    getSameScrapItem,
+  }
 }
 
 export default useItemDetailQuery
