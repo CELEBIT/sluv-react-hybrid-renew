@@ -165,6 +165,7 @@ const App = () => {
             <Route path='/community/detail/report-user/reason' element={<RequestReason />} />
             {/* 정보 공유하기 */}
             <Route path='/item/create' element={<ItemCreate />} />
+            <Route path='/item/edit' element={<ItemCreate />} />
             <Route path='/item/create/addinfo' element={<AddInfo />} />
             <Route path='/item/create/addlink' element={<AddLink />} />
             <Route path='/item/create/confirm' element={<ItemConfirm />} />
