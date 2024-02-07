@@ -210,11 +210,13 @@ const ItemDetail = () => {
             <UserImg imgUrl={data?.writer.profileImgUrl} />
             <span>{data?.writer.nickName}</span>
           </div>
-          {data?.followStatus ? (
-            <ButtonSmall type='sec' text='팔로잉' icon={true} onClick={onClickFollow} />
-          ) : (
-            <ButtonSmall type='sec' text='팔로우' onClick={onClickFollow} />
-          )}
+          {data?.hasMine === false ? (
+            data?.followStatus ? (
+              <ButtonSmall type='sec' text='팔로잉' icon={true} onClick={onClickFollow} />
+            ) : (
+              <ButtonSmall type='sec' text='팔로우' onClick={onClickFollow} />
+            )
+          ) : null}
         </UploaderInfoWrapper>
         <AdditionalInfoWrapper>
           {data?.whenDiscovery && <span>{convertToKoDate(new Date(data?.whenDiscovery))}</span>}
