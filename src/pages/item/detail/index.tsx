@@ -56,7 +56,6 @@ import DisplayField from '../../../components/TextField/DisplayField/DisplayFiel
 import ButtonSmall from '../../../components/ButtonSmall/ButtonSmall'
 import { formatPrice } from '../create/components/PriceField/price.util'
 import { HeaderWrapper } from '../addInfo/styles'
-import RecommendedItemList from '../../../components/RecommendedItem/RecommendedItemList'
 import Carousel from './components/Carousel/Carousel'
 import useItemDetailQuery from '../../../apis/item/hooks/useItemDetailQuery'
 
@@ -68,6 +67,9 @@ import { RequestEditItemState } from '../editRequest'
 import { useSetRecoilState } from 'recoil'
 import { Common } from '../../../components/styles'
 import { ItemClosetListModal } from '../../closet/detail'
+import SameCeleb from './components/Carousel/SameCeleb'
+import SameScrap from './components/Carousel/SameScrap'
+import SameBrand from './components/Carousel/SameBrand'
 
 const ItemDetail = () => {
   const navigate = useNavigate()
@@ -259,24 +261,9 @@ const ItemDetail = () => {
           <ArrowLarge></ArrowLarge>
         </WrongInfo>
         <RecommendWrapper>
-          {(data?.sameCelebItemList?.length ?? 0) > 0 && (
-            <RecommendedItemList
-              title='같은 셀럽의 아이템'
-              list={data?.sameCelebItemList}
-            ></RecommendedItemList>
-          )}
-          {(data?.sameBrandItemList?.length ?? 0) > 0 && (
-            <RecommendedItemList
-              title='같은 브랜드의 아이템'
-              list={data?.sameBrandItemList}
-            ></RecommendedItemList>
-          )}
-          {(data?.otherSluverItemList?.length ?? 0) > 0 && (
-            <RecommendedItemList
-              title='다른 스러버들이 함께 보관한 아이템'
-              list={data?.otherSluverItemList}
-            ></RecommendedItemList>
-          )}
+          <SameCeleb itemId={Number(itemId)} />
+          <SameBrand itemId={Number(itemId)} />
+          <SameScrap itemId={Number(itemId)} />
         </RecommendWrapper>
         <ShareItemWrapper>
           <ShareWrapper>
