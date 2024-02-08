@@ -14,7 +14,6 @@ const HowAbout = () => {
 
   const { getHowAboutItem } = useHowAboutItemQuery()
   const { data } = getHowAboutItem()
-  console.log('getHowAboutItem', { data })
   return (
     <ScrollComponentWrapper>
       <HomeTitle className='title'>이 아이템은 어때요?</HomeTitle>
