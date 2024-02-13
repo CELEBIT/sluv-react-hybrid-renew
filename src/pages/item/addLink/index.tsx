@@ -14,16 +14,16 @@ const AddLink = () => {
   const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
   const [links, setLinks] = useRecoilState(linksState)
   const [hasError, setHasError] = useState(false)
-
+  console.log('links', links)
   useEffect(() => {
-    if (itemInfo.linkList) setLinks([...itemInfo.linkList])
+    if (itemInfo.linkList) setLinks(itemInfo.linkList)
   }, [])
 
   const handleComplete = (updatedLinks: Link[]) => {
     setLinks(updatedLinks)
-    const isLinkNameEmpty = links.some((link) => link.linkName === '')
-    const isUrlEmpty = links.some((link) => link.itemLinkUrl === '')
-    const isUrlValid = links.every((link) => urlRegex.test(link.itemLinkUrl))
+    const isLinkNameEmpty = updatedLinks.some((link) => link.linkName === '')
+    const isUrlEmpty = updatedLinks.some((link) => link.itemLinkUrl === '')
+    const isUrlValid = updatedLinks.every((link) => urlRegex.test(link.itemLinkUrl))
 
     if (!isLinkNameEmpty && !isUrlEmpty && isUrlValid) {
       setHasError(false)
@@ -31,6 +31,7 @@ const AddLink = () => {
         ...itemInfo,
         linkList: [...links],
       })
+      console.log('링크 완료 후 itemInfo', itemInfo)
       navigate(-1)
       return
     } else {

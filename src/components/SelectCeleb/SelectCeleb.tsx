@@ -115,6 +115,9 @@ const SelectCeleb = () => {
   }
 
   useEffect(() => {
+    if (itemInfo.celeb) {
+      // 수정시
+    }
     if ((interestCelebList?.length ?? 0) <= 0) {
       // 관심셀럽이 없으므로 리턴
       return

@@ -22,12 +22,15 @@ const Carousel = ({ imgList }: CarouselProps) => {
   })
   return (
     <div className='navigation-wrapper' style={{ position: 'relative' }}>
-      <ImageContainer ref={sliderRef} className='keen-slider'>
-        {imgList.map((itemImg: ImgResult, index) => (
-          <Image key={index} url={itemImg.imgUrl} className='keen-slider__slide'></Image>
-        ))}
-      </ImageContainer>
       {imgList && (
+        <ImageContainer ref={sliderRef} className='keen-slider'>
+          {imgList.map((itemImg: ImgResult, index) => (
+            <Image key={index} url={itemImg.imgUrl} className='keen-slider__slide'></Image>
+          ))}
+        </ImageContainer>
+      )}
+
+      {imgList.length > 0 && (
         <>
           {loaded && instanceRef.current && (
             <Dots>
