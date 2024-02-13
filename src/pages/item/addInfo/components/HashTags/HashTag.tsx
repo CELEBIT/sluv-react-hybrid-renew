@@ -30,6 +30,7 @@ const HashtagInput: React.FC<HashtagInputProps> = ({ placeholder }) => {
 
   useEffect(() => {
     if (itemInfo.hashTagList) {
+      console.log(itemInfo.hashTagList)
       setHashtags([...itemInfo.hashTagList])
     }
   }, [])

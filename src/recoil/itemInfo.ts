@@ -6,7 +6,7 @@ export interface ICeleb {
   celebId: number
   celebName: string
 }
-interface ICategory {
+export interface ICategory {
   categoryId: number
   childName: string
   parentCategoryId: number
@@ -30,7 +30,7 @@ export interface IItemInfo {
   id: number | null
   imgList: Array<ImgResult> | null
   celeb?: ICeleb | null
-  whenDiscovery: string | null | Date
+  whenDiscovery: Date | null
   whereDiscovery: string | null
   itemCategory: ICategory | null
   brand?: IBrand | null

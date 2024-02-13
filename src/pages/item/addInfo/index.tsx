@@ -13,39 +13,39 @@ const AddInfo = () => {
 
   const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
 
-  const [addInfoText, setAddInfoText] = useState<string | null>(itemInfo.additionalInfo)
+  const [addInfoText, setAddInfoText] = useState<string | null>(itemInfo.additionalInfo ?? '')
   const [source, setSource] = useState<string | null>(itemInfo.infoSource)
   const hashTags = useRecoilValue(hashTagState)
 
   const [infoValid, setInfoValid] = useState(true)
   const [hasSubmitted, setHasSubmitted] = useState(false)
 
-  console.log('hasSubmitted', hasSubmitted)
-
   const onSubmit = () => {
     setHasSubmitted(true)
 
-    setItemInfo({
-      ...itemInfo,
-      additionalInfo: addInfoText === '' ? null : addInfoText,
-      infoSource: source === '' ? null : source,
-      hashTagList: hashTags.length === 0 ? null : hashTags,
-    })
-    setInfoValid(true)
-    navigate('/item/create')
+    // setItemInfo({
+    //   ...itemInfo,
+    //   additionalInfo: addInfoText === '' ? null : addInfoText,
+    //   infoSource: source === '' ? null : source,
+    //   hashTagList: hashTags.length === 0 ? null : hashTags,
+    // })
+    // setInfoValid(true)
+    // navigate(-1)
 
-    // if (addInfoText || source || hashTags.length > 0) {
-    //   setItemInfo({
-    //     ...itemInfo,
-    //     additionalInfo: addInfoText,
-    //     infoSource: source,
-    //     hashTagList: hashTags,
-    //   })
-    //   setInfoValid(true)
-    //   navigate('/item/create')
-    // } else {
-    //   setInfoValid(false)
-    // }
+    if (addInfoText || source || hashTags.length > 0) {
+      console.log(addInfoText)
+      console.log('hashTags', hashTags)
+      setItemInfo({
+        ...itemInfo,
+        additionalInfo: addInfoText === '' ? null : addInfoText,
+        infoSource: source === '' ? null : source,
+        hashTagList: hashTags.length === 0 ? null : hashTags,
+      })
+      setInfoValid(true)
+      navigate(-1)
+    } else {
+      setInfoValid(false)
+    }
   }
 
   useEffect(() => {

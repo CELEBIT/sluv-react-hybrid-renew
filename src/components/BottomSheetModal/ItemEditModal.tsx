@@ -21,13 +21,13 @@ const ItemEditModal = ({ itemId }: IProps) => {
   const { openModal, closeModal } = useModals()
 
   const onClickEdit = () => {
-    closeModal(modals.ItemEditRequestModal, () => {
-      navigate('/item/detail/request-deleteAndSort')
+    closeModal(modals.ItemEditModal, () => {
+      navigate(`/item/edit/${itemId}`)
     })
   }
 
   const onClickDeleteItem = () => {
-    closeModal(modals.ItemEditRequestModal, () => {
+    closeModal(modals.ItemEditModal, () => {
       openModal(modals.DeleteItemModal, { itemId: itemId })
     })
   }
