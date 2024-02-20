@@ -44,7 +44,6 @@ const UserInterestCelebModal = ({ id }: userIdProps) => {
     // 다른 유저
     const { getOtherUserInterestCelebWithCategory } = useInterestCelebQuery()
     const { data: interestCelebList } = getOtherUserInterestCelebWithCategory(Number(id))
-    console.log(interestCelebList)
     useEffect(() => {
       const celebListWrapper = document.getElementById('celebListWrapper')
       if (celebListWrapper) {
@@ -58,7 +57,7 @@ const UserInterestCelebModal = ({ id }: userIdProps) => {
           <div className='Header'>
             <Header isModalHeader={true} title='관심 셀럽 목록' modalCloseBtnClick={onClose} />
           </div>
-          <MenuWrapper className={expanded ? 'long' : ''}>
+          <MenuWrapper>
             {interestCelebList?.map((Category, index) => {
               if (Category.celebList.length > 0) {
                 return (
@@ -107,7 +106,7 @@ const UserInterestCelebModal = ({ id }: userIdProps) => {
           <div className='Header'>
             <Header isModalHeader={true} title='관심 셀럽 목록' modalCloseBtnClick={onClose} />
           </div>
-          <MenuWrapper className={expanded ? 'long' : ''}>
+          <MenuWrapper>
             {interestCelebList?.map((Category, index) => {
               if (Category.celebList.length > 0) {
                 return (
@@ -146,7 +145,7 @@ const MenuWrapper = styled.div`
   flex-direction: column;
   overflow-y: scroll;
   width: 100%;
-  height: 80%;
+  max-height: 75vh;
   border-top: 1px solid ${Common.colors.GR200};
   min-height: 15rem;
 `
