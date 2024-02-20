@@ -52,12 +52,20 @@ const UserProfile = () => {
   const onClickFollower = (userName: string) => {
     setFollowTab('follower')
     setSelectedUserName(userName)
-    navigate('./followlist')
+    if (id) {
+      navigate(`/user/followlist/${id}`)
+    } else {
+      navigate('./followlist')
+    }
   }
   const onClickFollowing = (userName: string) => {
     setFollowTab('following')
     setSelectedUserName(userName)
-    navigate('./followlist')
+    if (id) {
+      navigate(`/user/followlist/${id}`)
+    } else {
+      navigate('./followlist')
+    }
   }
   if (!id) {
     // 현재 유저의 마이페이지

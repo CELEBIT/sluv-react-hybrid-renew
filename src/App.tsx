@@ -192,7 +192,7 @@ const App = () => {
             <Route path='/user/:id' element={<User />} />
             <Route path='/user/select-celeb' element={<SelectInterestCeleb />} />
             <Route path='/user/followlist' element={<FollowList />} />
-            <Route path='/user/:id/followlist' element={<FollowList />} />
+            <Route path='/user/followlist/:id' element={<FollowList />} />
             {/* 마이페이지 나의 게시글 */}
             <Route path='/user/item' element={<UserItem />} />
             <Route path='/user/community' element={<UserCommunity />} />

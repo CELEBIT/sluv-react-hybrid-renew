@@ -10,11 +10,15 @@ import { itemInfoState } from '../../../recoil/itemInfo'
 
 const AddLink = () => {
   const navigate = useNavigate()
-
   const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
   const [links, setLinks] = useRecoilState(linksState)
   const [hasError, setHasError] = useState(false)
-  console.log('links', links)
+
+  const onBackClick = () => {
+    setLinks([{ linkName: '', itemLinkUrl: '' }])
+    navigate(-1)
+  }
+
   useEffect(() => {
     if (itemInfo.linkList) setLinks(itemInfo.linkList)
   }, [])
@@ -42,7 +46,7 @@ const AddLink = () => {
   }
   return (
     <AddInfoContainer>
-      <Header isModalHeader={false} hasArrow={true} title={'구매 링크'}>
+      <Header isModalHeader={false} hasArrow={true} title={'구매 링크'} backBtnClick={onBackClick}>
         <span className='submit' onClick={() => handleComplete(links)}>
           완료
         </span>

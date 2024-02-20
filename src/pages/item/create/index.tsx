@@ -22,6 +22,9 @@ import { ReactComponent as Error } from '../../../assets/error_20.svg'
 import { ReactComponent as LinkAddOff } from '../../../assets/link_add_off_20.svg'
 import { ReactComponent as InfoAddOff } from '../../../assets/info_add_off_20.svg'
 import { ReactComponent as StorageOff } from '../../../assets/storage_off_20.svg'
+import { ReactComponent as LinkAddOn } from '../../../assets/link_add_on_20.svg'
+import { ReactComponent as InfoAddOn } from '../../../assets/info_add_on_20.svg'
+import { ReactComponent as StorageOn } from '../../../assets/storage_on_20.svg'
 import { HeaderWrapper } from '../addInfo/styles'
 import { ErrorText } from '../../../components/TextField/DefaultTextfield/styles'
 import { selectedSubCategoryState } from '../../../components/BottomSheetModal/ItemCategoryModal'
@@ -295,11 +298,20 @@ const ItemCreate = () => {
       <BottomBar>
         <div className='left'>
           <div className='button' onClick={() => navigate('/item/create/addInfo')}>
-            <InfoAddOff></InfoAddOff>
+            {itemInfo.additionalInfo && itemInfo.additionalInfo?.length > 0 ? (
+              <InfoAddOn></InfoAddOn>
+            ) : (
+              <InfoAddOff></InfoAddOff>
+            )}
+
             <span>추가 정보</span>
           </div>
           <div className='button' onClick={() => navigate('/item/create/addlink')}>
-            <LinkAddOff></LinkAddOff>
+            {itemInfo.linkList && itemInfo.linkList.length > 0 ? (
+              <LinkAddOn></LinkAddOn>
+            ) : (
+              <LinkAddOff></LinkAddOff>
+            )}
             <span>구매 링크</span>
           </div>
         </div>

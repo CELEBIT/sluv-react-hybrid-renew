@@ -103,6 +103,7 @@ export default class UserService {
       {
         params: {
           page,
+          size: 3,
         },
       },
     )
@@ -115,6 +116,34 @@ export default class UserService {
       {
         params: {
           page,
+          size: 3,
+        },
+      },
+    )
+    return data.result
+  }
+
+  // 타유저의 팔로우/팔로잉 리스트
+  async getUserFollowerList(userId: number, page: number) {
+    const data: ResponseType<GetPaginationResult<IUserResult>> = await request.get(
+      `${this.userUrl}/${userId}/follower`,
+      {
+        params: {
+          page,
+          size: 20,
+        },
+      },
+    )
+    return data.result
+  }
+
+  async getUserFollowingList(userId: number, page: number) {
+    const data: ResponseType<GetPaginationResult<IUserResult>> = await request.get(
+      `${this.userUrl}/${userId}/following`,
+      {
+        params: {
+          page,
+          size: 20,
         },
       },
     )
