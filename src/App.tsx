@@ -165,7 +165,7 @@ const App = () => {
             <Route path='/community/detail/report-user/reason' element={<RequestReason />} />
             {/* 정보 공유하기 */}
             <Route path='/item/create' element={<ItemCreate />} />
-            <Route path='/item/edit' element={<ItemCreate />} />
+            <Route path='/item/edit/:id' element={<ItemCreate />} />
             <Route path='/item/create/addinfo' element={<AddInfo />} />
             <Route path='/item/create/addlink' element={<AddLink />} />
             <Route path='/item/create/confirm' element={<ItemConfirm />} />
@@ -192,7 +192,7 @@ const App = () => {
             <Route path='/user/:id' element={<User />} />
             <Route path='/user/select-celeb' element={<SelectInterestCeleb />} />
             <Route path='/user/followlist' element={<FollowList />} />
-            <Route path='/user/:id/followlist' element={<FollowList />} />
+            <Route path='/user/followlist/:id' element={<FollowList />} />
             {/* 마이페이지 나의 게시글 */}
             <Route path='/user/item' element={<UserItem />} />
             <Route path='/user/community' element={<UserCommunity />} />

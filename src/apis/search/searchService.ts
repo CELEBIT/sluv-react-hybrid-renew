@@ -24,7 +24,7 @@ export interface SearchQuestionResult {
   itemImgList: Array<QuestionImg> | null
   categoryName: Array<string> | null
   qtype: string
-  user?: {
+  user: {
     id: number
     nickName: string
     profileImgUrl: string

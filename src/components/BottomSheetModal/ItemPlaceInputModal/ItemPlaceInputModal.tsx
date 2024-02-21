@@ -16,7 +16,7 @@ import { useRecoilState } from 'recoil'
 
 const ItemPlaceInputModal = () => {
   const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
-  const [placeName, setPlaceName] = useState('')
+  const [placeName, setPlaceName] = useState(itemInfo.whereDiscovery ?? '')
   const { closeModal } = useModals()
 
   const {

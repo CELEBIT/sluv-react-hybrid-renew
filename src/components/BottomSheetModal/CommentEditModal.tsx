@@ -16,18 +16,18 @@ interface IProps {
   itemId: number
 }
 
-const ItemEditModal = ({ itemId }: IProps) => {
+const CommentEditModal = ({ itemId }: IProps) => {
   const navigate = useNavigate()
   const { openModal, closeModal } = useModals()
 
   const onClickEdit = () => {
-    closeModal(modals.ItemEditModal, () => {
-      navigate(`/item/edit/${itemId}`)
+    closeModal(modals.CommentEditModal, () => {
+      navigate('/community/comment/edit')
     })
   }
 
   const onClickDeleteItem = () => {
-    closeModal(modals.ItemEditModal, () => {
+    closeModal(modals.CommentEditModal, () => {
       openModal(modals.DeleteItemModal, { itemId: itemId })
     })
   }
@@ -40,10 +40,10 @@ const ItemEditModal = ({ itemId }: IProps) => {
         />
         <MenuWrapper>
           <Menu onClick={onClickEdit}>
-            <Share stroke={Common.colors.BK}></Share>게시글 수정하기
+            <Share stroke={Common.colors.BK}></Share>댓글 수정하기
           </Menu>
           <Menu onClick={onClickDeleteItem}>
-            <Share stroke={Common.colors.BK}></Share>게시글 삭제하기
+            <Share stroke={Common.colors.BK}></Share>댓글 삭제하기
           </Menu>
         </MenuWrapper>
       </ModalWrapper>
@@ -73,4 +73,4 @@ const Menu = styled.div`
   ${Pretendard({ size: 17, weight: Common.bold.regular, color: Common.colors.BK })}
 `
 
-export default ItemEditModal
+export default CommentEditModal

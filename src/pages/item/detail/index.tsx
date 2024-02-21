@@ -79,6 +79,7 @@ const ItemDetail = () => {
 
   const { getItemDetail } = useItemDetailQuery()
   const { data } = getItemDetail(Number(itemId))
+  console.log(data)
 
   const setEditReportItemState = useSetRecoilState(RequestEditItemState)
   const colors = ['gray', 'pink', 'orange', 'yellow', 'green', 'blue']
@@ -133,7 +134,7 @@ const ItemDetail = () => {
         </Header>
       </HeaderWrapper>
       <ItemWrapper>
-        {data?.imgList && <Carousel imgList={data?.imgList}></Carousel>}
+        {data?.imgList ? <Carousel imgList={data?.imgList}></Carousel> : null}
 
         <BasicInfoWrapper>
           <Top>

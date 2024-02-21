@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { css } from '@emotion/react'
 import { Common, Pretendard } from '../../../components/styles'
 
 export const DetailContainer = styled.div`
@@ -15,6 +16,7 @@ export const DetailContainer = styled.div`
     display: none;
   }
 `
+
 export const CommunityWrapper = styled.div`
   display: flex;
   flex-direction: column;

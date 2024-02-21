@@ -14,7 +14,6 @@ const EditComment = () => {
   // location.state로 받지 말고 edit할 comment state 만들어서 관리해야돼.
   const navigate = useNavigate()
 
-  const commentData = location.state
   const [commentObject, setCommentObject] = useRecoilState(commentState)
   const [imgItemList, setImgItemList] = useRecoilState(imgItemListState)
 
@@ -24,36 +23,37 @@ const EditComment = () => {
       content: newValue,
     }))
   }
+  // const handleComplete = () => {}
 
-  useEffect(() => {
-    if (commentData.itemList) {
-      const transformedItemList = location.state.itemList.map((item: Item) => ({
-        itemId: item.item.itemId,
-        sortOrder: item.sortOrder,
-      }))
-      setCommentObject({
-        content: commentData.content,
-        imgList: commentData.imgUrlList,
-        itemList: transformedItemList,
-      })
-      const transformedItemImgList: Array<IselectedItem> = commentData.itemList.map(
-        (item: Item, index: number) => ({
-          description: null,
-          vote: null,
-          representFlag: index === 0,
-          itemId: item.item.itemId,
-          imgUrl: item.item.imgUrl,
-        }),
-      )
-      setImgItemList(transformedItemImgList)
-    } else {
-      setCommentObject({
-        content: commentData.content,
-        imgList: commentData.imgUrlList,
-        itemList: null,
-      })
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (commentObject && commentObject?.itemList) {
+  //     const transformedItemList = location.state.itemList.map((item: Item) => ({
+  //       itemId: item.item.itemId,
+  //       sortOrder: item.sortOrder,
+  //     }))
+  //     setCommentObject({
+  //       content: commentObject.content,
+  //       imgList: commentObject.imgList,
+  //       itemList: transformedItemList,
+  //     })
+  //     const transformedItemImgList: Array<IselectedItem> = commentObject.itemList.map(
+  //       (item: Item, index: number) => ({
+  //         description: null,
+  //         vote: null,
+  //         representFlag: index === 0,
+  //         itemId: item.item.itemId,
+  //         imgUrl: item.item.imgUrl,
+  //       }),
+  //     )
+  //     setImgItemList(transformedItemImgList)
+  //   } else {
+  //     setCommentObject({
+  //       content: commentData.content,
+  //       imgList: commentData.imgUrlList,
+  //       itemList: null,
+  //     })
+  //   }
+  // }, [])
 
   return (
     <CommentUploadContainer>

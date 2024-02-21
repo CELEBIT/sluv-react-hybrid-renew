@@ -11,7 +11,7 @@ const UserCloset = () => {
   const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } =
     getOtherUserClosetList(Number(id))
   console.log('closet Data', data)
-  if (!data?.pages[0].content) {
+  if (!data?.pages[0].content.length) {
     return (
       <Root>
         <EmptyState
