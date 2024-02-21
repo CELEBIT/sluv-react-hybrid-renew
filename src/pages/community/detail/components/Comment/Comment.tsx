@@ -33,7 +33,11 @@ import { ReactComponent as LikeOff } from '../../../../../assets/like_off_18.svg
 import { ReactComponent as LikeOn } from '../../../../../assets/like_on_18.svg'
 import { ReactComponent as Alert } from '../../../../../assets/info_18.svg'
 import { useNavigate } from 'react-router-dom'
-import { CommentResult } from '../../../../../apis/comment/commentService.type'
+import { CommentResult, Item as CommentItem } from '../../../../../apis/comment/commentService.type'
+import useModals from '../../../../../components/Modals/hooks/useModals'
+import { modals } from '../../../../../components/Modals'
+import { useSetRecoilState } from 'recoil'
+import { commentState } from '../../CommunityDetail'
 interface CommentProps {
   questionId: number
   comment: CommentResult
@@ -41,6 +45,9 @@ interface CommentProps {
 
 const Comment = ({ questionId, comment }: CommentProps) => {
   const navigate = useNavigate()
+  const { openModal } = useModals()
+  const setCommentObject = useSetRecoilState(commentState)
+
   function convertToUTC(dateString: string): string {
     const date = new Date(dateString)
     date.setHours(date.getHours() + 9)
@@ -52,6 +59,29 @@ const Comment = ({ questionId, comment }: CommentProps) => {
   } = useSearchCommentQuery()
   const onClickLike = (commentId: number, questionId: number) => {
     mutateByLike({ commentId, questionId })
+  }
+  const onShowMore = () => {
+    if (comment.itemList) {
+      const transformedItemList = comment.itemList.map((item: CommentItem) => ({
+        itemId: item.item.itemId,
+        sortOrder: item.sortOrder,
+      }))
+      setCommentObject({
+        id: comment.id,
+        content: comment.content,
+        imgList: comment.imgUrlList,
+        itemList: transformedItemList,
+      })
+    } else {
+      setCommentObject({
+        id: comment.id,
+        content: comment.content,
+        imgList: comment.imgUrlList,
+        itemList: null,
+      })
+    }
+
+    openModal(modals.CommentEditModal)
   }
 
   return (
@@ -66,9 +96,7 @@ const Comment = ({ questionId, comment }: CommentProps) => {
               <NickName>{comment.user.nickName}</NickName>
               <Time>{formatUpdatedAt(convertToUTC(comment.createdAt))}</Time>
             </UserInfo>
-            <ShowMore
-              onClick={() => navigate('/community/comment/edit', { state: comment })}
-            ></ShowMore>
+            <ShowMore onClick={onShowMore}></ShowMore>
           </ContentTop>
           {comment.commentStatus === 'ACTIVE' ? (
             <CommentContent>{comment.content}</CommentContent>
