@@ -57,6 +57,8 @@ const SelectedInterestCelebModal = loadable(
 
 const UserInterestCelebModal = loadable(() => import('../BottomSheetModal/UserInterestCelebModal'))
 
+const CommentEditModal = loadable(() => import('../BottomSheetModal/CommentEditModal'))
+
 // 모달 관리 객체
 export const modals = {
   AskRecentPostWritingModal: AskRecentPostWritingModal as FunctionComponent<
@@ -124,6 +126,8 @@ export const modals = {
     ComponentProps<typeof ClosetBoxCreateBottomSheetModal>
   >,
   UserInterestCelebModal: UserInterestCelebModal as FunctionComponent<userIdProps>,
+
+  CommentEditModal: CommentEditModal as FunctionComponent<ComponentProps<typeof CommentEditModal>>,
 }
 
 const Modals = () => {
