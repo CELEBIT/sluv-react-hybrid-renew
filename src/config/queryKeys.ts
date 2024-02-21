@@ -54,6 +54,8 @@ export const queryKeys = {
   getOtherUserMypageInfo: (userId: number) => ['getOtherUserMypageInfo', userId] as const,
   userFollowerList: ['userFollowerList'] as const,
   userFollowingList: ['userFollowingList'] as const,
+  otherUserFollowerList: (userId: number) => ['otherUserFollowerList', userId] as const,
+  otherUserFollowingList: (userId: number) => ['otherUserFollowingList', userId] as const,
   userLikeItem: ['userLikeItem'] as const,
   userUploadQuestion: ['userUploadQuestion'] as const,
   userUploadComment: ['userUploadComment'] as const,

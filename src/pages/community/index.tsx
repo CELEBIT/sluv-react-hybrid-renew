@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { CommunityPageContainer, QuestionListWrapper, TabContainer } from './styles'
+import { CommunityPageContainer, QuestionListWrapper } from './styles'
 import { HeaderWrapper } from '../item/addInfo/styles'
 import Header from '../../components/Header/Header'
 import { ReactComponent as Search } from '../../assets/search_24.svg'
@@ -10,13 +10,10 @@ import WriteCommunityItemButton from './components/WriteCommunityItemButton/Writ
 import BannerItemsList from './components/BannerItems/BannerItemsList'
 import Menu from './components/Menu/Menu'
 import { ComponentContainer } from '../home/styles'
-import BlackFilter from '../../components/FIlter/BlackFilter'
 import NewCommunity from './components/NewCommunity/NewCommunity'
-import HotCommunity from './components/HotCommunity/HotCommunity'
 
 const Community = () => {
   const navigate = useNavigate()
-  const [selectedTab, setSelectedTab] = useState('Hot')
 
   const ComponentContainerRef = useRef<HTMLDivElement>(null)
   const stickyRef = useRef<HTMLDivElement>(null)
@@ -46,16 +43,17 @@ const Community = () => {
       <ComponentContainer ref={ComponentContainerRef}>
         <BannerItemsList></BannerItemsList>
         <Menu menuRef={stickyRef} isStickyAtTop={isStickyAtTop}></Menu>
-        <TabContainer>
+        {/* <TabContainer>
           <BlackFilter isSelected={selectedTab === 'Hot'} onClick={() => setSelectedTab('Hot')}>
             Hot
           </BlackFilter>
           <BlackFilter isSelected={selectedTab === 'New'} onClick={() => setSelectedTab('New')}>
             New
           </BlackFilter>
-        </TabContainer>
+        </TabContainer> */}
         <QuestionListWrapper>
-          {selectedTab === 'Hot' ? <HotCommunity></HotCommunity> : <NewCommunity></NewCommunity>}
+          <NewCommunity></NewCommunity>
+          {/* {selectedTab === 'Hot' ? <HotCommunity></HotCommunity> : } */}
         </QuestionListWrapper>
         <WriteCommunityItemButton isTop={!isStickyAtTop}></WriteCommunityItemButton>
       </ComponentContainer>

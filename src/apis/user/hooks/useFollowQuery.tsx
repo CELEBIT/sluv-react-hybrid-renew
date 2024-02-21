@@ -59,7 +59,43 @@ const useFollowQuery = () => {
     )
   }
 
-  return { followUser, getUserFollowerList, getUserFollowingList }
+  const getOtherUserFollowerList = (
+    userId: number,
+  ): UseInfiniteQueryResult<GetPaginationResult<IUserResult>, any> => {
+    return useInfiniteQuery(
+      queryKeys.otherUserFollowerList(userId),
+      ({ pageParam = 0 }) => user.getUserFollowerList(userId, pageParam),
+      {
+        getNextPageParam: (lastPage) => {
+          if (lastPage?.hasNext) return lastPage.page + 1
+          return undefined
+        },
+      },
+    )
+  }
+
+  const getOtherUserFollowingList = (
+    userId: number,
+  ): UseInfiniteQueryResult<GetPaginationResult<IUserResult>, any> => {
+    return useInfiniteQuery(
+      queryKeys.otherUserFollowingList(userId),
+      ({ pageParam = 0 }) => user.getUserFollowingList(userId, pageParam),
+      {
+        getNextPageParam: (lastPage) => {
+          if (lastPage?.hasNext) return lastPage.page + 1
+          return undefined
+        },
+      },
+    )
+  }
+
+  return {
+    followUser,
+    getUserFollowerList,
+    getUserFollowingList,
+    getOtherUserFollowerList,
+    getOtherUserFollowingList,
+  }
 }
 
 export default useFollowQuery

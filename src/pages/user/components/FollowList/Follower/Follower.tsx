@@ -1,44 +1,70 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import useFollowQuery from '../../../../../apis/user/hooks/useFollowQuery'
 import styled from '@emotion/styled'
 import ButtonSmall from '../../../../../components/ButtonSmall/ButtonSmall'
 import UserImage from '../../../../../components/UserImage/UserImage'
 import { Common, Pretendard } from '../../../../../components/styles'
 import EmptyState from '../../../../../components/EmptyState'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useObserver } from '../../../../../hooks/useObserver'
 
 const Follower = () => {
-  const { getUserFollowerList } = useFollowQuery()
-  const { data } = getUserFollowerList()
+  const { id } = useParams()
+  const navigate = useNavigate()
+  const { getOtherUserFollowerList, getUserFollowerList } = useFollowQuery()
+  const { data, isFetching, isFetchingNextPage, fetchNextPage } = id
+    ? getOtherUserFollowerList(Number(id))
+    : getUserFollowerList()
   console.log(data)
+  console.log(isFetching)
+
   const {
     followUser: { mutate: mutateByFollow },
   } = useFollowQuery()
   const onClickFollow = (userId: number) => {
     if (data) mutateByFollow({ userId: userId })
   }
+  const bottom = useRef(null)
+  const onIntersect = ([entry]: IntersectionObserverEntry[]) => {
+    entry.isIntersecting && fetchNextPage()
+  }
+  useObserver({
+    target: bottom,
+    onIntersect,
+  })
 
   return (
     <FollowContainer>
       {data ? (
         <>
-          {data?.pages[0].content.map((user) => {
-            return (
-              <FollowRow key={user.id}>
-                <UserInfo>
-                  <UserImage imgUrl={user.profileImgUrl} size={40}></UserImage>
-                  {user.nickName}
-                </UserInfo>
-                <ButtonSmall
-                  text={user.followStatus ? '팔로잉' : '팔로우'}
-                  type='pri'
-                  icon={user.followStatus ? true : false}
-                  iconName='check'
-                  active={user.followStatus ? false : true}
-                  onClick={() => onClickFollow(user.id)}
-                ></ButtonSmall>
-              </FollowRow>
-            )
-          })}
+          {data?.pages.map(
+            (item) =>
+              item.content.length > 0 &&
+              item.content.map((user) => {
+                return (
+                  <FollowRow key={user.id} onClick={() => navigate(`/user/${user.id}`)}>
+                    <UserInfo>
+                      <UserImage imgUrl={user.profileImgUrl} size={40}></UserImage>
+                      {user.nickName}
+                    </UserInfo>
+                    <ButtonSmall
+                      text={user.followStatus ? '팔로잉' : '팔로우'}
+                      type='pri'
+                      icon={user.followStatus ? true : false}
+                      iconName='check'
+                      active={user.followStatus ? false : true}
+                      onClick={() => onClickFollow(user.id)}
+                    ></ButtonSmall>
+                  </FollowRow>
+                )
+              }),
+          )}
+          <div ref={bottom} />
+          {isFetching && !isFetchingNextPage ? (
+            <div className='spinner'>
+              <div>Loading</div>
+            </div>
+          ) : null}
         </>
       ) : (
         <EmptyStateWrapper>

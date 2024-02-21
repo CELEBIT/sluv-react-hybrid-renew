@@ -14,7 +14,7 @@ const UserImage = ({ size, imgUrl }: UserImageProps) => {
   }
   return (
     <DefaultProfile
-      style={{ flexShrink: 0, width: `${size * 0.625}rem`, height: `${size * 0.625}rem` }}
+      style={{ flexShrink: 0, width: `${size * 0.0625}rem`, height: `${size * 0.0625}rem` }}
     ></DefaultProfile>
   )
 }

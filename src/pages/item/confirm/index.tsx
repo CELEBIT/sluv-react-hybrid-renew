@@ -123,7 +123,7 @@ const ItemConfirm = () => {
             <div className='padding'>
               <DisplayField disabled={true}>
                 {itemInfo.whenDiscovery && (
-                  <span>{formatDate(new Date(itemInfo?.whenDiscovery as string))}</span>
+                  <span>{formatDate(new Date(itemInfo?.whenDiscovery))}</span>
                 )}
                 {itemInfo.whereDiscovery && <span>{itemInfo.whereDiscovery}</span>}
               </DisplayField>

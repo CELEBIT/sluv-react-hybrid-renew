@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import BrandItemField from './components/BrandItemField/BrandItemField'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 import DatePlaceField from './components/DatePlaceField/DatePlaceField'
 import PriceField from './components/PriceField/PriceField'
-import { useNavigate } from 'react-router-dom'
-import SelectCeleb, { selectedCelebState } from '../../../components/SelectCeleb/SelectCeleb'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import SelectCeleb, {
+  selectedCelebState,
+  selectedGroupState,
+} from '../../../components/SelectCeleb/SelectCeleb'
 import SelectCategory from './components/SelectCategory/SelectCategory'
 import Header from '../../../components/Header/Header'
 import {
@@ -19,41 +22,143 @@ import { ReactComponent as Error } from '../../../assets/error_20.svg'
 import { ReactComponent as LinkAddOff } from '../../../assets/link_add_off_20.svg'
 import { ReactComponent as InfoAddOff } from '../../../assets/info_add_off_20.svg'
 import { ReactComponent as StorageOff } from '../../../assets/storage_off_20.svg'
+import { ReactComponent as LinkAddOn } from '../../../assets/link_add_on_20.svg'
+import { ReactComponent as InfoAddOn } from '../../../assets/info_add_on_20.svg'
+import { ReactComponent as StorageOn } from '../../../assets/storage_on_20.svg'
 import { HeaderWrapper } from '../addInfo/styles'
 import { ErrorText } from '../../../components/TextField/DefaultTextfield/styles'
 import { selectedSubCategoryState } from '../../../components/BottomSheetModal/ItemCategoryModal'
 import { linksState } from '../addLink/components/LinkInput/LinkInput'
 import ImageField from './components/ImageField/ImageField'
-import { celebInfoInItemState, itemInfoState } from '../../../recoil/itemInfo'
+import {
+  ICategory,
+  IHashTag,
+  IItemInfo,
+  celebInfoInItemState,
+  itemInfoState,
+} from '../../../recoil/itemInfo'
 import useUploadStateObserver from '../../../hooks/useUploadStateObserver'
 import { localStorageKeys } from '../../../config/localStorageKeys'
 import useModals from '../../../components/Modals/hooks/useModals'
 import { modals } from '../../../components/Modals'
 import useItemQuery from '../../../apis/item/hooks/useItemQuery'
-import { TempItemReq } from '../../../apis/item/itemService.type'
+import { HashTagResult, ImgResult, TempItemReq } from '../../../apis/item/itemService.type'
+import useItemDetailQuery from '../../../apis/item/hooks/useItemDetailQuery'
+import { Image, imgListState } from '../../../components/AddPhotos/AddPhotos'
 
 const ItemCreate = () => {
   useUploadStateObserver()
 
   const { openModal } = useModals()
   const navigate = useNavigate()
-  const celeb = useRecoilValue(selectedCelebState)
-  const category = useRecoilValue(selectedSubCategoryState)
+  const location = useLocation()
+  const [celeb, setCeleb] = useRecoilState(selectedCelebState)
+  const [category, setCategory] = useRecoilState(selectedSubCategoryState)
   const links = useRecoilValue(linksState)
-  const itemInfo = useRecoilValue(itemInfoState)
+  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
+  const resetItemInfo = useResetRecoilState(itemInfoState)
   const [hasTriedToUpload, setHasTriedToUpload] = useState(false)
+  const [imgList, setImgListState] = useRecoilState(imgListState)
+
+  // 아이템 수정용
+  const { id: itemId } = useParams()
+  const { getItemDetail } = useItemDetailQuery()
+  const { data } = getItemDetail(Number(itemId))
+  const setCelebInfoInItem = useSetRecoilState(celebInfoInItemState)
+  const resetCelebInfoInItem = useResetRecoilState(celebInfoInItemState)
 
   useEffect(() => {
+    const newImgList: ImgResult[] = imgList.map((img: Image, idx) => ({
+      imgUrl: img.imgUrl ? img.imgUrl : '',
+      representFlag: idx === 0,
+      sortOrder: idx,
+    }))
+
+    setItemInfo({ ...itemInfo, imgList: newImgList })
+  }, [imgList])
+
+  console.log('imgList', imgList)
+  useEffect(() => {
+    if (location.pathname.includes('/edit/') && data) {
+      const {
+        imgList,
+        whenDiscovery,
+        whereDiscovery,
+        category,
+        itemName,
+        brand,
+        price,
+        color,
+        additionalInfo,
+        hashTagList,
+        linkList,
+        infoSource,
+        newBrandName,
+        celeb,
+      } = data
+      setImgListState(imgList)
+      setCeleb({ id: celeb.id, celebNameKr: celeb.celebTotalNameKr })
+      setCelebInfoInItem({
+        soloId: celeb.id,
+        soloName: celeb.celebChildNameKr,
+        groupId: celeb.parentId,
+        groupName: celeb.celebParentNameKr,
+      })
+      const editItemCategory: ICategory | null = {
+        categoryId: category.id,
+        childName: category.name,
+        parentCategoryId: category.parentId,
+        parentName: category.parentName,
+      }
+      setCategory({ id: category.id, name: category.name })
+      const editHashTagList: Array<IHashTag> | null = hashTagList.map((tag: HashTagResult) => ({
+        hashtagId: tag.id,
+        hashtagContent: tag.hashtagContent,
+      }))
+      const newState: IItemInfo = {
+        id: Number(itemId),
+        imgList: itemInfo.imgList ?? imgList,
+        whenDiscovery: new Date(whenDiscovery),
+        whereDiscovery,
+        itemCategory: editItemCategory,
+        brand: {
+          brandId: brand.id,
+          brandName: brand.brandKr,
+          brandImgUrl: brand.brandImgUrl,
+        },
+        celeb: {
+          celebId: celeb.id,
+          celebName: celeb.celebTotalNameKr,
+        },
+        itemName: itemName,
+        price: price,
+        color,
+        additionalInfo: additionalInfo ? additionalInfo : itemInfo.additionalInfo,
+        hashTagList: editHashTagList.length > 0 ? editHashTagList : itemInfo.hashTagList,
+        linkList: itemInfo.linkList ? itemInfo.linkList : linkList,
+        infoSource,
+        newBrand: { brandName: newBrandName },
+      }
+      console.log('newState imgList', newState.imgList)
+      setItemInfo(newState)
+    }
+  }, [data, location.pathname, setItemInfo])
+
+  console.log('itemInfo', itemInfo)
+  useEffect(() => {
     const id = localStorage.getItem(localStorageKeys.TEMP_ITEM_ID)
-    if (id) {
-      openModal(modals.AskRecentPostWritingModal)
+    if (location.pathname.includes('/edit/') === false) {
+      if (id) {
+        openModal(modals.AskRecentPostWritingModal)
+      }
+      if (hasTriedToUpload === true) {
+        localStorage.removeItem(localStorageKeys.TEMP_ITEM_ID)
+      }
     }
   }, [])
 
-  const celebInfo = useRecoilValue(celebInfoInItemState)
-
   const {
-    postItem: { mutate, isSuccess },
+    postItem: { mutate },
   } = useItemQuery()
 
   const onSubmit = () => {
@@ -69,7 +174,7 @@ const ItemCreate = () => {
       let hashTags: Array<number> | null = []
       if ((itemInfo.hashTagList?.length ?? 0) > 0) {
         itemInfo?.hashTagList?.map((item) => {
-          hashTags?.push(item.hashtagId)
+          if (item.hashtagId) hashTags?.push(item.hashtagId)
         })
       } else {
         hashTags = null
@@ -96,7 +201,7 @@ const ItemCreate = () => {
         return
       }
       const item: TempItemReq = {
-        id: null,
+        id: itemInfo.id ? itemInfo.id : null,
         imgList: itemInfo.imgList,
         celebId: itemInfo.celeb?.celebId ?? null,
         whenDiscovery: itemInfo.whenDiscovery && (itemInfo.whenDiscovery as Date).toISOString(),
@@ -116,30 +221,12 @@ const ItemCreate = () => {
     } else {
       alert('오류가 발생했어요. 다시 시도해주세요')
     }
-    // const newItem = {
-    //   id: 0,
-    //   imgList: [
-    //     {
-    //       imgUrl: 'string',
-    //       representFlag: true,
-    //     },
-    //   ],
-    //   celebId: celeb.id,
-    //   whenDiscovery: null,
-    //   whereDiscovery: null,
-    //   categoryId: category.id,
-    //   brandId: null,
-    //   itemName: itemInfo.itemName,
-    //   price: null,
-    //   color: null,
-    //   additionalInfo: null,
-    //   hashTagIdList: [0],
-    //   linkList: links[0].linkName ? links : null,
-    //   infoSource: null,
-    //   newCelebId: 0,
-    //   newBrandId: 0,
-    // }
-    // console.log(newItem)
+  }
+
+  const onBackClick = () => {
+    resetItemInfo()
+    resetCelebInfoInItem()
+    navigate('/', { replace: true })
   }
 
   return (
@@ -149,7 +236,7 @@ const ItemCreate = () => {
           isModalHeader={false}
           title='정보 공유하기'
           hasArrow={true}
-          backBtnClick={() => navigate('/', { replace: true })}
+          backBtnClick={onBackClick}
         >
           <span className='submit' onClick={onSubmit}>
             등록
@@ -211,11 +298,20 @@ const ItemCreate = () => {
       <BottomBar>
         <div className='left'>
           <div className='button' onClick={() => navigate('/item/create/addInfo')}>
-            <InfoAddOff></InfoAddOff>
+            {itemInfo.additionalInfo && itemInfo.additionalInfo?.length > 0 ? (
+              <InfoAddOn></InfoAddOn>
+            ) : (
+              <InfoAddOff></InfoAddOff>
+            )}
+
             <span>추가 정보</span>
           </div>
           <div className='button' onClick={() => navigate('/item/create/addlink')}>
-            <LinkAddOff></LinkAddOff>
+            {itemInfo.linkList && itemInfo.linkList.length > 0 ? (
+              <LinkAddOn></LinkAddOn>
+            ) : (
+              <LinkAddOff></LinkAddOff>
+            )}
             <span>구매 링크</span>
           </div>
         </div>

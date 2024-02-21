@@ -78,6 +78,7 @@ const useUploadStateObserver = () => {
 
   useEffect(() => {
     if (imgList.length > 0) {
+      console.log('mutate in img Upload', imgList)
       mutateByImgUpload(imgList)
     }
   }, [imgList])

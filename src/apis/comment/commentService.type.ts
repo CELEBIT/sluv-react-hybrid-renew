@@ -43,6 +43,7 @@ export interface ItemPost {
 }
 
 export interface NewComment {
+  id?: number
   content: string | null
   imgList: Array<Img> | null
   itemList: Array<ItemPost> | null

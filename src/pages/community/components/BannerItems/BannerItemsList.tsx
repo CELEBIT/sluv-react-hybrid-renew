@@ -3,27 +3,32 @@ import React from 'react'
 import BannerItem from './BannerItem/BannerItem'
 import useCommunityHomeQuery from '../../../../apis/question/hooks/useCommunityHomeQuery'
 import { useNavigate } from 'react-router-dom'
+import useQuestionListQuery from '../../../../apis/question/hooks/useQuestionListQuery'
 
 const BannerItemsList = () => {
-  const { getCommunityBannerItems } = useCommunityHomeQuery()
-  const { data } = getCommunityBannerItems()
+  // const { getCommunityBannerItems } = useCommunityHomeQuery()
+  // const { data } = getCommunityBannerItems()
+  const { getQuestionHotList } = useQuestionListQuery()
+  const { data } = getQuestionHotList()
   const navigate = useNavigate()
   return (
     <BannerItemsListContainer>
       {data &&
-        data.map((item) => {
-          return (
-            <BannerItem
-              key={item.id}
-              qtype={item.qtype}
-              imgUrl={item.imgList?.at(0)?.imgUrl ?? ''}
-              title={item.title}
-              userImgUrl={item.user.profileImgUrl}
-              userName={item.user.nickName}
-              onClick={() => navigate(`./detail/${item.id}`)}
-            ></BannerItem>
-          )
-        })}
+        data?.pages.map((list) =>
+          list.content.map((item) => {
+            return (
+              <BannerItem
+                key={item.id}
+                qtype={item.qtype}
+                imgUrl={item.imgList?.at(0)?.imgUrl ?? ''}
+                title={item.title}
+                userImgUrl={item.user.profileImgUrl}
+                userName={item.user.nickName}
+                onClick={() => navigate(`./detail/${item.id}`)}
+              ></BannerItem>
+            )
+          }),
+        )}
     </BannerItemsListContainer>
   )
 }

@@ -31,32 +31,35 @@ export default class S3Service {
 
   // 아이템 이미지 업로드
   async postItemImg(fileList: Array<Image>) {
+    console.log('fileList in postItemImg', fileList)
     const resultList: Array<Image> = []
     const data = await Promise.allSettled(
       fileList.map(async (item) => {
-        const response: ResponseType<S3Result> = await request.post(
-          `${this.presignedUrl}/item`,
-          {},
-          {
-            params: {
-              imgExtension: String(item.imgFile?.type.split('/')[1]).toUpperCase(),
+        if (item.imgFile) {
+          // 새로 추가한 사진인 경우에만 (게시글 수정에서)
+          const response: ResponseType<S3Result> = await request.post(
+            `${this.presignedUrl}/item`,
+            {},
+            {
+              params: {
+                imgExtension: String(item.imgFile?.type.split('/')[1]).toUpperCase(),
+              },
             },
-          },
-        )
-
-        if (response.isSuccess && response.result?.preSignedUrl && item.imgFile) {
-          try {
-            const data = await this.uploadImg(response.result.preSignedUrl, item.imgFile)
-            if (data.status === 200) {
-              const { preSignedUrl } = response.result
-              resultList.push({
-                representFlag: item.representFlag,
-                imgUrl: preSignedUrl.split('?')[0],
-              })
+          )
+          if (response.isSuccess && response.result?.preSignedUrl && item.imgFile) {
+            try {
+              const data = await this.uploadImg(response.result.preSignedUrl, item.imgFile)
+              if (data.status === 200) {
+                const { preSignedUrl } = response.result
+                resultList.push({
+                  representFlag: item.representFlag,
+                  imgUrl: preSignedUrl.split('?')[0],
+                })
+              }
+            } catch (err: any) {
+              console.error(err)
+              return err
             }
-          } catch (err: any) {
-            console.error(err)
-            return err
           }
         }
       }),
