@@ -108,11 +108,11 @@ const ClosetBoxCreatePage = ({ service, isEditMode = false }: ClosetBoxCreatePag
         <S.CreateFooter>
           <S.ClosetCreateFooterElementWrapper>
             <S.SwitchContainer>
-              <p>공개여부</p>
+              <p>비공개</p>
               <ToggleSwitch
-                isToggleOn={contextValue.states.closetStatus === 'PUBLIC'}
+                isToggleOn={contextValue.states.closetStatus === 'PRIVATE'}
                 onToggleSwitch={(e) =>
-                  contextValue.handlers.setClosetStatus(e.target.checked ? 'PUBLIC' : 'PRIVATE')
+                  contextValue.handlers.setClosetStatus(e.target.checked ? 'PRIVATE' : 'PUBLIC')
                 }
               />
             </S.SwitchContainer>

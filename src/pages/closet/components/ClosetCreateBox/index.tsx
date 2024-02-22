@@ -69,11 +69,14 @@ type ClosetCreateBoxContentProps = PropsWithChildren<object>
 export const ClosetCreateBoxContent = ({ children }: ClosetCreateBoxContentProps) => {
   const context = useContext(CreateClosetFormContext)
   const { pathname } = useLocation()
-  const isOnCreatePage = pathname === '/closet/create'
+  const isOnCreatePage = pathname === '/closet/create' || pathname === '/closet/edit'
 
   if (!context) return <></>
 
   const coverBoxColor = context.states.colorScheme
+  if (context.states.coverImgUrl === 'null') {
+    context.states.coverImageMode = 'NONE'
+  }
   const coverImageMode = context.states.coverImageMode as CoverImageMode
 
   const showCreateBoxContentText = coverImageMode === 'NONE'

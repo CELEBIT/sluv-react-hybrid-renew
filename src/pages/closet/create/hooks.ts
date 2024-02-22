@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom'
 const useClosetFormStates = (service?: ClosetBoxService) => {
   const [name, setName] = useState<string>(service?.name || '')
   const [coverImgUrl, setCoverImgUrl] = useState<string | null>(service?.coverImgUrl || '')
-  const [closetStatus, setClosetStatus] = useState<ClosetStatus>(service?.closetStatus || 'PRIVATE')
+  const [closetStatus, setClosetStatus] = useState<ClosetStatus>(service?.closetStatus || 'PUBLIC')
   const [colorScheme, setColorScheme] = useState<CoverBoxColorKey>(service?.colorScheme || 'RED')
   const [coverImageMode, setCoverImageMode] = useState<CoverImageMode>(
     service?.coverImageMode || 'NONE',
