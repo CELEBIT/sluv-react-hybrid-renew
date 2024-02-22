@@ -24,6 +24,9 @@ export const BodyContainer = styled.section`
   flex-direction: column;
   padding-bottom: 70px;
   overflow-y: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 export const SubHeader = styled.section`
