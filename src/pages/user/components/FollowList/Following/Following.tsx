@@ -15,8 +15,6 @@ const Following = () => {
   const { data, isFetching, isFetchingNextPage, fetchNextPage } = id
     ? getOtherUserFollowingList(Number(id))
     : getUserFollowingList()
-  console.log(data)
-  console.log(isFetching)
   const {
     followUser: { mutate: mutateByFollow },
   } = useFollowQuery()

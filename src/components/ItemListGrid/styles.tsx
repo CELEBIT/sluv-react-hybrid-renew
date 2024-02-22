@@ -10,12 +10,12 @@ export const ItemListGridContainer = styled.div`
 export const ItemListWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
+  height: 100%;
   flex-shrink: 0;
   gap: 0.5rem;
   row-gap: 1.5rem;
   width: 100%;
   padding: 1.25rem;
-  align-items: center;
 `
 
 export const ViewHeader = styled.div`
