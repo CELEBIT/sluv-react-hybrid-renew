@@ -7,6 +7,7 @@ export const getClosetBoxBackground = (
   target: Exclude<keyof CoverBoxBackgroundConfig, 'nameTag' | 'grab'>,
 ) => {
   console.log(closetBox.coverImageMode)
+  console.log(closetBox)
 
   if (closetBox.coverImgUrl || closetBox.coverImageMode === 'IMAGE') {
     return css`

@@ -1,5 +1,11 @@
 import styled from '@emotion/styled'
 import { ClosetBoxModel, ClosetItemModel } from '../../../apis/closet/model'
+import blueImage from '../../../assets/default_closet_inner_cover_blue.svg'
+import orangeImage from '../../../assets/default_closet_inner_cover_yellow.svg'
+import purpleImage from '../../../assets/default_closet_inner_cover_purple.svg'
+import grayImage from '../../../assets/default_closet_inner_cover_black.svg'
+import greenImage from '../../../assets/default_closet_inner_cover_green.svg'
+import redImage from '../../../assets/default_closet_inner_cover_red.svg'
 
 export const Root = styled.div`
   display: flex;
@@ -87,33 +93,37 @@ export const BackgroundContainer = styled.div<{
   imgUrl?: ClosetBoxModel['coverImgUrl']
   colorScheme: ClosetBoxModel['colorScheme']
 }>`
-  position: fixed;
+  /* position: fixed; */
   width: 100%;
   height: 200px;
-
-  background: url(${({ imgUrl, colorScheme }) =>
-      imgUrl ? imgUrl : getDefaultImageUrl(colorScheme)})
-    no-repeat center center;
+  background: ${({ imgUrl, colorScheme }) =>
+    imgUrl ? `url(${imgUrl})` : `url(${getDefaultImageUrl(colorScheme)})`};
+  background-position: top;
+  background-repeat: no-repeat;
   background-size: cover;
+
   z-index: -1;
 `
 
 const getDefaultImageUrl = (colorScheme: ClosetBoxModel['colorScheme']) => {
+  console.log(colorScheme)
   switch (colorScheme) {
     case 'BLUE':
-      return 'src/assets/default_closet_inner_cover_blue.svg'
+      return blueImage
     case 'ORANGE':
-      return 'src/assets/default_closet_inner_cover_yellow.svg'
+      return orangeImage
     case 'PURPLE':
-      return 'src/assets/default_closet_inner_cover_purple.svg'
+      return purpleImage
     case 'GRAY':
-      return 'src/assets/default_closet_inner_cover_black.svg'
+      return grayImage
     case 'GREEN':
-      return 'src/assets/default_closet_inner_cover_green.svg'
+      return greenImage
     case 'RED':
-      return 'src/assets/default_closet_inner_cover_red.svg'
+      return redImage
     case 'DEFAULT':
-      return 'src/assets/default_closet_inner_cover_purple.svg'
+      return purpleImage
+    default:
+      return ''
   }
 }
 
