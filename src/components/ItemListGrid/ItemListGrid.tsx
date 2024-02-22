@@ -58,7 +58,7 @@ const ItemListGrid = ({
 
   return (
     <ItemListGridContainer>
-      {canChangeView && data && data?.pages[0].content.length && (
+      {canChangeView && data && data?.pages[0].content.length > 0 && (
         <ViewHeader>
           <ViewHeaderLeft>전체 {totalLength}</ViewHeaderLeft>
           {viewSize === 'small' ? (

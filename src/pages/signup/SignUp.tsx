@@ -43,6 +43,12 @@ function SignUp() {
     storage.set('accessToken', jwtToken)
   }, [jwtToken])
 
+  useEffect(() => {
+    if (jwtToken && userStatus === 'ACTIVE') {
+      navigate('/')
+    }
+  }, [jwtToken, userStatus])
+
   const [signupValues, setSignupValues] = useState<Partial<SignupValues>>(() => {
     return {
       step: userStatus === 'PENDING_PROFILE' ? 0 : userStatus === 'PENDING_CELEB' ? 2 : undefined,
