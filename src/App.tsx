@@ -104,25 +104,35 @@ const TermsOfUse = React.lazy(() => import('./pages/settings/components/TermsOfU
 
 const App = () => {
   useLayoutEffect(() => {
-    console.log(window.location.search)
-    console.log(window.location.hash)
-    console.log(window.location.search.split('?'))
-    const payload = {
-      ...queryToObject(window.location.search.split('?')[1]),
-      ...queryToObject(window.location.hash.split('#')[1]),
-    }
-    console.log('payload', payload)
-    if (payload.AccessToken) {
-      storage.set('accessToken', payload.AccessToken)
-      storage.set('device', payload.device)
-      storage.set('version', payload.VersionNumber)
-    } else {
-      storage.set(
-        'accessToken',
-        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjc5ODk4NzE5LCJleHAiOjE3MTE0MzQ3MTl9.jvFrmgt9YVPpqL2k1r9hxTSsMm1sODAdRzroNVx-RAo',
-      )
-    }
+    // console.log(window.location.search)
+    // console.log(window.location.hash)
+    // console.log(window.location.search.split('?'))
+    // const payload = {
+    //   ...queryToObject(window.location.search.split('?')[1]),
+    //   ...queryToObject(window.location.hash.split('#')[1]),
+    // }
+    // console.log('payload', payload)
+    // if (payload.AccessToken) {
+    //   storage.set('accessToken', payload.AccessToken)
+    //   storage.set('device', payload.device)
+    //   storage.set('version', payload.VersionNumber)
+    // }
+    // else {
+    // storage.set(
+    //   'accessToken',
+    //   'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjc5ODk4NzE5LCJleHAiOjE3MTE0MzQ3MTl9.jvFrmgt9YVPpqL2k1r9hxTSsMm1sODAdRzroNVx-RAo',
+    // )
+    // }
   }, [])
+
+  // useEffect(() => {
+  //   if (jwtToken) storage.set('accessToken', jwtToken)
+  //   else
+  //     storage.set(
+  //       'accessToken',
+  //       'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjc5ODk4NzE5LCJleHAiOjE3MTE0MzQ3MTl9.jvFrmgt9YVPpqL2k1r9hxTSsMm1sODAdRzroNVx-RAo',
+  //     )
+  // }, [jwtToken])
 
   return (
     <S.Root>

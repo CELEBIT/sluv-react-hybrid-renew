@@ -7,9 +7,10 @@ declare global {
     }
     webkit: {
       messageHandlers: {
-        IOSBridge: {
-          sendToNative: (message: string) => void
-        }
+        IOSBridge: any
+        // {
+        //   sendToNative: (message: string) => void
+        // }
       }
     }
     sendToWebview: (message: string) => void
