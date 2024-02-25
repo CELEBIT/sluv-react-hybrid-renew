@@ -1,11 +1,10 @@
-import React, { useRef } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import styled from '@emotion/styled'
 import { ReactComponent as Add } from '../../../../../assets/add_18.svg'
 import { ReactComponent as Error } from '../../../../../assets/error_20.svg'
 import { Pretendard, Common } from '../../../../../components/styles'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { Image, imgListState } from '../../../../../components/AddPhotos/AddPhotos'
-import { sendMessageToNative } from '../../../../../utils/bridge'
 
 interface ImageFieldProps {
   error: boolean
@@ -34,8 +33,28 @@ const DefaultImageField = ({ error }: ImageFieldProps) => {
   const onClickOpenGallery = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click()
+      console.log('clicked')
+      window?.webkit?.messageHandlers?.IOSBridge?.postMessage({
+        action: 'openImagePicker',
+        totalImage: 5,
+        selectedImage: imgList.length,
+      })
     }
   }
+
+  useEffect(() => {
+    window.addEventListener('openImagePicker', customEventHandler)
+
+    return () => window.removeEventListener('openImagePicker', customEventHandler)
+  }, [])
+
+  const customEventHandler = useCallback(
+    (e: any) => {
+      changeImg(e.detail.data)
+    },
+    [changeImg],
+  )
+
   return (
     <DefaultImageFieldWrapper error={error} onClick={onClickOpenGallery}>
       {error ? <Error></Error> : <Add></Add>}
@@ -45,6 +64,7 @@ const DefaultImageField = ({ error }: ImageFieldProps) => {
         type='file'
         accept='image/*'
         onChange={(e) => changeImg(e)}
+        onClick={onClickOpenGallery}
         style={{ display: 'none' }}
         multiple
         max={5}

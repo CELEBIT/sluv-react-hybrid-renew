@@ -26,10 +26,12 @@ function SignUp() {
 
   const setToken = (token: string) => {
     setJwtToken(token)
+    alert(`token ${token}`)
     console.log('token', token)
   }
   const setStatus = (status: string) => {
     setUserStatus(status)
+    alert(`status ${status}`)
     console.log('status', status)
   }
 
@@ -40,7 +42,14 @@ function SignUp() {
   }, [])
 
   useEffect(() => {
-    storage.set('accessToken', jwtToken)
+    if (jwtToken) storage.set('accessToken', jwtToken)
+    else {
+      alert('jwtToken 없음')
+      // storage.set(
+      //   'accessToken',
+      //   'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjc5ODk4NzE5LCJleHAiOjE3MTE0MzQ3MTl9.jvFrmgt9YVPpqL2k1r9hxTSsMm1sODAdRzroNVx-RAo',
+      // )
+    }
   }, [jwtToken])
 
   useEffect(() => {
