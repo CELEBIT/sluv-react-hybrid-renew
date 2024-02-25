@@ -9,20 +9,18 @@ export const RootContainer = styled.div`
 
 export const Layout = styled.div<{ colorScheme: CoverBoxColorKey }>`
   display: flex;
-  border-radius: 100px;
+  border-radius: 50px;
   padding: 14px 20px 14px 20px;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
   background: ${({ colorScheme }) => DEFAULT_COVER_COLOR_SET[colorScheme].nameTag?.background};
 `
 
 export const TitleWrapper = styled.div`
+  display: flex;
   width: 100%;
   font-size: 18px;
   font-weight: 600;
   text-align: start;
-  font-family: Pretendard;
+  font-family: 'Pretendard';
   color: #ffffff;
 `
 
@@ -38,15 +36,16 @@ export const SideDotsIcon = styled(OriginSideDotsIcon)<{ editMode?: boolean }>`
 
 export const LockIcon = styled(OriginLockIcon)<{ editMode?: boolean }>`
   stroke: ${({ editMode }) => (editMode ? '#ffffff66' : '#ffffff')};
-  fill: ${({ editMode }) => (editMode ? '#ffffff66' : '#ffffff')};
+  /* fill: ${({ editMode }) => (editMode ? '#ffffff66' : '#ffffff')}; */
 `
 
 export const NameTagEditInput = styled.input`
   font-size: 18px;
-  font-family: Pretendard;
+  font-family: 'Pretendard';
   font-weight: 600;
   background: transparent;
   border: none;
+  max-width: 13.4375rem;
 
   &:focus,
   &:active {

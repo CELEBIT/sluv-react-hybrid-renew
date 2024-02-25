@@ -103,7 +103,7 @@ export default class UserService {
       {
         params: {
           page,
-          size: 3,
+          size: 20,
         },
       },
     )
@@ -116,7 +116,7 @@ export default class UserService {
       {
         params: {
           page,
-          size: 3,
+          size: 20,
         },
       },
     )

@@ -3,13 +3,12 @@ import useHotCelebItemQuery from '../../../../apis/item/hooks/useHotCelebItemQue
 import ItemListGrid from '../../../../components/ItemListGrid/ItemListGrid'
 import useUserItemQuery from '../../../../apis/user/hooks/useUserItemQuery'
 import { useParams } from 'react-router-dom'
-import { UserItemListContainer } from './styles'
 import { ContentContainer, HeaderWrapper, PageContainer } from '../../styles'
 import Header from '../../../../components/Header/Header'
-import { EmptyStateWrapper } from '../FollowList/Follower/Follower'
 import EmptyState from '../../../../components/EmptyState'
 import ButtonSmall from '../../../../components/ButtonSmall/ButtonSmall'
 import { useObserver } from '../../../../hooks/useObserver'
+import { EmptyStateWrapper } from '../FollowList/Follower/Follower'
 
 const UserItem = () => {
   const { id } = useParams()
@@ -37,16 +36,14 @@ const UserItem = () => {
     )
   } else {
     const { getUserUploadItem } = useUserItemQuery()
-    const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } =
-      getUserUploadItem()
-    const tempData = data?.pages[0].content
+    const { data, status, isFetching, isFetchingNextPage, fetchNextPage } = getUserUploadItem()
     return (
       <PageContainer>
         <HeaderWrapper>
           <Header title='아이템' isModalHeader={false} hasArrow={true}></Header>
         </HeaderWrapper>
         <ContentContainer>
-          {tempData && tempData.length > 0 ? (
+          {data && data?.pages[0].content.length > 0 ? (
             <ItemListGrid
               data={data}
               canChangeView={true}

@@ -5,6 +5,7 @@ export const ItemListGridContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  align-items: center;
 `
 
 export const ItemListWrapper = styled.div`
@@ -15,7 +16,6 @@ export const ItemListWrapper = styled.div`
   row-gap: 1.5rem;
   width: 100%;
   padding: 1.25rem;
-  align-items: center;
 `
 
 export const ViewHeader = styled.div`

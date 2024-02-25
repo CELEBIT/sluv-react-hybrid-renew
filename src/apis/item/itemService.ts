@@ -278,4 +278,18 @@ export default class ItemService {
     )
     return data.result
   }
+
+  // 지금 당장 구매 가능한 아이템 조회
+  async getRecommendItem(page: number) {
+    const data: ResponseType<GetPaginationResult<RecommendItemResult[]>> = await request.get(
+      `${this.itemUrl}/recommend`,
+      {
+        params: {
+          page,
+          size: 10,
+        },
+      },
+    )
+    return data.result
+  }
 }

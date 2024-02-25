@@ -155,7 +155,7 @@ const RecentViewItem = () => {
           ) : null}
         </ListWrapper>
       ) : (
-        <div className='full'>
+        <div>
           <EmptyState
             icon='clock'
             title='최근 본 아이템이 없어요'

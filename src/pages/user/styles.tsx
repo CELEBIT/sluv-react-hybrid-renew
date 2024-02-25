@@ -30,7 +30,7 @@ export const HeaderWrapper = styled.header`
 export const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  overflow-y: scroll; /* Enable scrolling for the content */
+  overflow-y: scroll;
   height: 100%;
   width: 100%;
   padding-bottom: 3.75rem;
@@ -70,7 +70,7 @@ export const ItemListContainer = styled.div`
   position: sticky;
   padding-bottom: 3.75rem;
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
 `
 
 export const EachContentWrapper = styled.div`

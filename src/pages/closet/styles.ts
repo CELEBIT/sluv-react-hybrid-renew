@@ -19,10 +19,14 @@ export const BodyContainer = styled.section`
   align-items: center;
   justify-content: flex-start;
   width: 100%;
+  height: 100%;
   gap: 12px;
   flex-direction: column;
-  margin-bottom: 90px;
+  padding-bottom: 70px;
   overflow-y: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 export const SubHeader = styled.section`
