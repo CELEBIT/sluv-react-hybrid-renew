@@ -5,7 +5,7 @@ export const Root = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   padding: 1.25rem;
   overflow: hidden;
 `

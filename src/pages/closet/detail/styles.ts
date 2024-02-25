@@ -6,6 +6,7 @@ import purpleImage from '../../../assets/default_closet_inner_cover_purple.svg'
 import grayImage from '../../../assets/default_closet_inner_cover_black.svg'
 import greenImage from '../../../assets/default_closet_inner_cover_green.svg'
 import redImage from '../../../assets/default_closet_inner_cover_red.svg'
+import { Common } from '../../../components/styles'
 
 export const Root = styled.div`
   display: flex;
@@ -27,7 +28,7 @@ export const EmptyPageRoot = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
+  height: 80%;
 `
 
 export const EmptyBoxContainer = styled.div`
@@ -38,7 +39,7 @@ export const EmptyBoxContainer = styled.div`
   width: 100%;
   min-height: 160px;
   max-width: 206px;
-  font-family: Pretendard;
+  font-family: 'Pretendard';
 
   & > svg {
     height: 36px !important;
@@ -67,6 +68,7 @@ export const EmptyBoxContainer = styled.div`
 
   & > button {
     margin-top: 0;
+    font-family: 'Pretendard';
     display: flex;
     align-content: center;
     justify-content: center;
@@ -78,6 +80,7 @@ export const EmptyBoxContainer = styled.div`
     box-sizing: border-box;
     padding: 6px 12px 6px 12px;
     border-radius: 6px;
+    color: ${Common.colors.GR600};
   }
 `
 

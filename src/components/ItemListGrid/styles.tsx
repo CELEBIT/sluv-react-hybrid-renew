@@ -5,12 +5,12 @@ export const ItemListGridContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  align-items: center;
 `
 
 export const ItemListWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  height: 100%;
   flex-shrink: 0;
   gap: 0.5rem;
   row-gap: 1.5rem;
