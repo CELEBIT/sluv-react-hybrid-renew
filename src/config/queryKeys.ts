@@ -37,6 +37,7 @@ export const queryKeys = {
   recentSearch: ['recentSearch'] as const,
   searchKeywordPreview: (keyword: string) => ['searchKeywordPreview', keyword] as const,
   searchTotal: (keyword: string) => ['searchTotal', keyword] as const,
+  recommendHotItem: ['recommendHotItem'] as const,
   buyNowItem: ['buyNowItem'] as const,
   curationItem: ['curationItem'] as const,
   howAboutItem: ['howAboutItem'] as const,

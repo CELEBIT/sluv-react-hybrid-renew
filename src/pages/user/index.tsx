@@ -81,9 +81,7 @@ const User = () => {
               setSelectedTab={setSelectedTab}
             ></Tabs>
           </StickyTabContainer>
-          <ItemListContainer>
-            {selectedTab === 'item' ? <UserItem></UserItem> : <UserCloset></UserCloset>}
-          </ItemListContainer>
+          {selectedTab === 'item' ? <UserItem></UserItem> : <UserCloset></UserCloset>}
         </ContentContainer>
       </PageContainer>
     )

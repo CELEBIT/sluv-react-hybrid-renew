@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import { ItemList, TitleText } from '../../RecommendedItem/RecommendedItemList'
 import Item from '../../RecommendedItem/Item'
 import useItemDetailQuery from '../../../apis/item/hooks/useItemDetailQuery'
-import { HotItemListWrapper, ListWrapper } from './styles'
+import { HotItemListWrapper, ListWrapper, TitleText } from './styles'
 import { ItemResult } from '../../../apis/item/itemService.type'
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 import {
@@ -14,6 +13,8 @@ import {
   secondItemState,
 } from '../../../recoil/communityInfo'
 import { maxItemPhotoCountState } from '..'
+import useRecommendHotItemQuery from '../../../apis/item/hooks/useRecommendHotItemQuery'
+import useUserMypageQuery from '../../../apis/user/hooks/useUserMypageQuery'
 
 const HotItem = () => {
   const [communityUploadInfo, setCommunityUploadInfo] = useRecoilState(communityItemState)
@@ -95,13 +96,17 @@ const HotItem = () => {
       }
     }
   }
-  const { getItemDetail } = useItemDetailQuery()
-  const { data } = getItemDetail(35)
+  const { getRecommendHotItem } = useRecommendHotItemQuery()
+  const { data } = getRecommendHotItem()
+
+  const { getMypageInfo } = useUserMypageQuery()
+  const nickname = getMypageInfo.data?.userInfo.nickName
+
   return (
     <HotItemListWrapper>
-      <TitleText>리노님을 위한 인기 아이템</TitleText>
+      <TitleText>{nickname}님을 위한 인기 아이템</TitleText>
       <ListWrapper>
-        {data?.sameBrandItemList.map((each) => {
+        {data?.pages[0].content.map((each) => {
           return (
             <Item
               key={each.itemId}
@@ -113,6 +118,7 @@ const HotItem = () => {
               isSelected={
                 imgItemList ? imgItemList.some((item) => item.itemId === each.itemId) : false
               }
+              size={105}
               borderRadius={8}
               onClick={() => handleItemClick(each)}
             ></Item>
