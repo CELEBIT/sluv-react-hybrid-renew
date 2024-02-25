@@ -3,8 +3,9 @@ import styled from '@emotion/styled'
 import { ReactComponent as Add } from '../../../../../assets/add_18.svg'
 import { ReactComponent as Error } from '../../../../../assets/error_20.svg'
 import { Pretendard, Common } from '../../../../../components/styles'
-import { useSetRecoilState } from 'recoil'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import { Image, imgListState } from '../../../../../components/AddPhotos/AddPhotos'
+import { sendMessageToNative } from '../../../../../utils/bridge'
 
 interface ImageFieldProps {
   error: boolean
@@ -12,7 +13,7 @@ interface ImageFieldProps {
 
 const DefaultImageField = ({ error }: ImageFieldProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const setImgList = useSetRecoilState(imgListState)
+  const [imgList, setImgList] = useRecoilState(imgListState)
 
   const changeImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.currentTarget

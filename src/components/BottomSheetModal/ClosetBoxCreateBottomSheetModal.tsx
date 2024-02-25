@@ -52,19 +52,19 @@ const ModalContentContainer = styled.div`
 
 const ItemContainer = styled.div`
   display: flex;
-  padding: 16px 32px;
+  padding: 14px 32px;
   align-items: center;
   width: 100%;
   gap: 10px;
-  height: 52px;
 `
 
 const ItemTitle = styled.p`
   display: block;
   height: 100%;
-
+  font-family: 'Pretendard';
   font-size: 17px;
   font-weight: 500;
+  margin: 0;
 `
 
 const HeaderWrapper = styled.div`

@@ -2,7 +2,7 @@ import { BridgeMessage } from '../service'
 
 export const sendMessageToNative = (message: BridgeMessage<any>): void => {
   const serialized = JSON.stringify(message)
-
+  console.log(message)
   if (window.AndroidBridge && window.AndroidBridge.sendToNative) {
     window.AndroidBridge.sendToNative(serialized)
   } else if (window.webkit.messageHandlers.IOSBridge) {

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { Common, Pretendard } from '../../styles'
 
 export const HotItemListWrapper = styled.div`
   display: flex;
@@ -7,18 +8,15 @@ export const HotItemListWrapper = styled.div`
   margin-top: 1.4375rem;
 `
 export const ListWrapper = styled.div`
-  display: grid;
+  display: flex;
   justify-items: center;
-  flex-grow: none;
-  padding: 0 1.25rem;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-auto-rows: minmax(0, auto);
-  row-gap: 1.5rem;
-  column-gap: 0.625rem;
+  overflow: scroll;
+  gap: 0.625rem;
 
-  > div {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+  ::-webkit-scrollbar {
+    display: none;
   }
+`
+export const TitleText = styled.div`
+  ${Pretendard({ size: 18, weight: Common.bold.semiBold, color: Common.colors.BK })}
 `

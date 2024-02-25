@@ -17,6 +17,7 @@ import { ReactComponent as ViewBigOn } from '../../assets/view_big_on_24.svg'
 import { useObserver } from '../../hooks/useObserver'
 import { InfiniteData } from '@tanstack/react-query'
 import { GetPaginationResult } from '../../apis/core/type'
+import { EmptyStateContainer } from '../EmptyState/styles'
 
 interface ItemListGridProps {
   data: InfiniteData<GetPaginationResult<RecommendItemResult>> | undefined
@@ -58,7 +59,7 @@ const ItemListGrid = ({
 
   return (
     <ItemListGridContainer>
-      {canChangeView && data && data?.pages[0].content.length && (
+      {canChangeView && data && data?.pages[0].content.length > 0 && (
         <ViewHeader>
           <ViewHeaderLeft>전체 {totalLength}</ViewHeaderLeft>
           {viewSize === 'small' ? (
@@ -113,16 +114,18 @@ const ItemListGrid = ({
             ) : null}
           </>
         ) : (
-          <EmptyState
-            icon={emptyIcon ? emptyIcon : 'item'}
-            title={emptyTitle ? emptyTitle : '아이템이 없어요'}
-            subtitle={
-              emptyTitle
-                ? emptyTitle
-                : `아이템이 업로드 될 때까지
+          <EmptyStateContainer>
+            <EmptyState
+              icon={emptyIcon ? emptyIcon : 'item'}
+              title={emptyTitle ? emptyTitle : '아이템이 없어요'}
+              subtitle={
+                emptyTitle
+                  ? emptyTitle
+                  : `아이템이 업로드 될 때까지
   조금만 기다려 주세요`
-            }
-          ></EmptyState>
+              }
+            ></EmptyState>
+          </EmptyStateContainer>
         )}
       </ItemListWrapper>
     </ItemListGridContainer>

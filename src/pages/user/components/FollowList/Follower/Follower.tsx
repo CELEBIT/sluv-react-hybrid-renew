@@ -111,8 +111,6 @@ export const EmptyStateWrapper = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
-  /* padding-top: 7.5rem;
-   */
 `
 
 export default Follower

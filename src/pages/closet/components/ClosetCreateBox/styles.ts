@@ -26,11 +26,11 @@ export const CreateBoxContent = styled.div<{ closetBox: ClosetBoxService }>`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  height: 100%;
+  height: 180px;
   width: 100%;
   gap: 10px;
 `
-export const CreateBoxTitleWrapper = styled.p`ss
+export const CreateBoxTitleWrapper = styled.p`
   font-size: 15px;
   color: #aeb5bc;
   padding: 0;

@@ -77,7 +77,6 @@ const ItemCreate = () => {
     setItemInfo({ ...itemInfo, imgList: newImgList })
   }, [imgList])
 
-  console.log('imgList', imgList)
   useEffect(() => {
     if (location.pathname.includes('/edit/') && data) {
       const {
@@ -144,7 +143,6 @@ const ItemCreate = () => {
     }
   }, [data, location.pathname, setItemInfo])
 
-  console.log('itemInfo', itemInfo)
   useEffect(() => {
     const id = localStorage.getItem(localStorageKeys.TEMP_ITEM_ID)
     if (location.pathname.includes('/edit/') === false) {

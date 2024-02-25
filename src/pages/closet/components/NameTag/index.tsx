@@ -46,7 +46,8 @@ const NameTag = forwardRef<HTMLInputElement, NameTagProps>(function RenderNameTa
                 type='text'
               />
               <ToolTip
-                left={'-2.5rem'}
+                left={'-250px'}
+                top={'20px'}
                 arrowPosition={'top-left'}
                 isVisible={showTooltipValidation}
               >
