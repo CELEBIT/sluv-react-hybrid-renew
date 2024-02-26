@@ -12,7 +12,7 @@ interface ButtonSmallProps {
   // iconName: add or check
   type: string
   //  type 상태는 pri or sec
-  onClick: () => void
+  onClick: any
 }
 
 const ButtonSmall = ({ text, icon, iconName, active, type, onClick }: ButtonSmallProps) => {

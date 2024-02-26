@@ -7,6 +7,9 @@ import { Common, Pretendard } from '../../../../../components/styles'
 import EmptyState from '../../../../../components/EmptyState'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useObserver } from '../../../../../hooks/useObserver'
+import { ReactComponent as Spinner } from '../../../../../assets/Spinner.svg'
+
+import Flex from '../../../../../components/Flex'
 
 const Follower = () => {
   const { id } = useParams()
@@ -21,7 +24,8 @@ const Follower = () => {
   const {
     followUser: { mutate: mutateByFollow },
   } = useFollowQuery()
-  const onClickFollow = (userId: number) => {
+  const onClickFollow = (event: React.MouseEvent<HTMLButtonElement>, userId: number) => {
+    event.stopPropagation()
     if (data) mutateByFollow({ userId: userId })
   }
   const bottom = useRef(null)
@@ -53,18 +57,14 @@ const Follower = () => {
                       icon={user.followStatus ? true : false}
                       iconName='check'
                       active={user.followStatus ? false : true}
-                      onClick={() => onClickFollow(user.id)}
+                      onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
+                        onClickFollow(event, user.id)
+                      }
                     ></ButtonSmall>
                   </FollowRow>
                 )
               }),
           )}
-          <div ref={bottom} />
-          {isFetching && !isFetchingNextPage ? (
-            <div className='spinner'>
-              <div>Loading</div>
-            </div>
-          ) : null}
         </>
       ) : (
         <EmptyStateWrapper>
@@ -76,6 +76,12 @@ const Follower = () => {
             />
           </EmptyState>
         </EmptyStateWrapper>
+      )}
+      <div ref={bottom} />
+      {isFetching && !isFetchingNextPage && (
+        <Flex justify='center' align='center' className='spinner'>
+          <Spinner></Spinner>
+        </Flex>
       )}
     </FollowContainer>
   )

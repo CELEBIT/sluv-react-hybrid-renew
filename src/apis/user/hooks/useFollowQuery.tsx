@@ -24,6 +24,8 @@ const useFollowQuery = () => {
       else {
         queryClient.invalidateQueries(queryKeys.userFollowerList)
         queryClient.invalidateQueries(queryKeys.userFollowingList)
+        queryClient.invalidateQueries(queryKeys.otherUserFollowerList(vars.userId))
+        queryClient.invalidateQueries(queryKeys.otherUserFollowingList(vars.userId))
         queryClient.invalidateQueries(queryKeys.getMypageInfo)
         queryClient.invalidateQueries(queryKeys.getHotSluver())
       }
