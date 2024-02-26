@@ -11,14 +11,6 @@ import { useNavigate } from 'react-router-dom'
 import SignupComplete from '../../components/SignupComplete/SignupComplete'
 import storage from '../../utils/storage'
 
-// WebView 통신
-declare global {
-  interface Window {
-    setToken: (token: string) => void
-    setUserStatus: (status: string) => void
-  }
-}
-
 function SignUp() {
   const navigate = useNavigate()
   const [jwtToken, setJwtToken] = useState('')
@@ -42,25 +34,39 @@ function SignUp() {
   }, [])
 
   useEffect(() => {
-    if (jwtToken) storage.set('accessToken', jwtToken)
-    else {
+    if (jwtToken) {
+      storage.set('accessToken', jwtToken)
+      alert('NATIVE to REACT jwtToken 설정 완료')
+    } else {
       alert('jwtToken 없음')
       // storage.set(
       //   'accessToken',
       //   'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjc5ODk4NzE5LCJleHAiOjE3MTE0MzQ3MTl9.jvFrmgt9YVPpqL2k1r9hxTSsMm1sODAdRzroNVx-RAo',
       // )
     }
-  }, [jwtToken])
+  }, [window.setToken, window.setUserStatus])
 
   useEffect(() => {
     if (jwtToken && userStatus === 'ACTIVE') {
       navigate('/')
     }
+    if (jwtToken && userStatus === 'PENDING_PROFILE') {
+      setSignupValues((prevValues) => ({
+        ...prevValues,
+        step: 0,
+      }))
+    }
+    if (jwtToken && userStatus === 'PENDING_CELEB') {
+      setSignupValues((prevValues) => ({
+        ...prevValues,
+        step: 2,
+      }))
+    }
   }, [jwtToken, userStatus])
 
   const [signupValues, setSignupValues] = useState<Partial<SignupValues>>(() => {
     return {
-      step: userStatus === 'PENDING_PROFILE' ? 0 : userStatus === 'PENDING_CELEB' ? 2 : undefined,
+      step: userStatus === 'PENDING_PROFILE' ? 0 : userStatus === 'PENDING_CELEB' ? 2 : 0,
     }
   })
 
