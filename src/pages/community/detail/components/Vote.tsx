@@ -11,18 +11,18 @@ interface VoteProps {
   questionId: number
   voteList: Array<Img | Item>
   voteStatus: number
+  voteEndTime: Date
 }
 const isImg = (item: Img | Item): item is Img => {
   return 'imgUrl' in item
 }
-const Vote = ({ voteList, voteStatus, questionId }: VoteProps) => {
+const Vote = ({ voteList, voteStatus, questionId, voteEndTime }: VoteProps) => {
   const {
     voteItem: { mutate: mutateByVote },
   } = useQuestionDetailQuery()
   const onClickVote = (questionId: number, voteSortOrder: number) => {
-    console.log('vote clicked')
-    console.log(voteSortOrder)
-    mutateByVote({ questionId, voteSortOrder })
+    if (new Date(voteEndTime) < new Date()) alert('투표가 종료되었어요.')
+    else mutateByVote({ questionId, voteSortOrder })
   }
 
   return (
