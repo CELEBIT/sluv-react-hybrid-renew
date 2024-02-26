@@ -14,5 +14,7 @@ declare global {
       }
     }
     sendToWebview: (message: string) => void
+    setToken: (token: string) => void
+    setUserStatus: (status: string) => void
   }
 }

@@ -6,6 +6,8 @@ import ButtonSmall from '../../../../../components/ButtonSmall/ButtonSmall'
 import EmptyState from '../../../../../components/EmptyState'
 import { useObserver } from '../../../../../hooks/useObserver'
 import { useNavigate, useParams } from 'react-router-dom'
+import Flex from '../../../../../components/Flex'
+import { ReactComponent as Spinner } from '../../../../../assets/Spinner.svg'
 
 const Following = () => {
   const { id } = useParams()
@@ -18,7 +20,8 @@ const Following = () => {
   const {
     followUser: { mutate: mutateByFollow },
   } = useFollowQuery()
-  const onClickFollow = (userId: number) => {
+  const onClickFollow = (event: React.MouseEvent<HTMLButtonElement>, userId: number) => {
+    event.stopPropagation()
     if (data) mutateByFollow({ userId: userId })
   }
 
@@ -51,18 +54,14 @@ const Following = () => {
                       icon={user.followStatus ? true : false}
                       iconName='check'
                       active={user.followStatus ? false : true}
-                      onClick={() => onClickFollow(user.id)}
+                      onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
+                        onClickFollow(event, user.id)
+                      }
                     ></ButtonSmall>
                   </FollowRow>
                 )
               }),
           )}
-          <div ref={bottom} />
-          {isFetching && !isFetchingNextPage ? (
-            <div className='spinner'>
-              <div>Loading</div>
-            </div>
-          ) : null}
         </>
       ) : (
         <EmptyStateWrapper>
@@ -74,6 +73,12 @@ const Following = () => {
             />
           </EmptyState>
         </EmptyStateWrapper>
+      )}
+      <div ref={bottom} />
+      {isFetching && !isFetchingNextPage && (
+        <Flex justify='center' align='center' className='spinner'>
+          <Spinner></Spinner>
+        </Flex>
       )}
     </FollowContainer>
   )
