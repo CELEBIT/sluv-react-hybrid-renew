@@ -21,6 +21,7 @@ const BuyHome = () => {
   const { getQuestionBuyList } = useQuestionListQuery()
   const { data } = getQuestionBuyList(selectedTab)
   const tempData = data?.pages[0].content
+  console.log(tempData)
 
   useEffect(() => {
     const handleScroll = () => {

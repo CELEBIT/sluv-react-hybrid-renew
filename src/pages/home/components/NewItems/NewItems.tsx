@@ -10,7 +10,7 @@ const NewItems = () => {
   const navigate = useNavigate()
 
   const { getNewItem } = useNewItemQuery()
-  const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } = getNewItem()
+  const { data } = getNewItem()
   const tempData = data?.pages[0].content
 
   return (
@@ -23,7 +23,7 @@ const NewItems = () => {
         {tempData?.map((item) => {
           return (
             <Item
-              key={item.itemId}
+              key={'new' + item.itemId}
               {...item}
               size={150}
               borderRadius={8}

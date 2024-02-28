@@ -10,7 +10,8 @@ interface HighlightedTextProps {
 }
 
 const HighlightedText = ({ searchText, text, fontSize, fontWeight }: HighlightedTextProps) => {
-  const regex = new RegExp(`(${searchText})`, 'gi')
+  const escapedSearchText = searchText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const regex = new RegExp(`(${escapedSearchText})`, 'gi')
   const parts = text.split(regex)
 
   return (

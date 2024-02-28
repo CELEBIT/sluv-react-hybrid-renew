@@ -48,6 +48,9 @@ export const processTempTitle = (
 }
 
 export const filterRepresentImg = (imgList: Array<ImgResult>): string => {
-  const representImg = imgList.filter((img) => img.representFlag)
-  return representImg[0].imgUrl
+  if (imgList) {
+    const representImg = imgList.filter((img) => img.representFlag)
+    return representImg[0].imgUrl
+  }
+  return ''
 }

@@ -27,7 +27,8 @@ const AskRecentPostWritingModal = () => {
     }
     localStorage.setItem(localStorageKeys.TEMP_ITEM_ID, String(tempData.id))
     const hashtags: Array<IHashTag> = []
-    tempData.hashTagList.length > 0 &&
+    tempData.hashTagList &&
+      tempData.hashTagList.length > 0 &&
       tempData.hashTagList.map((item) => {
         hashtags.push({
           hashtagId: item.id,
@@ -36,7 +37,7 @@ const AskRecentPostWritingModal = () => {
       })
     setItemInfo({
       ...itemInfo,
-      imgList: tempData.imgList.length === 0 ? null : tempData.imgList,
+      imgList: tempData.imgList ?? tempData.imgList,
       celeb: tempData.celeb && {
         celebId: tempData.celeb.id,
         celebName: tempData.celeb.celebNameEn,
@@ -58,7 +59,7 @@ const AskRecentPostWritingModal = () => {
       price: tempData.price,
       additionalInfo: tempData.additionalInfo,
       hashTagList: hashtags.length === 0 ? null : hashtags,
-      linkList: tempData.linkList.length === 0 ? null : tempData.linkList,
+      linkList: tempData.linkList ? tempData.linkList : null,
       infoSource: tempData.infoSource,
       newCeleb: tempData.newCeleb && {
         celebId: tempData.newCeleb.newCelebId,
