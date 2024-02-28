@@ -29,6 +29,7 @@ const HashtagInput: React.FC<HashtagInputProps> = ({ placeholder }) => {
   const tagInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
+    // 초기 설정
     if (itemInfo.hashTagList) {
       console.log(itemInfo.hashTagList)
       setHashtags([...itemInfo.hashTagList])
@@ -42,7 +43,6 @@ const HashtagInput: React.FC<HashtagInputProps> = ({ placeholder }) => {
       }
     }
     document.addEventListener('keydown', handleBackspace)
-    console.log(hashTags)
     return () => {
       document.removeEventListener('keydown', handleBackspace)
     }

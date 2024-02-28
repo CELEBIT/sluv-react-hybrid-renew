@@ -21,6 +21,7 @@ interface TempItemProps {
 
 const TempItem = ({ data, isFirst, isEditMode }: TempItemProps) => {
   const navigate = useNavigate()
+  console.log(data)
 
   const [isChecked, setIsChecked] = useState(false)
   const [checkedList, setCheckedList] = useRecoilState(checkListState)
@@ -28,7 +29,7 @@ const TempItem = ({ data, isFirst, isEditMode }: TempItemProps) => {
 
   const [title, imgUrl] = useMemo(() => {
     const processedTitle = String(processTempTitle(data))
-    if (data.imgList.length < 1) {
+    if (data.imgList === null) {
       return [processedTitle, '']
     } else {
       return [processedTitle, filterRepresentImg(data.imgList)]
@@ -57,7 +58,7 @@ const TempItem = ({ data, isFirst, isEditMode }: TempItemProps) => {
     }
     localStorage.setItem(localStorageKeys.TEMP_ITEM_ID, String(data.id))
     const hashtags: Array<IHashTag> = []
-    data.hashTagList.length > 0 &&
+    data.hashTagList &&
       data.hashTagList.map((item) => {
         hashtags.push({
           hashtagId: item.id,
@@ -66,7 +67,7 @@ const TempItem = ({ data, isFirst, isEditMode }: TempItemProps) => {
       })
     setItemInfo({
       ...itemInfo,
-      imgList: data.imgList.length === 0 ? null : data.imgList,
+      imgList: !data.imgList ? null : data.imgList,
       celeb: data.celeb && {
         celebId: data.celeb.id,
         celebName: data.celeb.celebNameEn,
@@ -87,8 +88,8 @@ const TempItem = ({ data, isFirst, isEditMode }: TempItemProps) => {
       itemName: data.itemName,
       price: data.price,
       additionalInfo: data.additionalInfo,
-      hashTagList: hashtags.length === 0 ? null : hashtags,
-      linkList: data.linkList.length === 0 ? null : data.linkList,
+      hashTagList: !hashtags ? null : hashtags,
+      linkList: !data.linkList ? null : data.linkList,
       infoSource: data.infoSource,
       newCeleb: data.newCeleb && {
         celebId: data.newCeleb.newCelebId,
@@ -130,7 +131,9 @@ const TempItem = ({ data, isFirst, isEditMode }: TempItemProps) => {
           </span>
         </div>
       </div>
-      {data.imgList.length > 0 && <Img size={48} borderRadius={8} imgUrl={imgUrl} />}
+      {data.imgList && data.imgList.length > 0 && (
+        <Img size={48} borderRadius={8} imgUrl={imgUrl} />
+      )}
     </TempItemWrap>
   )
 }

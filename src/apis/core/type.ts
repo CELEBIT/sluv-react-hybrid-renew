@@ -10,6 +10,7 @@ export interface GetPaginationResult<T> {
   page: number
   content: Array<T>
   count?: number
+  countNum?: number
   restCommentNum?: number
 }
 

@@ -21,8 +21,8 @@ const HowAbout = () => {
         {data &&
           data.map((item, index) => {
             return (
-              <>
-                <HowAboutItem key={index}>
+              <div key={'howabout' + item.itemId}>
+                <HowAboutItem onClick={() => navigate(`/item/detail/${item.itemId}`)}>
                   <CirclePhoto imgUrl={item.imgUrl}></CirclePhoto>
                   <RightWrapper>
                     <ItemInfoWrapper>
@@ -34,7 +34,7 @@ const HowAbout = () => {
                   </RightWrapper>
                 </HowAboutItem>
                 {index !== data.length - 1 && <Line></Line>}
-              </>
+              </div>
             )
           })}
       </HowAboutList>

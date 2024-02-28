@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import BrandItemField from './components/BrandItemField/BrandItemField'
+import BrandItemField from '../create/components/BrandItemField/BrandItemField'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
-import DatePlaceField from './components/DatePlaceField/DatePlaceField'
-import PriceField from './components/PriceField/PriceField'
+import DatePlaceField from '../create/components/DatePlaceField/DatePlaceField'
+import PriceField from '../create/components/PriceField/PriceField'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import SelectCeleb, {
-  selectedCelebState,
-  selectedGroupState,
-} from '../../../components/SelectCeleb/SelectCeleb'
-import SelectCategory from './components/SelectCategory/SelectCategory'
-import Header from '../../../components/Header/Header'
+
 import {
   BottomBar,
   ComponentContainer,
@@ -17,7 +12,7 @@ import {
   ItemCreatePageStyle,
   Label,
   LabelContainer,
-} from './styles'
+} from '../create/styles'
 import { ReactComponent as Error } from '../../../assets/error_20.svg'
 import { ReactComponent as LinkAddOff } from '../../../assets/link_add_off_20.svg'
 import { ReactComponent as InfoAddOff } from '../../../assets/info_add_off_20.svg'
@@ -31,8 +26,7 @@ import {
   parentCategoryState,
   subCategoryState,
 } from '../../../components/BottomSheetModal/ItemCategoryModal'
-import { linksState } from '../addLink/components/LinkInput/LinkInput'
-import ImageField from './components/ImageField/ImageField'
+import ImageField from '../create/components/ImageField/ImageField'
 import {
   ICategory,
   IHashTag,
@@ -40,33 +34,104 @@ import {
   celebInfoInItemState,
   itemInfoState,
 } from '../../../recoil/itemInfo'
-import useUploadStateObserver from '../../../hooks/useUploadStateObserver'
-import { localStorageKeys } from '../../../config/localStorageKeys'
 import useModals from '../../../components/Modals/hooks/useModals'
-import { modals } from '../../../components/Modals'
 import useItemQuery from '../../../apis/item/hooks/useItemQuery'
 import { HashTagResult, ImgResult, TempItemReq } from '../../../apis/item/itemService.type'
 import useItemDetailQuery from '../../../apis/item/hooks/useItemDetailQuery'
 import { Image, imgListState } from '../../../components/AddPhotos/AddPhotos'
+import { selectedCelebState } from '../../../components/SelectCeleb/SelectCeleb'
+import Header from '../../../components/Header/Header'
+import SelectCategory from '../create/components/SelectCategory/SelectCategory'
+import ButtonMedium from '../../../components/ButtonMedium/ButtonMedium'
+import { CelebWrapper } from './styles'
+import { hashTagState } from '../addInfo/components/HashTags/HashTag'
 
-const ItemCreate = () => {
-  useUploadStateObserver()
-
+const ItemEdit = () => {
   const { openModal } = useModals()
   const navigate = useNavigate()
-  const location = useLocation()
   const [celeb, setCeleb] = useRecoilState(selectedCelebState)
+
   const [category, setCategory] = useRecoilState(subCategoryState)
-  const [selectedParentCategory, setSelectedParentCategory] = useRecoilState(parentCategoryState)
-  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
-  const resetItemInfo = useResetRecoilState(itemInfoState)
+  const [parentCategory, setParentCategory] = useRecoilState(parentCategoryState)
+
   const [hasTriedToUpload, setHasTriedToUpload] = useState(false)
   const [imgList, setImgListState] = useRecoilState(imgListState)
+  const hashTag = useRecoilValue(hashTagState)
+  console.log(hashTag)
+  const { id: itemId } = useParams()
+  const { getItemDetail } = useItemDetailQuery()
 
-  // console.log('itemInfo in ItemCreate', itemInfo)
+  // 1. 아이템 정보 불러오기
+  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
+  const { data } = getItemDetail(Number(itemId))
 
-  const setCelebInfoInItem = useSetRecoilState(celebInfoInItemState)
-  const resetCelebInfoInItem = useResetRecoilState(celebInfoInItemState)
+  useEffect(() => {
+    console.log('useEffect called')
+    if (data) {
+      // 사진
+      setImgListState(data.imgList)
+
+      // 셀럽
+      setCeleb({ id: data.celeb.id, celebNameKr: data.celeb.celebTotalNameKr })
+      setCelebInfoInItem({
+        soloId: data.celeb.id,
+        soloName: data.celeb.celebChildNameKr,
+        groupId: data.celeb.parentId,
+        groupName: data.celeb.celebParentNameKr,
+      })
+
+      // 카테고리
+      // parent category
+      setParentCategory({ id: data.category.parentId, name: data.category.parentName })
+      // sub category
+      setCategory({
+        id: data.category.id,
+        name: data.category.name,
+      })
+      // itemInfo 저장용 Category
+      const editItemCategory: ICategory | null = {
+        categoryId: data.category.id,
+        childName: data.category.name,
+        parentCategoryId: data.category.parentId,
+        parentName: data.category.parentName,
+      }
+
+      // itemInfo 저장용 Hashtag
+      const editHashTagList: Array<IHashTag> | null = data.hashTagList.map(
+        (tag: HashTagResult) => ({
+          hashtagId: tag.id,
+          hashtagContent: tag.hashtagContent,
+        }),
+      )
+      const newState: IItemInfo = {
+        id: Number(itemId),
+        imgList: itemInfo.imgList ?? data.imgList,
+        whenDiscovery: new Date(data.whenDiscovery),
+        whereDiscovery: data.whereDiscovery,
+        itemCategory: editItemCategory,
+        brand: {
+          brandId: data.brand.id,
+          brandName: data.brand.brandKr,
+          brandImgUrl: data.brand.brandImgUrl,
+        },
+        celeb: {
+          celebId: data.celeb.id,
+          celebName: data.celeb.celebTotalNameKr,
+        },
+        itemName: data.itemName,
+        price: data.price,
+        color: data.color,
+        additionalInfo: data.additionalInfo,
+        hashTagList: editHashTagList,
+        linkList: data.linkList,
+        infoSource: data.infoSource,
+        newBrand: { brandName: data.newBrandName },
+      }
+      setItemInfo(newState)
+    }
+  }, [data])
+
+  const [celebInfoInItem, setCelebInfoInItem] = useRecoilState(celebInfoInItemState)
 
   useEffect(() => {
     const newImgList: ImgResult[] = imgList.map((img: Image, idx) => ({
@@ -76,16 +141,6 @@ const ItemCreate = () => {
     }))
     if (imgList.length > 0) setItemInfo({ ...itemInfo, imgList: newImgList })
   }, [imgList])
-
-  useEffect(() => {
-    const id = localStorage.getItem(localStorageKeys.TEMP_ITEM_ID)
-    if (id) {
-      openModal(modals.AskRecentPostWritingModal)
-    }
-    if (hasTriedToUpload === true) {
-      localStorage.removeItem(localStorageKeys.TEMP_ITEM_ID)
-    }
-  }, [])
 
   const {
     postItem: { mutate },
@@ -101,13 +156,11 @@ const ItemCreate = () => {
       itemInfo.itemName &&
       itemInfo.price
     ) {
-      let hashTags: Array<number> | null = []
+      const finalHashTags: Array<number> | null = []
       if ((itemInfo.hashTagList?.length ?? 0) > 0) {
         itemInfo?.hashTagList?.map((item) => {
-          if (item.hashtagId) hashTags?.push(item.hashtagId)
+          if (item.hashtagId) finalHashTags?.push(item.hashtagId)
         })
-      } else {
-        hashTags = null
       }
 
       if (
@@ -141,21 +194,31 @@ const ItemCreate = () => {
         itemName: itemInfo.itemName === '' ? null : itemInfo.itemName,
         price: itemInfo.price ?? null,
         additionalInfo: itemInfo.additionalInfo === '' ? null : itemInfo.additionalInfo,
-        hashTagList: hashTags,
+        hashTagList: finalHashTags,
         linkList: itemInfo.linkList,
         infoSource: itemInfo.infoSource === '' ? null : itemInfo.infoSource,
         newCelebId: itemInfo.newCeleb?.celebId ?? null,
         newBrandId: itemInfo.newBrand?.brandId ?? null,
       }
+      console.log(item)
       mutate(item)
     } else {
       alert('오류가 발생했어요. 다시 시도해주세요')
     }
   }
 
+  const resetItemInfo = useResetRecoilState(itemInfoState)
+  const resetCelebInfoInItem = useResetRecoilState(celebInfoInItemState)
+  const resetCategory = useResetRecoilState(subCategoryState)
+  const resetParentCategory = useResetRecoilState(parentCategoryState)
+  const resetImgListState = useResetRecoilState(imgListState)
+
   const onBackClick = () => {
     resetItemInfo()
     resetCelebInfoInItem()
+    resetCategory()
+    resetParentCategory()
+    resetImgListState()
     navigate('/', { replace: true })
   }
 
@@ -164,7 +227,7 @@ const ItemCreate = () => {
       <HeaderWrapper>
         <Header
           isModalHeader={false}
-          title='정보 공유하기'
+          title='정보 수정하기'
           hasArrow={true}
           backBtnClick={onBackClick}
         >
@@ -183,10 +246,9 @@ const ItemCreate = () => {
             {hasTriedToUpload && !celeb.id && <Error></Error>}
             <Label>누가 착용했나요?</Label>
           </LabelContainer>
-          <SelectCeleb></SelectCeleb>
-          {hasTriedToUpload && !celeb.id && (
-            <ErrorText className='error'>필수 항목입니다</ErrorText>
-          )}
+          <CelebWrapper>
+            <ButtonMedium text={celeb.celebNameKr} type='pri' active={true}></ButtonMedium>
+          </CelebWrapper>
         </ComponentWrapper>
         <ComponentWrapper>
           <LabelContainer>
@@ -227,7 +289,7 @@ const ItemCreate = () => {
 
       <BottomBar>
         <div className='left'>
-          <div className='button' onClick={() => navigate('/item/create/addInfo')}>
+          <div className='button' onClick={() => navigate('/item/edit/addInfo')}>
             {itemInfo.additionalInfo && itemInfo.additionalInfo?.length > 0 ? (
               <InfoAddOn></InfoAddOn>
             ) : (
@@ -236,7 +298,7 @@ const ItemCreate = () => {
 
             <span>추가 정보</span>
           </div>
-          <div className='button' onClick={() => navigate('/item/create/addlink')}>
+          <div className='button' onClick={() => navigate('/item/edit/addlink')}>
             {itemInfo.linkList && itemInfo.linkList.length > 0 ? (
               <LinkAddOn></LinkAddOn>
             ) : (
@@ -245,12 +307,9 @@ const ItemCreate = () => {
             <span>구매 링크</span>
           </div>
         </div>
-        <div className='right'>
-          <StorageOff onClick={() => navigate('/item/create/temporary-storage')}></StorageOff>
-        </div>
       </BottomBar>
     </ItemCreatePageStyle>
   )
 }
 
-export default ItemCreate
+export default ItemEdit

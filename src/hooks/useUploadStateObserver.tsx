@@ -7,6 +7,7 @@ import { TempItemReq } from '../apis/item/itemService.type'
 import { localStorageKeys } from '../config/localStorageKeys'
 import { imgListState } from '../components/AddPhotos/AddPhotos'
 import useItemImgUpload from '../apis/s3/hooks/useItemImgUpload'
+import { useLocation } from 'react-router-dom'
 
 const useUploadStateObserver = () => {
   const {
@@ -16,11 +17,13 @@ const useUploadStateObserver = () => {
     postItemImg: { mutate: mutateByImgUpload },
   } = useItemImgUpload()
 
+  const location = useLocation()
+
   const itemInfo = useRecoilValue(itemInfoState)
   const celebInfo = useRecoilValue(celebInfoInItemState)
   const imgList = useRecoilValue(imgListState)
-  const [debounceItemInfo] = useDebounce(itemInfo, 500)
-  const [debounceCelebInfo] = useDebounce(celebInfo, 500)
+  const [debounceItemInfo] = useDebounce(itemInfo, 1000)
+  const [debounceCelebInfo] = useDebounce(celebInfo, 1000)
 
   const hashTags = useMemo(() => {
     const temp: Array<number> = []
@@ -52,28 +55,36 @@ const useUploadStateObserver = () => {
         itemInfo.newBrand
       )
     ) {
+      console.log('item Info all Null')
       return
-    }
-    const tempItem: TempItemReq = {
-      id: localStorage.getItem('tempItemId') ? Number(localStorage.getItem('tempItemId')) : null,
-      imgList: itemInfo.imgList,
-      celebId: itemInfo.celeb?.celebId ?? null,
-      whenDiscovery: itemInfo.whenDiscovery && (itemInfo.whenDiscovery as Date).toISOString(),
-      whereDiscovery: itemInfo.whereDiscovery === '' ? null : itemInfo.whereDiscovery,
-      categoryId: itemInfo.itemCategory?.categoryId ?? null,
-      brandId: itemInfo.brand?.brandId ?? null,
-      itemName: itemInfo.itemName === '' ? null : itemInfo.itemName,
-      price: itemInfo.price ?? null,
-      additionalInfo: itemInfo.additionalInfo === '' ? null : itemInfo.additionalInfo,
-      hashTagList: hashTags,
-      linkList: itemInfo.linkList,
-      infoSource: itemInfo.infoSource === '' ? null : itemInfo.infoSource,
-      newCelebId: itemInfo.newCeleb?.celebId ?? null,
-      newBrandId: itemInfo.newBrand?.brandId ?? null,
-    }
-    mutateByTempItem(tempItem)
+    } else {
+      if (!location.pathname.includes('edit')) {
+        console.log('item info in uploadState observer', itemInfo)
+        const tempItem: TempItemReq = {
+          id: localStorage.getItem('tempItemId')
+            ? Number(localStorage.getItem('tempItemId'))
+            : null,
+          imgList: itemInfo.imgList ?? null,
+          celebId: itemInfo.celeb?.celebId ?? null,
+          whenDiscovery: itemInfo.whenDiscovery && (itemInfo.whenDiscovery as Date).toISOString(),
+          whereDiscovery: itemInfo.whereDiscovery ?? itemInfo.whereDiscovery,
+          categoryId: itemInfo.itemCategory?.categoryId ?? null,
+          brandId: itemInfo.brand?.brandId ?? null,
+          itemName: itemInfo.itemName === '' ? null : itemInfo.itemName,
+          price: itemInfo.price ?? null,
+          additionalInfo: itemInfo.additionalInfo === '' ? null : itemInfo.additionalInfo,
+          hashTagList: hashTags,
+          linkList: itemInfo.linkList,
+          infoSource: itemInfo.infoSource === '' ? null : itemInfo.infoSource,
+          newCelebId: itemInfo.newCeleb?.celebId ?? null,
+          newBrandId: itemInfo.newBrand?.brandId ?? null,
+        }
+        // console.log('tempItem', tempItem)
+        mutateByTempItem(tempItem)
 
-    console.log('Recoil 상태 변화 감지')
+        // console.log('Recoil 상태 변화 감지')
+      }
+    }
   }, [debounceItemInfo, debounceCelebInfo])
 
   useEffect(() => {

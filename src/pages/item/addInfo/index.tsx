@@ -12,6 +12,7 @@ const AddInfo = () => {
   const navigate = useNavigate()
 
   const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
+  console.log('iteminfo in addInfo', itemInfo)
 
   const [addInfoText, setAddInfoText] = useState<string | null>(itemInfo.additionalInfo ?? '')
   const [source, setSource] = useState<string | null>(itemInfo.infoSource)
@@ -47,6 +48,7 @@ const AddInfo = () => {
       setInfoValid(false)
     }
   }
+  console.log(hashTags)
 
   useEffect(() => {
     if (hasSubmitted) {
@@ -56,7 +58,7 @@ const AddInfo = () => {
         setInfoValid(false)
       }
     }
-  }, [addInfoText, source])
+  }, [addInfoText, source, hashTags])
 
   return (
     <AddInfoContainer>
