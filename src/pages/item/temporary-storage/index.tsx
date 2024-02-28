@@ -31,7 +31,7 @@ const TemporaryStorage = () => {
 
   const { getTempItem } = useTempItemQuery()
   const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } = getTempItem()
-  console.log(data)
+  console.log('temp storage', data)
   const onIntersect = ([entry]: IntersectionObserverEntry[]) => {
     entry.isIntersecting && fetchNextPage()
   }

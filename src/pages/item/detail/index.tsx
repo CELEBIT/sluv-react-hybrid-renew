@@ -240,7 +240,7 @@ const ItemDetail = () => {
           <HashTags>
             {data?.hashTagList.map((hashtag, index) => {
               return (
-                <Badge key={hashtag.id} color={colors[index % colors.length]}>
+                <Badge key={hashtag.hashtagId} color={colors[index % colors.length]}>
                   #{hashtag.hashtagContent}
                 </Badge>
               )

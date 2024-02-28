@@ -21,7 +21,7 @@ const HashtagInput: React.FC<HashtagInputProps> = ({ placeholder }) => {
     postHashtag: { mutate: mutateByPostHashtag },
   } = useItemHashtagQuery()
 
-  const itemInfo = useRecoilValue(itemInfoState)
+  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
   const [hashTags, setHashtags] = useRecoilState(hashTagState)
   const [currentTag, setCurrentTag] = useState<string>('')
   const [isFocused, setIsFocused] = useState<boolean>(false)
@@ -35,6 +35,13 @@ const HashtagInput: React.FC<HashtagInputProps> = ({ placeholder }) => {
       setHashtags([...itemInfo.hashTagList])
     }
   }, [])
+
+  useEffect(() => {
+    if (itemInfo.hashTagList) {
+      // console.log(itemInfo.hashTagList)
+      setItemInfo({ ...itemInfo, hashTagList: hashTags })
+    }
+  }, [hashTags])
 
   useEffect(() => {
     const handleBackspace = (event: KeyboardEvent) => {
@@ -56,7 +63,6 @@ const HashtagInput: React.FC<HashtagInputProps> = ({ placeholder }) => {
     if (event.key === 'Enter' || event.code === 'Space') {
       if (event.nativeEvent.isComposing) return
       event.preventDefault()
-
       if (currentTag.trim() !== '') {
         mutateByPostHashtag({ hashtagContent: currentTag })
         setCurrentTag('')

@@ -22,8 +22,8 @@ const useUploadStateObserver = () => {
   const itemInfo = useRecoilValue(itemInfoState)
   const celebInfo = useRecoilValue(celebInfoInItemState)
   const imgList = useRecoilValue(imgListState)
-  const [debounceItemInfo] = useDebounce(itemInfo, 1000)
-  const [debounceCelebInfo] = useDebounce(celebInfo, 1000)
+  const [debounceItemInfo] = useDebounce(itemInfo, 500)
+  const [debounceCelebInfo] = useDebounce(celebInfo, 500)
 
   const hashTags = useMemo(() => {
     const temp: Array<number> = []
@@ -73,13 +73,13 @@ const useUploadStateObserver = () => {
           itemName: itemInfo.itemName === '' ? null : itemInfo.itemName,
           price: itemInfo.price ?? null,
           additionalInfo: itemInfo.additionalInfo === '' ? null : itemInfo.additionalInfo,
-          hashTagList: hashTags,
+          hashTagIdList: hashTags,
           linkList: itemInfo.linkList,
           infoSource: itemInfo.infoSource === '' ? null : itemInfo.infoSource,
           newCelebId: itemInfo.newCeleb?.celebId ?? null,
           newBrandId: itemInfo.newBrand?.brandId ?? null,
         }
-        // console.log('tempItem', tempItem)
+        console.log('tempItem', tempItem)
         mutateByTempItem(tempItem)
 
         // console.log('Recoil 상태 변화 감지')
