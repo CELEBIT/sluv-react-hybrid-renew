@@ -12,6 +12,11 @@ import { TempItemResult } from '../../../../apis/item/itemService.type'
 import { useNavigate } from 'react-router-dom'
 import { localStorageKeys } from '../../../../config/localStorageKeys'
 import { IHashTag, itemInfoState } from '../../../../recoil/itemInfo'
+import { imgListState } from '../../../../components/AddPhotos/AddPhotos'
+import {
+  parentCategoryState,
+  subCategoryState,
+} from '../../../../components/BottomSheetModal/ItemCategoryModal'
 
 interface TempItemProps {
   data: TempItemResult
@@ -21,11 +26,13 @@ interface TempItemProps {
 
 const TempItem = ({ data, isFirst, isEditMode }: TempItemProps) => {
   const navigate = useNavigate()
-  console.log(data)
 
   const [isChecked, setIsChecked] = useState(false)
   const [checkedList, setCheckedList] = useRecoilState(checkListState)
   const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
+  const [imgList, setImgListState] = useRecoilState(imgListState)
+  const [subCategory, setSubCategory] = useRecoilState(subCategoryState)
+  const [parentCategory, setParentCategory] = useRecoilState(parentCategoryState)
 
   const [title, imgUrl] = useMemo(() => {
     const processedTitle = String(processTempTitle(data))
@@ -57,17 +64,28 @@ const TempItem = ({ data, isFirst, isEditMode }: TempItemProps) => {
       return
     }
     localStorage.setItem(localStorageKeys.TEMP_ITEM_ID, String(data.id))
+
     const hashtags: Array<IHashTag> = []
     data.hashTagList &&
       data.hashTagList.map((item) => {
         hashtags.push({
-          hashtagId: item.id,
+          hashtagId: item.hashtagId,
           hashtagContent: item.hashtagContent,
         })
       })
+    setImgListState(data.imgList)
+    if (data.category) {
+      if (data.category.parentId && data.category.parentName) {
+        setParentCategory({ id: data.category.parentId, name: data.category.parentName })
+      }
+      if (data.category.id && data.category.name) {
+        setSubCategory({ id: data.category.id, name: data.category.name })
+      }
+    }
+
     setItemInfo({
       ...itemInfo,
-      imgList: !data.imgList ? null : data.imgList,
+      imgList: data.imgList.length > 0 ? data.imgList : [],
       celeb: data.celeb && {
         celebId: data.celeb.id,
         celebName: data.celeb.celebNameEn,

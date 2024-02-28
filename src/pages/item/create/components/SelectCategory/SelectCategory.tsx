@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import useModals from '../../../../../components/Modals/hooks/useModals'
 import useItemCategoryQuery from '../../../../../apis/item/hooks/useItemCategoryQuery'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import {
   Category,
   parentCategoryState,
@@ -10,10 +10,12 @@ import {
 import ButtonMedium from '../../../../../components/ButtonMedium/ButtonMedium'
 import { modals } from '../../../../../components/Modals'
 import { ChipWrapper } from './styles'
+import { itemInfoState } from '../../../../../recoil/itemInfo'
 
 function SelectCategory() {
   const { openModal } = useModals()
   const activeCategoryRef = useRef<HTMLDivElement>(null)
+  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
 
   const {
     getItemCategory: { data },
@@ -38,6 +40,17 @@ function SelectCategory() {
       setParentCategory({
         ...parentCategory,
         subCategoryList: data[parentCategory.id - 1].subCategoryList,
+      })
+    }
+    if (parentCategory && subCategory) {
+      setItemInfo({
+        ...itemInfo,
+        itemCategory: {
+          categoryId: subCategory.id,
+          childName: subCategory.name,
+          parentCategoryId: parentCategory.id,
+          parentName: parentCategory.name,
+        },
       })
     }
   }, [])

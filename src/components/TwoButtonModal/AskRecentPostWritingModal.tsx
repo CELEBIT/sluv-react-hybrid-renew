@@ -31,7 +31,7 @@ const AskRecentPostWritingModal = () => {
       tempData.hashTagList.length > 0 &&
       tempData.hashTagList.map((item) => {
         hashtags.push({
-          hashtagId: item.id,
+          hashtagId: item.hashtagId,
           hashtagContent: item.hashtagContent,
         })
       })

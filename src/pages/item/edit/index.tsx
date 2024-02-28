@@ -66,7 +66,6 @@ const ItemEdit = () => {
   const { data } = getItemDetail(Number(itemId))
 
   useEffect(() => {
-    console.log('useEffect called')
     if (data) {
       // 사진
       setImgListState(data.imgList)
@@ -99,7 +98,7 @@ const ItemEdit = () => {
       // itemInfo 저장용 Hashtag
       const editHashTagList: Array<IHashTag> | null = data.hashTagList.map(
         (tag: HashTagResult) => ({
-          hashtagId: tag.id,
+          hashtagId: tag.hashtagId,
           hashtagContent: tag.hashtagContent,
         }),
       )
@@ -127,6 +126,7 @@ const ItemEdit = () => {
         infoSource: data.infoSource,
         newBrand: { brandName: data.newBrandName },
       }
+      console.log(newState)
       setItemInfo(newState)
     }
   }, [data])
@@ -156,6 +156,7 @@ const ItemEdit = () => {
       itemInfo.itemName &&
       itemInfo.price
     ) {
+      console.log('itemInfo.hashTagList', itemInfo.hashTagList)
       const finalHashTags: Array<number> | null = []
       if ((itemInfo.hashTagList?.length ?? 0) > 0) {
         itemInfo?.hashTagList?.map((item) => {
@@ -194,7 +195,7 @@ const ItemEdit = () => {
         itemName: itemInfo.itemName === '' ? null : itemInfo.itemName,
         price: itemInfo.price ?? null,
         additionalInfo: itemInfo.additionalInfo === '' ? null : itemInfo.additionalInfo,
-        hashTagList: finalHashTags,
+        hashTagIdList: finalHashTags,
         linkList: itemInfo.linkList,
         infoSource: itemInfo.infoSource === '' ? null : itemInfo.infoSource,
         newCelebId: itemInfo.newCeleb?.celebId ?? null,
@@ -202,6 +203,11 @@ const ItemEdit = () => {
       }
       console.log(item)
       mutate(item)
+      resetItemInfo()
+      resetCelebInfoInItem()
+      resetCategory()
+      resetParentCategory()
+      resetImgListState()
     } else {
       alert('오류가 발생했어요. 다시 시도해주세요')
     }

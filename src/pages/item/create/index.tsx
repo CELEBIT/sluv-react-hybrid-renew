@@ -75,6 +75,7 @@ const ItemCreate = () => {
       sortOrder: idx,
     }))
     if (imgList.length > 0) setItemInfo({ ...itemInfo, imgList: newImgList })
+    console.log('imgList in useEffect', imgList)
   }, [imgList])
 
   useEffect(() => {
@@ -141,7 +142,7 @@ const ItemCreate = () => {
         itemName: itemInfo.itemName === '' ? null : itemInfo.itemName,
         price: itemInfo.price ?? null,
         additionalInfo: itemInfo.additionalInfo === '' ? null : itemInfo.additionalInfo,
-        hashTagList: hashTags,
+        hashTagIdList: hashTags,
         linkList: itemInfo.linkList,
         infoSource: itemInfo.infoSource === '' ? null : itemInfo.infoSource,
         newCelebId: itemInfo.newCeleb?.celebId ?? null,
@@ -153,9 +154,16 @@ const ItemCreate = () => {
     }
   }
 
+  const resetCategory = useResetRecoilState(subCategoryState)
+  const resetParentCategory = useResetRecoilState(parentCategoryState)
+  const resetImgListState = useResetRecoilState(imgListState)
+
   const onBackClick = () => {
     resetItemInfo()
     resetCelebInfoInItem()
+    resetCategory()
+    resetParentCategory()
+    resetImgListState()
     navigate('/', { replace: true })
   }
 
@@ -228,7 +236,8 @@ const ItemCreate = () => {
       <BottomBar>
         <div className='left'>
           <div className='button' onClick={() => navigate('/item/create/addInfo')}>
-            {itemInfo.additionalInfo && itemInfo.additionalInfo?.length > 0 ? (
+            {(itemInfo.additionalInfo && itemInfo.additionalInfo?.length > 0) ||
+            (itemInfo.hashTagList && itemInfo.hashTagList.length > 0) ? (
               <InfoAddOn></InfoAddOn>
             ) : (
               <InfoAddOff></InfoAddOff>
