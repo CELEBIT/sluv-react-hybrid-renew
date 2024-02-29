@@ -79,7 +79,7 @@ const TempItem = ({ data, isFirst, isEditMode }: TempItemProps) => {
     setHashTags(hashtags)
 
     // 사진 설정
-    setImgListState(data.imgList)
+    setImgListState(data.imgList ?? [])
     if (data.category) {
       if (data.category.parentId && data.category.parentName) {
         setParentCategory({ id: data.category.parentId, name: data.category.parentName })
@@ -89,17 +89,19 @@ const TempItem = ({ data, isFirst, isEditMode }: TempItemProps) => {
       }
     }
     // 셀럽 설정
-    setCelebInfoInItem((prevState) => ({
-      ...prevState,
-      groupId: data.celeb.parentId !== null ? data.celeb.parentId : null,
-      groupName: data.celeb.parentCelebNameKr !== null ? data.celeb.parentCelebNameKr : null,
-      soloId: data.celeb.id !== null ? data.celeb.id : null,
-      soloName: data.celeb.celebNameKr !== null ? data.celeb.celebNameKr : null,
-    }))
+    if (data.celeb) {
+      setCelebInfoInItem((prevState) => ({
+        ...prevState,
+        groupId: data.celeb.parentId !== null ? data.celeb.parentId : null,
+        groupName: data.celeb.parentCelebNameKr !== null ? data.celeb.parentCelebNameKr : null,
+        soloId: data.celeb.id !== null ? data.celeb.id : null,
+        soloName: data.celeb.celebNameKr !== null ? data.celeb.celebNameKr : null,
+      }))
+    }
 
     setItemInfo({
       ...itemInfo,
-      imgList: data.imgList.length > 0 ? data.imgList : [],
+      imgList: data.imgList ?? null,
       celeb: data.celeb && {
         celebId: data.celeb.id,
         celebName: data.celeb.celebNameKr,
