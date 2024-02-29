@@ -20,7 +20,6 @@ function SelectCategory() {
   const {
     getItemCategory: { data },
   } = useItemCategoryQuery()
-  console.log('category data', data)
 
   const [parentCategory, setParentCategory] = useRecoilState(parentCategoryState)
   const subCategory = useRecoilValue(subCategoryState)
@@ -42,7 +41,7 @@ function SelectCategory() {
         subCategoryList: data[parentCategory.id - 1].subCategoryList,
       })
     }
-    if (parentCategory && subCategory) {
+    if (parentCategory.id !== 0 && subCategory.id !== 0) {
       setItemInfo({
         ...itemInfo,
         itemCategory: {
