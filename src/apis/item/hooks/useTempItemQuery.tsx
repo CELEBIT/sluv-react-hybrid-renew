@@ -45,8 +45,9 @@ const useTempItemQuery = () => {
     onSuccess: (res) => {
       if (res?.tempItemId) {
         localStorage.setItem(localStorageKeys.TEMP_ITEM_ID, String(res?.tempItemId))
+        console.log('post complete')
+        queryClient.invalidateQueries(queryKeys.tempItem)
       }
-      queryClient.invalidateQueries(queryKeys.tempItem)
     },
   })
   return { getTempItem, deleteTempItem, deleteTempItemAll, postTempItem }

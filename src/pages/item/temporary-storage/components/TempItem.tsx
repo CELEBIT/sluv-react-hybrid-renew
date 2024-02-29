@@ -6,12 +6,18 @@ import { Common, Pretendard } from '../../../../components/styles'
 import { ReactComponent as Check } from '../../../../assets/check_24.svg'
 import { formatUpdatedAt } from '../../../../utils/utility'
 import { filterRepresentImg, processTempTitle } from './TempItem.util'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import { checkListState } from '..'
 import { TempItemResult } from '../../../../apis/item/itemService.type'
 import { useNavigate } from 'react-router-dom'
 import { localStorageKeys } from '../../../../config/localStorageKeys'
-import { IHashTag, itemInfoState } from '../../../../recoil/itemInfo'
+import { IHashTag, celebInfoInItemState, itemInfoState } from '../../../../recoil/itemInfo'
+import { imgListState } from '../../../../components/AddPhotos/AddPhotos'
+import {
+  parentCategoryState,
+  subCategoryState,
+} from '../../../../components/BottomSheetModal/ItemCategoryModal'
+import { hashTagState } from '../../addInfo/components/HashTags/HashTag'
 
 interface TempItemProps {
   data: TempItemResult
@@ -25,10 +31,15 @@ const TempItem = ({ data, isFirst, isEditMode }: TempItemProps) => {
   const [isChecked, setIsChecked] = useState(false)
   const [checkedList, setCheckedList] = useRecoilState(checkListState)
   const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
+  const setCelebInfoInItem = useSetRecoilState(celebInfoInItemState)
+  const setImgListState = useSetRecoilState(imgListState)
+  const setSubCategory = useSetRecoilState(subCategoryState)
+  const setParentCategory = useSetRecoilState(parentCategoryState)
+  const setHashTags = useSetRecoilState(hashTagState)
 
   const [title, imgUrl] = useMemo(() => {
     const processedTitle = String(processTempTitle(data))
-    if (data.imgList.length < 1) {
+    if (data.imgList === null) {
       return [processedTitle, '']
     } else {
       return [processedTitle, filterRepresentImg(data.imgList)]
@@ -56,20 +67,44 @@ const TempItem = ({ data, isFirst, isEditMode }: TempItemProps) => {
       return
     }
     localStorage.setItem(localStorageKeys.TEMP_ITEM_ID, String(data.id))
+
     const hashtags: Array<IHashTag> = []
-    data.hashTagList.length > 0 &&
+    data.hashTagList &&
       data.hashTagList.map((item) => {
         hashtags.push({
-          hashtagId: item.id,
+          hashtagId: item.hashtagId,
           hashtagContent: item.hashtagContent,
         })
       })
+    setHashTags(hashtags)
+
+    // 사진 설정
+    setImgListState(data.imgList ?? [])
+    if (data.category) {
+      if (data.category.parentId && data.category.parentName) {
+        setParentCategory({ id: data.category.parentId, name: data.category.parentName })
+      }
+      if (data.category.id && data.category.name) {
+        setSubCategory({ id: data.category.id, name: data.category.name })
+      }
+    }
+    // 셀럽 설정
+    if (data.celeb) {
+      setCelebInfoInItem((prevState) => ({
+        ...prevState,
+        groupId: data.celeb.parentId !== null ? data.celeb.parentId : null,
+        groupName: data.celeb.parentCelebNameKr !== null ? data.celeb.parentCelebNameKr : null,
+        soloId: data.celeb.id !== null ? data.celeb.id : null,
+        soloName: data.celeb.celebNameKr !== null ? data.celeb.celebNameKr : null,
+      }))
+    }
+
     setItemInfo({
       ...itemInfo,
-      imgList: data.imgList.length === 0 ? null : data.imgList,
+      imgList: data.imgList ?? null,
       celeb: data.celeb && {
         celebId: data.celeb.id,
-        celebName: data.celeb.celebNameEn,
+        celebName: data.celeb.celebNameKr,
       },
       whenDiscovery: data.whenDiscovery ? new Date(data.whenDiscovery) : null,
       whereDiscovery: data.whereDiscovery,
@@ -87,8 +122,8 @@ const TempItem = ({ data, isFirst, isEditMode }: TempItemProps) => {
       itemName: data.itemName,
       price: data.price,
       additionalInfo: data.additionalInfo,
-      hashTagList: hashtags.length === 0 ? null : hashtags,
-      linkList: data.linkList.length === 0 ? null : data.linkList,
+      hashTagList: !hashtags ? null : hashtags,
+      linkList: !data.linkList ? null : data.linkList,
       infoSource: data.infoSource,
       newCeleb: data.newCeleb && {
         celebId: data.newCeleb.newCelebId,
@@ -130,7 +165,9 @@ const TempItem = ({ data, isFirst, isEditMode }: TempItemProps) => {
           </span>
         </div>
       </div>
-      {data.imgList.length > 0 && <Img size={48} borderRadius={8} imgUrl={imgUrl} />}
+      {data.imgList && data.imgList.length > 0 && (
+        <Img size={48} borderRadius={8} imgUrl={imgUrl} />
+      )}
     </TempItemWrap>
   )
 }

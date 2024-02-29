@@ -14,28 +14,15 @@ import { Common, Pretendard } from '../styles'
 import ButtonLarge from '../ButtonLarge/ButtonLarge'
 import { itemInfoState } from '../../recoil/itemInfo'
 
-export const CategoryDisplayListState = atom<Category[]>({
-  key: atomKeys.CategoryListState,
-  default: [
-    {
-      id: 0,
-      name: '',
-      parentId: 0,
-      parentName: '',
-      subCategoryList: [],
-    },
-  ],
-})
-
-export const selectedParentCategoryState = atom<Category>({
-  key: atomKeys.selectedParentCategoryIdState,
+export const parentCategoryState = atom<Category>({
+  key: atomKeys.parentCategoryIdState,
   default: {
     id: 0,
     name: '',
   },
 })
-export const selectedSubCategoryState = atom<Category>({
-  key: atomKeys.selectedSubCategoryIdState,
+export const subCategoryState = atom<Category>({
+  key: atomKeys.subCategoryIdState,
   default: {
     id: 0,
     name: '',
@@ -45,25 +32,21 @@ export const selectedSubCategoryState = atom<Category>({
 export interface Category {
   id: number
   name: string
-  parentId?: 0
-  parentName?: ''
   subCategoryList?: Category[]
 }
 
 const ItemCategoryModal = () => {
   const { closeModal } = useModals()
-  const [selectedParentCategory, setSelectedParentCategory] = useRecoilState(
-    selectedParentCategoryState,
-  )
-  const [selectedSubCategory, setSelectedSubCategory] = useRecoilState(selectedSubCategoryState)
+  const [selectedParentCategory, setSelectedParentCategory] = useRecoilState(parentCategoryState)
+  const [subCategory, setsubCategory] = useRecoilState(subCategoryState)
   const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
-
+  console.log('subCategory in modal', subCategory)
   const onComplete = () => {
     setItemInfo({
       ...itemInfo,
       itemCategory: {
-        categoryId: selectedSubCategory.id,
-        childName: selectedSubCategory.name,
+        categoryId: subCategory.id,
+        childName: subCategory.name,
         parentCategoryId: selectedParentCategory.id,
         parentName: selectedParentCategory.name,
       },
@@ -72,13 +55,13 @@ const ItemCategoryModal = () => {
   }
   const onParentClick = (category: Category) => {
     setSelectedParentCategory(category)
-    setSelectedSubCategory({
+    setsubCategory({
       id: 0,
       name: '',
     })
   }
   const onSubClick = (category: Category) => {
-    setSelectedSubCategory(category)
+    setsubCategory(category)
     console.log('sub', category)
   }
 
@@ -132,7 +115,7 @@ const ItemCategoryModal = () => {
                     key={category.id}
                     text={category.name}
                     type='pri'
-                    active={selectedSubCategory.id === category.id}
+                    active={subCategory.id === category.id}
                     onClick={() => onSubClick(category)}
                   ></ButtonMedium>
                 )
@@ -144,7 +127,7 @@ const ItemCategoryModal = () => {
         <ButtonWrapper>
           <ButtonLarge
             text='완료'
-            active={selectedParentCategory.id < 9 ? selectedSubCategory.id !== 0 : true}
+            active={selectedParentCategory.id < 9 ? subCategory.id !== 0 : true}
             onClick={onComplete}
           ></ButtonLarge>
         </ButtonWrapper>

@@ -115,9 +115,6 @@ const SelectCeleb = () => {
   }
 
   useEffect(() => {
-    if (itemInfo.celeb) {
-      // 수정시
-    }
     if ((interestCelebList?.length ?? 0) <= 0) {
       // 관심셀럽이 없으므로 리턴
       return
@@ -161,6 +158,42 @@ const SelectCeleb = () => {
       return
     }
   }, [celebInfoInItem, interestCelebList])
+  console.log('현재 celebInfoInItem', celebInfoInItem)
+  useEffect(() => {
+    if (celebInfoInItem.soloId && !celebInfoInItem.groupId) {
+      // 선택한 셀럽이 솔로인 경우
+      // 관심셀럽 리스트에 해당 솔로가 있다면
+      // 기존 관심셀럽 리스트에서 삭제 후 리스트 맨 앞으로 보냄
+      const newList = interestCelebList?.filter((celeb) => celeb.id !== celebInfoInItem.soloId)
+      if (newList) {
+        setDisplayList([
+          {
+            id: celebInfoInItem.soloId,
+            celebNameKr: celebInfoInItem.soloName ?? '',
+          },
+          ...newList,
+        ])
+      }
+      return
+    }
+    if (celebInfoInItem.groupId && celebInfoInItem.soloId) {
+      // 선택한 셀럽이 그룹의 멤버인 경우
+      // 관심셀럽 리스트에서 해당 그룹이 있다면
+      // 기존 관심셀럽 리스트에서 삭제 후 리스트 맨 앞으로 보내고
+      // 그룹명 + 멤버명 형태로 보여줌
+      const newList = interestCelebList?.filter((celeb) => celeb.id !== celebInfoInItem.groupId)
+      if (newList) {
+        setDisplayList([
+          {
+            id: celebInfoInItem.soloId,
+            celebNameKr: celebInfoInItem.groupName + ' ' + celebInfoInItem.soloName,
+          },
+          ...newList,
+        ])
+      }
+      return
+    }
+  }, [])
 
   return (
     <SelectCelebWrapper>

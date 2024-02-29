@@ -16,7 +16,6 @@ const WeeklyTopUser = () => {
   const {
     getHotSluver: { data: userList },
   } = useGetHotSluverQuery(selectedInterestCeleb ? selectedInterestCeleb : undefined)
-  console.log('userList', userList)
   const navigate = useNavigate()
   return (
     <ScrollComponentWrapper bgColor='gray'>
@@ -26,7 +25,7 @@ const WeeklyTopUser = () => {
         {userList?.map((user, index) => {
           return (
             <UserCard
-              key={user.id}
+              key={'sluver' + user.id}
               rank={index + 1}
               borderRadius={16}
               imgUrl={user.profileImgUrl}

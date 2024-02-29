@@ -40,6 +40,7 @@ const TemporaryStorage = React.lazy(() => import('./pages/item/temporary-storage
 const AddInfo = React.lazy(() => import('./pages/item/addInfo'))
 const AddLink = React.lazy(() => import('./pages/item/addLink'))
 const ItemDetail = React.lazy(() => import('./pages/item/detail'))
+const ItemEdit = React.lazy(() => import('./pages/item/edit'))
 const ItemConfirm = React.lazy(() => import('./pages/item/confirm'))
 
 // 아이템 신고 / 수정요청
@@ -164,12 +165,17 @@ const App = () => {
             <Route path='/community/detail/report-user' element={<EditRequest />} />
             <Route path='/community/detail/report-user/reason' element={<RequestReason />} />
             {/* 정보 공유하기 */}
+
             <Route path='/item/create' element={<ItemCreate />} />
-            <Route path='/item/edit/:id' element={<ItemCreate />} />
             <Route path='/item/create/addinfo' element={<AddInfo />} />
             <Route path='/item/create/addlink' element={<AddLink />} />
             <Route path='/item/create/confirm' element={<ItemConfirm />} />
             <Route path='/item/create/temporary-storage' element={<TemporaryStorage />} />
+
+            <Route path='/item/edit/:id' element={<ItemEdit />} />
+            <Route path='/item/edit/addinfo' element={<AddInfo />} />
+            <Route path='/item/edit/addlink' element={<AddLink />} />
+
             <Route path='/item/detail/:id' element={<ItemDetail />} />
             <Route path='/item/detail/request-edit' element={<EditRequest />} />
             <Route path='/item/detail/request-edit/reason' element={<RequestReason />} />

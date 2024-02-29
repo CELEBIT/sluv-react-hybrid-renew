@@ -5,6 +5,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { AddPhotosWrapper } from './styles'
 import AddButton from './AddButton'
 import Photo from './Photo'
+import { useLocation } from 'react-router-dom'
 
 export interface Image {
   imgFile?: File
@@ -19,6 +20,7 @@ export const imgListState = atom<Image[]>({
 
 const AddPhotos = () => {
   const [imgList, setImageList] = useRecoilState(imgListState)
+  const location = useLocation()
 
   const fileInputRef = useRef<HTMLInputElement>(null)
   const changeImg = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,7 +74,7 @@ const AddPhotos = () => {
 
   return (
     <AddPhotosWrapper>
-      {imgList.length < 5 && (
+      {imgList.length < 5 && !location.pathname.includes('edit') && (
         <AddButton onClick={() => onClickOpenGallery()} itemCnt={imgList.length}>
           <input
             id='inputFile'
@@ -105,7 +107,9 @@ const AddPhotos = () => {
                         imgUrl={img.imgUrl}
                         imgFile={img.imgFile}
                         representFlag={index === 0}
-                        candelete={true}
+                        candelete={
+                          location.pathname.includes('edit') && imgList.length === 1 ? false : true
+                        }
                         onDelete={() => handleRemovePhoto(index)}
                       ></Photo>
                     </div>

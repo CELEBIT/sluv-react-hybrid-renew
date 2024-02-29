@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { Common, Pretendard } from '../styles'
 
 export const Root = styled.div<{ isOpen: boolean }>`
-  z-index: 50;
+  z-index: 150;
   position: fixed;
   bottom: ${(props) => (props.isOpen ? '0' : '-50px')};
   left: 0;

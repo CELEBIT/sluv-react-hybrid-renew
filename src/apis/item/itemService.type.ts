@@ -29,6 +29,7 @@ export interface CelebResult {
   celebNameKr: string
   celebNameEn: string
   categoryChild: string
+  parentId: number
   categoryParent: string
   parentCelebNameKr: string
   parentCelebNameEn: string
@@ -46,7 +47,7 @@ export interface BrandResult {
   brandImgUrl: string
 }
 export interface HashTagResult {
-  id: number
+  hashtagId: number
   hashtagContent: string
   hashtagStatus: string
 }
@@ -136,7 +137,7 @@ export interface TempItemReq {
   itemName: string | null
   price: number | null
   additionalInfo: string | null
-  hashTagList: Array<number> | null
+  hashTagIdList: Array<number> | null
   linkList: Array<LinkResult> | null
   infoSource: string | null
   newCelebId: number | null
