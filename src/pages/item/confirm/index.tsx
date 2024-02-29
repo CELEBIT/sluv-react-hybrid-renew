@@ -55,7 +55,12 @@ const ItemConfirm = () => {
     ) {
       return
     }
-
+    const finalHashTags: Array<number> | null = []
+    if ((itemInfo.hashTagList?.length ?? 0) > 0) {
+      itemInfo?.hashTagList?.map((item) => {
+        if (item.hashtagId) finalHashTags?.push(item.hashtagId)
+      })
+    }
     const item: TempItemReq = {
       id: null,
       imgList: itemInfo.imgList,
@@ -67,7 +72,7 @@ const ItemConfirm = () => {
       itemName: itemInfo.itemName === '' ? null : itemInfo.itemName,
       price: itemInfo.price ?? null,
       additionalInfo: itemInfo.additionalInfo === '' ? null : itemInfo.additionalInfo,
-      hashTagList: hashTags,
+      hashTagIdList: finalHashTags,
       linkList: itemInfo.linkList,
       infoSource: itemInfo.infoSource === '' ? null : itemInfo.infoSource,
       newCelebId: itemInfo.newCeleb?.celebId ?? null,

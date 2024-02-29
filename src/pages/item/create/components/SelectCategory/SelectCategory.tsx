@@ -1,143 +1,89 @@
-import React, { useEffect, useRef } from 'react'
-import { modals } from '../../../../../components/Modals'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import useModals from '../../../../../components/Modals/hooks/useModals'
 import useItemCategoryQuery from '../../../../../apis/item/hooks/useItemCategoryQuery'
-import ButtonMedium from '../../../../../components/ButtonMedium/ButtonMedium'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import {
   Category,
-  CategoryDisplayListState,
-  selectedParentCategoryState,
-  selectedSubCategoryState,
+  parentCategoryState,
+  subCategoryState,
 } from '../../../../../components/BottomSheetModal/ItemCategoryModal'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import ButtonMedium from '../../../../../components/ButtonMedium/ButtonMedium'
+import { modals } from '../../../../../components/Modals'
 import { ChipWrapper } from './styles'
 import { itemInfoState } from '../../../../../recoil/itemInfo'
 
-const SelectCategory = () => {
+function SelectCategory() {
   const { openModal } = useModals()
-  const selectRef = useRef<HTMLDivElement>(null)
+  const activeCategoryRef = useRef<HTMLDivElement>(null)
+  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
 
   const {
     getItemCategory: { data },
   } = useItemCategoryQuery()
 
-  const itemInfo = useRecoilValue(itemInfoState)
-
-  const [categoryDisplayList, setCategoryDisplayList] = useRecoilState(CategoryDisplayListState)
-  const [selectedParentCategory, setSelectedParentCategory] = useRecoilState(
-    selectedParentCategoryState,
-  )
-  const setSelectedSubCategory = useSetRecoilState(selectedSubCategoryState)
+  const [parentCategory, setParentCategory] = useRecoilState(parentCategoryState)
+  const subCategory = useRecoilValue(subCategoryState)
 
   const onCategoryClick = (category: Category) => {
-    openModal(modals.ItemCategoryModal)
-    setSelectedParentCategory({
+    setParentCategory({
+      ...parentCategory,
       id: category.id,
-      name: data?.find((cat) => cat.id === category.id)?.name ?? '오류',
+      name: category.name,
       subCategoryList: category.subCategoryList,
     })
-    console.log(category)
-    if (category.id === 9) {
-      setSelectedSubCategory({ id: 9, name: '기타' })
-    } else {
-      setSelectedSubCategory({ id: 0, name: '' })
-    }
+    openModal(modals.ItemCategoryModal)
   }
-  useEffect(() => {
-    if (selectRef.current) {
-      selectRef.current.scrollLeft = 0
-    }
-  }, [categoryDisplayList])
-  useEffect(() => {
-    if (data) {
-      setCategoryDisplayList(data)
-    }
-  }, [data, setCategoryDisplayList])
 
   useEffect(() => {
-    if (!data) {
-      return
+    if (parentCategory.id && data) {
+      setParentCategory({
+        ...parentCategory,
+        subCategoryList: data[parentCategory.id - 1].subCategoryList,
+      })
     }
-    const parentCategoryId = itemInfo.itemCategory?.parentCategoryId
-    const filteredListByParent = data.filter((category) => category.id !== parentCategoryId)
-    if (parentCategoryId !== 9) {
-      const newDisplayItem = {
-        id: parentCategoryId ?? -1,
-        name:
-          (itemInfo.itemCategory?.parentName ?? '오류') + '>' + itemInfo.itemCategory?.childName,
-        subCategoryList: selectedParentCategory.subCategoryList,
-      }
-      setCategoryDisplayList([newDisplayItem, ...filteredListByParent])
-    } else {
-      const newDisplayItem = {
-        id: itemInfo.itemCategory?.parentCategoryId ?? -1,
-        name: itemInfo.itemCategory?.parentName ?? '오류',
-      }
-      setCategoryDisplayList([newDisplayItem, ...filteredListByParent])
+    if (parentCategory.id !== 0 && subCategory.id !== 0) {
+      setItemInfo({
+        ...itemInfo,
+        itemCategory: {
+          categoryId: subCategory.id,
+          childName: subCategory.name,
+          parentCategoryId: parentCategory.id,
+          parentName: parentCategory.name,
+        },
+      })
     }
-  }, [itemInfo.itemCategory?.parentCategoryId, itemInfo.itemCategory?.categoryId])
+  }, [])
+
+  // scroll 관련
+  useEffect(() => {
+    if (activeCategoryRef.current) {
+      activeCategoryRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'end',
+      })
+    }
+  }, [parentCategory])
 
   return (
-    <ChipWrapper ref={selectRef}>
-      {itemInfo.itemCategory?.parentCategoryId && itemInfo.itemCategory?.categoryId ? (
-        <>
-          {categoryDisplayList?.map((category) => {
-            return (
-              <ButtonMedium
-                key={category.id}
-                text={category.name}
-                icon={true}
-                type='pri'
-                active={
-                  itemInfo.itemCategory?.parentCategoryId === category.id &&
-                  itemInfo.itemCategory?.categoryId !== 0
-                }
-                onClick={() => onCategoryClick(category)}
-              ></ButtonMedium>
-            )
-          })}
-        </>
-      ) : (
-        <>
-          {itemInfo.itemCategory?.parentCategoryId === 9 ? (
-            <>
-              {categoryDisplayList?.map((category) => {
-                return (
-                  <ButtonMedium
-                    key={category.id}
-                    text={category.name}
-                    icon={true}
-                    type='pri'
-                    active={itemInfo.itemCategory?.parentCategoryId === category.id}
-                    onClick={() => onCategoryClick(category)}
-                  ></ButtonMedium>
-                )
-              })}
-            </>
-          ) : (
-            <>
-              {(data?.length ?? 0) > 0 &&
-                data?.map((category) => {
-                  return (
-                    <ButtonMedium
-                      key={category.id}
-                      text={category.name}
-                      icon={true}
-                      type='pri'
-                      active={
-                        itemInfo.itemCategory?.parentCategoryId === 9
-                          ? true
-                          : itemInfo.itemCategory?.parentCategoryId === category.id &&
-                            itemInfo.itemCategory?.categoryId !== 0
-                      }
-                      onClick={() => onCategoryClick(category)}
-                    ></ButtonMedium>
-                  )
-                })}
-            </>
-          )}
-        </>
-      )}
+    <ChipWrapper>
+      {data?.map((category) => {
+        return (
+          <ButtonMedium
+            key={category.id}
+            // 상위 + > + 하위
+            text={
+              parentCategory.id && subCategory.id && category.id === parentCategory.id
+                ? `${parentCategory.name}>${subCategory.name}`
+                : category.name
+            }
+            icon={true}
+            type='pri'
+            active={parentCategory.id === category.id}
+            onClick={() => onCategoryClick(category)}
+            ref={parentCategory.id === category.id ? activeCategoryRef : null}
+          ></ButtonMedium>
+        )
+      })}
     </ChipWrapper>
   )
 }

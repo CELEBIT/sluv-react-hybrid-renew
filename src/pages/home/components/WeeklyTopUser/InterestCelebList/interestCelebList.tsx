@@ -17,7 +17,6 @@ const InterestCelebList = () => {
   const {
     getInterestCeleb: { data: interestCelebList },
   } = useInterestCelebQuery()
-  console.log(interestCelebList)
   return (
     <FilterListWrapper>
       <BlackFilter
@@ -30,7 +29,7 @@ const InterestCelebList = () => {
         interestCelebList?.map((celeb) => {
           return (
             <BlackFilter
-              key={celeb.id}
+              key={'interest' + celeb.id}
               isSelected={selectedInterestCeleb === celeb.id}
               onClick={() => setselectedInterestCeleb(celeb.id)}
             >

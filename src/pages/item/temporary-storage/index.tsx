@@ -31,7 +31,7 @@ const TemporaryStorage = () => {
 
   const { getTempItem } = useTempItemQuery()
   const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } = getTempItem()
-
+  console.log('temp storage', data)
   const onIntersect = ([entry]: IntersectionObserverEntry[]) => {
     entry.isIntersecting && fetchNextPage()
   }
@@ -57,7 +57,7 @@ const TemporaryStorage = () => {
         <Header isModalHeader={false} title={'임시 보관함'} hasArrow={true}>
           <EditBtn
             onClick={() => setIsEditMode((prev) => !prev)}
-            disabled={!isEditMode && (data?.pages[0].count ?? 0) < 2}
+            disabled={!isEditMode && (data?.pages[0].countNum ?? 0) < 2}
           >
             {isEditMode ? '완료' : '편집'}
           </EditBtn>
@@ -68,7 +68,7 @@ const TemporaryStorage = () => {
           </SelectedCtnDiv>
         ) : (
           <SelectedCtnDiv>
-            총<span> {data?.pages[0].count ?? 0}</span>개 보관 중
+            총<span> {data?.pages[0].countNum ?? 0}</span>개 보관 중
           </SelectedCtnDiv>
         )}
       </HeaderWrap>

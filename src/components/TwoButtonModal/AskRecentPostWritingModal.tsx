@@ -5,8 +5,11 @@ import useModals from '../Modals/hooks/useModals'
 import { BtnModalContent } from '../Modals/styles'
 import useTempItemQuery from '../../apis/item/hooks/useTempItemQuery'
 import { localStorageKeys } from '../../config/localStorageKeys'
-import { IHashTag, itemInfoState } from '../../recoil/itemInfo'
-import { useRecoilState } from 'recoil'
+import { IHashTag, celebInfoInItemState, itemInfoState } from '../../recoil/itemInfo'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { imgListState } from '../AddPhotos/AddPhotos'
+import { parentCategoryState, subCategoryState } from '../BottomSheetModal/ItemCategoryModal'
+import { hashTagState } from '../../pages/item/addInfo/components/HashTags/HashTag'
 
 const AskRecentPostWritingModal = () => {
   const { closeModal } = useModals()
@@ -15,6 +18,11 @@ const AskRecentPostWritingModal = () => {
   const tempData = data?.pages[0].content[0]
 
   const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
+  const setCelebInfoInItem = useSetRecoilState(celebInfoInItemState)
+  const setImgListState = useSetRecoilState(imgListState)
+  const setSubCategory = useSetRecoilState(subCategoryState)
+  const setParentCategory = useSetRecoilState(parentCategoryState)
+  const setHashTags = useSetRecoilState(hashTagState)
 
   const handleNewWriting = () => {
     localStorage.removeItem(localStorageKeys.TEMP_ITEM_ID)
@@ -26,17 +34,43 @@ const AskRecentPostWritingModal = () => {
       return
     }
     localStorage.setItem(localStorageKeys.TEMP_ITEM_ID, String(tempData.id))
+    // 해시태그 설정
     const hashtags: Array<IHashTag> = []
-    tempData.hashTagList.length > 0 &&
+    tempData.hashTagList &&
+      tempData.hashTagList.length > 0 &&
       tempData.hashTagList.map((item) => {
         hashtags.push({
-          hashtagId: item.id,
+          hashtagId: item.hashtagId,
           hashtagContent: item.hashtagContent,
         })
       })
+    setHashTags(hashtags)
+    // 카테고리 설정
+    if (tempData.category) {
+      if (tempData.category.parentId && tempData.category.parentName) {
+        setParentCategory({ id: tempData.category.parentId, name: tempData.category.parentName })
+      }
+      if (tempData.category.id && tempData.category.name) {
+        setSubCategory({ id: tempData.category.id, name: tempData.category.name })
+      }
+    }
+    // 사진 설정
+    setImgListState(tempData.imgList ?? [])
+    // 셀럽 설정
+    if (tempData.celeb) {
+      setCelebInfoInItem((prevState) => ({
+        ...prevState,
+        groupId: tempData.celeb.parentId !== null ? tempData.celeb.parentId : null,
+        groupName:
+          tempData.celeb.parentCelebNameKr !== null ? tempData.celeb.parentCelebNameKr : null,
+        soloId: tempData.celeb.id !== null ? tempData.celeb.id : null,
+        soloName: tempData.celeb.celebNameKr !== null ? tempData.celeb.celebNameKr : null,
+      }))
+    }
+
     setItemInfo({
       ...itemInfo,
-      imgList: tempData.imgList.length === 0 ? null : tempData.imgList,
+      imgList: tempData.imgList ?? null,
       celeb: tempData.celeb && {
         celebId: tempData.celeb.id,
         celebName: tempData.celeb.celebNameEn,
@@ -57,8 +91,8 @@ const AskRecentPostWritingModal = () => {
       itemName: tempData.itemName,
       price: tempData.price,
       additionalInfo: tempData.additionalInfo,
-      hashTagList: hashtags.length === 0 ? null : hashtags,
-      linkList: tempData.linkList.length === 0 ? null : tempData.linkList,
+      hashTagList: !hashtags ? null : hashtags,
+      linkList: tempData.linkList ? tempData.linkList : null,
       infoSource: tempData.infoSource,
       newCeleb: tempData.newCeleb && {
         celebId: tempData.newCeleb.newCelebId,

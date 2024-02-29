@@ -228,6 +228,7 @@ const CommunityDetail = () => {
                   voteList={sortedList}
                   voteStatus={data.voteStatus}
                   questionId={Number(questionId)}
+                  voteEndTime={new Date(data.voteEndTime)}
                 ></Vote>
               ) : (
                 <DisplayPhotoItems

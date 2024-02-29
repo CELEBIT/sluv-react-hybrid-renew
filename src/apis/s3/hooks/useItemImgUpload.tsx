@@ -27,10 +27,10 @@ const useItemImgUpload = () => {
         })
       })
       if (temp.length === 0) return
-      // setItemInfo({
-      //   ...itemInfo,
-      //   imgList: temp,
-      // })
+      setItemInfo({
+        ...itemInfo,
+        imgList: temp,
+      })
     },
     onError: (err) => {
       console.error(err)
