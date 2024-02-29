@@ -29,6 +29,7 @@ export interface CelebResult {
   celebNameKr: string
   celebNameEn: string
   categoryChild: string
+  parentId: number
   categoryParent: string
   parentCelebNameKr: string
   parentCelebNameEn: string
