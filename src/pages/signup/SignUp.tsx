@@ -45,6 +45,7 @@ function SignUp() {
 
   useEffect(() => {
     window.addEventListener('setToken', function (event: MessageEvent) {
+      alert(event)
       if (event.data) {
         console.log('setToken', event.data)
         alert(event.data)
@@ -59,6 +60,7 @@ function SignUp() {
     })
 
     window.addEventListener('setUserStatus', function (event: MessageEvent) {
+      alert(event)
       if (event.data) {
         console.log('setStatus', event.data)
         alert(event.data)
