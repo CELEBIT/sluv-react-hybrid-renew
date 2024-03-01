@@ -49,15 +49,15 @@ function SignUp() {
 
   useEffect(() => {
     window.addEventListener('setToken', function (event: MessageEvent) {
-      alert(`setToken ${event.data}`)
       if (event.data && event.data.message) {
         setToken(event.data.message)
+        alert(`setToken ${event.data}`)
       }
     })
     window.addEventListener('setStatus', function (event: MessageEvent) {
-      alert(`setStatus ${event.data}`)
       if (event.data && event.data.message) {
         setStatus(event.data.message)
+        alert(`setStatus ${event.data}`)
       }
     })
   }, [])
