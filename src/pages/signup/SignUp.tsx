@@ -30,8 +30,8 @@ function SignUp() {
 
   // Native to JS로 토큰, status 저장
   useEffect(() => {
-    window.setToken = setToken
-    window.setUserStatus = setStatus
+    window.setToken = setToken as (token: string) => void
+    window.setUserStatus = setStatus as (status: string) => void
   }, [])
 
   useEffect(() => {
@@ -44,35 +44,47 @@ function SignUp() {
   }, [jwtToken])
 
   useEffect(() => {
-    window.addEventListener('setToken', function (event: MessageEvent) {
-      alert(event)
+    const handleTokenEvent = (event: MessageEvent<string>) => {
       if (event.data) {
-        console.log('setToken', event.data)
-        alert(event.data)
-        const tokenData = JSON.parse(event.data)
-
-        if (tokenData.token) {
-          storage.set('accessToken', tokenData.token)
-          setToken(tokenData.token)
-          alert(`Received token: ${tokenData.token}`)
+        try {
+          const tokenData = JSON.parse(event.data)
+          if (tokenData.token) {
+            storage.set('accessToken', tokenData.token)
+            setToken(tokenData.token)
+            alert(`Received token: ${tokenData.token}`)
+          }
+        } catch (error) {
+          console.error('Error parsing token data:', error)
+          alert('error')
+          // Handle parsing error appropriately (e.g., display an error message to the user)
         }
       }
-    })
+    }
 
-    window.addEventListener('setUserStatus', function (event: MessageEvent) {
-      alert(event)
+    const handleStatusEvent = (event: MessageEvent<string>) => {
       if (event.data) {
-        console.log('setStatus', event.data)
-        alert(event.data)
-        const statusData = JSON.parse(event.data)
-        if (statusData.status) {
-          setStatus(statusData.status)
-          storage.set('userStatus', statusData.status)
-
-          alert(`Received user status: ${statusData.status}`)
+        try {
+          const statusData = JSON.parse(event.data)
+          if (statusData.status) {
+            setStatus(statusData.status)
+            storage.set('userStatus', statusData.status)
+            alert(`Received user status: ${statusData.status}`)
+          }
+        } catch (error) {
+          console.error('Error parsing status data:', error)
+          // Handle parsing error appropriately
+          alert('error')
         }
       }
-    })
+    }
+
+    window.addEventListener('setToken', handleTokenEvent)
+    window.addEventListener('setUserStatus', handleStatusEvent)
+
+    return () => {
+      window.removeEventListener('setToken', handleTokenEvent)
+      window.removeEventListener('setUserStatus', handleStatusEvent)
+    }
   }, [])
 
   useEffect(() => {
