@@ -40,24 +40,27 @@ function SignUp() {
       alert(`NATIVE to REACT jwtToken 설정 완료 ${jwtToken}`)
     } else {
       alert('jwtToken 없음')
-      // storage.set(
-      //   'accessToken',
-      //   'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjc5ODk4NzE5LCJleHAiOjE3MTE0MzQ3MTl9.jvFrmgt9YVPpqL2k1r9hxTSsMm1sODAdRzroNVx-RAo',
-      // )
     }
   }, [jwtToken])
 
   useEffect(() => {
     window.addEventListener('setToken', function (event: MessageEvent) {
-      if (event.data && event.data.message) {
-        setToken(event.data.message)
-        alert(`setToken ${event.data}`)
+      if (event.data) {
+        const tokenData = JSON.parse(event.data)
+        if (tokenData.token) {
+          setToken(tokenData.token)
+          alert(`Received token: ${tokenData.token}`)
+        }
       }
     })
+
     window.addEventListener('setStatus', function (event: MessageEvent) {
-      if (event.data && event.data.message) {
-        setStatus(event.data.message)
-        alert(`setStatus ${event.data}`)
+      if (event.data) {
+        const statusData = JSON.parse(event.data)
+        if (statusData.status) {
+          setStatus(statusData.status)
+          alert(`Received user status: ${statusData.status}`)
+        }
       }
     })
   }, [])
