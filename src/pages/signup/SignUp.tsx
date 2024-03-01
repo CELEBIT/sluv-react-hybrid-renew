@@ -45,20 +45,30 @@ function SignUp() {
 
   useEffect(() => {
     window.addEventListener('setToken', function (event: MessageEvent) {
+      alert(event)
       if (event.data) {
+        console.log('setToken', event.data)
+        alert(event.data)
         const tokenData = JSON.parse(event.data)
+
         if (tokenData.token) {
+          storage.set('accessToken', tokenData.token)
           setToken(tokenData.token)
           alert(`Received token: ${tokenData.token}`)
         }
       }
     })
 
-    window.addEventListener('setStatus', function (event: MessageEvent) {
+    window.addEventListener('setUserStatus', function (event: MessageEvent) {
+      alert(event)
       if (event.data) {
+        console.log('setStatus', event.data)
+        alert(event.data)
         const statusData = JSON.parse(event.data)
         if (statusData.status) {
           setStatus(statusData.status)
+          storage.set('userStatus', statusData.status)
+
           alert(`Received user status: ${statusData.status}`)
         }
       }
