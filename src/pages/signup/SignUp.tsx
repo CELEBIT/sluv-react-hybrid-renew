@@ -25,6 +25,7 @@ function SignUp() {
     setUserStatus(status)
     alert(`status ${status}`)
     console.log('status', status)
+    storage.set('userStatus', status)
   }
 
   // Native to JS로 토큰, status 저장
@@ -36,7 +37,7 @@ function SignUp() {
   useEffect(() => {
     if (jwtToken) {
       storage.set('accessToken', jwtToken)
-      alert('NATIVE to REACT jwtToken 설정 완료')
+      alert(`NATIVE to REACT jwtToken 설정 완료 ${jwtToken}`)
     } else {
       alert('jwtToken 없음')
       // storage.set(
@@ -44,7 +45,22 @@ function SignUp() {
       //   'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjc5ODk4NzE5LCJleHAiOjE3MTE0MzQ3MTl9.jvFrmgt9YVPpqL2k1r9hxTSsMm1sODAdRzroNVx-RAo',
       // )
     }
-  }, [window.setToken, window.setUserStatus])
+  }, [jwtToken])
+
+  useEffect(() => {
+    window.addEventListener('setToken', function (event: MessageEvent) {
+      alert(`setToken ${event.data}`)
+      if (event.data && event.data.message) {
+        setToken(event.data.message)
+      }
+    })
+    window.addEventListener('setStatus', function (event: MessageEvent) {
+      alert(`setStatus ${event.data}`)
+      if (event.data && event.data.message) {
+        setStatus(event.data.message)
+      }
+    })
+  }, [])
 
   useEffect(() => {
     if (jwtToken && userStatus === 'ACTIVE') {
