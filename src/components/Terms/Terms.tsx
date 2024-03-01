@@ -48,6 +48,7 @@ function Terms({ onNext }: { onNext: (terms: SignupValues['terms']) => void }) {
           약관에 모두 동의
         </Agreement.Title>
         <div>token: {storage.get('accessToken')}</div>
+        <div>status: {storage.get('userStatus')}</div>
         <Line />
         {약관목록.map(({ id, title, link, mandatory }) => (
           <Agreement.Description
