@@ -117,12 +117,13 @@ const App = () => {
       storage.set('accessToken', payload.AccessToken)
       storage.set('device', payload.device)
       storage.set('version', payload.VersionNumber)
-    } else {
-      storage.set(
-        'accessToken',
-        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjc5ODk4NzE5LCJleHAiOjE3MTE0MzQ3MTl9.jvFrmgt9YVPpqL2k1r9hxTSsMm1sODAdRzroNVx-RAo',
-      )
     }
+    // else {
+    //   storage.set(
+    //     'accessToken',
+    //     'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjc5ODk4NzE5LCJleHAiOjE3MTE0MzQ3MTl9.jvFrmgt9YVPpqL2k1r9hxTSsMm1sODAdRzroNVx-RAo',
+    //   )
+    // }
   }, [])
 
   return (

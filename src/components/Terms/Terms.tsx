@@ -6,6 +6,7 @@ import { 약관목록 } from '../../config/constant'
 import { SignupValues } from '../../models/signup'
 import { Line, Title } from '../../pages/signup/styles'
 import Flex from '../Flex'
+import storage from '../../utils/storage'
 // import { ApplyValues } from '@models/apply'
 
 function Terms({ onNext }: { onNext: (terms: SignupValues['terms']) => void }) {
@@ -46,6 +47,7 @@ function Terms({ onNext }: { onNext: (terms: SignupValues['terms']) => void }) {
         <Agreement.Title checked={모든약관이_동의되었는가} onChange={handleAllAgreement}>
           약관에 모두 동의
         </Agreement.Title>
+        <div>token: {storage.get('accessToken')}</div>
         <Line />
         {약관목록.map(({ id, title, link, mandatory }) => (
           <Agreement.Description
