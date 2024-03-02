@@ -1,4 +1,4 @@
-import React, { Suspense, useLayoutEffect } from 'react'
+import React, { Suspense, useEffect, useLayoutEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import BottomNav from './components/BottomNav/BottomNav'
 import Modals from './components/Modals'
@@ -104,26 +104,73 @@ const Privacy = React.lazy(() => import('./pages/settings/components/Privacy/Pri
 const TermsOfUse = React.lazy(() => import('./pages/settings/components/TermsOfUse/TermsOfUse'))
 
 const App = () => {
-  useLayoutEffect(() => {
-    console.log(window.location.search)
-    console.log(window.location.hash)
-    console.log(window.location.search.split('?'))
-    const payload = {
-      ...queryToObject(window.location.search.split('?')[1]),
-      ...queryToObject(window.location.hash.split('#')[1]),
+  // useLayoutEffect(() => {
+  //   console.log(window.location.search)
+  //   console.log(window.location.hash)
+  //   console.log(window.location.search.split('?'))
+  //   const payload = {
+  //     ...queryToObject(window.location.search.split('?')[1]),
+  //     ...queryToObject(window.location.hash.split('#')[1]),
+  //   }
+  //   console.log('payload', payload)
+  //   if (payload.AccessToken) {
+  //     storage.set('accessToken', payload.AccessToken)
+  //     storage.set('device', payload.device)
+  //     storage.set('version', payload.VersionNumber)
+  //   }
+  //   // else {
+  //   //   storage.set(
+  //   //     'accessToken',
+  //   //     'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjc5ODk4NzE5LCJleHAiOjE3MTE0MzQ3MTl9.jvFrmgt9YVPpqL2k1r9hxTSsMm1sODAdRzroNVx-RAo',
+  //   //   )
+  //   // }
+  // }, [])
+
+  useEffect(() => {
+    const handleTokenEvent = (event: MessageEvent<string>) => {
+      if (event.data) {
+        try {
+          const tokenData = JSON.parse(event.data)
+          if (tokenData.token) {
+            storage.tokenSet(tokenData.token)
+          }
+        } catch (error) {
+          console.error('Error parsing token data:', error)
+          alert(`error ${error}`)
+        }
+      }
     }
-    console.log('payload', payload)
-    if (payload.AccessToken) {
-      storage.set('accessToken', payload.AccessToken)
-      storage.set('device', payload.device)
-      storage.set('version', payload.VersionNumber)
+
+    const handleStatusEvent = (event: MessageEvent<string>) => {
+      if (event.data) {
+        try {
+          const statusData = JSON.parse(event.data)
+          if (statusData.status) {
+            storage.userStatusSet(statusData.status)
+          }
+        } catch (error) {
+          console.error('Error parsing status data:', error)
+          alert(`error ${error}`)
+        }
+      }
     }
-    // else {
-    //   storage.set(
-    //     'accessToken',
-    //     'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjc5ODk4NzE5LCJleHAiOjE3MTE0MzQ3MTl9.jvFrmgt9YVPpqL2k1r9hxTSsMm1sODAdRzroNVx-RAo',
-    //   )
-    // }
+
+    window.addEventListener('setToken', handleTokenEvent)
+    window.addEventListener('setUserStatus', handleStatusEvent)
+
+    return () => {
+      window.removeEventListener('setToken', handleTokenEvent)
+      window.removeEventListener('setUserStatus', handleStatusEvent)
+    }
+  }, [])
+
+  useEffect(() => {
+    window.setToken = (token) => {
+      storage.tokenSet(token)
+    }
+    window.setUserStatus = (status) => {
+      storage.userStatusSet(status)
+    }
   }, [])
 
   return (
