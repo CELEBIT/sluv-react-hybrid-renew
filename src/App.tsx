@@ -11,6 +11,7 @@ import Loading from './components/Loading'
 import { bridgeProxyAdapter } from './utils/bridge'
 import ClosetBoxEditPage from './pages/closet/edit'
 import ClosetDetailPage from './pages/closet/detail'
+import { Token, UserStatus } from './utils/bridge/shared/global'
 
 bridgeProxyAdapter()
 
@@ -126,50 +127,50 @@ const App = () => {
   //   // }
   // }, [])
 
+  // useEffect(() => {
+  //   const handleTokenEvent = (event: MessageEvent<string>) => {
+  //     if (event.data) {
+  //       try {
+  //         const tokenData = JSON.parse(event.data)
+  //         if (tokenData.token) {
+  //           storage.tokenSet(tokenData.token)
+  //         }
+  //       } catch (error) {
+  //         console.error('Error parsing token data:', error)
+  //         alert(`error ${error}`)
+  //       }
+  //     }
+  //   }
+
+  //   const handleStatusEvent = (event: MessageEvent<string>) => {
+  //     if (event.data) {
+  //       try {
+  //         const statusData = JSON.parse(event.data)
+  //         if (statusData.status) {
+  //           storage.userStatusSet(statusData.status)
+  //         }
+  //       } catch (error) {
+  //         console.error('Error parsing status data:', error)
+  //         alert(`error ${error}`)
+  //       }
+  //     }
+  //   }
+
+  //   window.addEventListener('setToken', handleTokenEvent)
+  //   window.addEventListener('setUserStatus', handleStatusEvent)
+
+  //   return () => {
+  //     window.removeEventListener('setToken', handleTokenEvent)
+  //     window.removeEventListener('setUserStatus', handleStatusEvent)
+  //   }
+  // }, [])
+
   useEffect(() => {
-    const handleTokenEvent = (event: MessageEvent<string>) => {
-      if (event.data) {
-        try {
-          const tokenData = JSON.parse(event.data)
-          if (tokenData.token) {
-            storage.tokenSet(tokenData.token)
-          }
-        } catch (error) {
-          console.error('Error parsing token data:', error)
-          alert(`error ${error}`)
-        }
-      }
+    window.setToken = (tokenData: Token) => {
+      storage.tokenSet(tokenData.token)
     }
-
-    const handleStatusEvent = (event: MessageEvent<string>) => {
-      if (event.data) {
-        try {
-          const statusData = JSON.parse(event.data)
-          if (statusData.status) {
-            storage.userStatusSet(statusData.status)
-          }
-        } catch (error) {
-          console.error('Error parsing status data:', error)
-          alert(`error ${error}`)
-        }
-      }
-    }
-
-    window.addEventListener('setToken', handleTokenEvent)
-    window.addEventListener('setUserStatus', handleStatusEvent)
-
-    return () => {
-      window.removeEventListener('setToken', handleTokenEvent)
-      window.removeEventListener('setUserStatus', handleStatusEvent)
-    }
-  }, [])
-
-  useEffect(() => {
-    window.setToken = (token) => {
-      storage.tokenSet(token)
-    }
-    window.setUserStatus = (status) => {
-      storage.userStatusSet(status)
+    window.setUserStatus = (statusData: UserStatus) => {
+      storage.userStatusSet(statusData.status)
     }
   }, [])
 

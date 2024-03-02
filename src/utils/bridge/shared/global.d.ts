@@ -1,5 +1,12 @@
 import { BridgeMessage } from '../service'
 
+export interface Token {
+  token: string
+}
+export interface UserStatus {
+  status: string
+}
+
 declare global {
   interface Window {
     AndroidBridge: {
@@ -14,7 +21,7 @@ declare global {
       }
     }
     sendToWebview: (message: string) => void
-    setToken: (token: string) => void
-    setUserStatus: (status: string) => void
+    setToken: (tokenData: Token) => void
+    setUserStatus: (statusData: UserStatus) => void
   }
 }
