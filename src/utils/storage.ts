@@ -10,11 +10,11 @@ class Storage {
     window.localStorage.setItem(key, value)
   }
 
-  get<T>(key: string, initialValue?: T): T {
+  get(key: string, initialValue?: string) {
     try {
       return this.cache.get(key) || window.localStorage.getItem(key) || initialValue
     } catch (err) {
-      return initialValue as T
+      return initialValue
     }
   }
 
@@ -45,6 +45,10 @@ class Storage {
     // this.remove('accessTokenAge')
     // this.remove('refreshToken')
     // this.remove('refreshTokenAge')
+  }
+
+  userStatusSet(userStatus: string) {
+    this.set('userStatus', userStatus)
   }
 }
 
