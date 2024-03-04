@@ -14,6 +14,7 @@ const HowAbout = () => {
 
   const { getHowAboutItem } = useHowAboutItemQuery()
   const { data } = getHowAboutItem()
+  console.log(data)
   return (
     <ScrollComponentWrapper>
       <HomeTitle className='title'>이 아이템은 어때요?</HomeTitle>
@@ -55,6 +56,7 @@ export const HowAboutItem = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-bottom: 1rem;
 `
 
 export const CirclePhoto = styled.div<{ imgUrl: string }>`
