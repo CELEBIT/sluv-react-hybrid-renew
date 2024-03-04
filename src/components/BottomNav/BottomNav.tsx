@@ -25,8 +25,8 @@ const BottomNav = () => {
   return (
     <Root isOpen={isOpen}>
       <BottomNavItemLink key={BOTTOM_NAV_ITEM_DATA[0].path} to={BOTTOM_NAV_ITEM_DATA[0].path}>
-        {pathname === '/' ? <HomeActive /> : <Home />}
-        <BottomNavLabel className={pathname === '/' ? 'active' : ''}>
+        {pathname === '/home' ? <HomeActive /> : <Home />}
+        <BottomNavLabel className={pathname === '/home' ? 'active' : ''}>
           {BOTTOM_NAV_ITEM_DATA[0].label}
         </BottomNavLabel>
       </BottomNavItemLink>

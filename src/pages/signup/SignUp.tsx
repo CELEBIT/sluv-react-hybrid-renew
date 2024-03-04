@@ -33,7 +33,7 @@ function SignUp() {
 
   useEffect(() => {
     if (jwtToken && userStatus === 'ACTIVE') {
-      navigate('/')
+      navigate('/home')
     }
     if (jwtToken && userStatus === 'PENDING_PROFILE') {
       setSignupValues((prevValues) => ({
@@ -89,7 +89,7 @@ function SignUp() {
   }
 
   const handleSignupComplete = () => {
-    navigate('/')
+    navigate('/home')
   }
   console.log(signupValues.terms)
 
