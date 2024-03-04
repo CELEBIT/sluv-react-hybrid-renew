@@ -66,7 +66,7 @@ const User = () => {
         <HeaderWrapper>
           <Header isModalHeader={false} hasArrow={true}>
             <div className='headerRight'>
-              <Home onClick={() => navigate('/')} />
+              <Home onClick={() => navigate('/home')} />
               <Search fill={Common.colors.BK} onClick={() => navigate('/search')}></Search>
               <ShowMore onClick={() => onClickShowMore()}></ShowMore>
             </div>

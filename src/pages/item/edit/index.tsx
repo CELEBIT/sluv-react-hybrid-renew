@@ -225,7 +225,7 @@ const ItemEdit = () => {
     resetCategory()
     resetParentCategory()
     resetImgListState()
-    navigate('/', { replace: true })
+    navigate('/home', { replace: true })
   }
 
   return (

@@ -164,7 +164,7 @@ const ItemCreate = () => {
     resetCategory()
     resetParentCategory()
     resetImgListState()
-    navigate('/', { replace: true })
+    navigate('/home', { replace: true })
   }
 
   return (

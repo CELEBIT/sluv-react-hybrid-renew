@@ -105,72 +105,23 @@ const Privacy = React.lazy(() => import('./pages/settings/components/Privacy/Pri
 const TermsOfUse = React.lazy(() => import('./pages/settings/components/TermsOfUse/TermsOfUse'))
 
 const App = () => {
-  // useLayoutEffect(() => {
-  //   console.log(window.location.search)
-  //   console.log(window.location.hash)
-  //   console.log(window.location.search.split('?'))
-  //   const payload = {
-  //     ...queryToObject(window.location.search.split('?')[1]),
-  //     ...queryToObject(window.location.hash.split('#')[1]),
-  //   }
-  //   console.log('payload', payload)
-  //   if (payload.AccessToken) {
-  //     storage.set('accessToken', payload.AccessToken)
-  //     storage.set('device', payload.device)
-  //     storage.set('version', payload.VersionNumber)
-  //   }
-  //   // else {
-  //   //   storage.set(
-  //   //     'accessToken',
-  //   //     'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjc5ODk4NzE5LCJleHAiOjE3MTE0MzQ3MTl9.jvFrmgt9YVPpqL2k1r9hxTSsMm1sODAdRzroNVx-RAo',
-  //   //   )
-  //   // }
-  // }, [])
-
-  // useEffect(() => {
-  //   const handleTokenEvent = (event: MessageEvent<string>) => {
-  //     if (event.data) {
-  //       try {
-  //         const tokenData = JSON.parse(event.data)
-  //         if (tokenData.token) {
-  //           storage.tokenSet(tokenData.token)
-  //         }
-  //       } catch (error) {
-  //         console.error('Error parsing token data:', error)
-  //         alert(`error ${error}`)
-  //       }
-  //     }
-  //   }
-
-  //   const handleStatusEvent = (event: MessageEvent<string>) => {
-  //     if (event.data) {
-  //       try {
-  //         const statusData = JSON.parse(event.data)
-  //         if (statusData.status) {
-  //           storage.userStatusSet(statusData.status)
-  //         }
-  //       } catch (error) {
-  //         console.error('Error parsing status data:', error)
-  //         alert(`error ${error}`)
-  //       }
-  //     }
-  //   }
-
-  //   window.addEventListener('setToken', handleTokenEvent)
-  //   window.addEventListener('setUserStatus', handleStatusEvent)
-
-  //   return () => {
-  //     window.removeEventListener('setToken', handleTokenEvent)
-  //     window.removeEventListener('setUserStatus', handleStatusEvent)
-  //   }
-  // }, [])
-
-  useEffect(() => {
-    window.setToken = (tokenData: Token) => {
-      storage.tokenSet(tokenData.token)
+  useLayoutEffect(() => {
+    console.log(window.location.search)
+    console.log(window.location.hash)
+    console.log(window.location.search.split('?'))
+    const payload = {
+      ...queryToObject(window.location.search.split('?')[1]),
+      ...queryToObject(window.location.hash.split('#')[1]),
     }
-    window.setUserStatus = (statusData: UserStatus) => {
-      storage.userStatusSet(statusData.status)
+    console.log('payload', payload)
+    if (payload.accessToken && payload.userStatus) {
+      storage.set('accessToken', payload.accessToken)
+      storage.set('userStatus', payload.userStatus)
+    } else {
+      storage.set(
+        'accessToken',
+        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjc5ODk4NzE5LCJleHAiOjE3MTE0MzQ3MTl9.jvFrmgt9YVPpqL2k1r9hxTSsMm1sODAdRzroNVx-RAo',
+      )
     }
   }, [])
 
@@ -182,9 +133,9 @@ const App = () => {
             <Route path='/404' element={<Page404 />} />
             <Route path='/500' element={<Page500 />} />
             {/* 홈 */}
-            <Route path='/' element={<Home />} />
+            <Route path='/home' element={<Home />} />
             {/* 회원가입 */}
-            <Route path='/signup' element={<SignUp />} />
+            <Route path='/' element={<SignUp />} />
             {/* 관심셀럽선택 */}
             {/* <Route path='/select-celeb' element={<SelectInterestCeleb />} />
             <Route path='/select-celeb/complete' element={<SignupComplete />} /> */}

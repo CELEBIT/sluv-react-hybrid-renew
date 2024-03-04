@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ReactComponent as Banner } from '../../assets/Top.svg'
 import { ReactComponent as HotCelebBanner } from '../../assets/HotCelebBanner.svg'
 import { ReactComponent as Logo } from '../../assets/logo.svg'
@@ -19,13 +19,20 @@ import { Divider } from '../item/detail/styles'
 import { HeaderWrapper } from '../../components/Header/styles'
 import { Common } from '../../components/styles'
 import { useNavigate } from 'react-router-dom'
+import storage from '../../utils/storage'
 
 const Home = () => {
   const navigate = useNavigate()
+  useEffect(() => {
+    if (!storage.get('accessToken')) {
+      confirm('스럽을 이용하시려면 로그인해주세요.')
+      navigate('/')
+    }
+  })
   return (
     <HomeContainer>
       <HeaderWrapper role='heading' isModalHeader={false} style={{ padding: '0.625rem 1.25rem' }}>
-        <div className='left'>
+        <div className='left' onClick={() => navigate('/home')}>
           <Logo></Logo>
         </div>
         <div className='right'>

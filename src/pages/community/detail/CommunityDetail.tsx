@@ -184,7 +184,7 @@ const CommunityDetail = () => {
     <DetailContainer>
       <HeaderWrapper>
         <Header isModalHeader={false} hasArrow={true}>
-          <Home onClick={() => navigate('/')} />
+          <Home onClick={() => navigate('/home')} />
           <Share stroke={Common.colors.BK} />
           <More onClick={() => onClickShowMore()} />
         </Header>
