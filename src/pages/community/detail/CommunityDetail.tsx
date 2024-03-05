@@ -94,7 +94,7 @@ const CommunityDetail = () => {
 
   const { getQuestionDetail } = useQuestionDetailQuery()
   const { data } = getQuestionDetail(Number(questionId))
-
+  console.log(data)
   const combinedList = [...(data?.imgList ?? []), ...(data?.itemList ?? [])]
   const sortedList = combinedList.sort((a, b) => a.sortOrder - b.sortOrder)
 
@@ -184,7 +184,7 @@ const CommunityDetail = () => {
     <DetailContainer>
       <HeaderWrapper>
         <Header isModalHeader={false} hasArrow={true}>
-          <Home onClick={() => navigate('/')} />
+          <Home onClick={() => navigate('/home')} />
           <Share stroke={Common.colors.BK} />
           <More onClick={() => onClickShowMore()} />
         </Header>
