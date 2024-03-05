@@ -20,13 +20,9 @@ function SignUp() {
     const token = storage.get('accessToken')
     const status = storage.get('userStatus')
     if (token) {
-      console.log(token)
-      alert(`token : ${token}`)
       setJwtToken(token)
     }
     if (status) {
-      console.log(status)
-      alert(`status : ${status}`)
       setUserStatus(status)
     }
   }, [])
