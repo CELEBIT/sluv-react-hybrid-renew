@@ -111,7 +111,7 @@ const App = () => {
     console.log(window.location.search.split('?'))
     const payload = {
       ...queryToObject(window.location.search.split('?')[1]),
-      ...queryToObject(window.location.hash.split('#')[1]),
+      ...queryToObject(window.location.hash.split('&')[1]),
     }
     console.log('payload', payload)
     if (payload.accessToken && payload.userStatus) {
