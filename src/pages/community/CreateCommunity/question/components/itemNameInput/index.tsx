@@ -33,7 +33,7 @@ const ItemNameInput = ({ value, setValue, placeholder }: ItemNameInputProps) => 
   )
 }
 
-const NameInputWrapper = styled.div`
+export const NameInputWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
