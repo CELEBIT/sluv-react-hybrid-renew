@@ -11,6 +11,9 @@ import { Line } from '../../detail/styles'
 import { ReactComponent as BuyHomeBanner } from '../../../../assets/CommunityEachBanner/BuyBanner.svg'
 import EmptyState from '../../../../components/EmptyState'
 import { EmptyStateWrapper } from '../../../user/components/FollowList/Follower/Follower'
+import VoteTwoItem from '../../CreateCommunity/question/components/twoItemUpload/VoteTwoItem'
+import * as S from './components/styles'
+import BuyVote from './components/BuyVote'
 
 const BuyHome = () => {
   const ComponentContainerRef = useRef<HTMLDivElement>(null)
@@ -74,7 +77,7 @@ const BuyHome = () => {
             {tempData?.map((each, index) => {
               return (
                 <>
-                  <QuestionListItem key={each.id} item={each} detail={true}></QuestionListItem>
+                  <BuyVote item={each} selectedTab={selectedTab}></BuyVote>
                   {index !== tempData.length - 1 && <Line></Line>}
                 </>
               )
