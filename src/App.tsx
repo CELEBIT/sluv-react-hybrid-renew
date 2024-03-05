@@ -117,13 +117,12 @@ const App = () => {
     if (payload.accessToken && payload.userStatus) {
       storage.set('accessToken', payload.accessToken)
       storage.set('userStatus', payload.userStatus)
+    } else {
+      storage.set(
+        'accessToken',
+        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjc5ODk4NzE5LCJleHAiOjE3MTE0MzQ3MTl9.jvFrmgt9YVPpqL2k1r9hxTSsMm1sODAdRzroNVx-RAo',
+      )
     }
-    //  else {
-    //   storage.set(
-    //     'accessToken',
-    //     'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjc5ODk4NzE5LCJleHAiOjE3MTE0MzQ3MTl9.jvFrmgt9YVPpqL2k1r9hxTSsMm1sODAdRzroNVx-RAo',
-    //   )
-    // }
   }, [])
 
   return (
