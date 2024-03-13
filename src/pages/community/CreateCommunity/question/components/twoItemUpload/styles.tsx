@@ -57,6 +57,8 @@ export const ItemNameWrapper = styled.div`
   border-radius: 0 0 0.5rem 0.5rem;
   width: 100%;
   height: 3.5rem;
+  overflow: hidden;
+
   .left {
     border-radius: 0 0 0 0.5rem;
   }

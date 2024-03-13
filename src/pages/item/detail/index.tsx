@@ -70,6 +70,7 @@ import { ItemClosetListModal } from '../../closet/detail'
 import SameCeleb from './components/Carousel/SameCeleb'
 import SameScrap from './components/Carousel/SameScrap'
 import SameBrand from './components/Carousel/SameBrand'
+import { deleteScrap, patchClosetScrap } from '../../../apis/closet'
 
 const ItemDetail = () => {
   const navigate = useNavigate()
@@ -79,7 +80,6 @@ const ItemDetail = () => {
 
   const { getItemDetail } = useItemDetailQuery()
   const { data } = getItemDetail(Number(itemId))
-  console.log(data)
 
   const setEditReportItemState = useSetRecoilState(RequestEditItemState)
   const colors = ['gray', 'pink', 'orange', 'yellow', 'green', 'blue']
@@ -118,8 +118,25 @@ const ItemDetail = () => {
     if (data) mutateByLike(Number(itemId))
   }
 
-  const handleScrapItem = () => {
-    openModal(ItemClosetListModal, { itemId: itemId ?? '' })
+  const handleScrapItem = async () => {
+    if (data?.scrapStatus) {
+      const res = await deleteScrap(Number(itemId))
+      console.log(res)
+      if (res.isSuccess) {
+        alert('아이템 저장이 취소되었어요')
+        queryClient.invalidateQueries(queryKeys.itemDetail(Number(itemId)))
+      }
+    } else {
+      openModal(ItemClosetListModal, { itemId: itemId ?? '' })
+    }
+  }
+
+  const onClickUser = () => {
+    if (data?.hasMine) {
+      navigate('/user')
+    } else {
+      navigate(`/user/${data?.writer.id}`)
+    }
   }
 
   return (
@@ -142,7 +159,7 @@ const ItemDetail = () => {
 
             <Interactions>
               {data?.scrapStatus ? (
-                <StorageOn></StorageOn>
+                <StorageOn onClick={handleScrapItem}></StorageOn>
               ) : (
                 <StorageOff onClick={handleScrapItem}></StorageOff>
               )}
@@ -209,16 +226,18 @@ const ItemDetail = () => {
           </LinkInfoWrapper>
         )}
         <UploaderInfoWrapper>
-          <div className='user'>
+          <div className='user' onClick={onClickUser}>
             <UserImg imgUrl={data?.writer.profileImgUrl} />
             <span>{data?.writer.nickName}</span>
           </div>
           {data?.hasMine === false ? (
-            data?.followStatus ? (
-              <ButtonSmall type='sec' text='팔로잉' icon={true} onClick={onClickFollow} />
-            ) : (
-              <ButtonSmall type='sec' text='팔로우' onClick={onClickFollow} />
-            )
+            <ButtonSmall
+              type='pri'
+              text={data.followStatus ? '팔로잉' : '팔로우'}
+              active={data.followStatus ? false : true}
+              icon={data.followStatus ? true : false}
+              onClick={onClickFollow}
+            />
           ) : null}
         </UploaderInfoWrapper>
         <AdditionalInfoWrapper>

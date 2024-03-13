@@ -33,12 +33,25 @@ export interface SearchQuestionResult {
   viewNum?: number
   commentNum?: number
 }
-// export interface SearchUserResult {
-//   id: number
-//   nickname: string
-//   profileImgUrl: string
-//   followStatus: boolean
-// }
+
+export interface BuyHomeResult {
+  id: number
+  title: string
+  content: string
+  celebName: string
+  imgList: Array<QuestionImg> | null
+  itemImgList: Array<QuestionImg> | null
+  categoryName: Array<string> | null
+  qtype: string
+  user: {
+    id: number
+    nickName: string
+    profileImgUrl: string
+  }
+  voteEndTime: string
+  hasMine: boolean
+}
+
 export interface IRecentSearch {
   keyword: string
 }
