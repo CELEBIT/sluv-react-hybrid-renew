@@ -51,16 +51,17 @@ const User = () => {
   const { openModal } = useModals()
   const setEditReportItemState = useSetRecoilState(RequestEditItemState)
 
-  const onClickShowMore = () => {
-    openModal(modals.ItemEditRequestModal)
-    // setEditReportItemState({
-    //   itemId: Number(itemId),
-    //   itemWriterId: data?.writer.id,
-    //   itemWriterName: data?.writer.nickName,
-    // })
-  }
-
   if (id) {
+    const { getOtherUserMypageInfo } = useUserMypageQuery()
+    const { data } = getOtherUserMypageInfo(Number(id))
+    const onClickShowMore = () => {
+      setEditReportItemState({
+        itemId: 0,
+        itemWriterId: data?.userInfo.id,
+        itemWriterName: data?.userInfo.nickName,
+      })
+      openModal(modals.UserModal, { userName: data?.userInfo.nickName || '' })
+    }
     return (
       <PageContainer>
         <HeaderWrapper>
@@ -95,8 +96,7 @@ const User = () => {
           <Header isModalHeader={false} hasArrow={true} title='마이페이지'>
             <div className='headerRight'>
               <Setting onClick={() => navigate('/settings')} />
-              <Upload stroke={Common.colors.BK} onClick={() => navigate('/search')}></Upload>
-              <ShowMore onClick={() => onClickShowMore()}></ShowMore>
+              <Upload stroke={Common.colors.BK}></Upload>
             </div>
           </Header>
         </HeaderWrapper>

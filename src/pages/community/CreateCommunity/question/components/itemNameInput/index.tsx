@@ -39,7 +39,7 @@ export const NameInputWrapper = styled.div`
   justify-content: center;
   height: 100%;
   width: 100%;
-  padding: 1rem 1.25rem;
+  /* padding: 1rem 1.25rem; */
 `
 
 const InputField = styled.input`

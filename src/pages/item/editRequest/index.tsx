@@ -3,7 +3,7 @@ import { EditReportContainer, EditReportListWrapper, ReasonWrapper, Title } from
 import Header from '../../../components/Header/Header'
 import DisplayField from '../../../components/TextField/DisplayField/DisplayField'
 import { atomKeys } from '../../../config/atomKeys'
-import { atom, useSetRecoilState } from 'recoil'
+import { atom, useRecoilValue, useSetRecoilState } from 'recoil'
 import { useLocation, useNavigate } from 'react-router-dom'
 import {
   editReasonList,
@@ -45,6 +45,8 @@ const EditRequest = () => {
   const setRequestReason = useSetRecoilState<EditRequestReason>(RequestEditReasonState)
   // 페이지 렌더링용
   const setRequestDisplay = useSetRecoilState<reasonList>(RequestDisplayState)
+  const EditReportItemState = useRecoilValue(RequestEditItemState)
+  console.log('edit item state', EditReportItemState)
 
   const onClickReason = (reason: string, displayText: string) => {
     setRequestReason({ reason: reason, content: '' })

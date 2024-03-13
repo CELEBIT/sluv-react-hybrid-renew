@@ -89,3 +89,7 @@ export const patchClosetScrap = async (
 ): Promise<ResponseType<undefined>> => {
   return await request.post(`${BASE_PATH}/${itemId}/scrap/${closetId}`)
 }
+
+export const deleteScrap = async (itemId: number): Promise<ResponseType<undefined>> => {
+  return await request.delete(`${BASE_PATH}/${itemId}/scrap`)
+}

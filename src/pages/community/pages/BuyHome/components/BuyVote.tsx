@@ -5,7 +5,7 @@ import { SearchQuestionResult } from '../../../../../apis/search/searchService'
 import UserImage from '../../../../../components/UserImage/UserImage'
 import { Dot } from '../../../../../components/Dot/Dot'
 import useQuestionDetailQuery from '../../../../../apis/question/hooks/useQuestionDetailQuery'
-
+import { ReactComponent as Check } from '../../../../../assets/check_20.svg'
 interface BuyVoteProps {
   item: SearchQuestionResult
   selectedTab: string
@@ -34,7 +34,7 @@ function BuyVote({ item, selectedTab }: BuyVoteProps) {
         </S.UserContainer>
       </S.UserInfo>
       <S.Title>{item.title}</S.Title>
-      {data && <VoteTwoItem item={item} data={data}></VoteTwoItem>}
+      {data && <VoteTwoItem item={item} data={data} selectedTab={selectedTab}></VoteTwoItem>}
     </S.Container>
   )
 }

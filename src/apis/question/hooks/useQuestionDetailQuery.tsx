@@ -39,6 +39,7 @@ const useQuestionDetailQuery = () => {
     {
       onSuccess: (res, { questionId }) => {
         queryClient.invalidateQueries(queryKeys.questionDetail(questionId))
+        queryClient.invalidateQueries(queryKeys.getQuestionBuyList())
       },
     },
   )
