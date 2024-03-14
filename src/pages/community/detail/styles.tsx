@@ -151,6 +151,7 @@ export const RecommendInfo = styled.div`
 export const InfoTop = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
   gap: 0.25rem;
 `
 

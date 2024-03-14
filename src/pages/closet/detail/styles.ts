@@ -90,13 +90,14 @@ export const Body = styled.div`
   top: 50px;
   height: 100%;
   width: 100%;
+  overflow-y: scroll;
 `
 
 export const BackgroundContainer = styled.div<{
   imgUrl?: ClosetBoxModel['coverImgUrl']
   colorScheme: ClosetBoxModel['colorScheme']
 }>`
-  /* position: fixed; */
+  position: fixed;
   width: 100%;
   height: 200px;
   background: ${({ imgUrl, colorScheme }) =>
@@ -109,7 +110,6 @@ export const BackgroundContainer = styled.div<{
 `
 
 const getDefaultImageUrl = (colorScheme: ClosetBoxModel['colorScheme']) => {
-  console.log(colorScheme)
   switch (colorScheme) {
     case 'BLUE':
       return blueImage
@@ -157,6 +157,7 @@ export const InnerItemGridContainer = styled.div`
   grid-gap: 24px 10px; /* 행 간 간격 24px, 열 간 간격 10px */
   padding: 0 24px;
   width: 100%; /* 필요한 경우 그리드의 너비를 조정 */
+  padding-bottom: 70px;
 `
 
 export const EditFooter = styled.footer`

@@ -7,21 +7,24 @@ import { SearchQuestionResult } from '../../../../../../apis/search/searchServic
 import { QuestionResult } from '../../../../../../apis/question/questionService.type'
 import useQuestionDetailQuery from '../../../../../../apis/question/hooks/useQuestionDetailQuery'
 import VotePercent from './VotePercent'
+import styled from '@emotion/styled'
+import { Common, Pretendard } from '../../../../../../components/styles'
 
 interface VoteTwoItemProps {
   item: SearchQuestionResult
   data: QuestionResult
+  selectedTab: string
 }
 
-const VoteTwoItem = ({ item, data }: VoteTwoItemProps) => {
-  const {
-    voteItem: { mutate: mutateByVote },
-  } = useQuestionDetailQuery()
-  const onClickVote = (questionId: number, voteSortOrder: number) => {
-    if (data.hasMine) alert('자신의 게시글은 투표할 수 없어요.')
-    else mutateByVote({ questionId, voteSortOrder })
-  }
+interface VoteButtonProps {
+  hasMine: boolean
+  questionId: number
+  voteSortOrder: number
+}
+
+const VoteTwoItem = ({ item, data, selectedTab }: VoteTwoItemProps) => {
   console.log(data)
+  console.log(new Date(data.voteEndTime) < new Date())
   return (
     <TwoItemUploadWrapper>
       <ImageWrapper>
@@ -37,14 +40,19 @@ const VoteTwoItem = ({ item, data }: VoteTwoItemProps) => {
         ></ImageField>
       </ImageWrapper>
       <ItemNameWrapper>
-        <ItemName className='left' onClick={() => onClickVote(item.id, 0)}>
+        <ItemName className='left'>
           <InputContainer>
             <NameInputWrapper>
-              {data.voteStatus === null ? (
-                '투표하기'
+              {(data.voteStatus === null || !data.hasMine) &&
+              new Date(data.voteEndTime) > new Date() ? (
+                <VoteButton
+                  hasMine={data.hasMine}
+                  questionId={item.id}
+                  voteSortOrder={0}
+                ></VoteButton>
               ) : (
                 <>
-                  {data.imgList && data.imgList[0] && (
+                  {data.imgList && data.imgList.length > 0 && data.imgList[0] && (
                     <VotePercent data={data?.imgList[0]}></VotePercent>
                   )}
                   {data.itemList && data.itemList[0] && (
@@ -56,11 +64,16 @@ const VoteTwoItem = ({ item, data }: VoteTwoItemProps) => {
           </InputContainer>
         </ItemName>
         <div className='divider' />
-        <ItemName className='right' onClick={() => onClickVote(item.id, 1)}>
+        <ItemName className='right'>
           <InputContainer>
             <NameInputWrapper>
-              {data.voteStatus === null ? (
-                '투표하기'
+              {(data.voteStatus === null || !data.hasMine) &&
+              new Date(data.voteEndTime) > new Date() ? (
+                <VoteButton
+                  hasMine={data.hasMine}
+                  questionId={item.id}
+                  voteSortOrder={1}
+                ></VoteButton>
               ) : (
                 <>
                   {data.imgList && data.imgList[1] && (
@@ -78,5 +91,25 @@ const VoteTwoItem = ({ item, data }: VoteTwoItemProps) => {
     </TwoItemUploadWrapper>
   )
 }
+
+function VoteButton({ hasMine, questionId, voteSortOrder }: VoteButtonProps) {
+  const {
+    voteItem: { mutate: mutateByVote },
+  } = useQuestionDetailQuery()
+  const onClickVote = (questionId: number, voteSortOrder: number) => {
+    if (hasMine) alert('자신의 게시글은 투표할 수 없어요.')
+    else {
+      mutateByVote({ questionId, voteSortOrder })
+      alert('투표되었습니다')
+    }
+  }
+  return <Container onClick={() => onClickVote(questionId, voteSortOrder)}>투표하기</Container>
+}
+
+const Container = styled.div`
+  align-items: center;
+  justify-content: center;
+  ${Pretendard({ size: 17, weight: Common.bold.regular, color: Common.colors.PRI })}
+`
 
 export default VoteTwoItem

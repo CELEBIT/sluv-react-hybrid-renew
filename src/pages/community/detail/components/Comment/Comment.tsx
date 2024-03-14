@@ -96,14 +96,14 @@ const Comment = ({ questionId, comment }: CommentProps) => {
               <NickName>{comment.user.nickName}</NickName>
               <Time>{formatUpdatedAt(convertToUTC(comment.createdAt))}</Time>
             </UserInfo>
-            <ShowMore onClick={onShowMore}></ShowMore>
+            {comment.commentStatus === 'ACTIVE' && <ShowMore onClick={onShowMore}></ShowMore>}
           </ContentTop>
           {comment.commentStatus === 'ACTIVE' ? (
             <CommentContent>{comment.content}</CommentContent>
           ) : (
             <BlockedContainer>
               <Alert></Alert>
-              <CommentContent>AI에 의해 필터링된 댓글입니다.</CommentContent>
+              <CommentContent>AI가 부적절한 댓글을 감지했어요</CommentContent>
             </BlockedContainer>
           )}
         </ContentRight>
@@ -130,25 +130,27 @@ const Comment = ({ questionId, comment }: CommentProps) => {
           })}
         </ItemWrapper>
       )}
-      <CommentExpression>
-        <ExpressionWrapper>
-          <span
-            onClick={() =>
-              navigate('/community/comment/subcomment', { state: { comment, questionId } })
-            }
-          >
-            답글 달기
-          </span>
-          <LikeWrapper>
-            <span>{comment.likeNum}</span>
-            {comment.likeStatus ? (
-              <LikeOn onClick={() => onClickLike(comment.id, questionId)}></LikeOn>
-            ) : (
-              <LikeOff onClick={() => onClickLike(comment.id, questionId)}></LikeOff>
-            )}
-          </LikeWrapper>
-        </ExpressionWrapper>
-      </CommentExpression>
+      {comment.commentStatus === 'ACTIVE' && (
+        <CommentExpression>
+          <ExpressionWrapper>
+            <span
+              onClick={() =>
+                navigate('/community/comment/subcomment', { state: { comment, questionId } })
+              }
+            >
+              답글 달기
+            </span>
+            <LikeWrapper>
+              <span>{comment.likeNum}</span>
+              {comment.likeStatus ? (
+                <LikeOn onClick={() => onClickLike(comment.id, questionId)}></LikeOn>
+              ) : (
+                <LikeOff onClick={() => onClickLike(comment.id, questionId)}></LikeOff>
+              )}
+            </LikeWrapper>
+          </ExpressionWrapper>
+        </CommentExpression>
+      )}
       <SubCommentList comment={comment} questionId={questionId}></SubCommentList>
     </CommentWrapper>
   )
