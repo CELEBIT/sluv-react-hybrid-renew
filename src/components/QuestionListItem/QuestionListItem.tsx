@@ -20,6 +20,7 @@ import UserImage from '../UserImage/UserImage'
 import { ReactComponent as Like } from '../../assets/Like_18.svg'
 import { ReactComponent as CommentIcon } from '../../assets/comment_18.svg'
 import { ReactComponent as View } from '../../assets/page view_18.svg'
+import { Dot } from '../Dot/Dot'
 
 interface QuestionItemProps {
   item: SearchQuestionResult
@@ -63,6 +64,7 @@ const QuestionListItem = ({ item, detail }: QuestionItemProps) => {
         <RecommendInfo>
           <InfoTop>
             <Category color={color}>{questionType}</Category>
+            {item.celebName && <Dot></Dot>}
             {item.celebName && <Category color='grey'>{item.celebName}</Category>}
             {item.categoryName && (
               <>

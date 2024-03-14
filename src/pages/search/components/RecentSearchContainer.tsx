@@ -82,5 +82,5 @@ const DeleteAllText = styled.span`
   font-family: Pretendard;
   font-size: 0.9375rem;
   font-weight: 500;
-  color: ${Common.colors.GR500} !important;
+  color: ${Common.colors.BK} !important;
 `

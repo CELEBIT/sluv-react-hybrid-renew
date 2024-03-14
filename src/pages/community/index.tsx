@@ -37,7 +37,7 @@ const Community = () => {
       <HeaderWrapper>
         <Header isModalHeader={false} title='커뮤니티' hasArrow={false}>
           <Search fill='black' onClick={() => navigate('/search')}></Search>
-          <NoticeOff></NoticeOff>
+          {/* <NoticeOff></NoticeOff> */}
         </Header>
       </HeaderWrapper>
       <ComponentContainer ref={ComponentContainerRef}>

@@ -50,7 +50,7 @@ const WhichOne = () => {
       <ComponentWrapper className='top'>
         <LabelContainer>
           {hasTriedToUpload && (!title || (title && title.length < 10)) && <Error></Error>}
-          <Label>아이템 정보를 물어보세요</Label>
+          <Label>고민되는 아이템을 물어보세요</Label>
         </LabelContainer>
         <div className='padding'>
           <DefaultTextfield
