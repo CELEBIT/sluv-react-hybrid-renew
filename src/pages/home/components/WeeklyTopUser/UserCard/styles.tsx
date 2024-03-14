@@ -10,6 +10,7 @@ export const UserCardWrapper = styled.div<{ borderRadius?: number }>`
   width: 9rem;
   padding: 1.25rem 0.8125rem 1rem 0.8125rem;
   background-color: white;
+  box-sizing: border-box;
   border-radius: ${({ borderRadius }) => (borderRadius ? `${borderRadius * 0.0625}rem` : 'none')};
   .rank {
     position: absolute;
@@ -30,8 +31,17 @@ export const UserPhoto = styled.div<{ imgUrl: string }>`
   background-image: url(${(props) => props.imgUrl});
   background-color: ${Common.colors.GR300};
 `
-export const UserNickName = styled.span`
+
+export const NickNameWrapper = styled.div`
+  align-items: center;
+  width: 100%;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   margin-top: 0.75rem;
   margin-bottom: 1rem;
+  overflow: hidden;
+`
+export const UserNickName = styled.span`
   ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.BK })}
 `

@@ -1,5 +1,5 @@
 import React from 'react'
-import { UserCardWrapper, UserNickName, UserPhoto } from './styles'
+import { NickNameWrapper, UserCardWrapper, UserNickName, UserPhoto } from './styles'
 import { ReactComponent as RankFirst } from '../../../../../assets/rank_1.svg'
 import { ReactComponent as RankSecond } from '../../../../../assets/rank_2.svg'
 import { ReactComponent as RankThird } from '../../../../../assets/rank_3.svg'
@@ -36,7 +36,10 @@ const UserCard = ({ rank, imgUrl, followStatus, user, borderRadius, onClick }: U
         </div>
       )}
       <UserPhoto imgUrl={imgUrl}></UserPhoto>
-      <UserNickName>{user?.nickName}</UserNickName>
+      <NickNameWrapper>
+        <UserNickName>{user?.nickName}</UserNickName>
+      </NickNameWrapper>
+
       {followStatus ? (
         <FollowMediumButton icon={true} active={false} onClick={(e) => onClickFollow(e, user.id)}>
           팔로잉

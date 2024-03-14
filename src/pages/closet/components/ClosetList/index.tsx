@@ -9,6 +9,8 @@ import { DeleteRecheckModalParam } from '../../deleteAndSort'
 import { queryToObject } from '../../../../utils/utility'
 import { patchClosetItems, patchClosetScrap } from '../../../../apis/closet'
 import { AnotherClosetListModal } from '../../detail'
+import { useQueryClient } from '@tanstack/react-query'
+import { queryKeys } from '../../../../config/queryKeys'
 
 type ClosetListContainerProps = {
   status?: ClosetStatus
@@ -38,10 +40,14 @@ export const ScrapClosetList = ({
     status === 'PRIVATE' ? data.filter((closet) => closet.closetStatus === 'PRIVATE') : data
   const { openModal, closeModal } = useModals()
   const { id } = queryToObject(window.location.search.split('?')[1])
+  const queryClient = useQueryClient()
 
   const handleScrapItem = async (toClosetId: string) => {
     const res = await patchClosetScrap(itemId, toClosetId)
-    if (res.isSuccess) alert('성공적으로 스크랩되었습니다.')
+    if (res.isSuccess) {
+      alert('성공적으로 스크랩되었습니다.')
+      queryClient.invalidateQueries(queryKeys.itemDetail(Number(itemId)))
+    }
     closeModal(AnotherClosetListModal)
   }
 

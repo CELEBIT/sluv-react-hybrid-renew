@@ -13,6 +13,7 @@ const Curation = () => {
   }
   const { getCurationItem } = useCurationItemQuery()
   const { data } = getCurationItem()
+  console.log('Curation', data)
   return (
     <ScrollComponentWrapper>
       <HomeTitle className='title'>한눈에 보는 취향 큐레이션</HomeTitle>

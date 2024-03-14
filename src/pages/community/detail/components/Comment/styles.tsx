@@ -143,6 +143,7 @@ export const BlockedContainer = styled.div`
   justify-content: center;
   width: 100%;
   padding: 20px;
+  margin-bottom: 10px;
   background-color: ${Common.colors.GR100};
   border-radius: 1rem;
   gap: 0.5rem;

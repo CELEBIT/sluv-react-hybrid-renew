@@ -41,7 +41,7 @@ const RequestReason = () => {
   const {
     reportUser: { mutate: mutateByReportUser },
   } = useReportUserQuery()
-
+  console.log(requestItem)
   const onSubmit = () => {
     setHasSubmitted(true)
     if (reasonText) {
