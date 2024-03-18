@@ -81,6 +81,21 @@ const RecommendItem = () => {
           >
             후회없템
           </BlackFilter>
+          <BlackFilter
+            isSelected={selectedTab === '선물템'}
+            onClick={() => setSelectedTab('선물템')}
+          >
+            선물템
+          </BlackFilter>
+          <BlackFilter
+            isSelected={selectedTab === '신박템'}
+            onClick={() => setSelectedTab('신박템')}
+          >
+            신박템
+          </BlackFilter>
+          <BlackFilter isSelected={selectedTab === '기타'} onClick={() => setSelectedTab('기타')}>
+            기타
+          </BlackFilter>
         </TabContainer>
         <QuestionListWrapper>
           {(tempData?.length ?? 0) > 0 ? (

@@ -131,7 +131,7 @@ export const HotItemWrap = styled.div`
 `
 export const HotItem = styled.div<{ imgUrl: string }>`
   display: flex;
-  /* justify-content: flex-end; */
+  justify-content: space-between;
   flex-direction: row;
   position: relative;
   box-sizing: border-box;
@@ -145,12 +145,16 @@ export const HotItem = styled.div<{ imgUrl: string }>`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+
   .column {
     display: flex;
     flex-direction: column;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
   .storage {
-    right: 0;
+    flex-shrink: 0;
     z-index: 100;
   }
 `
@@ -172,6 +176,7 @@ export const HotItemCeleb = styled.span`
   })}
   z-index: 100;
   padding-right: 1.25rem;
+  margin-bottom: 0.75rem;
 `
 export const HotItemText = styled.span`
   ${Pretendard({
