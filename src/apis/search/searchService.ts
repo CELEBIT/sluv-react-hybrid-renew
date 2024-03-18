@@ -81,6 +81,37 @@ export default class SearchService {
     )
     return data.result
   }
+
+  // 커뮤니티 검색
+  async searchCommunity(keyword: string, page: number) {
+    const data: ResponseType<GetPaginationResult<SearchItemResult>> = await request.get(
+      `${this.searchUrl}/question`,
+      {
+        params: {
+          keyword,
+          page,
+          size: 30,
+        },
+      },
+    )
+    return data.result
+  }
+
+  // 유저 검색
+  async searchUser(keyword: string, page: number) {
+    const data: ResponseType<GetPaginationResult<IUserResult>> = await request.get(
+      `${this.searchUrl}/user`,
+      {
+        params: {
+          keyword,
+          page,
+          size: 30,
+        },
+      },
+    )
+    return data.result
+  }
+
   // 최근 검색어 조회
   async getRecentSearch() {
     const data: ResponseType<Array<IRecentSearch>> = await request.get(
