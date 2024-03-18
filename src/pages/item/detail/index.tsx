@@ -83,7 +83,6 @@ const ItemDetail = () => {
   console.log(data)
   const setEditReportItemState = useSetRecoilState(RequestEditItemState)
   const colors = ['gray', 'pink', 'orange', 'yellow', 'green', 'blue']
-  const price = 120235
 
   useEffect(() => {
     queryClient.refetchQueries(queryKeys.itemDetail(Number(itemId)))
@@ -245,10 +244,12 @@ const ItemDetail = () => {
           {data?.whereDiscovery && <span>{data?.whereDiscovery}에서 착용하였고</span>}
           {data?.price && (
             <>
-              {price >= 500000000 ? (
+              {data.price >= 500000000 ? (
                 <span>가격은 5억원대 이상이에요</span>
               ) : (
-                <span>가격은 {formatPrice(price)}대에요</span>
+                <span>
+                  {data.price > 0 ? `가격은 ${formatPrice(data.price)}대에요` : '가격은 모르겠어요'}
+                </span>
               )}
             </>
           )}

@@ -59,6 +59,19 @@ const BrandList = () => {
     })
   }
 
+  function capitalizeEachWord(str: string) {
+    // 모든 문자를 소문자로 변경 후, 단어 단위로 분리
+    const words = str.toLowerCase().split(' ')
+
+    // 각 단어의 첫 글자를 대문자로 변경
+    for (let i = 0; i < words.length; i++) {
+      words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1)
+    }
+
+    // 단어들을 다시 합쳐서 반환
+    return words.join(' ')
+  }
+
   return (
     <BrandListWrapper>
       {status === 'error' && <p>{JSON.stringify(error.response.data)}</p>}
@@ -77,9 +90,10 @@ const BrandList = () => {
                     ></HighlightedText>
                     <HighlightedText
                       searchText={brandName}
-                      text={brand.brandEn}
+                      text={capitalizeEachWord(brand.brandEn)}
                       fontSize={0.9375}
                       fontWeight={Common.bold.thin}
+                      disabled={true}
                     ></HighlightedText>
                   </TextWrap>
                   <BrandLogo size={46} url={brand.brandImgUrl} />
