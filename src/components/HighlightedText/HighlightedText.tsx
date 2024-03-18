@@ -7,9 +7,16 @@ interface HighlightedTextProps {
   text: string
   fontSize?: number
   fontWeight?: number
+  disabled?: boolean
 }
 
-const HighlightedText = ({ searchText, text, fontSize, fontWeight }: HighlightedTextProps) => {
+const HighlightedText = ({
+  searchText,
+  text,
+  fontSize,
+  fontWeight,
+  disabled,
+}: HighlightedTextProps) => {
   const escapedSearchText = searchText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
   const regex = new RegExp(`(${escapedSearchText})`, 'gi')
   const parts = text.split(regex)
@@ -22,7 +29,9 @@ const HighlightedText = ({ searchText, text, fontSize, fontWeight }: Highlighted
             {part}
           </span>
         ) : (
-          <span key={i}>{part}</span>
+          <span key={i} className={disabled ? 'disabled' : undefined}>
+            {part}
+          </span>
         ),
       )}
     </HighlightWrapper>
@@ -35,6 +44,10 @@ const HighlightWrapper = styled.div<{ fontSize?: number; fontWeight?: number }>`
 
   .highlighted {
     color: ${Common.colors.SEC} !important;
+  }
+
+  .disabled {
+    color: ${Common.colors.GR500} !important;
   }
 `
 export default HighlightedText

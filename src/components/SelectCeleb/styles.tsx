@@ -26,5 +26,6 @@ export const SelectCelebWrapper = styled.div`
     right: 0;
     overflow-wrap: 0;
     padding-right: 1.25rem;
+    /* border: 1px solid red; */
   }
 `

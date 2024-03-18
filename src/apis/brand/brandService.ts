@@ -5,6 +5,7 @@ export interface RecentBrandResult {
   id: number
   brandName: string
   flag: string
+  brandImgUrl: string
 }
 // [인기 브랜드 조회, 브랜드 검색] 에서 사용 중
 export interface TopBrandResult {

@@ -70,4 +70,6 @@ export const queryKeys = {
   getQuestionBuyList: (voteStatus?: string) => ['getQuestionBuyList', voteStatus] as const,
   getQuestionHowAboutList: (celebId?: number) => ['getQuestionHowAboutList', celebId] as const,
   getQuestionRecommendList: (hashtag?: string) => ['getQuestionRecommendList', hashtag] as const,
+  searchCommunity: (keyword: string) => ['searchCommunity', keyword] as const,
+  searchUser: (keyword: string) => ['searchUser', keyword] as const,
 }

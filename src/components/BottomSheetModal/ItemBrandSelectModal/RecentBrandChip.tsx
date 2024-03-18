@@ -37,7 +37,7 @@ const RecentBrandChip = ({ brandData }: RecentBrandChipProps) => {
         brand: {
           brandId: brand.id,
           brandName: brand.brandName,
-          brandImgUrl: '',
+          brandImgUrl: brandData.brandImgUrl,
         },
         newBrand: null,
       })

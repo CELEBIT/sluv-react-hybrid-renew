@@ -170,12 +170,7 @@ const ItemCreate = () => {
   return (
     <ItemCreatePageStyle>
       <HeaderWrapper>
-        <Header
-          isModalHeader={false}
-          title='정보 공유하기'
-          hasArrow={true}
-          backBtnClick={onBackClick}
-        >
+        <Header isModalHeader={false} title='정보 공유' hasArrow={true} backBtnClick={onBackClick}>
           <span className='submit' onClick={onSubmit}>
             등록
           </span>
