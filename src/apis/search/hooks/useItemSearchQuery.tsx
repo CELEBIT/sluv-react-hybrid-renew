@@ -9,6 +9,7 @@ const useItemSearchQuery = () => {
   const searchItem = (
     keyword: string,
   ): UseInfiniteQueryResult<GetPaginationResult<SearchItemResult>, any> => {
+    console.log(keyword)
     return useInfiniteQuery(
       queryKeys.searchItem(keyword),
       ({ pageParam = 0 }) => search.searchItem(keyword, pageParam),

@@ -1,6 +1,9 @@
 import styled from '@emotion/styled'
 import React from 'react'
-import TotalResultContainer from './TotalResultContainer'
+import TotalResult from './TotalResult'
+import ItemResult from './ItemResult'
+import CommunityResult from './CommunityResult'
+import UserResult from './UserResult'
 
 interface SearchResultContainerProps {
   selectedTab: string
@@ -10,7 +13,10 @@ interface SearchResultContainerProps {
 const SearchResultContainer = ({ selectedTab, keyword }: SearchResultContainerProps) => {
   return (
     <SearchResultWrap>
-      {selectedTab === 'all' && <TotalResultContainer keyword={keyword} />}
+      {selectedTab === 'all' && <TotalResult keyword={keyword} />}
+      {selectedTab === 'item' && <ItemResult keyword={keyword} />}
+      {selectedTab === 'community' && <CommunityResult keyword={keyword} />}
+      {selectedTab === 'user' && <UserResult keyword={keyword} />}
     </SearchResultWrap>
   )
 }
@@ -18,5 +24,8 @@ const SearchResultContainer = ({ selectedTab, keyword }: SearchResultContainerPr
 export default SearchResultContainer
 
 const SearchResultWrap = styled.div`
-  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-top: 0.75rem;
 `
