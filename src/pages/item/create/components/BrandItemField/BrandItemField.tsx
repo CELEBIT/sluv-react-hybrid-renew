@@ -45,7 +45,7 @@ const BrandItemField = ({ brandValid, itemNameValid }: BrandItemFieldProps) => {
         <Brand onClick={onBrandSelect}>
           <BrandLogo
             size={32}
-            url={!itemInfo.newBrand?.brandId ? '' : itemInfo.brand?.brandImgUrl}
+            url={itemInfo.newBrand?.brandId ? '' : itemInfo.brand?.brandImgUrl}
           />
           <span>
             {itemInfo.newBrand?.brandId ? itemInfo.newBrand.brandName : itemInfo.brand?.brandName}

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { ReactComponent as Banner } from '../../assets/Top.svg'
 import { ReactComponent as HotCelebBanner } from '../../assets/HotCelebBanner.svg'
 import { ReactComponent as Logo } from '../../assets/logo.svg'
@@ -20,15 +20,39 @@ import { HeaderWrapper } from '../../components/Header/styles'
 import { Common } from '../../components/styles'
 import { useNavigate } from 'react-router-dom'
 import storage from '../../utils/storage'
+import ScrollToTop from './components/ScrollToTopButton'
 
 const Home = () => {
   const navigate = useNavigate()
+  const bannerRef = useRef<HTMLDivElement>(null)
+  const scrollToTopRef = useRef<HTMLDivElement>(null)
+  const [showScrollToTop, setShowScrollToTop] = useState<boolean>(false)
+
   useEffect(() => {
     if (!storage.get('accessToken')) {
       confirm('스럽을 이용하시려면 로그인해주세요.')
       navigate('/')
     }
   })
+  useEffect(() => {
+    const handleScroll = () => {
+      if (bannerRef.current && scrollToTopRef.current) {
+        scrollToTopRef.current?.scrollTop > bannerRef.current.offsetHeight
+          ? setShowScrollToTop(true)
+          : setShowScrollToTop(false)
+      }
+    }
+
+    scrollToTopRef.current?.addEventListener('scroll', handleScroll)
+    return () => scrollToTopRef.current?.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const handleClick = () => {
+    scrollToTopRef.current?.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
+  }
   return (
     <HomeContainer>
       <HeaderWrapper role='heading' isModalHeader={false} style={{ padding: '0.625rem 1.25rem' }}>
@@ -39,8 +63,8 @@ const Home = () => {
           <Search fill={Common.colors.BK} onClick={() => navigate('/search')}></Search>
         </div>
       </HeaderWrapper>
-      <ComponentContainer>
-        <div>
+      <ComponentContainer ref={scrollToTopRef}>
+        <div ref={bannerRef}>
           <Banner style={{ height: '100%', width: '100vw' }}></Banner>
         </div>
         <Curation></Curation>
@@ -57,6 +81,7 @@ const Home = () => {
         <LuxuryMood></LuxuryMood>
         <Divider></Divider>
         <PresentItem></PresentItem>
+        {showScrollToTop && <ScrollToTop onClick={handleClick} />}
       </ComponentContainer>
     </HomeContainer>
   )

@@ -23,7 +23,10 @@ const HowAbout = () => {
           data.map((item, index) => {
             return (
               <div key={'howabout' + item.itemId}>
-                <HowAboutItem onClick={() => navigate(`/item/detail/${item.itemId}`)}>
+                <HowAboutItem
+                  onClick={() => navigate(`/item/detail/${item.itemId}`)}
+                  className={index === data.length - 1 ? 'last' : undefined}
+                >
                   <CirclePhoto imgUrl={item.imgUrl}></CirclePhoto>
                   <RightWrapper>
                     <ItemInfoWrapper>
@@ -50,6 +53,9 @@ export const HowAboutList = styled.div`
   flex-direction: column;
   padding: 0 1.25rem;
   gap: 1rem;
+  .last {
+    margin-bottom: 0 !important;
+  }
 `
 
 export const HowAboutItem = styled.div`

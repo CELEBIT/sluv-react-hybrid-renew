@@ -16,7 +16,6 @@ interface Tab {
 const Tabs = ({ tabList, selectedTab, setSelectedTab }: TabProps) => {
   const onclickTab = (tabName: string) => {
     setSelectedTab(tabName)
-    console.log(selectedTab)
   }
   return (
     <TabContainer>
