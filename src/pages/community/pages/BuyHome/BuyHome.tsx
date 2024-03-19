@@ -107,7 +107,6 @@ const BuyHome = () => {
             </EmptyStateContainer>
           </QuestionListWrapper>
         )}
-
         <WriteCommunityItemButton isTop={!isStickyAtTop}></WriteCommunityItemButton>
       </ComponentContainer>
     </CommunityPageContainer>
