@@ -27,7 +27,8 @@ const useCommunityImgUpload = () => {
   const communityMenu = useRecoilValue(communityMenuState)
 
   const postCommunityImg = useMutation(
-    (fileList: Array<IselectedItem>) => s3.postCommunityImg(fileList, setCommunityItem),
+    (fileList: Array<IselectedItem>) =>
+      s3.postCommunityImg(fileList, communityItem, setCommunityItem),
     {
       onSuccess: (res) => {
         if (communityMenu === '찾아주세요') mutatebyFind({ ...communityItem, imgList: res })
