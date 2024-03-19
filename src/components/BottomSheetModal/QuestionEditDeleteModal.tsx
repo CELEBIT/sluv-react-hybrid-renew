@@ -2,7 +2,7 @@ import React from 'react'
 import BottomSheetModal from '.'
 import styled from '@emotion/styled'
 
-import { atom, useRecoilValue } from 'recoil'
+import { atom, useRecoilValue, useResetRecoilState } from 'recoil'
 // import { atomKeys } from '../../config/atomKeys'
 import Header from '../Header/Header'
 import useModals from '../Modals/hooks/useModals'
@@ -11,6 +11,7 @@ import { Common, Pretendard } from '../styles'
 import { useNavigate } from 'react-router-dom'
 import { ReactComponent as Share } from '../../assets/share_24.svg'
 import { atomKeys } from '../../config/atomKeys'
+import { communityItemState, imgItemListState } from '../../recoil/communityInfo'
 
 export const questionTypeState = atom<string>({
   key: atomKeys.questionType,
@@ -21,7 +22,8 @@ const QuestionEditDeleteModal = () => {
   const navigate = useNavigate()
   const { openModal, closeModal } = useModals()
   const questionType = useRecoilValue(questionTypeState)
-
+  const resetQuestionItem = useResetRecoilState(communityItemState)
+  const resetImgItemList = useResetRecoilState(imgItemListState)
   const onClickEditQuestion = () => {
     console.log('questionType', questionType)
     closeModal(modals.QuestionEditDeleteModal, () => {
@@ -29,6 +31,8 @@ const QuestionEditDeleteModal = () => {
       else if (questionType === 'How' || questionType === 'Recommend')
         navigate('/community/question/deleteAndSort')
       else {
+        resetQuestionItem()
+        resetImgItemList()
         alert('투표가 시작되어 수정할 수 없어요')
       }
     })
