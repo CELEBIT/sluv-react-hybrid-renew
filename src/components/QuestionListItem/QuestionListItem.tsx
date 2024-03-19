@@ -21,6 +21,7 @@ import { ReactComponent as Like } from '../../assets/Like_18.svg'
 import { ReactComponent as CommentIcon } from '../../assets/comment_18.svg'
 import { ReactComponent as View } from '../../assets/page view_18.svg'
 import { Dot } from '../Dot/Dot'
+import styled from '@emotion/styled'
 
 interface QuestionItemProps {
   item: SearchQuestionResult
@@ -53,6 +54,7 @@ const QuestionListItem = ({ item, detail }: QuestionItemProps) => {
     ...(item?.itemImgList?.filter((item) => item !== null) ?? []),
   ]
   const sortedList = combinedList.sort((a, b) => a.sortOrder - b.sortOrder)
+  const titleContent = item.title + (item.content ?? '')
 
   return (
     <RecommendContainer
@@ -79,10 +81,7 @@ const QuestionListItem = ({ item, detail }: QuestionItemProps) => {
               </>
             )}
           </InfoTop>
-          <span className='questionTitle'>
-            {item.title}
-            {item.content}
-          </span>
+          <QuestionTitle className='questionTitle'>{titleContent}</QuestionTitle>
         </RecommendInfo>
 
         {item.qtype !== 'Buy' ? (
@@ -143,3 +142,11 @@ const QuestionListItem = ({ item, detail }: QuestionItemProps) => {
 }
 
 export default QuestionListItem
+
+const QuestionTitle = styled.span`
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`

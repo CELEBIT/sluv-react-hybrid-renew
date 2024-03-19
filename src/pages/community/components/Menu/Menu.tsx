@@ -50,22 +50,24 @@ export const MenuContainer = styled.div`
   display: flex;
   position: sticky;
   top: -0.0625rem;
-  justify-content: space-evenly;
-  gap: 0.6875rem;
-  padding: 0.625rem 1.25rem;
+  justify-content: space-between;
+  width: 100%;
+  /* gap: 0.6875rem; */
+  padding: 0.625rem 1.25rem 1.25rem 1.25rem;
   margin-bottom: 1.5rem;
   background-color: white;
-  border-radius: 0 0 1.875rem 1.875rem;
+  border-radius: 0 0 30px 30px;
   box-shadow: 0px 10px 10px 0px rgba(136, 137, 157, 0.15);
   z-index: 100;
 `
 export const EachMenu = styled.div`
   display: flex;
-  flex-shrink: 0;
+  /* flex-shrink: 0; */
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
+  white-space: nowrap;
 `
 export const MenuText = styled.span`
   ${Pretendard({ size: 13, weight: Common.bold.regular, color: Common.colors.BK })}
