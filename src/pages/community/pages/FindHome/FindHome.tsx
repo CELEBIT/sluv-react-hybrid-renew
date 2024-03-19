@@ -1,5 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { CommunityPageContainer, QuestionListWrapper, TabContainer } from '../../styles'
+import {
+  CommunityPageContainer,
+  EmptyStateContainer,
+  QuestionListWrapper,
+  TabContainer,
+} from '../../styles'
 import { HeaderWrapper } from '../../../user/styles'
 import Header from '../../../../components/Header/Header'
 import { ComponentContainer } from '../../../home/styles'
@@ -11,8 +16,11 @@ import { Line } from '../../detail/styles'
 import { ReactComponent as FindHomeBanner } from '../../../../assets/CommunityEachBanner/FindBanner.svg'
 import EmptyState from '../../../../components/EmptyState'
 import useInterestCelebQuery from '../../../../apis/user/hooks/useInterestCelebQuery'
+import ButtonSmall from '../../../../components/ButtonSmall/ButtonSmall'
+import { useNavigate } from 'react-router-dom'
 
 const FindHome = () => {
+  const navigate = useNavigate()
   const ComponentContainerRef = useRef<HTMLDivElement>(null)
   const stickyRef = useRef<HTMLDivElement>(null)
   const [isStickyAtTop, setIsStickyAtTop] = useState(false)
@@ -20,7 +28,6 @@ const FindHome = () => {
 
   const { getInterestCeleb } = useInterestCelebQuery()
   const celebList = getInterestCeleb
-  console.log('celebList', celebList.data)
 
   const { getQuestionFindList } = useQuestionListQuery()
   const { data } = getQuestionFindList(selectedTab ? selectedTab : undefined)
@@ -80,12 +87,19 @@ const FindHome = () => {
               })}
             </>
           ) : (
-            <EmptyState
-              icon='comment'
-              title='아직 찾아주세요 글이 없어요'
-              subtitle='궁금한 것을 물어보며
-다양한 의견을 받아보아요.'
-            ></EmptyState>
+            <EmptyStateContainer>
+              <EmptyState
+                icon='comment'
+                title='‘찾아주세요’ 게시글이 없어요'
+                subtitle='궁금한 아이템 정보를 요청해 보아요'
+              >
+                <ButtonSmall
+                  text='요청하러 가기'
+                  type='pri'
+                  onClick={() => navigate('/community/create/find-request')}
+                />
+              </EmptyState>
+            </EmptyStateContainer>
           )}
         </QuestionListWrapper>
         <WriteCommunityItemButton isTop={!isStickyAtTop}></WriteCommunityItemButton>
