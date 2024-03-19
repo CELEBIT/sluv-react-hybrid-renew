@@ -117,7 +117,7 @@ const QuestionListItem = ({ item, detail }: QuestionItemProps) => {
       {detail && (
         <DetailInfo>
           <DetailLeft>
-            <UserImage size={20} imgUrl={item.user?.profileImgUrl}></UserImage>
+            <UserImage size={20} imgUrl={item.user?.profileImgUrl ?? null}></UserImage>
             <DetailNickname>{item.user?.nickName}</DetailNickname>
           </DetailLeft>
           <DetailRight>
