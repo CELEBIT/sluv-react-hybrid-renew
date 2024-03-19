@@ -152,7 +152,11 @@ const App = () => {
               <Route path='howabout' element={<CreateHowabout />} />
               <Route path='recommend' element={<CreateRecommend />} />
             </Route>
-            <Route path='/community/question/edit' element={<Question />} />
+            <Route path='/community/edit' element={<Question />}>
+              <Route path='howabout' element={<CreateHowabout />} />
+              <Route path='recommend' element={<CreateRecommend />} />
+            </Route>
+            {/* <Route path='/community/question/edit' element={<Question />} /> */}
             <Route path='/community/select-item-photo' element={<SelectItemOrPhoto />} />
             <Route path='/community/comment/comment-item-photo' element={<CommentItemPhoto />} />
             <Route path='/community/comment/upload' element={<CommentUpload />} />
