@@ -2,7 +2,7 @@ import React from 'react'
 import BottomSheetModal from '.'
 import styled from '@emotion/styled'
 
-import { atom, useRecoilValue, useResetRecoilState } from 'recoil'
+import { atom, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 // import { atomKeys } from '../../config/atomKeys'
 import Header from '../Header/Header'
 import useModals from '../Modals/hooks/useModals'
@@ -11,7 +11,12 @@ import { Common, Pretendard } from '../styles'
 import { useNavigate } from 'react-router-dom'
 import { ReactComponent as Share } from '../../assets/share_24.svg'
 import { atomKeys } from '../../config/atomKeys'
-import { communityItemState, imgItemListState } from '../../recoil/communityInfo'
+import {
+  communityItemState,
+  communityQuestionMenuState,
+  imgItemListState,
+} from '../../recoil/communityInfo'
+import { communityMenuState } from '../Header/CommunityHeader/CommunityHeader'
 
 export const questionTypeState = atom<string>({
   key: atomKeys.questionType,
@@ -24,13 +29,23 @@ const QuestionEditDeleteModal = () => {
   const questionType = useRecoilValue(questionTypeState)
   const resetQuestionItem = useResetRecoilState(communityItemState)
   const resetImgItemList = useResetRecoilState(imgItemListState)
+  const setCommunityQuestionMenu = useSetRecoilState(communityMenuState)
+
   const onClickEditQuestion = () => {
-    console.log('questionType', questionType)
     closeModal(modals.QuestionEditDeleteModal, () => {
-      if (questionType === 'Find') navigate('/community/find-request/deleteAndSort')
-      else if (questionType === 'How' || questionType === 'Recommend')
-        navigate('/community/question/deleteAndSort')
-      else {
+      if (questionType === 'Find') {
+        navigate('/community/find-request/edit')
+        setCommunityQuestionMenu('찾아주세요')
+      }
+      if (questionType === 'How') {
+        navigate('/community/edit/howabout')
+        setCommunityQuestionMenu('이거 어때')
+      }
+      if (questionType === 'Recommend') {
+        navigate('/community/edit/recommend')
+        setCommunityQuestionMenu('추천해 줘')
+      }
+      if (questionType === 'Buy') {
         resetQuestionItem()
         resetImgItemList()
         alert('투표가 시작되어 수정할 수 없어요')
