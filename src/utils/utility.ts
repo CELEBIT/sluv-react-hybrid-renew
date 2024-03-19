@@ -57,13 +57,12 @@ export const formatUpdatedAt = (updatedAt: string): string => {
 export function getRankingUpdateTime(date: Date): string {
   const targetTime = new Date(date)
   targetTime.setHours(17, 0, 0, 0) // 17:00 설정
-
   const currentTime = new Date()
-  const currentTimeString = currentTime.toLocaleString()
+  const options: Intl.DateTimeFormatOptions = { month: '2-digit', day: '2-digit' }
+  const dateString = currentTime.toLocaleDateString(undefined, options)
 
   if (currentTime < targetTime) {
     // 17:00 전
-    const dateString = currentTime.toLocaleDateString()
     return `${dateString} 17:00 기준`
   } else {
     // 17:00 후
