@@ -36,6 +36,9 @@ const Question = () => {
 
   const firstItem = useRecoilValue(firstItemState)
   const secondItem = useRecoilValue(secondItemState)
+  const resetFirstItem = useResetRecoilState(firstItemState)
+  const resetSecondItem = useResetRecoilState(secondItemState)
+  const resetImgItemList = useResetRecoilState(imgItemListState)
 
   const {
     postBuyRequest: { mutate: MutateByBuyRequest },
@@ -95,14 +98,15 @@ const Question = () => {
         sortOrder: sortOrder,
       }))
     await mutateByImgUpload(newImgList)
+    resetQuestionItem()
+    resetFirstItem()
+    resetSecondItem()
+    resetImgItemList()
   }
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     setHasTriedToUpload(true)
-    console.log(questionItem)
-
     if (questionItem.title && questionItem.title.length > 10 && questionItem.title.length < 60) {
-      console.log(CommunityMenu)
       if (CommunityMenu === '이 중에 뭐 살까') {
         console.log('이 중에 뭐 살까')
         if (
@@ -112,23 +116,13 @@ const Question = () => {
           secondItem.description &&
           questionItem.voteEndTime
         ) {
-          console.log('uploadImage')
-          uploadImg()
+          await uploadImg()
         }
       } else if (CommunityMenu === '이거 어때') {
-        console.log('CommunityMenu === 이거어때')
-
-        console.log(questionItem)
-        // MutateByHowAboutRequest(questionItem)
-        // resetQuestionItem()
-        uploadImg()
+        await uploadImg()
       } else {
         if (questionItem.categoryNameList?.length ?? 0 > 0) {
-          console.log('CommunityMenu === 추천해줘')
-
-          // MutateByRecommendRequest(questionItem)
-          // resetQuestionItem()
-          uploadImg()
+          await uploadImg()
         }
       }
     }
@@ -138,10 +132,18 @@ const Question = () => {
     setHasTriedToUpload(false)
   }, [CommunityMenu])
 
+  const onBackClick = () => {
+    resetFirstItem()
+    resetSecondItem()
+    resetQuestionItem()
+    resetImgItemList()
+    navigate(-1)
+  }
+
   return (
     <QuestionContainer>
       <HeaderWrapper>
-        <CommunityHeader backBtnClick={() => navigate('/community')}>
+        <CommunityHeader backBtnClick={onBackClick}>
           <span className='submit' onClick={onSubmit}>
             완료
           </span>

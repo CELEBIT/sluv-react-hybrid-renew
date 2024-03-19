@@ -31,6 +31,7 @@ const useCommunityImgUpload = () => {
       s3.postCommunityImg(fileList, communityItem, setCommunityItem),
     {
       onSuccess: (res) => {
+        console.log(communityItem)
         if (communityMenu === '찾아주세요') mutatebyFind({ ...communityItem, imgList: res })
         if (communityMenu === '이거 어때') mutatebyHow({ ...communityItem, imgList: res })
         if (communityMenu === '이 중에 뭐 살까') mutatebyBuy({ ...communityItem, imgList: res })
