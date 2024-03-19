@@ -43,9 +43,7 @@ const Community = () => {
       <ComponentContainer ref={ComponentContainerRef}>
         <BannerItemsList></BannerItemsList>
         <Menu menuRef={stickyRef} isStickyAtTop={isStickyAtTop}></Menu>
-        <QuestionListWrapper>
-          <NewCommunity></NewCommunity>
-        </QuestionListWrapper>
+        <NewCommunity></NewCommunity>
         <WriteCommunityItemButton isTop={!isStickyAtTop}></WriteCommunityItemButton>
       </ComponentContainer>
     </CommunityPageContainer>
