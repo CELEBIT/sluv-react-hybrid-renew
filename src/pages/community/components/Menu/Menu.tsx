@@ -57,6 +57,7 @@ export const MenuContainer = styled.div`
   background-color: white;
   border-radius: 0 0 1.875rem 1.875rem;
   box-shadow: 0px 10px 10px 0px rgba(136, 137, 157, 0.15);
+  z-index: 100;
 `
 export const EachMenu = styled.div`
   display: flex;
