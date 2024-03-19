@@ -68,6 +68,7 @@ const QuestionListItem = ({ item, detail }: QuestionItemProps) => {
             {item.celebName && <Category color='grey'>{item.celebName}</Category>}
             {item.categoryName && (
               <>
+                <Dot></Dot>
                 {item.categoryName.map((category) => {
                   return (
                     <Category color='grey' key={category}>
