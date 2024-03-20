@@ -71,3 +71,29 @@ export function getRankingUpdateTime(date: Date): string {
     return `${nextDayString} 17:00 기준`
   }
 }
+
+export function getRemainingTime(endTime: string): string {
+  const now = new Date()
+  const end = new Date(endTime)
+  const diffInMs = end.getTime() - now.getTime()
+  const diffInHours = Math.ceil(diffInMs / (1000 * 60 * 60)) // 밀리초를 시간 단위로 변환
+
+  if (diffInHours <= 24) {
+    return '투표 종료 임박'
+  } else if (diffInHours <= 48) {
+    return '투표 종료 D-1'
+  } else if (diffInHours <= 72) {
+    return '투표 종료 D-2'
+  } else if (diffInHours <= 96) {
+    return '투표 종료 D-3'
+  } else if (diffInMs <= 0) {
+    return '투표 종료'
+  } else {
+    return '진행중'
+  }
+}
+
+export function convertToSeoulTimeISOString(endTime: Date): Date {
+  const seoulTime = new Date(endTime.getTime() + 9 * 60 * 60 * 1000)
+  return seoulTime
+}

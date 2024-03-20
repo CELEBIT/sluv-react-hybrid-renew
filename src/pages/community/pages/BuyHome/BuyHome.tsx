@@ -37,7 +37,6 @@ const BuyHome = () => {
     const handleScroll = () => {
       if (stickyRef.current) {
         const { top } = stickyRef.current.getBoundingClientRect()
-        console.log(top)
         setIsStickyAtTop(Math.floor(top) <= 65)
       }
     }
@@ -84,7 +83,7 @@ const BuyHome = () => {
             {tempData?.map((each, index) => {
               return (
                 <>
-                  <BuyVote item={each} selectedTab={selectedTab}></BuyVote>
+                  <BuyVote item={each} selectedTab={selectedTab} key={index}></BuyVote>
                   {index !== tempData.length - 1 && <Line></Line>}
                 </>
               )

@@ -11,10 +11,9 @@ const SetVoteDateTime = () => {
   const maxEndDateTime = new Date(new Date().setDate(currentDateTime.getDate() + 7))
 
   const onChangeDate = (date: Date) => {
-    console.log(date.toISOString())
     setQuestionInfo({
       ...questionInfo,
-      voteEndTime: new Date(date.toISOString()),
+      voteEndTime: date,
     })
   }
 
