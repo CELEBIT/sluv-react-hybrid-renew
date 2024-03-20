@@ -61,16 +61,6 @@ const TwoItemUpload = ({ onClick }: TwoItemUploadProps) => {
         resetSecondItem()
       }
     } else {
-      console.log('사진 삭제')
-      // newItemList = communityUploadInfo.imgList?.filter(
-      //   (addedItem) => addedItem.imgFile !== item.imgFile,
-      // )
-
-      // setCommunityUploadInfo({
-      //   ...communityUploadInfo,
-      //   imgList: newItemList || null,
-      // })
-
       const newImgItemList = imgItemList.filter((addedItem) => addedItem.imgFile !== item.imgFile)
       setImgItemList(newImgItemList)
 

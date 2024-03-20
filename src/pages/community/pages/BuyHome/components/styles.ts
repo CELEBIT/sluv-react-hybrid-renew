@@ -19,12 +19,14 @@ export const Title = styled.div`
 export const UserInfo = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  gap: 0.1875rem;
 `
 export const Status = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 0.25rem;
+  gap: 4px;
 `
 
 export const UserName = styled.div`
@@ -33,8 +35,7 @@ export const UserName = styled.div`
 
 export const VoteStatus = styled.div<{ color?: string }>`
   ${({ color }) =>
-    color === 'red' &&
-    ` ${Pretendard({ size: 13, weight: Common.bold.thin, color: Common.colors.ERROR })}
-  `}
-  ${Pretendard({ size: 13, weight: Common.bold.thin, color: Common.colors.GR600 })}
+    color === 'red'
+      ? Pretendard({ size: 13, weight: Common.bold.thin, color: Common.colors.ERROR })
+      : Pretendard({ size: 13, weight: Common.bold.thin, color: Common.colors.GR600 })}
 `

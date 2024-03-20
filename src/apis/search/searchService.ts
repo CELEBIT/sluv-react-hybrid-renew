@@ -1,5 +1,6 @@
 import request from '../core'
 import { GetPaginationResult, ResponseType } from '../core/type'
+import { Img, Item } from '../question/questionService.type'
 import { IUserResult } from '../user/userService'
 
 export interface SearchItemResult {
@@ -39,8 +40,8 @@ export interface BuyHomeResult {
   title: string
   content: string
   celebName: string
-  imgList: Array<QuestionImg> | null
-  itemImgList: Array<QuestionImg> | null
+  imgList: Array<Img> | null
+  itemImgList: Array<Item> | null
   categoryName: Array<string> | null
   qtype: string
   user: {
@@ -49,7 +50,10 @@ export interface BuyHomeResult {
     profileImgUrl: string
   }
   voteEndTime: string
+  selectedVoteNum: number // 자신이 투표한 아이템
+  voteNum: number // 총 투표수
   hasMine: boolean
+  voteStatus: false
 }
 
 export interface IRecentSearch {

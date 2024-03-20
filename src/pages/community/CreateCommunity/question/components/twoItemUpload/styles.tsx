@@ -76,3 +76,7 @@ export const ItemName = styled.div`
   width: 100%;
   height: 100%;
 `
+
+export const Description = styled.div`
+  ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.WH })}
+`

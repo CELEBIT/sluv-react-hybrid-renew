@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Common, Pretendard } from '../../../../components/styles'
 
 interface CountDownProps {
-  voteEndTime: Date
+  voteEndTime: string
 }
 const CountDown = ({ voteEndTime }: CountDownProps) => {
   const [daysLeft, setDaysLeft] = useState<number | null>(null)
@@ -13,6 +13,7 @@ const CountDown = ({ voteEndTime }: CountDownProps) => {
     const interval = setInterval(() => {
       const now = new Date().getTime()
       const end = new Date(voteEndTime).getTime()
+
       const timeRemaining = end - now
 
       if (timeRemaining <= 0) {
