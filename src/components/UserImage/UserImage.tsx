@@ -38,7 +38,7 @@ const UserImg = styled.div<{ size: number; imgUrl?: string }>`
   overflow: hidden;
 `
 
-const Dim = styled.div`
+export const Dim = styled.div`
   display: flex;
   position: absolute;
   top: 0;

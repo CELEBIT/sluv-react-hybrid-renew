@@ -78,7 +78,9 @@ export function getRemainingTime(endTime: string): string {
   const diffInMs = end.getTime() - now.getTime()
   const diffInHours = Math.ceil(diffInMs / (1000 * 60 * 60)) // 밀리초를 시간 단위로 변환
 
-  if (diffInHours <= 24) {
+  if (diffInMs < 0) {
+    return '투표 종료'
+  } else if (diffInHours <= 24) {
     return '투표 종료 임박'
   } else if (diffInHours <= 48) {
     return '투표 종료 D-1'
@@ -86,8 +88,6 @@ export function getRemainingTime(endTime: string): string {
     return '투표 종료 D-2'
   } else if (diffInHours <= 96) {
     return '투표 종료 D-3'
-  } else if (diffInMs <= 0) {
-    return '투표 종료'
   } else {
     return '진행중'
   }

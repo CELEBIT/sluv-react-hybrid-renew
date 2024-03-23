@@ -104,34 +104,32 @@ const RecommendItem = () => {
             기타
           </BlackFilter>
         </TabContainer>
-        <QuestionListWrapper>
-          {(tempData?.length ?? 0) > 0 ? (
-            <>
-              {tempData?.map((each, index) => {
-                return (
-                  <>
-                    <QuestionListItem key={each.id} item={each} detail={true}></QuestionListItem>
-                    {index !== tempData.length - 1 && <Line></Line>}
-                  </>
-                )
-              })}
-            </>
-          ) : (
-            <EmptyStateContainer>
-              <EmptyState
-                icon='comment'
-                title='‘추천해 줘’ 게시글이 없어요'
-                subtitle='궁금한 것을 물어보며 추천받아 보아요'
-              >
-                <ButtonSmall
-                  text='질문하러 가기'
-                  type='pri'
-                  onClick={() => navigate('/community/create/recommend')}
-                />
-              </EmptyState>
-            </EmptyStateContainer>
-          )}
-        </QuestionListWrapper>
+        {(tempData?.length ?? 0) > 0 ? (
+          <QuestionListWrapper>
+            {tempData?.map((each, index) => {
+              return (
+                <>
+                  <QuestionListItem key={each.id} item={each} detail={true}></QuestionListItem>
+                  {index !== tempData.length - 1 && <Line></Line>}
+                </>
+              )
+            })}
+          </QuestionListWrapper>
+        ) : (
+          <EmptyStateContainer>
+            <EmptyState
+              icon='comment'
+              title='‘추천해 줘’ 게시글이 없어요'
+              subtitle='궁금한 것을 물어보며 추천받아 보아요'
+            >
+              <ButtonSmall
+                text='질문하러 가기'
+                type='pri'
+                onClick={() => navigate('/community/create/recommend')}
+              />
+            </EmptyState>
+          </EmptyStateContainer>
+        )}
         <WriteCommunityItemButton isTop={!isStickyAtTop}></WriteCommunityItemButton>
       </ComponentContainer>
     </CommunityPageContainer>
