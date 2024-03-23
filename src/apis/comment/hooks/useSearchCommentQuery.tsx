@@ -40,7 +40,16 @@ const useSearchCommentQuery = () => {
     },
   })
 
-  return { getComment, addComment, likeComment }
+  const deleteComment = useMutation(
+    ({ commentId }: ILikeComment) => comment.deleteComment(commentId),
+    {
+      onSuccess: (res, { questionId }) => {
+        queryClient.invalidateQueries(queryKeys.comment(questionId))
+      },
+    },
+  )
+
+  return { getComment, addComment, likeComment, deleteComment }
 }
 
 export default useSearchCommentQuery

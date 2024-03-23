@@ -13,12 +13,15 @@ import { RequestEditItemState } from '../../pages/item/editRequest'
 import { ReactComponent as Share } from '../../assets/share_24.svg'
 
 interface IProps {
-  itemId: number
+  commentId: number
+  questionId: number
 }
 
-const CommentEditModal = ({ itemId }: IProps) => {
+const CommentEditModal = ({ commentId, questionId }: IProps) => {
   const navigate = useNavigate()
   const { openModal, closeModal } = useModals()
+  console.log('commentId', commentId)
+  console.log('questionId', questionId)
 
   const onClickEdit = () => {
     closeModal(modals.CommentEditModal, () => {
@@ -28,7 +31,7 @@ const CommentEditModal = ({ itemId }: IProps) => {
 
   const onClickDeleteItem = () => {
     closeModal(modals.CommentEditModal, () => {
-      openModal(modals.DeleteItemModal, { itemId: itemId })
+      openModal(modals.DeleteCommentModal, { commentId, questionId })
     })
   }
   return (

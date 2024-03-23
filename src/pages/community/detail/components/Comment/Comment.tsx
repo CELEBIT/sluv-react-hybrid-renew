@@ -84,7 +84,7 @@ const Comment = ({ questionId, comment }: CommentProps) => {
       })
     }
 
-    openModal(modals.CommentEditModal)
+    openModal(modals.CommentEditModal, { commentId: comment.id, questionId })
   }
 
   return (
