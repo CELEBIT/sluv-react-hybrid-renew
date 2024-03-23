@@ -58,7 +58,7 @@ const SelectedInterestCelebModal = loadable(
 const UserInterestCelebModal = loadable(() => import('../BottomSheetModal/UserInterestCelebModal'))
 const UserModal = loadable(() => import('../BottomSheetModal/UserModal'))
 const CommentEditModal = loadable(() => import('../BottomSheetModal/CommentEditModal'))
-
+const DeleteCommentModal = loadable(() => import('../TwoButtonModal/DeleteCommentModal'))
 // 모달 관리 객체
 export const modals = {
   AskRecentPostWritingModal: AskRecentPostWritingModal as FunctionComponent<
@@ -128,6 +128,9 @@ export const modals = {
   UserInterestCelebModal: UserInterestCelebModal as FunctionComponent<userIdProps>,
   UserModal: UserModal as FunctionComponent<ComponentProps<typeof UserModal>>,
   CommentEditModal: CommentEditModal as FunctionComponent<ComponentProps<typeof CommentEditModal>>,
+  DeleteCommentModal: DeleteCommentModal as FunctionComponent<
+    ComponentProps<typeof DeleteCommentModal>
+  >,
 }
 
 const Modals = () => {

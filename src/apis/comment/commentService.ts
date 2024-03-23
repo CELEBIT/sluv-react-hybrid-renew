@@ -73,4 +73,9 @@ export default class CommentService {
     const data: ResponseType = await request.post(`${this.commentUrl}/${commentId}/like`)
     return data
   }
+
+  async deleteComment(commentId: number) {
+    const data: ResponseType = await request.delete(`${this.commentUrl}/${commentId}`)
+    return data
+  }
 }
