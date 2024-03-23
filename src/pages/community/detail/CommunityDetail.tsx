@@ -236,7 +236,9 @@ const CommunityDetail = () => {
                 ></DisplayPhotoItems>
               )}
               {data?.qtype === 'Find' && !data.hasMine && (
-                <FindItemButton>아이템 찾아주기</FindItemButton>
+                <FindItemButton onClick={() => navigate('/community/comment/comment-item-photo')}>
+                  아이템 찾아주기
+                </FindItemButton>
               )}
             </CommunityContent>
             <InteractionWrapper>

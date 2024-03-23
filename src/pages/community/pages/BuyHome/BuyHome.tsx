@@ -90,21 +90,21 @@ const BuyHome = () => {
             })}
           </QuestionListWrapper>
         ) : (
-          <QuestionListWrapper>
-            <EmptyStateContainer>
-              <EmptyState
-                icon='comment'
-                title='‘이 중에 뭐 살까’ 게시글이 없어요'
-                subtitle='고민되는 아이템을 질문해 보아요'
-              >
-                <ButtonSmall
-                  text='질문하러 가기'
-                  type='pri'
-                  onClick={() => navigate('/community/create/buy')}
-                />
-              </EmptyState>
-            </EmptyStateContainer>
-          </QuestionListWrapper>
+          // <QuestionListWrapper>
+          <EmptyStateContainer>
+            <EmptyState
+              icon='comment'
+              title='‘이 중에 뭐 살까’ 게시글이 없어요'
+              subtitle='고민되는 아이템을 질문해 보아요'
+            >
+              <ButtonSmall
+                text='질문하러 가기'
+                type='pri'
+                onClick={() => navigate('/community/create/buy')}
+              />
+            </EmptyState>
+          </EmptyStateContainer>
+          // </QuestionListWrapper>
         )}
         <WriteCommunityItemButton isTop={!isStickyAtTop}></WriteCommunityItemButton>
       </ComponentContainer>
