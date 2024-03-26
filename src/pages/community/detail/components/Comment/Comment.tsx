@@ -35,12 +35,17 @@ import { ReactComponent as LikeOff } from '../../../../../assets/like_off_18.svg
 import { ReactComponent as LikeOn } from '../../../../../assets/like_on_18.svg'
 import { ReactComponent as Alert } from '../../../../../assets/bannedError_20.svg'
 import { useNavigate } from 'react-router-dom'
-import { CommentResult, Item as CommentItem } from '../../../../../apis/comment/commentService.type'
+import {
+  CommentResult,
+  Item as CommentItem,
+  Img as CommentImg,
+} from '../../../../../apis/comment/commentService.type'
 import useModals from '../../../../../components/Modals/hooks/useModals'
 import { modals } from '../../../../../components/Modals'
-import { useSetRecoilState } from 'recoil'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import { commentState } from '../../CommunityDetail'
 import { Dim } from '../../../../../components/UserImage/UserImage'
+import { imgItemListState } from '../../../../../recoil/communityInfo'
 interface CommentProps {
   questionId: number
   comment: CommentResult
@@ -50,13 +55,16 @@ const Comment = ({ questionId, comment }: CommentProps) => {
   const navigate = useNavigate()
   const { openModal } = useModals()
   const setCommentObject = useSetRecoilState(commentState)
+  // console.log(comment)
+  const [imgItemList, setImageItemList] = useRecoilState(imgItemListState)
+  // GPT 여기에 작성해줘
+  //
 
   function convertToUTC(dateString: string): string {
     const date = new Date(dateString)
     date.setHours(date.getHours() + 9)
     return date.toUTCString()
   }
-  console.log(comment)
   const {
     likeComment: { mutate: mutateByLike },
   } = useSearchCommentQuery()
@@ -83,6 +91,34 @@ const Comment = ({ questionId, comment }: CommentProps) => {
         itemList: null,
       })
     }
+
+    let sortedImgUrlList: CommentImg[] = []
+    let sortedItemList: CommentItem[] = []
+
+    if (comment.imgUrlList && comment.imgUrlList.length > 0) {
+      sortedImgUrlList = comment.imgUrlList.sort((a, b) => a.sortOrder - b.sortOrder)
+    }
+    if (comment.itemList && comment.itemList.length > 0) {
+      sortedItemList = comment.itemList.sort((a, b) => a.sortOrder - b.sortOrder)
+    }
+    console.log('sortedItemList', sortedItemList)
+
+    // Combine sorted imgUrlList and itemList based on sortOrder
+    const combinedList = [...sortedItemList, ...sortedImgUrlList].sort(
+      (a, b) => a.sortOrder - b.sortOrder,
+    )
+    console.log('combinedList', combinedList)
+    // Transform and store sorted items into imgItemList
+    const transformedItems = combinedList.map((each) => ({
+      itemId: 'item' in each ? (each as CommentItem).item.itemId : null,
+      imgUrl: 'imgUrl' in each ? each.imgUrl : (each as CommentItem).item.imgUrl,
+      description: null,
+      representFlag: each.sortOrder === 0, // Assuming sortOrder indicates representation
+      sortOrder: each.sortOrder,
+    }))
+    console.log('transformedItems', transformedItems)
+
+    setImageItemList(transformedItems)
 
     openModal(modals.CommentEditModal, { commentId: comment.id, questionId })
   }

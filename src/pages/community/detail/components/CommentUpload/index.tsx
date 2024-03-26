@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { CommentUploadContainer, HeaderWrapper, TextFieldWrapper } from './styles'
 import Header from '../../../../../components/Header/Header'
 import TextArea from '../../../../../components/TextField/TextArea/TextArea'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 import { commentQuestionIdState, commentState } from '../../CommunityDetail'
 import { imgItemListState } from '../../../../../recoil/communityInfo'
@@ -10,21 +10,23 @@ import AddPhotos from '../../../../../components/AddPhotos/AddPhotos'
 import AddItemPhotos from '../../../../../components/AddPhotos/AddItemPhotos'
 import useSearchCommentQuery, {
   IAddComment,
+  IEditComment,
 } from '../../../../../apis/comment/hooks/useSearchCommentQuery'
 
 const CommentUpload = () => {
   const navigate = useNavigate()
+  const { pathname } = useLocation()
   const [commentObject, setCommentObject] = useRecoilState(commentState)
   const resetCommentObject = useResetRecoilState(commentState)
   const questionId = useRecoilValue(commentQuestionIdState)
   const [imgItemList, setImageItemList] = useRecoilState(imgItemListState)
+  const resetimgItemList = useResetRecoilState(imgItemListState)
   const [comment, setcomment] = useState(commentObject.content)
   const [infoValid, setInfoValid] = useState(true)
   const [hasSubmitted, setHasSubmitted] = useState(false)
+  console.log(imgItemList)
 
   const onSubmit = () => {
-    console.log('imgItemList', imgItemList)
-    console.log(commentObject)
     setHasSubmitted(true)
     setCommentObject({ ...commentObject, content: comment })
     if (
@@ -35,6 +37,7 @@ const CommentUpload = () => {
       setInfoValid(true)
       onAddComment()
       resetCommentObject()
+      resetimgItemList()
       navigate(`/community/detail/${questionId}`)
     } else {
       setInfoValid(false)
@@ -43,9 +46,11 @@ const CommentUpload = () => {
 
   const {
     addComment: { mutate: mutateByAddComment },
+    editComment: { mutate: mutateByEditComment },
   } = useSearchCommentQuery()
   const onAddComment = () => {
     const itemsWithImgFile = imgItemList.filter((item) => item.imgFile)
+    console.log(itemsWithImgFile)
     if (itemsWithImgFile.length > 0) {
       // 이미지 업로드 후 댓글 업로드
     } else {
@@ -56,8 +61,21 @@ const CommentUpload = () => {
         imgList: null,
         itemList: commentObject.itemList,
       }
-
-      mutateByAddComment(newComment)
+      if (pathname === '/community/comment/upload') mutateByAddComment(newComment)
+      if (pathname === '/community/comment/edit') {
+        console.log('commentObject', commentObject)
+        if (commentObject.id) {
+          const newComment: IEditComment = {
+            questionId: Number(questionId),
+            commentId: commentObject.id,
+            content: comment,
+            imgList: null,
+            itemList: commentObject.itemList,
+          }
+          console.log('newComment', newComment)
+          mutateByEditComment(newComment)
+        }
+      }
     }
   }
 
@@ -75,6 +93,12 @@ const CommentUpload = () => {
     }
   }, [comment, commentObject.imgList, commentObject.itemList])
 
+  const onAddPhotos = () => {
+    if (pathname === '/community/comment/edit') {
+      navigate('/community/comment/comment-item-photo', { state: 'edit' })
+    } else navigate('/community/comment/comment-item-photo')
+  }
+
   return (
     <CommentUploadContainer>
       <HeaderWrapper>
@@ -84,10 +108,7 @@ const CommentUpload = () => {
           </span>
         </Header>
       </HeaderWrapper>
-      <AddItemPhotos
-        size={103.5}
-        onClick={() => navigate('/community/comment/comment-item-photo')}
-      ></AddItemPhotos>
+      <AddItemPhotos size={103.5} onClick={onAddPhotos}></AddItemPhotos>
       <TextFieldWrapper>
         <TextArea
           value={comment ?? ''}

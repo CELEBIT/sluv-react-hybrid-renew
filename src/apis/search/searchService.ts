@@ -163,4 +163,10 @@ export default class SearchService {
     })
     return data
   }
+
+  // 최근 검색어 [모두] 삭제
+  async deleteAllRecentSearch() {
+    const data: ResponseType = await request.delete(`${this.searchUrl}/recentSearch/all`)
+    return data
+  }
 }

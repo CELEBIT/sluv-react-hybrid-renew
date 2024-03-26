@@ -10,6 +10,14 @@ export interface IAddComment {
   itemList: Array<ItemPost> | null
 }
 
+export interface IEditComment {
+  questionId: number
+  commentId: number
+  content: string | null
+  imgList: Array<Img> | null
+  itemList: Array<ItemPost> | null
+}
+
 export interface ILikeComment {
   commentId: number
   questionId: number
@@ -34,6 +42,17 @@ const useSearchCommentQuery = () => {
     },
   )
 
+  const editComment = useMutation(
+    ({ commentId, content, imgList, itemList }: IEditComment) =>
+      comment.editComment(commentId, content, imgList, itemList),
+    {
+      onSuccess: (res, { questionId }) => {
+        console.log(res)
+        queryClient.invalidateQueries(queryKeys.comment(questionId))
+      },
+    },
+  )
+
   const likeComment = useMutation(({ commentId }: ILikeComment) => comment.likeComment(commentId), {
     onSuccess: (res, { questionId }) => {
       queryClient.invalidateQueries(queryKeys.comment(questionId))
@@ -45,11 +64,12 @@ const useSearchCommentQuery = () => {
     {
       onSuccess: (res, { questionId }) => {
         queryClient.invalidateQueries(queryKeys.comment(questionId))
+        queryClient.invalidateQueries(queryKeys.getQuestionTotalList)
       },
     },
   )
 
-  return { getComment, addComment, likeComment, deleteComment }
+  return { getComment, addComment, editComment, likeComment, deleteComment }
 }
 
 export default useSearchCommentQuery

@@ -25,6 +25,7 @@ import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
 import { useLocation, useNavigate } from 'react-router-dom'
 import ScrapItem from '../ScrapItem'
 import UserUploadItem from '../UserUploadItem'
+import KeywordPreviewContainer from '../../../pages/search/components/KeywordPreviewContainer'
 
 const CommentItemPhoto = () => {
   const navigate = useNavigate()
@@ -159,7 +160,7 @@ const CommentItemPhoto = () => {
         </ComponentWrapper>
 
         {searchValue !== '' ? (
-          <SearchResult></SearchResult>
+          <SearchResult></SearchResult> // <KeywordPreviewContainer keyword={searchValue} />
         ) : (
           <>
             {isFocused === false ? (

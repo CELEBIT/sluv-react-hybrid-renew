@@ -139,7 +139,7 @@ export const Img = styled.div<{ imgUrl: string }>`
     position: absolute;
     right: 0.25rem;
     bottom: 0.25rem;
-    z-index: 30;
+    z-index: 10;
   }
 `
 
