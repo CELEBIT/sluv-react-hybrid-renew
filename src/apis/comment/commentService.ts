@@ -38,6 +38,20 @@ export default class CommentService {
     return data
   }
 
+  async editComment(
+    commentId: number,
+    content: string | null,
+    imgList: Array<Img> | null,
+    itemList: Array<ItemPost> | null,
+  ) {
+    const data: ResponseType = await request.put(`${this.commentUrl}/${commentId}`, {
+      content,
+      imgList,
+      itemList,
+    })
+    return data
+  }
+
   // 질문 게시글 답글 조회
   async getSubComment(commentId: number, size?: number) {
     const data: ResponseType<GetPaginationResult<CommentResult>> = await request.get(

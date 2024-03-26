@@ -36,7 +36,7 @@ export const itemNameSearchState = atom<string>({
 
 const SearchResult = () => {
   const itemName = useRecoilValue(itemNameSearchState)
-  const [debouncedItemName] = useDebounce(itemName, 300)
+  const [debouncedItemName] = useDebounce(itemName, 500)
   const [imgItemList, setImageItemList] = useRecoilState(imgItemListState)
 
   const maxItemPhotoCount = useRecoilValue(maxItemPhotoCountState)
@@ -54,8 +54,6 @@ const SearchResult = () => {
     searchItem(debouncedItemName)
   const tempData = data?.pages[0].content[0]
   const bottom = useRef(null)
-  console.log('tempData', error)
-  console.log('itemName', itemName)
 
   const onIntersect = ([entry]: IntersectionObserverEntry[]) =>
     entry.isIntersecting && fetchNextPage()
@@ -144,6 +142,7 @@ const SearchResult = () => {
                   return (
                     <Item
                       key={each.itemId}
+                      size={105}
                       itemId={each.itemId}
                       itemName={each.itemName}
                       imgUrl={each.imgUrl}

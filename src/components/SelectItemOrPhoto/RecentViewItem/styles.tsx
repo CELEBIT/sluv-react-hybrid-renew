@@ -18,6 +18,7 @@ export const ListWrapper = styled.div`
   grid-auto-rows: minmax(0, auto);
   row-gap: 1.5rem;
   column-gap: 0.625rem;
+  padding-bottom: 1.25rem;
 
   > div {
     text-overflow: ellipsis;

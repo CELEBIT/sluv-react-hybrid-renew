@@ -11,7 +11,6 @@ function NewCommunity() {
   const { getQuestionTotalList } = useQuestionListQuery()
   const { data, error, fetchNextPage, status, isFetching, isFetchingNextPage } =
     getQuestionTotalList()
-  console.log(status, 'status')
   const bottom = useRef(null)
 
   const onIntersect = ([entry]: IntersectionObserverEntry[]) =>

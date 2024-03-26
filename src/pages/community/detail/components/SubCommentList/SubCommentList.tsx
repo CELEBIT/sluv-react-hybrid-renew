@@ -14,7 +14,7 @@ interface SubcommentProps {
 const SubCommentList = ({ comment }: SubcommentProps) => {
   const { getSubComment } = useSearchSubCommentQuery()
   const { data } = getSubComment(comment.id)
-  console.log('subcomment', data)
+  // console.log('subcomment', data)
   const showRestComment = data?.restCommentNum !== undefined ? data.restCommentNum > 0 : false
   function convertToUTC(dateString: string): string {
     const date = new Date(dateString)

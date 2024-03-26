@@ -6,6 +6,8 @@ import { BtnModalContent } from '../Modals/styles'
 import useItemDetailQuery from '../../apis/item/hooks/useItemDetailQuery'
 import { useNavigate } from 'react-router-dom'
 import useSearchCommentQuery from '../../apis/comment/hooks/useSearchCommentQuery'
+import { useResetRecoilState } from 'recoil'
+import { commentState } from '../../pages/community/detail/CommunityDetail'
 
 interface IProps {
   commentId: number
@@ -15,9 +17,7 @@ interface IProps {
 const DeleteCommentModal = ({ commentId, questionId }: IProps) => {
   const { closeModal } = useModals()
   const navigate = useNavigate()
-  console.log('commentId', commentId)
-  console.log('questionId', questionId)
-
+  const resetCommentObject = useResetRecoilState(commentState)
   const {
     deleteComment: { mutate: mutateCommentDeleted },
   } = useSearchCommentQuery()
@@ -25,14 +25,20 @@ const DeleteCommentModal = ({ commentId, questionId }: IProps) => {
   const onDelete = () => {
     mutateCommentDeleted({ commentId, questionId })
     closeModal(modals.DeleteCommentModal)
+    resetCommentObject()
     navigate(-1)
+  }
+
+  const onClose = () => {
+    resetCommentObject()
+    closeModal(modals.DeleteCommentModal)
   }
 
   return (
     <TwoButtonModal
       leftButtonName='취소하기'
       rightButtonName='삭제하기'
-      leftButtonOnClick={() => closeModal(modals.DeleteCommentModal)}
+      leftButtonOnClick={onClose}
       rightButtonOnClick={onDelete}
     >
       <BtnModalContent>

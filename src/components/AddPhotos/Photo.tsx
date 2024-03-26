@@ -46,7 +46,7 @@ const Photo = ({
   if (imgUrl) {
     return (
       <Img size={size} borderRadius={borderRadius} imgUrl={imgUrl}>
-        {imgUrl && <ItemCardDim></ItemCardDim>}
+        {imgUrl && <ItemCardDim size={size} borderRadius={borderRadius}></ItemCardDim>}
         {candelete && <DeleteList className='delete' onClick={onDelete}></DeleteList>}
         {representFlag && <Represent className='represent'></Represent>}
         {storageFlag !== undefined && (
@@ -108,11 +108,11 @@ export const Img = styled.div<{
   background-image: ${(props) =>
     props.imgFile ? `url(${URL.createObjectURL(props.imgFile)})` : `url(${props.imgUrl})`};
   background-color: ${Common.colors.GR300};
-  overflow: hidden;
   .delete {
     position: absolute;
     top: 0px;
     right: 0px;
+    z-index: 5;
     transform: translate(50%, -50%);
   }
 
@@ -128,9 +128,12 @@ export const Img = styled.div<{
   }
 `
 
-const ItemCardDim = styled.div`
-  display: flex;
+const ItemCardDim = styled.div<{ size?: number; borderRadius: number }>`
+  /* display:L */
   position: absolute;
+  width: ${(props) => (props.size ? `${props.size * 0.0625}rem` : '100%')};
+  height: ${(props) => (props.size ? `${props.size * 0.0625}rem` : '100%')};
+  border-radius: ${(props) => props.borderRadius * 0.0625}rem;
   top: 0;
   left: 0;
   width: 100%;

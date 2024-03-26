@@ -276,7 +276,7 @@ const CommunityDetail = () => {
             {isFocused && (
               <RecommendChipWrapper>
                 <Chip
-                  text='아이템 찾아주기'
+                  text={data.qtype === 'Find' ? '아이템 찾아주기' : '다른 아이템 추천하기'}
                   onClick={() => navigate('/community/comment/comment-item-photo')}
                 ></Chip>
               </RecommendChipWrapper>

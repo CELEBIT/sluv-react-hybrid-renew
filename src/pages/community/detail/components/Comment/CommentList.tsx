@@ -40,7 +40,6 @@ interface CommentListProps {
 const CommentList = ({ questionId }: CommentListProps) => {
   const { getComment } = useSearchCommentQuery()
   const { data } = getComment(questionId)
-
   if (data && data.length > 0) {
     return (
       <CommentContainer>
