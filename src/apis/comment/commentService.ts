@@ -38,8 +38,23 @@ export default class CommentService {
     return data
   }
 
+  async editComment(
+    commentId: number,
+    content: string | null,
+    imgList: Array<Img> | null,
+    itemList: Array<ItemPost> | null,
+  ) {
+    const data: ResponseType = await request.put(`${this.commentUrl}/${commentId}`, {
+      content,
+      imgList,
+      itemList,
+    })
+    return data
+  }
+
   // 질문 게시글 답글 조회
   async getSubComment(commentId: number, size?: number) {
+    console.log('size in getSubComment', size)
     const data: ResponseType<GetPaginationResult<CommentResult>> = await request.get(
       `${this.commentUrl}/${commentId}/subcomment`,
       {
@@ -71,6 +86,11 @@ export default class CommentService {
   // 댓글/대댓글 좋아요
   async likeComment(commentId: number) {
     const data: ResponseType = await request.post(`${this.commentUrl}/${commentId}/like`)
+    return data
+  }
+
+  async deleteComment(commentId: number) {
+    const data: ResponseType = await request.delete(`${this.commentUrl}/${commentId}`)
     return data
   }
 }

@@ -82,7 +82,6 @@ export const InfoTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  background-color: red;
   white-space: pre-wrap;
 `
 export const CommunityContent = styled.div`
@@ -152,6 +151,7 @@ export const InfoTop = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  padding-top: 0.375rem;
   gap: 0.25rem;
 `
 
@@ -190,7 +190,7 @@ export const DetailEach = styled.div`
 `
 
 export const Category = styled.div<{ color: string }>`
-  margin-top: 0.375rem;
+  /* margin-top: 0.375rem; */
   ${({ color }) => {
     if (color === 'yellow') {
       return Pretendard({ size: 13, weight: Common.bold.thin, color: Common.colors.YL })
@@ -231,6 +231,7 @@ export const CommentContainer = styled.div`
   flex-direction: column;
   width: 100%;
   position: absolute;
+
   bottom: 0;
   background-color: white;
   border-top: 1px solid ${Common.colors.GR300};

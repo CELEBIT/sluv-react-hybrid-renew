@@ -35,4 +35,10 @@ export default HashTagSearchList
 
 const Wrapper = styled.div`
   display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `

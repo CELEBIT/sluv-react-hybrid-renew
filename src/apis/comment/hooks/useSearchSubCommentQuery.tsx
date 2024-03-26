@@ -21,8 +21,8 @@ const useSearchSubCommentQuery = () => {
   const comment = new CommentService()
   const queryClient = useQueryClient()
 
-  const getSubComment = (commentId: number) => {
-    return useQuery(queryKeys.subcomment(commentId), () => comment.getSubComment(commentId))
+  const getSubComment = (commentId: number, size?: number) => {
+    return useQuery(queryKeys.subcomment(commentId), () => comment.getSubComment(commentId, size))
   }
 
   const addSubComment = useMutation(

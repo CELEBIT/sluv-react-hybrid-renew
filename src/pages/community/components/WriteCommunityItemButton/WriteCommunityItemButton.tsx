@@ -7,7 +7,7 @@ import { ReactComponent as Write } from '../../../../assets/writeCommunity_40.sv
 import { ReactComponent as QuestionIcon } from '../../../../assets/askQuestion_24.svg'
 import { ReactComponent as WriteIcon } from '../../../../assets/write_community_13.svg'
 import { ReactComponent as Close } from '../../../../assets/closeCommunity_40.svg'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { ButtonText, WriteCommunityItemButtonWrapper, WriteQuestionButton } from './styles'
 
 interface WriteButtonProps {
@@ -17,6 +17,8 @@ interface WriteButtonProps {
 const WriteCommunityItemButton = ({ isTop }: WriteButtonProps) => {
   const [menuOpen, setMenuOpen] = useState(false)
   const navigate = useNavigate()
+  const { pathname } = useLocation()
+  console.log(pathname)
   return (
     <WriteCommunityItemButtonWrapper>
       {menuOpen === true ? (
@@ -44,7 +46,7 @@ const WriteCommunityItemButton = ({ isTop }: WriteButtonProps) => {
           {isTop ? (
             <WriteQuestionButton onClick={() => setMenuOpen(!menuOpen)} hasButtonText>
               <QuestionIcon></QuestionIcon>
-              <ButtonText>질문하기</ButtonText>
+              <ButtonText>{pathname === '/community' ? '질문하기' : '글쓰기'}</ButtonText>
             </WriteQuestionButton>
           ) : (
             <WriteQuestionButton onClick={() => setMenuOpen(!menuOpen)}>

@@ -11,7 +11,7 @@ export const CommentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   overflow-x: scroll;
-  width: 100%;
+  overflow-y: scroll;
 `
 export const ContentWrapper = styled.div`
   display: flex;
@@ -52,6 +52,10 @@ export const CommentContent = styled.span`
   ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.BK })}
 `
 
+export const BannedContent = styled.span`
+  ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.GR500 })}
+`
+
 export const NickName = styled.span`
   ${Pretendard({ size: 14, weight: Common.bold.regular, color: Common.colors.BK })}
 `
@@ -72,6 +76,7 @@ export const UserImg = styled.div<{ imgUrl: string }>`
 
 export const ItemWrapper = styled.div`
   display: flex;
+  flex-shrink: 0;
   flex-direction: row;
   gap: 0.75rem;
   width: 100%;
@@ -135,12 +140,20 @@ export const Img = styled.div<{ imgUrl: string }>`
     position: absolute;
     right: 0.25rem;
     bottom: 0.25rem;
+    z-index: 10;
   }
 `
+
 export const BlockedContainer = styled.div`
+  display: flex;
+  padding: 0.75rem 1.25rem;
+`
+
+export const BlockedBg = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: c;
   width: 100%;
   padding: 20px;
   margin-bottom: 10px;

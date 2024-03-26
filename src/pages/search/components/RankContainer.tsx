@@ -44,8 +44,8 @@ const RankWrap = styled.section`
     height: 6px;
     background: ${Common.colors.GR300};
     border-radius: 50%;
-    margin: 0 5px;
-    padding: 5px;
+    margin: 0 3px;
+    padding: 3px;
     cursor: pointer;
   }
 

@@ -17,11 +17,19 @@ export const CommunityPageContainer = styled.div`
 export const QuestionListWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100%;
   padding-bottom: 3.125rem;
   .title {
     padding: 0 1.25rem;
     ${Pretendard({ size: 18, weight: Common.bold.semiBold, color: Common.colors.BK })}
   }
+`
+
+export const EmptyStateContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: calc(100% - 40px);
 `
 
 export const TabContainer = styled.div`

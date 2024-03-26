@@ -5,12 +5,12 @@ import { useObserver } from '../../../../hooks/useObserver'
 import { Line } from '../../detail/styles'
 import Flex from '../../../../components/Flex'
 import { ReactComponent as Spinner } from '../../../../assets/Spinner.svg'
+import styled from '@emotion/styled'
 
 function NewCommunity() {
   const { getQuestionTotalList } = useQuestionListQuery()
   const { data, error, fetchNextPage, status, isFetching, isFetchingNextPage } =
     getQuestionTotalList()
-  console.log(status, 'status')
   const bottom = useRef(null)
 
   const onIntersect = ([entry]: IntersectionObserverEntry[]) =>
@@ -20,7 +20,7 @@ function NewCommunity() {
     onIntersect,
   })
   return (
-    <div>
+    <Layout>
       {status === 'error' && (
         <Flex justify='center' align='center'>
           {JSON.stringify(error.response.data)}
@@ -43,8 +43,14 @@ function NewCommunity() {
           <Spinner></Spinner>
         </Flex>
       ) : null}
-    </div>
+    </Layout>
   )
 }
+
+const Layout = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 6.25rem;
+`
 
 export default NewCommunity

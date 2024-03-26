@@ -56,7 +56,7 @@ export const TagInput = styled.input<{ placeholder?: string; value?: string }>`
 export const SearchedHashTag = styled.div`
   display: flex;
   flex-direction: row;
-
+  white-space: nowrap;
   .count {
     margin: 0 4px;
   }

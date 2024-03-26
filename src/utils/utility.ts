@@ -57,13 +57,12 @@ export const formatUpdatedAt = (updatedAt: string): string => {
 export function getRankingUpdateTime(date: Date): string {
   const targetTime = new Date(date)
   targetTime.setHours(17, 0, 0, 0) // 17:00 설정
-
   const currentTime = new Date()
-  const currentTimeString = currentTime.toLocaleString()
+  const options: Intl.DateTimeFormatOptions = { month: '2-digit', day: '2-digit' }
+  const dateString = currentTime.toLocaleDateString(undefined, options)
 
   if (currentTime < targetTime) {
     // 17:00 전
-    const dateString = currentTime.toLocaleDateString()
     return `${dateString} 17:00 기준`
   } else {
     // 17:00 후
@@ -71,4 +70,30 @@ export function getRankingUpdateTime(date: Date): string {
     const nextDayString = nextDay.toLocaleDateString()
     return `${nextDayString} 17:00 기준`
   }
+}
+
+export function getRemainingTime(endTime: string): string {
+  const now = new Date()
+  const end = new Date(endTime)
+  const diffInMs = end.getTime() - now.getTime()
+  const diffInHours = Math.ceil(diffInMs / (1000 * 60 * 60)) // 밀리초를 시간 단위로 변환
+
+  if (diffInMs < 0) {
+    return '투표 종료'
+  } else if (diffInHours <= 24) {
+    return '투표 종료 임박'
+  } else if (diffInHours <= 48) {
+    return '투표 종료 D-1'
+  } else if (diffInHours <= 72) {
+    return '투표 종료 D-2'
+  } else if (diffInHours <= 96) {
+    return '투표 종료 D-3'
+  } else {
+    return '진행중'
+  }
+}
+
+export function convertToSeoulTimeISOString(endTime: Date): Date {
+  const seoulTime = new Date(endTime.getTime() + 9 * 60 * 60 * 1000)
+  return seoulTime
 }

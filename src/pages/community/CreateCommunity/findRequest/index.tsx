@@ -27,11 +27,12 @@ import {
   imgListUpdatedState,
 } from '../../../../recoil/communityInfo'
 import useCommunityImgUpload from '../../../../apis/s3/hooks/useCommunityImgUpload'
+import { celebInfoInItemState } from '../../../../recoil/itemInfo'
 
 const FindRequest = () => {
   const navigate = useNavigate()
   const [findRequestInfo, setFindRequestInfo] = useRecoilState(communityItemState)
-  const resetFindRequestInfo = useResetRecoilState(communityItemState)
+
   const celeb = useRecoilValue(selectedCelebState)
   const newCeleb = useRecoilValue(selectedNewCelebState)
   const [hasTriedToUpload, setHasTriedToUpload] = useState(false)
@@ -39,6 +40,10 @@ const FindRequest = () => {
   const [title, setTitle] = useState<string | null>(findRequestInfo.title)
   const [content, setContent] = useState<string | null>(findRequestInfo.content ?? null)
   const [imgItemList, setImageItemList] = useRecoilState(imgItemListState)
+
+  const resetFindRequestInfo = useResetRecoilState(communityItemState)
+  const resetCelebInfoInItem = useResetRecoilState(celebInfoInItemState)
+  const resetImageItemList = useResetRecoilState(imgItemListState)
 
   const {
     postCommunityImg: { mutate: mutateByImgUpload },
@@ -69,11 +74,10 @@ const FindRequest = () => {
       findRequestInfo.title.length > 10 &&
       findRequestInfo.title.length < 60
     ) {
-      setFindRequestInfo({ ...findRequestInfo, newCelebId: null })
       await uploadImg()
-
-      setTitle('')
-      setContent('')
+      resetFindRequestInfo()
+      resetCelebInfoInItem()
+      resetImageItemList()
     }
   }
 
@@ -84,16 +88,20 @@ const FindRequest = () => {
       title: title,
       content: content,
     })
+    console.log(findRequestInfo)
   }, [title, content, celeb])
 
-  useEffect(() => {
-    resetFindRequestInfo
-  })
+  const onBackClick = () => {
+    resetFindRequestInfo()
+    resetCelebInfoInItem()
+    resetImageItemList()
+    navigate(-1)
+  }
 
   return (
     <FindRequestContainer>
       <HeaderWrapper>
-        <CommunityHeader backBtnClick={() => navigate('/community')}>
+        <CommunityHeader backBtnClick={onBackClick}>
           <span className='submit' onClick={onSubmit}>
             등록
           </span>

@@ -20,7 +20,7 @@ export const ComponentContainer = styled.div`
   flex-shrink: 0;
   flex-direction: column;
   position: relative;
-  height: 100%;
+  /* height: 100%; */
   width: 100%;
   overflow-y: scroll;
   overflow-x: hidden;

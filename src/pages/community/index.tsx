@@ -43,18 +43,7 @@ const Community = () => {
       <ComponentContainer ref={ComponentContainerRef}>
         <BannerItemsList></BannerItemsList>
         <Menu menuRef={stickyRef} isStickyAtTop={isStickyAtTop}></Menu>
-        {/* <TabContainer>
-          <BlackFilter isSelected={selectedTab === 'Hot'} onClick={() => setSelectedTab('Hot')}>
-            Hot
-          </BlackFilter>
-          <BlackFilter isSelected={selectedTab === 'New'} onClick={() => setSelectedTab('New')}>
-            New
-          </BlackFilter>
-        </TabContainer> */}
-        <QuestionListWrapper>
-          <NewCommunity></NewCommunity>
-          {/* {selectedTab === 'Hot' ? <HotCommunity></HotCommunity> : } */}
-        </QuestionListWrapper>
+        <NewCommunity></NewCommunity>
         <WriteCommunityItemButton isTop={!isStickyAtTop}></WriteCommunityItemButton>
       </ComponentContainer>
     </CommunityPageContainer>

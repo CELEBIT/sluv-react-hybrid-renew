@@ -6,6 +6,7 @@ import { ReactComponent as Voted } from '../../../../assets/check_on_24.svg'
 import useQuestionDetailQuery, {
   IVote,
 } from '../../../../apis/question/hooks/useQuestionDetailQuery'
+import { getRemainingTime } from '../../../../utils/utility'
 
 interface VoteProps {
   questionId: number
@@ -35,7 +36,8 @@ const Vote = ({ voteList, voteStatus, questionId, voteEndTime }: VoteProps) => {
             {isImg(each) ? (
               <>
                 <VotePhoto imgUrl={each.imgUrl} />
-                {voteStatus !== null ? (
+                {voteStatus !== null ||
+                getRemainingTime(voteEndTime.toDateString()) === '투표 종료' ? (
                   <VoteInfo onClick={() => onClickVote(questionId, each.sortOrder)}>
                     <PercentageIndicator
                       percent={each.votePercent}
@@ -68,7 +70,9 @@ const Vote = ({ voteList, voteStatus, questionId, voteEndTime }: VoteProps) => {
                     </div>
                   </div>
                 </VotePhoto>
-                {voteStatus !== null ? (
+
+                {voteStatus !== null ||
+                getRemainingTime(voteEndTime.toDateString()) === '투표 종료' ? (
                   <VoteInfo onClick={() => onClickVote(questionId, each.sortOrder)}>
                     <PercentageIndicator
                       percent={each.votePercent}

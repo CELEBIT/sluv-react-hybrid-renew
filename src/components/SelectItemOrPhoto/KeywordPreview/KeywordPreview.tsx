@@ -8,11 +8,11 @@ import { Common, Pretendard } from '../../../components/styles'
 import Loading from '../../../components/Loading'
 import { useNavigate } from 'react-router-dom'
 
-interface KeywordPreviewContainerProps {
+interface KeywordPreviewProps {
   keyword: string
 }
 
-const KeywordPreviewContainer = ({ keyword }: KeywordPreviewContainerProps) => {
+const KeywordPreview = ({ keyword }: KeywordPreviewProps) => {
   const navigate = useNavigate()
 
   const bottom = useRef(null)
@@ -62,7 +62,7 @@ const KeywordPreviewContainer = ({ keyword }: KeywordPreviewContainerProps) => {
   )
 }
 
-export default KeywordPreviewContainer
+export default KeywordPreview
 
 const KeywordPreviewWrap = styled.div`
   display: flex;

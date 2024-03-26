@@ -72,7 +72,7 @@ const CommunityHeader = ({ children, backBtnClick }: HeaderProps) => {
     <HeaderWrapper role='heading'>
       <div className='left'>
         <ArrowBack onClick={backBtnClick} className='arrow-back' />
-        {pathname.includes('deleteAndSort') ? (
+        {pathname.includes('edit') ? (
           <Title>{communityMenu}</Title>
         ) : (
           <>

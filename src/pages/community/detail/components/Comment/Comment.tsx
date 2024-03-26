@@ -5,6 +5,8 @@ import { ReactComponent as ShowMore } from '../../../../../assets/add_24.svg'
 import { ReactComponent as StorageOff } from '../../../../../assets/storage_list_off_24.svg'
 import { ReactComponent as StorageOn } from '../../../../../assets/storage_on_24.svg'
 import {
+  BannedContent,
+  BlockedBg,
   BlockedContainer,
   BrandName,
   CelebName,
@@ -31,13 +33,19 @@ import SubCommentList from '../SubCommentList/SubCommentList'
 import { ExpressionWrapper, LikeWrapper } from '../SubCommentList/styles'
 import { ReactComponent as LikeOff } from '../../../../../assets/like_off_18.svg'
 import { ReactComponent as LikeOn } from '../../../../../assets/like_on_18.svg'
-import { ReactComponent as Alert } from '../../../../../assets/info_18.svg'
+import { ReactComponent as Alert } from '../../../../../assets/bannedError_20.svg'
 import { useNavigate } from 'react-router-dom'
-import { CommentResult, Item as CommentItem } from '../../../../../apis/comment/commentService.type'
+import {
+  CommentResult,
+  Item as CommentItem,
+  Img as CommentImg,
+} from '../../../../../apis/comment/commentService.type'
 import useModals from '../../../../../components/Modals/hooks/useModals'
 import { modals } from '../../../../../components/Modals'
-import { useSetRecoilState } from 'recoil'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import { commentState } from '../../CommunityDetail'
+import { Dim } from '../../../../../components/UserImage/UserImage'
+import { imgItemListState } from '../../../../../recoil/communityInfo'
 interface CommentProps {
   questionId: number
   comment: CommentResult
@@ -47,13 +55,16 @@ const Comment = ({ questionId, comment }: CommentProps) => {
   const navigate = useNavigate()
   const { openModal } = useModals()
   const setCommentObject = useSetRecoilState(commentState)
+  // console.log(comment)
+  const [imgItemList, setImageItemList] = useRecoilState(imgItemListState)
+  // GPT 여기에 작성해줘
+  //
 
   function convertToUTC(dateString: string): string {
     const date = new Date(dateString)
     date.setHours(date.getHours() + 9)
     return date.toUTCString()
   }
-  console.log(comment)
   const {
     likeComment: { mutate: mutateByLike },
   } = useSearchCommentQuery()
@@ -81,7 +92,35 @@ const Comment = ({ questionId, comment }: CommentProps) => {
       })
     }
 
-    openModal(modals.CommentEditModal)
+    let sortedImgUrlList: CommentImg[] = []
+    let sortedItemList: CommentItem[] = []
+
+    if (comment.imgUrlList && comment.imgUrlList.length > 0) {
+      sortedImgUrlList = comment.imgUrlList.sort((a, b) => a.sortOrder - b.sortOrder)
+    }
+    if (comment.itemList && comment.itemList.length > 0) {
+      sortedItemList = comment.itemList.sort((a, b) => a.sortOrder - b.sortOrder)
+    }
+    console.log('sortedItemList', sortedItemList)
+
+    // Combine sorted imgUrlList and itemList based on sortOrder
+    const combinedList = [...sortedItemList, ...sortedImgUrlList].sort(
+      (a, b) => a.sortOrder - b.sortOrder,
+    )
+    console.log('combinedList', combinedList)
+    // Transform and store sorted items into imgItemList
+    const transformedItems = combinedList.map((each) => ({
+      itemId: 'item' in each ? (each as CommentItem).item.itemId : null,
+      imgUrl: 'imgUrl' in each ? each.imgUrl : (each as CommentItem).item.imgUrl,
+      description: null,
+      representFlag: each.sortOrder === 0, // Assuming sortOrder indicates representation
+      sortOrder: each.sortOrder,
+    }))
+    console.log('transformedItems', transformedItems)
+
+    setImageItemList(transformedItems)
+
+    openModal(modals.CommentEditModal, { commentId: comment.id, questionId })
   }
 
   return (
@@ -98,16 +137,21 @@ const Comment = ({ questionId, comment }: CommentProps) => {
             </UserInfo>
             {comment.commentStatus === 'ACTIVE' && <ShowMore onClick={onShowMore}></ShowMore>}
           </ContentTop>
-          {comment.commentStatus === 'ACTIVE' ? (
-            <CommentContent>{comment.content}</CommentContent>
-          ) : (
-            <BlockedContainer>
-              <Alert></Alert>
-              <CommentContent>AI가 부적절한 댓글을 감지했어요</CommentContent>
-            </BlockedContainer>
-          )}
+          {comment.commentStatus === 'ACTIVE' && <CommentContent>{comment.content}</CommentContent>}
         </ContentRight>
       </ContentWrapper>
+      {comment.commentStatus !== 'ACTIVE' && (
+        <BlockedContainer>
+          <BlockedBg>
+            <Alert></Alert>
+            <BannedContent>
+              {comment.commentStatus === 'BLOCKED'
+                ? 'AI가 부적절한 댓글을 감지했어요'
+                : '댓글 작성자가 삭제한 댓글이에요'}
+            </BannedContent>
+          </BlockedBg>
+        </BlockedContainer>
+      )}
       {comment.itemList && comment.itemList.length > 0 && (
         <ItemWrapper>
           {comment.itemList.map((each) => {
@@ -119,7 +163,9 @@ const Comment = ({ questionId, comment }: CommentProps) => {
                   ) : (
                     <StorageOff className='represent'></StorageOff>
                   )}
+                  <Dim></Dim>
                 </Img>
+
                 <ItemTextWrapper>
                   <CelebName>{each.item.celebName}</CelebName>
                   <BrandName>{each.item.brandName}</BrandName>

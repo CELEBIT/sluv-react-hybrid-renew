@@ -2,7 +2,7 @@ import { UseInfiniteQueryResult, useInfiniteQuery } from '@tanstack/react-query'
 import QuestionService from '../questionService'
 import { queryKeys } from '../../../config/queryKeys'
 import { GetPaginationResult } from '../../core/type'
-import { SearchQuestionResult } from '../../search/searchService'
+import { BuyHomeResult, SearchQuestionResult } from '../../search/searchService'
 
 export interface IVote {
   questionId: number
@@ -74,7 +74,7 @@ const useQuestionListQuery = () => {
   }
   const getQuestionBuyList = (
     voteStatus: string,
-  ): UseInfiniteQueryResult<GetPaginationResult<SearchQuestionResult>, any> => {
+  ): UseInfiniteQueryResult<GetPaginationResult<BuyHomeResult>, any> => {
     return useInfiniteQuery(
       queryKeys.getQuestionBuyList(voteStatus),
       ({ pageParam = 0 }) => question.getQuestionBuyList(pageParam, voteStatus),

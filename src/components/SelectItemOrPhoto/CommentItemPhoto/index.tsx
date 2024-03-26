@@ -25,6 +25,7 @@ import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
 import { useLocation, useNavigate } from 'react-router-dom'
 import ScrapItem from '../ScrapItem'
 import UserUploadItem from '../UserUploadItem'
+import KeywordPreviewContainer from '../../../pages/search/components/KeywordPreviewContainer'
 
 const CommentItemPhoto = () => {
   const navigate = useNavigate()
@@ -100,11 +101,10 @@ const CommentItemPhoto = () => {
         }
       })
     }
-    if (location.state === 'edit') {
-      navigate(-1)
-    } else {
-      navigate('/community/comment/upload')
-    }
+    if (location.state === 'edit') navigate(-1)
+    else if (location.state.name === 'subcomment')
+      navigate('/community/subcomment/upload', { state: location.state.comment })
+    else navigate('/community/comment/upload')
   }
 
   // imgItemList에 IselectedItem 형태로 추가해줘야함
@@ -159,7 +159,7 @@ const CommentItemPhoto = () => {
         </ComponentWrapper>
 
         {searchValue !== '' ? (
-          <SearchResult></SearchResult>
+          <SearchResult></SearchResult> // <KeywordPreviewContainer keyword={searchValue} />
         ) : (
           <>
             {isFocused === false ? (

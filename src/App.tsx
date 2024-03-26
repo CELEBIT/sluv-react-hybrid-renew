@@ -70,9 +70,9 @@ const CreateRecommend = React.lazy(
 const CommunityDetail = React.lazy(() => import('./pages/community/detail/CommunityDetail'))
 const CommentItemPhoto = React.lazy(() => import('./components/SelectItemOrPhoto/CommentItemPhoto'))
 const CommentUpload = React.lazy(() => import('./pages/community/detail/components/CommentUpload'))
-const EditComment = React.lazy(
-  () => import('./pages/community/detail/components/EditComment/EditComment'),
-)
+// const EditComment = React.lazy(
+//   () => import('./pages/community/detail/components/EditComment/EditComment'),
+// )
 const AddSubComment = React.lazy(
   () => import('./pages/community/detail/components/AddSubComment/AddSubComment'),
 )
@@ -120,7 +120,7 @@ const App = () => {
     } else {
       storage.set(
         'accessToken',
-        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjc5ODk4NzE5LCJleHAiOjE3MTE0MzQ3MTl9.jvFrmgt9YVPpqL2k1r9hxTSsMm1sODAdRzroNVx-RAo',
+        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzExNDM2MjIyLCJleHAiOjE3NDI5NzIyMjJ9.deoUzbNon7-F6uLXi2-sx7N7Gp9XMeTOWUBl2yU1uHY',
       )
     }
   }, [])
@@ -152,11 +152,16 @@ const App = () => {
               <Route path='howabout' element={<CreateHowabout />} />
               <Route path='recommend' element={<CreateRecommend />} />
             </Route>
-            <Route path='/community/question/edit' element={<Question />} />
+            <Route path='/community/edit' element={<Question />}>
+              <Route path='howabout' element={<CreateHowabout />} />
+              <Route path='recommend' element={<CreateRecommend />} />
+            </Route>
+            {/* <Route path='/community/question/edit' element={<Question />} /> */}
             <Route path='/community/select-item-photo' element={<SelectItemOrPhoto />} />
             <Route path='/community/comment/comment-item-photo' element={<CommentItemPhoto />} />
             <Route path='/community/comment/upload' element={<CommentUpload />} />
-            <Route path='/community/comment/edit' element={<EditComment />} />
+            <Route path='/community/comment/edit' element={<CommentUpload />} />
+            <Route path='/community/subcomment/upload' element={<CommentUpload />} />
             <Route path='/community/comment/subcomment' element={<AddSubComment />} />
             <Route path='/community/detail/:id' element={<CommunityDetail />} />
             <Route path='/community/detail/:id/comment/:commentid' element={<CommunityDetail />} />

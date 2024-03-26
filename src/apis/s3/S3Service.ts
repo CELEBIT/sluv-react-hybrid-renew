@@ -70,6 +70,7 @@ export default class S3Service {
   // 커뮤니티 이미지 업로드
   async postCommunityImg(
     fileList: Array<IselectedItem>,
+    communityItem: CommunityItem,
     setCommunityItem: SetterOrUpdater<CommunityItem>,
   ) {
     const resultList: Array<IimgList> = []
@@ -102,11 +103,10 @@ export default class S3Service {
         }
       }
     }
-    console.log('resultList', resultList)
-    setCommunityItem((prevCommunityItem) => ({
-      ...prevCommunityItem,
+    setCommunityItem({
+      ...communityItem,
       imgList: resultList,
-    }))
+    })
     return resultList
   }
 

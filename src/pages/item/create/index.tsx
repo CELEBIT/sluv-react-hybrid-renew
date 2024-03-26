@@ -21,10 +21,10 @@ import {
 import { ReactComponent as Error } from '../../../assets/error_20.svg'
 import { ReactComponent as LinkAddOff } from '../../../assets/link_add_off_20.svg'
 import { ReactComponent as InfoAddOff } from '../../../assets/info_add_off_20.svg'
-import { ReactComponent as StorageOff } from '../../../assets/storage_off_20.svg'
 import { ReactComponent as LinkAddOn } from '../../../assets/link_add_on_20.svg'
 import { ReactComponent as InfoAddOn } from '../../../assets/info_add_on_20.svg'
 import { ReactComponent as StorageOn } from '../../../assets/storage_on_20.svg'
+import { ReactComponent as StorageOff } from '../../../assets/storage_off_20.svg'
 import { HeaderWrapper } from '../addInfo/styles'
 import { ErrorText } from '../../../components/TextField/DefaultTextfield/styles'
 import {
@@ -48,25 +48,25 @@ import useItemQuery from '../../../apis/item/hooks/useItemQuery'
 import { HashTagResult, ImgResult, TempItemReq } from '../../../apis/item/itemService.type'
 import useItemDetailQuery from '../../../apis/item/hooks/useItemDetailQuery'
 import { Image, imgListState } from '../../../components/AddPhotos/AddPhotos'
+import useTempItemQuery from '../../../apis/item/hooks/useTempItemQuery'
 
 const ItemCreate = () => {
   useUploadStateObserver()
 
   const { openModal } = useModals()
   const navigate = useNavigate()
-  const location = useLocation()
-  const [celeb, setCeleb] = useRecoilState(selectedCelebState)
-  const [category, setCategory] = useRecoilState(subCategoryState)
-  const [selectedParentCategory, setSelectedParentCategory] = useRecoilState(parentCategoryState)
+  const celeb = useRecoilValue(selectedCelebState)
+  const category = useRecoilValue(subCategoryState)
   const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
   const resetItemInfo = useResetRecoilState(itemInfoState)
   const [hasTriedToUpload, setHasTriedToUpload] = useState(false)
-  const [imgList, setImgListState] = useRecoilState(imgListState)
+  const imgList = useRecoilValue(imgListState)
 
-  // console.log('itemInfo in ItemCreate', itemInfo)
-
-  const setCelebInfoInItem = useSetRecoilState(celebInfoInItemState)
   const resetCelebInfoInItem = useResetRecoilState(celebInfoInItemState)
+
+  const { getTempItem } = useTempItemQuery()
+  const { data } = getTempItem()
+  console.log('temp storage', data?.pages[0].countNum)
 
   useEffect(() => {
     const newImgList: ImgResult[] = imgList.map((img: Image, idx) => ({
@@ -250,7 +250,11 @@ const ItemCreate = () => {
           </div>
         </div>
         <div className='right'>
-          <StorageOff onClick={() => navigate('/item/create/temporary-storage')}></StorageOff>
+          {data?.pages[0].countNum && data?.pages[0].countNum > 0 ? (
+            <StorageOn onClick={() => navigate('/item/create/temporary-storage')}></StorageOn>
+          ) : (
+            <StorageOff onClick={() => navigate('/item/create/temporary-storage')}></StorageOff>
+          )}
         </div>
       </BottomBar>
     </ItemCreatePageStyle>

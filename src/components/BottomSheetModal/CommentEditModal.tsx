@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import BottomSheetModal from '.'
 import styled from '@emotion/styled'
 
-import { useRecoilValue } from 'recoil'
+import { useRecoilValue, useResetRecoilState } from 'recoil'
 // import { atomKeys } from '../../config/atomKeys'
 import Header from '../Header/Header'
 import useModals from '../Modals/hooks/useModals'
@@ -11,14 +11,17 @@ import { Common, Pretendard } from '../styles'
 import { useNavigate } from 'react-router-dom'
 import { RequestEditItemState } from '../../pages/item/editRequest'
 import { ReactComponent as Share } from '../../assets/share_24.svg'
+import { commentState } from '../../pages/community/detail/CommunityDetail'
 
 interface IProps {
-  itemId: number
+  commentId: number
+  questionId: number
 }
 
-const CommentEditModal = ({ itemId }: IProps) => {
+const CommentEditModal = ({ commentId, questionId }: IProps) => {
   const navigate = useNavigate()
   const { openModal, closeModal } = useModals()
+  const resetCommentObject = useResetRecoilState(commentState)
 
   const onClickEdit = () => {
     closeModal(modals.CommentEditModal, () => {
@@ -28,16 +31,19 @@ const CommentEditModal = ({ itemId }: IProps) => {
 
   const onClickDeleteItem = () => {
     closeModal(modals.CommentEditModal, () => {
-      openModal(modals.DeleteItemModal, { itemId: itemId })
+      openModal(modals.DeleteCommentModal, { commentId, questionId })
     })
   }
+
+  const onClose = () => {
+    resetCommentObject()
+    closeModal(modals.ItemEditRequestModal)
+  }
+
   return (
     <BottomSheetModal>
       <ModalWrapper>
-        <Header
-          isModalHeader={true}
-          modalCloseBtnClick={() => closeModal(modals.ItemEditRequestModal)}
-        />
+        <Header isModalHeader={true} modalCloseBtnClick={onClose} />
         <MenuWrapper>
           <Menu onClick={onClickEdit}>
             <Share stroke={Common.colors.BK}></Share>댓글 수정하기

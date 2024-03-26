@@ -13,6 +13,7 @@ import {
 } from '../../../recoil/communityInfo'
 import useUploadQuestionQuery from '../../question/hooks/useUploadQuestionQuery'
 import { communityMenuState } from '../../../components/Header/CommunityHeader/CommunityHeader'
+import { convertToSeoulTimeISOString } from '../../../utils/utility'
 
 const useCommunityImgUpload = () => {
   const s3 = new S3Service()
@@ -27,12 +28,21 @@ const useCommunityImgUpload = () => {
   const communityMenu = useRecoilValue(communityMenuState)
 
   const postCommunityImg = useMutation(
-    (fileList: Array<IselectedItem>) => s3.postCommunityImg(fileList, setCommunityItem),
+    (fileList: Array<IselectedItem>) =>
+      s3.postCommunityImg(fileList, communityItem, setCommunityItem),
     {
       onSuccess: (res) => {
+        console.log(communityItem)
         if (communityMenu === '찾아주세요') mutatebyFind({ ...communityItem, imgList: res })
         if (communityMenu === '이거 어때') mutatebyHow({ ...communityItem, imgList: res })
-        if (communityMenu === '이 중에 뭐 살까') mutatebyBuy({ ...communityItem, imgList: res })
+        if (communityMenu === '이 중에 뭐 살까')
+          mutatebyBuy({
+            ...communityItem,
+            imgList: res,
+            voteEndTime: convertToSeoulTimeISOString(
+              communityItem.voteEndTime ? communityItem.voteEndTime : new Date(),
+            ),
+          })
         if (communityMenu === '추천해 줘') mutatebyRecommend({ ...communityItem, imgList: res })
       },
     },

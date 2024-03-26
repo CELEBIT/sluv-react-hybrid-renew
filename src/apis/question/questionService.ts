@@ -2,7 +2,7 @@ import { CommunityItem } from '../../recoil/communityInfo'
 import request from '../core'
 import { GetPaginationResult, ResponseType } from '../core/type'
 import { CommunityBannerItem, QuestionResult } from './questionService.type'
-import { SearchQuestionResult } from '../search/searchService'
+import { BuyHomeResult, SearchQuestionResult } from '../search/searchService'
 
 export interface questionUpload {
   id: number
@@ -146,7 +146,7 @@ export default class QuestionService {
   }
   // 이 중에 뭐 살까 홈 아이템 검색
   async getQuestionBuyList(page: number, voteStatus?: string) {
-    const data: ResponseType<GetPaginationResult<SearchQuestionResult>> = await request.get(
+    const data: ResponseType<GetPaginationResult<BuyHomeResult>> = await request.get(
       `${this.questionUrl}/buy`,
       {
         params: {

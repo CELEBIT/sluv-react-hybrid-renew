@@ -7,16 +7,10 @@ import {
   DetailContainer,
   FindItemButton,
   InfoChip,
-  InfoTextWrapper,
   InfoWrapper,
   InteractionWrapper,
-  Line,
   ProfileImg,
-  Recommend,
   RecommendChipWrapper,
-  RecommendInfo,
-  RecommendListWrapper,
-  RecommendPhoto,
   UserTextWrapper,
   UserWrapper,
 } from './styles'
@@ -50,7 +44,7 @@ import { atomKeys } from '../../../config/atomKeys'
 import { atom, useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
 import Comment from './components/Comment/Comment'
 import Chip from '../../../components/Chip/Chip'
-import { formatUpdatedAt } from '../../../utils/utility'
+import { formatUpdatedAt, getRemainingTime } from '../../../utils/utility'
 import RecommendList from './components/RecommendList'
 import { Common } from '../../../components/styles'
 import useModals from '../../../components/Modals/hooks/useModals'
@@ -148,7 +142,6 @@ const CommunityDetail = () => {
             sortOrder: item.sortOrder,
           })) ?? null,
         categoryNameList: data.recommendCategoryList,
-        voteEndTime: new Date(data.voteEndTime),
       })
       setQuestionType(data.qtype)
       const convertedList: IselectedItem[] = sortedList.map((item) => {
@@ -220,8 +213,8 @@ const CommunityDetail = () => {
             <span className='title'>{data?.title}</span>
             <span className='content'>{data?.content}</span>
             <CommunityContent>
-              {data?.qtype === 'Buy' && new Date(data?.voteEndTime) > new Date() && (
-                <CountDown voteEndTime={new Date(data?.voteEndTime)}></CountDown>
+              {data?.qtype === 'Buy' && getRemainingTime(data.voteEndTime) !== '투표 종료' && (
+                <CountDown voteEndTime={data?.voteEndTime}></CountDown>
               )}
               {data?.qtype === 'Buy' ? (
                 <Vote
@@ -237,7 +230,9 @@ const CommunityDetail = () => {
                 ></DisplayPhotoItems>
               )}
               {data?.qtype === 'Find' && !data.hasMine && (
-                <FindItemButton>아이템 찾아주기</FindItemButton>
+                <FindItemButton onClick={() => navigate('/community/comment/comment-item-photo')}>
+                  아이템 찾아주기
+                </FindItemButton>
               )}
             </CommunityContent>
             <InteractionWrapper>
@@ -275,7 +270,7 @@ const CommunityDetail = () => {
             {isFocused && (
               <RecommendChipWrapper>
                 <Chip
-                  text='아이템 찾아주기'
+                  text={data.qtype === 'Find' ? '아이템 찾아주기' : '다른 아이템 추천하기'}
                   onClick={() => navigate('/community/comment/comment-item-photo')}
                 ></Chip>
               </RecommendChipWrapper>

@@ -105,24 +105,26 @@ const ItemCategoryModal = () => {
               )
             })}
         </ChipWrapper>
-        {subCategories.length > 0 && (
-          <>
-            <CategoryLabel>{selectedParentCategory?.name} 종류</CategoryLabel>
-            <SubCategoryWrapper>
-              {subCategories.map((category) => {
-                return (
-                  <ButtonMedium
-                    key={category.id}
-                    text={category.name}
-                    type='pri'
-                    active={subCategory.id === category.id}
-                    onClick={() => onSubClick(category)}
-                  ></ButtonMedium>
-                )
-              })}
-            </SubCategoryWrapper>
-          </>
-        )}
+        <SubCategoryContainer>
+          {subCategories.length > 0 && (
+            <>
+              <CategoryLabel>{selectedParentCategory?.name} 종류</CategoryLabel>
+              <SubCategoryWrapper>
+                {subCategories.map((category) => {
+                  return (
+                    <ButtonMedium
+                      key={category.id}
+                      text={category.name}
+                      type='pri'
+                      active={subCategory.id === category.id}
+                      onClick={() => onSubClick(category)}
+                    ></ButtonMedium>
+                  )
+                })}
+              </SubCategoryWrapper>
+            </>
+          )}
+        </SubCategoryContainer>
 
         <ButtonWrapper>
           <ButtonLarge
@@ -138,9 +140,14 @@ const ItemCategoryModal = () => {
 
 export default ItemCategoryModal
 
+const SubCategoryContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 11.875rem;
+`
+
 const SubCategoryWrapper = styled.div`
   display: flex;
-
   padding: 0.5rem 1.25rem;
   width: 100%;
   flex-wrap: wrap;

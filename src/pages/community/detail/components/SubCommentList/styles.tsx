@@ -4,7 +4,7 @@ import { Common, Pretendard } from '../../../../../components/styles'
 export const SubCommentListContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding-bottom: 1.25rem;
+  padding-bottom: 3.75rem;
   border-top: 1px solid ${Common.colors.GR200};
 `
 // 대댓글

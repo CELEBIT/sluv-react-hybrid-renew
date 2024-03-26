@@ -29,6 +29,7 @@ const useUploadQuestionQuery = () => {
   const postBuyRequest = useMutation((item: CommunityItem) => question.postBuyRequest(item), {
     onSuccess: (res) => {
       if (res?.id) {
+        resetCommunityItem()
         resetImageItemList()
         navigate(`/community/detail/${res.id}`)
       }

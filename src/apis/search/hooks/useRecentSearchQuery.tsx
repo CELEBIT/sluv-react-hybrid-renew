@@ -14,7 +14,13 @@ const useRecentSearchQuery = () => {
       queryClient.invalidateQueries(queryKeys.recentSearch)
     },
   })
-  return { getRecentSearch, deleteRecentSearch }
+
+  const deleteAllRecentSearch = useMutation(() => search.deleteAllRecentSearch(), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(queryKeys.recentSearch)
+    },
+  })
+  return { getRecentSearch, deleteRecentSearch, deleteAllRecentSearch }
 }
 
 export default useRecentSearchQuery
