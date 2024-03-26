@@ -12,10 +12,11 @@ import useSearchCommentQuery, {
   IAddComment,
   IEditComment,
 } from '../../../../../apis/comment/hooks/useSearchCommentQuery'
+import useSearchSubCommentQuery from '../../../../../apis/comment/hooks/useSearchSubCommentQuery'
 
 const CommentUpload = () => {
   const navigate = useNavigate()
-  const { pathname } = useLocation()
+  const { state, pathname } = useLocation()
   const [commentObject, setCommentObject] = useRecoilState(commentState)
   const resetCommentObject = useResetRecoilState(commentState)
   const questionId = useRecoilValue(commentQuestionIdState)
@@ -48,6 +49,10 @@ const CommentUpload = () => {
     addComment: { mutate: mutateByAddComment },
     editComment: { mutate: mutateByEditComment },
   } = useSearchCommentQuery()
+
+  const {
+    addSubComment: { mutate: mutateByAddSubComment },
+  } = useSearchSubCommentQuery()
   const onAddComment = () => {
     const itemsWithImgFile = imgItemList.filter((item) => item.imgFile)
     console.log(itemsWithImgFile)
@@ -62,6 +67,8 @@ const CommentUpload = () => {
         itemList: commentObject.itemList,
       }
       if (pathname === '/community/comment/upload') mutateByAddComment(newComment)
+      if (pathname === '/community/subcomment/upload')
+        mutateByAddSubComment({ ...newComment, commentId: state.id })
       if (pathname === '/community/comment/edit') {
         console.log('commentObject', commentObject)
         if (commentObject.id) {

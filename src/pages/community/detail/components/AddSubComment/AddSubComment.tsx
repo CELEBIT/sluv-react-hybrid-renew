@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { HeaderWrapper } from '../../../../item/addInfo/styles'
 import Header from '../../../../../components/Header/Header'
 import { AddSubCommentContainer } from './styles'
@@ -15,6 +15,9 @@ import { useRecoilState, useResetRecoilState } from 'recoil'
 import { commentState } from '../../CommunityDetail'
 import { ReactComponent as SubmitOff } from '../../../../../assets/submit_off_32.svg'
 import { ReactComponent as SubmitOn } from '../../../../../assets/submit_on_32.svg'
+import useSearchSubCommentQuery, {
+  IAddSubComment,
+} from '../../../../../apis/comment/hooks/useSearchSubCommentQuery'
 
 const AddSubComment = () => {
   const location = useLocation()
@@ -27,18 +30,18 @@ const AddSubComment = () => {
   const [commentString, setCommentString] = useState<string>('')
   const [isFocused, setIsFocused] = useState(false)
 
-  // API 수정 해야함 -> 대댓글 upload로 수정 필요
   const {
-    addComment: { mutate: mutateByAddComment },
-  } = useSearchCommentQuery()
+    addSubComment: { mutate: mutateByAddSubComment },
+  } = useSearchSubCommentQuery()
   const onAddComment = () => {
-    const newComment: IAddComment = {
+    const newComment: IAddSubComment = {
+      commentId: Number(comment.id),
       questionId: Number(questionId),
       content: commentObject.content,
       imgList: commentObject.imgList,
       itemList: commentObject.itemList,
     }
-    mutateByAddComment(newComment)
+    mutateByAddSubComment(newComment)
   }
   const submitComment = () => {
     onAddComment()
@@ -55,6 +58,11 @@ const AddSubComment = () => {
       }
     }, 100)
   }
+
+  useEffect(() => {
+    setCommentObject({ ...commentObject, content: commentString })
+  }, [commentString])
+
   return (
     <AddSubCommentContainer>
       <HeaderWrapper>
@@ -66,7 +74,11 @@ const AddSubComment = () => {
           <RecommendChipWrapper>
             <Chip
               text='아이템 찾아주기'
-              onClick={() => navigate('/community/comment/comment-item-photo')}
+              onClick={() =>
+                navigate('/community/comment/comment-item-photo', {
+                  state: { comment: comment, name: 'subcomment' },
+                })
+              }
             ></Chip>
           </RecommendChipWrapper>
         )}
@@ -75,7 +87,7 @@ const AddSubComment = () => {
             value={commentString}
             setValue={setCommentString}
             placeholder='댓글을 남겨주세요'
-            onEnter={() => submitComment()}
+            onEnter={submitComment}
           ></CommentField>
           {commentString ? (
             <SubmitOn onClick={() => submitComment()}></SubmitOn>

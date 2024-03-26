@@ -34,6 +34,7 @@ import { ReactComponent as LikeOn } from '../../../../../assets/like_on_18.svg'
 import { ReactComponent as SubCommentArrow } from '../../../../../assets/arrow_comment_18.svg'
 import useSearchSubCommentQuery from '../../../../../apis/comment/hooks/useSearchSubCommentQuery'
 import { useNavigate } from 'react-router-dom'
+import { Dim } from '../../../../../components/UserImage/UserImage'
 interface SubCommentProps {
   subcomment: SubCommentResult
   comment: CommentResult
@@ -89,6 +90,7 @@ const SubComment = ({ subcomment, comment }: SubCommentProps) => {
                     ) : (
                       <StorageOff className='represent'></StorageOff>
                     )}
+                    <Dim></Dim>
                   </Img>
                   <ItemTextWrapper>
                     <CelebName>{each.item.celebName}</CelebName>
