@@ -120,7 +120,7 @@ const App = () => {
     } else {
       storage.set(
         'accessToken',
-        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjc5ODk4NzE5LCJleHAiOjE3MTE0MzQ3MTl9.jvFrmgt9YVPpqL2k1r9hxTSsMm1sODAdRzroNVx-RAo',
+        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzExNDM2MjIyLCJleHAiOjE3NDI5NzIyMjJ9.deoUzbNon7-F6uLXi2-sx7N7Gp9XMeTOWUBl2yU1uHY',
       )
     }
   }, [])

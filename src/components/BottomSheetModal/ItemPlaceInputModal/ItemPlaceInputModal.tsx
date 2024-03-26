@@ -136,7 +136,7 @@ export const ChipWrapper = styled.div`
   white-space: nowrap;
   box-sizing: border-box;
   padding: 0.5rem 0 0 1.25rem;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
   gap: 1.0625rem;
   & > *:last-child {
     margin-right: 1.25rem;

@@ -22,10 +22,13 @@ export const SelectCelebWrapper = styled.div`
     }
   }
   .search {
+    display: flex;
+    flex-direction: row;
     position: absolute;
     right: 0;
     overflow-wrap: 0;
+    padding-left: 0.5rem;
     padding-right: 1.25rem;
-    /* border: 1px solid red; */
+    background: linear-gradient(90deg, #ffffffe1 11.79%, #ffffff 50.18%, #ffffff 79.72%);
   }
 `
