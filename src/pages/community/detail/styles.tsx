@@ -82,7 +82,6 @@ export const InfoTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  background-color: red;
   white-space: pre-wrap;
 `
 export const CommunityContent = styled.div`
@@ -232,6 +231,7 @@ export const CommentContainer = styled.div`
   flex-direction: column;
   width: 100%;
   position: absolute;
+
   bottom: 0;
   background-color: white;
   border-top: 1px solid ${Common.colors.GR300};

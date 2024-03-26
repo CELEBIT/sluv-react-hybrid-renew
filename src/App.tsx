@@ -161,6 +161,7 @@ const App = () => {
             <Route path='/community/comment/comment-item-photo' element={<CommentItemPhoto />} />
             <Route path='/community/comment/upload' element={<CommentUpload />} />
             <Route path='/community/comment/edit' element={<CommentUpload />} />
+            <Route path='/community/subcomment/upload' element={<CommentUpload />} />
             <Route path='/community/comment/subcomment' element={<AddSubComment />} />
             <Route path='/community/detail/:id' element={<CommunityDetail />} />
             <Route path='/community/detail/:id/comment/:commentid' element={<CommunityDetail />} />

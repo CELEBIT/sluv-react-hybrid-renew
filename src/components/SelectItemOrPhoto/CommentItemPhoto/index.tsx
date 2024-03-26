@@ -101,11 +101,10 @@ const CommentItemPhoto = () => {
         }
       })
     }
-    if (location.state === 'edit') {
-      navigate(-1)
-    } else {
-      navigate('/community/comment/upload')
-    }
+    if (location.state === 'edit') navigate(-1)
+    else if (location.state.name === 'subcomment')
+      navigate('/community/subcomment/upload', { state: location.state.comment })
+    else navigate('/community/comment/upload')
   }
 
   // imgItemList에 IselectedItem 형태로 추가해줘야함

@@ -11,7 +11,7 @@ export const CommentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   overflow-x: scroll;
-  width: 100%;
+  overflow-y: scroll;
 `
 export const ContentWrapper = styled.div`
   display: flex;
@@ -76,6 +76,7 @@ export const UserImg = styled.div<{ imgUrl: string }>`
 
 export const ItemWrapper = styled.div`
   display: flex;
+  flex-shrink: 0;
   flex-direction: row;
   gap: 0.75rem;
   width: 100%;
