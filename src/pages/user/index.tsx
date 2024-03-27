@@ -96,7 +96,7 @@ const User = () => {
           <Header isModalHeader={false} hasArrow={true} title='마이페이지'>
             <div className='headerRight'>
               <Setting onClick={() => navigate('/settings')} />
-              <Upload stroke={Common.colors.BK}></Upload>
+              {/* <Upload stroke={Common.colors.BK}></Upload> */}
             </div>
           </Header>
         </HeaderWrapper>

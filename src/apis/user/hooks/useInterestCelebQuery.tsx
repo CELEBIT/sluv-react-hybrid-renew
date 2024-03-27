@@ -30,7 +30,7 @@ const useInterestCelebQuery = () => {
     (celebIdList: Array<number>) => user.postInterestCeleb(celebIdList),
     {
       onSuccess: (res) => {
-        queryClient.invalidateQueries(queryKeys.interestCeleb)
+        queryClient.invalidateQueries()
         if (currentRoute === '/settings/select-celeb') {
           alert('관심셀럽이 수정되었어요')
           navigate('/settings')

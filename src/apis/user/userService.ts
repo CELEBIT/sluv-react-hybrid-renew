@@ -322,4 +322,10 @@ export default class UserService {
     const data: ResponseType = await request.post(`${this.userUrl}/profile`, { imgUrl, nickName })
     return data
   }
+
+  // 약관 동의
+  async termsAgree() {
+    const data: ResponseType = await request.post(`${this.userUrl}/terms`)
+    return data
+  }
 }
