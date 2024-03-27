@@ -104,6 +104,7 @@ const Settings = React.lazy(() => import('./pages/settings/index'))
 const EditProfile = React.lazy(() => import('./components/Profile/Profile'))
 const Privacy = React.lazy(() => import('./pages/settings/components/Privacy/Privacy'))
 const TermsOfUse = React.lazy(() => import('./pages/settings/components/TermsOfUse/TermsOfUse'))
+const Marketing = React.lazy(() => import('./pages/settings/components/Marketing/Marketing'))
 
 const App = () => {
   useLayoutEffect(() => {
@@ -224,6 +225,7 @@ const App = () => {
             <Route path='/settings' element={<Settings />} />
             <Route path='/settings/privacy' element={<Privacy />} />
             <Route path='/settings/terms' element={<TermsOfUse />} />
+            <Route path='/settings/marketing' element={<Marketing />} />
             <Route path='/settings/select-celeb' element={<SelectInterestCeleb />} />
             <Route path='/settings/edit-profile' element={<EditProfile />} />
           </Routes>
