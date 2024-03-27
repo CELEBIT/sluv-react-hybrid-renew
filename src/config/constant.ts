@@ -29,7 +29,7 @@ export const 약관목록 = [
   {
     id: '04',
     title: '광고성 정보 수신 및 마케팅 활용 동의',
-    link: '/settings/privacy',
+    link: '/settings/marketing',
     mandatory: false,
   },
 ] as Term[]
