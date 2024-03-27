@@ -22,12 +22,13 @@ const useFollowQuery = () => {
       console.log(res, vars)
       if (vars.itemId) queryClient.invalidateQueries(queryKeys.itemDetail(vars.itemId))
       else {
-        queryClient.invalidateQueries(queryKeys.userFollowerList)
-        queryClient.invalidateQueries(queryKeys.userFollowingList)
-        queryClient.invalidateQueries(queryKeys.otherUserFollowerList(vars.userId))
-        queryClient.invalidateQueries(queryKeys.otherUserFollowingList(vars.userId))
-        queryClient.invalidateQueries(queryKeys.getMypageInfo)
-        queryClient.invalidateQueries(queryKeys.getHotSluver())
+        queryClient.invalidateQueries()
+        // queryClient.invalidateQueries(queryKeys.userFollowerList)
+        // queryClient.invalidateQueries(queryKeys.userFollowingList)
+        // queryClient.invalidateQueries(queryKeys.otherUserFollowerList(vars.userId))
+        // queryClient.invalidateQueries(queryKeys.otherUserFollowingList(vars.userId))
+        // queryClient.invalidateQueries(queryKeys.getMypageInfo)
+        // queryClient.invalidateQueries(queryKeys.getHotSluver())
       }
     },
   })

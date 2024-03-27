@@ -8,13 +8,37 @@ import { Common, Pretendard } from '../../../../components/styles'
 import { ReactComponent as StorageOff } from '../../../../assets/storage_off_24.svg'
 import { ReactComponent as StorageOn } from '../../../../assets/storage_on_24.svg'
 import useHowAboutItemQuery from '../../../../apis/item/hooks/useHowAboutItemQuery'
+import { useQueryClient } from '@tanstack/react-query'
+import useModals from '../../../../components/Modals/hooks/useModals'
+import { deleteScrap } from '../../../../apis/closet'
+import { ItemClosetListModal } from '../../../closet/detail'
 
 const HowAbout = () => {
   const navigate = useNavigate()
 
   const { getHowAboutItem } = useHowAboutItemQuery()
   const { data } = getHowAboutItem()
-  console.log(data)
+
+  const queryClient = useQueryClient()
+  const { openModal } = useModals()
+  const handleScrapItem = async (
+    e: React.MouseEvent<SVGSVGElement, MouseEvent>,
+    scrapStatus: boolean,
+    itemId: number,
+  ) => {
+    e.stopPropagation()
+    if (scrapStatus) {
+      const res = await deleteScrap(itemId)
+      console.log(res)
+      if (res.isSuccess) {
+        alert('아이템 저장이 취소되었어요')
+        queryClient.invalidateQueries()
+      }
+    } else {
+      openModal(ItemClosetListModal, { itemId: String(itemId) ?? '' })
+    }
+  }
+
   return (
     <ScrollComponentWrapper>
       <HomeTitle className='title'>이 아이템은 어때요?</HomeTitle>
@@ -34,7 +58,17 @@ const HowAbout = () => {
                       <ItemText>{item.brandName}</ItemText>
                       <ItemText>{item.itemName}</ItemText>
                     </ItemInfoWrapper>
-                    {item.scrapStatus ? <StorageOn /> : <StorageOff />}
+                    {item.scrapStatus ? (
+                      <StorageOn
+                        className='represent'
+                        onClick={(e) => handleScrapItem(e, item.scrapStatus, item.itemId)}
+                      ></StorageOn>
+                    ) : (
+                      <StorageOff
+                        className='represent'
+                        onClick={(e) => handleScrapItem(e, item.scrapStatus, item.itemId)}
+                      ></StorageOff>
+                    )}
                   </RightWrapper>
                 </HowAboutItem>
                 {index !== data.length - 1 && <Line></Line>}

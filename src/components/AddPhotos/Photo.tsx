@@ -7,8 +7,14 @@ import { ReactComponent as StorageOn } from '../../assets/storage_on_24.svg'
 import { ReactComponent as CheckOff } from '../../assets/checkbox_off_32.svg'
 import { ReactComponent as CheckOn } from '../../assets/checkbox_on_32.svg'
 import { Common } from '../styles'
+import { deleteScrap } from '../../apis/closet'
+import { useQueryClient } from '@tanstack/react-query'
+import useModals from '../Modals/hooks/useModals'
+import { queryKeys } from '../../config/queryKeys'
+import { ItemClosetListModal } from '../../pages/closet/detail'
 
 interface PhotoProps {
+  itemId?: number
   size?: number
   borderRadius: number
   imgUrl?: string
@@ -21,6 +27,7 @@ interface PhotoProps {
 }
 
 const Photo = ({
+  itemId,
   size,
   borderRadius,
   imgUrl,
@@ -31,6 +38,8 @@ const Photo = ({
   storageFlag,
   isSelected,
 }: PhotoProps) => {
+  const queryClient = useQueryClient()
+  const { openModal } = useModals()
   const [previewFile, setPreviewFile] = useState<string>('')
 
   useEffect(() => {
@@ -43,6 +52,21 @@ const Photo = ({
     }
   }, [])
 
+  const handleScrapItem = async (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
+    e.stopPropagation()
+
+    if (storageFlag) {
+      const res = await deleteScrap(Number(itemId))
+      console.log(res)
+      if (res.isSuccess) {
+        alert('아이템 저장이 취소되었어요')
+        queryClient.invalidateQueries()
+      }
+    } else {
+      openModal(ItemClosetListModal, { itemId: String(itemId) ?? '' })
+    }
+  }
+
   if (imgUrl) {
     return (
       <Img size={size} borderRadius={borderRadius} imgUrl={imgUrl}>
@@ -52,9 +76,9 @@ const Photo = ({
         {storageFlag !== undefined && (
           <>
             {storageFlag ? (
-              <StorageOn className='represent'></StorageOn>
+              <StorageOn className='represent' onClick={(e) => handleScrapItem(e)}></StorageOn>
             ) : (
-              <StorageOff className='represent'></StorageOff>
+              <StorageOff className='represent' onClick={(e) => handleScrapItem(e)}></StorageOff>
             )}
           </>
         )}

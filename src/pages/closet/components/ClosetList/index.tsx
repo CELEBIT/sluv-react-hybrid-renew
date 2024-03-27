@@ -46,7 +46,7 @@ export const ScrapClosetList = ({
     const res = await patchClosetScrap(itemId, toClosetId)
     if (res.isSuccess) {
       alert('성공적으로 스크랩되었습니다.')
-      queryClient.invalidateQueries(queryKeys.itemDetail(Number(itemId)))
+      queryClient.invalidateQueries()
     }
     closeModal(AnotherClosetListModal)
   }
