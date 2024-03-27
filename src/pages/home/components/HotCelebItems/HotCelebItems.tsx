@@ -20,6 +20,10 @@ import { ReactComponent as Fire } from '../../../../assets/Fire.svg'
 import { ReactComponent as Diamond } from '../../../../assets/Diamond.svg'
 import useHotCelebItemQuery from '../../../../apis/item/hooks/useHotCelebItemQuery'
 import { useNavigate } from 'react-router-dom'
+import { useQueryClient } from '@tanstack/react-query'
+import useModals from '../../../../components/Modals/hooks/useModals'
+import { deleteScrap } from '../../../../apis/closet'
+import { ItemClosetListModal } from '../../../closet/detail'
 
 const HotCelebItems = () => {
   const navigate = useNavigate()
@@ -27,6 +31,26 @@ const HotCelebItems = () => {
 
   const { getHotCelebItem } = useHotCelebItemQuery()
   const { data } = getHotCelebItem(tab)
+
+  const queryClient = useQueryClient()
+  const { openModal } = useModals()
+  const handleScrapItem = async (
+    e: React.MouseEvent<SVGSVGElement, MouseEvent>,
+    scrapStatus: boolean,
+    itemId: number,
+  ) => {
+    e.stopPropagation()
+    if (scrapStatus) {
+      const res = await deleteScrap(itemId)
+      console.log(res)
+      if (res.isSuccess) {
+        alert('아이템 저장이 취소되었어요')
+        queryClient.invalidateQueries()
+      }
+    } else {
+      openModal(ItemClosetListModal, { itemId: String(itemId) ?? '' })
+    }
+  }
 
   return (
     <ScrollComponentWrapper>
@@ -61,9 +85,15 @@ const HotCelebItems = () => {
               </div>
 
               {hotitem.scrapStatus ? (
-                <StorageOn className='storage'></StorageOn>
+                <StorageOn
+                  className='storage'
+                  onClick={(e) => handleScrapItem(e, hotitem.scrapStatus, hotitem.itemId)}
+                ></StorageOn>
               ) : (
-                <StorageOff className='storage'></StorageOff>
+                <StorageOff
+                  className='storage'
+                  onClick={(e) => handleScrapItem(e, hotitem.scrapStatus, hotitem.itemId)}
+                ></StorageOff>
               )}
               <HotItemDim></HotItemDim>
             </HotItem>

@@ -7,6 +7,7 @@ import { SignupValues } from '../../models/signup'
 import { Line, Title } from '../../pages/signup/styles'
 import Flex from '../Flex'
 import storage from '../../utils/storage'
+import useUserMypageQuery from '../../apis/user/hooks/useUserMypageQuery'
 // import { ApplyValues } from '@models/apply'
 
 function Terms({ onNext }: { onNext: (terms: SignupValues['terms']) => void }) {
@@ -36,6 +37,10 @@ function Terms({ onNext }: { onNext: (terms: SignupValues['terms']) => void }) {
   const 모든필수약관이_동의되었는가 = 약관목록
     .filter((term) => term.mandatory)
     .every((term) => termsAgreements[term.id])
+
+  const {
+    termsAgree: { mutate },
+  } = useUserMypageQuery()
 
   return (
     <Flex direction='column'>
@@ -70,6 +75,7 @@ function Terms({ onNext }: { onNext: (terms: SignupValues['terms']) => void }) {
         disabled={모든필수약관이_동의되었는가 === false}
         onClick={() => {
           const checkedTermIds = Object.keys(termsAgreements).filter((key) => termsAgreements[key])
+          if (모든약관이_동의되었는가) mutate()
           onNext(checkedTermIds)
         }}
       />

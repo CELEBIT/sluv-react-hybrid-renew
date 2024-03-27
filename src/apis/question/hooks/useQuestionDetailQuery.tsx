@@ -39,11 +39,12 @@ const useQuestionDetailQuery = () => {
     {
       onSuccess: (res, { questionId }) => {
         console.log(res)
-        queryClient.invalidateQueries(queryKeys.questionDetail(questionId))
-        queryClient.invalidateQueries(queryKeys.getQuestionBuyList('전체'))
-        queryClient.invalidateQueries(queryKeys.getQuestionBuyList('진행 중'))
-        queryClient.invalidateQueries(queryKeys.getQuestionBuyList('종료 임박'))
-        queryClient.invalidateQueries(queryKeys.getQuestionBuyList('종료'))
+        queryClient.invalidateQueries()
+        // queryClient.invalidateQueries(queryKeys.questionDetail(questionId))
+        // queryClient.invalidateQueries(queryKeys.getQuestionBuyList('전체'))
+        // queryClient.invalidateQueries(queryKeys.getQuestionBuyList('진행 중'))
+        // queryClient.invalidateQueries(queryKeys.getQuestionBuyList('종료 임박'))
+        // queryClient.invalidateQueries(queryKeys.getQuestionBuyList('종료'))
       },
     },
   )

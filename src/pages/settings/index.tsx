@@ -31,11 +31,11 @@ const Settings = () => {
         <Divider></Divider>
         <SettingMenu>
           <MenuTitle>나의 정보</MenuTitle>
-          <Menu>프로필 수정</Menu>
+          <Menu onClick={() => navigate('/settings/edit-profile')}>프로필 수정</Menu>
           <Menu onClick={() => navigate('/settings/select-celeb')}>관심셀럽 편집</Menu>
         </SettingMenu>
         <Divider></Divider>
-        <SettingMenu>
+        {/* <SettingMenu>
           <MenuTitle>알림</MenuTitle>
           <Menu>
             푸쉬 알림
@@ -45,7 +45,7 @@ const Settings = () => {
             ></ToggleSwitch>
           </Menu>
         </SettingMenu>
-        <Divider></Divider>
+        <Divider></Divider> */}
         <SettingMenu>
           <MenuTitle>서비스 정보</MenuTitle>
           <Menu onClick={() => navigate('./terms')}>서비스 이용 약관</Menu>

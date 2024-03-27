@@ -70,7 +70,7 @@ import { ItemClosetListModal } from '../../closet/detail'
 import SameCeleb from './components/Carousel/SameCeleb'
 import SameScrap from './components/Carousel/SameScrap'
 import SameBrand from './components/Carousel/SameBrand'
-import { deleteScrap, patchClosetScrap } from '../../../apis/closet'
+import { deleteScrap } from '../../../apis/closet'
 
 const ItemDetail = () => {
   const navigate = useNavigate()

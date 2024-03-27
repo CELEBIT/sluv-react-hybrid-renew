@@ -31,6 +31,7 @@ const Item = ({
   return (
     <RecommendItemWrapper key={itemId} size={size} onClick={() => onClick()}>
       <Photo
+        itemId={itemId}
         size={size}
         borderRadius={borderRadius}
         imgUrl={imgUrl}

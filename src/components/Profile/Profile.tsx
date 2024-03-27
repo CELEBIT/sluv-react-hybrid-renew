@@ -10,13 +10,19 @@ import { Title } from '../../pages/signup/styles'
 import { ReactComponent as DefaultProfile } from '../../assets/profile_big.svg'
 import { ReactComponent as AddPhoto } from '../../assets/add_photo_30.svg'
 import { AxiosError } from 'axios'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { HeaderWrap } from '../../pages/search/styles'
+import Header from '../Header/Header'
+import { ContentContainer, PageContainer } from '../../pages/user/styles'
+import { HeaderWrapper } from '../Header/CommunityHeader/styles'
 
-function Profile({ onNext }: { onNext: (profile: SignupValues['profile']) => void }) {
+function Profile({ onNext }: { onNext?: (profile: SignupValues['profile']) => void }) {
   const [profileValues, setProfileValues] = useState<SignupValues['profile']>({
     nickname: '',
     userImg: '',
   })
-
+  const { pathname } = useLocation()
+  const navigate = useNavigate()
   const errors = useMemo(() => validate(profileValues), [profileValues])
   const 제출가능한상태인가 = Object.keys(errors).length === 0
 
@@ -44,7 +50,7 @@ function Profile({ onNext }: { onNext: (profile: SignupValues['profile']) => voi
       return
     }
     const s3 = new S3Service()
-    const imgURL = await s3.postClosetImg(file)
+    const imgURL = await s3.postProfileImg(file)
     setProfileValues((prevValues) => ({
       ...prevValues,
       userImg: imgURL,
@@ -57,64 +63,110 @@ function Profile({ onNext }: { onNext: (profile: SignupValues['profile']) => voi
   } = useUserMypageQuery()
 
   const handleSubmit = () => {
-    mutate(profileValues, {
-      onError: (error: AxiosError<{ code: number }>) => {
-        if (error.response) {
-          const { code } = error.response.data
-          if (code === 2017) {
-            errors.nickname = '중복된 닉네임입니다'
+    if (제출가능한상태인가) {
+      mutate(profileValues, {
+        onError: (error: AxiosError<{ code: number }>) => {
+          if (error.response) {
+            const { code } = error.response.data
+            if (code === 2017) {
+              errors.nickname = '중복된 닉네임입니다'
+            }
           }
-        }
-        console.log(error)
-      },
-      onSuccess: (data) => {
-        onNext(profileValues)
-      },
-    })
+          console.log(error)
+        },
+        onSuccess: () => {
+          if (onNext) onNext(profileValues)
+          else navigate(-1)
+        },
+      })
+    }
   }
 
+  const {
+    getMypageInfo: { data },
+  } = useUserMypageQuery()
+  const [currentNickname, setcurrentNickname] = useState(data?.userInfo.nickName ?? '')
+  const [currentImg, setcurrentImg] = useState(data?.userInfo.profileImgUrl ?? '')
   useEffect(() => {
-    // 유저 존재 시 프로필 가져오기
-  }, [])
+    if (pathname === '/settings/edit-profile') {
+      if (data) {
+        setProfileValues((prevValues) => ({
+          ...prevValues,
+          userImg: data?.userInfo.profileImgUrl,
+          nickname: data?.userInfo.nickName,
+        }))
+        setcurrentNickname(data?.userInfo.nickName)
+        setcurrentImg(data?.userInfo.profileImgUrl)
+      }
+    }
+  }, [data])
 
   return (
-    <Flex direction='column'>
-      <Title>
-        프로필 사진과 <br />
-        닉네임을 등록해주세요
-      </Title>
-      <Flex direction='column' justify='center' align='center'>
-        <ProfileContainer>
-          {profileValues.userImg ? (
-            <img src={profileValues.userImg} alt='유저의 이미지' />
-          ) : (
-            <DefaultProfile />
-          )}
-          <input type='file' accept='image/*' onChange={handleChangeFile} />
-          <AddPhoto className='add' />
-        </ProfileContainer>
-        <TextField
-          label='이름'
-          name='nickname'
-          placeholder='내 닉네임'
-          value={profileValues.nickname}
-          onChange={handleFormValues}
-          hasError={Boolean(dirty?.nickname) && Boolean(errors.nickname)}
-          helpMessage={dirty?.nickname ? errors.nickname : ''}
-          onBlur={handleBlur}
-        />
-      </Flex>
+    <Layout>
+      {pathname === '/settings/edit-profile' && (
+        <HeaderWrap>
+          <Header isModalHeader={false} hasArrow={true} backBtnClick={() => navigate(-1)} />
+        </HeaderWrap>
+      )}
 
-      <FixedBottomButton
-        label='완료'
-        disabled={제출가능한상태인가 === false}
-        onClick={() => {
-          handleSubmit()
-        }}
-      />
-    </Flex>
+      <ContentContainer>
+        <Flex direction='column' style={{ padding: '0 20px' }}>
+          <Title>
+            프로필 사진과 <br />
+            닉네임을 등록해주세요
+          </Title>
+          <Flex direction='column' justify='center' align='center'>
+            <ProfileContainer>
+              {profileValues.userImg ? (
+                <img src={profileValues.userImg} alt='유저의 이미지' />
+              ) : (
+                <DefaultProfile />
+              )}
+              <input type='file' accept='image/*' onChange={handleChangeFile} />
+              <AddPhoto className='add' />
+            </ProfileContainer>
+            <TextField
+              label='이름'
+              name='nickname'
+              placeholder='내 닉네임'
+              value={profileValues.nickname}
+              onChange={handleFormValues}
+              hasError={Boolean(dirty?.nickname) && Boolean(errors.nickname)}
+              helpMessage={dirty?.nickname ? errors.nickname : ''}
+              onBlur={handleBlur}
+            />
+          </Flex>
+          <FixedBottomButton
+            label='완료'
+            disabled={
+              pathname === '/settings/edit-profile'
+                ? currentNickname === profileValues.nickname && currentImg === profileValues.userImg
+                : 제출가능한상태인가 === false
+            }
+            onClick={() => {
+              handleSubmit()
+            }}
+          />
+        </Flex>
+      </ContentContainer>
+    </Layout>
   )
 }
+
+export const Layout = styled.div`
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  width: 100vw;
+  height: 100%;
+  margin-left: calc(-50vw + 50%);
+  .headerRight {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.25rem;
+  }
+`
 
 export const ProfileContainer = styled.div`
   position: relative;
