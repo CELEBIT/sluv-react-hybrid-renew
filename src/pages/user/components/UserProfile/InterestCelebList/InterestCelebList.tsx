@@ -55,6 +55,7 @@ const InterestCelebList = () => {
               color={getColorForCategory(celeb.celebCategory)}
               active={true}
               size='small'
+              canDelete={false}
             >
               {celeb.celebNameKr}
             </ColorChip>

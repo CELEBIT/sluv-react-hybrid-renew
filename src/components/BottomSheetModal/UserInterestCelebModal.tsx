@@ -70,7 +70,7 @@ const UserInterestCelebModal = ({ id }: userIdProps) => {
                             <ColorChip
                               key={celeb.id}
                               color={colorList[index]}
-                              canDelete={id ? false : true}
+                              canDelete={false}
                               active={true}
                             >
                               {celeb.celebNameKr}
@@ -120,7 +120,7 @@ const UserInterestCelebModal = ({ id }: userIdProps) => {
                             <ColorChip
                               key={celeb.id}
                               color={colorList[index]}
-                              canDelete={id ? false : true}
+                              canDelete={false}
                               active={true}
                             >
                               {celeb.celebNameKr}

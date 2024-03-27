@@ -120,6 +120,11 @@ const useUserMypageQuery = () => {
       },
     },
   )
+  const termsAgree = useMutation(queryKeys.termsAgree, () => user.termsAgree(), {
+    onSuccess: () => {
+      console.log('term agreed')
+    },
+  })
 
   return {
     getMypageInfo,
@@ -130,6 +135,7 @@ const useUserMypageQuery = () => {
     getRecentViewCommunityItem,
     getLikedComment,
     uploadProfile,
+    termsAgree,
   }
 }
 
