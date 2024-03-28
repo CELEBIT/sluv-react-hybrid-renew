@@ -1,5 +1,6 @@
 export const queryKeys = {
   termsAgree: ['termsAgree'] as const,
+  getMarketingAgreeStatus: ['getMarketingAgreeStatus'] as const,
   itemCategory: ['itemCategory'] as const,
   brandRecentSelected: ['brandRecentSelected'] as const,
   brandTop: ['brandTop'] as const,

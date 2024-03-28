@@ -120,11 +120,17 @@ const useUserMypageQuery = () => {
       },
     },
   )
+
+  // 마케팅 약관 동의 post
   const termsAgree = useMutation(queryKeys.termsAgree, () => user.termsAgree(), {
     onSuccess: () => {
-      console.log('term agreed')
+      queryClient.invalidateQueries(queryKeys.getMarketingAgreeStatus)
     },
   })
+
+  const getMarketingAgreeStatus = useQuery(queryKeys.getMarketingAgreeStatus, () =>
+    user.getMarketingAgreement(),
+  )
 
   return {
     getMypageInfo,
@@ -136,6 +142,7 @@ const useUserMypageQuery = () => {
     getLikedComment,
     uploadProfile,
     termsAgree,
+    getMarketingAgreeStatus,
   }
 }
 

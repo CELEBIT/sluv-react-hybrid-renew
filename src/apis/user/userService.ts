@@ -51,6 +51,10 @@ export interface ICommentResult {
   ICommentResult: string
 }
 
+export interface ITermsAgreement {
+  termsStatus: boolean
+}
+
 export default class UserService {
   userCelebUrl: string
   userUrl: string
@@ -327,5 +331,11 @@ export default class UserService {
   async termsAgree() {
     const data: ResponseType = await request.post(`${this.userUrl}/terms`)
     return data
+  }
+
+  // 현재 유저 마이페이지 조회
+  async getMarketingAgreement() {
+    const data: ResponseType<ITermsAgreement> = await request.get(`${this.userUrl}/terms`)
+    return data.result
   }
 }
