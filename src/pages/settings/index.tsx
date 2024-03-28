@@ -5,13 +5,27 @@ import { DeleteAccount, Menu, MenuTitle, SettingMenu, UpdateText } from './style
 import { Divider } from '../item/detail/styles'
 import ToggleSwitch from '../../components/ToggleSwitch/ToggleSwitch'
 import { useNavigate } from 'react-router-dom'
+import useUserMypageQuery from '../../apis/user/hooks/useUserMypageQuery'
 
 const Settings = () => {
   const navigate = useNavigate()
   const [pushAlarmState, setPushAlarmState] = useState(false)
+
+  const { getMarketingAgreeStatus } = useUserMypageQuery()
+  const { data } = getMarketingAgreeStatus
+
+  const {
+    termsAgree: { mutate },
+  } = useUserMypageQuery()
+
   const onClickPushAlarm = () => {
     setPushAlarmState(!pushAlarmState)
     // api call
+  }
+
+  const onClickTermsToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.stopPropagation()
+    mutate()
   }
   return (
     <PageContainer>
@@ -46,10 +60,20 @@ const Settings = () => {
           </Menu>
         </SettingMenu>
         <Divider></Divider> */}
+
         <SettingMenu>
           <MenuTitle>서비스 정보</MenuTitle>
           <Menu onClick={() => navigate('./terms')}>서비스 이용 약관</Menu>
           <Menu onClick={() => navigate('./privacy')}>개인정보 처리방침</Menu>
+          <Menu onClick={() => navigate('/settings/marketing')}>
+            광고성 정보 수신 및 마케팅 활용 동의
+            {data && (
+              <ToggleSwitch
+                isToggleOn={data?.termsStatus}
+                onToggleSwitch={(event) => onClickTermsToggle(event)}
+              ></ToggleSwitch>
+            )}
+          </Menu>
           <Menu>
             현재 버전 1.0.2
             <UpdateText canUpdate={false}>최신 버전</UpdateText>
