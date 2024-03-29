@@ -17,14 +17,15 @@ export const HomeContainer = styled.div`
 `
 export const ComponentContainer = styled.div`
   display: flex;
-  flex-shrink: 0;
   flex-direction: column;
   position: relative;
-  /* height: 100%; */
+  height: 100%;
   width: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
-  padding-bottom: 1.25rem;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 export const ScrollComponentWrapper = styled.div<{ bgColor?: string }>`
