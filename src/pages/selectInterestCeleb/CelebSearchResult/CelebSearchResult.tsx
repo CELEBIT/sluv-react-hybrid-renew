@@ -62,24 +62,29 @@ const CelebSearchResult = ({ celebName }: CelebSearchResultProps) => {
   return (
     <SearchResultContainer>
       {data?.map((Category, index) => {
-        if (Category.subCelebList.length > 0) {
+        if (Category.celebList.length > 0) {
           return (
-            <CelebCategoryWrapper key={Category.id} id={Category.celebNameKr}>
+            <CelebCategoryWrapper key={Category.categoryId} id={Category.categoryName}>
               <CategoryContentWrapper>
-                <CategoryTitle>{Category.celebNameKr}</CategoryTitle>
+                <CategoryTitle>{Category.categoryName}</CategoryTitle>
                 <CelebListWrapper open={true}>
-                  {Category.subCelebList.map((celeb) => {
-                    const isSelected = celebIds.includes(celeb.id)
+                  {Category.celebList.map((celeb) => {
+                    const isSelected = celebIds.includes(celeb.celebId)
                     return (
                       <ColorChip
-                        key={celeb.id}
+                        key={celeb.celebId}
                         color={colorList[index]}
                         active={isSelected}
                         onClick={() =>
-                          handleColorChipClick(Category.id, celeb.id, celeb.celebNameKr, isSelected)
+                          handleColorChipClick(
+                            Category.categoryId,
+                            celeb.celebId,
+                            celeb.celebName,
+                            isSelected,
+                          )
                         }
                       >
-                        {celeb.celebNameKr}
+                        {celeb.celebName}
                       </ColorChip>
                     )
                   })}
