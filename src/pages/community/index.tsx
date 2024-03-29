@@ -11,6 +11,7 @@ import BannerItemsList from './components/BannerItems/BannerItemsList'
 import Menu from './components/Menu/Menu'
 import { ComponentContainer } from '../home/styles'
 import NewCommunity from './components/NewCommunity/NewCommunity'
+import styled from '@emotion/styled'
 
 const Community = () => {
   const navigate = useNavigate()
@@ -24,6 +25,7 @@ const Community = () => {
       if (stickyRef.current) {
         const { top } = stickyRef.current.getBoundingClientRect()
         setIsStickyAtTop(top <= 65)
+        console.log(top)
       }
     }
     ComponentContainerRef.current?.addEventListener('scroll', handleScroll)
@@ -40,14 +42,28 @@ const Community = () => {
           {/* <NoticeOff></NoticeOff> */}
         </Header>
       </HeaderWrapper>
-      <ComponentContainer ref={ComponentContainerRef}>
+      <ComponentLayout ref={ComponentContainerRef}>
         <BannerItemsList></BannerItemsList>
         <Menu menuRef={stickyRef} isStickyAtTop={isStickyAtTop}></Menu>
         <NewCommunity></NewCommunity>
         <WriteCommunityItemButton isTop={!isStickyAtTop}></WriteCommunityItemButton>
-      </ComponentContainer>
+      </ComponentLayout>
     </CommunityPageContainer>
   )
 }
+
+export const ComponentLayout = styled.div`
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`
 
 export default Community

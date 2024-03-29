@@ -7,9 +7,9 @@ export const CommunityPageContainer = styled.div`
   position: relative;
   margin-left: -1.25rem;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   padding-left: 0;
-  overflow-y: scroll;
+  padding-bottom: 3.125rem;
   ::-webkit-scrollbar {
     display: none;
   }
