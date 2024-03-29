@@ -114,7 +114,7 @@ export default class CelebService {
 
   // 관심 셀럽 검색
   async searchSelectCeleb(celebName: string) {
-    const data: ResponseType<Array<ISearchCelebResult>> = await request.get(
+    const data: ResponseType<Array<ISelectCelebResult>> = await request.get(
       `${this.celebUrl}/search/interested`,
       {
         params: {
