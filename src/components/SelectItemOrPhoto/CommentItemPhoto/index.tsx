@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useResetRecoilState } from 'recoil'
 import { commentState } from '../../../pages/community/detail/CommunityDetail'
 import { maxItemPhotoCountState } from '..'
 import { IselectedItem, imgItemListState } from '../../../recoil/communityInfo'
@@ -33,6 +33,7 @@ const CommentItemPhoto = () => {
   const [commentObject, setCommentObject] = useRecoilState(commentState)
   const [maxItemPhotoCount, setMaxItemPhotoCount] = useRecoilState(maxItemPhotoCountState)
   const [imgItemList, setImageItemList] = useRecoilState(imgItemListState)
+  const resetImageItemList = useResetRecoilState(imgItemListState)
   const [searchValue, setSearchValue] = useRecoilState<string>(itemNameSearchState)
   const [selectedTab, setSelectedTab] = useState('recent')
   const [isFocused, setIsFocused] = useState<boolean>(false)
@@ -102,7 +103,7 @@ const CommentItemPhoto = () => {
       })
     }
     if (location.state === 'edit') navigate(-1)
-    else if (location.state.name === 'subcomment')
+    else if (location.state?.name === 'subcomment')
       navigate('/community/subcomment/upload', { state: location.state.comment })
     else navigate('/community/comment/upload')
   }
@@ -139,10 +140,20 @@ const CommentItemPhoto = () => {
     setMaxItemPhotoCount(5)
   }, [])
 
+  const onBackClick = () => {
+    resetImageItemList()
+    navigate(-1)
+  }
+
   return (
     <SelectItemOrPhotoContainer>
       <HeaderWrapper>
-        <Header isModalHeader={false} hasArrow={true} title='아이템 선택'></Header>
+        <Header
+          isModalHeader={false}
+          hasArrow={true}
+          title='아이템 선택'
+          backBtnClick={onBackClick}
+        ></Header>
       </HeaderWrapper>
       <ComponentContainer>
         <ComponentWrapper

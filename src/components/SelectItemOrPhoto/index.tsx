@@ -18,9 +18,7 @@ import ButtonLarge from '../ButtonLarge/ButtonLarge'
 import { ReactComponent as Gallery } from '../../assets/gallery_24.svg'
 import { atom, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import {
-  IselectedItem,
   communityItemState,
-  communityQuestionMenuState,
   firstItemState,
   imgItemListState,
   secondItemState,
