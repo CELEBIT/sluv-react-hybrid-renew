@@ -155,7 +155,7 @@ export const HotItem = styled.div<{ imgUrl: string }>`
   }
   .storage {
     flex-shrink: 0;
-    z-index: 100;
+    z-index: 10;
   }
 `
 export const HotItemDim = styled.div`
@@ -174,7 +174,7 @@ export const HotItemCeleb = styled.span`
     weight: Common.bold.regular,
     color: Common.colors.WH,
   })}
-  z-index: 100;
+  z-index: 10;
   padding-right: 1.25rem;
   margin-bottom: 0.75rem;
 `
@@ -184,7 +184,7 @@ export const HotItemText = styled.span`
     weight: Common.bold.regular,
     color: Common.colors.WH,
   })}
-  z-index: 100;
+  z-index: 10;
   padding-right: 1.25rem;
   text-overflow: ellipsis;
   white-space: nowrap;
