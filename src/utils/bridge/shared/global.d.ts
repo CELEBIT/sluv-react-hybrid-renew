@@ -39,17 +39,3 @@ declare global {
     sendToWebview: (message: string) => void
   }
 }
-
-export const requestPhotoSelection = (totalPhotos: number, photosToSelect: number) => {
-  if (typeof window !== 'undefined' && window.webkit) {
-    window.webkit.postMessage(
-      JSON.stringify({
-        type: 'photoSelection',
-        totalPhotos,
-        photosToSelect,
-      }),
-    )
-  } else {
-    console.error('The app is not running in a WebView or server-side rendering is in process.')
-  }
-}
