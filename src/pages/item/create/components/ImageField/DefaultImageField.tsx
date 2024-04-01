@@ -30,15 +30,19 @@ const DefaultImageField = ({ error }: ImageFieldProps) => {
     if (fileInputRef.current?.value) fileInputRef.current.value = ''
   }
 
+  const sendMessageToiOS = (totalPhotos: number, selectPhotos: number) => {
+    if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.IOSBridge) {
+      window.webkit.messageHandlers.IOSBridge.postMessage({ totalPhotos, selectPhotos })
+    } else {
+      console.error('The webkit messageHandlers interface is not available.')
+    }
+  }
+
   const onClickOpenGallery = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click()
       console.log('clicked')
-      window?.webkit?.messageHandlers?.IOSBridge?.postMessage({
-        action: 'openImagePicker',
-        totalImage: 5,
-        selectedImage: imgList.length,
-      })
+      sendMessageToiOS(5, imgList.length)
     }
   }
 

@@ -119,13 +119,31 @@ const App = () => {
     if (payload.accessToken && payload.userStatus) {
       storage.set('accessToken', payload.accessToken)
       storage.set('userStatus', payload.userStatus)
-    } else {
-      storage.set(
-        'accessToken',
-        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzExNDM2MjIyLCJleHAiOjE3NDI5NzIyMjJ9.deoUzbNon7-F6uLXi2-sx7N7Gp9XMeTOWUBl2yU1uHY',
-      )
     }
+    // else {
+    //   storage.set(
+    //     'accessToken',
+    //     'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzExNDM2MjIyLCJleHAiOjE3NDI5NzIyMjJ9.deoUzbNon7-F6uLXi2-sx7N7Gp9XMeTOWUBl2yU1uHY',
+    //   )
+    // }
   }, [])
+
+  // useEffect(() => {
+  //   // 메시지 리스너 함수
+  //   const handlePhotoMessage = (event) => {
+  //     // 여기서는 event.data가 사진 데이터라고 가정
+  //     // 실제로는 event.origin 등을 체크하여 보안을 강화하는 것이 좋음
+  //     setPhotoData(event.data)
+  //   }
+
+  //   // 'message' 이벤트 리스너 등록
+  //   window.addEventListener('ㅎㄷㅅ', handlePhotoMessage)
+
+  //   // 컴포넌트 언마운트 시 리스너 해제
+  //   return () => {
+  //     window.removeEventListener('message', handlePhotoMessage)
+  //   }
+  // }, []) // 의존성 배열이 비어있으므로, 컴포넌트 마운트 시 한 번만 실행됨
 
   return (
     <S.Root>
