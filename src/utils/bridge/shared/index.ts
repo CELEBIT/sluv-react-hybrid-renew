@@ -6,7 +6,7 @@ export const sendMessageToNative = (message: BridgeMessage<any>): void => {
   if (window.AndroidBridge && window.AndroidBridge.sendToNative) {
     window.AndroidBridge.sendToNative(serialized)
   } else if (window.webkit.messageHandlers.IOSBridge) {
-    window.webkit.messageHandlers.IOSBridge.sendToNative(serialized)
+    window.webkit.messageHandlers.IOSBridge.postMessage(serialized)
   } else {
     throw new Error('WebView interface is not available.')
   }
