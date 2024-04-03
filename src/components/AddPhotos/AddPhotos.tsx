@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { atomKeys } from '../../config/atomKeys'
 import { atom, useRecoilState, useRecoilValue } from 'recoil'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
@@ -6,6 +6,7 @@ import { AddPhotosWrapper } from './styles'
 import AddButton from './AddButton'
 import Photo from './Photo'
 import { useLocation } from 'react-router-dom'
+import { convertToImageList, openGallery } from '../../utils/utility'
 
 export interface Image {
   imgFile?: File
@@ -19,7 +20,7 @@ export const imgListState = atom<Image[]>({
 })
 
 const AddPhotos = () => {
-  const [imgList, setImageList] = useRecoilState(imgListState)
+  const [imgList, setImgList] = useRecoilState(imgListState)
   const location = useLocation()
 
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -34,15 +35,35 @@ const AddPhotos = () => {
         imgFile: imgFileList[i],
       })
     }
-    setImageList([...imgList, ...temp])
+    setImgList([...imgList, ...temp])
 
     if (fileInputRef.current?.value) fileInputRef.current.value = ''
   }
   const onClickOpenGallery = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click()
+      console.log('open gallery called')
+      openGallery(5, 5 - imgList.length)
     }
   }
+
+  useEffect(() => {
+    // 메시지 리스너 함수
+    const handlePhotosMessage = (event: MessageEvent) => {
+      // event.origin 체크로 보안 강화
+      // if (event.origin !== '여러분의 신뢰할 수 있는 출처') {
+      //   console.error('Untrusted message origin:', event.origin)
+      //   return
+      // }
+      const images = convertToImageList(event.data, imgList)
+      setImgList([...imgList, ...images])
+    }
+
+    window.addEventListener('getImageFromIOS', handlePhotosMessage)
+    return () => {
+      window.removeEventListener('getImageFromIOS', handlePhotosMessage)
+    }
+  }, [])
 
   const onDragEnd = (result: any) => {
     if (!result.destination) {
@@ -60,7 +81,7 @@ const AddPhotos = () => {
       ...img,
       representFlag: index === 0,
     }))
-    setImageList(updatedList)
+    setImgList(updatedList)
   }
   const handleRemovePhoto = (index: number) => {
     const updatedList = [...imgList]
@@ -69,7 +90,7 @@ const AddPhotos = () => {
       ...img,
       representFlag: index === 0,
     }))
-    setImageList(finalList)
+    setImgList(finalList)
   }
 
   return (
