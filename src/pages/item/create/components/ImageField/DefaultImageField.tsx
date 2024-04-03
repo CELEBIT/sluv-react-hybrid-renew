@@ -48,6 +48,7 @@ const DefaultImageField = ({ error }: ImageFieldProps) => {
       //   console.error('Untrusted message origin:', event.origin)
       //   return
       // }
+      console.log('event 자체', event)
       const images = convertToImageList(event.data, imgList)
       setImgList([...images])
     }
