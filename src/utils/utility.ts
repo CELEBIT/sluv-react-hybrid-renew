@@ -100,6 +100,29 @@ export function convertToSeoulTimeISOString(endTime: Date): Date {
   return seoulTime
 }
 
+// Base64 배열을 파일 배열로 변환하는 함수
+export const convertToImageList = (base64DataArray: any, imgList: Image[]) => {
+  const temp = base64DataArray.map((base64Data: string, index: number) => {
+    // Decode base64 string using Buffer
+    const byteCharacters = Buffer.from(base64Data, 'base64')
+    const byteArray = new Uint8Array(byteCharacters)
+
+    // Create Blob from decoded bytes
+    const blob = new Blob([byteArray], { type: 'application/octet-stream' })
+
+    // Create File from Blob
+    const fileName = `image_${index}.jpg`
+    const file = new File([blob], fileName, { type: 'image/jpeg' })
+
+    return {
+      representFlag: imgList.length === 0 && index === 0,
+      imgFile: file,
+    }
+  })
+
+  return temp
+}
+
 // Base64 문자열을 Blob 객체로 변환하는 함수
 export function base64ToBlob(base64: string, contentType: string): Blob {
   const byteCharacters = atob(base64.split(',')[1]) // Base64 데이터의 실제 내용을 추출
@@ -118,21 +141,21 @@ export function base64ToBlob(base64: string, contentType: string): Blob {
   return new Blob(byteArrays, { type: contentType })
 }
 
-export const convertToImageList = (base64DataArray: any, imgList: Image[]) => {
-  console.log('event.data', base64DataArray)
+// export const convertToImageList = (base64DataArray: any, imgList: Image[]) => {
+//   console.log('event', base64DataArray)
 
-  const temp: Array<Image> = base64DataArray.map((base64Data: string, index: number) => {
-    const blob = base64ToBlob(base64Data, 'image/jpeg')
-    const file = new File([blob], `image_${index}.jpg`, { type: 'image/jpeg' })
+//   const temp: Array<Image> = base64DataArray.map((base64Data: string, index: number) => {
+//     const blob = base64ToBlob(base64Data, 'image/jpeg')
+//     const file = new File([blob], `image_${index}.jpg`, { type: 'image/jpeg' })
 
-    return {
-      representFlag: imgList.length === 0 && index === 0 ? true : false, // 첫 번째 이미지를 대표 이미지로 설정
-      imgFile: file,
-    }
-  })
+//     return {
+//       representFlag: imgList.length === 0 && index === 0 ? true : false, // 첫 번째 이미지를 대표 이미지로 설정
+//       imgFile: file,
+//     }
+//   })
 
-  return temp
-}
+//   return temp
+// }
 
 export const openGallery = (totalPhotos: number, photosToSelect: number) => {
   if (
