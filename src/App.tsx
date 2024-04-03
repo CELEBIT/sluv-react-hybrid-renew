@@ -8,12 +8,12 @@ import storage from './utils/storage'
 import SelectItemOrPhoto from './components/SelectItemOrPhoto'
 
 import Loading from './components/Loading'
-import { bridgeProxyAdapter } from './utils/bridge'
+// import { bridgeProxyAdapter } from './utils/bridge'
 import ClosetBoxEditPage from './pages/closet/edit'
 import ClosetDetailPage from './pages/closet/detail'
 import { Token, UserStatus } from './utils/bridge/shared/global'
 
-bridgeProxyAdapter()
+// bridgeProxyAdapter()
 
 const loading = <Loading />
 
