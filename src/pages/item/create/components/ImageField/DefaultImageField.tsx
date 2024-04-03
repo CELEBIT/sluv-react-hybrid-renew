@@ -50,7 +50,7 @@ const DefaultImageField = ({ error }: ImageFieldProps) => {
       // }
       console.log('event 자체', event)
       const images = convertToImageList(event.detail, imgList)
-      setImgList([...images])
+      setImgList([...imgList, ...images])
     }
 
     window.addEventListener('getImageFromIOS', handlePhotosMessage)

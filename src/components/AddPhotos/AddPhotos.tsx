@@ -35,7 +35,7 @@ const AddPhotos = () => {
         imgFile: imgFileList[i],
       })
     }
-    setImgList([...imgList, ...temp])
+    setImgList([...temp])
 
     if (fileInputRef.current?.value) fileInputRef.current.value = ''
   }
@@ -57,7 +57,7 @@ const AddPhotos = () => {
       // }
       console.log('event 자체', event)
       const images = convertToImageList(event.detail, imgList)
-      setImgList([...images])
+      setImgList([...imgList, ...images])
     }
 
     window.addEventListener('getImageFromIOS', handlePhotosMessage)
