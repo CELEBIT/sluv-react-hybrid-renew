@@ -1,3 +1,5 @@
+import { Image } from '../components/AddPhotos/AddPhotos'
+
 export const queryToObject = (query: string) => {
   const parameters = new URLSearchParams(query)
   return Object.fromEntries(parameters.entries())
@@ -96,4 +98,59 @@ export function getRemainingTime(endTime: string): string {
 export function convertToSeoulTimeISOString(endTime: Date): Date {
   const seoulTime = new Date(endTime.getTime() + 9 * 60 * 60 * 1000)
   return seoulTime
+}
+
+// Base64 문자열을 Blob 객체로 변환하는 함수
+export function base64ToBlob(base64: string, contentType: string): Blob {
+  const byteCharacters = atob(base64.split(',')[1]) // Base64 데이터의 실제 내용을 추출
+  const byteArrays = []
+
+  for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+    const slice = byteCharacters.slice(offset, offset + 512)
+    const byteNumbers = new Array(slice.length)
+    for (let i = 0; i < slice.length; i++) {
+      byteNumbers[i] = slice.charCodeAt(i)
+    }
+    const byteArray = new Uint8Array(byteNumbers)
+    byteArrays.push(byteArray)
+  }
+
+  return new Blob(byteArrays, { type: contentType })
+}
+
+export const convertToImageList = (base64DataArray: any, imgList: Image[]) => {
+  console.log('event', base64DataArray)
+
+  const temp: Array<Image> = base64DataArray.map((base64Data: string, index: number) => {
+    const blob = base64ToBlob(base64Data, 'image/jpeg')
+    const file = new File([blob], `image_${index}.jpg`, { type: 'image/jpeg' })
+
+    return {
+      representFlag: imgList.length === 0 && index === 0 ? true : false, // 첫 번째 이미지를 대표 이미지로 설정
+      imgFile: file,
+    }
+  })
+
+  return temp
+}
+
+export const openGallery = (totalPhotos: number, photosToSelect: number) => {
+  if (
+    typeof window !== 'undefined' &&
+    window.webkit &&
+    window.webkit.messageHandlers &&
+    window.webkit.messageHandlers.IOSBridge
+  ) {
+    console.log(totalPhotos)
+    console.log(photosToSelect)
+    window.webkit.messageHandlers.IOSBridge.postMessage(
+      JSON.stringify({
+        type: 'openGallery',
+        totalPhotos: totalPhotos,
+        photosToSelect: photosToSelect,
+      }),
+    )
+  } else {
+    console.error('The app is not running in a WebView or server-side rendering is in process.')
+  }
 }
