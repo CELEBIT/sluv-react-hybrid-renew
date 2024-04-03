@@ -42,14 +42,14 @@ const DefaultImageField = ({ error }: ImageFieldProps) => {
 
   useEffect(() => {
     // 메시지 리스너 함수
-    const handlePhotosMessage = (event: MessageEvent) => {
+    const handlePhotosMessage = (event: any) => {
       // event.origin 체크로 보안 강화
       // if (event.origin !== '여러분의 신뢰할 수 있는 출처') {
       //   console.error('Untrusted message origin:', event.origin)
       //   return
       // }
       console.log('event 자체', event)
-      const images = convertToImageList(event.data, imgList)
+      const images = convertToImageList(event.detail, imgList)
       setImgList([...images])
     }
 
