@@ -119,7 +119,7 @@ export function base64ToBlob(base64: string, contentType: string): Blob {
 }
 
 export const convertToImageList = (base64DataArray: any, imgList: Image[]) => {
-  console.log('event', base64DataArray)
+  console.log('event.data', base64DataArray)
 
   const temp: Array<Image> = base64DataArray.map((base64Data: string, index: number) => {
     const blob = base64ToBlob(base64Data, 'image/jpeg')
