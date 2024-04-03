@@ -25,8 +25,8 @@ function SignUp() {
     if (status) {
       setUserStatus(status)
     }
-    alert(token)
-    alert(status)
+    // alert(token)
+    // alert(status)
   }, [])
 
   useEffect(() => {
