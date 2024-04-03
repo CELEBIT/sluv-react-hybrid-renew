@@ -11,7 +11,7 @@ const ImageField = ({ hasTriedToUpload }: ImageFieldProps) => {
   const imgList = useRecoilValue(imgListState)
   return (
     <>
-      {imgList.length ? (
+      {imgList.length > 0 ? (
         <AddPhotos></AddPhotos>
       ) : (
         <DefaultImageField error={hasTriedToUpload && !imgList.length}></DefaultImageField>

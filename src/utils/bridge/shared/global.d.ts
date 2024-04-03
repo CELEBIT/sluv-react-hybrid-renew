@@ -1,4 +1,4 @@
-import { BridgeMessage } from '../service'
+// import { BridgeMessage } from '../service'
 
 export interface Token {
   token: string

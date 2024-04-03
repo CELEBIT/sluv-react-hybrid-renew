@@ -11,6 +11,7 @@ interface ImageFieldProps {
 }
 
 const DefaultImageField = ({ error }: ImageFieldProps) => {
+  console.log('render')
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [imgList, setImgList] = useRecoilState(imgListState)
 
@@ -30,24 +31,77 @@ const DefaultImageField = ({ error }: ImageFieldProps) => {
     if (fileInputRef.current?.value) fileInputRef.current.value = ''
   }
 
-  const sendMessageToiOS = (totalPhotos: number, selectPhotos: number) => {
-    if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.IOSBridge) {
-      window.webkit.messageHandlers.IOSBridge.postMessage({ totalPhotos, selectPhotos })
-    } else {
-      console.error('The webkit messageHandlers interface is not available.')
-    }
-  }
+  // const openGallery = (totalPhotos: number, photosToSelect: number) => {
+  //   if (
+  //     typeof window !== 'undefined' &&
+  //     window.webkit &&
+  //     window.webkit.messageHandlers &&
+  //     window.webkit.messageHandlers.IOSBridge
+  //   ) {
+  //     console.log(totalPhotos)
+  //     console.log(photosToSelect)
+  //     window.webkit.messageHandlers.IOSBridge.postMessage(
+  //       JSON.stringify({
+  //         type: 'openGallery',
+  //         totalPhotos: totalPhotos,
+  //         photosToSelect: photosToSelect,
+  //       }),
+  //     )
+  //   } else {
+  //     console.error('The app is not running in a WebView or server-side rendering is in process.')
+  //   }
+  // }
+
+  // const onClickOpenGallery = () => {
+  //   if (fileInputRef.current) {
+  //     fileInputRef.current.click()
+  //     console.log('open gallery called')
+  //     openGallery(5, 5 - imgList.length)
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   // 메시지 리스너 함수
+  //   const handlePhotosMessage = (event: any) => {
+  //     // 여기서는 event.data가 사진 데이터 배열이라고 가정
+  //     // 실제로는 event.origin 등을 체크하여 보안을 강화하는 것이 좋음
+  //     console.log('event', event)
+  //     console.log('event.data', event.data)
+  //     const target = event.data
+  //     const imgFileList = target.files as FileList
+
+  //     const temp: Array<Image> = []
+  //     for (let i = 0; i < imgFileList.length; i++) {
+  //       temp.push({
+  //         representFlag: i == 0 ? true : false,
+  //         imgFile: imgFileList[i],
+  //       })
+  //     }
+  //     setImgList([...temp])
+  //   }
+
+  //   window.addEventListener('getImageFromIOS', handlePhotosMessage)
+  //   return () => {
+  //     window.removeEventListener('getImageFromIOS', handlePhotosMessage)
+  //   }
+  // }, [])
 
   const openGallery = (totalPhotos: number, photosToSelect: number) => {
-    if (typeof window !== 'undefined' && window.webkit) {
+    if (
+      typeof window !== 'undefined' &&
+      window.webkit &&
+      window.webkit.messageHandlers &&
+      window.webkit.messageHandlers.IOSBridge
+    ) {
+      console.log(totalPhotos)
+      console.log(photosToSelect)
       window.webkit.messageHandlers.IOSBridge.postMessage(
         JSON.stringify({
           type: 'openGallery',
-          totalPhotos,
-          photosToSelect,
+          totalPhotos: totalPhotos,
+          photosToSelect: photosToSelect,
         }),
       )
-      alert('message Sent')
     } else {
       console.error('The app is not running in a WebView or server-side rendering is in process.')
     }
@@ -56,30 +110,36 @@ const DefaultImageField = ({ error }: ImageFieldProps) => {
   const onClickOpenGallery = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click()
-      console.log('clicked')
+      console.log('open gallery called')
       openGallery(5, 5 - imgList.length)
     }
   }
 
   useEffect(() => {
     // 메시지 리스너 함수
-    const handlePhotosMessage = (event: any) => {
-      // 여기서는 event.data가 사진 데이터 배열이라고 가정
-      // 실제로는 event.origin 등을 체크하여 보안을 강화하는 것이 좋음
+    const handlePhotosMessage = (event: MessageEvent) => {
+      // event.origin 체크로 보안 강화
+      // if (event.origin !== '신뢰할 수 있는 출처') {
+      //   console.error('Untrusted message origin:', event.origin)
+      //   return
+      // }
+
       console.log('event', event)
       console.log('event.data', event.data)
-      const target = event.data
-      const imgFileList = target.files as FileList
+      // 여기서 event.data는 JSON 문자열로 가정
+      const data = JSON.parse(event.data)
+
+      // data에서 이미지 파일 리스트 추출
+      const imgFileList = data.files as FileList
 
       const temp: Array<Image> = []
       for (let i = 0; i < imgFileList.length; i++) {
         temp.push({
-          representFlag: i == 0 ? true : false,
+          representFlag: i === 0 ? true : false,
           imgFile: imgFileList[i],
         })
       }
       setImgList([...temp])
-      alert(event.data)
     }
 
     window.addEventListener('getImageFromIOS', handlePhotosMessage)
@@ -97,7 +157,7 @@ const DefaultImageField = ({ error }: ImageFieldProps) => {
         type='file'
         accept='image/*'
         onChange={(e) => changeImg(e)}
-        onClick={onClickOpenGallery}
+        // onClick={onClickOpenGallery}
         style={{ display: 'none' }}
         multiple
         max={5}
