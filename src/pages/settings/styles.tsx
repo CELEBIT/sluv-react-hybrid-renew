@@ -6,6 +6,10 @@ export const SettingMenu = styled.div`
   flex-direction: column;
   padding: 1rem 1.25rem 0.875rem 1.25rem;
   justify-content: center;
+
+  .logout {
+    padding: 0 0 0.125rem 0;
+  }
 `
 
 export const MenuTitle = styled.span`
