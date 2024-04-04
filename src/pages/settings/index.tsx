@@ -37,20 +37,7 @@ const Settings = () => {
   }
 
   const onWidthdraw = () => {
-    if (
-      typeof window !== 'undefined' &&
-      window.webkit &&
-      window.webkit.messageHandlers &&
-      window.webkit.messageHandlers.IOSBridge
-    ) {
-      window.webkit.messageHandlers.IOSBridge.postMessage(
-        JSON.stringify({
-          type: 'logout',
-        }),
-      )
-    }
-    storage.clear()
-    navigate('/')
+    navigate('./withdraw')
   }
 
   return (
@@ -110,7 +97,7 @@ const Settings = () => {
           <Menu className='logout'>로그아웃</Menu>
         </SettingMenu>
         <Divider></Divider>
-        <DeleteAccount>탈퇴하기</DeleteAccount>
+        <DeleteAccount onClick={onWidthdraw}>탈퇴하기</DeleteAccount>
       </ContentContainer>
     </PageContainer>
   )

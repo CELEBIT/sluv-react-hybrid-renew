@@ -21,15 +21,20 @@ const LogoutModal = () => {
       window.webkit.messageHandlers &&
       window.webkit.messageHandlers.IOSBridge
     ) {
+      closeModal(modals.LogoutModal, () => {
+        storage.clear()
+      })
       window.webkit.messageHandlers.IOSBridge.postMessage(
         JSON.stringify({
           type: 'logout',
         }),
       )
+    } else {
+      closeModal(modals.LogoutModal, () => {
+        storage.clear()
+        navigate('/')
+      })
     }
-    storage.clear()
-    closeModal(modals.DeleteTempItemModal)
-    navigate('/')
   }
 
   return (

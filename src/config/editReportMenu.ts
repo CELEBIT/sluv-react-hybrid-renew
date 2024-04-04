@@ -32,3 +32,11 @@ export const reportUserReasonList = [
   { reason: 'SEXUAL_HARASSMENT', displayText: '성희롱을 해요' },
   { reason: 'ETC', displayText: '기타' },
 ]
+
+export const withdrawReasonList = [
+  { reason: 'NO_INFO', displayText: '원하는 정보가 없어요' },
+  { reason: 'BAD_MANNER', displayText: '비매너적인 활동을 하는 사용자가 많아요' },
+  { reason: 'MANY_ALARM', displayText: '알림이 너무 많이 와요' },
+  { reason: 'NEW_ID', displayText: '계정을 새롭게 만들고 싶어요' },
+  { reason: 'ETC', displayText: '기타' },
+]
