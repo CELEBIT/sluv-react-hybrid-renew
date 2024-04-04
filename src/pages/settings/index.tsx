@@ -6,9 +6,13 @@ import { Divider } from '../item/detail/styles'
 import ToggleSwitch from '../../components/ToggleSwitch/ToggleSwitch'
 import { useNavigate } from 'react-router-dom'
 import useUserMypageQuery from '../../apis/user/hooks/useUserMypageQuery'
+import storage from '../../utils/storage'
+import useModals from '../../components/Modals/hooks/useModals'
+import { modals } from '../../components/Modals'
 
 const Settings = () => {
   const navigate = useNavigate()
+  const { openModal } = useModals()
   const [pushAlarmState, setPushAlarmState] = useState(false)
 
   const { getMarketingAgreeStatus } = useUserMypageQuery()
@@ -27,6 +31,28 @@ const Settings = () => {
     event.stopPropagation()
     mutate()
   }
+
+  const onLogout = () => {
+    openModal(modals.LogoutModal)
+  }
+
+  const onWidthdraw = () => {
+    if (
+      typeof window !== 'undefined' &&
+      window.webkit &&
+      window.webkit.messageHandlers &&
+      window.webkit.messageHandlers.IOSBridge
+    ) {
+      window.webkit.messageHandlers.IOSBridge.postMessage(
+        JSON.stringify({
+          type: 'logout',
+        }),
+      )
+    }
+    storage.clear()
+    navigate('/')
+  }
+
   return (
     <PageContainer>
       <HeaderWrapper>
@@ -80,8 +106,8 @@ const Settings = () => {
           </Menu>
         </SettingMenu>
         <Divider></Divider>
-        <SettingMenu>
-          <Menu>로그아웃</Menu>
+        <SettingMenu onClick={onLogout}>
+          <Menu className='logout'>로그아웃</Menu>
         </SettingMenu>
         <Divider></Divider>
         <DeleteAccount>탈퇴하기</DeleteAccount>
