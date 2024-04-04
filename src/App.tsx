@@ -106,6 +106,12 @@ const Privacy = React.lazy(() => import('./pages/settings/components/Privacy/Pri
 const TermsOfUse = React.lazy(() => import('./pages/settings/components/TermsOfUse/TermsOfUse'))
 const Marketing = React.lazy(() => import('./pages/settings/components/Marketing/Marketing'))
 
+// 아이템 신고 / 수정요청
+const RequestWithdraw = React.lazy(() => import('./pages/settings/RequestWithdraw/index'))
+const WithdrawReason = React.lazy(
+  () => import('./pages/settings/RequestWithdraw/WithdrawReason/index'),
+)
+
 const App = () => {
   useLayoutEffect(() => {
     console.log(window.location.search)
@@ -126,23 +132,6 @@ const App = () => {
       )
     }
   }, [])
-
-  // useEffect(() => {
-  //   // 메시지 리스너 함수
-  //   const handlePhotoMessage = (event) => {
-  //     // 여기서는 event.data가 사진 데이터라고 가정
-  //     // 실제로는 event.origin 등을 체크하여 보안을 강화하는 것이 좋음
-  //     setPhotoData(event.data)
-  //   }
-
-  //   // 'message' 이벤트 리스너 등록
-  //   window.addEventListener('ㅎㄷㅅ', handlePhotoMessage)
-
-  //   // 컴포넌트 언마운트 시 리스너 해제
-  //   return () => {
-  //     window.removeEventListener('message', handlePhotoMessage)
-  //   }
-  // }, []) // 의존성 배열이 비어있으므로, 컴포넌트 마운트 시 한 번만 실행됨
 
   return (
     <S.Root>
@@ -245,6 +234,8 @@ const App = () => {
             <Route path='/settings/marketing' element={<Marketing />} />
             <Route path='/settings/select-celeb' element={<SelectInterestCeleb />} />
             <Route path='/settings/edit-profile' element={<EditProfile />} />
+            <Route path='/settings/withdraw' element={<RequestWithdraw />} />
+            <Route path='/settings/withdraw/reason' element={<WithdrawReason />} />
           </Routes>
         </Suspense>
         <Modals />
