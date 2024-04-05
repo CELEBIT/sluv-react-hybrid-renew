@@ -15,6 +15,7 @@ import { ReactComponent as Share } from '../../../assets/share_24.svg'
 import { ReactComponent as Arrow } from '../../../assets/arrow_18.svg'
 import { ReactComponent as LikeSmall } from '../../../assets/Like_18.svg'
 import { ReactComponent as ShareSmall } from '../../../assets/Share_18.svg'
+import { ReactComponent as Storage } from '../../../assets/storage_18.svg'
 import { ReactComponent as View } from '../../../assets/page view_18.svg'
 import { ReactComponent as LinkIcon } from '../../../assets/link_add_20.svg'
 import { ReactComponent as ArrowLarge } from '../../../assets/arrow_20.svg'
@@ -195,7 +196,7 @@ const ItemDetail = () => {
               <span>{data?.likeNum}</span>
             </Reaction>
             <Reaction>
-              <ShareSmall></ShareSmall>
+              <Storage></Storage>
               <span>{data?.scrapNum}</span>
             </Reaction>
             <Reaction>
