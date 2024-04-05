@@ -85,7 +85,7 @@ export default class QuestionService {
       {
         params: {
           page,
-          size: 5,
+          size: 20,
         },
       },
     )
