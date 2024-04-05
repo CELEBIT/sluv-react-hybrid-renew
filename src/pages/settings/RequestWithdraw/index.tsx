@@ -14,12 +14,12 @@ export interface WithdrawReason {
 }
 
 export const WithdrawReasonState = atom<WithdrawReason>({
-  key: atomKeys.requestEditReasonState,
+  key: atomKeys.withdrawReasonState,
   default: { reason: '', content: '' },
 })
 
 export const WithdrawDisplayState = atom<reasonList>({
-  key: atomKeys.requestDisplayState,
+  key: atomKeys.withdrawDisplayState,
   default: { reason: '', displayText: '' },
 })
 const RequestWithdraw = () => {
