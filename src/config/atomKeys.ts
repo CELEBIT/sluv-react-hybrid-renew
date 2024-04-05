@@ -37,4 +37,6 @@ export const atomKeys = {
   selectedUserName: 'selectedUserName' as const,
   hasTriedUpload: 'hasTriedUpload' as const,
   imgListUpdatedState: 'imgListUpdatedState' as const,
+  withdrawReasonState: 'withdrawReasonState' as const,
+  withdrawDisplayState: 'withdrawDisplayState' as const,
 }
