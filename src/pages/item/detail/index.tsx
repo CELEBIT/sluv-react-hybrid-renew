@@ -23,6 +23,7 @@ import { ReactComponent as Comment } from '../../../assets/comment_18.svg'
 import { ReactComponent as Kakao } from '../../../assets/share_kakao_40.svg'
 import { ReactComponent as Twitter } from '../../../assets/share_twitter_40.svg'
 import { ReactComponent as ShareAdd } from '../../../assets/share_add_40.svg'
+import { ReactComponent as DefaultProfile } from '../../../assets/defaultProfile_40.svg'
 
 import {
   AdditionalInfoWrapper,
@@ -138,6 +139,7 @@ const ItemDetail = () => {
       navigate(`/user/${data?.writer.id}`)
     }
   }
+  console.log(data)
 
   return (
     <ItemDetailContainer>
@@ -226,11 +228,15 @@ const ItemDetail = () => {
           </LinkInfoWrapper>
         )}
         <UploaderInfoWrapper>
-          <div className='user' onClick={onClickUser}>
-            <UserImg imgUrl={data?.writer.profileImgUrl} />
-            <span>{data?.writer.nickName}</span>
+          <div className='user' onClick={data?.writer.id !== null ? onClickUser : undefined}>
+            {data?.writer.id !== null ? (
+              <UserImg imgUrl={data?.writer.profileImgUrl} />
+            ) : (
+              <DefaultProfile></DefaultProfile>
+            )}
+            <span>{data?.writer.id !== null ? data?.writer.nickName : '탈퇴한 유저'}</span>
           </div>
-          {data?.hasMine === false ? (
+          {data?.hasMine === false && data.writer.id !== null ? (
             <ButtonSmall
               type='pri'
               text={data.followStatus ? '팔로잉' : '팔로우'}
