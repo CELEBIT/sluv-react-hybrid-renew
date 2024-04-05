@@ -44,7 +44,7 @@ export const reset = css`
     background: gray;
     margin: 0;
     padding: 0;
-    font-family: -apple-system, sans-serif, Roboto;
+    font-family: Pretendard, -apple-system, sans-serif, Roboto;
 
     // outline:0; // 기본 outline 스타일을 제거
     // appearance:none; // HTML 폼 요소(button, checkbox, radio, select 등)의 기본 스타일을 제거

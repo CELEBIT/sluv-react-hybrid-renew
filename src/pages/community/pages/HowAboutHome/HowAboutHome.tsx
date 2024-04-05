@@ -17,6 +17,8 @@ import { ReactComponent as HowAboutBanner } from '../../../../assets/CommunityEa
 import EmptyState from '../../../../components/EmptyState'
 import ButtonSmall from '../../../../components/ButtonSmall/ButtonSmall'
 import { useNavigate } from 'react-router-dom'
+import Flex from '../../../../components/Flex'
+import { ReactComponent as ConnectionError } from '../../../../assets/connectionError_36.svg'
 
 const HowAboutHome = () => {
   const navigate = useNavigate()
@@ -25,8 +27,7 @@ const HowAboutHome = () => {
   const [isStickyAtTop, setIsStickyAtTop] = useState(false)
 
   const { getQuestionHowAboutList } = useQuestionListQuery()
-  const { data } = getQuestionHowAboutList()
-  console.log(data)
+  const { data, status } = getQuestionHowAboutList()
   const tempData = data?.pages[0].content
 
   useEffect(() => {
@@ -55,32 +56,51 @@ const HowAboutHome = () => {
       <ComponentContainer ref={ComponentContainerRef}>
         <HowAboutBanner style={{ flexShrink: 0 }}></HowAboutBanner>
         <QuestionListWrapper>
-          {(tempData?.length ?? 0) > 0 ? (
-            <>
-              {tempData?.map((each, index) => {
-                return (
-                  <>
-                    <QuestionListItem key={each.id} item={each} detail={true}></QuestionListItem>
-                    {index !== tempData.length - 1 && <Line></Line>}
-                  </>
-                )
-              })}
-            </>
+          {status === 'error' ? (
+            <Flex
+              justify='center'
+              align='center'
+              direction='column'
+              style={{ height: '40vh', gap: '0.5rem' }}
+            >
+              <ConnectionError></ConnectionError>
+              <span>죄송해요. 잠시 문제가 생긴 것 같아요.</span>
+              <span>잠시만 기다려주세요.</span>
+            </Flex>
           ) : (
-            <EmptyStateContainer>
-              <EmptyState
-                icon='comment'
-                title='‘이거 어때’ 게시글이 없어요'
-                subtitle='궁금한 것을 물어보며
+            <>
+              {(tempData?.length ?? 0) > 0 ? (
+                <>
+                  {tempData?.map((each, index) => {
+                    return (
+                      <>
+                        <QuestionListItem
+                          key={each.id}
+                          item={each}
+                          detail={true}
+                        ></QuestionListItem>
+                        {index !== tempData.length - 1 && <Line></Line>}
+                      </>
+                    )
+                  })}
+                </>
+              ) : (
+                <EmptyStateContainer>
+                  <EmptyState
+                    icon='comment'
+                    title='‘이거 어때’ 게시글이 없어요'
+                    subtitle='궁금한 것을 물어보며
 다양한 의견을 받아 보아요'
-              >
-                <ButtonSmall
-                  text='질문하러 가기'
-                  type='pri'
-                  onClick={() => navigate('/community/create/howabout')}
-                />
-              </EmptyState>
-            </EmptyStateContainer>
+                  >
+                    <ButtonSmall
+                      text='질문하러 가기'
+                      type='pri'
+                      onClick={() => navigate('/community/create/howabout')}
+                    />
+                  </EmptyState>
+                </EmptyStateContainer>
+              )}
+            </>
           )}
         </QuestionListWrapper>
         <WriteCommunityItemButton isTop={!isStickyAtTop}></WriteCommunityItemButton>
