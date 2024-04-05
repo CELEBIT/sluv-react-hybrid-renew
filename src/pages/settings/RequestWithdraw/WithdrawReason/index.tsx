@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { EditReportContainer, ReasonWrapper, Title } from '../styles'
+import { EditReportContainer, Title } from '../styles'
 import Header from '../../../../components/Header/Header'
 import TextArea from '../../../../components/TextField/TextArea/TextArea'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { useLocation } from 'react-router-dom'
-import useItemDetailQuery from '../../../../apis/item/hooks/useItemDetailQuery'
-import useReportUserQuery from '../../../../apis/user/hooks/useReportUserQuery'
-import useQuestionDetailQuery from '../../../../apis/question/hooks/useQuestionDetailQuery'
 import { WithdrawDisplayState, WithdrawReasonState } from '..'
 import useModals from '../../../../components/Modals/hooks/useModals'
 import { modals } from '../../../../components/Modals'
+import { ReasonWrapper } from '../../../item/editRequest/styles'
 
 const WithdrawReason = () => {
   const { openModal } = useModals()
