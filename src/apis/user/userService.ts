@@ -15,6 +15,11 @@ export interface ICategoryInterestResult {
   celebList: Array<ICelebResult>
 }
 
+export interface IIdResult {
+  email: string
+  snsType: string
+}
+
 export interface IUserResult {
   id: number
   nickName: string
@@ -63,6 +68,11 @@ export default class UserService {
     this.userCelebUrl = '/app/user/celeb'
     this.userUrl = '/app/user'
     this.closetUrl = '/app/closet'
+  }
+
+  async getIdInfo() {
+    const data: ResponseType<IIdResult> = await request.get(`${this.userUrl}/social`)
+    return data.result
   }
 
   // 유저의 관심셀럽 조회
