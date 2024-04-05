@@ -19,6 +19,8 @@ const useUserMypageQuery = () => {
 
   const getMypageInfo = useQuery(queryKeys.getMypageInfo, () => user.getUserMypageInfo())
 
+  const getIdInfo = useQuery(queryKeys.getIdInfo, () => user.getIdInfo())
+
   const getOtherUserMypageInfo = (userId: number) => {
     return useQuery(queryKeys.getOtherUserMypageInfo(userId), () =>
       user.getOtherUserMypageInfo(userId),
@@ -134,6 +136,7 @@ const useUserMypageQuery = () => {
 
   return {
     getMypageInfo,
+    getIdInfo,
     getOtherUserMypageInfo,
     getUserLikeItem,
     getUserUploadQuestion,

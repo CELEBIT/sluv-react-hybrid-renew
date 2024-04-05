@@ -17,6 +17,15 @@ export const MenuTitle = styled.span`
   ${Pretendard({ size: 14, weight: Common.bold.regular, color: Common.colors.GR600 })}
 `
 
+export const IdInfoRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 1rem 0;
+  gap: 0.5rem;
+  ${Pretendard({ size: 17, weight: Common.bold.regular, color: Common.colors.BK })}
+`
+
 export const Menu = styled.div`
   display: flex;
   flex-direction: row;
