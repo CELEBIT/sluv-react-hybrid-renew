@@ -5,7 +5,7 @@ import { ReactComponent as Error } from '../../../../../assets/error_20.svg'
 import { Pretendard, Common } from '../../../../../components/styles'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { Image, imgListState } from '../../../../../components/AddPhotos/AddPhotos'
-import { base64ToBlob, convertToImageList, openGallery } from '../../../../../utils/utility'
+import { convertToImageList, openGallery } from '../../../../../utils/utility'
 
 interface ImageFieldProps {
   error: boolean

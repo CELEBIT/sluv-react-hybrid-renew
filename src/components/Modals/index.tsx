@@ -62,6 +62,8 @@ const DeleteCommentModal = loadable(() => import('../TwoButtonModal/DeleteCommen
 
 const LogoutModal = loadable(() => import('../TwoButtonModal/LogoutModal'))
 const ConfirmWithdrawModal = loadable(() => import('../OneButtonModal/ConfirmWithdrawModal'))
+
+const ProfileImgModal = loadable(() => import('../BottomSheetModal/ProfileImgModal'))
 // 모달 관리 객체
 export const modals = {
   AskRecentPostWritingModal: AskRecentPostWritingModal as FunctionComponent<
@@ -138,6 +140,7 @@ export const modals = {
   ConfirmWithdrawModal: ConfirmWithdrawModal as FunctionComponent<
     ComponentProps<typeof ConfirmWithdrawModal>
   >,
+  ProfileImgModal: ProfileImgModal as FunctionComponent<ComponentProps<typeof ProfileImgModal>>,
 }
 
 const Modals = () => {

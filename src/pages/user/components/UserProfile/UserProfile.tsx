@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   ArrowDim,
   ArrowRight,
@@ -27,6 +27,8 @@ import useUserMypageQuery from '../../../../apis/user/hooks/useUserMypageQuery'
 import { atom, useSetRecoilState } from 'recoil'
 import { atomKeys } from '../../../../config/atomKeys'
 import InterestCelebList from './InterestCelebList/InterestCelebList'
+import { convertToFile } from '../../../../utils/utility'
+import S3Service from '../../../../apis/s3/S3Service'
 
 export const selectedFollowTabState = atom<string>({
   key: atomKeys.selectedFollowTab,
@@ -71,14 +73,41 @@ const UserProfile = () => {
     // 현재 유저의 마이페이지
     const {
       getMypageInfo: { data },
+      editProfileImage: { mutate },
     } = useUserMypageQuery()
+
+    const { openModal } = useModals()
+    const onAddNewProfileImg = () => {
+      openModal(modals.ProfileImgModal, { imgExist: false })
+    }
+    const onChangeProfileImg = () => {
+      openModal(modals.ProfileImgModal, { imgExist: true })
+    }
+
+    useEffect(() => {
+      const handlePhotosMessage = async (event: any) => {
+        console.log('event 자체', event.detail)
+        const image = convertToFile(event.detail)
+        const s3 = new S3Service()
+        const imgURL = await s3.postProfileImg(image)
+        mutate(imgURL)
+      }
+
+      window.addEventListener('getImageFromIOS', handlePhotosMessage)
+      return () => {
+        window.removeEventListener('getImageFromIOS', handlePhotosMessage)
+      }
+    }, [])
     return (
       <ProfileContainer>
         <UserInfoWrapper>
           {data?.userInfo.profileImgUrl ? (
-            <UserImg imgUrl={data?.userInfo.profileImgUrl}></UserImg>
+            <UserImg imgUrl={data?.userInfo.profileImgUrl} onClick={onAddNewProfileImg}></UserImg>
           ) : (
-            <DefaultProfileWithAdd style={{ flexShrink: 0 }}></DefaultProfileWithAdd>
+            <DefaultProfileWithAdd
+              style={{ flexShrink: 0 }}
+              onClick={onChangeProfileImg}
+            ></DefaultProfileWithAdd>
           )}
           <InfoRightWrapper>
             <InfoTopWrapper>{data?.userInfo.nickName}</InfoTopWrapper>
