@@ -117,11 +117,25 @@ const useUserMypageQuery = () => {
   const uploadProfile = useMutation(
     ({ nickname, userImg }: IProfile) => user.submitProfile(nickname, userImg),
     {
-      onSuccess: (res, vars) => {
+      onSuccess: () => {
         queryClient.invalidateQueries(queryKeys.getMypageInfo)
       },
     },
   )
+
+  // 프로필 이미지 수정
+  const editProfileImage = useMutation((userImg: string) => user.editProfileImage(userImg), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(queryKeys.getMypageInfo)
+    },
+  })
+
+  // 프로필 이미지 삭제
+  const deleteProfileImage = useMutation(() => user.deleteProfileImage(), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(queryKeys.getMypageInfo)
+    },
+  })
 
   // 마케팅 약관 동의 post
   const termsAgree = useMutation(queryKeys.termsAgree, () => user.termsAgree(), {
@@ -144,6 +158,8 @@ const useUserMypageQuery = () => {
     getRecentViewCommunityItem,
     getLikedComment,
     uploadProfile,
+    editProfileImage,
+    deleteProfileImage,
     termsAgree,
     getMarketingAgreeStatus,
   }

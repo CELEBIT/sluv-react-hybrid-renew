@@ -337,6 +337,18 @@ export default class UserService {
     return data
   }
 
+  // 프로필 이미지  수정
+  async editProfileImage(imgUrl: string) {
+    const data: ResponseType = await request.patch(`${this.userUrl}/profileImg`, { imgUrl })
+    return data
+  }
+
+  // 프로필 이미지  삭제
+  async deleteProfileImage() {
+    const data: ResponseType = await request.delete(`${this.userUrl}/profileImg`)
+    return data
+  }
+
   // 약관 동의
   async termsAgree() {
     const data: ResponseType = await request.post(`${this.userUrl}/terms`)
