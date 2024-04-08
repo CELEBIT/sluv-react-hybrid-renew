@@ -16,7 +16,13 @@ import Tabs from '../Tabs'
 import ScrapItem from './ScrapItem'
 import ButtonLarge from '../ButtonLarge/ButtonLarge'
 import { ReactComponent as Gallery } from '../../assets/gallery_24.svg'
-import { atom, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import {
+  atom,
+  useRecoilState,
+  useRecoilValue,
+  useResetRecoilState,
+  useSetRecoilState,
+} from 'recoil'
 import {
   communityItemState,
   firstItemState,
@@ -55,10 +61,11 @@ const SelectItemOrPhoto = () => {
   const [maxItemPhotoCount, setMaxItemPhotoCount] = useRecoilState(maxItemPhotoCountState)
 
   const [searchValue, setSearchValue] = useRecoilState<string>(itemNameSearchState)
+  const resetSearchValue = useResetRecoilState(itemNameSearchState)
   const [finalValue, setFinalValue] = useRecoilState<string>(finalSearchState)
+  const resetFinalValue = useResetRecoilState(finalSearchState)
   const [debouncedItemName] = useDebounce(searchValue, 500)
   const [selectedTab, setSelectedTab] = useState('recent')
-  const [isFocused, setIsFocused] = useState<boolean>(false)
   const imgInput = useRef<HTMLInputElement>(null)
   // API나오면 recent search로 수정
 
@@ -222,6 +229,16 @@ const SelectItemOrPhoto = () => {
     getRecentSearch: { data },
   } = useRecentSearchQuery()
 
+  const onBackClick = () => {
+    if (onSearch) {
+      setOnSearch(false)
+    } else {
+      navigate(-1)
+    }
+    resetFinalValue()
+    resetSearchValue()
+  }
+
   return (
     <SelectItemOrPhotoContainer>
       <HeaderWrapper>
@@ -229,7 +246,7 @@ const SelectItemOrPhoto = () => {
           isModalHeader={false}
           hasArrow={true}
           title='아이템 선택'
-          backBtnClick={onSearch ? () => setOnSearch(false) : () => navigate(-1)}
+          backBtnClick={onBackClick}
         ></Header>
       </HeaderWrapper>
       <ComponentContainer>
