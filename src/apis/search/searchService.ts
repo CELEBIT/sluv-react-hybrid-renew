@@ -1,6 +1,8 @@
+import { IHotCeleb } from '../celeb/CelebService'
 import request from '../core'
 import { GetPaginationResult, ResponseType } from '../core/type'
-import { Img, Item } from '../question/questionService.type'
+import { BrandResult } from '../item/itemService.type'
+import { Celeb, Img, Item } from '../question/questionService.type'
 import { IUserResult } from '../user/userService'
 
 export interface SearchItemResult {
@@ -63,6 +65,12 @@ export interface ITotalSearch {
   itemList: Array<SearchItemResult>
   questionList: Array<SearchQuestionResult>
   userList: Array<IUserResult>
+}
+
+export interface IAllDataSearch {
+  celebList: Array<IHotCeleb>
+  itemList: Array<SearchItemResult>
+  brandList: Array<BrandResult>
 }
 
 export default class SearchService {
@@ -147,6 +155,18 @@ export default class SearchService {
     })
     return data.result
   }
+
+  // 브랜드, 셀럽, 아이템 전체 검색
+  async searchAllData(keyword: string) {
+    const data: ResponseType<IAllDataSearch> = await request.get(`${this.searchUrl}/allData`, {
+      params: {
+        keyword,
+      },
+      timeout: 5000,
+    })
+    return data.result
+  }
+
   // 인기 검색어 조회
   async getSearchRank() {
     const data: ResponseType<Array<IRecentSearch>> = await request.get(

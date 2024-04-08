@@ -13,6 +13,10 @@ const useSearchQuery = () => {
     return useQuery(queryKeys.searchTotal(keyword), () => search.searchTotal(keyword))
   }
 
+  const searchAllData = (keyword: string) => {
+    return useQuery(queryKeys.searchAllData(keyword), () => search.searchAllData(keyword))
+  }
+
   const searchCommunity = (
     keyword: string,
   ): UseInfiniteQueryResult<GetPaginationResult<SearchQuestionResult>, any> => {
@@ -45,7 +49,7 @@ const useSearchQuery = () => {
     )
   }
 
-  return { searchTotal, searchCommunity, searchUser }
+  return { searchTotal, searchAllData, searchCommunity, searchUser }
 }
 
 export default useSearchQuery
