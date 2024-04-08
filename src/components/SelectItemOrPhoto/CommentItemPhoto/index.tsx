@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useRecoilState, useResetRecoilState } from 'recoil'
 import { commentState } from '../../../pages/community/detail/CommunityDetail'
-import { maxItemPhotoCountState } from '..'
+import { finalSearchState, maxItemPhotoCountState } from '..'
 import { IselectedItem, imgItemListState } from '../../../recoil/communityInfo'
 import SearchResult, { itemNameSearchState } from '../SearchResult'
 import {
@@ -26,6 +26,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import ScrapItem from '../ScrapItem'
 import UserUploadItem from '../UserUploadItem'
 import KeywordPreviewContainer from '../../../pages/search/components/KeywordPreviewContainer'
+import { useDebounce } from 'use-debounce'
+import KeywordPreview from '../KeywordPreview/KeywordPreview'
 
 const CommentItemPhoto = () => {
   const navigate = useNavigate()
@@ -34,7 +36,14 @@ const CommentItemPhoto = () => {
   const [maxItemPhotoCount, setMaxItemPhotoCount] = useRecoilState(maxItemPhotoCountState)
   const [imgItemList, setImageItemList] = useRecoilState(imgItemListState)
   const resetImageItemList = useResetRecoilState(imgItemListState)
+
+  const [onSearch, setOnSearch] = useState<boolean>(false)
   const [searchValue, setSearchValue] = useRecoilState<string>(itemNameSearchState)
+  const resetSearchValue = useResetRecoilState(itemNameSearchState)
+  const [finalValue, setFinalValue] = useRecoilState<string>(finalSearchState)
+  const resetFinalValue = useResetRecoilState(finalSearchState)
+  const [debouncedItemName] = useDebounce(searchValue, 500)
+
   const [selectedTab, setSelectedTab] = useState('recent')
   const [isFocused, setIsFocused] = useState<boolean>(false)
   const imgInput = useRef<HTMLInputElement>(null)
@@ -141,8 +150,18 @@ const CommentItemPhoto = () => {
   }, [])
 
   const onBackClick = () => {
-    resetImageItemList()
-    navigate(-1)
+    if (onSearch) {
+      setOnSearch(false)
+    } else {
+      resetImageItemList()
+      navigate(-1)
+    }
+    resetFinalValue()
+    resetSearchValue()
+  }
+
+  const handleFocus = () => {
+    setOnSearch(true)
   }
 
   return (
@@ -156,11 +175,7 @@ const CommentItemPhoto = () => {
         ></Header>
       </HeaderWrapper>
       <ComponentContainer>
-        <ComponentWrapper
-          className='padding top'
-          onFocus={() => setIsFocused(true)}
-          onBlur={handleBlur}
-        >
+        <ComponentWrapper className='padding top' onFocus={handleFocus}>
           <SearchTextfield
             value={searchValue}
             setValue={setSearchValue}
@@ -169,7 +184,39 @@ const CommentItemPhoto = () => {
           ></SearchTextfield>
         </ComponentWrapper>
 
-        {searchValue !== '' ? (
+        {!onSearch ? (
+          <>
+            <Tabs
+              tabList={tabList}
+              selectedTab={selectedTab}
+              setSelectedTab={setSelectedTab}
+            ></Tabs>
+            {selectedTab === 'recent' && <RecentViewItem></RecentViewItem>}
+            {selectedTab === 'myUpload' && <UserUploadItem></UserUploadItem>}
+          </>
+        ) : (
+          <>
+            {searchValue !== '' ? (
+              <>
+                {searchValue === finalValue ? (
+                  <SearchResult></SearchResult>
+                ) : (
+                  <KeywordPreview keyword={debouncedItemName}></KeywordPreview>
+                )}
+              </>
+            ) : (
+              <>
+                {(data?.length ?? 0) > 0 ? (
+                  <RecentSearchItem></RecentSearchItem>
+                ) : (
+                  <HotSearchItem></HotSearchItem>
+                )}
+              </>
+            )}
+          </>
+        )}
+
+        {/* {searchValue !== '' ? (
           <SearchResult></SearchResult> // <KeywordPreviewContainer keyword={searchValue} />
         ) : (
           <>
@@ -187,7 +234,7 @@ const CommentItemPhoto = () => {
               <>{data ? <RecentSearchItem></RecentSearchItem> : <HotSearchItem></HotSearchItem>}</>
             )}
           </>
-        )}
+        )} */}
       </ComponentContainer>
       <Dimmer></Dimmer>
       <BottomWrapper>
