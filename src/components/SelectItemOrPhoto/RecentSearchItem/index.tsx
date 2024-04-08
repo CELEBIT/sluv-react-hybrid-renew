@@ -6,6 +6,7 @@ import { useSetRecoilState } from 'recoil'
 import { ChipWrapper } from '../../BottomSheetModal/ItemBrandSelectModal/ItemBrandSelectModal'
 import useRecentSearchQuery from '../../../apis/search/hooks/useRecentSearchQuery'
 import { itemNameSearchState } from '../SearchResult'
+import { finalSearchState } from '..'
 
 const RecentSearchItem = () => {
   const {
@@ -14,7 +15,7 @@ const RecentSearchItem = () => {
     deleteAllRecentSearch: { mutate: mutateByDeleteAllRecentSearch },
   } = useRecentSearchQuery()
   const setSearchKeyword = useSetRecoilState(itemNameSearchState)
-  console.log(data)
+  const setFinalValue = useSetRecoilState<string>(finalSearchState)
 
   const onDeleteAllSearchLog = () => {
     mutateByDeleteAllRecentSearch()
@@ -25,12 +26,13 @@ const RecentSearchItem = () => {
 
   const onChipClick = (keyword: string) => {
     setSearchKeyword(keyword)
+    setFinalValue(keyword)
   }
 
   return (
     <RecentSearchWrapper>
       <SearchLogWrapper>
-        <span>최근 검색어 이지롱</span>
+        <span>최근 검색어</span>
         <DeleteAllText onClick={onDeleteAllSearchLog}>전체삭제</DeleteAllText>
       </SearchLogWrapper>
       <ChipWrapper>

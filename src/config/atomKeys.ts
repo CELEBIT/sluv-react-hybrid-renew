@@ -27,6 +27,7 @@ export const atomKeys = {
   selectedItemListState: 'selectedItemListState' as const,
   maxItemPhotoCount: 'maxItemPhotoCount' as const,
   itemNameSearchState: 'itemNameSearchState' as const,
+  finalSearchState: 'finalSearchState' as const,
   imgItemListState: 'imgItemListState' as const,
   commentState: 'commentState' as const,
   commentQuestionId: 'commentQuestionId' as const,

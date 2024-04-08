@@ -131,6 +131,7 @@ export default class SearchService {
     )
     return data.result
   }
+
   // 검색어 자동완성
   async getSearchKeywordPreview(keyword: string, page: number) {
     const data: ResponseType<GetPaginationResult<IRecentSearch>> = await request.get(

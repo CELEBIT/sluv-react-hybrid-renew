@@ -5,13 +5,11 @@ import Modals from './components/Modals'
 import * as S from './components/styles'
 import { queryToObject } from './utils/utility'
 import storage from './utils/storage'
-import SelectItemOrPhoto from './components/SelectItemOrPhoto'
 
 import Loading from './components/Loading'
 // import { bridgeProxyAdapter } from './utils/bridge'
 import ClosetBoxEditPage from './pages/closet/edit'
 import ClosetDetailPage from './pages/closet/detail'
-import { Token, UserStatus } from './utils/bridge/shared/global'
 
 // bridgeProxyAdapter()
 
@@ -66,6 +64,8 @@ const CreateHowabout = React.lazy(
 const CreateRecommend = React.lazy(
   () => import('./pages/community/CreateCommunity/question/recommend'),
 )
+
+const SelectItemOrPhoto = React.lazy(() => import('./components/SelectItemOrPhoto'))
 
 const CommunityDetail = React.lazy(() => import('./pages/community/detail/CommunityDetail'))
 const CommentItemPhoto = React.lazy(() => import('./components/SelectItemOrPhoto/CommentItemPhoto'))

@@ -1,16 +1,9 @@
 import styled from '@emotion/styled'
-import { Common } from '../../styles'
 import React, { useRef } from 'react'
 import { atom, useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
-import { Brand } from '../../../pages/item/create/components/BrandItemField/BrandItemField'
-import BrandLogo from '../../BrandLogo/BrandLogo'
-import useBrandSearchQuery from '../../../apis/brand/hooks/useBrandSearchQuery'
 
 import { useObserver } from '../../../hooks/useObserver'
 import { useDebounce } from 'use-debounce'
-import HighlightedText from '../../HighlightedText/HighlightedText'
-import { itemInfoState } from '../../../recoil/itemInfo'
-import { brandNameSearchState } from '../../BottomSheetModal/ItemBrandSelectModal/ItemBrandSelectModal'
 import EmptyState from '../../EmptyState'
 import HotItem from '../HotItem'
 import { Divider } from '../../../pages/item/detail/styles'
@@ -26,7 +19,7 @@ import {
 } from '../../../recoil/communityInfo'
 import { ItemResult } from '../../../apis/item/itemService.type'
 import { communityMenuState } from '../../Header/CommunityHeader/CommunityHeader'
-import { maxItemPhotoCountState } from '..'
+import { finalSearchState, maxItemPhotoCountState } from '..'
 import Loading from '../../Loading'
 
 export const itemNameSearchState = atom<string>({
@@ -34,8 +27,8 @@ export const itemNameSearchState = atom<string>({
   default: '',
 })
 
-const SearchResult = () => {
-  const itemName = useRecoilValue(itemNameSearchState)
+const SearchItemPhotoResult = () => {
+  const itemName = useRecoilValue(finalSearchState)
   const [debouncedItemName] = useDebounce(itemName, 500)
   const [imgItemList, setImageItemList] = useRecoilState(imgItemListState)
 
@@ -52,7 +45,7 @@ const SearchResult = () => {
   const { searchItem } = useItemSearchQuery()
   const { data, error, fetchNextPage, status, isFetching, isFetchingNextPage } =
     searchItem(debouncedItemName)
-  const tempData = data?.pages[0].content[0]
+
   const bottom = useRef(null)
 
   const onIntersect = ([entry]: IntersectionObserverEntry[]) =>
@@ -131,7 +124,7 @@ const SearchResult = () => {
   }
   return (
     <SearchResultWrapper>
-      {tempData ? (
+      {data && data.pages[0].content.length > 0 ? (
         <ListWrapper>
           {status === 'error' && <p>{JSON.stringify(error.response.data)}</p>}
           {status === 'success' &&
@@ -167,7 +160,7 @@ const SearchResult = () => {
           ) : null}
         </ListWrapper>
       ) : (
-        <div className='full'>
+        <div>
           <EmptyState
             icon='search'
             title='검색 결과가 없어요'
@@ -182,7 +175,7 @@ const SearchResult = () => {
   )
 }
 
-export default SearchResult
+export default SearchItemPhotoResult
 
 const SearchResultWrapper = styled.div`
   display: flex;

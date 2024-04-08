@@ -32,29 +32,36 @@ import { brandNameSearchState } from '../BottomSheetModal/ItemBrandSelectModal/I
 import { useNavigate } from 'react-router-dom'
 import { atomKeys } from '../../config/atomKeys'
 import { communityMenuState } from '../Header/CommunityHeader/CommunityHeader'
+import useSearchQuery from '../../apis/search/hooks/useSearchQuery'
+import { useDebounce } from 'use-debounce'
+import KeywordPreview from './KeywordPreview/KeywordPreview'
+import useRecentSearchQuery from '../../apis/search/hooks/useRecentSearchQuery'
 
 export const maxItemPhotoCountState = atom<number>({
   key: atomKeys.maxItemPhotoCount,
   default: 0,
 })
 
+export const finalSearchState = atom<string>({
+  key: atomKeys.finalSearchState,
+  default: '',
+})
+
 const SelectItemOrPhoto = () => {
   const navigate = useNavigate()
+  const [onSearch, setOnSearch] = useState<boolean>(false)
   const [communityUploadInfo, setCommunityUploadInfo] = useRecoilState(communityItemState)
   const CommunityMenu = useRecoilValue(communityMenuState)
   const [maxItemPhotoCount, setMaxItemPhotoCount] = useRecoilState(maxItemPhotoCountState)
+
   const [searchValue, setSearchValue] = useRecoilState<string>(itemNameSearchState)
+  const [finalValue, setFinalValue] = useRecoilState<string>(finalSearchState)
+  const [debouncedItemName] = useDebounce(searchValue, 500)
   const [selectedTab, setSelectedTab] = useState('recent')
   const [isFocused, setIsFocused] = useState<boolean>(false)
   const imgInput = useRef<HTMLInputElement>(null)
   // API나오면 recent search로 수정
-  const {
-    getRecentCeleb: { data },
-  } = useRecentCelebQuery()
 
-  const handleBlur = () => {
-    setIsFocused(false)
-  }
   const tabList = [
     { id: 'recent', tabName: '최근 본 아이템' },
     { id: 'saved', tabName: '찜한 아이템' },
@@ -115,7 +122,6 @@ const SelectItemOrPhoto = () => {
             }
           }
         })
-        console.log('updatedItemList', updatedItemList)
         return {
           ...prevInfo,
           itemList: updatedItemList.length > 0 ? updatedItemList : null,
@@ -206,41 +212,63 @@ const SelectItemOrPhoto = () => {
     }
   }
 
+  const handleFocus = () => {
+    setOnSearch(true)
+  }
+  const handleEnter = () => {
+    setFinalValue(searchValue)
+  }
+  const {
+    getRecentSearch: { data },
+  } = useRecentSearchQuery()
+
   return (
     <SelectItemOrPhotoContainer>
       <HeaderWrapper>
-        <Header isModalHeader={false} hasArrow={true} title='아이템 선택'></Header>
+        <Header
+          isModalHeader={false}
+          hasArrow={true}
+          title='아이템 선택'
+          backBtnClick={onSearch ? () => setOnSearch(false) : () => navigate(-1)}
+        ></Header>
       </HeaderWrapper>
       <ComponentContainer>
-        <ComponentWrapper
-          className='padding top'
-          onFocus={() => setIsFocused(true)}
-          onBlur={handleBlur}
-        >
+        <ComponentWrapper className='padding top' onFocus={handleFocus}>
           <SearchTextfield
             value={searchValue}
             setValue={setSearchValue}
             placeholder='셀럽/아이템을 검색해주세요'
-            onEnter={() => console.log('entered')}
+            onEnter={handleEnter}
           ></SearchTextfield>
         </ComponentWrapper>
-
-        {searchValue !== '' ? (
-          <SearchResult></SearchResult>
+        {!onSearch ? (
+          <>
+            <Tabs
+              tabList={tabList}
+              selectedTab={selectedTab}
+              setSelectedTab={setSelectedTab}
+            ></Tabs>
+            {selectedTab === 'recent' && <RecentViewItem></RecentViewItem>}
+            {selectedTab === 'saved' && <ScrapItem></ScrapItem>}
+          </>
         ) : (
           <>
-            {isFocused === false ? (
+            {searchValue !== '' ? (
               <>
-                <Tabs
-                  tabList={tabList}
-                  selectedTab={selectedTab}
-                  setSelectedTab={setSelectedTab}
-                ></Tabs>
-                {selectedTab === 'recent' && <RecentViewItem></RecentViewItem>}
-                {selectedTab === 'saved' && <ScrapItem></ScrapItem>}
+                {searchValue === finalValue ? (
+                  <SearchResult></SearchResult>
+                ) : (
+                  <KeywordPreview keyword={debouncedItemName}></KeywordPreview>
+                )}
               </>
             ) : (
-              <>{data ? <RecentSelectItem></RecentSelectItem> : <HotSearchItem></HotSearchItem>}</>
+              <>
+                {(data?.length ?? 0) > 0 ? (
+                  <RecentSelectItem></RecentSelectItem>
+                ) : (
+                  <HotSearchItem></HotSearchItem>
+                )}
+              </>
             )}
           </>
         )}
