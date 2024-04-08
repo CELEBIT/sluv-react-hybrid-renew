@@ -11,70 +11,25 @@ import { modals } from '../../Modals'
 import { ChipWrapper } from '../../BottomSheetModal/ItemCelebModal/ItemCelebSearchModal'
 import styled from '@emotion/styled'
 import { Common, Pretendard } from '../../styles'
+import useSearchRankQuery from '../../../apis/search/hooks/useSearchRankQuery'
+import { itemNameSearchState } from '../SearchResult'
+import { finalSearchState } from '..'
 
 const HotSearchItem = () => {
-  const { closeModal } = useModals()
-  const setSelectedCeleb = useSetRecoilState(selectedCelebState)
-  const setSelectedGroup = useSetRecoilState(selectedGroupState)
-  const [celebInfoInItem, setCelebInfoInItem] = useRecoilState(celebInfoInItemState)
-  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
+  const setSearchValue = useSetRecoilState<string>(itemNameSearchState)
+  const setFinalValue = useSetRecoilState<string>(finalSearchState)
 
   const {
-    getHotCeleb: { data },
-  } = useHotCelebQuery()
+    getSearchRank: { data },
+  } = useSearchRankQuery()
+
   const {
     postRecentCeleb: { mutate: mutateByPostRecentCeleb },
   } = useRecentCelebQuery()
 
-  const onChipClick = (celebData: IHotCeleb) => {
-    if (celebData.parentId) {
-      // 선택한 셀럽이 그룹의 멤버인 경우
-      setCelebInfoInItem({
-        ...celebInfoInItem,
-        soloId: celebData.id,
-        soloName: celebData.celebChildNameKr,
-        groupId: celebData.parentId,
-        groupName: celebData.celebParentNameKr,
-      })
-      setItemInfo({
-        ...itemInfo,
-        celeb: {
-          celebId: celebData.id,
-          celebName: celebData.celebChildNameKr,
-        },
-      })
-    } else {
-      // 선택한 셀럽이 솔로인 경우
-      setCelebInfoInItem({
-        ...celebInfoInItem,
-        soloId: celebData.id,
-        soloName: celebData.celebChildNameKr,
-        groupId: null,
-        groupName: null,
-      })
-      setItemInfo({
-        ...itemInfo,
-        celeb: {
-          celebId: celebData.id,
-          celebName: celebData.celebChildNameKr,
-        },
-      })
-    }
-    mutateByPostRecentCeleb(
-      { celebId: celebData.id, newCelebId: null },
-      {
-        onSuccess: () => {
-          closeModal(modals.ItemCelebSearchModal)
-        },
-      },
-    )
-
-    // API 변경 후 수정
-    setSelectedCeleb({
-      id: celebData.id,
-      celebNameKr: celebData.celebChildNameKr,
-    })
-    setSelectedGroup({ id: 0, celebNameKr: '' })
+  const onChipClick = (keyword: string) => {
+    setSearchValue(keyword)
+    setFinalValue(keyword)
   }
 
   return (
@@ -82,12 +37,12 @@ const HotSearchItem = () => {
       <span>인기 검색어</span>
       <ChipWrapper>
         {(data?.length ?? 0) > 0 &&
-          data?.map((celeb) => {
+          data?.map((keyword) => {
             return (
               <Chip
-                key={celeb.id}
-                text={celeb.celebTotalNameKr}
-                onClick={() => onChipClick(celeb)}
+                key={keyword.keyword}
+                text={keyword.keyword}
+                onClick={() => onChipClick(keyword.keyword)}
               />
             )
           })}
