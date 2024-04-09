@@ -158,7 +158,7 @@ const SelectCeleb = () => {
       return
     }
   }, [celebInfoInItem, interestCelebList])
-  console.log('현재 celebInfoInItem', celebInfoInItem)
+  // console.log('현재 celebInfoInItem', celebInfoInItem)
   useEffect(() => {
     if (celebInfoInItem.soloId && !celebInfoInItem.groupId) {
       // 선택한 셀럽이 솔로인 경우
