@@ -27,6 +27,7 @@ const QuestionReportModal = () => {
     })
   }
   const EditReportItem = useRecoilValue(RequestEditItemState)
+
   return (
     <BottomSheetModal>
       <ModalWrapper>
@@ -38,10 +39,12 @@ const QuestionReportModal = () => {
           <Menu onClick={onClickReportQuestion}>
             <Share stroke={Common.colors.BK}></Share>게시글 신고하기
           </Menu>
-          <Menu onClick={onClickReportUser}>
-            <Share stroke={Common.colors.BK}></Share>
-            &apos;{EditReportItem.itemWriterName}&apos;님 신고하기
-          </Menu>
+          {EditReportItem.itemWriterId !== -1 && (
+            <Menu onClick={onClickReportUser}>
+              <Share stroke={Common.colors.BK}></Share>
+              &apos;{EditReportItem.itemWriterName}&apos;님 신고하기
+            </Menu>
+          )}
         </MenuWrapper>
       </ModalWrapper>
     </BottomSheetModal>

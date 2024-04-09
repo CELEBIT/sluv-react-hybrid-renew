@@ -25,11 +25,11 @@ import { ReactComponent as LikeOn } from '../../../assets/like_on_24.svg'
 import { ReactComponent as LikeOff } from '../../../assets/like_off_24.svg'
 import { ReactComponent as SubmitOff } from '../../../assets/submit_off_32.svg'
 import { ReactComponent as SubmitOn } from '../../../assets/submit_on_32.svg'
+import { ReactComponent as DefaultProfile } from '../../../assets/profile_medium_74.svg'
 
 import Badge from '../../../components/Badge/Badge'
 import { Divider, Reaction } from '../../item/detail/styles'
 import { HeaderWrapper } from '../../item/addInfo/styles'
-import EmptyState from '../../../components/EmptyState'
 import CommentField from '../../../components/TextField/CommentField/CommentField'
 import { useNavigate, useParams } from 'react-router-dom'
 import useQuestionDetailQuery from '../../../apis/question/hooks/useQuestionDetailQuery'
@@ -42,7 +42,6 @@ import useSearchCommentQuery, {
 import { NewComment } from '../../../apis/comment/commentService.type'
 import { atomKeys } from '../../../config/atomKeys'
 import { atom, useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
-import Comment from './components/Comment/Comment'
 import Chip from '../../../components/Chip/Chip'
 import { formatUpdatedAt, getRemainingTime } from '../../../utils/utility'
 import RecommendList from './components/RecommendList'
@@ -52,7 +51,6 @@ import { modals } from '../../../components/Modals'
 import { RequestEditItemState } from '../../item/editRequest'
 import { IselectedItem, communityItemState, imgItemListState } from '../../../recoil/communityInfo'
 import { questionTypeState } from '../../../components/BottomSheetModal/QuestionEditDeleteModal'
-import { selectedCelebState } from '../../../components/SelectCeleb/SelectCeleb'
 import CommentList from './components/Comment/CommentList'
 import { ReactComponent as Spinner } from '../../../assets/Spinner.svg'
 import Flex from '../../../components/Flex'
@@ -71,14 +69,14 @@ const CommunityDetail = () => {
   const navigate = useNavigate()
   const { openModal } = useModals()
   const [commentObject, setCommentObject] = useRecoilState(commentState)
-  const setEditReportItemState = useSetRecoilState(RequestEditItemState)
-  const resetCommentObject = useResetRecoilState(commentState)
-  const [questionInfo, setQuestionInfo] = useRecoilState(communityItemState)
   const [commentString, setCommentString] = useState<string>(commentObject.content ?? '')
   const [isFocused, setIsFocused] = useState(false)
+
+  const setEditReportItemState = useSetRecoilState(RequestEditItemState)
+  const resetCommentObject = useResetRecoilState(commentState)
+  const setQuestionInfo = useSetRecoilState(communityItemState)
   const setQuestionType = useSetRecoilState(questionTypeState)
-  const [imgItemList, setImgItemList] = useRecoilState(imgItemListState)
-  const setSelectedCeleb = useSetRecoilState(selectedCelebState)
+  const setImgItemList = useSetRecoilState(imgItemListState)
 
   const { id: questionId } = useParams()
   const setCommentQuestionId = useSetRecoilState(commentQuestionIdState)
@@ -204,9 +202,18 @@ const CommunityDetail = () => {
               {data?.qtype === 'Find' && <Badge color='gray'>{data.celeb.celebName}</Badge>}
             </InfoChip>
             <UserWrapper>
-              <ProfileImg url={data?.user.profileImgUrl}></ProfileImg>
+              {data?.user.profileImgUrl ? (
+                <ProfileImg url={data?.user.profileImgUrl}></ProfileImg>
+              ) : (
+                <DefaultProfile
+                  style={{ flexShrink: 0, width: '2.25rem', height: '2.25rem' }}
+                ></DefaultProfile>
+              )}
+
               <UserTextWrapper>
-                <span className='username'>{data?.user.nickName}</span>
+                <span className='username'>
+                  {data.user.id !== -1 ? data?.user.nickName : '탈퇴한 유저'}
+                </span>
                 {data?.createdAt && <span className='time'>{formatUpdatedAt(data.createdAt)}</span>}
               </UserTextWrapper>
             </UserWrapper>
