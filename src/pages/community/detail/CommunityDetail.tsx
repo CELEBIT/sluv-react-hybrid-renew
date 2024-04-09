@@ -80,12 +80,17 @@ const CommunityDetail = () => {
 
   const { id: questionId } = useParams()
   const setCommentQuestionId = useSetRecoilState(commentQuestionIdState)
-  if (questionId) {
-    setCommentQuestionId(Number(questionId))
-  }
+  useEffect(() => {
+    if (questionId) {
+      setCommentQuestionId(Number(questionId))
+    }
+  }, [])
+
+  console.log(questionId)
 
   const { getQuestionDetail } = useQuestionDetailQuery()
   const { data } = getQuestionDetail(Number(questionId))
+  console.log('data', data)
   const combinedList = [...(data?.imgList ?? []), ...(data?.itemList ?? [])]
   const sortedList = combinedList.sort((a, b) => a.sortOrder - b.sortOrder)
 
@@ -175,7 +180,7 @@ const CommunityDetail = () => {
       <HeaderWrapper>
         <Header isModalHeader={false} hasArrow={true}>
           <Home onClick={() => navigate('/home')} />
-          <Share stroke={Common.colors.BK} />
+          {/* <Share stroke={Common.colors.BK} /> */}
           <More onClick={() => onClickShowMore()} />
         </Header>
       </HeaderWrapper>
