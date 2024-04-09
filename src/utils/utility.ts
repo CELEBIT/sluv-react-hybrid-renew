@@ -1,4 +1,5 @@
 import { Image } from '../components/AddPhotos/AddPhotos'
+import { IselectedItem } from '../recoil/communityInfo'
 
 export const queryToObject = (query: string) => {
   const parameters = new URLSearchParams(query)
@@ -101,7 +102,7 @@ export function convertToSeoulTimeISOString(endTime: Date): Date {
 }
 
 // Base64 배열을 파일 배열로 변환하는 함수
-export const convertToImageList = (base64DataArray: any, imgList: Image[]) => {
+export const convertToImageList = (base64DataArray: any, imgList: Image[] | IselectedItem[]) => {
   const temp = base64DataArray.map((base64Data: string, index: number) => {
     // Decode base64 string using Buffer
     const byteCharacters = Buffer.from(base64Data, 'base64')

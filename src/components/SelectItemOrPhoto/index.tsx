@@ -42,6 +42,7 @@ import useSearchQuery from '../../apis/search/hooks/useSearchQuery'
 import { useDebounce } from 'use-debounce'
 import KeywordPreview from './KeywordPreview/KeywordPreview'
 import useRecentSearchQuery from '../../apis/search/hooks/useRecentSearchQuery'
+import { convertToImageList, openGallery } from '../../utils/utility'
 
 export const maxItemPhotoCountState = atom<number>({
   key: atomKeys.maxItemPhotoCount,
@@ -66,8 +67,6 @@ const SelectItemOrPhoto = () => {
   const resetFinalValue = useResetRecoilState(finalSearchState)
   const [debouncedItemName] = useDebounce(searchValue, 500)
   const [selectedTab, setSelectedTab] = useState('recent')
-  const imgInput = useRef<HTMLInputElement>(null)
-  // API나오면 recent search로 수정
 
   const tabList = [
     { id: 'recent', tabName: '최근 본 아이템' },
@@ -218,6 +217,64 @@ const SelectItemOrPhoto = () => {
       }
     }
   }
+  const onNativeImgUpload = (fileArr: File[]) => {
+    if (fileArr) {
+      setSelectedFileList((pre) => [...pre, ...Array.from(fileArr)])
+      for (let i = 0; i < fileArr.length; i++) {
+        const file = fileArr[i]
+        if (imgItemList.length + i + 1 <= maxItemPhotoCount) {
+          const fileSelected = {
+            imgFile: file,
+            description: null,
+            vote: null,
+            representFlag: !imgItemList && i === 0,
+          }
+          if (CommunityMenu === '이 중에 뭐 살까') {
+            if (fileArr[i]) {
+              if (i === 0) {
+                // console.log(firstItem)
+                // firstItem || secondItem 둘중에 하나라도 null 이면 추가 가능
+                if (firstItem.imgFile === null && firstItem.itemId === null) {
+                  // firstItem이 비어있을 때
+                  // console.log('first item 없음')
+                  setFirstItem((prev) => ({
+                    ...prev,
+                    ...{ imgFile: fileArr[i] },
+                  }))
+                  // console.log('firstItem', firstItem)
+                } else if (firstItem.imgFile || firstItem.itemId) {
+                  // first가 존재할 때
+                  // console.log('seconds 아이템 null')
+                  setSecondItem((prev) => ({
+                    ...prev,
+                    ...{ imgFile: fileArr[i] },
+                  }))
+                }
+              } else {
+                // 두번째 사진 -> firstItem, secondItem 둘다 없을 때만 가능
+                // secondItem에만 추가하면 됨.
+                // console.log('i==1')
+                if (secondItem.imgFile === null && secondItem.itemId === null) {
+                  // console.log('seconds 아이템 null')
+                  setSecondItem((prev) => ({
+                    ...prev,
+                    ...{ imgFile: fileArr[i] },
+                  }))
+                  // console.log('secondItem', secondItem)
+                }
+              }
+            }
+            setImageItemList((prevList) => [...prevList, fileSelected])
+          } else {
+            setImageItemList((prevList) => [...prevList, fileSelected])
+          }
+        } else {
+          alert(`아이템/사진은 ${maxItemPhotoCount}개까지 선택할 수 있어요. `)
+          break
+        }
+      }
+    }
+  }
 
   const handleFocus = () => {
     setOnSearch(true)
@@ -238,6 +295,28 @@ const SelectItemOrPhoto = () => {
     resetFinalValue()
     resetSearchValue()
   }
+
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const onClickOpenGallery = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click()
+      openGallery(maxItemPhotoCount, maxItemPhotoCount - imgItemList.length)
+    }
+  }
+
+  useEffect(() => {
+    // 메시지 리스너 함수
+    const handlePhotosMessage = (event: any) => {
+      const images = convertToImageList(event.detail, imgItemList)
+      onNativeImgUpload(images)
+    }
+
+    window.addEventListener('getImageFromIOS', handlePhotosMessage)
+    return () => {
+      window.removeEventListener('getImageFromIOS', handlePhotosMessage)
+    }
+  }, [])
 
   return (
     <SelectItemOrPhotoContainer>
@@ -292,11 +371,11 @@ const SelectItemOrPhoto = () => {
       </ComponentContainer>
       <Dimmer></Dimmer>
       <BottomWrapper>
-        <GalleryButton onClick={() => imgInput.current?.click()}>
+        <GalleryButton onClick={onClickOpenGallery}>
           <input
             type='file'
             accept='image/*'
-            ref={imgInput}
+            ref={fileInputRef}
             style={{ display: 'none' }}
             onChange={onChangeImg}
             multiple
