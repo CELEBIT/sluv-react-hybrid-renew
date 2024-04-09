@@ -20,6 +20,8 @@ import UserImage from '../UserImage/UserImage'
 import { ReactComponent as Like } from '../../assets/Like_18.svg'
 import { ReactComponent as CommentIcon } from '../../assets/comment_18.svg'
 import { ReactComponent as View } from '../../assets/page view_18.svg'
+import { ReactComponent as DefaultProfile } from '../../assets/profile_medium_74.svg'
+
 import { Dot } from '../Dot/Dot'
 import styled from '@emotion/styled'
 
@@ -117,8 +119,16 @@ const QuestionListItem = ({ item, detail }: QuestionItemProps) => {
       {detail && (
         <DetailInfo>
           <DetailLeft>
-            <UserImage size={20} imgUrl={item.user?.profileImgUrl ?? null}></UserImage>
-            <DetailNickname>{item.user?.nickName}</DetailNickname>
+            {item.user?.profileImgUrl ? (
+              <UserImage size={20} imgUrl={item.user?.profileImgUrl}></UserImage>
+            ) : (
+              <DefaultProfile
+                style={{ flexShrink: 0, width: '1.25rem', height: '1.25rem' }}
+              ></DefaultProfile>
+            )}
+            <DetailNickname>
+              {item.user.id !== -1 ? item.user?.nickName : '탈퇴한 유저'}
+            </DetailNickname>
           </DetailLeft>
           <DetailRight>
             <DetailEach>
