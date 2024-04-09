@@ -4,8 +4,7 @@ import VoteTwoItem from '../../../CreateCommunity/question/components/twoItemUpl
 import { BuyHomeResult, SearchQuestionResult } from '../../../../../apis/search/searchService'
 import UserImage from '../../../../../components/UserImage/UserImage'
 import { Dot } from '../../../../../components/Dot/Dot'
-import useQuestionDetailQuery from '../../../../../apis/question/hooks/useQuestionDetailQuery'
-import { ReactComponent as Check } from '../../../../../assets/check_20.svg'
+import { ReactComponent as DefaultProfile } from '../../../../../assets/defaultProfile_40.svg'
 import { getRemainingTime } from '../../../../../utils/utility'
 import { useNavigate } from 'react-router-dom'
 interface BuyVoteProps {
@@ -21,9 +20,15 @@ function BuyVote({ item, selectedTab }: BuyVoteProps) {
     <S.Container onClick={() => navigate(`/community/detail/${item.id}`)}>
       <S.UserInfo>
         <S.UserContainer>
-          <UserImage size={36} imgUrl={item.user.profileImgUrl} />
+          {item.user?.profileImgUrl ? (
+            <UserImage size={36} imgUrl={item.user?.profileImgUrl}></UserImage>
+          ) : (
+            <DefaultProfile
+              style={{ flexShrink: 0, width: '36px', height: '36px' }}
+            ></DefaultProfile>
+          )}
           <S.UserInfo>
-            <S.UserName>{item.user.nickName}</S.UserName>
+            <S.UserName>{item.user.id !== -1 ? item.user.nickName : '탈퇴한 유저'}</S.UserName>
             <S.Status>
               <S.VoteStatus>{item.voteNum}명 투표 참여</S.VoteStatus>
               {remainingTime !== '진행중' && (
