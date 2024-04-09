@@ -17,6 +17,7 @@ const useSearchQuery = () => {
   const queryClient = useQueryClient()
 
   const searchTotal = (keyword: string) => {
+    queryClient.invalidateQueries(queryKeys.recentSearch)
     return useQuery(queryKeys.searchTotal(keyword), () => search.searchTotal(keyword))
   }
 
