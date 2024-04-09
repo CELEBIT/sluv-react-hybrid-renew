@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import useModals from '../../../components/Modals/hooks/useModals'
 import { modals } from '../../../components/Modals'
 
@@ -73,18 +73,35 @@ import SameCeleb from './components/Carousel/SameCeleb'
 import SameScrap from './components/Carousel/SameScrap'
 import SameBrand from './components/Carousel/SameBrand'
 import { deleteScrap } from '../../../apis/closet'
+import share from './share'
 
 const ItemDetail = () => {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const { openModal } = useModals()
   const { id: itemId } = useParams()
+  const location = useLocation()
 
   const { getItemDetail } = useItemDetailQuery()
   const { data } = getItemDetail(Number(itemId))
 
   const setEditReportItemState = useSetRecoilState(RequestEditItemState)
   const colors = ['gray', 'pink', 'orange', 'yellow', 'green', 'blue']
+
+  const dataToShare = {
+    title: 'SLUV',
+    text: '셀럽의 아이템 정보를 공유해보아요!',
+    url: `https://sluv.co.kr${location.pathname}`,
+  }
+
+  const handleShare = async () => {
+    const result = await share(dataToShare)
+    if (result === 'copiedToClipboard') {
+      alert('링크를 클립보드에 복사했습니다.')
+    } else if (result === 'failed') {
+      alert('공유하기가 지원되지 않는 환경입니다.')
+    }
+  }
 
   useEffect(() => {
     queryClient.refetchQueries(queryKeys.itemDetail(Number(itemId)))
@@ -169,7 +186,7 @@ const ItemDetail = () => {
                 <LikeOff onClick={onClickLike}></LikeOff>
               )}
 
-              <Share stroke={Common.colors.GR600}></Share>
+              <Share stroke={Common.colors.GR600} onClick={handleShare}></Share>
             </Interactions>
           </Top>
           <ItemInfo>
