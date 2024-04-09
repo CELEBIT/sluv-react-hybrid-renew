@@ -22,8 +22,6 @@ const UserResult = ({ keyword }: Props) => {
   const navigate = useNavigate()
   const { searchUser } = useSearchQuery()
   const { data, isFetching, isFetchingNextPage, fetchNextPage } = searchUser(keyword)
-  console.log(data)
-  console.log(isFetching)
 
   const {
     followUser: { mutate: mutateByFollow },

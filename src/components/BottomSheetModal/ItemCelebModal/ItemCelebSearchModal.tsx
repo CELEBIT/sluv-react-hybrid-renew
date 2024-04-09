@@ -37,21 +37,6 @@ const ItemCelebSearchModal = () => {
     }, 100)
   }
 
-  const onSearch = () => {
-    console.log('검색')
-  }
-  // const onClickExistingCeleb = (celebResult: ICelebResult) => {
-  //   setSelectedCeleb(celebResult)
-  //   setSelectedGroup({ id: 0, celebNameKr: '' })
-  //   closeModal(modals.ItemCelebSearchModal)
-  // }
-  // const onClickNewCeleb = (name: string) => {
-  //   setNewCeleb({ newCelebName: name })
-  //   setSelectedCeleb({ id: 0, celebNameKr: '' })
-  //   setSelectedGroup({ id: 0, celebNameKr: '' })
-  //   closeModal(modals.ItemCelebSearchModal)
-  // }
-
   const onClose = () => {
     setSelectedCeleb({ id: 0, celebNameKr: '' })
     setSelectedGroup({ id: 0, celebNameKr: '' })
@@ -104,28 +89,6 @@ const ItemCelebSearchModal = () => {
     )
   }
 
-  //   useEffect(() => {
-  //     if (defaultRef.current && myCelebRef.current) {
-  //       defaultRef.current.addEventListener('scroll', handleScroll)
-  //     }
-  //     return () => {
-  //       if (defaultRef.current && myCelebRef.current) {
-  //         defaultRef.current.removeEventListener('scroll', handleScroll)
-  //       }
-  //     }
-  //   }, [defaultRef, myCelebRef])
-
-  //   const handleScroll = () => {
-  //     if (defaultRef.current && myCelebRef.current) {
-  //       if (
-  //         myCelebRef.current.offsetTop <=
-  //         defaultRef.current.scrollTop + defaultRef.current.scrollTop
-  //       ) {
-  //         defaultRef.current.classList.add('long')
-  //       }
-  //     }
-  //   }
-
   return (
     <BottomSheetModal>
       <ModalWrapper>
@@ -137,7 +100,6 @@ const ItemCelebSearchModal = () => {
           <SearchTextfield
             value={searchValue}
             setValue={setSearchValue}
-            onEnter={onSearch}
             placeholder='셀럽을 검색해주세요'
           ></SearchTextfield>
         </SearchWrapper>
@@ -150,7 +112,6 @@ const ItemCelebSearchModal = () => {
                   <div className='myCeleb' ref={myCelebRef}>
                     <MyCeleb></MyCeleb>
                   </div>
-                  {/* {defaultRef.current?.classList.contains('long') && ( */}
                   <ButtonWrapper>
                     <ButtonLarge
                       text='완료'
@@ -158,14 +119,12 @@ const ItemCelebSearchModal = () => {
                       onClick={onComplete}
                     ></ButtonLarge>
                   </ButtonWrapper>
-                  {/* )} */}
                 </div>
               </>
             ) : (
               <>
                 <div className='long' ref={defaultRef}>
                   <RecentSelectCeleb></RecentSelectCeleb>
-                  {/* )} */}
                 </div>
               </>
             )}

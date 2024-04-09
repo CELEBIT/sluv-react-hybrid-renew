@@ -23,7 +23,7 @@ const CelebSearchResult = ({ celebName }: CelebSearchResultProps) => {
   const [debouncedSearch] = useDebounce(celebName, 300)
   const { searchSelectCeleb } = useSelectCelebQuery()
   const { data } = searchSelectCeleb(debouncedSearch)
-  console.log(data)
+
   const getSelectedCelebIds = (celebResults: Array<ISelectCelebResult>): Array<number> => {
     const celebIds: Array<number> = []
     for (const celebResult of celebResults) {

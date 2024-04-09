@@ -55,11 +55,10 @@ const useUploadStateObserver = () => {
         itemInfo.newBrand
       )
     ) {
-      console.log('item Info all Null')
+      // console.log('item Info all Null')
       return
     } else {
       if (!location.pathname.includes('edit')) {
-        console.log('item info in uploadState observer', itemInfo)
         const tempItem: TempItemReq = {
           id: localStorage.getItem('tempItemId')
             ? Number(localStorage.getItem('tempItemId'))
@@ -79,17 +78,16 @@ const useUploadStateObserver = () => {
           newCelebId: itemInfo.newCeleb?.celebId ?? null,
           newBrandId: itemInfo.newBrand?.brandId ?? null,
         }
-        console.log('tempItem', tempItem)
         mutateByTempItem(tempItem)
 
-        console.log('Recoil 상태 변화 감지')
+        // console.log('Recoil 상태 변화 감지')
       }
     }
   }, [debounceItemInfo, debounceCelebInfo])
 
   useEffect(() => {
     if (imgList.length > 0) {
-      console.log('mutate in img Upload', imgList)
+      // console.log('mutate in img Upload', imgList)
       mutateByImgUpload(imgList)
     }
   }, [imgList])

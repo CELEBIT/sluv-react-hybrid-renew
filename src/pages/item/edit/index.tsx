@@ -57,7 +57,7 @@ const ItemEdit = () => {
   const [hasTriedToUpload, setHasTriedToUpload] = useState(false)
   const [imgList, setImgListState] = useRecoilState(imgListState)
   const hashTag = useRecoilValue(hashTagState)
-  console.log(hashTag)
+
   const { id: itemId } = useParams()
   const { getItemDetail } = useItemDetailQuery()
 
@@ -126,12 +126,11 @@ const ItemEdit = () => {
         infoSource: data.infoSource,
         newBrand: { brandName: data.newBrandName },
       }
-      console.log(newState)
       setItemInfo(newState)
     }
   }, [data])
 
-  const [celebInfoInItem, setCelebInfoInItem] = useRecoilState(celebInfoInItemState)
+  const setCelebInfoInItem = useSetRecoilState(celebInfoInItemState)
 
   useEffect(() => {
     const newImgList: ImgResult[] = imgList.map((img: Image, idx) => ({
@@ -156,7 +155,6 @@ const ItemEdit = () => {
       itemInfo.itemName &&
       itemInfo.price
     ) {
-      console.log('itemInfo.hashTagList', itemInfo.hashTagList)
       const finalHashTags: Array<number> | null = []
       if ((itemInfo.hashTagList?.length ?? 0) > 0) {
         itemInfo?.hashTagList?.map((item) => {
@@ -201,7 +199,6 @@ const ItemEdit = () => {
         newCelebId: itemInfo.newCeleb?.celebId ?? null,
         newBrandId: itemInfo.newBrand?.brandId ?? null,
       }
-      console.log(item)
       mutate(item)
       resetItemInfo()
       resetCelebInfoInItem()

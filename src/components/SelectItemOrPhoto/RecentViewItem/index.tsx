@@ -41,7 +41,7 @@ const RecentViewItem = () => {
   const [imgItemList, setImageItemList] = useRecoilState(imgItemListState)
 
   const handleItemClick = (item: ItemResult) => {
-    console.log(imgItemList)
+    // console.log(imgItemList)
     // 이미 item이 추가되어 있는 경우, communityUploadInfo.itemList에서 삭제
     const isItemAdded = imgItemList.some((addedItem) => addedItem.itemId === item.itemId)
     if (isItemAdded) {
@@ -93,13 +93,13 @@ const RecentViewItem = () => {
             itemName: item.itemName,
           }
           if (firstItem?.itemId === null && firstItem?.imgUrl === null) {
-            console.log(firstItem)
+            // console.log(firstItem)
             setFirstItem((prevFirstItem) => ({
               ...prevFirstItem,
               ...newItem,
             }))
           } else if (secondItem?.itemId === null && secondItem?.imgUrl === null) {
-            console.log(secondItem)
+            // console.log(secondItem)
             setSecondItem((prevSecondItem) => ({
               ...prevSecondItem,
               ...newItem,

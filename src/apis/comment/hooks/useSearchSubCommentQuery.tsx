@@ -30,7 +30,7 @@ const useSearchSubCommentQuery = () => {
       comment.addSubComment(questionId, commentId, content, imgList, itemList),
     {
       onSuccess: (res, { commentId }) => {
-        console.log(res)
+        //
         queryClient.invalidateQueries(queryKeys.subcomment(commentId))
       },
     },
@@ -40,7 +40,7 @@ const useSearchSubCommentQuery = () => {
     ({ subCommentId }: ILikeSubComment) => comment.likeComment(subCommentId),
     {
       onSuccess: (res, { commentId }) => {
-        console.log('clicked')
+        // console.log('clicked')
         queryClient.invalidateQueries(queryKeys.subcomment(commentId))
       },
     },

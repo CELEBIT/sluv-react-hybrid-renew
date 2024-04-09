@@ -82,13 +82,12 @@ const ItemDetail = () => {
 
   const { getItemDetail } = useItemDetailQuery()
   const { data } = getItemDetail(Number(itemId))
-  console.log(data)
+
   const setEditReportItemState = useSetRecoilState(RequestEditItemState)
   const colors = ['gray', 'pink', 'orange', 'yellow', 'green', 'blue']
 
   useEffect(() => {
     queryClient.refetchQueries(queryKeys.itemDetail(Number(itemId)))
-    console.log('refetch')
   }, [itemId])
 
   const onClickShowMore = () => {
@@ -122,7 +121,7 @@ const ItemDetail = () => {
   const handleScrapItem = async () => {
     if (data?.scrapStatus) {
       const res = await deleteScrap(Number(itemId))
-      console.log(res)
+
       if (res.isSuccess) {
         alert('아이템 저장이 취소되었어요')
         queryClient.invalidateQueries(queryKeys.itemDetail(Number(itemId)))
@@ -139,7 +138,6 @@ const ItemDetail = () => {
       navigate(`/user/${data?.writer.id}`)
     }
   }
-  console.log(data)
 
   return (
     <ItemDetailContainer>

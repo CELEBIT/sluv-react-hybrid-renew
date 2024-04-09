@@ -19,7 +19,6 @@ const UserItem = () => {
       getOtherUserUploadItem(Number(id))
 
     const tempData = data?.pages[0].content
-    console.log('tempData', data)
     return (
       <>
         {tempData && (

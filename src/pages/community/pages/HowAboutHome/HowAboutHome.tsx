@@ -34,7 +34,7 @@ const HowAboutHome = () => {
     const handleScroll = () => {
       if (stickyRef.current) {
         const { top } = stickyRef.current.getBoundingClientRect()
-        console.log(top)
+
         setIsStickyAtTop(Math.floor(top) <= 65)
       }
     }

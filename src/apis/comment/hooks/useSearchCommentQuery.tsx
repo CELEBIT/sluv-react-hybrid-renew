@@ -36,7 +36,7 @@ const useSearchCommentQuery = () => {
       comment.addComment(questionId, content, imgList, itemList),
     {
       onSuccess: (res, { questionId }) => {
-        console.log(res)
+        //
         queryClient.invalidateQueries(queryKeys.comment(questionId))
       },
     },
@@ -47,7 +47,7 @@ const useSearchCommentQuery = () => {
       comment.editComment(commentId, content, imgList, itemList),
     {
       onSuccess: (res, { questionId }) => {
-        console.log(res)
+        //
         queryClient.invalidateQueries(queryKeys.comment(questionId))
       },
     },

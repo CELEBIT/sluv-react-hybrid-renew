@@ -57,12 +57,8 @@ const ClosetDetailPage = () => {
 
   if (status !== 'success') return <div>...is loading...</div>
 
-  console.log('id', data)
-  console.log(id)
-
   const handleScroll: UIEventHandler<HTMLDivElement> = (e) => {
     setContentTop('0px')
-    console.log('excuted')
   }
 
   return (

@@ -66,11 +66,11 @@ const Following = () => {
       ) : (
         <EmptyStateWrapper>
           <EmptyState icon='save' title='팔로우한 사용자가 없어요'>
-            <ButtonSmall
+            {/* <ButtonSmall
               text='인기 사용자 보러가기'
               type='pri'
               onClick={() => console.log('clicked')}
-            />
+            /> */}
           </EmptyState>
         </EmptyStateWrapper>
       )}

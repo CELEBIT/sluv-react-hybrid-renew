@@ -27,7 +27,7 @@ const useSearchQuery = () => {
   const searchCommunity = (
     keyword: string,
   ): UseInfiniteQueryResult<GetPaginationResult<SearchQuestionResult>, any> => {
-    console.log(keyword)
+    // console.log(keyword)
     return useInfiniteQuery(
       queryKeys.searchCommunity(keyword),
       ({ pageParam = 0 }) => search.searchCommunity(keyword, pageParam),
@@ -43,7 +43,7 @@ const useSearchQuery = () => {
   const searchUser = (
     keyword: string,
   ): UseInfiniteQueryResult<GetPaginationResult<IUserResult>, any> => {
-    console.log(keyword)
+    // console.log(keyword)
     return useInfiniteQuery(
       queryKeys.searchUser(keyword),
       ({ pageParam = 0 }) => search.searchUser(keyword, pageParam),

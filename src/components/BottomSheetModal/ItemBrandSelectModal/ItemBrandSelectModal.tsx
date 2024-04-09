@@ -24,11 +24,6 @@ const ItemBrandSelectModal = () => {
   const {
     getBrandRecentSelected: { data: recentBrandData },
   } = useRecentBrandQuery()
-  console.log('최근 선택한 브랜드', recentBrandData)
-
-  const onSearch = () => {
-    console.log('검색')
-  }
 
   return (
     <BottomSheetModal>
@@ -44,7 +39,6 @@ const ItemBrandSelectModal = () => {
           <SearchTextfield
             value={searchValue}
             setValue={setSearchValue}
-            onEnter={onSearch}
             placeholder='브랜드를 검색해주세요'
           ></SearchTextfield>
         </SearchWrapper>

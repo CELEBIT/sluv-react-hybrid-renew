@@ -35,11 +35,9 @@ const AddLink = () => {
         ...itemInfo,
         linkList: [...links],
       })
-      console.log('링크 완료 후 itemInfo', itemInfo)
       navigate(-1)
       return
     } else {
-      console.log(links)
       setHasError(true)
       return
     }

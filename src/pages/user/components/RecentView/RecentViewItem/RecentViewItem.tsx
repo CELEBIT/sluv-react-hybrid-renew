@@ -7,7 +7,7 @@ import EmptyState from '../../../../../components/EmptyState'
 const RecentViewItem = () => {
   const { getRecentViewItem } = useRecentViewItemQuery()
   const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } = getRecentViewItem()
-  console.log(data)
+
   const tempData = data?.pages[0].content
   return (
     <>

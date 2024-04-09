@@ -36,8 +36,8 @@ const Question = () => {
   } = useCommunityImgUpload()
 
   const uploadImg = async () => {
-    console.log(firstItem.description)
-    console.log(secondItem.description)
+    // console.log(firstItem.description)
+    // console.log(secondItem.description)
     const updatedImgItemList = imgItemList.map((item, index) => ({
       ...item,
       sortOrder: index,
@@ -52,7 +52,7 @@ const Question = () => {
           : item.description,
     }))
     setImageItemList(updatedImgItemList)
-    console.log('updatedImgItemList', updatedImgItemList)
+    // console.log('updatedImgItemList', updatedImgItemList)
     const newItemList = updatedImgItemList
       .filter((item) => item.itemId)
       .map(({ itemId, description, sortOrder }) => ({
@@ -74,7 +74,7 @@ const Question = () => {
       ...questionItem,
       itemList: newItemList,
     })
-    console.log('newImgList', newImgList)
+    // console.log('newImgList', newImgList)
 
     await mutateByImgUpload(newImgList)
     resetQuestionItem()
@@ -87,7 +87,6 @@ const Question = () => {
     setHasTriedToUpload(true)
     if (questionItem.title && questionItem.title.length > 10 && questionItem.title.length < 60) {
       if (CommunityMenu === '이 중에 뭐 살까') {
-        console.log('이 중에 뭐 살까')
         if (
           (firstItem.imgUrl || firstItem.imgFile) &&
           (secondItem.imgUrl || secondItem.imgFile) &&

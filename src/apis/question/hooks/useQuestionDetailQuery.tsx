@@ -38,7 +38,7 @@ const useQuestionDetailQuery = () => {
     ({ questionId, voteSortOrder }: IVote) => question.voteItem(questionId, voteSortOrder),
     {
       onSuccess: (res, { questionId }) => {
-        console.log(res)
+        //
         queryClient.invalidateQueries()
         // queryClient.invalidateQueries(queryKeys.questionDetail(questionId))
         // queryClient.invalidateQueries(queryKeys.getQuestionBuyList('전체'))
@@ -75,7 +75,7 @@ const useQuestionDetailQuery = () => {
 
   const likeQuestion = useMutation((questionId: number) => question.likeQusetion(questionId), {
     onSuccess: (res, questionId) => {
-      console.log(res)
+      //
       queryClient.invalidateQueries(queryKeys.questionDetail(questionId))
     },
   })

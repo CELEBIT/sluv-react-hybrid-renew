@@ -31,14 +31,12 @@ const HashtagInput: React.FC<HashtagInputProps> = ({ placeholder }) => {
   useEffect(() => {
     // 초기 설정
     if (itemInfo.hashTagList) {
-      console.log(itemInfo.hashTagList)
       setHashtags([...itemInfo.hashTagList])
     }
   }, [])
 
   useEffect(() => {
     if (itemInfo.hashTagList) {
-      // console.log(itemInfo.hashTagList)
       setItemInfo({ ...itemInfo, hashTagList: hashTags })
     }
   }, [hashTags])

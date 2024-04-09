@@ -24,7 +24,7 @@ const HowAboutThis = () => {
       title: title,
       content: content,
     })
-    console.log(questionInfo)
+    // console.log(questionInfo)
   }, [title, content])
 
   return (

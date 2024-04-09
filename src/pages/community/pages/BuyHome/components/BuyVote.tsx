@@ -14,7 +14,6 @@ interface BuyVoteProps {
 
 function BuyVote({ item, selectedTab }: BuyVoteProps) {
   const navigate = useNavigate()
-  console.log('vote End Time', item.voteEndTime)
   const remainingTime = getRemainingTime(item.voteEndTime)
   return (
     <S.Container onClick={() => navigate(`/community/detail/${item.id}`)}>

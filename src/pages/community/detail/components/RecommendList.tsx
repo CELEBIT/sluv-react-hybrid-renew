@@ -23,7 +23,6 @@ interface RecommendListProps {
 const RecommendList = ({ questionId, nickName, qType }: RecommendListProps) => {
   const { getWaitQuestion } = useQuestionDetailQuery()
   const { data } = getWaitQuestion(Number(questionId), qType)
-  console.log('Wait Data', data)
 
   return (
     <RecommendListWrapper>

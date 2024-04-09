@@ -57,7 +57,7 @@ const Photo = ({
 
     if (storageFlag) {
       const res = await deleteScrap(Number(itemId))
-      console.log(res)
+      //
       if (res.isSuccess) {
         alert('아이템 저장이 취소되었어요')
         queryClient.invalidateQueries()

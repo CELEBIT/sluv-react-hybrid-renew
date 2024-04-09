@@ -51,7 +51,6 @@ const ItemCelebSelectModal = () => {
     )
   }
   const onClickMember = (member: ICelebResult) => {
-    console.log(member)
     setSelectedCeleb(member)
     setCelebInfoInItem({
       ...celebInfoInItem,

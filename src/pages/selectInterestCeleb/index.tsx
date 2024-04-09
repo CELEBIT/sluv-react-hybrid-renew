@@ -134,11 +134,9 @@ const SelectInterestCeleb = ({
   const onComplete = () => {
     const updatedIdList = getSelectedCelebIds(selectedInterestCeleb)
     mutateByPostInterestCeleb(updatedIdList)
-    console.log('관심셀럽 등록', updatedIdList)
 
     if (onNext !== undefined) {
       if (pathname == '/') {
-        console.log('true')
         onNext()
       }
     }

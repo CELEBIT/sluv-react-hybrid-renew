@@ -88,7 +88,6 @@ const FindRequest = () => {
       title: title,
       content: content,
     })
-    console.log(findRequestInfo)
   }, [title, content, celeb])
 
   const onBackClick = () => {

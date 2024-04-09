@@ -61,7 +61,6 @@ const SelectedInterestCelebModal = () => {
                     <CategoryTitle>{Category.categoryName}</CategoryTitle>
                     <CelebListWrapper>
                       {Category.celebList.map((celeb) => {
-                        console.log(celeb)
                         return (
                           <ColorChip
                             key={celeb.celebId}

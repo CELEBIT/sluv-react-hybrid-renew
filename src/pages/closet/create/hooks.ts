@@ -71,11 +71,11 @@ export const useCreateClosetFormContext = (
   })
   const navigate = useNavigate()
 
-  console.log(name)
-  console.log(coverImgUrl)
-  console.log(closetStatus)
-  console.log(colorScheme)
-  console.log(coverImageMode)
+  // console.log(name)
+  // console.log(coverImgUrl)
+  // console.log(closetStatus)
+  // console.log(colorScheme)
+  // console.log(coverImageMode)
 
   const handleCreateNewCloset = async () => {
     const isDuplicated =

@@ -55,7 +55,7 @@ const ProfileImgModal = ({ imgExist }: ProfileImgModalProps) => {
     }
     const s3 = new S3Service()
     const imgURL = await s3.postProfileImg(file)
-    console.log('imgURL', imgURL)
+    // console.log('imgURL', imgURL)
     mutateByEdit(imgURL)
 
     if (fileInputRef.current?.value) fileInputRef.current.value = ''

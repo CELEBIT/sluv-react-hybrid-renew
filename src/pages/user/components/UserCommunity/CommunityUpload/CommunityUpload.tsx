@@ -9,7 +9,7 @@ const CommunityUpload = () => {
   const { getUserUploadQuestion } = useUserMypageQuery()
   const { data } = getUserUploadQuestion()
   const tempData = data?.pages[0].content
-  console.log(tempData)
+
   return (
     <QuestionListWrapper>
       {tempData?.map((each, index) => {

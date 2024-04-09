@@ -18,7 +18,6 @@ const KeywordPreview = ({ keyword }: KeywordPreviewProps) => {
   const navigate = useNavigate()
   const { searchAllData } = useSearchQuery()
   const { data } = searchAllData(keyword)
-  console.log(data)
   const setSearchValue = useSetRecoilState<string>(itemNameSearchState)
   const setFinalValue = useSetRecoilState<string>(finalSearchState)
 

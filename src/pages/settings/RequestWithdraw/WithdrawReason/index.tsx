@@ -24,7 +24,6 @@ const WithdrawReason = () => {
 
   const onSubmit = () => {
     setHasSubmitted(true)
-    console.log(withdrawReason)
     if (reasonText) {
       setInfoValid(true)
       openModal(modals.ConfirmWithdrawModal)

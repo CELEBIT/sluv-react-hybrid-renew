@@ -17,7 +17,7 @@ const useUploadQuestionQuery = () => {
   const postFindRequest = useMutation((item: CommunityItem) => question.postFindRequest(item), {
     onSuccess: (res) => {
       if (res?.id) {
-        console.log(res)
+        //
         resetCommunityItem()
         resetImageItemList()
         queryClient.invalidateQueries(queryKeys.questionDetail(res.id))

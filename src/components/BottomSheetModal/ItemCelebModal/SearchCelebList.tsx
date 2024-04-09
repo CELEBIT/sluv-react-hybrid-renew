@@ -38,7 +38,6 @@ const SearchCelebList = ({ keyword }: SearchCelebListProps) => {
   const setSelectedGroup = useSetRecoilState(selectedGroupState)
   const setCelebInfoInItem = useSetRecoilState(celebInfoInItemState)
   const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
-  console.log('셀럽 무한스크롤', data)
 
   const onClickExistingCeleb = (celeb: ISearchCeleb) => {
     setSelectedCeleb({
@@ -67,8 +66,6 @@ const SearchCelebList = ({ keyword }: SearchCelebListProps) => {
         },
       },
     )
-
-    console.log('기존 셀럽', celeb)
   }
   const onClickNewCeleb = (newCelebName: string) => {
     console.log('New Celeb', newCelebName)
@@ -85,7 +82,7 @@ const SearchCelebList = ({ keyword }: SearchCelebListProps) => {
                 <ExistingCeleb key={idx} onClick={() => onClickExistingCeleb(celeb)}>
                   <HighlightedText searchText={debouncedKeyword} text={celeb.celebTotalNameKr} />
                   <SubText>
-                    <span>가수 / &nbsp; </span>
+                    <span>{celeb.category} / &nbsp; </span>
                     <HighlightedText searchText={debouncedKeyword} text={celeb.celebTotalNameEn} />
                   </SubText>
                 </ExistingCeleb>

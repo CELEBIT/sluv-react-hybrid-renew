@@ -16,12 +16,10 @@ const DatePlaceField = () => {
   // 날짜 선택 모달
   const onDateSelect = () => {
     openModal(modals.ItemDatePickerModal)
-    console.log('date select Modal')
   }
   // 장소 입력 모달
   const onPlaceSelect = () => {
     openModal(modals.ItemPlaceInputModal)
-    console.log('place select Modal')
   }
   return (
     <DatePlaceWrapper>

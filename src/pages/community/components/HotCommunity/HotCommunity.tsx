@@ -10,7 +10,6 @@ function HotCommunity() {
   const { getQuestionHotList } = useQuestionListQuery()
   const { data, error, fetchNextPage, status, isFetching, isFetchingNextPage } =
     getQuestionHotList()
-  console.log(data)
   const bottom = useRef(null)
 
   const onIntersect = ([entry]: IntersectionObserverEntry[]) =>

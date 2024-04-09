@@ -28,7 +28,6 @@ const BrandItemField = ({ brandValid, itemNameValid }: BrandItemFieldProps) => {
     openModal(modals.ItemBrandSelectModal)
   }
   const onItemNameSelect = () => {
-    console.log('아이템 모달 열기')
     openModal(modals.ItemNameInputModal)
   }
   const brandErrorMsg = '필수 항목입니다'

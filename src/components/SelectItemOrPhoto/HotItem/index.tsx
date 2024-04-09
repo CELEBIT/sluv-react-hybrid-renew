@@ -28,7 +28,7 @@ const HotItem = () => {
   const [imgItemList, setImageItemList] = useRecoilState(imgItemListState)
 
   const handleItemClick = (item: ItemResult) => {
-    console.log(imgItemList)
+    // console.log(imgItemList)
     // 이미 item이 추가되어 있는 경우, communityUploadInfo.itemList에서 삭제
     const isItemAdded = imgItemList.some((addedItem) => addedItem.itemId === item.itemId)
     if (isItemAdded) {
@@ -80,13 +80,13 @@ const HotItem = () => {
             itemName: item.itemName,
           }
           if (firstItem?.itemId === null) {
-            console.log(firstItem)
+            // console.log(firstItem)
             setFirstItem((prevFirstItem) => ({
               ...prevFirstItem,
               ...newItem,
             }))
           } else if (secondItem?.itemId === null) {
-            console.log(secondItem)
+            // console.log(secondItem)
             setSecondItem((prevSecondItem) => ({
               ...prevSecondItem,
               ...newItem,

@@ -30,14 +30,14 @@ const useItemDetailQuery = () => {
 
   const likeItem = useMutation((itemId: number) => item.likeItem(itemId), {
     onSuccess: (res, itemId) => {
-      console.log(res)
+      //
       queryClient.invalidateQueries(queryKeys.itemDetail(itemId))
     },
   })
 
   const deleteItem = useMutation((itemId: number) => item.deleteItem(itemId), {
     onSuccess: (res) => {
-      console.log(res)
+      //
       queryClient.invalidateQueries(queryKeys.userUploadItem)
       queryClient.invalidateQueries(queryKeys.getMypageInfo)
     },

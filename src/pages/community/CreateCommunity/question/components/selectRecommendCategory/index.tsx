@@ -27,7 +27,7 @@ const SelectRecommendCategory = () => {
       ...prevState,
       categoryNameList: updatedCategoryList,
     }))
-    console.log('categoryNameList', questionItem.categoryNameList)
+    // console.log('categoryNameList', questionItem.categoryNameList)
   }
   return (
     <MenuSelectWrapper>

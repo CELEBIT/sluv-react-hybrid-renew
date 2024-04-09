@@ -122,7 +122,7 @@ export default class ItemService {
   // 임시저장 아이템 저장
   async postTempItem(tempItem: TempItemReq) {
     const data: ResponseType<TempItemId> = await request.post(`${this.tempItemUrl}`, tempItem)
-    console.log('tempItem in postTempItem', tempItem)
+    // console.log('tempItem in postTempItem', tempItem)
     return data.result
   }
   // 아이템 등록 및 수정
