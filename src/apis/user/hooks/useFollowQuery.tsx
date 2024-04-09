@@ -19,7 +19,7 @@ const useFollowQuery = () => {
 
   const followUser = useMutation(({ userId, itemId }: IFollow) => user.followUser(userId), {
     onSuccess: (res, vars) => {
-      console.log(res, vars)
+      // console.log(res, vars)
       if (vars.itemId) queryClient.invalidateQueries(queryKeys.itemDetail(vars.itemId))
       else {
         queryClient.invalidateQueries()

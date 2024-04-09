@@ -12,7 +12,6 @@ const AddInfo = () => {
   const navigate = useNavigate()
 
   const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
-  console.log('iteminfo in addInfo', itemInfo)
 
   const [addInfoText, setAddInfoText] = useState<string | null>(itemInfo.additionalInfo ?? '')
   const [source, setSource] = useState<string | null>(itemInfo.infoSource)
@@ -24,18 +23,7 @@ const AddInfo = () => {
   const onSubmit = () => {
     setHasSubmitted(true)
 
-    // setItemInfo({
-    //   ...itemInfo,
-    //   additionalInfo: addInfoText === '' ? null : addInfoText,
-    //   infoSource: source === '' ? null : source,
-    //   hashTagList: hashTags.length === 0 ? null : hashTags,
-    // })
-    // setInfoValid(true)
-    // navigate(-1)
-
     if (addInfoText || source || hashTags.length > 0) {
-      console.log(addInfoText)
-      console.log('hashTags', hashTags)
       setItemInfo({
         ...itemInfo,
         additionalInfo: addInfoText === '' ? null : addInfoText,
@@ -48,7 +36,6 @@ const AddInfo = () => {
       setInfoValid(false)
     }
   }
-  console.log(hashTags)
 
   useEffect(() => {
     if (hasSubmitted) {

@@ -42,7 +42,7 @@ const AddPhotos = () => {
   const onClickOpenGallery = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click()
-      console.log('open gallery called')
+      // console.log('open gallery called')
       openGallery(5, 5 - imgList.length)
     }
   }
@@ -55,7 +55,7 @@ const AddPhotos = () => {
       //   console.error('Untrusted message origin:', event.origin)
       //   return
       // }
-      console.log('event 자체', event)
+      // console.log('event 자체', event)
       const images = convertToImageList(event.detail, imgList)
       setImgList([...imgList, ...images])
     }

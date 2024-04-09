@@ -9,7 +9,7 @@ import styled from '@emotion/styled'
 const RecentViewCommunity = () => {
   const { getRecentViewCommunityItem } = useUserMypageQuery()
   const { data } = getRecentViewCommunityItem()
-  console.log(data)
+
   const tempData = data?.pages[0].content
   return (
     <>

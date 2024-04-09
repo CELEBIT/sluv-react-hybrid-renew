@@ -56,7 +56,7 @@ const SearchItemPhotoResult = () => {
   })
 
   const handleItemClick = (item: ItemResult) => {
-    console.log(imgItemList)
+    // console.log(imgItemList)
     // 이미 item이 추가되어 있는 경우, communityUploadInfo.itemList에서 삭제
     const isItemAdded = imgItemList.some((addedItem) => addedItem.itemId === item.itemId)
     if (isItemAdded) {

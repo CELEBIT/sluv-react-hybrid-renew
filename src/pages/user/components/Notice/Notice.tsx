@@ -9,7 +9,6 @@ const Notice = () => {
   const { getNoticeList } = useNoticeQuery()
   const { data } = getNoticeList()
   const tempData = data?.pages[0].content
-  console.log(tempData)
 
   return (
     <PageContainer>

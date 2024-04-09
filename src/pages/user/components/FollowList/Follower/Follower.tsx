@@ -18,8 +18,6 @@ const Follower = () => {
   const { data, isFetching, isFetchingNextPage, fetchNextPage } = id
     ? getOtherUserFollowerList(Number(id))
     : getUserFollowerList()
-  console.log(data)
-  console.log(isFetching)
 
   const {
     followUser: { mutate: mutateByFollow },
@@ -69,11 +67,11 @@ const Follower = () => {
       ) : (
         <EmptyStateWrapper>
           <EmptyState icon='save' title='팔로워가 없어요'>
-            <ButtonSmall
+            {/* <ButtonSmall
               text='인기 사용자 보러가기'
               type='pri'
               onClick={() => console.log('clicked')}
-            />
+            /> */}
           </EmptyState>
         </EmptyStateWrapper>
       )}

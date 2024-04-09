@@ -180,7 +180,6 @@ const CommentItemPhoto = () => {
             value={searchValue}
             setValue={setSearchValue}
             placeholder='셀럽/아이템을 검색해주세요'
-            onEnter={() => console.log('entered')}
           ></SearchTextfield>
         </ComponentWrapper>
 

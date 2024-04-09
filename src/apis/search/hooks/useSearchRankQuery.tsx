@@ -8,7 +8,7 @@ const useSearchRankQuery = () => {
   const search = new SearchService()
 
   const getSearchRank = useQuery(queryKeys.getSearchRank, () => search.getSearchRank())
-  console.log(getSearchRank.data)
+  // console.log(getSearchRank.data)
   return { getSearchRank }
 }
 

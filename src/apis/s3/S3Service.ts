@@ -31,7 +31,7 @@ export default class S3Service {
 
   // 아이템 이미지 업로드
   async postItemImg(fileList: Array<Image>) {
-    console.log('fileList in postItemImg', fileList)
+    // console.log('fileList in postItemImg', fileList)
     const resultList: Array<Image> = []
     const data = await Promise.allSettled(
       fileList.map(async (item) => {

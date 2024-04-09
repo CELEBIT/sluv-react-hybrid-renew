@@ -12,7 +12,6 @@ interface ImageFieldProps {
 }
 
 const DefaultImageField = ({ error }: ImageFieldProps) => {
-  console.log('render')
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [imgList, setImgList] = useRecoilState(imgListState)
 
@@ -35,7 +34,6 @@ const DefaultImageField = ({ error }: ImageFieldProps) => {
   const onClickOpenGallery = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click()
-      console.log('open gallery called')
       openGallery(5, 5 - imgList.length)
     }
   }
@@ -43,12 +41,6 @@ const DefaultImageField = ({ error }: ImageFieldProps) => {
   useEffect(() => {
     // 메시지 리스너 함수
     const handlePhotosMessage = (event: any) => {
-      // event.origin 체크로 보안 강화
-      // if (event.origin !== '여러분의 신뢰할 수 있는 출처') {
-      //   console.error('Untrusted message origin:', event.origin)
-      //   return
-      // }
-      console.log('event 자체', event)
       const images = convertToImageList(event.detail, imgList)
       setImgList([...imgList, ...images])
     }

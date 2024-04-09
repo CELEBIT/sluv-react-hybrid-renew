@@ -51,7 +51,6 @@ const BrandList = () => {
       newBrand: null,
     })
   }
-  console.log('브랜드 무한스크롤', data)
 
   const onSelectNewBrand = async (newBrandName: string) => {
     mutateByPostNewBrand({

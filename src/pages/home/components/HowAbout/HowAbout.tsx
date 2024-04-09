@@ -29,7 +29,7 @@ const HowAbout = () => {
     e.stopPropagation()
     if (scrapStatus) {
       const res = await deleteScrap(itemId)
-      console.log(res)
+
       if (res.isSuccess) {
         alert('아이템 저장이 취소되었어요')
         queryClient.invalidateQueries()

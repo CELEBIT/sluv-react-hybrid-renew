@@ -25,7 +25,7 @@ const CommentUpload = () => {
   const [comment, setcomment] = useState(commentObject.content)
   const [infoValid, setInfoValid] = useState(true)
   const [hasSubmitted, setHasSubmitted] = useState(false)
-  console.log(imgItemList)
+  // console.log(imgItemList)
 
   const onSubmit = () => {
     setHasSubmitted(true)
@@ -55,7 +55,7 @@ const CommentUpload = () => {
   } = useSearchSubCommentQuery()
   const onAddComment = () => {
     const itemsWithImgFile = imgItemList.filter((item) => item.imgFile)
-    console.log(itemsWithImgFile)
+    // console.log(itemsWithImgFile)
     if (itemsWithImgFile.length > 0) {
       // 이미지 업로드 후 댓글 업로드
     } else {
@@ -70,7 +70,7 @@ const CommentUpload = () => {
       if (pathname === '/community/subcomment/upload')
         mutateByAddSubComment({ ...newComment, commentId: state.id })
       if (pathname === '/community/comment/edit') {
-        console.log('commentObject', commentObject)
+        // console.log('commentObject', commentObject)
         if (commentObject.id) {
           const newComment: IEditComment = {
             questionId: Number(questionId),
@@ -79,7 +79,7 @@ const CommentUpload = () => {
             imgList: null,
             itemList: commentObject.itemList,
           }
-          console.log('newComment', newComment)
+          // console.log('newComment', newComment)
           mutateByEditComment(newComment)
         }
       }

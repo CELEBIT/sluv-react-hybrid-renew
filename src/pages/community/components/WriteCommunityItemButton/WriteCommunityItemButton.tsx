@@ -18,7 +18,6 @@ const WriteCommunityItemButton = ({ isTop }: WriteButtonProps) => {
   const [menuOpen, setMenuOpen] = useState(false)
   const navigate = useNavigate()
   const { pathname } = useLocation()
-  console.log(pathname)
   return (
     <WriteCommunityItemButtonWrapper>
       {menuOpen === true ? (

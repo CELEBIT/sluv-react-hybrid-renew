@@ -150,8 +150,6 @@ export const openGallery = (totalPhotos: number, photosToSelect: number) => {
     window.webkit.messageHandlers &&
     window.webkit.messageHandlers.IOSBridge
   ) {
-    console.log(totalPhotos)
-    console.log(photosToSelect)
     window.webkit.messageHandlers.IOSBridge.postMessage(
       JSON.stringify({
         type: 'openGallery',

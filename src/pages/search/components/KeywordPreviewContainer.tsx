@@ -22,8 +22,6 @@ const KeywordPreviewContainer = ({ keyword }: KeywordPreviewContainerProps) => {
   const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } =
     getSearchKeywordPreview(keyword)
 
-  console.log(data)
-
   const onIntersect = ([entry]: IntersectionObserverEntry[]) => {
     entry.isIntersecting && fetchNextPage()
   }

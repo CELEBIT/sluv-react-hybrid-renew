@@ -89,7 +89,6 @@ function SignUp() {
   const handleSignupComplete = () => {
     navigate('/home')
   }
-  console.log(signupValues.terms)
 
   return (
     <S.Layout>

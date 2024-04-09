@@ -30,7 +30,6 @@ export const ClosetBoxEditPage = () => {
     // @ts-ignore
     coverImageMode: queryParams.get('coverImageMode'),
   }
-  console.log(params)
 
   return <ClosetBoxCreatePage isEditMode={true} service={params} />
 }

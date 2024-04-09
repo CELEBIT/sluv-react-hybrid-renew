@@ -101,13 +101,13 @@ const Comment = ({ questionId, comment }: CommentProps) => {
     if (comment.itemList && comment.itemList.length > 0) {
       sortedItemList = comment.itemList.sort((a, b) => a.sortOrder - b.sortOrder)
     }
-    console.log('sortedItemList', sortedItemList)
+    // console.log('sortedItemList', sortedItemList)
 
     // Combine sorted imgUrlList and itemList based on sortOrder
     const combinedList = [...sortedItemList, ...sortedImgUrlList].sort(
       (a, b) => a.sortOrder - b.sortOrder,
     )
-    console.log('combinedList', combinedList)
+    // console.log('combinedList', combinedList)
     // Transform and store sorted items into imgItemList
     const transformedItems = combinedList.map((each) => ({
       itemId: 'item' in each ? (each as CommentItem).item.itemId : null,
@@ -116,7 +116,7 @@ const Comment = ({ questionId, comment }: CommentProps) => {
       representFlag: each.sortOrder === 0, // Assuming sortOrder indicates representation
       sortOrder: each.sortOrder,
     }))
-    console.log('transformedItems', transformedItems)
+    // console.log('transformedItems', transformedItems)
 
     setImageItemList(transformedItems)
 

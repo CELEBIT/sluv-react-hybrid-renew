@@ -9,7 +9,6 @@ const HotBrand = () => {
   const {
     getTopBrand: { data },
   } = useTopBrandQuery()
-  console.log('인기 브랜드', data)
 
   return (
     <HotWrapper>

@@ -118,7 +118,7 @@ export default class QuestionService {
   // 질문 게시글 삭제
   async deleteQuestion(questionId: number) {
     const data: ResponseType = await request.delete(`${this.questionUrl}/${questionId}`)
-    console.log('질문게시글삭제', data)
+    // console.log('질문게시글삭제', data)
     return data
   }
 

@@ -46,7 +46,6 @@ const EditRequest = () => {
   // 페이지 렌더링용
   const setRequestDisplay = useSetRecoilState<reasonList>(RequestDisplayState)
   const EditReportItemState = useRecoilValue(RequestEditItemState)
-  console.log('edit item state', EditReportItemState)
 
   const onClickReason = (reason: string, displayText: string) => {
     setRequestReason({ reason: reason, content: '' })

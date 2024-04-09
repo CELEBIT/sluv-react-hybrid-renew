@@ -166,7 +166,7 @@ export default class UserService {
 
   // 유저 신고
   async reportUser(userId: number | undefined, reason: string, content: string) {
-    console.log('유저 id', userId)
+    // console.log('유저 id', userId)
     const data: ResponseType = await request.post(`${this.userUrl}/${userId}/report`, {
       reason,
       content,

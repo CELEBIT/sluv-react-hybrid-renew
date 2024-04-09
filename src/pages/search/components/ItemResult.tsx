@@ -11,7 +11,7 @@ type Props = {
 const ItemResult = ({ keyword }: Props) => {
   const { searchItem } = useItemSearchQuery()
   const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } = searchItem(keyword)
-  console.log(data)
+
   return (
     <>
       {data && data.pages[0].content.length > 0 ? (

@@ -20,7 +20,7 @@ const QuestionDateTimePickerModal = () => {
       questionInfo.voteEndTime &&
       questionInfo?.voteEndTime < new Date(new Date().setHours(today.getHours() + 3))
     ) {
-      console.log(new Date(new Date().setHours(today.getHours() + 3)))
+      // console.log(new Date(new Date().setHours(today.getHours() + 3)))
       alert('마감시간은 지금으로부터 최소 3시간 이후로 설정할 수 있습니다')
     } else {
       closeModal(modals.QuestionDateTimePickerModal)

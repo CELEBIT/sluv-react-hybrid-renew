@@ -115,7 +115,6 @@ const UserInterestCelebModal = ({ id }: userIdProps) => {
                       <CategoryTitle>{Category.categoryName}</CategoryTitle>
                       <CelebListWrapper id='celebListWrapper'>
                         {Category.celebList.map((celeb) => {
-                          console.log(celeb)
                           return (
                             <ColorChip
                               key={celeb.id}

@@ -11,10 +11,11 @@ import DefaultCreateBox from './components/ClosetCreateBox/DefaultCreateBox'
 import SubHeader from './components/SubHeader'
 import { ClosetMainSubHeaderEditText } from './components/SubHeader/SubHeaderText'
 import ClosetList from './components/ClosetList'
+import { useNavigate } from 'react-router-dom'
 
 const Closet = () => {
   const { data, status } = useQuery({ ...closetQueryConfig.getClosetList() })
-
+  const navigate = useNavigate()
   if (status === 'error' || !data?.result?.closetList) {
     return <div>error</div>
   }
@@ -23,8 +24,7 @@ const Closet = () => {
     <S.Root>
       <S.HeaderContainer>
         <Header isModalHeader={false} title={'옷장'} hasArrow>
-          <SearchIcon />
-          <BellOnIcon />
+          <SearchIcon onClick={() => navigate('/search')} />
         </Header>
         <SubHeader
           leftPaneChildren={

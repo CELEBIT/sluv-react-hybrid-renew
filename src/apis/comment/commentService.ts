@@ -54,7 +54,7 @@ export default class CommentService {
 
   // 질문 게시글 답글 조회
   async getSubComment(commentId: number, size?: number) {
-    console.log('size in getSubComment', size)
+    // console.log('size in getSubComment', size)
     const data: ResponseType<GetPaginationResult<CommentResult>> = await request.get(
       `${this.commentUrl}/${commentId}/subcomment`,
       {

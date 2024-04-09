@@ -40,7 +40,7 @@ const ItemCategoryModal = () => {
   const [selectedParentCategory, setSelectedParentCategory] = useRecoilState(parentCategoryState)
   const [subCategory, setsubCategory] = useRecoilState(subCategoryState)
   const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
-  console.log('subCategory in modal', subCategory)
+  // console.log('subCategory in modal', subCategory)
   const onComplete = () => {
     setItemInfo({
       ...itemInfo,
@@ -62,7 +62,7 @@ const ItemCategoryModal = () => {
   }
   const onSubClick = (category: Category) => {
     setsubCategory(category)
-    console.log('sub', category)
+    // console.log('sub', category)
   }
 
   const {

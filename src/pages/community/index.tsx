@@ -25,7 +25,6 @@ const Community = () => {
       if (stickyRef.current) {
         const { top } = stickyRef.current.getBoundingClientRect()
         setIsStickyAtTop(top <= 65)
-        console.log(top)
       }
     }
     ComponentContainerRef.current?.addEventListener('scroll', handleScroll)

@@ -37,7 +37,6 @@ const SubCommentList = ({ comment }: SubcommentProps) => {
     } else {
       // 닫혀있을 때
       if (data?.restCommentNum) {
-        console.log(data.restCommentNum)
         setRestNum(data.content.length + data.restCommentNum)
       }
     }

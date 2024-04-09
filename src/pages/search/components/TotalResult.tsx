@@ -19,7 +19,7 @@ const TotalResult = ({ keyword }: TotalResultProps) => {
   const navigate = useNavigate()
   const { searchTotal } = useSearchQuery()
   const { data } = searchTotal(keyword)
-  console.log(data)
+
   return (
     <>
       {data?.itemList.length === 0 &&

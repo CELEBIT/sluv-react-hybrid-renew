@@ -52,7 +52,6 @@ const SubComment = ({ subcomment, comment }: SubCommentProps) => {
     likeSubComment: { mutate: mutateByLike },
   } = useSearchSubCommentQuery()
   const onClickLike = (commentId: number, subCommentId: number) => {
-    console.log('clicked')
     mutateByLike({ commentId, subCommentId })
   }
 

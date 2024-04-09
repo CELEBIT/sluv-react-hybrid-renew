@@ -67,7 +67,6 @@ const ItemCreate = () => {
 
   const { getTempItem } = useTempItemQuery()
   const { data } = getTempItem()
-  console.log('temp storage', data?.pages[0].countNum)
 
   useEffect(() => {
     const newImgList: ImgResult[] = imgList.map((img: Image, idx) => ({
@@ -76,7 +75,6 @@ const ItemCreate = () => {
       sortOrder: idx,
     }))
     if (imgList.length > 0) setItemInfo({ ...itemInfo, imgList: newImgList })
-    console.log('imgList in useEffect', imgList)
   }, [imgList])
 
   useEffect(() => {
@@ -167,21 +165,6 @@ const ItemCreate = () => {
     resetImgListState()
     navigate('/home', { replace: true })
   }
-
-  // useEffect(() => {
-  //   // 메시지 리스너 함수
-  //   const handlePhotosMessage = (event: any) => {
-  //     // 여기서는 event.data가 사진 데이터 배열이라고 가정
-  //     // 실제로는 event.origin 등을 체크하여 보안을 강화하는 것이 좋음
-  //     console.log(event.data)
-  //     alert(event.data)
-  //   }
-
-  //   window.addEventListener('getImageFromIOS', handlePhotosMessage)
-  //   return () => {
-  //     window.removeEventListener('getImageFromIOS', handlePhotosMessage)
-  //   }
-  // }, [])
 
   return (
     <ItemCreatePageStyle>

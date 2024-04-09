@@ -86,7 +86,6 @@ const UserProfile = () => {
 
     useEffect(() => {
       const handlePhotosMessage = async (event: any) => {
-        console.log('event 자체', event.detail)
         const image = convertToFile(event.detail)
         const s3 = new S3Service()
         const imgURL = await s3.postProfileImg(image)

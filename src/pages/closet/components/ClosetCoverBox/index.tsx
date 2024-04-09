@@ -16,7 +16,6 @@ const ClosetCoverBox = ({ service, editMode = false, handleClickBox }: ClosetCov
 
   const handleForwardDetailPage = () => {
     if (handleClickBox) {
-      console.log('asd')
       handleClickBox()
       return
     }

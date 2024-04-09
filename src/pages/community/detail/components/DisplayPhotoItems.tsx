@@ -17,12 +17,10 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
   const combinedList = [...(imgList || []), ...(itemList || [])].sort(
     (a, b) => a.sortOrder - b.sortOrder,
   )
-  console.log('combinedList', combinedList)
   const isImgItem = (item: Img | Item): item is Img => {
     return (item as Img).imgUrl !== undefined
   }
   if (combinedList.length === 0) {
-    console.log('combined list is null')
     return null
   } else if (combinedList.length === 1) {
     return (

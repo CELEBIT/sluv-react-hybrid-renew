@@ -173,16 +173,16 @@ const SelectItemOrPhoto = () => {
             if (CommunityMenu === '이 중에 뭐 살까') {
               if (fileArr[i]) {
                 if (i === 0) {
-                  console.log(firstItem)
+                  // console.log(firstItem)
                   // firstItem || secondItem 둘중에 하나라도 null 이면 추가 가능
                   if (firstItem.imgFile === null && firstItem.itemId === null) {
                     // firstItem이 비어있을 때
-                    console.log('first item 없음')
+                    // console.log('first item 없음')
                     setFirstItem((prev) => ({
                       ...prev,
                       ...{ imgFile: fileArr[i] },
                     }))
-                    console.log('firstItem', firstItem)
+                    // console.log('firstItem', firstItem)
                   } else if (firstItem.imgFile || firstItem.itemId) {
                     // first가 존재할 때
                     // console.log('seconds 아이템 null')
@@ -194,14 +194,14 @@ const SelectItemOrPhoto = () => {
                 } else {
                   // 두번째 사진 -> firstItem, secondItem 둘다 없을 때만 가능
                   // secondItem에만 추가하면 됨.
-                  console.log('i==1')
+                  // console.log('i==1')
                   if (secondItem.imgFile === null && secondItem.itemId === null) {
                     // console.log('seconds 아이템 null')
                     setSecondItem((prev) => ({
                       ...prev,
                       ...{ imgFile: fileArr[i] },
                     }))
-                    console.log('secondItem', secondItem)
+                    // console.log('secondItem', secondItem)
                   }
                 }
               }

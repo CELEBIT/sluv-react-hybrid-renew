@@ -18,7 +18,7 @@ const CommunityResult = ({ keyword }: Props) => {
   const { searchCommunity } = useSearchQuery()
   const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } =
     searchCommunity(keyword)
-  console.log(data)
+
   const bottom = useRef(null)
 
   const onIntersect = ([entry]: IntersectionObserverEntry[]) =>
