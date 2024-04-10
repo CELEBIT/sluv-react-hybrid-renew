@@ -88,14 +88,8 @@ const ItemDetail = () => {
   const setEditReportItemState = useSetRecoilState(RequestEditItemState)
   const colors = ['gray', 'pink', 'orange', 'yellow', 'green', 'blue']
 
-  const dataToShare = {
-    title: 'SLUV',
-    text: '셀럽의 아이템 정보를 공유해보아요!',
-    url: `https://sluv.co.kr${location.pathname}`,
-  }
-
   const handleShare = async () => {
-    const result = await share(dataToShare)
+    const result = await share()
     if (result === 'copiedToClipboard') {
       alert('링크를 클립보드에 복사했습니다.')
     } else if (result === 'failed') {
