@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useRef } from 'react'
+import React, { ChangeEvent, useEffect, useRef } from 'react'
 import BottomSheetModal from '.'
 import styled from '@emotion/styled'
 
@@ -7,7 +7,7 @@ import useModals from '../Modals/hooks/useModals'
 import { modals } from '../Modals'
 import { Common, Pretendard } from '../styles'
 import { ReactComponent as Share } from '../../assets/share_24.svg'
-import { openGallery } from '../../utils/utility'
+import { convertToFile, openGallery } from '../../utils/utility'
 import useUserMypageQuery from '../../apis/user/hooks/useUserMypageQuery'
 import S3Service from '../../apis/s3/S3Service'
 
@@ -61,6 +61,20 @@ const ProfileImgModal = ({ imgExist }: ProfileImgModalProps) => {
     if (fileInputRef.current?.value) fileInputRef.current.value = ''
     closeModal(modals.ProfileImgModal)
   }
+
+  useEffect(() => {
+    // 메시지 리스너 함수
+    const handlePhotosMessage = async (event: any) => {
+      const images = convertToFile(event.detail)
+      const s3 = new S3Service()
+      const imgURL = await s3.postProfileImg(images[0])
+      if (imgURL) mutateByEdit(imgURL)
+    }
+    window.addEventListener('getImageFromIOS', handlePhotosMessage)
+    return () => {
+      window.removeEventListener('getImageFromIOS', handlePhotosMessage)
+    }
+  }, [])
 
   return (
     <BottomSheetModal>
