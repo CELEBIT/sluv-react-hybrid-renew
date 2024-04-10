@@ -17,7 +17,7 @@ import {
 import Header from '../../../components/Header/Header'
 
 import { ReactComponent as Home } from '../../../assets/home_24.svg'
-import { ReactComponent as Share } from '../../../assets/share_24.svg'
+import { ReactComponent as ShareIcon } from '../../../assets/share_24.svg'
 import { ReactComponent as More } from '../../../assets/add_24.svg'
 import { ReactComponent as CommentIcon } from '../../../assets/comment_18.svg'
 import { ReactComponent as View } from '../../../assets/page view_18.svg'
@@ -54,6 +54,7 @@ import { questionTypeState } from '../../../components/BottomSheetModal/Question
 import CommentList from './components/Comment/CommentList'
 import { ReactComponent as Spinner } from '../../../assets/Spinner.svg'
 import Flex from '../../../components/Flex'
+import Share from '../../../utils/Share/share'
 
 export const commentState = atom<NewComment>({
   key: atomKeys.commentState,
@@ -175,12 +176,22 @@ const CommunityDetail = () => {
     setCommentObject({ ...commentObject, content: commentString })
   }, [commentString])
 
+  // 공유하기
+  const handleShare = async () => {
+    const result = await Share()
+    if (result === 'copiedToClipboard') {
+      alert('링크를 클립보드에 복사했습니다.')
+    } else if (result === 'failed') {
+      alert('공유하기가 지원되지 않는 환경입니다.')
+    }
+  }
+
   return (
     <DetailContainer>
       <HeaderWrapper>
         <Header isModalHeader={false} hasArrow={true}>
           <Home onClick={() => navigate('/home')} />
-          {/* <Share stroke={Common.colors.BK} /> */}
+          <ShareIcon stroke={Common.colors.BK} onClick={handleShare} />
           <More onClick={() => onClickShowMore()} />
         </Header>
       </HeaderWrapper>
