@@ -48,7 +48,7 @@ export const ComponentWrapper = styled.div`
 export const BottomWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  position: relative;
+  position: fixed;
   bottom: 0;
   box-sizing: border-box;
   flex-grow: 0;

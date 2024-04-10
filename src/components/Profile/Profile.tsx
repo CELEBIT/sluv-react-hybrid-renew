@@ -113,6 +113,7 @@ function Profile({ onNext }: { onNext?: (profile: SignupValues['profile']) => vo
   useEffect(() => {
     // 메시지 리스너 함수
     const handlePhotosMessage = async (event: any) => {
+      console.log(event.detail)
       const images = convertToFile(event.detail)
       const s3 = new S3Service()
       const imgURL = await s3.postProfileImg(images[0])
