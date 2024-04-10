@@ -4,20 +4,12 @@ import UserProfile from './components/UserProfile/UserProfile'
 import Tabs from '../../components/Tabs'
 import { Divider } from '../item/detail/styles'
 import {
-  BottomInfo,
-  CardWrapper,
-  CommunityCard,
   ContentContainer,
   ContentTitle,
-  Count,
   EachContentWrapper,
   HeaderWrapper,
-  ItemCard,
-  ItemListContainer,
-  ItemPreviewImg,
   Menu,
   PageContainer,
-  PreviewWrapper,
   StickyTabContainer,
 } from './styles'
 import UserItem from './components/UserItem/UserItem'
