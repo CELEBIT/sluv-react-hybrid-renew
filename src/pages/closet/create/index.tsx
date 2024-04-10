@@ -60,8 +60,11 @@ const ClosetBoxCreatePage = ({ service, isEditMode = false }: ClosetBoxCreatePag
       const images = convertToFile(event.detail)
       const s3 = new S3Service()
       const imgURL = await s3.postProfileImg(images[0])
-      contextValue.handlers.setCoverImgUrl(imgURL)
-      contextValue.handlers.setCoverImageMode('IMAGE')
+      if (imgURL) {
+        console.log('이미지 url', imgURL)
+        contextValue.handlers.setCoverImgUrl(imgURL)
+        contextValue.handlers.setCoverImageMode('IMAGE')
+      }
 
       window.addEventListener('getImageFromIOS', handlePhotosMessage)
       return () => {
