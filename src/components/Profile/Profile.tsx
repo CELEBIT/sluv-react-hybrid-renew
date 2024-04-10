@@ -103,10 +103,19 @@ function Profile({ onNext }: { onNext?: (profile: SignupValues['profile']) => vo
   }, [data])
 
   const fileInputRef = useRef<HTMLInputElement>(null)
+
   const onClickOpenGallery = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click()
+    if (
+      typeof window !== 'undefined' &&
+      window.webkit &&
+      window.webkit.messageHandlers &&
+      window.webkit.messageHandlers.IOSBridge
+    ) {
       openGallery(1, 1)
+    } else {
+      if (fileInputRef.current) {
+        fileInputRef.current.click() // 파일 선택 창 열기
+      }
     }
   }
 
@@ -122,11 +131,10 @@ function Profile({ onNext }: { onNext?: (profile: SignupValues['profile']) => vo
           ...prevValues,
           userImg: imgURL,
         }))
-
-      window.addEventListener('getImageFromIOS', handlePhotosMessage)
-      return () => {
-        window.removeEventListener('getImageFromIOS', handlePhotosMessage)
-      }
+    }
+    window.addEventListener('getImageFromIOS', handlePhotosMessage)
+    return () => {
+      window.removeEventListener('getImageFromIOS', handlePhotosMessage)
     }
   }, [])
 
