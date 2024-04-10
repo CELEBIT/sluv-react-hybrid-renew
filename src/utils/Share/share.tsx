@@ -25,7 +25,12 @@ export const isShareSupported = () => navigator.share ?? false
  * ```
  */
 
-export const share = (data: ShareData) => {
+export const Share = () => {
+  const data = {
+    title: 'SLUV',
+    text: '셀럽의 아이템 정보를 공유해보아요!',
+    url: `https://sluv.co.kr${window.location.pathname}`,
+  }
   return new Promise<'shared' | 'copiedToClipboard' | 'failed'>((resolve) => {
     if (isShareSupported()) {
       navigator
@@ -54,4 +59,4 @@ export const share = (data: ShareData) => {
   })
 }
 
-export default share
+export default Share
