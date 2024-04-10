@@ -73,7 +73,7 @@ import SameCeleb from './components/Carousel/SameCeleb'
 import SameScrap from './components/Carousel/SameScrap'
 import SameBrand from './components/Carousel/SameBrand'
 import { deleteScrap } from '../../../apis/closet'
-import share from './share'
+import share from '../../../utils/Share/share'
 
 const ItemDetail = () => {
   const navigate = useNavigate()
