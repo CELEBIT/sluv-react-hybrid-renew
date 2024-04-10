@@ -1,4 +1,4 @@
-import { useState, useEffect, ChangeEvent, useCallback, useMemo } from 'react'
+import { useState, useEffect, ChangeEvent, useCallback, useMemo, useRef } from 'react'
 import styled from '@emotion/styled'
 import { SignupValues } from '../../models/signup'
 import Flex from '../Flex'
@@ -15,6 +15,7 @@ import { HeaderWrap } from '../../pages/search/styles'
 import Header from '../Header/Header'
 import { ContentContainer, PageContainer } from '../../pages/user/styles'
 import { HeaderWrapper } from '../Header/CommunityHeader/styles'
+import { convertToFile, convertToImageList, openGallery } from '../../utils/utility'
 
 function Profile({ onNext }: { onNext?: (profile: SignupValues['profile']) => void }) {
   const [profileValues, setProfileValues] = useState<SignupValues['profile']>({
@@ -101,6 +102,32 @@ function Profile({ onNext }: { onNext?: (profile: SignupValues['profile']) => vo
     }
   }, [data])
 
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const onClickOpenGallery = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click()
+      openGallery(1, 1)
+    }
+  }
+
+  useEffect(() => {
+    // 메시지 리스너 함수
+    const handlePhotosMessage = async (event: any) => {
+      const images = convertToFile(event.detail)
+      const s3 = new S3Service()
+      const imgURL = await s3.postProfileImg(images[0])
+      setProfileValues((prevValues) => ({
+        ...prevValues,
+        userImg: imgURL,
+      }))
+
+      window.addEventListener('getImageFromIOS', handlePhotosMessage)
+      return () => {
+        window.removeEventListener('getImageFromIOS', handlePhotosMessage)
+      }
+    }
+  }, [])
+
   return (
     <Layout>
       {pathname === '/settings/edit-profile' && (
@@ -116,13 +143,13 @@ function Profile({ onNext }: { onNext?: (profile: SignupValues['profile']) => vo
             닉네임을 등록해주세요
           </Title>
           <Flex direction='column' justify='center' align='center'>
-            <ProfileContainer>
+            <ProfileContainer onClick={onClickOpenGallery}>
               {profileValues.userImg ? (
                 <img src={profileValues.userImg} alt='유저의 이미지' />
               ) : (
                 <DefaultProfile />
               )}
-              <input type='file' accept='image/*' onChange={handleChangeFile} />
+              <input type='file' accept='image/*' ref={fileInputRef} onChange={handleChangeFile} />
               <AddPhoto className='add' />
             </ProfileContainer>
             <TextField

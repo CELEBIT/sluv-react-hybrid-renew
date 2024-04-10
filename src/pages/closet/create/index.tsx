@@ -1,4 +1,4 @@
-import React, { ChangeEvent, createContext, useCallback, useMemo, useRef } from 'react'
+import React, { ChangeEvent, createContext, useCallback, useEffect, useMemo, useRef } from 'react'
 import { useCreateClosetFormContext } from './hooks'
 import Header from '../../../components/Header/Header'
 
@@ -15,6 +15,7 @@ import { useLocation, useParams } from 'react-router-dom'
 import OneButtonModal from '../../../components/OneButtonModal'
 import { BtnModalContent } from '../../../components/Modals/styles'
 import S3Service from '../../../apis/s3/S3Service'
+import { convertToFile, openGallery } from '../../../utils/utility'
 
 type CreateClosetFormContextType = ReturnType<typeof useCreateClosetFormContext>
 export const CreateClosetFormContext = createContext<CreateClosetFormContextType | null>(null)
@@ -46,12 +47,35 @@ const ClosetBoxCreatePage = ({ service, isEditMode = false }: ClosetBoxCreatePag
     isEditMode,
   )
 
+  const onClickOpenGallery = () => {
+    if (coverImageRef.current) {
+      coverImageRef.current.click()
+      openGallery(1, 1)
+    }
+  }
+
+  useEffect(() => {
+    // 메시지 리스너 함수
+    const handlePhotosMessage = async (event: any) => {
+      const images = convertToFile(event.detail)
+      const s3 = new S3Service()
+      const imgURL = await s3.postProfileImg(images[0])
+      contextValue.handlers.setCoverImgUrl(imgURL)
+      contextValue.handlers.setCoverImageMode('IMAGE')
+
+      window.addEventListener('getImageFromIOS', handlePhotosMessage)
+      return () => {
+        window.removeEventListener('getImageFromIOS', handlePhotosMessage)
+      }
+    }
+  }, [])
+
   const SELECT_COVER_IMAGE_MODAL_ITEMS: ClosetBoxBottomSheetListItem[] = useMemo(
     () => [
       {
         title: '앨범에서 사진 선택',
         callback: () => {
-          coverImageRef.current?.click()
+          onClickOpenGallery()
           closeModal(ClosetBoxCreateBottomSheetModal)
         },
       },
