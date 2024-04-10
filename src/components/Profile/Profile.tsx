@@ -117,10 +117,11 @@ function Profile({ onNext }: { onNext?: (profile: SignupValues['profile']) => vo
       const images = convertToFile(event.detail)
       const s3 = new S3Service()
       const imgURL = await s3.postProfileImg(images[0])
-      setProfileValues((prevValues) => ({
-        ...prevValues,
-        userImg: imgURL,
-      }))
+      if (imgURL)
+        setProfileValues((prevValues) => ({
+          ...prevValues,
+          userImg: imgURL,
+        }))
 
       window.addEventListener('getImageFromIOS', handlePhotosMessage)
       return () => {

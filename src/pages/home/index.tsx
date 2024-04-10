@@ -65,7 +65,11 @@ const Home = () => {
       </HeaderWrapper>
       <ComponentContainer ref={scrollToTopRef}>
         <div ref={bannerRef}>
-          <Banner style={{ height: '100%', width: '100vw' }}></Banner>
+          {/* <Banner style={{ height: '100%', width: '100vw' }}></Banner> */}
+          <object
+            data='../../assets/HotCelebBanner.svg'
+            style={{ height: '100%', width: '100vw' }}
+          ></object>
         </div>
         <Curation></Curation>
         <BuyNow></BuyNow>
