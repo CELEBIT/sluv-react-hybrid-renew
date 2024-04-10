@@ -61,7 +61,7 @@ import { HeaderWrapper } from '../addInfo/styles'
 import Carousel from './components/Carousel/Carousel'
 import useItemDetailQuery from '../../../apis/item/hooks/useItemDetailQuery'
 
-import { convertToKoDate } from '../../../utils/utility'
+import { convertToImageList, convertToKoDate } from '../../../utils/utility'
 import useFollowQuery from '../../../apis/user/hooks/useFollowQuery'
 import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '../../../config/queryKeys'
@@ -88,18 +88,28 @@ const ItemDetail = () => {
   const setEditReportItemState = useSetRecoilState(RequestEditItemState)
   const colors = ['gray', 'pink', 'orange', 'yellow', 'green', 'blue']
 
-  const dataToShare = {
-    title: 'SLUV',
-    text: '셀럽의 아이템 정보를 공유해보아요!',
-    url: `https://sluv.co.kr${location.pathname}`,
-  }
-
   const handleShare = async () => {
-    const result = await share(dataToShare)
-    if (result === 'copiedToClipboard') {
-      alert('링크를 클립보드에 복사했습니다.')
-    } else if (result === 'failed') {
-      alert('공유하기가 지원되지 않는 환경입니다.')
+    if (data?.imgList && data.imgList.length > 0 && data.imgList[0].imgUrl) {
+      const blob = await fetch(new URL(data.imgList[0].imgUrl)).then((r) => r.blob())
+      const dataToShare = {
+        title: 'SLUV',
+        text: '셀럽의 아이템 정보를 공유해보아요!',
+        files: [
+          new File([blob], 'file.png', {
+            type: blob.type,
+          }),
+        ],
+        url: `https://sluv.co.kr${location.pathname}`,
+      }
+      const result = await share(dataToShare)
+      if (result === 'copiedToClipboard') {
+        alert('링크를 클립보드에 복사했습니다.')
+      } else if (result === 'failed') {
+        alert('공유하기가 지원되지 않는 환경입니다.')
+      }
+    } else {
+      // Handle case where imgUrl is not available
+      console.error('imgUrl is not available in data')
     }
   }
 
