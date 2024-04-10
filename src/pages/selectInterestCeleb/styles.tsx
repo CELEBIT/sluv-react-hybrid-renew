@@ -12,7 +12,7 @@ export const SelectCelebContainer = styled.div`
   padding-left: 0;
   background-color: white;
   /* overflow: hidden; */
-
+  position: relative;
   ::-webkit-scrollbar {
     display: none;
   }
