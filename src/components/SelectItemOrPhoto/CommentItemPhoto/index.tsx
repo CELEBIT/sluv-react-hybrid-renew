@@ -28,6 +28,7 @@ import UserUploadItem from '../UserUploadItem'
 import KeywordPreviewContainer from '../../../pages/search/components/KeywordPreviewContainer'
 import { useDebounce } from 'use-debounce'
 import KeywordPreview from '../KeywordPreview/KeywordPreview'
+import { convertToImageList, openGallery } from '../../../utils/utility'
 
 const CommentItemPhoto = () => {
   const navigate = useNavigate()
@@ -164,6 +165,47 @@ const CommentItemPhoto = () => {
     setOnSearch(true)
   }
 
+  const onClickOpenGallery = () => {
+    if (imgInput.current) {
+      imgInput.current.click()
+      openGallery(maxItemPhotoCount, maxItemPhotoCount - imgItemList.length)
+    }
+  }
+
+  const onNativeImgUpload = (fileArr: File[]) => {
+    if (fileArr) {
+      setSelectedFileList((pre) => [...pre, ...Array.from(fileArr)])
+      for (let i = 0; i < fileArr.length; i++) {
+        const file = fileArr[i]
+        if (imgItemList.length + i + 1 <= maxItemPhotoCount) {
+          const fileSelected = {
+            imgFile: file,
+            description: null,
+            vote: null,
+            representFlag: !imgItemList && i === 0,
+          }
+          setImageItemList((prevList) => [...prevList, fileSelected])
+        } else {
+          alert(`아이템/사진은 ${maxItemPhotoCount}개까지 선택할 수 있어요. `)
+          break
+        }
+      }
+    }
+  }
+
+  useEffect(() => {
+    // 메시지 리스너 함수
+    const handlePhotosMessage = (event: any) => {
+      const images = convertToImageList(event.detail, imgItemList)
+      onNativeImgUpload(images)
+    }
+
+    window.addEventListener('getImageFromIOS', handlePhotosMessage)
+    return () => {
+      window.removeEventListener('getImageFromIOS', handlePhotosMessage)
+    }
+  }, [])
+
   return (
     <SelectItemOrPhotoContainer>
       <HeaderWrapper>
@@ -237,7 +279,7 @@ const CommentItemPhoto = () => {
       </ComponentContainer>
       <Dimmer></Dimmer>
       <BottomWrapper>
-        <GalleryButton onClick={() => imgInput.current?.click()}>
+        <GalleryButton onClick={onClickOpenGallery}>
           <input
             type='file'
             accept='image/*'
