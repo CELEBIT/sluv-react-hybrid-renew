@@ -48,9 +48,17 @@ const ClosetBoxCreatePage = ({ service, isEditMode = false }: ClosetBoxCreatePag
   )
 
   const onClickOpenGallery = () => {
-    if (coverImageRef.current) {
-      coverImageRef.current.click()
+    if (
+      typeof window !== 'undefined' &&
+      window.webkit &&
+      window.webkit.messageHandlers &&
+      window.webkit.messageHandlers.IOSBridge
+    ) {
       openGallery(1, 1)
+    } else {
+      if (coverImageRef.current) {
+        coverImageRef.current.click() // 파일 선택 창 열기
+      }
     }
   }
 
@@ -65,11 +73,10 @@ const ClosetBoxCreatePage = ({ service, isEditMode = false }: ClosetBoxCreatePag
         contextValue.handlers.setCoverImgUrl(imgURL)
         contextValue.handlers.setCoverImageMode('IMAGE')
       }
-
-      window.addEventListener('getImageFromIOS', handlePhotosMessage)
-      return () => {
-        window.removeEventListener('getImageFromIOS', handlePhotosMessage)
-      }
+    }
+    window.addEventListener('getImageFromIOS', handlePhotosMessage)
+    return () => {
+      window.removeEventListener('getImageFromIOS', handlePhotosMessage)
     }
   }, [])
 

@@ -13,6 +13,7 @@ const GalaxyFold3DeviceSize = 320
 const GalaxyDeviceSize = 360
 const StandardSize = 380
 const iPhone12DeviceSize = 390
+const iPhone15DeviceSize = 393
 const iPhone12ProMaxDeviceSize = 430
 export const supportDeviceSize = 1080
 
@@ -32,8 +33,12 @@ export const reset = css`
       font-size: 16.5px;
     }
     @media all and (min-width: ${iPhone12DeviceSize +
+      1}px) and (max-width: ${iPhone15DeviceSize}px) {
+      font-size: 16.9px;
+    }
+    @media all and (min-width: ${iPhone15DeviceSize +
       1}px) and (max-width: ${iPhone12ProMaxDeviceSize}px) {
-      font-size: 17.75px;
+      font-size: 18px;
     }
     @media all and (min-width: ${iPhone12ProMaxDeviceSize + 1}px) {
       font-size: 19px;
