@@ -31,7 +31,7 @@ const ProfileImgModal = ({ imgExist }: ProfileImgModalProps) => {
       window.webkit.messageHandlers &&
       window.webkit.messageHandlers.IOSBridge
     ) {
-      closeModal(modals.ProfileImgModal, () => openGallery(1, 1))
+      openGallery(1, 1)
     } else {
       if (fileInputRef.current) {
         fileInputRef.current.click() // 파일 선택 창 열기
@@ -69,6 +69,7 @@ const ProfileImgModal = ({ imgExist }: ProfileImgModalProps) => {
       const s3 = new S3Service()
       const imgURL = await s3.postProfileImg(images[0])
       if (imgURL) mutateByEdit(imgURL)
+      closeModal(modals.ProfileImgModal)
     }
     window.addEventListener('getImageFromIOS', handlePhotosMessage)
     return () => {
