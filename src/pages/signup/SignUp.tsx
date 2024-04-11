@@ -16,6 +16,21 @@ function SignUp() {
   const [jwtToken, setJwtToken] = useState('')
   const [userStatus, setUserStatus] = useState('')
 
+  const onNativeBackClick = () => {
+    if (
+      typeof window !== 'undefined' &&
+      window.webkit &&
+      window.webkit.messageHandlers &&
+      window.webkit.messageHandlers.IOSBridge
+    ) {
+      window.webkit.messageHandlers.IOSBridge.postMessage(
+        JSON.stringify({
+          type: 'logout',
+        }),
+      )
+    }
+  }
+
   useEffect(() => {
     const token = storage.get('accessToken')
     const status = storage.get('userStatus')
@@ -94,7 +109,11 @@ function SignUp() {
     <S.Layout>
       {signupValues.step !== 2 ? (
         <HeaderWrap>
-          <Header isModalHeader={false} hasArrow={true} backBtnClick={handleBackClick} />
+          <Header
+            isModalHeader={false}
+            hasArrow={true}
+            backBtnClick={signupValues.step === 0 ? onNativeBackClick : handleBackClick}
+          />
         </HeaderWrap>
       ) : null}
 
