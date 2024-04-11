@@ -46,7 +46,7 @@ import { convertToImageList, openGallery } from '../../utils/utility'
 
 export const maxItemPhotoCountState = atom<number>({
   key: atomKeys.maxItemPhotoCount,
-  default: 0,
+  default: 5,
 })
 
 export const finalSearchState = atom<string>({
