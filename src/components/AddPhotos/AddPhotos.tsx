@@ -35,7 +35,7 @@ const AddPhotos = () => {
         imgFile: imgFileList[i],
       })
     }
-    setImgList([...temp])
+    setImgList([...imgList, ...temp])
 
     if (fileInputRef.current?.value) fileInputRef.current.value = ''
   }
