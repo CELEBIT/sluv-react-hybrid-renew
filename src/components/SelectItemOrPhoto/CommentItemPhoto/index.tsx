@@ -116,6 +116,7 @@ const CommentItemPhoto = () => {
     else if (location.state?.name === 'subcomment')
       navigate('/community/subcomment/upload', { state: location.state.comment })
     else navigate('/community/comment/upload')
+    // 업로드 api 추가
   }
 
   // imgItemList에 IselectedItem 형태로 추가해줘야함
@@ -150,6 +151,7 @@ const CommentItemPhoto = () => {
     setMaxItemPhotoCount(5)
     console.log(maxItemPhotoCount)
   })
+
   const onBackClick = () => {
     if (onSearch) {
       setOnSearch(false)
