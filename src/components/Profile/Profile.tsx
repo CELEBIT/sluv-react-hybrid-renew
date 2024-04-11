@@ -61,25 +61,39 @@ function Profile({ onNext }: { onNext?: (profile: SignupValues['profile']) => vo
 
   const {
     uploadProfile: { mutate },
+    editProfileImage: { mutate: mutateByEditImg },
   } = useUserMypageQuery()
 
   const handleSubmit = () => {
     if (제출가능한상태인가) {
-      mutate(profileValues, {
-        onError: (error: AxiosError<{ code: number }>) => {
-          if (error.response) {
-            const { code } = error.response.data
-            if (code === 2017) {
-              errors.nickname = '중복된 닉네임입니다'
+      if (pathname === '/settings/edit-profile' && currentNickname === profileValues.nickname) {
+        mutateByEditImg(profileValues.userImg, {
+          onSuccess: () => {
+            if (onNext) onNext(profileValues)
+            else navigate(-1)
+          },
+        })
+      } else {
+        mutate(profileValues, {
+          onError: (error: AxiosError<{ code: number }>) => {
+            if (error.response) {
+              const { code } = error.response.data
+              if (code === 2017) {
+                errors.nickname = '중복된 닉네임입니다'
+                setDirty((prevDirty) => ({
+                  ...prevDirty,
+                  nickname: 'true',
+                }))
+              }
             }
-          }
-          console.log(error)
-        },
-        onSuccess: () => {
-          if (onNext) onNext(profileValues)
-          else navigate(-1)
-        },
-      })
+            console.log(error)
+          },
+          onSuccess: () => {
+            if (onNext) onNext(profileValues)
+            else navigate(-1)
+          },
+        })
+      }
     }
   }
 
@@ -112,10 +126,6 @@ function Profile({ onNext }: { onNext?: (profile: SignupValues['profile']) => vo
       window.webkit.messageHandlers.IOSBridge
     ) {
       openGallery(1, 1)
-    } else {
-      if (fileInputRef.current) {
-        fileInputRef.current.click() // 파일 선택 창 열기
-      }
     }
   }
 
