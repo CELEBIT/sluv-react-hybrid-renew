@@ -144,7 +144,7 @@ const SelectItemOrPhoto = () => {
     } else {
       setMaxItemPhotoCount(5)
     }
-  })
+  }, [])
 
   // api file upload용
   const [selectedFileList, setSelectedFileList] = useState<File[]>([])
@@ -386,7 +386,7 @@ const SelectItemOrPhoto = () => {
           text={`선택완료(${imgItemList?.length}/${maxItemPhotoCount}) `}
           active={imgItemList?.length > 0}
           color='BK'
-          onClick={() => onComplete()}
+          onClick={onComplete}
         ></ButtonLarge>
       </BottomWrapper>
     </SelectItemOrPhotoContainer>
