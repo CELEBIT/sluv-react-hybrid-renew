@@ -84,19 +84,6 @@ const UserProfile = () => {
       openModal(modals.ProfileImgModal, { imgExist: true })
     }
 
-    useEffect(() => {
-      const handlePhotosMessage = async (event: any) => {
-        const image = convertToFile(event.detail)
-        const s3 = new S3Service()
-        const imgURL = await s3.postProfileImg(image)
-        mutate(imgURL)
-      }
-
-      window.addEventListener('getImageFromIOS', handlePhotosMessage)
-      return () => {
-        window.removeEventListener('getImageFromIOS', handlePhotosMessage)
-      }
-    }, [])
     return (
       <ProfileContainer>
         <UserInfoWrapper>
