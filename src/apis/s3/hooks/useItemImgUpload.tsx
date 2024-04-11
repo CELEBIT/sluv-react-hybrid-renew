@@ -10,11 +10,10 @@ import { communityItemState } from '../../../recoil/communityInfo'
 const useItemImgUpload = () => {
   const s3 = new S3Service()
   const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
-  const [imgList, setImgList] = useRecoilState(imgListState)
 
   const postItemImg = useMutation((fileList: Array<Image>) => s3.postItemImg(fileList), {
     onSuccess: (res) => {
-      // console.log('이미지 업로드 후 res', res)
+      console.log('이미지 업로드 후 res', res)
 
       const temp: Array<ImgResult> = []
 
