@@ -144,7 +144,7 @@ const SelectItemOrPhoto = () => {
     } else {
       setMaxItemPhotoCount(5)
     }
-  }, [])
+  })
 
   // api file upload용
   const [selectedFileList, setSelectedFileList] = useState<File[]>([])
