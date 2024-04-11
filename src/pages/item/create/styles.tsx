@@ -64,7 +64,7 @@ export const ComponentWrapper = styled.div`
 
 export const BottomBar = styled.div`
   display: flex;
-  position: relative;
+  position: absolute;
   justify-content: space-between;
   bottom: 0;
   padding: 0 1rem;
