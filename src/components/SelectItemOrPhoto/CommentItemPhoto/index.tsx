@@ -148,6 +148,7 @@ const CommentItemPhoto = () => {
 
   useEffect(() => {
     setMaxItemPhotoCount(5)
+    console.log(maxItemPhotoCount)
   })
   const onBackClick = () => {
     if (onSearch) {
@@ -172,6 +173,7 @@ const CommentItemPhoto = () => {
   }
 
   const onNativeImgUpload = (fileArr: File[]) => {
+    console.log('fileArr in onNativeImgUpload', fileArr)
     if (fileArr) {
       setSelectedFileList((pre) => [...pre, ...Array.from(fileArr)])
       for (let i = 0; i < fileArr.length; i++) {
@@ -196,6 +198,7 @@ const CommentItemPhoto = () => {
     // 메시지 리스너 함수
     const handlePhotosMessage = (event: any) => {
       const images = convertToFile(event.detail)
+      console.log(images)
       onNativeImgUpload(images)
     }
 

@@ -69,6 +69,7 @@ const ItemCreate = () => {
   const { data } = getTempItem()
 
   useEffect(() => {
+    console.log('imgList')
     const newImgList: ImgResult[] = imgList.map((img: Image, idx) => ({
       imgUrl: img.imgUrl ? img.imgUrl : '',
       representFlag: idx === 0,
