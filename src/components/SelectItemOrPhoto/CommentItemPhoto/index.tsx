@@ -28,7 +28,7 @@ import UserUploadItem from '../UserUploadItem'
 import KeywordPreviewContainer from '../../../pages/search/components/KeywordPreviewContainer'
 import { useDebounce } from 'use-debounce'
 import KeywordPreview from '../KeywordPreview/KeywordPreview'
-import { convertToImageList, openGallery } from '../../../utils/utility'
+import { convertToFile, convertToImageList, openGallery } from '../../../utils/utility'
 
 const CommentItemPhoto = () => {
   const navigate = useNavigate()
@@ -195,7 +195,7 @@ const CommentItemPhoto = () => {
   useEffect(() => {
     // 메시지 리스너 함수
     const handlePhotosMessage = (event: any) => {
-      const images = convertToImageList(event.detail, imgItemList)
+      const images = convertToFile(event.detail)
       onNativeImgUpload(images)
     }
 
