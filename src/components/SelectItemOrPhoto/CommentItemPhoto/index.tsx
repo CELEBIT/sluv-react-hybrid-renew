@@ -148,8 +148,7 @@ const CommentItemPhoto = () => {
 
   useEffect(() => {
     setMaxItemPhotoCount(5)
-  }, [])
-
+  })
   const onBackClick = () => {
     if (onSearch) {
       setOnSearch(false)
@@ -168,7 +167,7 @@ const CommentItemPhoto = () => {
   const onClickOpenGallery = () => {
     if (imgInput.current) {
       imgInput.current.click()
-      openGallery(maxItemPhotoCount, maxItemPhotoCount - imgItemList.length)
+      openGallery(5, 5 - imgItemList.length)
     }
   }
 
