@@ -84,6 +84,9 @@ export const ItemWrapper = styled.div`
   background-color: ${Common.colors.GR50};
   padding: 1.25rem;
   margin-top: 1.25rem;
+  .img {
+    padding-right: 0;
+  }
 `
 
 export const Item = styled.div`
@@ -91,7 +94,7 @@ export const Item = styled.div`
   flex-direction: row;
   flex-shrink: 0;
   height: 5.4375rem;
-  width: 14rem;
+  /* width: 14rem; */
   padding-right: 1.125rem;
   gap: 0.5rem;
   align-items: center;
