@@ -4,6 +4,7 @@ import { ResponseType } from '../core/type'
 import { Image } from '../../components/AddPhotos/AddPhotos'
 import { CommunityItem, IimgList, IselectedItem } from '../../recoil/communityInfo'
 import { SetterOrUpdater } from 'recoil'
+import { Img, NewComment } from '../comment/commentService.type'
 
 export interface S3Result {
   preSignedUrl: string
@@ -107,6 +108,40 @@ export default class S3Service {
       ...communityItem,
       imgList: resultList,
     })
+    return resultList
+  }
+
+  // 커뮤니티 댓글 이미지 업로드
+  async postCommentImg(fileList: Array<IselectedItem>) {
+    fileList = fileList.filter((item) => item.imgFile)
+    const resultList: Array<Img> = []
+    for (const [index, item] of fileList.entries()) {
+      const response: ResponseType<S3Result> = await request.post(
+        `${this.presignedUrl}/comment`,
+        {},
+        {
+          params: {
+            imgExtension: String(item.imgFile?.type.split('/')[1]).toUpperCase(),
+          },
+        },
+      )
+
+      if (response.isSuccess && response.result?.preSignedUrl && item.imgFile) {
+        try {
+          const data = await this.uploadImg(response.result.preSignedUrl, item.imgFile)
+          if (data.status === 200) {
+            const { preSignedUrl } = response.result
+            resultList.push({
+              imgUrl: preSignedUrl.split('?')[0],
+              sortOrder: item.sortOrder ? item.sortOrder : index,
+            })
+          }
+        } catch (err: any) {
+          console.error(err)
+          return err
+        }
+      }
+    }
     return resultList
   }
 
