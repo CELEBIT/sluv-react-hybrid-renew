@@ -35,8 +35,8 @@ const CommentItemPhoto = () => {
   const location = useLocation()
   const [commentObject, setCommentObject] = useRecoilState(commentState)
   const [maxItemPhotoCount, setMaxItemPhotoCount] = useRecoilState(maxItemPhotoCountState)
-  const [imgItemList, setImageItemList] = useRecoilState(imgItemListState)
-  const resetImageItemList = useResetRecoilState(imgItemListState)
+  const [imgItemList, setImgItemList] = useRecoilState(imgItemListState)
+  const resetImgItemList = useResetRecoilState(imgItemListState)
 
   const [onSearch, setOnSearch] = useState<boolean>(false)
   const [searchValue, setSearchValue] = useRecoilState<string>(itemNameSearchState)
@@ -65,24 +65,38 @@ const CommentItemPhoto = () => {
     setIsFocused(false)
   }
 
+  const onBackClick = () => {
+    if (onSearch) {
+      setOnSearch(false)
+    } else {
+      resetImgItemList()
+      navigate(-1)
+    }
+    resetFinalValue()
+    resetSearchValue()
+  }
+
+  const handleFocus = () => {
+    setOnSearch(true)
+  }
+
   const onComplete = () => {
-    // 대표사진 설정
+    console.log('imgItemList in commentItemPhoto', imgItemList)
     if (imgItemList.length > 0) {
-      setImageItemList((prevList) => {
-        const updatedList = [...prevList]
-        updatedList[0] = {
-          ...updatedList[0],
-          representFlag: true,
-        }
+      setImgItemList((prevList) => {
+        const updatedList = prevList.map((item, index) => ({
+          ...item,
+          sortOrder: index,
+          representFlag: index === 0,
+        }))
         return updatedList
       })
       // 댓글 아이템 설정
       setCommentObject((prevInfo) => {
         const { itemList, imgList } = prevInfo
         const updatedItemList = itemList ? [...itemList] : []
-        const updatedImgList = imgList ? [...imgList] : []
 
-        imgItemList.forEach((item, index) => {
+        imgItemList.forEach(async (item, index) => {
           if (
             item.itemId &&
             !updatedItemList.some((existingItem) => existingItem.itemId === item.itemId)
@@ -92,23 +106,11 @@ const CommentItemPhoto = () => {
               itemId: item.itemId,
               sortOrder: index,
             })
-          } else if (
-            !item.itemId &&
-            item.imgUrl &&
-            !updatedImgList.some((existingItem) => existingItem.imgUrl === item.imgUrl)
-          ) {
-            // 사진 추가
-            updatedImgList.push({
-              imgUrl: item.imgUrl,
-              sortOrder: index,
-            })
           }
         })
-
         return {
           ...prevInfo,
           itemList: updatedItemList.length > 0 ? updatedItemList : null,
-          imgList: updatedImgList.length > 0 ? updatedImgList : null,
         }
       })
     }
@@ -116,7 +118,6 @@ const CommentItemPhoto = () => {
     else if (location.state?.name === 'subcomment')
       navigate('/community/subcomment/upload', { state: location.state.comment })
     else navigate('/community/comment/upload')
-    // 업로드 api 추가
   }
 
   // imgItemList에 IselectedItem 형태로 추가해줘야함
@@ -131,12 +132,11 @@ const CommentItemPhoto = () => {
           reader.onloadend = () => {
             const fileSelected: IselectedItem = {
               imgFile: file,
-              imgUrl: reader.result as string,
+              imgUrl: null,
               description: null,
-              vote: null,
-              representFlag: !imgItemList && i === 0,
+              representFlag: false,
             }
-            setImageItemList((prevList) => [...prevList, fileSelected])
+            setImgItemList((prevList) => [...prevList, fileSelected])
           }
           reader.readAsDataURL(file)
         } else {
@@ -147,26 +147,7 @@ const CommentItemPhoto = () => {
     }
   }
 
-  useEffect(() => {
-    setMaxItemPhotoCount(5)
-    console.log(maxItemPhotoCount)
-  })
-
-  const onBackClick = () => {
-    if (onSearch) {
-      setOnSearch(false)
-    } else {
-      resetImageItemList()
-      navigate(-1)
-    }
-    resetFinalValue()
-    resetSearchValue()
-  }
-
-  const handleFocus = () => {
-    setOnSearch(true)
-  }
-
+  // Native Img Picker
   const onClickOpenGallery = () => {
     if (imgInput.current) {
       imgInput.current.click()
@@ -183,11 +164,12 @@ const CommentItemPhoto = () => {
         if (imgItemList.length + i + 1 <= maxItemPhotoCount) {
           const fileSelected = {
             imgFile: file,
+            imgUrl: null,
             description: null,
             vote: null,
-            representFlag: !imgItemList && i === 0,
+            representFlag: false,
           }
-          setImageItemList((prevList) => [...prevList, fileSelected])
+          setImgItemList((prevList) => [...prevList, fileSelected])
         } else {
           alert(`아이템/사진은 ${maxItemPhotoCount}개까지 선택할 수 있어요. `)
           break
@@ -209,6 +191,11 @@ const CommentItemPhoto = () => {
       window.removeEventListener('getImageFromIOS', handlePhotosMessage)
     }
   }, [])
+
+  useEffect(() => {
+    setMaxItemPhotoCount(5)
+    console.log(maxItemPhotoCount)
+  })
 
   return (
     <SelectItemOrPhotoContainer>

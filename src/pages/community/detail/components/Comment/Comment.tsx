@@ -55,7 +55,7 @@ const Comment = ({ questionId, comment }: CommentProps) => {
   const navigate = useNavigate()
   const { openModal } = useModals()
   const setCommentObject = useSetRecoilState(commentState)
-  // console.log(comment)
+  console.log(comment)
   const [imgItemList, setImageItemList] = useRecoilState(imgItemListState)
   // GPT 여기에 작성해줘
   //
@@ -71,6 +71,25 @@ const Comment = ({ questionId, comment }: CommentProps) => {
   const onClickLike = (commentId: number, questionId: number) => {
     mutateByLike({ commentId, questionId })
   }
+
+  const mergeAndSort = (comment: CommentResult): (CommentImg | CommentItem)[] => {
+    const mergedList: (CommentImg | CommentItem)[] = []
+    // imgUrlList가 있는 경우 복사
+    if (comment.imgUrlList) {
+      mergedList.push(...comment.imgUrlList)
+    }
+    // itemList가 있는 경우 복사
+    if (comment.itemList) {
+      mergedList.push(...comment.itemList)
+    }
+    // sortOrder를 기준으로 정렬
+    mergedList.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0))
+
+    return mergedList
+  }
+  const sortedList = mergeAndSort(comment)
+  console.log('sortedList', sortedList)
+
   const onShowMore = () => {
     if (comment.itemList) {
       const transformedItemList = comment.itemList.map((item: CommentItem) => ({
@@ -152,12 +171,12 @@ const Comment = ({ questionId, comment }: CommentProps) => {
           </BlockedBg>
         </BlockedContainer>
       )}
-      {comment.itemList && comment.itemList.length > 0 && (
+      {/* {sortedList && sortedList.length > 0 && (
         <ItemWrapper>
-          {comment.itemList.map((each) => {
+          {sortedList.map((each) => {
             return (
-              <Item key={each.item.itemId}>
-                <Img imgUrl={each.item.imgUrl}>
+              <Item key={each.sortOrder}>
+                <Img imgUrl={each.}>
                   {each.item.scrapStatus ? (
                     <StorageOn className='represent'></StorageOn>
                   ) : (
@@ -175,7 +194,45 @@ const Comment = ({ questionId, comment }: CommentProps) => {
             )
           })}
         </ItemWrapper>
+      )} */}
+      {sortedList && sortedList.length > 0 && (
+        <ItemWrapper>
+          {sortedList.map((each) => {
+            if ('imgUrl' in each) {
+              // 각 요소가 Img인지 확인
+              return (
+                <Item key={each.imgUrl} className='img'>
+                  <Img imgUrl={each.imgUrl}>
+                    <Dim></Dim>
+                  </Img>
+                </Item>
+              )
+            } else if ('item' in each) {
+              // 각 요소가 Item인지 확인
+              return (
+                <Item key={each.item.imgUrl}>
+                  <Img imgUrl={each.item.imgUrl}>
+                    {each.item.scrapStatus ? (
+                      <StorageOn className='represent'></StorageOn>
+                    ) : (
+                      <StorageOff className='represent'></StorageOff>
+                    )}
+                    <Dim></Dim>
+                  </Img>
+
+                  <ItemTextWrapper>
+                    <CelebName>{each.item.celebName}</CelebName>
+                    <BrandName>{each.item.brandName}</BrandName>
+                    <ItemName>{each.item.itemName}</ItemName>
+                  </ItemTextWrapper>
+                </Item>
+              )
+            }
+            return null // 모든 경우에 대해 값을 반환하도록 추가합니다.
+          })}
+        </ItemWrapper>
       )}
+
       {comment.commentStatus === 'ACTIVE' && (
         <CommentExpression>
           <ExpressionWrapper>

@@ -13,6 +13,7 @@ import useSearchCommentQuery, {
   IEditComment,
 } from '../../../../../apis/comment/hooks/useSearchCommentQuery'
 import useSearchSubCommentQuery from '../../../../../apis/comment/hooks/useSearchSubCommentQuery'
+import S3Service from '../../../../../apis/s3/S3Service'
 
 const CommentUpload = () => {
   const navigate = useNavigate()
@@ -53,35 +54,35 @@ const CommentUpload = () => {
   const {
     addSubComment: { mutate: mutateByAddSubComment },
   } = useSearchSubCommentQuery()
-  const onAddComment = () => {
+
+  console.log('imgItemList in comment upload', imgItemList)
+  const onAddComment = async () => {
     const itemsWithImgFile = imgItemList.filter((item) => item.imgFile)
-    // console.log(itemsWithImgFile)
-    if (itemsWithImgFile.length > 0) {
-      // 이미지 업로드 후 댓글 업로드
-    } else {
-      // 바로 댓글 업로드
-      const newComment: IAddComment = {
-        questionId: Number(questionId),
-        content: comment,
-        imgList: null,
-        itemList: commentObject.itemList,
-      }
-      if (pathname === '/community/comment/upload') mutateByAddComment(newComment)
-      if (pathname === '/community/subcomment/upload')
-        mutateByAddSubComment({ ...newComment, commentId: state.id })
-      if (pathname === '/community/comment/edit') {
-        // console.log('commentObject', commentObject)
-        if (commentObject.id) {
-          const newComment: IEditComment = {
-            questionId: Number(questionId),
-            commentId: commentObject.id,
-            content: comment,
-            imgList: null,
-            itemList: commentObject.itemList,
-          }
-          // console.log('newComment', newComment)
-          mutateByEditComment(newComment)
+    const s3 = new S3Service()
+    const imgURL = await s3.postCommentImg(itemsWithImgFile)
+    const newComment: IAddComment = {
+      questionId: Number(questionId),
+      content: comment,
+      imgList: itemsWithImgFile ? imgURL : null,
+      itemList: commentObject.itemList,
+    }
+    console.log('newComment', newComment)
+
+    if (pathname === '/community/comment/upload') mutateByAddComment(newComment)
+    if (pathname === '/community/subcomment/upload')
+      mutateByAddSubComment({ ...newComment, commentId: state.id })
+    if (pathname === '/community/comment/edit') {
+      // console.log('commentObject', commentObject)
+      if (commentObject.id) {
+        const newComment: IEditComment = {
+          questionId: Number(questionId),
+          commentId: commentObject.id,
+          content: comment,
+          imgList: itemsWithImgFile ? imgURL : null,
+          itemList: commentObject.itemList,
         }
+        // console.log('newComment', newComment)
+        mutateByEditComment(newComment)
       }
     }
   }
