@@ -76,14 +76,14 @@ const SelectItemOrPhoto = () => {
     // 대표사진 설정
     if (imgItemList.length > 0) {
       setImageItemList((prevList) => {
-        const updatedList = [...prevList]
-        updatedList[0] = {
-          ...updatedList[0],
-          representFlag: true,
-        }
+        const updatedList = prevList.map((item, index) => ({
+          ...item,
+          sortOrder: index,
+          representFlag: index === 0,
+        }))
         return updatedList
       })
-      // 커뮤니티 아이템 설정
+      // 커뮤니티 아이템만 설정
       setCommunityUploadInfo((prevInfo) => {
         const updatedList = [...imgItemList]
         updatedList[0] = {
