@@ -76,14 +76,14 @@ const SelectItemOrPhoto = () => {
     // 대표사진 설정
     if (imgItemList.length > 0) {
       setImageItemList((prevList) => {
-        const updatedList = prevList.map((item, index) => ({
-          ...item,
-          sortOrder: index,
-          representFlag: index === 0,
-        }))
+        const updatedList = [...prevList]
+        updatedList[0] = {
+          ...updatedList[0],
+          representFlag: true,
+        }
         return updatedList
       })
-      // 커뮤니티 아이템만 설정
+      // 커뮤니티 아이템 설정
       setCommunityUploadInfo((prevInfo) => {
         const updatedList = [...imgItemList]
         updatedList[0] = {
@@ -165,6 +165,7 @@ const SelectItemOrPhoto = () => {
           reader.onloadend = () => {
             const fileSelected = {
               imgFile: file,
+              imgUrl: null,
               description: null,
               vote: null,
               representFlag: !imgItemList && i === 0,
@@ -225,6 +226,7 @@ const SelectItemOrPhoto = () => {
         if (imgItemList.length + i + 1 <= maxItemPhotoCount) {
           const fileSelected = {
             imgFile: file,
+            imgUrl: null,
             description: null,
             vote: null,
             representFlag: !imgItemList && i === 0,
@@ -299,9 +301,15 @@ const SelectItemOrPhoto = () => {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const onClickOpenGallery = () => {
-    if (fileInputRef.current) {
+    if (
+      typeof window !== 'undefined' &&
+      window.webkit &&
+      window.webkit.messageHandlers &&
+      window.webkit.messageHandlers.IOSBridge
+    ) {
+      openGallery(5, 5 - imgItemList.length)
+    } else if (fileInputRef.current) {
       fileInputRef.current.click()
-      openGallery(maxItemPhotoCount, maxItemPhotoCount - imgItemList.length)
     }
   }
 

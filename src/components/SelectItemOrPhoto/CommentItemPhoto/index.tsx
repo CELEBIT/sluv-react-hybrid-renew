@@ -149,9 +149,15 @@ const CommentItemPhoto = () => {
 
   // Native Img Picker
   const onClickOpenGallery = () => {
-    if (imgInput.current) {
-      imgInput.current.click()
+    if (
+      typeof window !== 'undefined' &&
+      window.webkit &&
+      window.webkit.messageHandlers &&
+      window.webkit.messageHandlers.IOSBridge
+    ) {
       openGallery(5, 5 - imgItemList.length)
+    } else if (imgInput.current) {
+      imgInput.current.click()
     }
   }
 
@@ -247,26 +253,6 @@ const CommentItemPhoto = () => {
             )}
           </>
         )}
-
-        {/* {searchValue !== '' ? (
-          <SearchResult></SearchResult> // <KeywordPreviewContainer keyword={searchValue} />
-        ) : (
-          <>
-            {isFocused === false ? (
-              <>
-                <Tabs
-                  tabList={tabList}
-                  selectedTab={selectedTab}
-                  setSelectedTab={setSelectedTab}
-                ></Tabs>
-                {selectedTab === 'recent' && <RecentViewItem></RecentViewItem>}
-                {selectedTab === 'myUpload' && <UserUploadItem></UserUploadItem>}
-              </>
-            ) : (
-              <>{data ? <RecentSearchItem></RecentSearchItem> : <HotSearchItem></HotSearchItem>}</>
-            )}
-          </>
-        )} */}
       </ComponentContainer>
       <Dimmer></Dimmer>
       <BottomWrapper>
