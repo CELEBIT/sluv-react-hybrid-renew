@@ -95,8 +95,7 @@ const Photo = ({
     )
   } else {
     return (
-      <ImgFileWrap size={size} borderRadius={borderRadius}>
-        {imgFile && <img src={URL.createObjectURL(imgFile)} />}
+      <Img size={size} borderRadius={borderRadius} imgFile={imgFile}>
         {candelete && <DeleteList className='delete' onClick={onDelete}></DeleteList>}
         {representFlag && <Represent className='represent'></Represent>}
         {storageFlag !== undefined && (
@@ -108,7 +107,7 @@ const Photo = ({
             )}
           </>
         )}
-      </ImgFileWrap>
+      </Img>
     )
   }
 }
