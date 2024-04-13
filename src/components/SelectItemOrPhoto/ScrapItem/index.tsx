@@ -41,11 +41,18 @@ const ScrapItem = () => {
       if (communityQuestionMenu === '이 중에 뭐 살까') {
         // 왼쪽 사진/아이템 삭제
         if (firstItem.itemId === item.itemId) {
-          resetFirstItem()
+          setFirstItem((prev) => ({
+            ...prev,
+            ...{ itemId: null, imgUrl: null, brandName: null, celebName: null, itemName: null },
+          }))
         }
         // 오른쪽 사진/아이템 삭제
         if (secondItem.itemId === item.itemId) {
-          resetSecondItem()
+          // resetSecondItem()
+          setSecondItem((prev) => ({
+            ...prev,
+            ...{ itemId: null, imgUrl: null, brandName: null, celebName: null, itemName: null },
+          }))
         }
       }
     } else {
@@ -82,14 +89,12 @@ const ScrapItem = () => {
             brandName: item.brandName,
             itemName: item.itemName,
           }
-          if (firstItem?.itemId === null) {
-            // console.log(firstItem)
+          if (firstItem?.itemId === null && firstItem?.imgFile === null) {
             setFirstItem((prevFirstItem) => ({
               ...prevFirstItem,
               ...newItem,
             }))
-          } else if (secondItem?.itemId === null) {
-            // console.log(secondItem)
+          } else if (secondItem?.itemId === null && secondItem?.imgFile === null) {
             setSecondItem((prevSecondItem) => ({
               ...prevSecondItem,
               ...newItem,

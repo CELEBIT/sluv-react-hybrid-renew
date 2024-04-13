@@ -96,7 +96,7 @@ const CommentItemPhoto = () => {
         const { itemList, imgList } = prevInfo
         const updatedItemList = itemList ? [...itemList] : []
 
-        imgItemList.forEach(async (item, index) => {
+        imgItemList.forEach((item, index) => {
           if (
             item.itemId &&
             !updatedItemList.some((existingItem) => existingItem.itemId === item.itemId)
@@ -200,7 +200,6 @@ const CommentItemPhoto = () => {
 
   useEffect(() => {
     setMaxItemPhotoCount(5)
-    console.log(maxItemPhotoCount)
   })
 
   return (
