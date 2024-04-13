@@ -15,6 +15,9 @@ import ClosetDetailPage from './pages/closet/detail'
 
 const loading = <Loading />
 
+// 앱 로드
+const AppLoad = React.lazy(() => import('./pages/appLoad'))
+
 // 에러 페이지
 const Page404 = React.lazy(() => import('./pages/page404'))
 const Page500 = React.lazy(() => import('./pages/page404'))
@@ -144,7 +147,9 @@ const App = () => {
             {/* 홈 */}
             <Route path='/home' element={<Home />} />
             {/* 회원가입 */}
-            <Route path='/' element={<SignUp />} />
+            <Route path='/' element={<AppLoad />} />
+
+            <Route path='/signup' element={<SignUp />} />
             {/* 관심셀럽선택 */}
             {/* <Route path='/select-celeb' element={<SelectInterestCeleb />} />
             <Route path='/select-celeb/complete' element={<SignupComplete />} /> */}
