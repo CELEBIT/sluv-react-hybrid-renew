@@ -14,7 +14,6 @@ import { Common, Pretendard } from '../../styles'
 import useSearchRankQuery from '../../../apis/search/hooks/useSearchRankQuery'
 import { itemNameSearchState } from '../SearchResult'
 import { finalSearchState } from '..'
-
 const HotSearchItem = () => {
   const setSearchValue = useSetRecoilState<string>(itemNameSearchState)
   const setFinalValue = useSetRecoilState<string>(finalSearchState)

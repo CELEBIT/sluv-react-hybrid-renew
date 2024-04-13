@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { ReactComponent as Delete } from '../../../../../../../assets/delete_textfield_24.svg'
 import { ImageField } from './ExistingItem'
 
@@ -9,11 +9,15 @@ interface UploadPhotoProps {
 }
 
 const UploadPhoto = ({ imgFile, className, onDelete }: UploadPhotoProps) => {
-  return (
-    <ImageField imgUrl={URL.createObjectURL(imgFile)} className={className}>
-      <Delete className='delete' onClick={() => onDelete()}></Delete>
-    </ImageField>
-  )
+  const imageFieldComponent = useMemo(() => {
+    return (
+      <ImageField imgFile={imgFile} className={className}>
+        <Delete className='delete' onClick={() => onDelete()}></Delete>
+      </ImageField>
+    )
+  }, [imgFile, className, onDelete])
+
+  return <>{imageFieldComponent}</>
 }
 
-export default UploadPhoto
+export default React.memo(UploadPhoto)
