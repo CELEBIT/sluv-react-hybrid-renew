@@ -11,6 +11,7 @@ export const WriteCommunityItemButtonWrapper = styled.div`
   position: fixed;
   bottom: 70px;
   right: 1.25rem;
+  z-index: 60;
 `
 
 export const WriteQuestionButton = styled.div<WriteQuestionButtonProps>`
