@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { SignupValues } from '../../models/signup'
 import Terms from '../../components/Terms/Terms'
-import { PageContainer } from '../user/styles'
 import { HeaderWrap } from '../search/styles'
 import Header from '../../components/Header/Header'
 import * as S from './styles'
@@ -10,12 +9,16 @@ import SelectInterestCeleb from '../selectInterestCeleb'
 import { useNavigate } from 'react-router-dom'
 import SignupComplete from '../../components/SignupComplete/SignupComplete'
 import storage from '../../utils/storage'
+import { ACCESS_TOKEN, UserStatus } from '../../config/constant'
 
 function SignUp() {
   const navigate = useNavigate()
-  const [jwtToken, setJwtToken] = useState('')
   const [userStatus, setUserStatus] = useState('')
-
+  const [signupValues, setSignupValues] = useState<Partial<SignupValues>>(() => {
+    return {
+      step: userStatus === 'PENDING_PROFILE' ? 0 : userStatus === 'PENDING_CELEB' ? 2 : 0,
+    }
+  })
   const onNativeBackClick = () => {
     if (
       typeof window !== 'undefined' &&
@@ -32,41 +35,22 @@ function SignUp() {
   }
 
   useEffect(() => {
-    const token = storage.get('accessToken')
-    const status = storage.get('userStatus')
-    if (token) {
-      setJwtToken(token)
-    }
-    if (status) {
-      setUserStatus(status)
-    }
-    // alert(token)
-    // alert(status)
-  }, [])
-
-  useEffect(() => {
-    if (jwtToken && userStatus === 'ACTIVE') {
-      navigate('/home')
-    }
-    if (jwtToken && userStatus === 'PENDING_PROFILE') {
+    const token = storage.get(ACCESS_TOKEN)
+    const status = storage.get(UserStatus)
+    if (token && status === 'PENDING_PROFILE') {
+      setUserStatus('PENDING_PROFILE')
       setSignupValues((prevValues) => ({
         ...prevValues,
         step: 0,
       }))
-    }
-    if (jwtToken && userStatus === 'PENDING_CELEB') {
+    } else if (token && status === 'PENDING_CELEB') {
+      setUserStatus('PENDING_CELEB')
       setSignupValues((prevValues) => ({
         ...prevValues,
         step: 2,
       }))
     }
-  }, [jwtToken, userStatus])
-
-  const [signupValues, setSignupValues] = useState<Partial<SignupValues>>(() => {
-    return {
-      step: userStatus === 'PENDING_PROFILE' ? 0 : userStatus === 'PENDING_CELEB' ? 2 : 0,
-    }
-  })
+  }, [])
 
   const handleBackClick = () => {
     setSignupValues((prevValues) => ({
