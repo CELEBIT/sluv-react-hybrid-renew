@@ -15,6 +15,9 @@ import ClosetDetailPage from './pages/closet/detail'
 
 const loading = <Loading />
 
+// 앱 로드
+const AppLoad = React.lazy(() => import('./pages/appLoad'))
+
 // 에러 페이지
 const Page404 = React.lazy(() => import('./pages/page404'))
 const Page500 = React.lazy(() => import('./pages/page404'))
@@ -125,12 +128,13 @@ const App = () => {
     if (payload.accessToken && payload.userStatus) {
       storage.set('accessToken', payload.accessToken)
       storage.set('userStatus', payload.userStatus)
-    } else {
-      storage.set(
-        'accessToken',
-        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzExNDM2MjIyLCJleHAiOjE3NDI5NzIyMjJ9.deoUzbNon7-F6uLXi2-sx7N7Gp9XMeTOWUBl2yU1uHY',
-      )
     }
+    // else {
+    //   storage.set(
+    //     'accessToken',
+    //     'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzExNDM2MjIyLCJleHAiOjE3NDI5NzIyMjJ9.deoUzbNon7-F6uLXi2-sx7N7Gp9XMeTOWUBl2yU1uHY',
+    //   )
+    // }
   }, [])
 
   return (
@@ -143,7 +147,9 @@ const App = () => {
             {/* 홈 */}
             <Route path='/home' element={<Home />} />
             {/* 회원가입 */}
-            <Route path='/' element={<SignUp />} />
+            <Route path='/' element={<AppLoad />} />
+
+            <Route path='/signup' element={<SignUp />} />
             {/* 관심셀럽선택 */}
             {/* <Route path='/select-celeb' element={<SelectInterestCeleb />} />
             <Route path='/select-celeb/complete' element={<SignupComplete />} /> */}

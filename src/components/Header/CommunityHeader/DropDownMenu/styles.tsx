@@ -36,7 +36,7 @@ export const DropDownContainer = styled.div<{ position?: string; top?: number }>
   width: 10rem;
   border-radius: 0.75rem;
   box-shadow: 0px 2px 17px rgba(199, 206, 212, 0.5);
-  z-index: 20;
+  z-index: 100;
 `
 
 export const SingleField = styled(Field)`

@@ -13,12 +13,23 @@ import { ACCESS_TOKEN } from '../../config/constant'
 const request: AxiosInstance = axios.create({
   baseURL: process.env.REACT_APP_MAIN_APP_API,
   timeout: 2500,
-
-  headers: {
-    accept: 'application/json',
-    Authorization: `Bearer ${window.localStorage.getItem(ACCESS_TOKEN)}`,
-  },
 })
+
+// 요청 인터셉터
+request.interceptors.request.use(
+  (config) => {
+    // 요청 성공 직전 호출됨
+    const accessToken = window.localStorage.getItem(ACCESS_TOKEN)
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`
+    }
+    return config
+  },
+  (error) => {
+    console.log(error)
+    return Promise.reject(error)
+  },
+)
 
 // // 요청 인터셉터
 // request.interceptors.request.use(
