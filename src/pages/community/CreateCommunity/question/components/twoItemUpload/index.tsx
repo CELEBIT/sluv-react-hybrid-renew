@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import {
   DefaultImageField,
   ImageWrapper,
@@ -29,20 +29,26 @@ const TwoItemUpload = ({ onClick }: TwoItemUploadProps) => {
   // 1. 사진/아이템 선택 페이지에서 순서대로 firstItem / secondItem에 저장
   // 2. firstItem / secondItem을 questionItem의 imgList / itemList 에 저장
   // 3. 완료 버튼 시 최종 업로드
+
+  const handleClick = useCallback(() => {
+    onClick()
+  }, [onClick])
+
   const [communityUploadInfo, setCommunityUploadInfo] = useRecoilState(communityItemState)
   const [imgItemList, setImgItemList] = useRecoilState(imgItemListState)
   const [firstItem, setFirstItem] = useRecoilState(firstItemState)
-  const resetFirstItem = useResetRecoilState(firstItemState)
   const [secondItem, setSecondItem] = useRecoilState(secondItemState)
-  const resetSecondItem = useResetRecoilState(secondItemState)
 
   const [firstItemName, setFirstItemName] = useState<string | null>(firstItem.description)
   const [secondItemName, setSecondItemName] = useState<string | null>(secondItem.description)
+  // console.log('two item render')
 
+  console.log('imgItemList', imgItemList)
   const onDeleteItem = (item: IselectedItem) => {
     let newItemList
 
     if (item.itemId !== null) {
+      // ITEM 존재시
       newItemList = communityUploadInfo.itemList?.filter(
         (addedItem) => addedItem.itemId !== item.itemId,
       )
@@ -55,22 +61,36 @@ const TwoItemUpload = ({ onClick }: TwoItemUploadProps) => {
       setImgItemList(newImgItemList)
 
       if (firstItem.itemId === item.itemId) {
-        resetFirstItem()
+        setFirstItem((prev) => ({
+          ...prev,
+          ...{ itemId: null, imgUrl: null, brandName: null, celebName: null, itemName: null },
+        }))
       }
       if (secondItem.itemId === item.itemId) {
-        resetSecondItem()
+        setSecondItem((prev) => ({
+          ...prev,
+          ...{ itemId: null, imgUrl: null, brandName: null, celebName: null, itemName: null },
+        }))
       }
     } else {
+      // FILE
       const newImgItemList = imgItemList.filter((addedItem) => addedItem.imgFile !== item.imgFile)
       setImgItemList(newImgItemList)
 
       if (firstItem.itemId === null && firstItem.imgFile === item.imgFile) {
-        resetFirstItem()
+        setFirstItem((prev) => ({
+          ...prev,
+          ...{ imgFile: null },
+        }))
       }
       if (secondItem.itemId === null && secondItem.imgFile === item.imgFile) {
-        resetSecondItem()
+        setSecondItem((prev) => ({
+          ...prev,
+          ...{ imgFile: null },
+        }))
       }
     }
+    console.log('imgItemList after delete', imgItemList)
   }
 
   useEffect(() => {
@@ -110,7 +130,7 @@ const TwoItemUpload = ({ onClick }: TwoItemUploadProps) => {
               )}
             </>
           )}
-          {!firstItem.imgUrl && !firstItem.imgFile && <AddItem onClick={() => onClick()}></AddItem>}
+          {!firstItem.itemId && !firstItem.imgFile && <AddItem onClick={handleClick}></AddItem>}
           {/* 2번째 아이템 */}
           {secondItem?.itemId !== null ? (
             <ExistingItem
@@ -161,4 +181,4 @@ const TwoItemUpload = ({ onClick }: TwoItemUploadProps) => {
   )
 }
 
-export default TwoItemUpload
+export default React.memo(TwoItemUpload)

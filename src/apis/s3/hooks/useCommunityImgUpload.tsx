@@ -2,13 +2,20 @@ import React from 'react'
 import S3Service from '../S3Service'
 import { useMutation } from '@tanstack/react-query'
 import { Image } from '../../../components/AddPhotos/AddPhotos'
-import { useRecoilCallback, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import {
+  useRecoilCallback,
+  useRecoilState,
+  useRecoilValue,
+  useResetRecoilState,
+  useSetRecoilState,
+} from 'recoil'
 import { itemInfoState } from '../../../recoil/itemInfo'
 import { ImgResult } from '../../item/itemService.type'
 import {
   IimgList,
   IselectedItem,
   communityItemState,
+  imgItemListState,
   imgListUpdatedState,
 } from '../../../recoil/communityInfo'
 import useUploadQuestionQuery from '../../question/hooks/useUploadQuestionQuery'
@@ -26,13 +33,14 @@ const useCommunityImgUpload = () => {
 
   const [communityItem, setCommunityItem] = useRecoilState(communityItemState)
   const communityMenu = useRecoilValue(communityMenuState)
+  const resetImgItemList = useResetRecoilState(imgItemListState)
 
   const postCommunityImg = useMutation(
     (fileList: Array<IselectedItem>) =>
       s3.postCommunityImg(fileList, communityItem, setCommunityItem),
     {
       onSuccess: (res) => {
-        // console.log(communityItem)
+        console.log('postCommunityImg', res)
         if (communityMenu === '찾아주세요') mutatebyFind({ ...communityItem, imgList: res })
         if (communityMenu === '이거 어때') mutatebyHow({ ...communityItem, imgList: res })
         if (communityMenu === '이 중에 뭐 살까')
@@ -44,6 +52,7 @@ const useCommunityImgUpload = () => {
             ),
           })
         if (communityMenu === '추천해 줘') mutatebyRecommend({ ...communityItem, imgList: res })
+        resetImgItemList()
       },
     },
   )

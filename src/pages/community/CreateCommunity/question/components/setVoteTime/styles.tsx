@@ -16,7 +16,7 @@ export const SetVoteDateTimeWrapper = styled.div`
 export const SetVoteDateTimeView = styled(DatePickerView)`
   .adm-picker-view-column {
     max-width: 4.875rem;
-    :first-child {
+    :first-of-type {
       padding-left: 1.25rem;
     }
     :last-child {
