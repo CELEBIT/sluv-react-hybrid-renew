@@ -42,7 +42,8 @@ import useSearchQuery from '../../apis/search/hooks/useSearchQuery'
 import { useDebounce } from 'use-debounce'
 import KeywordPreview from './KeywordPreview/KeywordPreview'
 import useRecentSearchQuery from '../../apis/search/hooks/useRecentSearchQuery'
-import { convertToImageList, openGallery } from '../../utils/utility'
+import { convertToFile, convertToImageList, openGallery } from '../../utils/utility'
+import HotItem from './HotItem'
 
 export const maxItemPhotoCountState = atom<number>({
   key: atomKeys.maxItemPhotoCount,
@@ -166,30 +167,26 @@ const SelectItemOrPhoto = () => {
           reader.onloadend = () => {
             const fileSelected = {
               imgFile: file,
-              imgUrl: null,
+              // imgUrl: null,
               description: null,
               vote: null,
               representFlag: !imgItemList && i === 0,
             }
             if (CommunityMenu === '이 중에 뭐 살까') {
-              if (fileArr[i]) {
+              if (file) {
                 if (i === 0) {
-                  // console.log(firstItem)
                   // firstItem || secondItem 둘중에 하나라도 null 이면 추가 가능
                   if (firstItem.imgFile === null && firstItem.itemId === null) {
                     // firstItem이 비어있을 때
-                    // console.log('first item 없음')
                     setFirstItem((prev) => ({
                       ...prev,
-                      ...{ imgFile: fileArr[i] },
+                      ...{ imgFile: file },
                     }))
-                    // console.log('firstItem', firstItem)
                   } else if (firstItem.imgFile || firstItem.itemId) {
                     // first가 존재할 때
-                    // console.log('seconds 아이템 null')
                     setSecondItem((prev) => ({
                       ...prev,
-                      ...{ imgFile: fileArr[i] },
+                      ...{ imgFile: file },
                     }))
                   }
                 } else {
@@ -200,7 +197,7 @@ const SelectItemOrPhoto = () => {
                     // console.log('seconds 아이템 null')
                     setSecondItem((prev) => ({
                       ...prev,
-                      ...{ imgFile: fileArr[i] },
+                      ...{ imgFile: file },
                     }))
                     // console.log('secondItem', secondItem)
                   }
@@ -220,6 +217,7 @@ const SelectItemOrPhoto = () => {
     }
   }
   const onNativeImgUpload = (fileArr: File[]) => {
+    console.log('Native에서 받은 fileArr', fileArr)
     if (fileArr) {
       setSelectedFileList((pre) => [...pre, ...Array.from(fileArr)])
       for (let i = 0; i < fileArr.length; i++) {
@@ -233,7 +231,7 @@ const SelectItemOrPhoto = () => {
             representFlag: !imgItemList && i === 0,
           }
           if (CommunityMenu === '이 중에 뭐 살까') {
-            if (fileArr[i]) {
+            if (file) {
               if (i === 0) {
                 // console.log(firstItem)
                 // firstItem || secondItem 둘중에 하나라도 null 이면 추가 가능
@@ -242,7 +240,7 @@ const SelectItemOrPhoto = () => {
                   // console.log('first item 없음')
                   setFirstItem((prev) => ({
                     ...prev,
-                    ...{ imgFile: fileArr[i] },
+                    ...{ imgFile: file },
                   }))
                   // console.log('firstItem', firstItem)
                 } else if (firstItem.imgFile || firstItem.itemId) {
@@ -250,7 +248,7 @@ const SelectItemOrPhoto = () => {
                   // console.log('seconds 아이템 null')
                   setSecondItem((prev) => ({
                     ...prev,
-                    ...{ imgFile: fileArr[i] },
+                    ...{ imgFile: file },
                   }))
                 }
               } else {
@@ -261,7 +259,7 @@ const SelectItemOrPhoto = () => {
                   // console.log('seconds 아이템 null')
                   setSecondItem((prev) => ({
                     ...prev,
-                    ...{ imgFile: fileArr[i] },
+                    ...{ imgFile: file },
                   }))
                   // console.log('secondItem', secondItem)
                 }
@@ -317,7 +315,7 @@ const SelectItemOrPhoto = () => {
   useEffect(() => {
     // 메시지 리스너 함수
     const handlePhotosMessage = (event: any) => {
-      const images = convertToImageList(event.detail, imgItemList)
+      const images = convertToFile(event.detail)
       onNativeImgUpload(images)
     }
 
@@ -353,7 +351,7 @@ const SelectItemOrPhoto = () => {
               selectedTab={selectedTab}
               setSelectedTab={setSelectedTab}
             ></Tabs>
-            {selectedTab === 'recent' && <RecentViewItem></RecentViewItem>}
+            {selectedTab === 'recent' && <HotItem></HotItem>}
             {selectedTab === 'saved' && <ScrapItem></ScrapItem>}
           </>
         ) : (

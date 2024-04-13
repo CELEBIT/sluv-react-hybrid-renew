@@ -40,17 +40,6 @@ const Photo = ({
 }: PhotoProps) => {
   const queryClient = useQueryClient()
   const { openModal } = useModals()
-  const [previewFile, setPreviewFile] = useState<string>('')
-
-  useEffect(() => {
-    if (imgFile) {
-      const reader = new FileReader()
-      reader.readAsDataURL(imgFile)
-      reader.onloadend = () => {
-        setPreviewFile(reader.result as string)
-      }
-    }
-  }, [])
 
   const handleScrapItem = async (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     e.stopPropagation()
@@ -67,49 +56,31 @@ const Photo = ({
     }
   }
 
-  if (imgUrl) {
-    return (
-      <Img size={size} borderRadius={borderRadius} imgUrl={imgUrl}>
-        {imgUrl && <ItemCardDim size={size} borderRadius={borderRadius}></ItemCardDim>}
-        {candelete && <DeleteList className='delete' onClick={onDelete}></DeleteList>}
-        {representFlag && <Represent className='represent'></Represent>}
-        {storageFlag !== undefined && (
-          <>
-            {storageFlag ? (
-              <StorageOn className='represent' onClick={(e) => handleScrapItem(e)}></StorageOn>
-            ) : (
-              <StorageOff className='represent' onClick={(e) => handleScrapItem(e)}></StorageOff>
-            )}
-          </>
-        )}
-        {isSelected !== undefined && (
-          <>
-            {isSelected ? (
-              <CheckOn className='select'></CheckOn>
-            ) : (
-              <CheckOff className='select'></CheckOff>
-            )}
-          </>
-        )}
-      </Img>
-    )
-  } else {
-    return (
-      <Img size={size} borderRadius={borderRadius} imgFile={imgFile}>
-        {candelete && <DeleteList className='delete' onClick={onDelete}></DeleteList>}
-        {representFlag && <Represent className='represent'></Represent>}
-        {storageFlag !== undefined && (
-          <>
-            {storageFlag ? (
-              <StorageOn className='represent'></StorageOn>
-            ) : (
-              <StorageOff className='represent'></StorageOff>
-            )}
-          </>
-        )}
-      </Img>
-    )
-  }
+  return (
+    <Img size={size} borderRadius={borderRadius} imgUrl={imgUrl} imgFile={imgFile}>
+      {imgUrl && <ItemCardDim size={size} borderRadius={borderRadius}></ItemCardDim>}
+      {candelete && <DeleteList className='delete' onClick={onDelete}></DeleteList>}
+      {representFlag && <Represent className='represent'></Represent>}
+      {storageFlag !== undefined && (
+        <>
+          {storageFlag ? (
+            <StorageOn className='represent' onClick={(e) => handleScrapItem(e)}></StorageOn>
+          ) : (
+            <StorageOff className='represent' onClick={(e) => handleScrapItem(e)}></StorageOff>
+          )}
+        </>
+      )}
+      {isSelected !== undefined && (
+        <>
+          {isSelected ? (
+            <CheckOn className='select'></CheckOn>
+          ) : (
+            <CheckOff className='select'></CheckOff>
+          )}
+        </>
+      )}
+    </Img>
+  )
 }
 
 export default Photo
