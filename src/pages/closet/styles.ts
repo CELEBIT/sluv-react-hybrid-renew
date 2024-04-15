@@ -20,9 +20,9 @@ export const BodyContainer = styled.section`
   justify-content: flex-start;
   width: 100%;
   height: 100%;
-  gap: 12px;
+  gap: 0.75rem;
   flex-direction: column;
-  padding-bottom: 70px;
+  padding-bottom: 4.375rem;
   overflow-y: scroll;
   ::-webkit-scrollbar {
     display: none;

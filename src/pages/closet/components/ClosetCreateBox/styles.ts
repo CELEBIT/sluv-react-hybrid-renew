@@ -14,9 +14,9 @@ export const CreateBoxLayout = styled.div<{ closetBox: ClosetBoxService }>`
   height: 100%;
   flex-direction: column;
   align-items: center;
-  border-radius: 26px;
+  border-radius: 1.625rem;
   box-sizing: border-box;
-  padding: 10px 10px 8px;
+  padding: 0.625rem 0.625rem 0.5rem;
   border: 1px solid #eaecef;
   ${({ closetBox }) => getClosetBoxBackground(closetBox, 'background')};
 `
@@ -26,12 +26,12 @@ export const CreateBoxContent = styled.div<{ closetBox: ClosetBoxService }>`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  height: 180px;
+  height: 11.25rem;
   width: 100%;
-  gap: 10px;
+  gap: 0.625rem;
 `
 export const CreateBoxTitleWrapper = styled.p`
-  font-size: 15px;
+  font-size: 0.9375rem;
   color: #aeb5bc;
   padding: 0;
   margin: 0;

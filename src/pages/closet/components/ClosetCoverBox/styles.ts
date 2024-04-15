@@ -3,11 +3,11 @@ import { ClosetBoxService } from '../../services'
 import { getClosetBoxBackground } from '../../utils'
 
 export const RootContainer = styled.div`
-  min-width: 335px;
-  height: 180px;
+  min-width: 20.9375rem;
+  height: 11.25rem;
   width: 100%;
   box-sizing: border-box;
-  border-radius: 26px;
+  border-radius: 1.625rem;
 `
 
 export const Layout = styled.div<{ closetBox: ClosetBoxService }>`
@@ -15,8 +15,8 @@ export const Layout = styled.div<{ closetBox: ClosetBoxService }>`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding: 10px 10px 8px;
-  border-radius: 26px;
+  padding: 0.625rem 0.625rem 0.5rem;
+  border-radius: 1.625rem;
   box-sizing: border-box;
   cursor: pointer;
 
@@ -26,7 +26,7 @@ export const Layout = styled.div<{ closetBox: ClosetBoxService }>`
 
 export const CoverBoxHeader = styled.div`
   width: 100%;
-  height: 52px;
+  height: 3.25rem;
 `
 
 export const CoverBoxBody = styled.div<{ service: ClosetBoxService }>`
@@ -40,11 +40,11 @@ export const CoverBoxBody = styled.div<{ service: ClosetBoxService }>`
 `
 
 export const CoverBoxFooter = styled.div`
-  height: 26px;
+  height: 1.625rem;
   width: 100%;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   color: #ffffff;
-  font-family: Pretendard;
+  font-family: 'Pretendard';
 `
