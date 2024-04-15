@@ -38,7 +38,7 @@ export const reset = css`
     }
     @media all and (min-width: ${iPhone15DeviceSize +
       1}px) and (max-width: ${iPhone12ProMaxDeviceSize}px) {
-      font-size: 18px;
+      font-size: 17.5008px;
     }
     @media all and (min-width: ${iPhone12ProMaxDeviceSize + 1}px) {
       font-size: 19px;

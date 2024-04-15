@@ -1,12 +1,11 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { ReactComponent as Banner } from '../../assets/Top.svg'
+import { ReactComponent as Banner } from '../../assets/최예나배너.svg'
 import { ReactComponent as HotCelebBanner } from '../../assets/HotCelebBanner.svg'
 import { ReactComponent as Logo } from '../../assets/logo.svg'
 
 import { ReactComponent as Search } from '../../assets/search_24.svg'
 
 import { ComponentContainer, HomeContainer } from './styles'
-import Header from '../../components/Header/Header'
 import Curation from './components/Curation/Curation'
 import BuyNow from './components/BuyNow/BuyNow'
 import WeeklyTopUser from './components/WeeklyTopUser/WeeklyTopUser'

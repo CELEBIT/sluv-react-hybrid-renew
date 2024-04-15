@@ -8,7 +8,6 @@ import {
 import { HeaderWrapper } from '../../../user/styles'
 import Header from '../../../../components/Header/Header'
 import { ComponentContainer } from '../../../home/styles'
-import QuestionListItem from '../../../../components/QuestionListItem/QuestionListItem'
 import WriteCommunityItemButton from '../../components/WriteCommunityItemButton/WriteCommunityItemButton'
 import BlackFilter from '../../../../components/FIlter/BlackFilter'
 import useQuestionListQuery from '../../../../apis/question/hooks/useQuestionListQuery'
@@ -16,12 +15,11 @@ import { Line } from '../../detail/styles'
 import { ReactComponent as BuyHomeBanner } from '../../../../assets/CommunityEachBanner/BuyBanner.svg'
 import { ReactComponent as ConnectionError } from '../../../../assets/connectionError_36.svg'
 import EmptyState from '../../../../components/EmptyState'
-import VoteTwoItem from '../../CreateCommunity/question/components/twoItemUpload/VoteTwoItem'
-import * as S from './components/styles'
 import BuyVote from './components/BuyVote'
 import ButtonSmall from '../../../../components/ButtonSmall/ButtonSmall'
 import { useNavigate } from 'react-router-dom'
 import Flex from '../../../../components/Flex'
+import { url } from 'inspector'
 
 const BuyHome = () => {
   const navigate = useNavigate()
@@ -57,7 +55,13 @@ const BuyHome = () => {
         ></Header>
       </HeaderWrapper>
       <ComponentContainer ref={ComponentContainerRef}>
-        <BuyHomeBanner style={{ flexShrink: 0 }}></BuyHomeBanner>
+        <BuyHomeBanner
+          style={{
+            flexShrink: 0,
+            width: '100vw',
+            height: 'auto',
+          }}
+        ></BuyHomeBanner>
         <TabContainer ref={stickyRef}>
           <BlackFilter isSelected={selectedTab === '전체'} onClick={() => setSelectedTab('전체')}>
             전체

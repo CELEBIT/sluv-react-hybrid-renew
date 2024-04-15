@@ -20,7 +20,7 @@ export const Root = styled.div`
 
 export const HeaderContainer = styled.header`
   width: 100%;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
 `
 
 export const EmptyPageRoot = styled.div`
@@ -37,33 +37,33 @@ export const EmptyBoxContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  min-height: 160px;
-  max-width: 206px;
+  min-height: 10rem;
+  max-width: 12.875rem;
   font-family: 'Pretendard';
 
   & > svg {
-    height: 36px !important;
-    margin-bottom: 12px;
+    height: 2.25rem !important;
+    margin-bottom: 0.75rem;
   }
 
   & > h3 {
     margin-top: 0;
-    font-size: 17px;
+    font-size: 1.0625rem;
     font-weight: 500;
-    line-height: 20px;
+    line-height: 1.25rem;
     text-align: center;
     color: #7b8894;
-    margin-bottom: 6px;
+    margin-bottom: 0.375rem;
   }
 
   & > p {
     margin-top: 0;
-    font-size: 13px;
+    font-size: 0.8125rem;
     font-weight: 400;
-    line-height: 18px;
+    line-height: 1.125rem;
     text-align: center;
     color: #aeb5bc;
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
   }
 
   & > button {
@@ -72,14 +72,14 @@ export const EmptyBoxContainer = styled.div`
     display: flex;
     align-content: center;
     justify-content: center;
-    font-size: 15px;
+    font-size: 0.9375rem;
     font-weight: 500;
-    line-height: 18px;
+    line-height: 1.125rem;
     border: 1px solid #eaecef;
     background: #fff;
     box-sizing: border-box;
-    padding: 6px 12px 6px 12px;
-    border-radius: 6px;
+    padding: 0.375rem 0.75rem 0.375rem 0.75rem;
+    border-radius: 0.375rem;
     color: ${Common.colors.GR600};
   }
 `
@@ -87,7 +87,7 @@ export const EmptyBoxContainer = styled.div`
 export const Body = styled.div`
   display: flex;
   position: absolute;
-  top: 50px;
+  top: 3.125rem;
   height: 100%;
   width: 100%;
   overflow-y: scroll;
@@ -99,7 +99,7 @@ export const BackgroundContainer = styled.div<{
 }>`
   position: fixed;
   width: 100%;
-  height: 200px;
+  height: 12.5rem;
   background: ${({ imgUrl, colorScheme }) =>
     imgUrl ? `url(${imgUrl})` : `url(${getDefaultImageUrl(colorScheme)})`};
   background-position: top;
@@ -146,25 +146,25 @@ export const SubHeaderEditText = styled.p`
   cursor: pointer;
   font-weight: 500;
   font-family: Pretendard;
-  line-height: 18px;
-  font-size: 15px;
+  line-height: 1.125rem;
+  font-size: 0.9375rem;
   color: #212529;
 `
 
 export const InnerItemGridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 세 열을 동일한 크기로 설정 */
-  grid-gap: 24px 10px; /* 행 간 간격 24px, 열 간 간격 10px */
-  padding: 0 24px;
+  grid-gap: 1.5rem 0.625rem; /* 행 간 간격 1.5rem, 열 간 간격 0.625rem */
+  padding: 0 1.5rem;
   width: 100%; /* 필요한 경우 그리드의 너비를 조정 */
-  padding-bottom: 70px;
+  padding-bottom: 4.375rem;
 `
 
 export const EditFooter = styled.footer`
   z-index: 99;
   position: fixed;
   bottom: 0;
-  height: 92px;
+  height: 5.75rem;
   width: 100%;
   background: #454381;
 `
@@ -181,17 +181,17 @@ export const FooterContentContainer = styled.div`
   align-items: center;
   flex-direction: column;
   justify-content: flex-start;
-  padding-top: 8px;
-  gap: 8px;
+  padding-top: 0.5rem;
+  gap: 0.5rem;
   width: 100%;
 
   & > p {
     margin: 0;
     font-family: Pretendard;
-    font-size: 12px;
+    font-size: 0.75rem;
     font-weight: 500;
-    line-height: 14px;
-    letter-spacing: 0px;
+    line-height: 0.875rem;
+    letter-spacing: 0rem;
     text-align: center;
     color: #fff;
   }
@@ -201,7 +201,7 @@ export const HeaderWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 0 1.25rem;
+  padding: 0 20px;
 `
 
 export const AnotherClosetBodyContainer = styled.section`
@@ -209,10 +209,10 @@ export const AnotherClosetBodyContainer = styled.section`
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  max-height: 400px;
-  gap: 16px;
+  max-height: 25rem;
+  gap: 1rem;
   flex-direction: column;
-  margin-bottom: 10px;
-  padding: 14px 24px;
+  margin-bottom: 0.625rem;
+  padding: 0.875rem 1.5rem;
   overflow-y: scroll;
 `

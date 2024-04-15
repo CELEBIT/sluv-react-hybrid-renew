@@ -11,16 +11,16 @@ export const BodyContainer = styled.section`
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  gap: 24px;
+  gap: 1.5rem;
   flex-direction: column;
   overflow-y: auto;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 `
 
 export const ClosetCreateFooterElementWrapper = styled.div`
   width: 100%;
   box-sizing: border-box;
-  padding: 12px 20px;
+  padding: 0.75rem 1.25rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,12 +32,12 @@ export const SwitchContainer = styled.div`
   margin: 0;
   align-items: center;
   justify-content: flex-end;
-  gap: 4px;
+  gap: 0.25rem;
 
   & > p {
     font-family: Pretendard;
     margin: 0;
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 500;
   }
 `
@@ -49,9 +49,9 @@ export const Button = styled.button<HTMLAttributes<HTMLButtonElement>>`
   color: white;
   font-family: Pretendard;
   width: 100%;
-  min-height: 56px;
+  min-height: 3.5rem;
   border-radius: 12px;
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 500;
   background-color: ${({ disabled }) => (disabled ? '#EAECEF' : '#454381')};
 `
@@ -66,7 +66,7 @@ export const CreateFooter = styled.footer`
 
 export const DeleteNameTagContainer = styled.div`
   display: flex;
-  gap: 12px;
+  gap: 0.75rem;
   justify-content: flex-start;
   align-items: center;
   width: 100%;
@@ -77,15 +77,15 @@ export const DeleteConfirmButton = styled.button`
   align-items: center;
   justify-content: center;
   font-family: Pretendard;
-  font-size: 17px;
+  font-size: 1.0625rem;
   font-weight: 500;
-  line-height: 20px;
+  line-height: 1.25rem;
   color: ${({ disabled }) => (disabled ? '#AEB5BC' : '#212529')};
   background: none;
   border: none;
 `
 
 export const MockedIcon = styled.svg`
-  width: 24px;
-  height: 24px;
+  width: 1.5rem;
+  height: 1.5rem;
 `
