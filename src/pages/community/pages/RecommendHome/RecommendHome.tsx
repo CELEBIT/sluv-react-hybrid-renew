@@ -55,7 +55,13 @@ const RecommendItem = () => {
         ></Header>
       </HeaderWrapper>
       <ComponentContainer ref={ComponentContainerRef}>
-        <RecommendHomeBanner style={{ flexShrink: 0 }}></RecommendHomeBanner>
+        <RecommendHomeBanner
+          style={{
+            flexShrink: 0,
+            width: '100vw',
+            height: 'auto',
+          }}
+        ></RecommendHomeBanner>
         <TabContainer ref={stickyRef}>
           <BlackFilter isSelected={selectedTab === null} onClick={() => setSelectedTab(null)}>
             전체

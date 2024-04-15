@@ -54,7 +54,13 @@ const HowAboutHome = () => {
         ></Header>
       </HeaderWrapper>
       <ComponentContainer ref={ComponentContainerRef}>
-        <HowAboutBanner style={{ flexShrink: 0 }}></HowAboutBanner>
+        <HowAboutBanner
+          style={{
+            flexShrink: 0,
+            width: '100vw',
+            height: 'auto',
+          }}
+        ></HowAboutBanner>
         <QuestionListWrapper>
           {status === 'error' ? (
             <Flex
