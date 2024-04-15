@@ -1,20 +1,20 @@
 import styled from '@emotion/styled'
 
 export const Root = styled.header`
-  height: 50px;
+  height: 3.125rem;
   width: 100%;
   box-sizing: border-box;
 `
 
 export const PaddedRoot = styled.header`
-  padding: 0 24px;
+  padding: 0 1.5rem;
   width: 100%;
   box-sizing: border-box;
 `
 
 export const Layout = styled.div`
   display: flex;
-  gap: 12px;
+  gap: 0.75rem;
   width: 100%;
   align-items: center;
 `

@@ -59,7 +59,13 @@ const FindHome = () => {
         ></Header>
       </HeaderWrapper>
       <ComponentContainer ref={ComponentContainerRef}>
-        <FindHomeBanner style={{ flexShrink: 0 }}></FindHomeBanner>
+        <FindHomeBanner
+          style={{
+            flexShrink: 0,
+            width: '100vw',
+            height: 'auto',
+          }}
+        ></FindHomeBanner>
         <TabContainer ref={stickyRef}>
           <BlackFilter isSelected={selectedTab === 0} onClick={() => setSelectedTab(0)}>
             전체

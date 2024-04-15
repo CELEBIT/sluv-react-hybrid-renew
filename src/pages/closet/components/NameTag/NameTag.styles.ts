@@ -4,20 +4,20 @@ import { ReactComponent as OriginSideDotsIcon } from '../../../../assets/add_24.
 import { ReactComponent as OriginLockIcon } from '../../../../assets/lock_24.svg'
 export const RootContainer = styled.div`
   width: 100%;
-  height: 52px;
+  height: 3.25rem;
 `
 
 export const Layout = styled.div<{ colorScheme: CoverBoxColorKey }>`
   display: flex;
-  border-radius: 50px;
-  padding: 14px 20px 14px 20px;
+  border-radius: 3.125rem;
+  padding: 0.875rem 1.25rem 0.875rem 1.25rem;
   background: ${({ colorScheme }) => DEFAULT_COVER_COLOR_SET[colorScheme].nameTag?.background};
 `
 
 export const TitleWrapper = styled.div`
   display: flex;
   width: 100%;
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 600;
   text-align: start;
   font-family: 'Pretendard';
@@ -28,7 +28,7 @@ export const IconContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 0.625rem;
 `
 export const SideDotsIcon = styled(OriginSideDotsIcon)<{ editMode?: boolean }>`
   stroke: ${({ editMode }) => (editMode ? '#ffffff66' : '#ffffff')};
@@ -40,7 +40,7 @@ export const LockIcon = styled(OriginLockIcon)<{ editMode?: boolean }>`
 `
 
 export const NameTagEditInput = styled.input`
-  font-size: 18px;
+  font-size: 1.125rem;
   font-family: 'Pretendard';
   font-weight: 600;
   background: transparent;
@@ -60,7 +60,7 @@ export const NameTagEditInput = styled.input`
 
 export const ChipRoot = styled.div`
   position: relative;
-  height: 35px;
+  height: 2.1875rem;
   left: 5%;
   top: 70%;
   width: 40%;
