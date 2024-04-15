@@ -351,7 +351,7 @@ const SelectItemOrPhoto = () => {
               selectedTab={selectedTab}
               setSelectedTab={setSelectedTab}
             ></Tabs>
-            {selectedTab === 'recent' && <HotItem></HotItem>}
+            {selectedTab === 'recent' && <RecentViewItem></RecentViewItem>}
             {selectedTab === 'saved' && <ScrapItem></ScrapItem>}
           </>
         ) : (
