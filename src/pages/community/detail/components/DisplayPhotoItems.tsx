@@ -17,7 +17,7 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
   const combinedList = [...(imgList || []), ...(itemList || [])].sort(
     (a, b) => a.sortOrder - b.sortOrder,
   )
-  const isImgItem = (item: Img | Item): item is Img => {
+  const isImg = (item: Img | Item): item is Img => {
     return (item as Img).imgUrl !== undefined
   }
   if (combinedList.length === 0) {
@@ -27,8 +27,8 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
       <DisplayPhotoItemWrapper>
         {combinedList.map((each, index) => (
           <div className='full' key={index}>
-            {isImgItem(each) ? (
-              <ImageField imgUrl={each.imgUrl}></ImageField>
+            {isImg(each) ? (
+              <ImageField imgUrl={each.imgUrl} dim={true}></ImageField>
             ) : (
               <ImageField imgUrl={each.item.imgUrl} dim={true}>
                 <ItemInfoWrapper>
@@ -45,29 +45,36 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
   } else if (combinedList.length === 2) {
     return (
       <DisplayPhotoItemWrapper>
-        {combinedList.map((each, index) => (
-          <div className='full' key={index}>
-            {isImgItem(each) ? (
-              <ImageField imgUrl={each.imgUrl}></ImageField>
-            ) : (
-              <ImageField imgUrl={each.item.imgUrl} dim={true}>
-                <ItemInfoWrapper>
-                  <CelebName>{each.item.celebName}</CelebName>
-                  <BrandName>{each.item.brandName}</BrandName>
-                  <ItemName>{each.item.itemName}</ItemName>
-                </ItemInfoWrapper>
-              </ImageField>
-            )}
-          </div>
-        ))}
+        {isImg(combinedList[0]) ? (
+          <ImageField imgUrl={combinedList[0].imgUrl} dim={true}></ImageField>
+        ) : (
+          <ImageField imgUrl={combinedList[0].item.imgUrl} dim={true}>
+            <ItemInfoWrapper>
+              <CelebName>{combinedList[0].item.celebName}</CelebName>
+              <BrandName>{combinedList[0].item.brandName}</BrandName>
+              <ItemName>{combinedList[0].item.itemName}</ItemName>
+            </ItemInfoWrapper>
+          </ImageField>
+        )}
+        {isImg(combinedList[1]) ? (
+          <ImageField imgUrl={combinedList[1].imgUrl} dim={true}></ImageField>
+        ) : (
+          <ImageField imgUrl={combinedList[1].item.imgUrl} dim={true}>
+            <ItemInfoWrapper>
+              <CelebName>{combinedList[1].item.celebName}</CelebName>
+              <BrandName>{combinedList[1].item.brandName}</BrandName>
+              <ItemName>{combinedList[1].item.itemName}</ItemName>
+            </ItemInfoWrapper>
+          </ImageField>
+        )}
       </DisplayPhotoItemWrapper>
     )
   } else if (combinedList.length === 3) {
     return (
       <DisplayPhotoItemWrapper>
         <ColumnWrapper>
-          {isImgItem(combinedList[0]) ? (
-            <ImageField imgUrl={combinedList[0].imgUrl}></ImageField>
+          {isImg(combinedList[0]) ? (
+            <ImageField imgUrl={combinedList[0].imgUrl} dim={true}></ImageField>
           ) : (
             <ImageField imgUrl={combinedList[0].item.imgUrl} dim={true}>
               <ItemInfoWrapper>
@@ -79,8 +86,8 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
           )}
         </ColumnWrapper>
         <ColumnWrapper>
-          {isImgItem(combinedList[1]) ? (
-            <ImageField imgUrl={combinedList[1].imgUrl}></ImageField>
+          {isImg(combinedList[1]) ? (
+            <ImageField imgUrl={combinedList[1].imgUrl} dim={true}></ImageField>
           ) : (
             <ImageField imgUrl={combinedList[1].item.imgUrl} dim={true}>
               <ItemInfoWrapper>
@@ -90,8 +97,8 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
               </ItemInfoWrapper>
             </ImageField>
           )}
-          {isImgItem(combinedList[2]) ? (
-            <ImageField imgUrl={combinedList[2].imgUrl}></ImageField>
+          {isImg(combinedList[2]) ? (
+            <ImageField imgUrl={combinedList[2].imgUrl} dim={true}></ImageField>
           ) : (
             <ImageField imgUrl={combinedList[2].item.imgUrl} dim={true}>
               <ItemInfoWrapper>
@@ -108,8 +115,8 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
     return (
       <DisplayPhotoItemWrapper>
         <ColumnWrapper>
-          {isImgItem(combinedList[0]) ? (
-            <ImageField imgUrl={combinedList[0].imgUrl}></ImageField>
+          {isImg(combinedList[0]) ? (
+            <ImageField imgUrl={combinedList[0].imgUrl} dim={true}></ImageField>
           ) : (
             <ImageField imgUrl={combinedList[0].item.imgUrl} dim={true}>
               <ItemInfoWrapper>
@@ -119,8 +126,8 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
               </ItemInfoWrapper>
             </ImageField>
           )}
-          {isImgItem(combinedList[1]) ? (
-            <ImageField imgUrl={combinedList[1].imgUrl}></ImageField>
+          {isImg(combinedList[1]) ? (
+            <ImageField imgUrl={combinedList[1].imgUrl} dim={true}></ImageField>
           ) : (
             <ImageField imgUrl={combinedList[1].item.imgUrl} dim={true}>
               <ItemInfoWrapper>
@@ -132,8 +139,8 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
           )}
         </ColumnWrapper>
         <ColumnWrapper>
-          {isImgItem(combinedList[2]) ? (
-            <ImageField imgUrl={combinedList[2].imgUrl}></ImageField>
+          {isImg(combinedList[2]) ? (
+            <ImageField imgUrl={combinedList[2].imgUrl} dim={true}></ImageField>
           ) : (
             <ImageField imgUrl={combinedList[2].item.imgUrl} dim={true}>
               <ItemInfoWrapper>
@@ -143,8 +150,8 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
               </ItemInfoWrapper>
             </ImageField>
           )}
-          {isImgItem(combinedList[3]) ? (
-            <ImageField imgUrl={combinedList[3].imgUrl}></ImageField>
+          {isImg(combinedList[3]) ? (
+            <ImageField imgUrl={combinedList[3].imgUrl} dim={true}></ImageField>
           ) : (
             <ImageField imgUrl={combinedList[3].item.imgUrl} dim={true}>
               <ItemInfoWrapper>
@@ -161,8 +168,8 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
     return (
       <FivePhotoItemWrapper>
         <ColumnWrapper>
-          {isImgItem(combinedList[0]) ? (
-            <ImageField imgUrl={combinedList[0].imgUrl} className='first'></ImageField>
+          {isImg(combinedList[0]) ? (
+            <ImageField imgUrl={combinedList[0].imgUrl} className='first' dim={true}></ImageField>
           ) : (
             <ImageField imgUrl={combinedList[0].item.imgUrl} className='first' dim={true}>
               <ItemInfoWrapper>
@@ -172,8 +179,8 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
               </ItemInfoWrapper>
             </ImageField>
           )}
-          {isImgItem(combinedList[3]) ? (
-            <ImageField imgUrl={combinedList[3].imgUrl}></ImageField>
+          {isImg(combinedList[3]) ? (
+            <ImageField imgUrl={combinedList[3].imgUrl} dim={true}></ImageField>
           ) : (
             <ImageField imgUrl={combinedList[3].item.imgUrl} dim={true}>
               <ItemInfoWrapper>
@@ -185,8 +192,8 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
           )}
         </ColumnWrapper>
         <ColumnWrapper>
-          {isImgItem(combinedList[1]) ? (
-            <ImageField imgUrl={combinedList[1].imgUrl}></ImageField>
+          {isImg(combinedList[1]) ? (
+            <ImageField imgUrl={combinedList[1].imgUrl} dim={true}></ImageField>
           ) : (
             <ImageField imgUrl={combinedList[1].item.imgUrl} dim={true}>
               <ItemInfoWrapper>
@@ -196,8 +203,8 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
               </ItemInfoWrapper>
             </ImageField>
           )}
-          {isImgItem(combinedList[2]) ? (
-            <ImageField imgUrl={combinedList[2].imgUrl}></ImageField>
+          {isImg(combinedList[2]) ? (
+            <ImageField imgUrl={combinedList[2].imgUrl} dim={true}></ImageField>
           ) : (
             <ImageField imgUrl={combinedList[2].item.imgUrl} dim={true}>
               <ItemInfoWrapper>
@@ -207,8 +214,8 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
               </ItemInfoWrapper>
             </ImageField>
           )}
-          {isImgItem(combinedList[4]) ? (
-            <ImageField imgUrl={combinedList[4].imgUrl}></ImageField>
+          {isImg(combinedList[4]) ? (
+            <ImageField imgUrl={combinedList[4].imgUrl} dim={true}></ImageField>
           ) : (
             <ImageField imgUrl={combinedList[4].item.imgUrl} dim={true}>
               <ItemInfoWrapper>
@@ -254,18 +261,22 @@ const FivePhotoItemWrapper = styled.div`
 
 export const ImageField = styled.div<{ imgUrl: string | null | undefined; dim?: boolean }>`
   display: flex;
+  justify-content: space-between;
+  flex-direction: row;
   position: relative;
+  box-sizing: border-box;
   align-items: flex-end;
   width: 100%;
   height: 100%;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 50%;
+  background-color: grey;
   background-image: ${(props) =>
       props.dim
         ? 'linear-gradient(360deg, rgba(0, 0, 0, 0.5) 0.45%, rgba(0, 0, 0, 0) 76.51%),'
         : ''}
     url(${(props) => props.imgUrl});
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50%;
   padding: 1rem;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -278,4 +289,5 @@ const ColumnWrapper = styled.div`
   width: 100%;
   gap: 0.1875rem;
 `
+
 export default DisplayPhotoItems
