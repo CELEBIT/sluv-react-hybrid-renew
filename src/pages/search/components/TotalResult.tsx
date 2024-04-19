@@ -86,7 +86,8 @@ const TotalResult = ({ keyword }: TotalResultProps) => {
                 imgUrl={user.profileImgUrl}
                 user={user}
                 followStatus={user.followStatus}
-                onClick={() => navigate(`/user/${user.id}`)}
+                isMine={user.isMine}
+                onClick={user.isMine ? undefined : () => navigate(`/user/${user.id}`)}
               />
             ))}
           </UserListWrap>

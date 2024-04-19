@@ -46,6 +46,8 @@ import { useRecoilState, useSetRecoilState } from 'recoil'
 import { commentState } from '../../CommunityDetail'
 import { Dim } from '../../../../../components/UserImage/UserImage'
 import { imgItemListState } from '../../../../../recoil/communityInfo'
+import { ReactComponent as DefaultProfile } from '../../../../../assets/defaultProfile_40.svg'
+
 interface CommentProps {
   questionId: number
   comment: CommentResult
@@ -146,7 +148,11 @@ const Comment = ({ questionId, comment }: CommentProps) => {
     <CommentWrapper key={comment.id}>
       <ContentWrapper>
         <ContentLeft>
-          <UserImg imgUrl={comment.user.profileImgUrl}></UserImg>
+          {comment.user.profileImgUrl ? (
+            <UserImg imgUrl={comment.user.profileImgUrl}></UserImg>
+          ) : (
+            <DefaultProfile style={{ width: '2.25rem', height: '2.25rem' }}></DefaultProfile>
+          )}
         </ContentLeft>
         <ContentRight>
           <ContentTop>

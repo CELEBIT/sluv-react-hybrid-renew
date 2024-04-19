@@ -6,6 +6,7 @@ import { ReactComponent as RankThird } from '../../../../../assets/rank_3.svg'
 import FollowMediumButton from '../../../../../components/ButtonMedium/FollowMediumButton'
 import useFollowQuery from '../../../../../apis/user/hooks/useFollowQuery'
 import { IUserResult } from '../../../../../apis/user/userService'
+import { ReactComponent as DefaultProfile } from '../../../../../assets/defaultProfile_40.svg'
 
 interface UserCardProps {
   rank?: number
@@ -13,10 +14,19 @@ interface UserCardProps {
   user: IUserResult
   followStatus?: boolean
   borderRadius?: number
-  onClick: () => void
+  isMine: boolean
+  onClick?: () => void
 }
 
-const UserCard = ({ rank, imgUrl, followStatus, user, borderRadius, onClick }: UserCardProps) => {
+const UserCard = ({
+  rank,
+  imgUrl,
+  followStatus,
+  user,
+  borderRadius,
+  isMine,
+  onClick,
+}: UserCardProps) => {
   const {
     followUser: { mutate: mutateByFollow },
   } = useFollowQuery()
@@ -35,19 +45,39 @@ const UserCard = ({ rank, imgUrl, followStatus, user, borderRadius, onClick }: U
           )}
         </div>
       )}
-      <UserPhoto imgUrl={imgUrl}></UserPhoto>
+      {imgUrl ? (
+        <UserPhoto imgUrl={imgUrl}></UserPhoto>
+      ) : (
+        <DefaultProfile style={{ width: '5rem', height: '5rem' }}></DefaultProfile>
+      )}
+
       <NickNameWrapper>
         <UserNickName>{user?.nickName}</UserNickName>
       </NickNameWrapper>
-
-      {followStatus ? (
-        <FollowMediumButton icon={true} active={false} onClick={(e) => onClickFollow(e, user.id)}>
-          팔로잉
+      {isMine ? (
+        <FollowMediumButton icon={false} active={false} type='disable'>
+          내 프로필
         </FollowMediumButton>
       ) : (
-        <FollowMediumButton icon={false} active={true} onClick={(e) => onClickFollow(e, user.id)}>
-          팔로우
-        </FollowMediumButton>
+        <>
+          {followStatus ? (
+            <FollowMediumButton
+              icon={true}
+              active={false}
+              onClick={(e) => onClickFollow(e, user.id)}
+            >
+              팔로잉
+            </FollowMediumButton>
+          ) : (
+            <FollowMediumButton
+              icon={false}
+              active={true}
+              onClick={(e) => onClickFollow(e, user.id)}
+            >
+              팔로우
+            </FollowMediumButton>
+          )}
+        </>
       )}
     </UserCardWrapper>
   )
