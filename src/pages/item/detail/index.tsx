@@ -80,7 +80,6 @@ const ItemDetail = () => {
   const queryClient = useQueryClient()
   const { openModal } = useModals()
   const { id: itemId } = useParams()
-  const location = useLocation()
 
   const { getItemDetail } = useItemDetailQuery()
   const { data } = getItemDetail(Number(itemId))
@@ -94,6 +93,17 @@ const ItemDetail = () => {
       alert('링크를 클립보드에 복사했습니다.')
     } else if (result === 'failed') {
       alert('공유하기가 지원되지 않는 환경입니다.')
+    }
+  }
+
+  const handleClick = (url: string) => {
+    // 만약 url에 "http://" 또는 "https://"가 포함되어 있다면,
+    // 해당 url로 이동합니다.
+    if (url.includes('http://') || url.includes('https://')) {
+      window.location.href = url
+    } else {
+      // 만약 "http://" 또는 "https://"가 없다면, 추가해줍니다.
+      window.location.href = 'http://' + url
     }
   }
 
@@ -224,7 +234,7 @@ const ItemDetail = () => {
               {(data?.linkList.length ?? 0) > 0 &&
                 data?.linkList.map((link, index) => {
                   return (
-                    <Link key={index}>
+                    <Link key={index} onClick={() => handleClick(link.itemLinkUrl)}>
                       <LinkIcon></LinkIcon>
                       <div className='linkinfo'>
                         <span>{link.linkName}</span>
