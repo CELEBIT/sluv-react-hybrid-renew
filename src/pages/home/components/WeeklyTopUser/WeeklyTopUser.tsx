@@ -31,7 +31,8 @@ const WeeklyTopUser = () => {
               imgUrl={user.profileImgUrl}
               followStatus={user.followStatus}
               user={user}
-              onClick={() => navigate(`/user/${user.id}`)}
+              isMine={user.isMine}
+              onClick={user.isMine ? undefined : () => navigate(`/user/${user.id}`)}
             />
           )
         })}
