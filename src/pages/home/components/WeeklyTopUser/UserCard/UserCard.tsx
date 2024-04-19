@@ -6,6 +6,7 @@ import { ReactComponent as RankThird } from '../../../../../assets/rank_3.svg'
 import FollowMediumButton from '../../../../../components/ButtonMedium/FollowMediumButton'
 import useFollowQuery from '../../../../../apis/user/hooks/useFollowQuery'
 import { IUserResult } from '../../../../../apis/user/userService'
+import { ReactComponent as DefaultProfile } from '../../../../../assets/defaultProfile_40.svg'
 
 interface UserCardProps {
   rank?: number
@@ -44,7 +45,12 @@ const UserCard = ({
           )}
         </div>
       )}
-      <UserPhoto imgUrl={imgUrl}></UserPhoto>
+      {imgUrl ? (
+        <UserPhoto imgUrl={imgUrl}></UserPhoto>
+      ) : (
+        <DefaultProfile style={{ width: '5rem', height: '5rem' }}></DefaultProfile>
+      )}
+
       <NickNameWrapper>
         <UserNickName>{user?.nickName}</UserNickName>
       </NickNameWrapper>
