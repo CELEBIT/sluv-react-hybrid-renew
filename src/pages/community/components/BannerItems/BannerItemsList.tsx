@@ -6,8 +6,6 @@ import { useNavigate } from 'react-router-dom'
 import useQuestionListQuery from '../../../../apis/question/hooks/useQuestionListQuery'
 
 const BannerItemsList = () => {
-  // const { getCommunityBannerItems } = useCommunityHomeQuery()
-  // const { data } = getCommunityBannerItems()
   const { getQuestionHotList } = useQuestionListQuery()
   const { data } = getQuestionHotList()
   const navigate = useNavigate()
@@ -24,6 +22,7 @@ const BannerItemsList = () => {
                 title={item.title}
                 userImgUrl={item.user.profileImgUrl}
                 userName={item.user.nickName}
+                content={item.content}
                 onClick={() => navigate(`./detail/${item.id}`)}
               ></BannerItem>
             )

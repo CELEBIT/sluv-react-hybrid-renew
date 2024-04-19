@@ -31,5 +31,5 @@
     "types": ["node", "jest", "@testing-library/jest-dom"],
     "jsxImportSource": "@emotion/react"
   },
-  "include": ["src", "svg.d.ts", "gif.d.ts"]
+  "include": ["src", "svg.d.ts", "gif.d.ts", "png.d.ts"]
 }

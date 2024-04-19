@@ -7,14 +7,15 @@ import styled from '@emotion/styled'
 interface ButtonMediumProps {
   children: any
   icon?: boolean
+  type?: string
   active: boolean
-  onClick: (e: any) => void
+  onClick?: (e: any) => void
 }
 
 const FollowMediumButton = forwardRef<HTMLDivElement, ButtonMediumProps>(
-  ({ icon, active, children, onClick }, ref) => {
+  ({ icon, active, children, type, onClick }, ref) => {
     return (
-      <MediumWrapper icon={icon} active={active} onClick={onClick} ref={ref}>
+      <MediumWrapper icon={icon} active={active} type={type} onClick={onClick} ref={ref}>
         <span>{children}</span>
         {icon && <Check width='13' height='13' stroke={Common.colors.GR600} />}
       </MediumWrapper>
@@ -29,14 +30,15 @@ export default FollowMediumButton
 export const MediumWrapper = styled.div<{
   icon?: boolean
   active?: boolean
+  type?: string
 }>`
   display: inline-flex;
   flex-direction: row;
   flex-shrink: 0;
   justify-content: center;
   align-items: center;
-
-  padding: 0.375rem 0.375rem 0.375rem 0.75rem;
+  padding: ${({ icon }) =>
+    icon ? '0.375rem 0.375rem 0.375rem 0.75rem' : '0.375rem 0.75rem 0.375rem 0.75rem'};
   border-radius: 0.5rem;
 
   ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.GR600 })};
@@ -52,4 +54,19 @@ export const MediumWrapper = styled.div<{
         background-color: ${Common.colors.BG};
         color: #5E2AB9;
 `};
+
+  color: ${({ type }) =>
+    (type === 'pri' && `${Common.colors.GR600}`) ||
+    (type === 'sec' && `${Common.colors.BK}`) ||
+    (type === 'disable' && `${Common.colors.GR500}`)};
+
+  background-color: ${({ type }) =>
+    (type === 'pri' && 'white') ||
+    (type === 'sec' && 'white') ||
+    (type === 'disable' && `${Common.colors.GR100}`)};
+
+  border: ${({ type }) =>
+    (type === 'pri' && `0.0625rem solid ${Common.colors.GR200}`) ||
+    (type === 'sec' && `0.0625rem solid ${Common.colors.BK}`) ||
+    (type === 'disable' && `0.0625rem solid ${Common.colors.GR200}`)};
 `
