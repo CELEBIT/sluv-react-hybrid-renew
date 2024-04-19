@@ -3,6 +3,8 @@ import React from 'react'
 import Badge from '../../../../../components/Badge/Badge'
 import UserImage from '../../../../../components/UserImage/UserImage'
 import { Common, Pretendard } from '../../../../../components/styles'
+import { ReactComponent as DefaultProfile } from '../../../../../assets/defaultProfile_40.svg'
+import CommunityBannerDefaultBg from '../../../../../assets/CommunityBannerDefaultBg.png'
 
 export interface BannerItemProps {
   qtype: string
@@ -10,6 +12,7 @@ export interface BannerItemProps {
   userImgUrl: string
   userName: string
   title: string
+  content: string
   onClick: () => void
 }
 
@@ -20,39 +23,84 @@ const BadgeColors = {
   default: 'blue',
 }
 
-const BannerItem = ({ qtype, imgUrl, userImgUrl, userName, title, onClick }: BannerItemProps) => {
+const BannerItem = ({
+  qtype,
+  imgUrl,
+  userImgUrl,
+  userName,
+  title,
+  content,
+  onClick,
+}: BannerItemProps) => {
   const badgeColor = BadgeColors[qtype as keyof typeof BadgeColors] || BadgeColors.default
-  return (
-    <BannerItemContainer imgUrl={imgUrl} onClick={onClick}>
-      <div>
-        <Badge color={badgeColor}>
-          {qtype === 'Find'
-            ? '찾아주세요'
-            : qtype === 'Buy'
-            ? '이 중에 뭐 살까'
-            : qtype === 'How'
-            ? '이거 어때'
-            : '추천해 줘'}
-        </Badge>
-      </div>
-      <ContentBoxContainer>
+
+  if (imgUrl) {
+    return (
+      <BannerItemContainer imgUrl={imgUrl ? imgUrl : CommunityBannerDefaultBg} onClick={onClick}>
+        <div>
+          <Badge color={badgeColor}>
+            {qtype === 'Find'
+              ? '찾아주세요'
+              : qtype === 'Buy'
+              ? '이 중에 뭐 살까'
+              : qtype === 'How'
+              ? '이거 어때'
+              : '추천해 줘'}
+          </Badge>
+        </div>
+        <ContentBoxContainer>
+          <UserInfoRow>
+            {userImgUrl ? (
+              <UserImage size={20} imgUrl={userImgUrl}></UserImage>
+            ) : (
+              <DefaultProfile style={{ width: '1.25rem', height: '1.25rem' }}></DefaultProfile>
+            )}
+            <UserNickName>{userName}</UserNickName>
+          </UserInfoRow>
+          <QuestionTitle>{title}</QuestionTitle>
+        </ContentBoxContainer>
+      </BannerItemContainer>
+    )
+  } else {
+    return (
+      <DimmedItemContainer
+        userImgUrl={userImgUrl ? userImgUrl : CommunityBannerDefaultBg}
+        onClick={onClick}
+      >
+        <div>
+          <Badge color={badgeColor}>
+            {qtype === 'Find'
+              ? '찾아주세요'
+              : qtype === 'Buy'
+              ? '이 중에 뭐 살까'
+              : qtype === 'How'
+              ? '이거 어때'
+              : '추천해 줘'}
+          </Badge>
+        </div>
         <UserInfoRow>
-          <UserImage
-            size={20}
-            imgUrl={'https://www.ascentkorea.com/wp-content/uploads/2022/11/bts-1024x657.jpg'}
-          ></UserImage>
+          {userImgUrl ? (
+            <UserImage size={20} imgUrl={userImgUrl}></UserImage>
+          ) : (
+            <DefaultProfile style={{ width: '1.25rem', height: '1.25rem' }}></DefaultProfile>
+          )}
           <UserNickName>{userName}</UserNickName>
         </UserInfoRow>
-        <QuestionTitle>{title}</QuestionTitle>
-      </ContentBoxContainer>
-    </BannerItemContainer>
-  )
+        <QuestionTitleContent>
+          {title} {content}
+        </QuestionTitleContent>
+        <Dim></Dim>
+        <Blur></Blur>
+      </DimmedItemContainer>
+    )
+  }
 }
 
 export default BannerItem
 
 export const BannerItemContainer = styled.div<{ imgUrl: string }>`
   display: flex;
+  position: relative;
   flex-direction: column;
   flex-shrink: 0;
   justify-content: space-between;
@@ -63,7 +111,26 @@ export const BannerItemContainer = styled.div<{ imgUrl: string }>`
   background-image: url(${(props) => props.imgUrl});
   background-repeat: no-repeat;
   background-size: cover;
+  overflow: hidden;
 `
+
+export const DimmedItemContainer = styled.div<{ userImgUrl: string }>`
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  flex-shrink: 0;
+  border-radius: 1rem;
+  padding: 0.625rem;
+  width: 11.375rem;
+  height: 14.4375rem;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden;
+  gap: 0.75rem;
+  background-image: url(${(props) => props.userImgUrl});
+  backdrop-filter: blur(40px);
+`
+
 export const ContentBoxContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -74,6 +141,27 @@ export const ContentBoxContainer = styled.div`
   background: rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(20px);
 `
+export const Dim = styled.div`
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #00000033;
+  z-index: -2;
+`
+
+export const Blur = styled.div`
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff40;
+  backdrop-filter: blur(15px);
+  z-index: -1;
+`
+
 export const UserInfoRow = styled.div`
   display: flex;
   align-items: center;
@@ -85,4 +173,9 @@ const UserNickName = styled.span`
 `
 const QuestionTitle = styled.span`
   ${Pretendard({ size: 14, weight: Common.bold.regular, color: Common.colors.WH })}
+`
+
+const QuestionTitleContent = styled.span`
+  z-index: 5;
+  ${Pretendard({ size: 17, weight: Common.bold.regular, color: Common.colors.WH })}
 `
