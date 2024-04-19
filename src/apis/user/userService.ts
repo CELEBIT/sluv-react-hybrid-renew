@@ -25,6 +25,7 @@ export interface IUserResult {
   nickName: string
   profileImgUrl: string
   followStatus: boolean
+  isMine: boolean
 }
 
 export interface IUserClosetList {
