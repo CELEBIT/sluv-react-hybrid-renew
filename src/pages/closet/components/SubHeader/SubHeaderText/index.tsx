@@ -18,12 +18,12 @@ export const ClosetMainSubHeaderEditText = () => {
           closeModal(ClosetBoxCreateBottomSheetModal, () => navigate('/closet/create'))
         },
       },
-      {
-        title: '옷장 정렬 및 삭제',
-        callback: () => {
-          closeModal(ClosetBoxCreateBottomSheetModal, () => navigate('/closet/deleteAndSort'))
-        },
-      },
+      // {
+      //   title: '옷장 정렬 및 삭제',
+      //   callback: () => {
+      //     closeModal(ClosetBoxCreateBottomSheetModal, () => navigate('/closet/deleteAndSort'))
+      //   },
+      // },
     ],
     [],
   )
