@@ -149,8 +149,6 @@ const ItemCreate = () => {
         newBrandId: itemInfo.newBrand?.brandId ?? null,
       }
       mutate(item)
-    } else {
-      alert('오류가 발생했어요. 다시 시도해주세요')
     }
   }
 
