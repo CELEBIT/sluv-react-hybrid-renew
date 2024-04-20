@@ -66,10 +66,10 @@ export function getRankingUpdateTime(date: Date): string {
 
   if (currentTime < targetTime) {
     // 17:00 전
-    return `${dateString} 17:00 기준`
+    return `${currentTime.getTime() - 24 * 60 * 60 * 1000} 17:00 기준`
   } else {
     // 17:00 후
-    const nextDay = new Date(currentTime.getTime() + 24 * 60 * 60 * 1000) // 현재 시간에 1일(24시간)을 더해줌
+    const nextDay = new Date(currentTime.getTime())
     const nextDayString = nextDay.toLocaleDateString()
     return `${nextDayString} 17:00 기준`
   }
