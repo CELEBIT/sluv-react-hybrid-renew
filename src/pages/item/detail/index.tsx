@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import useModals from '../../../components/Modals/hooks/useModals'
 import { modals } from '../../../components/Modals'
@@ -74,6 +74,7 @@ import SameScrap from './components/Carousel/SameScrap'
 import SameBrand from './components/Carousel/SameBrand'
 import { deleteScrap } from '../../../apis/closet'
 import share from '../../../utils/Share/share'
+import ShowLink from './components/ShowLink'
 
 const ItemDetail = () => {
   const navigate = useNavigate()
@@ -83,6 +84,7 @@ const ItemDetail = () => {
 
   const { getItemDetail } = useItemDetailQuery()
   const { data } = getItemDetail(Number(itemId))
+  console.log(data)
 
   const setEditReportItemState = useSetRecoilState(RequestEditItemState)
   const colors = ['gray', 'pink', 'orange', 'yellow', 'green', 'blue']
@@ -91,20 +93,19 @@ const ItemDetail = () => {
     const result = await share()
     if (result === 'copiedToClipboard') {
       alert('링크를 클립보드에 복사했습니다.')
-    } else if (result === 'failed') {
-      alert('공유하기가 지원되지 않는 환경입니다.')
     }
   }
 
+  const [link, setLink] = useState<string>('')
+  const [showLink, setShowLink] = useState<boolean>(false)
   const handleClick = (url: string) => {
-    // 만약 url에 "http://" 또는 "https://"가 포함되어 있다면,
-    // 해당 url로 이동합니다.
     if (url.includes('http://') || url.includes('https://')) {
-      window.location.href = url
+      setLink(url)
     } else {
       // 만약 "http://" 또는 "https://"가 없다면, 추가해줍니다.
-      window.location.href = 'http://' + url
+      setLink('http://' + url)
     }
+    setShowLink(!showLink)
   }
 
   useEffect(() => {
@@ -160,10 +161,18 @@ const ItemDetail = () => {
     }
   }
 
+  const onBackClick = () => {
+    if (showLink) {
+      setShowLink(!showLink)
+    } else {
+      navigate(-1)
+    }
+  }
+
   return (
     <ItemDetailContainer>
       <HeaderWrapper>
-        <Header isModalHeader={false} hasArrow={true}>
+        <Header isModalHeader={false} hasArrow={true} backBtnClick={onBackClick}>
           <div className='headerRight'>
             <Home onClick={() => navigate('/home')} />
             <Search fill={Common.colors.BK} onClick={() => navigate('/search')}></Search>
@@ -171,156 +180,171 @@ const ItemDetail = () => {
           </div>
         </Header>
       </HeaderWrapper>
-      <ItemWrapper>
-        {data?.imgList ? <Carousel imgList={data?.imgList}></Carousel> : null}
+      {showLink ? (
+        <ShowLink linkUrl={link} showLink={showLink} setShowLink={setShowLink}></ShowLink>
+      ) : (
+        <ItemWrapper>
+          {data?.imgList ? <Carousel imgList={data?.imgList}></Carousel> : null}
 
-        <BasicInfoWrapper>
-          <Top>
-            <Badge color='gray'>{data?.celeb.celebTotalNameKr}</Badge>
+          <BasicInfoWrapper>
+            <Top>
+              <Badge color='gray'>{data?.celeb.celebTotalNameKr}</Badge>
 
-            <Interactions>
-              {data?.scrapStatus ? (
-                <StorageOn onClick={handleScrapItem}></StorageOn>
-              ) : (
-                <StorageOff onClick={handleScrapItem}></StorageOff>
-              )}
-              {data?.likeStatus ? (
-                <LikeOn onClick={onClickLike}></LikeOn>
-              ) : (
-                <LikeOff onClick={onClickLike}></LikeOff>
-              )}
+              <Interactions>
+                {data?.scrapStatus ? (
+                  <StorageOn onClick={handleScrapItem}></StorageOn>
+                ) : (
+                  <StorageOff onClick={handleScrapItem}></StorageOff>
+                )}
+                {data?.likeStatus ? (
+                  <LikeOn onClick={onClickLike}></LikeOn>
+                ) : (
+                  <LikeOff onClick={onClickLike}></LikeOff>
+                )}
 
-              <Share stroke={Common.colors.GR600} onClick={handleShare}></Share>
-            </Interactions>
-          </Top>
-          <ItemInfo>
-            <Category>
-              {data?.category.parentName && (
-                <>
-                  <span>{data?.category.parentName}</span>
-                  <Arrow></Arrow>
-                </>
-              )}
-              <span>{data?.category.name}</span>
-              {data?.color && <ColorCircle color={data.color}></ColorCircle>}
-            </Category>
-            <ItemName>{data?.itemName}</ItemName>
-            <Brand>
-              <BrandLogo size={32} url={data?.brand.brandImgUrl} />
-              <span>{data?.brand.brandEn}</span>
-              <Arrow></Arrow>
-            </Brand>
-          </ItemInfo>
-          <ItemReaction>
-            <Reaction>
-              <LikeSmall></LikeSmall>
-              <span>{data?.likeNum}</span>
-            </Reaction>
-            <Reaction>
-              <Storage></Storage>
-              <span>{data?.scrapNum}</span>
-            </Reaction>
-            <Reaction>
-              <View></View>
-              <span>{data?.viewNum}</span>
-            </Reaction>
-          </ItemReaction>
-        </BasicInfoWrapper>
-        <Divider />
-        {(data?.linkList.length ?? 0) > 0 && (
-          <LinkInfoWrapper>
-            <Label>여기서 구매할 수 있어요!</Label>
-            <DisplayField>
-              {(data?.linkList.length ?? 0) > 0 &&
-                data?.linkList.map((link, index) => {
-                  return (
-                    <Link key={index} onClick={() => handleClick(link.itemLinkUrl)}>
-                      <LinkIcon></LinkIcon>
-                      <div className='linkinfo'>
-                        <span>{link.linkName}</span>
-                        <ArrowLarge></ArrowLarge>
-                      </div>
-                    </Link>
-                  )
-                })}
-            </DisplayField>
-          </LinkInfoWrapper>
-        )}
-        <UploaderInfoWrapper>
-          <div className='user' onClick={data?.writer.id !== null ? onClickUser : undefined}>
-            {data?.writer.id !== null ? (
-              <UserImg imgUrl={data?.writer.profileImgUrl} />
-            ) : (
-              <DefaultProfile></DefaultProfile>
-            )}
-            <span>{data?.writer.id !== null ? data?.writer.nickName : '탈퇴한 유저'}</span>
-          </div>
-          {data?.hasMine === false && data.writer.id !== null ? (
-            <ButtonSmall
-              type='pri'
-              text={data.followStatus ? '팔로잉' : '팔로우'}
-              active={data.followStatus ? false : true}
-              icon={data.followStatus ? true : false}
-              onClick={onClickFollow}
-            />
-          ) : null}
-        </UploaderInfoWrapper>
-        <AdditionalInfoWrapper>
-          {data?.whenDiscovery && <span>{convertToKoDate(new Date(data?.whenDiscovery))}</span>}
-          {data?.whereDiscovery && <span>{data?.whereDiscovery}에서 착용하였고</span>}
-          {data?.price && (
-            <>
-              {data.price >= 500000000 ? (
-                <span>가격은 5억원대 이상이에요</span>
-              ) : (
-                <span>
-                  {data.price > 0 ? `가격은 ${formatPrice(data.price)}대에요` : '가격은 모르겠어요'}
-                </span>
-              )}
-            </>
+                <Share stroke={Common.colors.GR600} onClick={handleShare}></Share>
+              </Interactions>
+            </Top>
+            <ItemInfo>
+              <Category>
+                {data?.category.parentName && (
+                  <>
+                    <span>{data?.category.parentName}</span>
+                    <Arrow></Arrow>
+                  </>
+                )}
+                <span>{data?.category.name}</span>
+                {data?.color && <ColorCircle color={data.color}></ColorCircle>}
+              </Category>
+              <ItemName>{data?.itemName}</ItemName>
+              <Brand>
+                <BrandLogo size={32} url={data?.brand.brandImgUrl} />
+                <span>{data?.brand.brandEn}</span>
+                <Arrow></Arrow>
+              </Brand>
+            </ItemInfo>
+            <ItemReaction>
+              <Reaction>
+                <LikeSmall></LikeSmall>
+                <span>{data?.likeNum}</span>
+              </Reaction>
+              <Reaction>
+                <Storage></Storage>
+                <span>{data?.scrapNum}</span>
+              </Reaction>
+              <Reaction>
+                <View></View>
+                <span>{data?.viewNum}</span>
+              </Reaction>
+            </ItemReaction>
+          </BasicInfoWrapper>
+          <Divider />
+          {(data?.linkList.length ?? 0) > 0 && (
+            <LinkInfoWrapper>
+              <Label>여기서 구매할 수 있어요!</Label>
+              <DisplayField>
+                {(data?.linkList.length ?? 0) > 0 &&
+                  data?.linkList.map((link, index) => {
+                    return (
+                      <Link key={index} onClick={() => handleClick(link.itemLinkUrl)}>
+                        <LinkIcon></LinkIcon>
+                        <div className='linkinfo'>
+                          <span>{link.linkName}</span>
+                          <ArrowLarge></ArrowLarge>
+                        </div>
+                      </Link>
+                    )
+                  })}
+              </DisplayField>
+            </LinkInfoWrapper>
           )}
+          <UploaderInfoWrapper>
+            <div className='user' onClick={data?.writer.id !== null ? onClickUser : undefined}>
+              {data?.writer.profileImgUrl !== null ? (
+                <UserImg imgUrl={data?.writer.profileImgUrl} />
+              ) : (
+                <DefaultProfile></DefaultProfile>
+              )}
+              <span>{data?.writer.id !== null ? data?.writer.nickName : '탈퇴한 유저'}</span>
+            </div>
+            {data?.hasMine === false && data.writer.id !== null ? (
+              <ButtonSmall
+                type='pri'
+                text={data.followStatus ? '팔로잉' : '팔로우'}
+                active={data.followStatus ? false : true}
+                icon={data.followStatus ? true : false}
+                onClick={onClickFollow}
+              />
+            ) : null}
+          </UploaderInfoWrapper>
+          <AdditionalInfoWrapper>
+            {data?.whenDiscovery && <span>{convertToKoDate(new Date(data?.whenDiscovery))}</span>}
+            {data?.whereDiscovery && <span>{data?.whereDiscovery}에서 착용하였고</span>}
+            {data?.price && (
+              <>
+                {data.price >= 500000000 ? (
+                  <span>가격은 5억원대 이상이에요</span>
+                ) : (
+                  <span>
+                    {data.price > 0
+                      ? `가격은 ${formatPrice(data.price)}대에요`
+                      : '가격은 모르겠어요'}
+                  </span>
+                )}
+              </>
+            )}
 
-          {data?.additionalInfo && <span>{data?.additionalInfo}</span>}
-        </AdditionalInfoWrapper>
-        {data?.hashTagList && (
-          <HashTags>
-            {data?.hashTagList.map((hashtag, index) => {
-              return (
-                <Badge key={hashtag.hashtagId} color={colors[index % colors.length]}>
-                  #{hashtag.hashtagContent}
-                </Badge>
-              )
-            })}
-          </HashTags>
-        )}
-        {data?.infoSource && (
-          <SourceWrapper>
-            <LinkIcon></LinkIcon>
-            <span className='label'>출처</span>
-            <span className='source'>{data?.infoSource}</span>
-          </SourceWrapper>
-        )}
-        <WrongInfo>
-          <div className='info'>
-            <Comment></Comment>
-            <span>잘못된 정보는 스러버에게 제보해 주세요</span>
-          </div>
-          <ArrowLarge></ArrowLarge>
-        </WrongInfo>
-        <RecommendWrapper>
-          <SameCeleb itemId={Number(itemId)} />
-          <SameBrand itemId={Number(itemId)} />
-          <SameScrap itemId={Number(itemId)} />
-        </RecommendWrapper>
-        <ShareItemWrapper>
+            {data?.additionalInfo && (
+              <span>
+                {data?.additionalInfo.split('\n\n').map((line, index) => (
+                  <React.Fragment key={index}>
+                    {line}
+                    <br />
+                  </React.Fragment>
+                ))}
+              </span>
+            )}
+          </AdditionalInfoWrapper>
+          {data?.hashTagList && (
+            <HashTags>
+              {data?.hashTagList.map((hashtag, index) => {
+                return (
+                  <Badge key={hashtag.hashtagId} color={colors[index % colors.length]}>
+                    #{hashtag.hashtagContent}
+                  </Badge>
+                )
+              })}
+            </HashTags>
+          )}
+          {data?.infoSource && (
+            <SourceWrapper>
+              <LinkIcon></LinkIcon>
+              <span className='label'>출처</span>
+              <span className='source'>{data?.infoSource}</span>
+            </SourceWrapper>
+          )}
+          <WrongInfo>
+            <div className='info'>
+              <Comment></Comment>
+              <span>잘못된 정보는 스러버에게 제보해 주세요</span>
+            </div>
+            <ArrowLarge></ArrowLarge>
+          </WrongInfo>
+          <RecommendWrapper>
+            <SameCeleb itemId={Number(itemId)} />
+            <SameBrand itemId={Number(itemId)} />
+            <SameScrap itemId={Number(itemId)} />
+          </RecommendWrapper>
+          {/* <ShareItemWrapper>
           <ShareWrapper>
             <Kakao />
             <Twitter />
             <ShareAdd />
           </ShareWrapper>
           <span>셀럽의 아이템 정보를 공유해 보아요!</span>
-        </ShareItemWrapper>
-      </ItemWrapper>
+        </ShareItemWrapper> */}
+        </ItemWrapper>
+      )}
     </ItemDetailContainer>
   )
 }

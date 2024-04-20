@@ -38,8 +38,7 @@ const useItemDetailQuery = () => {
   const deleteItem = useMutation((itemId: number) => item.deleteItem(itemId), {
     onSuccess: (res) => {
       //
-      queryClient.invalidateQueries(queryKeys.userUploadItem)
-      queryClient.invalidateQueries(queryKeys.getMypageInfo)
+      queryClient.invalidateQueries()
     },
   })
 
