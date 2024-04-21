@@ -14,19 +14,21 @@ const ItemNameInputModal = () => {
   const [inputValue, setInputValue] = useState<string>((itemInfo.itemName as string) || '')
   const { closeModal } = useModals()
 
-  const onSetItemName = (itemName: string) => {
-    setItemInfo({
-      ...itemInfo,
-      itemName,
-    })
-    closeModal(modals.ItemDatePickerModal)
+  const onSetItemName = () => {
+    closeModal(modals.ItemNameInputModal, () =>
+      setItemInfo({
+        ...itemInfo,
+        itemName: inputValue,
+      }),
+    )
   }
   const onClose = () => {
-    setItemInfo({
-      ...itemInfo,
-      itemName: inputValue,
-    })
-    closeModal(modals.ItemDatePickerModal)
+    closeModal(modals.ItemNameInputModal, () =>
+      setItemInfo({
+        ...itemInfo,
+        itemName: inputValue,
+      }),
+    )
   }
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -39,13 +41,13 @@ const ItemNameInputModal = () => {
         <Header
           title='상품명 입력'
           isModalHeader={true}
-          modalCloseBtnClick={() => closeModal(modals.ItemCategoryModal)}
+          modalCloseBtnClick={() => closeModal(modals.ItemNameInputModal)}
         />
         <div className='ContentWrapper'>
           <DefaultTextfield
             value={inputValue}
             setValue={setInputValue}
-            onEnter={() => onSetItemName(inputValue)}
+            onEnter={onSetItemName}
             placeholder='상품명을 입력해 주세요'
           ></DefaultTextfield>
           <ButtonLarge text='완료' active={true} onClick={onClose}></ButtonLarge>

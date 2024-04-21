@@ -30,6 +30,7 @@ const BrandItemField = ({ brandValid, itemNameValid }: BrandItemFieldProps) => {
   const onItemNameSelect = () => {
     openModal(modals.ItemNameInputModal)
   }
+  console.log(itemInfo.brand)
   const brandErrorMsg = '필수 항목입니다'
   const itemErrorMsg = '상품명은 필수 항목입니다'
   if (!itemInfo.brand?.brandId && !itemInfo.newBrand?.brandId && !itemInfo.itemName) {
@@ -42,10 +43,7 @@ const BrandItemField = ({ brandValid, itemNameValid }: BrandItemFieldProps) => {
     return (
       <DisplayField valid={itemNameValid} errorMsg={itemErrorMsg}>
         <Brand onClick={onBrandSelect}>
-          <BrandLogo
-            size={32}
-            url={itemInfo.newBrand?.brandId ? '' : itemInfo.brand?.brandImgUrl}
-          />
+          <BrandLogo size={32} url={itemInfo.brand?.brandId ? itemInfo.brand?.brandImgUrl : ''} />
           <span>
             {itemInfo.newBrand?.brandId ? itemInfo.newBrand.brandName : itemInfo.brand?.brandName}
           </span>
@@ -57,10 +55,7 @@ const BrandItemField = ({ brandValid, itemNameValid }: BrandItemFieldProps) => {
     return (
       <DisplayField>
         <Brand onClick={onBrandSelect}>
-          <BrandLogo
-            size={32}
-            url={!itemInfo.newBrand?.brandId ? '' : itemInfo.brand?.brandImgUrl}
-          />
+          <BrandLogo size={32} url={itemInfo.brand?.brandId ? itemInfo.brand?.brandImgUrl : ''} />
           <span>
             {itemInfo.newBrand?.brandId ? itemInfo.newBrand.brandName : itemInfo.brand?.brandName}
           </span>
