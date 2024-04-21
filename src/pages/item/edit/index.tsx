@@ -105,8 +105,8 @@ const ItemEdit = () => {
       const newState: IItemInfo = {
         id: Number(itemId),
         imgList: itemInfo.imgList ?? data.imgList,
-        whenDiscovery: new Date(data.whenDiscovery),
-        whereDiscovery: data.whereDiscovery,
+        whenDiscovery: data.whenDiscovery ? new Date(data.whenDiscovery) : null,
+        whereDiscovery: data.whereDiscovery ?? '',
         itemCategory: editItemCategory,
         brand: {
           brandId: data.brand.id,
@@ -186,7 +186,9 @@ const ItemEdit = () => {
         id: itemInfo.id ? itemInfo.id : null,
         imgList: itemInfo.imgList,
         celebId: itemInfo.celeb?.celebId ?? null,
-        whenDiscovery: itemInfo.whenDiscovery && (itemInfo.whenDiscovery as Date).toISOString(),
+        whenDiscovery: itemInfo.whenDiscovery
+          ? (itemInfo.whenDiscovery as Date).toISOString()
+          : null,
         whereDiscovery: itemInfo.whereDiscovery === '' ? null : itemInfo.whereDiscovery,
         categoryId: itemInfo.itemCategory?.categoryId ?? null,
         brandId: itemInfo.brand?.brandId ?? null,
@@ -199,12 +201,8 @@ const ItemEdit = () => {
         newCelebId: itemInfo.newCeleb?.celebId ?? null,
         newBrandId: itemInfo.newBrand?.brandId ?? null,
       }
+      console.log(item)
       mutate(item)
-      resetItemInfo()
-      resetCelebInfoInItem()
-      resetCategory()
-      resetParentCategory()
-      resetImgListState()
     } else {
       alert('오류가 발생했어요. 다시 시도해주세요')
     }
@@ -264,7 +262,7 @@ const ItemEdit = () => {
             {hasTriedToUpload &&
               (!category.id ||
                 !itemInfo.brand ||
-                !itemInfo.newBrand ||
+                // !itemInfo.newBrand ||
                 !itemInfo.itemName ||
                 !itemInfo.price) && <Error></Error>}
             <Label>어떤 아이템인가요?</Label>

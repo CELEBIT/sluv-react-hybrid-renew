@@ -199,8 +199,7 @@ const ItemCreate = () => {
           <LabelContainer>
             {hasTriedToUpload &&
               (!category.id ||
-                !itemInfo.brand ||
-                !itemInfo.newBrand ||
+                (itemInfo.brand?.brandId && itemInfo.newBrand) ||
                 !itemInfo.itemName ||
                 !itemInfo.price) && <Error></Error>}
             <Label>어떤 아이템인가요?</Label>

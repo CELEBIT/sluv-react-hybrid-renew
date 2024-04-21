@@ -14,11 +14,11 @@ const ItemNameInputModal = () => {
   const [inputValue, setInputValue] = useState<string>((itemInfo.itemName as string) || '')
   const { closeModal } = useModals()
 
-  const onSetItemName = (itemName: string) => {
+  const onSetItemName = () => {
     closeModal(modals.ItemNameInputModal, () =>
       setItemInfo({
         ...itemInfo,
-        itemName,
+        itemName: inputValue,
       }),
     )
   }
@@ -47,7 +47,7 @@ const ItemNameInputModal = () => {
           <DefaultTextfield
             value={inputValue}
             setValue={setInputValue}
-            onEnter={() => onSetItemName(inputValue)}
+            onEnter={onSetItemName}
             placeholder='상품명을 입력해 주세요'
           ></DefaultTextfield>
           <ButtonLarge text='완료' active={true} onClick={onClose}></ButtonLarge>
