@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import useModals from '../../../components/Modals/hooks/useModals'
 import { modals } from '../../../components/Modals'
-
 import Header from '../../../components/Header/Header'
 import { ReactComponent as Home } from '../../../assets/home_24.svg'
 import { ReactComponent as Search } from '../../../assets/search_24.svg'
@@ -168,6 +167,19 @@ const ItemDetail = () => {
       navigate(-1)
     }
   }
+
+  useEffect(() => {
+    const handlePopState = (event: PopStateEvent) => {
+      // 히스토리에서 뒤로가기가 발생하면 showLink 상태를 토글
+      if (event.state && event.state.showLink === true) {
+        setShowLink(!showLink)
+      }
+    }
+    window.addEventListener('popstate', handlePopState)
+    return () => {
+      window.removeEventListener('popstate', handlePopState)
+    }
+  }, [])
 
   return (
     <ItemDetailContainer>
