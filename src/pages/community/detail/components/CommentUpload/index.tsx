@@ -107,10 +107,20 @@ const CommentUpload = () => {
     } else navigate('/community/comment/comment-item-photo')
   }
 
+  const onBackClick = () => {
+    resetCommentObject()
+    navigate(-1)
+  }
+
   return (
     <CommentUploadContainer>
       <HeaderWrapper>
-        <Header isModalHeader={false} hasArrow={true} title={'댓글 달기'}>
+        <Header
+          isModalHeader={false}
+          hasArrow={true}
+          title={'댓글 달기'}
+          backBtnClick={onBackClick}
+        >
           <span className='submit' onClick={onSubmit}>
             등록
           </span>

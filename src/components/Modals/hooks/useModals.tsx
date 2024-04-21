@@ -21,10 +21,21 @@ const useModals = () => {
     }
   }, [])
 
+  // const openModal = useCallback(
+  //   <T extends FunctionComponent<any>>(
+  //     Component: T,
+  //     props?: Omit<ComponentProps<T>, 'open'>,
+  //   ): void => {
+  //     setModals((modals) => [...modals, { Component, props: { ...props, open: true } }])
+  //     history.pushState({ page: 'modal' }, document.title)
+  //   },
+  //   [],
+  // )
+
   const openModal = useCallback(
     <T extends FunctionComponent<any>>(
       Component: T,
-      props?: Omit<ComponentProps<T>, 'open'>,
+      props?: Omit<ComponentProps<T>, 'open'> & { callbackFunc?: () => void },
     ): void => {
       setModals((modals) => [...modals, { Component, props: { ...props, open: true } }])
       history.pushState({ page: 'modal' }, document.title)

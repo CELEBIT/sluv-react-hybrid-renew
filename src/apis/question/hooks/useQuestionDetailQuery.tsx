@@ -5,6 +5,8 @@ import { EditRequestReason } from '../../../pages/item/editRequest'
 import useModals from '../../../components/Modals/hooks/useModals'
 import { modals } from '../../../components/Modals'
 import { useNavigate } from 'react-router-dom'
+import { useResetRecoilState } from 'recoil'
+import { commentState } from '../../../pages/community/detail/CommunityDetail'
 
 export interface IVote {
   questionId: number
@@ -16,11 +18,17 @@ interface IReportQuestion {
   requestContent: EditRequestReason
 }
 
+interface IReportComment {
+  commentId: number
+  requestContent: EditRequestReason
+}
+
 const useQuestionDetailQuery = () => {
   const question = new QuestionService()
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const { openModal } = useModals()
+  const resetCommentObject = useResetRecoilState(commentState)
 
   const getQuestionDetail = (questionId: number) => {
     return useQuery(queryKeys.questionDetail(questionId), () =>
@@ -55,11 +63,29 @@ const useQuestionDetailQuery = () => {
     {
       onSuccess: (res) => {
         if (res.code == 1000) {
+          resetCommentObject()
           openModal(modals.ReportQuestionCompleteModal)
         }
       },
       onError: (error: any) => {
         if (error.response.data.code === 2013) {
+          openModal(modals.DuplicateReportModal)
+        }
+      },
+    },
+  )
+
+  const reportComment = useMutation(
+    ({ commentId, requestContent }: IReportComment) =>
+      question.reportComment(commentId, requestContent.reason, requestContent.content),
+    {
+      onSuccess: (res) => {
+        if (res.code == 1000) {
+          openModal(modals.ReportQuestionCompleteModal)
+        }
+      },
+      onError: (error: any) => {
+        if (error.response.data.code === 2016) {
           openModal(modals.DuplicateReportModal)
         }
       },
@@ -85,6 +111,7 @@ const useQuestionDetailQuery = () => {
     getWaitQuestion,
     voteItem,
     reportQuestion,
+    reportComment,
     deleteQuestion,
     likeQuestion,
   }
