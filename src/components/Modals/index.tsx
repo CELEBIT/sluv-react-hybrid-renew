@@ -43,6 +43,9 @@ const QuestionReportModal = loadable(() => import('../BottomSheetModal/QuestionR
 const ReportQuestionCompleteModal = loadable(
   () => import('../OneButtonModal/ReportQuestionCompleteModal'),
 )
+const ReportCommentCompleteModal = loadable(
+  () => import('../OneButtonModal/ReportCommentCompleteModal'),
+)
 const QuestionEditDeleteModal = loadable(
   () => import('../BottomSheetModal/QuestionEditDeleteModal'),
 )
@@ -59,7 +62,7 @@ const UserInterestCelebModal = loadable(() => import('../BottomSheetModal/UserIn
 const UserModal = loadable(() => import('../BottomSheetModal/UserModal'))
 const CommentEditModal = loadable(() => import('../BottomSheetModal/CommentEditModal'))
 const DeleteCommentModal = loadable(() => import('../TwoButtonModal/DeleteCommentModal'))
-
+const CommentReportModal = loadable(() => import('../BottomSheetModal/CommentReportModal'))
 const LogoutModal = loadable(() => import('../TwoButtonModal/LogoutModal'))
 const ConfirmWithdrawModal = loadable(() => import('../OneButtonModal/ConfirmWithdrawModal'))
 
@@ -118,6 +121,9 @@ export const modals = {
   ReportQuestionCompleteModal: ReportQuestionCompleteModal as FunctionComponent<
     ComponentProps<typeof ReportQuestionCompleteModal>
   >,
+  ReportCommentCompleteModal: ReportCommentCompleteModal as FunctionComponent<
+    ComponentProps<typeof ReportCommentCompleteModal>
+  >,
   QuestionEditDeleteModal: QuestionEditDeleteModal as FunctionComponent<
     ComponentProps<typeof QuestionEditDeleteModal>
   >,
@@ -135,6 +141,9 @@ export const modals = {
   CommentEditModal: CommentEditModal as FunctionComponent<ComponentProps<typeof CommentEditModal>>,
   DeleteCommentModal: DeleteCommentModal as FunctionComponent<
     ComponentProps<typeof DeleteCommentModal>
+  >,
+  CommentReportModal: CommentReportModal as FunctionComponent<
+    ComponentProps<typeof CommentReportModal>
   >,
   LogoutModal: LogoutModal as FunctionComponent<ComponentProps<typeof LogoutModal>>,
   ConfirmWithdrawModal: ConfirmWithdrawModal as FunctionComponent<

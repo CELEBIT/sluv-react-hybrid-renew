@@ -3,7 +3,7 @@ import { EditReportContainer, EditReportListWrapper, ReasonWrapper, Title } from
 import Header from '../../../components/Header/Header'
 import DisplayField from '../../../components/TextField/DisplayField/DisplayField'
 import { atomKeys } from '../../../config/atomKeys'
-import { atom, useRecoilValue, useSetRecoilState } from 'recoil'
+import { atom, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { useLocation, useNavigate } from 'react-router-dom'
 import {
   editReasonList,
@@ -11,11 +11,13 @@ import {
   reportItemReasonList,
   reportUserReasonList,
 } from '../../../config/editReportMenu'
+import { commentState } from '../../community/detail/CommunityDetail'
 
 interface EditRequestItem {
   itemId: number
   itemWriterId: number | undefined
   itemWriterName: string | undefined
+  questionId?: number
 }
 
 export interface EditRequestReason {
@@ -59,10 +61,15 @@ const EditRequest = () => {
       setReasonList(editReasonList)
     } else if (
       pathname === '/item/detail/report-item' ||
-      pathname === '/community/detail/report-question'
+      pathname === '/community/detail/report-question' ||
+      pathname === '/community/comment/report-comment'
     ) {
-      setPageName('게시글 신고')
-      setTitle('게시글을 신고하는 이유를 알려주세요')
+      setPageName(pathname === '/community/comment/report-comment' ? '댓글 신고' : '게시글 신고')
+      setTitle(
+        pathname === '/community/comment/report-comment'
+          ? '댓글을 신고하는 이류를 알려주세요'
+          : '게시글을 신고하는 이유를 알려주세요',
+      )
       setReasonList(reportItemReasonList)
     } else {
       setPageName('사용자 신고')
@@ -70,9 +77,20 @@ const EditRequest = () => {
       setReasonList(reportUserReasonList)
     }
   }, [pathname])
+
+  const resetCommentObject = useResetRecoilState(commentState)
+  const onBackClick = () => {
+    resetCommentObject()
+    navigate(-1)
+  }
   return (
     <EditReportContainer>
-      <Header isModalHeader={false} hasArrow={true} title={pageName}></Header>
+      <Header
+        isModalHeader={false}
+        hasArrow={true}
+        title={pageName}
+        backBtnClick={onBackClick}
+      ></Header>
       <ReasonWrapper>
         <Title>{title}</Title>
         <EditReportListWrapper>
