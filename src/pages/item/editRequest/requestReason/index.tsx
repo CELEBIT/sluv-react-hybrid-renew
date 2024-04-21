@@ -36,6 +36,7 @@ const RequestReason = () => {
 
   const {
     reportQuestion: { mutate: mutateByReportQuestion },
+    reportComment: { mutate: mutateByReportComment },
   } = useQuestionDetailQuery()
 
   const {
@@ -52,6 +53,11 @@ const RequestReason = () => {
       } else if (pathname === '/community/detail/report-question/reason') {
         mutateByReportQuestion({
           questionId: requestItem.itemId,
+          requestContent: editRequestReason,
+        })
+      } else if (pathname === '/community/comment/report-comment/reason') {
+        mutateByReportComment({
+          commentId: requestItem.itemId,
           requestContent: editRequestReason,
         })
       } else {
@@ -84,6 +90,8 @@ const RequestReason = () => {
       pathname === '/community/detail/report-question/reason'
     ) {
       setTitle('게시글 신고')
+    } else if (pathname === '/community/comment/report-comment/reason') {
+      setTitle('댓글 신고')
     } else {
       setTitle('사용자 신고')
     }
