@@ -15,18 +15,20 @@ const ItemNameInputModal = () => {
   const { closeModal } = useModals()
 
   const onSetItemName = (itemName: string) => {
-    setItemInfo({
-      ...itemInfo,
-      itemName,
-    })
-    closeModal(modals.ItemDatePickerModal)
+    closeModal(modals.ItemNameInputModal, () =>
+      setItemInfo({
+        ...itemInfo,
+        itemName,
+      }),
+    )
   }
   const onClose = () => {
-    setItemInfo({
-      ...itemInfo,
-      itemName: inputValue,
-    })
-    closeModal(modals.ItemDatePickerModal)
+    closeModal(modals.ItemNameInputModal, () =>
+      setItemInfo({
+        ...itemInfo,
+        itemName: inputValue,
+      }),
+    )
   }
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -39,7 +41,7 @@ const ItemNameInputModal = () => {
         <Header
           title='상품명 입력'
           isModalHeader={true}
-          modalCloseBtnClick={() => closeModal(modals.ItemCategoryModal)}
+          modalCloseBtnClick={() => closeModal(modals.ItemNameInputModal)}
         />
         <div className='ContentWrapper'>
           <DefaultTextfield
