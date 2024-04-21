@@ -80,8 +80,8 @@ const useUploadStateObserver = () => {
         }
         mutateByTempItem(tempItem)
 
-        console.log('Recoil 상태 변화 감지')
-        console.log(tempItem)
+        // console.log('Recoil 상태 변화 감지')
+        // console.log(tempItem)
       }
     }
   }, [debounceItemInfo, debounceCelebInfo])
