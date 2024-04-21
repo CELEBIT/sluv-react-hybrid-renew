@@ -10,9 +10,11 @@ export interface questionUpload {
 
 export default class QuestionService {
   questionUrl: string
+  commentUrl: string
 
   constructor() {
     this.questionUrl = '/app/question'
+    this.commentUrl = '/app/comment'
   }
   // 질문 검색
   async getQuestionDetail(questionId: number) {
@@ -109,6 +111,15 @@ export default class QuestionService {
   // 커뮤니티 게시글 신고
   async reportQuestion(questionId: number, reason: string, content: string) {
     const data: ResponseType = await request.post(`${this.questionUrl}/${questionId}/report`, {
+      reason,
+      content,
+    })
+    return data
+  }
+
+  // 커뮤니티 댓글 신고
+  async reportComment(commentId: number, reason: string, content: string) {
+    const data: ResponseType = await request.post(`${this.commentUrl}/${commentId}/report`, {
       reason,
       content,
     })

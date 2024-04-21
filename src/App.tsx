@@ -177,6 +177,8 @@ const App = () => {
             <Route path='/community/comment/edit' element={<CommentUpload />} />
             <Route path='/community/subcomment/upload' element={<CommentUpload />} />
             <Route path='/community/comment/subcomment' element={<AddSubComment />} />
+            <Route path='/community/comment/report-comment' element={<EditRequest />} />
+            <Route path='/community/comment/report-comment/reason' element={<RequestReason />} />
             <Route path='/community/detail/:id' element={<CommunityDetail />} />
             <Route path='/community/detail/:id/comment/:commentid' element={<CommunityDetail />} />
             <Route path='/community/detail/report-question' element={<EditRequest />} />

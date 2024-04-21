@@ -47,6 +47,7 @@ import { commentState } from '../../CommunityDetail'
 import { Dim } from '../../../../../components/UserImage/UserImage'
 import { imgItemListState } from '../../../../../recoil/communityInfo'
 import { ReactComponent as DefaultProfile } from '../../../../../assets/defaultProfile_40.svg'
+import { RequestEditItemState } from '../../../../item/editRequest'
 
 interface CommentProps {
   questionId: number
@@ -57,6 +58,7 @@ const Comment = ({ questionId, comment }: CommentProps) => {
   const navigate = useNavigate()
   const { openModal } = useModals()
   const setCommentObject = useSetRecoilState(commentState)
+  const setEditReportItemState = useSetRecoilState(RequestEditItemState)
   console.log(comment)
   const [imgItemList, setImageItemList] = useRecoilState(imgItemListState)
   // GPT 여기에 작성해줘
@@ -90,7 +92,6 @@ const Comment = ({ questionId, comment }: CommentProps) => {
     return mergedList
   }
   const sortedList = mergeAndSort(comment)
-  console.log('sortedList', sortedList)
 
   const onShowMore = () => {
     if (comment.itemList) {
@@ -115,12 +116,16 @@ const Comment = ({ questionId, comment }: CommentProps) => {
 
     let sortedImgUrlList: CommentImg[] = []
     let sortedItemList: CommentItem[] = []
-
+    console.log(comment.imgUrlList)
+    console.log(comment.itemList)
     if (comment.imgUrlList && comment.imgUrlList.length > 0) {
-      sortedImgUrlList = comment.imgUrlList.sort((a, b) => a.sortOrder - b.sortOrder)
+      const imgUrlListCopy = [...comment.imgUrlList]
+      sortedImgUrlList = imgUrlListCopy.sort((a, b) => a.sortOrder - b.sortOrder)
     }
+    // console.log('sortedImgUrlList', sortedImgUrlList)
     if (comment.itemList && comment.itemList.length > 0) {
-      sortedItemList = comment.itemList.sort((a, b) => a.sortOrder - b.sortOrder)
+      const itemListCopy = [...comment.itemList]
+      sortedItemList = itemListCopy.sort((a, b) => a.sortOrder - b.sortOrder)
     }
     // console.log('sortedItemList', sortedItemList)
 
@@ -140,14 +145,30 @@ const Comment = ({ questionId, comment }: CommentProps) => {
     // console.log('transformedItems', transformedItems)
 
     setImageItemList(transformedItems)
-
-    openModal(modals.CommentEditModal, { commentId: comment.id, questionId })
+    if (comment.hasMine) {
+      openModal(modals.CommentEditModal, { commentId: comment.id, questionId })
+    } else {
+      setEditReportItemState({
+        itemId: Number(comment.id),
+        itemWriterId: comment.user.id,
+        itemWriterName: comment.user.nickName,
+        questionId: questionId,
+      })
+      openModal(modals.CommentReportModal)
+    }
   }
 
+  const onProfileClick = (id: number, hasMine: boolean) => {
+    if (hasMine) {
+      navigate('/user')
+    } else {
+      navigate(`/user/${id}`)
+    }
+  }
   return (
     <CommentWrapper key={comment.id}>
       <ContentWrapper>
-        <ContentLeft>
+        <ContentLeft onClick={() => onProfileClick(comment.user.id, comment.hasMine)}>
           {comment.user.profileImgUrl ? (
             <UserImg imgUrl={comment.user.profileImgUrl}></UserImg>
           ) : (
@@ -157,7 +178,9 @@ const Comment = ({ questionId, comment }: CommentProps) => {
         <ContentRight>
           <ContentTop>
             <UserInfo>
-              <NickName>{comment.user.nickName}</NickName>
+              <NickName onClick={() => onProfileClick(comment.user.id, comment.hasMine)}>
+                {comment.user.nickName}
+              </NickName>
               <Time>{formatUpdatedAt(convertToUTC(comment.createdAt))}</Time>
             </UserInfo>
             {comment.commentStatus === 'ACTIVE' && <ShowMore onClick={onShowMore}></ShowMore>}
