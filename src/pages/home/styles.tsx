@@ -13,7 +13,7 @@ export const HomeContainer = styled.div`
     display: none;
   }
   background-color: white;
-  padding-bottom: 55px;
+  padding-bottom: 4.6875rem;
 `
 export const ComponentContainer = styled.div`
   display: flex;
