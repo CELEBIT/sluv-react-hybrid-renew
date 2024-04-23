@@ -26,7 +26,7 @@ export const ComponentContainer = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
-  padding-bottom: 1.25rem;
+  padding-bottom: 3.125rem;
 `
 
 export const ScrollComponentWrapper = styled.div<{ bgColor?: string }>`
