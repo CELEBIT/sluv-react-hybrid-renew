@@ -13,7 +13,7 @@ export const HomeContainer = styled.div`
     display: none;
   }
   background-color: white;
-  padding-bottom: 4.6875rem;
+  padding-bottom: 3.625rem;
 `
 export const ComponentContainer = styled.div`
   display: flex;
@@ -26,6 +26,7 @@ export const ComponentContainer = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
+  padding-bottom: 1.25rem;
 `
 
 export const ScrollComponentWrapper = styled.div<{ bgColor?: string }>`
