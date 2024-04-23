@@ -136,7 +136,7 @@ const SelectInterestCeleb = ({
     mutateByPostInterestCeleb(updatedIdList)
 
     if (onNext !== undefined) {
-      if (pathname == '/') {
+      if (pathname == '/signup') {
         onNext()
       }
     }
