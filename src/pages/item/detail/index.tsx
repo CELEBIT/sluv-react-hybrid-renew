@@ -60,7 +60,7 @@ import { HeaderWrapper } from '../addInfo/styles'
 import Carousel from './components/Carousel/Carousel'
 import useItemDetailQuery from '../../../apis/item/hooks/useItemDetailQuery'
 
-import { convertToKoDate } from '../../../utils/utility'
+import { convertToKoDate, openLink } from '../../../utils/utility'
 import useFollowQuery from '../../../apis/user/hooks/useFollowQuery'
 import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '../../../config/queryKeys'
@@ -97,15 +97,6 @@ const ItemDetail = () => {
 
   const [link, setLink] = useState<string>('')
   const [showLink, setShowLink] = useState<boolean>(false)
-  const handleClick = (url: string) => {
-    if (url.includes('http://') || url.includes('https://')) {
-      setLink(url)
-    } else {
-      // 만약 "http://" 또는 "https://"가 없다면, 추가해줍니다.
-      setLink('http://' + url)
-    }
-    setShowLink(!showLink)
-  }
 
   useEffect(() => {
     queryClient.refetchQueries(queryKeys.itemDetail(Number(itemId)))
@@ -165,6 +156,28 @@ const ItemDetail = () => {
       setShowLink(!showLink)
     } else {
       navigate(-1)
+    }
+  }
+
+  const onClickOpenLink = (link: string) => {
+    if (
+      typeof window !== 'undefined' &&
+      window.webkit &&
+      window.webkit.messageHandlers &&
+      window.webkit.messageHandlers.IOSBridge
+    ) {
+      if (link.includes('http://') || link.includes('https://')) {
+        openLink(link)
+      } else {
+        openLink('http://' + link)
+      }
+    } else {
+      if (link.includes('http://') || link.includes('https://')) {
+        setLink(link)
+      } else {
+        setLink('http://' + link)
+      }
+      setShowLink(!showLink)
     }
   }
 
@@ -258,7 +271,7 @@ const ItemDetail = () => {
                 {(data?.linkList.length ?? 0) > 0 &&
                   data?.linkList.map((link, index) => {
                     return (
-                      <Link key={index} onClick={() => handleClick(link.itemLinkUrl)}>
+                      <Link key={index} onClick={() => onClickOpenLink(link.itemLinkUrl)}>
                         <LinkIcon></LinkIcon>
                         <div className='linkinfo'>
                           <span>{link.linkName}</span>

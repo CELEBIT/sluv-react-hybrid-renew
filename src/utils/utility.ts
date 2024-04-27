@@ -162,3 +162,21 @@ export const openGallery = (totalPhotos: number, photosToSelect: number) => {
     console.error('The app is not running in a WebView or server-side rendering is in process.')
   }
 }
+
+export const openLink = (linkUrl: string) => {
+  if (
+    typeof window !== 'undefined' &&
+    window.webkit &&
+    window.webkit.messageHandlers &&
+    window.webkit.messageHandlers.IOSBridge
+  ) {
+    window.webkit.messageHandlers.IOSBridge.postMessage(
+      JSON.stringify({
+        type: 'openLink',
+        linkUlr: linkUrl,
+      }),
+    )
+  } else {
+    console.error('The app is not running in a WebView or server-side rendering is in process.')
+  }
+}
