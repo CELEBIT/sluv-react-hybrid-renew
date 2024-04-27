@@ -18,40 +18,33 @@ import {
   selectedGroupState,
   selectedNewCelebState,
 } from '../SelectCeleb/SelectCeleb'
+import { celebInfoInItemState } from '../../recoil/itemInfo'
 
 const CommunityTabChangeModal = ({ name, url }: CommunityMenu) => {
   const { closeModal } = useModals()
   const navigate = useNavigate()
   const setCommunityMenu = useSetRecoilState(communityMenuState)
-  const setQuestionItem = useSetRecoilState(communityItemState)
+  const resetCelebInfoInItemState = useResetRecoilState(celebInfoInItemState)
+  const resetQuestionItem = useResetRecoilState(communityItemState)
 
-  const setSelectedCeleb = useSetRecoilState(selectedCelebState)
-  const setSelectedGroup = useSetRecoilState(selectedGroupState)
-  const setNewCeleb = useSetRecoilState(selectedNewCelebState)
+  const resetSelectedCeleb = useResetRecoilState(selectedCelebState)
+  const resetSelectedGroup = useResetRecoilState(selectedGroupState)
+  const resetNewCeleb = useResetRecoilState(selectedNewCelebState)
 
   const resetFirstItem = useResetRecoilState(firstItemState)
   const resetSecondItem = useResetRecoilState(secondItemState)
   const resetImageItemList = useResetRecoilState(imgItemListState)
 
   const changeMenu = () => {
-    setQuestionItem({
-      id: null,
-      celebId: null,
-      newCelebId: null,
-      title: null,
-      content: null,
-      imgList: null,
-      itemList: null,
-      categoryNameList: null,
-      voteEndTime: undefined,
-    })
+    resetQuestionItem()
+    resetCelebInfoInItemState()
     resetFirstItem()
     resetSecondItem()
     resetImageItemList()
     setCommunityMenu(name)
-    setSelectedCeleb({ id: 0, celebNameKr: '' })
-    setSelectedGroup({ id: 0, celebNameKr: '' })
-    setNewCeleb({ newCelebName: '' })
+    resetSelectedCeleb()
+    resetSelectedGroup()
+    resetNewCeleb()
     closeModal(modals.CommunityTabChangeModal, () => {
       navigate(url)
     })
