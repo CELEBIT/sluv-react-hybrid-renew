@@ -55,7 +55,7 @@ const EditRequest = () => {
     navigate('./reason')
   }
   useEffect(() => {
-    if (pathname === '/item/detail/request-deleteAndSort') {
+    if (pathname === '/item/detail/request-edit') {
       setPageName('정보 수정 요청')
       setTitle('정보 수정을 요청하는 이유를 알려주세요')
       setReasonList(editReasonList)

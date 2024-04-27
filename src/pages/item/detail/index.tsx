@@ -107,12 +107,12 @@ const ItemDetail = () => {
       openModal(modals.ItemEditModal, { itemId: Number(itemId) })
     }
     if (!data?.hasMine) {
-      openModal(modals.ItemEditRequestModal)
       setEditReportItemState({
         itemId: Number(itemId),
         itemWriterId: data?.writer.id,
         itemWriterName: data?.writer.nickName,
       })
+      openModal(modals.ItemEditRequestModal)
     }
   }
 
@@ -179,6 +179,15 @@ const ItemDetail = () => {
       }
       setShowLink(!showLink)
     }
+  }
+
+  const onRequestEdit = () => {
+    setEditReportItemState({
+      itemId: Number(itemId),
+      itemWriterId: data?.writer.id,
+      itemWriterName: data?.writer.nickName,
+    })
+    navigate('/item/detail/request-edit')
   }
 
   useEffect(() => {
@@ -349,7 +358,7 @@ const ItemDetail = () => {
             </SourceWrapper>
           )}
           <WrongInfo>
-            <div className='info'>
+            <div className='info' onClick={onRequestEdit}>
               <Comment></Comment>
               <span>잘못된 정보는 스러버에게 제보해 주세요</span>
             </div>
