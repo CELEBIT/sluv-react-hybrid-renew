@@ -123,7 +123,7 @@ const Question = () => {
       <HeaderWrapper>
         <CommunityHeader backBtnClick={onBackClick}>
           <span className='submit' onClick={onSubmit}>
-            완료
+            등록
           </span>
         </CommunityHeader>
       </HeaderWrapper>

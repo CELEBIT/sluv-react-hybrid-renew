@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import useUserMypageQuery from '../../../../../apis/user/hooks/useUserMypageQuery'
 import { EmptyStateWrapper } from '../../FollowList/Follower/Follower'
 import EmptyState from '../../../../../components/EmptyState'
@@ -8,9 +8,11 @@ import styled from '@emotion/styled'
 
 const RecentViewCommunity = () => {
   const { getRecentViewCommunityItem } = useUserMypageQuery()
-  const { data } = getRecentViewCommunityItem()
-
+  const { data, refetch } = getRecentViewCommunityItem()
   const tempData = data?.pages[0].content
+  useEffect(() => {
+    refetch()
+  }, [])
   return (
     <>
       {tempData ? (

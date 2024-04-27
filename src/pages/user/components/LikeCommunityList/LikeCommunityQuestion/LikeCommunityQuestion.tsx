@@ -7,8 +7,8 @@ import { EmptyStateWrapper } from '../../FollowList/Follower/Follower'
 import EmptyState from '../../../../../components/EmptyState'
 
 const LikeCommunityQuestion = () => {
-  const { getUserUploadQuestion } = useUserMypageQuery()
-  const { data } = getUserUploadQuestion()
+  const { getUserLikedQuestion } = useUserMypageQuery()
+  const { data } = getUserLikedQuestion()
   const tempData = data?.pages[0].content
 
   return (

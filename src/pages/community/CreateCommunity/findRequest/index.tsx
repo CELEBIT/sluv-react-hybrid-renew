@@ -9,6 +9,7 @@ import {
 } from '../../../item/create/styles'
 import SelectCeleb, {
   selectedCelebState,
+  selectedGroupState,
   selectedNewCelebState,
 } from '../../../../components/SelectCeleb/SelectCeleb'
 import { ErrorText } from '../../../../components/TextField/DefaultTextfield/styles'
@@ -44,6 +45,9 @@ const FindRequest = () => {
   const resetFindRequestInfo = useResetRecoilState(communityItemState)
   const resetCelebInfoInItem = useResetRecoilState(celebInfoInItemState)
   const resetImageItemList = useResetRecoilState(imgItemListState)
+  const resetSelectedCeleb = useResetRecoilState(selectedCelebState)
+  const resetSelectedGroup = useResetRecoilState(selectedGroupState)
+  const resetNewCeleb = useResetRecoilState(selectedNewCelebState)
 
   const {
     postCommunityImg: { mutate: mutateByImgUpload },
@@ -94,6 +98,9 @@ const FindRequest = () => {
     resetFindRequestInfo()
     resetCelebInfoInItem()
     resetImageItemList()
+    resetSelectedCeleb()
+    resetSelectedGroup()
+    resetNewCeleb()
     navigate(-1)
   }
 

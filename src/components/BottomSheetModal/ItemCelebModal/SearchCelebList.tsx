@@ -23,9 +23,15 @@ const SearchCelebList = ({ keyword }: SearchCelebListProps) => {
   const { searchCeleb } = useCelebSearchQuery()
   const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } =
     searchCeleb(debouncedKeyword)
+
   const {
     postRecentCeleb: { mutate: mutateByPostRecentCeleb },
   } = useRecentCelebQuery()
+
+  const {
+    postNewCeleb: { mutate: mutatByPostNewCeleb },
+  } = useCelebSearchQuery()
+
   const bottom = useRef(null)
   const onIntersect = ([entry]: IntersectionObserverEntry[]) => {
     entry.isIntersecting && fetchNextPage()
@@ -68,7 +74,14 @@ const SearchCelebList = ({ keyword }: SearchCelebListProps) => {
     )
   }
   const onClickNewCeleb = (newCelebName: string) => {
-    console.log('New Celeb', newCelebName)
+    mutatByPostNewCeleb(
+      { newCelebName: newCelebName },
+      {
+        onSuccess: () => {
+          closeModal(modals.ItemCelebSearchModal)
+        },
+      },
+    )
   }
 
   return (

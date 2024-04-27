@@ -8,7 +8,7 @@ const CommentUpload = () => {
   const { getUserUploadComment } = useUserMypageQuery()
   const { data } = getUserUploadComment()
   const tempData = data?.pages[0].content
-
+  console.log(data)
   return (
     <QuestionListWrapper>
       {tempData?.map((each, index) => {
