@@ -37,7 +37,7 @@ const useSearchCommentQuery = () => {
     {
       onSuccess: (res, { questionId }) => {
         //
-        queryClient.invalidateQueries(queryKeys.comment(questionId))
+        queryClient.invalidateQueries()
       },
     },
   )
@@ -48,14 +48,14 @@ const useSearchCommentQuery = () => {
     {
       onSuccess: (res, { questionId }) => {
         //
-        queryClient.invalidateQueries(queryKeys.comment(questionId))
+        queryClient.invalidateQueries()
       },
     },
   )
 
   const likeComment = useMutation(({ commentId }: ILikeComment) => comment.likeComment(commentId), {
     onSuccess: (res, { questionId }) => {
-      queryClient.invalidateQueries(queryKeys.comment(questionId))
+      queryClient.invalidateQueries()
     },
   })
 
@@ -63,8 +63,7 @@ const useSearchCommentQuery = () => {
     ({ commentId }: ILikeComment) => comment.deleteComment(commentId),
     {
       onSuccess: (res, { questionId }) => {
-        queryClient.invalidateQueries(queryKeys.comment(questionId))
-        queryClient.invalidateQueries(queryKeys.getQuestionTotalList)
+        queryClient.invalidateQueries()
       },
     },
   )

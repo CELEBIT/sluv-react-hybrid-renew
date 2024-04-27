@@ -1,7 +1,15 @@
-import { UseInfiniteQueryResult, useInfiniteQuery } from '@tanstack/react-query'
+import { UseInfiniteQueryResult, useInfiniteQuery, useMutation } from '@tanstack/react-query'
 import CelebService, { ISearchCeleb } from '../CelebService'
 import { queryKeys } from '../../../config/queryKeys'
 import { GetPaginationResult } from '../../core/type'
+import useRecentCelebQuery from './useRecentCelebQuery'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { celebInfoInItemState, itemInfoState } from '../../../recoil/itemInfo'
+import { selectedCelebState } from '../../../components/SelectCeleb/SelectCeleb'
+
+interface INewCeleb {
+  newCelebName: string
+}
 
 const useCelebSearchQuery = () => {
   const celeb = new CelebService()
@@ -20,7 +28,39 @@ const useCelebSearchQuery = () => {
       },
     )
   }
-  return { searchCeleb }
+
+  const {
+    postRecentCeleb: { mutate: mutateByPostRecentCeleb },
+  } = useRecentCelebQuery()
+  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
+  const setSelectedCeleb = useSetRecoilState(selectedCelebState)
+  const setCelebInfoInItem = useSetRecoilState(celebInfoInItemState)
+
+  const postNewCeleb = useMutation(
+    ({ newCelebName }: INewCeleb) => celeb.postNewCeleb(newCelebName),
+    {
+      onSuccess: (res) => {
+        mutateByPostRecentCeleb({
+          newCelebId: res?.newCelebId ?? null,
+        })
+        if (res?.newCelebId && res.newCelebName) {
+          setItemInfo({
+            ...itemInfo,
+            newCeleb: { celebId: res?.newCelebId, celebName: res.newCelebName },
+          })
+          setSelectedCeleb({
+            id: res?.newCelebId,
+            celebNameKr: res.newCelebName,
+          })
+          setCelebInfoInItem({
+            soloId: res?.newCelebId,
+            soloName: res.newCelebName,
+          })
+        }
+      },
+    },
+  )
+  return { searchCeleb, postNewCeleb }
 }
 
 export default useCelebSearchQuery

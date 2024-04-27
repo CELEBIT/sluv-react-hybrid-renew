@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import useRecentViewItemQuery from '../../../../../apis/item/hooks/useRecentViewItemQuery'
 import ItemListGrid from '../../../../../components/ItemListGrid/ItemListGrid'
 import { EmptyStateWrapper } from '../../FollowList/Follower/Follower'
@@ -6,9 +6,14 @@ import EmptyState from '../../../../../components/EmptyState'
 
 const RecentViewItem = () => {
   const { getRecentViewItem } = useRecentViewItemQuery()
-  const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } = getRecentViewItem()
+  const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage, refetch } =
+    getRecentViewItem()
 
   const tempData = data?.pages[0].content
+
+  useEffect(() => {
+    refetch()
+  }, [])
   return (
     <>
       {tempData && tempData.length > 0 ? (

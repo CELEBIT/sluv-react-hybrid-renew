@@ -50,11 +50,18 @@ export interface ISearchCeleb {
   celebNameKr: string
 }
 
+export interface NewCelebResult {
+  newCelebId: number
+  newCelebName: string
+}
+
 export default class CelebService {
   celebUrl: string
+  newCelebUrl: string
 
   constructor() {
     this.celebUrl = '/app/celeb'
+    this.newCelebUrl = '/app/newCeleb'
   }
 
   // 인기 셀럽 조회
@@ -68,7 +75,7 @@ export default class CelebService {
     return data.result
   }
   // 유저가 최근 선택한 셀럽 등록
-  async postRecentCeleb(celebId: number | null, newCelebId: number | null) {
+  async postRecentCeleb(celebId?: number | null, newCelebId?: number | null) {
     const data: ResponseType = await request.post(`${this.celebUrl}/recent`, {
       celebId,
       newCelebId,
@@ -122,6 +129,14 @@ export default class CelebService {
         },
       },
     )
+    return data.result
+  }
+
+  // NewCeleb 등록
+  async postNewCeleb(newCelebName: string) {
+    const data: ResponseType<NewCelebResult> = await request.post(`${this.newCelebUrl}`, {
+      newCelebName,
+    })
     return data.result
   }
 }

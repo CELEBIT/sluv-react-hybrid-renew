@@ -232,7 +232,7 @@ const ItemDetail = () => {
               <Brand>
                 <BrandLogo size={32} url={data?.brand.brandImgUrl} />
                 <span>{data?.brand.brandEn}</span>
-                <Arrow></Arrow>
+                {/* <Arrow></Arrow> */}
               </Brand>
             </ItemInfo>
             <ItemReaction>
@@ -258,13 +258,7 @@ const ItemDetail = () => {
                 {(data?.linkList.length ?? 0) > 0 &&
                   data?.linkList.map((link, index) => {
                     return (
-                      <Link
-                        key={index}
-                        // onClick={() => handleClick(link.itemLinkUrl)}
-                        href={link.itemLinkUrl}
-                        target='_blank'
-                        rel='noopener noreferrer'
-                      >
+                      <Link key={index} onClick={() => handleClick(link.itemLinkUrl)}>
                         <LinkIcon></LinkIcon>
                         <div className='linkinfo'>
                           <span>{link.linkName}</span>
