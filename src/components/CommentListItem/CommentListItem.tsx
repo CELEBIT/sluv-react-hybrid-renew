@@ -13,7 +13,7 @@ interface CommentListItemProps {
 const CommentListItem = ({ comment }: CommentListItemProps) => {
   const navigate = useNavigate()
   return (
-    <Recommend key={comment.id} onClick={() => navigate(`/community/detail/${comment.id}`)}>
+    <Recommend key={comment.id} onClick={() => navigate(`/community/detail/${comment.questionId}`)}>
       <RecommendInfo>
         <InfoTop>
           {comment.questionTitle && <QuestionTitle>{comment.questionTitle}</QuestionTitle>}

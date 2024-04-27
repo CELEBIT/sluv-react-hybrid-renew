@@ -3,8 +3,8 @@ import CelebService, { CelebFlag } from '../CelebService'
 import { queryKeys } from '../../../config/queryKeys'
 
 interface IPostRecentCeleb {
-  celebId: number | null
-  newCelebId: number | null
+  celebId?: number | null
+  newCelebId?: number | null
 }
 interface IDeleteRecentCeleb {
   celebId: number
@@ -14,7 +14,9 @@ interface IDeleteRecentCeleb {
 const useRecentCelebQuery = () => {
   const celeb = new CelebService()
   const queryClient = useQueryClient()
+
   const getRecentCeleb = useQuery(queryKeys.recentCeleb, () => celeb.getRecentCeleb())
+
   const postRecentCeleb = useMutation(({ celebId, newCelebId }: IPostRecentCeleb) =>
     celeb.postRecentCeleb(celebId, newCelebId),
   )

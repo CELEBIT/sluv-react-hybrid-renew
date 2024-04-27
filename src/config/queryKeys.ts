@@ -67,6 +67,7 @@ export const queryKeys = {
   userUploadComment: ['userUploadComment'] as const,
   recentViewCommunityItem: ['recentViewCommunityItem'] as const,
   likedComment: ['likedComment'] as const,
+  likedQuestion: ['likedQuestion'] as const,
   noticeList: ['noticeList'] as const,
   noticeDetail: (noticeId: number) => ['noticeDetail', noticeId] as const,
   getCommunityBannerItems: ['getCommunityBannerItems'] as const,

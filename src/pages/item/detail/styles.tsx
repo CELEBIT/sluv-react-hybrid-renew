@@ -101,7 +101,7 @@ export const LinkInfoWrapper = styled.div`
   padding: 2rem 1.25rem;
   gap: 1rem;
 `
-export const Link = styled.a`
+export const Link = styled.div`
   display: flex;
   width: 100%;
   text-decoration: none;

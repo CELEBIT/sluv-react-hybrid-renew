@@ -52,6 +52,7 @@ export interface IUserMypageInfo {
 
 export interface ICommentResult {
   id: number
+  questionId: number
   questionTitle: string
   content: string
   ICommentResult: string
@@ -307,17 +308,17 @@ export default class UserService {
   }
 
   // 현재 유저가 좋아요한 커뮤니티 게시글
-  // async getLikeCommunityQuestion(page: number) {
-  //   const data: ResponseType<GetPaginationResult<SearchQuestionResult>> = await request.get(
-  //     `${this.userUrl}/like/question`,
-  //     {
-  //       params: {
-  //         page,
-  //       },
-  //     },
-  //   )
-  //   return data.result
-  // }
+  async getUserLikedQuestion(page: number) {
+    const data: ResponseType<GetPaginationResult<SearchQuestionResult>> = await request.get(
+      `${this.userUrl}/like/question`,
+      {
+        params: {
+          page,
+        },
+      },
+    )
+    return data.result
+  }
 
   // 현재 유저가 좋아한 커뮤니티 댓글
   async getUserLikedComment(page: number) {

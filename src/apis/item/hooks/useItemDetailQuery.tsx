@@ -30,8 +30,8 @@ const useItemDetailQuery = () => {
 
   const likeItem = useMutation((itemId: number) => item.likeItem(itemId), {
     onSuccess: (res, itemId) => {
-      //
-      queryClient.invalidateQueries(queryKeys.itemDetail(itemId))
+      // queryClient.invalidateQueries(queryKeys.itemDetail(itemId))
+      queryClient.invalidateQueries()
     },
   })
 

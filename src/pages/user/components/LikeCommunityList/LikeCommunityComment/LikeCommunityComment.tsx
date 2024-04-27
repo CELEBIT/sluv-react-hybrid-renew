@@ -10,6 +10,7 @@ const LikeCommunityComment = () => {
   const { getLikedComment } = useUserMypageQuery()
   const { data } = getLikedComment()
   const tempData = data?.pages[0].content
+  console.log(data)
 
   return (
     <>

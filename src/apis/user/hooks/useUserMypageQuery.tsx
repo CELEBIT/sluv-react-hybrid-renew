@@ -94,6 +94,23 @@ const useUserMypageQuery = () => {
     )
   }
 
+  // 업로드한 커뮤니티 게시글
+  const getUserLikedQuestion = (): UseInfiniteQueryResult<
+    GetPaginationResult<SearchQuestionResult>,
+    any
+  > => {
+    return useInfiniteQuery(
+      queryKeys.likedQuestion,
+      ({ pageParam = 0 }) => user.getUserLikedQuestion(pageParam),
+      {
+        getNextPageParam: (lastPage) => {
+          if (lastPage?.hasNext) return lastPage.page + 1
+          return undefined
+        },
+      },
+    )
+  }
+
   // 좋아요한 커뮤니티 댓글
   const getLikedComment = (): UseInfiniteQueryResult<GetPaginationResult<ICommentResult>, any> => {
     return useInfiniteQuery(
@@ -157,6 +174,7 @@ const useUserMypageQuery = () => {
     getUserUploadComment,
     getRecentViewCommunityItem,
     getLikedComment,
+    getUserLikedQuestion,
     uploadProfile,
     editProfileImage,
     deleteProfileImage,
