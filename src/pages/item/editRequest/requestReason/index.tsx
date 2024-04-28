@@ -46,7 +46,7 @@ const RequestReason = () => {
     setHasSubmitted(true)
     if (reasonText) {
       setInfoValid(true)
-      if (pathname === '/item/detail/request-deleteAndSort/reason') {
+      if (pathname === '/item/detail/request-edit/reason') {
         mutateByRequestEditItem({ itemId: requestItem.itemId, requestContent: editRequestReason })
       } else if (pathname === '/item/detail/report-item/reason') {
         mutateByReportItem({ itemId: requestItem.itemId, requestContent: editRequestReason })
@@ -83,7 +83,7 @@ const RequestReason = () => {
   }, [reasonText])
 
   useEffect(() => {
-    if (pathname === '/item/detail/request-deleteAndSort/reason') {
+    if (pathname === '/item/detail/request-edit/reason') {
       setTitle('정보 수정 요청')
     } else if (
       pathname === '/item/detail/report-item/reason' ||
