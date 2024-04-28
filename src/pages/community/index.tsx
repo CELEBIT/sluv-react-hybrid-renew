@@ -12,6 +12,14 @@ import Menu from './components/Menu/Menu'
 import { ComponentContainer } from '../home/styles'
 import NewCommunity from './components/NewCommunity/NewCommunity'
 import styled from '@emotion/styled'
+import { useResetRecoilState } from 'recoil'
+import { communityItemState, imgItemListState } from '../../recoil/communityInfo'
+import { celebInfoInItemState } from '../../recoil/itemInfo'
+import {
+  selectedCelebState,
+  selectedGroupState,
+  selectedNewCelebState,
+} from '../../components/SelectCeleb/SelectCeleb'
 
 const Community = () => {
   const navigate = useNavigate()
@@ -31,6 +39,22 @@ const Community = () => {
     return () => {
       ComponentContainerRef.current?.removeEventListener('scroll', handleScroll)
     }
+  }, [])
+
+  const resetFindRequestInfo = useResetRecoilState(communityItemState)
+  const resetCelebInfoInItem = useResetRecoilState(celebInfoInItemState)
+  const resetImageItemList = useResetRecoilState(imgItemListState)
+  const resetSelectedCeleb = useResetRecoilState(selectedCelebState)
+  const resetSelectedGroup = useResetRecoilState(selectedGroupState)
+  const resetNewCeleb = useResetRecoilState(selectedNewCelebState)
+
+  useEffect(() => {
+    resetFindRequestInfo()
+    resetCelebInfoInItem()
+    resetImageItemList()
+    resetSelectedCeleb()
+    resetSelectedGroup()
+    resetNewCeleb()
   }, [])
 
   return (
