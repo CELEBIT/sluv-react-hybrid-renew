@@ -9,12 +9,12 @@ import useSearchCommentQuery from '../../apis/comment/hooks/useSearchCommentQuer
 import { useResetRecoilState } from 'recoil'
 import { commentState } from '../../pages/community/detail/CommunityDetail'
 
-interface IProps {
+interface DeleteCommentModalProps {
   commentId: number
   questionId: number
 }
 
-const DeleteCommentModal = ({ commentId, questionId }: IProps) => {
+const DeleteCommentModal = ({ commentId, questionId }: DeleteCommentModalProps) => {
   const { closeModal } = useModals()
   const navigate = useNavigate()
   const resetCommentObject = useResetRecoilState(commentState)
