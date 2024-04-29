@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import { ReactComponent as ShareIcon } from '../../assets/share_24.svg'
 import Share from '../../utils/Share/share'
 
-interface UserModalProps {
+export interface UserModalProps {
   userName: string
 }
 

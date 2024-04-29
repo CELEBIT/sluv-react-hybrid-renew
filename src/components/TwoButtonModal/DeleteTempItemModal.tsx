@@ -7,7 +7,7 @@ import useTempItemQuery from '../../apis/item/hooks/useTempItemQuery'
 import { useRecoilValue } from 'recoil'
 import { checkListState } from '../../pages/item/temporary-storage'
 
-interface DeleteTempItemModalProps {
+export interface DeleteTempItemModalProps {
   type: string
 }
 

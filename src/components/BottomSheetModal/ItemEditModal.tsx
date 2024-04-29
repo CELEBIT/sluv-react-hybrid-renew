@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom'
 import { RequestEditItemState } from '../../pages/item/editRequest'
 import { ReactComponent as Share } from '../../assets/share_24.svg'
 
-interface ItemEditModalProps {
+export interface ItemEditModalProps {
   itemId: number
 }
 
