@@ -9,7 +9,7 @@ import useSearchCommentQuery from '../../apis/comment/hooks/useSearchCommentQuer
 import { useResetRecoilState } from 'recoil'
 import { commentState } from '../../pages/community/detail/CommunityDetail'
 
-interface DeleteCommentModalProps {
+export interface DeleteCommentModalProps {
   commentId: number
   questionId: number
 }

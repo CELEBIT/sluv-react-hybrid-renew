@@ -13,7 +13,7 @@ import { RequestEditItemState } from '../../pages/item/editRequest'
 import { ReactComponent as Share } from '../../assets/share_24.svg'
 import { commentState } from '../../pages/community/detail/CommunityDetail'
 
-interface CommentEditModalProps {
+export interface CommentEditModalProps {
   commentId: number
   questionId: number
 }

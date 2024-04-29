@@ -9,7 +9,7 @@ import { checkListState } from '../../pages/item/temporary-storage'
 import useItemDetailQuery from '../../apis/item/hooks/useItemDetailQuery'
 import { useNavigate } from 'react-router-dom'
 
-interface DeleteItemModalProps {
+export interface DeleteItemModalProps {
   itemId: number
 }
 

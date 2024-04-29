@@ -11,7 +11,7 @@ import { convertToFile, openGallery } from '../../utils/utility'
 import useUserMypageQuery from '../../apis/user/hooks/useUserMypageQuery'
 import S3Service from '../../apis/s3/S3Service'
 
-interface ProfileImgModalProps {
+export interface ProfileImgModalProps {
   imgExist: boolean
 }
 
