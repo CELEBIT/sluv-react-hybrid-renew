@@ -46,29 +46,30 @@ const SearchCelebList = ({ keyword }: SearchCelebListProps) => {
   const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
 
   const onClickExistingCeleb = (celeb: ISearchCeleb) => {
-    setSelectedCeleb({
-      id: celeb.id,
-      celebNameKr: celeb.celebChildNameKr,
-    })
-    setSelectedGroup({ id: 0, celebNameKr: '' })
-    setCelebInfoInItem({
-      soloId: celeb.id,
-      soloName: celeb.celebChildNameKr,
-      groupId: celeb.parentId,
-      groupName: celeb.celebParentNameKr,
-    })
-    setItemInfo({
-      ...itemInfo,
-      celeb: {
-        celebId: celeb.id,
-        celebName: celeb.celebChildNameKr,
-      },
-    })
     mutateByPostRecentCeleb(
       { celebId: celeb.id, newCelebId: null },
       {
         onSuccess: () => {
-          closeModal(modals.ItemCelebSearchModal)
+          closeModal(modals.ItemCelebSearchModal, () => {
+            setSelectedCeleb({
+              id: celeb.id,
+              celebNameKr: celeb.celebChildNameKr,
+            })
+            setSelectedGroup({ id: 0, celebNameKr: '' })
+            setCelebInfoInItem({
+              soloId: celeb.id,
+              soloName: celeb.celebChildNameKr,
+              groupId: celeb.parentId,
+              groupName: celeb.celebParentNameKr,
+            })
+            setItemInfo({
+              ...itemInfo,
+              celeb: {
+                celebId: celeb.id,
+                celebName: celeb.celebChildNameKr,
+              },
+            })
+          })
         },
       },
     )

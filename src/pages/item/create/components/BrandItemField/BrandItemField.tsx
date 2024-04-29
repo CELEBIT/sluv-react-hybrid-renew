@@ -30,7 +30,7 @@ const BrandItemField = ({ brandValid, itemNameValid }: BrandItemFieldProps) => {
   const onItemNameSelect = () => {
     openModal(modals.ItemNameInputModal)
   }
-  console.log(itemInfo.brand)
+
   const brandErrorMsg = '필수 항목입니다'
   const itemErrorMsg = '상품명은 필수 항목입니다'
   if (!itemInfo.brand?.brandId && !itemInfo.newBrand?.brandId && !itemInfo.itemName) {

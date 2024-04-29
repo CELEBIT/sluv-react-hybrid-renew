@@ -51,7 +51,7 @@ import { Image, imgListState } from '../../../components/AddPhotos/AddPhotos'
 import useTempItemQuery from '../../../apis/item/hooks/useTempItemQuery'
 
 const ItemCreate = () => {
-  useUploadStateObserver()
+  // useUploadStateObserver()
 
   const { openModal } = useModals()
   const navigate = useNavigate()
@@ -68,7 +68,7 @@ const ItemCreate = () => {
   const { getTempItem } = useTempItemQuery()
   const { data } = getTempItem()
 
-  console.log(itemInfo)
+  console.log('create render')
   useEffect(() => {
     const newImgList: ImgResult[] = imgList.map((img: Image, idx) => ({
       imgUrl: img.imgUrl ? img.imgUrl : '',

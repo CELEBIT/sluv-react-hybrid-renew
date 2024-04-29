@@ -30,25 +30,26 @@ const RecentSelectCeleb = () => {
 
   const onChipClick = (recentCeleb: IRecentCeleb) => {
     if (recentCeleb.flag == 'Y') {
-      setCelebInfoInItem({
-        ...celebInfoInItem,
-        groupId: recentCeleb.parentId,
-        groupName: recentCeleb.parentCelebName,
-        soloId: recentCeleb.id,
-        soloName: recentCeleb.childCelebName,
-      })
-      setItemInfo({
-        ...itemInfo,
-        celeb: {
-          celebId: recentCeleb.id,
-          celebName: recentCeleb.childCelebName,
-        },
-      })
       mutateByPostRecentCeleb(
         { celebId: recentCeleb.id, newCelebId: null },
         {
           onSuccess: () => {
-            closeModal(modals.ItemCelebSearchModal)
+            closeModal(modals.ItemCelebSearchModal, () => {
+              setCelebInfoInItem({
+                ...celebInfoInItem,
+                groupId: recentCeleb.parentId,
+                groupName: recentCeleb.parentCelebName,
+                soloId: recentCeleb.id,
+                soloName: recentCeleb.childCelebName,
+              })
+              setItemInfo({
+                ...itemInfo,
+                celeb: {
+                  celebId: recentCeleb.id,
+                  celebName: recentCeleb.childCelebName,
+                },
+              })
+            })
           },
         },
       )

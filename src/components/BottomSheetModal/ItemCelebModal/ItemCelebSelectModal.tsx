@@ -27,17 +27,6 @@ const ItemCelebSelectModal = () => {
 
   const { closeModal } = useModals()
   const onClose = () => {
-    setCelebInfoInItem({
-      groupId: null,
-      groupName: null,
-      soloId: null,
-      soloName: null,
-    })
-    setItemInfo({
-      ...itemInfo,
-      celeb: null,
-    })
-    setSelectedCeleb({ id: 0, celebNameKr: '' })
     closeModal(modals.ItemCelebSelectModal)
   }
   const onComplete = () => {
@@ -45,25 +34,26 @@ const ItemCelebSelectModal = () => {
       { celebId: selectedCeleb.id, newCelebId: null },
       {
         onSuccess: () => {
-          closeModal(modals.ItemCelebSelectModal)
+          closeModal(modals.ItemCelebSelectModal, () => {
+            setCelebInfoInItem({
+              ...celebInfoInItem,
+              soloId: selectedCeleb.id,
+              soloName: selectedCeleb.celebNameKr,
+            })
+            setItemInfo({
+              ...itemInfo,
+              celeb: {
+                celebId: selectedCeleb.id,
+                celebName: selectedCeleb.celebNameKr,
+              },
+            })
+          })
         },
       },
     )
   }
   const onClickMember = (member: ICelebResult) => {
     setSelectedCeleb(member)
-    setCelebInfoInItem({
-      ...celebInfoInItem,
-      soloId: member.id,
-      soloName: member.celebNameKr,
-    })
-    setItemInfo({
-      ...itemInfo,
-      celeb: {
-        celebId: member.id,
-        celebName: member.celebNameKr,
-      },
-    })
   }
   return (
     <BottomSheetModal>
