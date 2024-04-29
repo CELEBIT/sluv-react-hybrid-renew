@@ -1,11 +1,11 @@
 import styled from '@emotion/styled'
 import React from 'react'
 
-interface IProps {
+interface BottomSheetModalProps {
   children: React.ReactNode
 }
 
-const BottomSheetModal = ({ children }: IProps) => {
+const BottomSheetModal = ({ children }: BottomSheetModalProps) => {
   return <BottomSheetModalContainer>{children}</BottomSheetModalContainer>
 }
 

@@ -12,11 +12,11 @@ import { useNavigate } from 'react-router-dom'
 import { RequestEditItemState } from '../../pages/item/editRequest'
 import { ReactComponent as Share } from '../../assets/share_24.svg'
 
-interface IProps {
+interface ItemEditModalProps {
   itemId: number
 }
 
-const ItemEditModal = ({ itemId }: IProps) => {
+const ItemEditModal = ({ itemId }: ItemEditModalProps) => {
   const navigate = useNavigate()
   const { openModal, closeModal } = useModals()
 

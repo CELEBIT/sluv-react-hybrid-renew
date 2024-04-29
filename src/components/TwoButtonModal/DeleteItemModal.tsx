@@ -9,11 +9,11 @@ import { checkListState } from '../../pages/item/temporary-storage'
 import useItemDetailQuery from '../../apis/item/hooks/useItemDetailQuery'
 import { useNavigate } from 'react-router-dom'
 
-interface IProps {
+interface DeleteItemModalProps {
   itemId: number
 }
 
-const DeleteItemModal = ({ itemId }: IProps) => {
+const DeleteItemModal = ({ itemId }: DeleteItemModalProps) => {
   const { closeModal } = useModals()
   const navigate = useNavigate()
 
