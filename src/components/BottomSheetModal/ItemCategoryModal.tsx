@@ -42,16 +42,17 @@ const ItemCategoryModal = () => {
   const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
   // console.log('subCategory in modal', subCategory)
   const onComplete = () => {
-    setItemInfo({
-      ...itemInfo,
-      itemCategory: {
-        categoryId: subCategory.id,
-        childName: subCategory.name,
-        parentCategoryId: selectedParentCategory.id,
-        parentName: selectedParentCategory.name,
-      },
+    closeModal(modals.ItemCategoryModal, () => {
+      setItemInfo({
+        ...itemInfo,
+        itemCategory: {
+          categoryId: subCategory.id,
+          childName: subCategory.name,
+          parentCategoryId: selectedParentCategory.id,
+          parentName: selectedParentCategory.name,
+        },
+      })
     })
-    closeModal(modals.ItemCategoryModal)
   }
   const onParentClick = (category: Category) => {
     setSelectedParentCategory(category)

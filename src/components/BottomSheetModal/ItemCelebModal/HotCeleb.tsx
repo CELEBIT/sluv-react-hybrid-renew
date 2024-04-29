@@ -26,44 +26,45 @@ const HotCeleb = () => {
   } = useRecentCelebQuery()
 
   const onChipClick = (celebData: IHotCeleb) => {
-    if (celebData.parentId) {
-      // 선택한 셀럽이 그룹의 멤버인 경우
-      setCelebInfoInItem({
-        ...celebInfoInItem,
-        soloId: celebData.id,
-        soloName: celebData.celebChildNameKr,
-        groupId: celebData.parentId,
-        groupName: celebData.celebParentNameKr,
-      })
-      setItemInfo({
-        ...itemInfo,
-        celeb: {
-          celebId: celebData.id,
-          celebName: celebData.celebChildNameKr,
-        },
-      })
-    } else {
-      // 선택한 셀럽이 솔로인 경우
-      setCelebInfoInItem({
-        ...celebInfoInItem,
-        soloId: celebData.id,
-        soloName: celebData.celebChildNameKr,
-        groupId: null,
-        groupName: null,
-      })
-      setItemInfo({
-        ...itemInfo,
-        celeb: {
-          celebId: celebData.id,
-          celebName: celebData.celebChildNameKr,
-        },
-      })
-    }
     mutateByPostRecentCeleb(
       { celebId: celebData.id, newCelebId: null },
       {
         onSuccess: () => {
-          closeModal(modals.ItemCelebSearchModal)
+          closeModal(modals.ItemCelebSearchModal, () => {
+            if (celebData.parentId) {
+              // 선택한 셀럽이 그룹의 멤버인 경우
+              setCelebInfoInItem({
+                ...celebInfoInItem,
+                soloId: celebData.id,
+                soloName: celebData.celebChildNameKr,
+                groupId: celebData.parentId,
+                groupName: celebData.celebParentNameKr,
+              })
+              setItemInfo({
+                ...itemInfo,
+                celeb: {
+                  celebId: celebData.id,
+                  celebName: celebData.celebChildNameKr,
+                },
+              })
+            } else {
+              // 선택한 셀럽이 솔로인 경우
+              setCelebInfoInItem({
+                ...celebInfoInItem,
+                soloId: celebData.id,
+                soloName: celebData.celebChildNameKr,
+                groupId: null,
+                groupName: null,
+              })
+              setItemInfo({
+                ...itemInfo,
+                celeb: {
+                  celebId: celebData.id,
+                  celebName: celebData.celebChildNameKr,
+                },
+              })
+            }
+          })
         },
       },
     )

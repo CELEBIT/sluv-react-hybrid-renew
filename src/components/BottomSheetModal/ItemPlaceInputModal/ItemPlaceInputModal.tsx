@@ -36,10 +36,6 @@ const ItemPlaceInputModal = () => {
     } else {
       closeModal(modals.ItemPlaceInputModal)
     }
-    setItemInfo({
-      ...itemInfo,
-      whereDiscovery: placeName,
-    })
   }
   const onDeleteAllSearchLog = () => {
     mutateByDeleteAllRecentPlace()
@@ -51,7 +47,7 @@ const ItemPlaceInputModal = () => {
         <Header
           title='착용 장소'
           isModalHeader={true}
-          modalCloseBtnClick={() => closeModal(modals.ItemDatePickerModal)}
+          modalCloseBtnClick={() => closeModal(modals.ItemPlaceInputModal)}
         />
         <DefaultTextfield
           value={placeName}

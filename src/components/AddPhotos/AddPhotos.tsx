@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, memo } from 'react'
 import { atomKeys } from '../../config/atomKeys'
 import { atom, useRecoilState, useRecoilValue } from 'recoil'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
@@ -141,4 +141,4 @@ const AddPhotos = () => {
   )
 }
 
-export default AddPhotos
+export default memo(AddPhotos)

@@ -11,15 +11,16 @@ const modalsAtom = atom<
 })
 
 const useModals = () => {
-  const [modals, setModals] = useRecoilState(modalsAtom)
+  const [modalList, setModals] = useRecoilState(modalsAtom)
+  console.log('modals', modalList)
 
-  useEffect(() => {
-    const goBack = () => setModals([])
-    window.addEventListener('popstate', goBack)
-    return () => {
-      window.removeEventListener('popstate', goBack)
-    }
-  }, [])
+  // useEffect(() => {
+  //   const goBack = () => setModals([])
+  //   window.addEventListener('popstate', goBack)
+  //   return () => {
+  //     window.removeEventListener('popstate', goBack)
+  //   }
+  // }, [])
 
   // const openModal = useCallback(
   //   <T extends FunctionComponent<any>>(
@@ -40,7 +41,7 @@ const useModals = () => {
       setModals((modals) => [...modals, { Component, props: { ...props, open: true } }])
       history.pushState({ page: 'modal' }, document.title)
     },
-    [],
+    [setModals],
   )
 
   const closeModal = useCallback(
@@ -49,11 +50,11 @@ const useModals = () => {
       if (callbackFunc) callbackFunc()
       else history.back()
     },
-    [],
+    [setModals],
   )
 
   return {
-    modals,
+    modalList,
     openModal,
     closeModal,
   }

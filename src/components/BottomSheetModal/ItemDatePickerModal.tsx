@@ -20,11 +20,12 @@ const ItemDatePickerModal = () => {
   const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
 
   const onComplete = () => {
-    setItemInfo({
-      ...itemInfo,
-      whenDiscovery: date ?? null,
+    closeModal(modals.ItemDatePickerModal, () => {
+      setItemInfo({
+        ...itemInfo,
+        whenDiscovery: date ?? null,
+      })
     })
-    closeModal(modals.ItemDatePickerModal)
   }
   const onCancel = () => {
     setDate(undefined)

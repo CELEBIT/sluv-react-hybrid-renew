@@ -36,54 +36,49 @@ const ItemCelebSearchModal = () => {
       setIsFocused(false)
     }, 100)
   }
-
   const onClose = () => {
-    setSelectedCeleb({ id: 0, celebNameKr: '' })
-    setSelectedGroup({ id: 0, celebNameKr: '' })
     closeModal(modals.ItemCelebSearchModal)
   }
   const onComplete = () => {
-    if (selectedCeleb.id && !selectedGroup.id) {
-      // 솔로
-      setCelebInfoInItem({
-        soloId: selectedCeleb.id,
-        soloName: selectedCeleb.celebNameKr,
-        groupId: null,
-        groupName: null,
-      })
-      setItemInfo({
-        ...itemInfo,
-        celeb: {
-          celebId: selectedCeleb.id,
-          celebName: selectedCeleb.celebNameKr,
-        },
-      })
-    } else if (selectedCeleb.id && selectedGroup.id) {
-      // 그룹의 멤버
-      setCelebInfoInItem({
-        soloId: selectedCeleb.id,
-        soloName: selectedCeleb.celebNameKr,
-        groupId: selectedGroup.id,
-        groupName: selectedGroup.celebNameKr,
-      })
-      setItemInfo({
-        ...itemInfo,
-        celeb: {
-          celebId: selectedCeleb.id,
-          celebName: selectedCeleb.celebNameKr,
-        },
-      })
-    } else {
-      alert('오류')
-    }
-    setSelectedCeleb({ id: 0, celebNameKr: '' })
-    setSelectedGroup({ id: 0, celebNameKr: '' })
-
     mutateByPostRecentCeleb(
       { celebId: selectedCeleb.id, newCelebId: null },
       {
         onSuccess: () => {
-          closeModal(modals.ItemCelebSearchModal)
+          closeModal(modals.ItemCelebSearchModal, () => {
+            if (selectedCeleb.id && !selectedGroup.id) {
+              // 솔로
+              setCelebInfoInItem({
+                soloId: selectedCeleb.id,
+                soloName: selectedCeleb.celebNameKr,
+                groupId: null,
+                groupName: null,
+              })
+              setItemInfo({
+                ...itemInfo,
+                celeb: {
+                  celebId: selectedCeleb.id,
+                  celebName: selectedCeleb.celebNameKr,
+                },
+              })
+            } else if (selectedCeleb.id && selectedGroup.id) {
+              // 그룹의 멤버
+              setCelebInfoInItem({
+                soloId: selectedCeleb.id,
+                soloName: selectedCeleb.celebNameKr,
+                groupId: selectedGroup.id,
+                groupName: selectedGroup.celebNameKr,
+              })
+              setItemInfo({
+                ...itemInfo,
+                celeb: {
+                  celebId: selectedCeleb.id,
+                  celebName: selectedCeleb.celebNameKr,
+                },
+              })
+            } else {
+              alert('오류')
+            }
+          })
         },
       },
     )
@@ -93,7 +88,7 @@ const ItemCelebSearchModal = () => {
     <BottomSheetModal>
       <ModalWrapper>
         <div className='Header'>
-          <Header title='셀럽 검색' isModalHeader={true} modalCloseBtnClick={onClose} />
+          <Header title='셀럽 검색' isModalHeader={true} modalCloseBtnClick={() => onClose()} />
         </div>
         {/* 입력내용 없을 시 */}
         <SearchWrapper onFocus={() => setIsFocused(true)} onBlur={handleBlur}>
