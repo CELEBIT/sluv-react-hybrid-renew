@@ -173,7 +173,7 @@ export const openLink = (linkUrl: string) => {
     window.webkit.messageHandlers.IOSBridge.postMessage(
       JSON.stringify({
         type: 'openLink',
-        linkUlr: linkUrl,
+        linkUrl: linkUrl,
       }),
     )
   } else {
