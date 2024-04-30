@@ -8,7 +8,7 @@ import { ComponentWrapper, Label, LabelContainer } from '../create/styles'
 import DisplayField from '../../../components/TextField/DisplayField/DisplayField'
 
 import { useRecoilValue } from 'recoil'
-import { itemInfoState, celebInfoInItemState } from '../../../recoil/itemInfo'
+import { itemInfoState, createItemCelebState } from '../../../recoil/itemInfo'
 import ButtonHalf from '../../../components/ButtonHalf/ButtonHalf'
 import { formatDate } from '../create/components/DatePlaceField/date.util'
 import { formatPrice } from '../create/components/PriceField/price.util'
@@ -19,7 +19,7 @@ import { TempItemReq } from '../../../apis/item/itemService.type'
 const ItemConfirm = () => {
   const navigate = useNavigate()
   const itemInfo = useRecoilValue(itemInfoState)
-  const celebInfo = useRecoilValue(celebInfoInItemState)
+  const celebInfo = useRecoilValue(createItemCelebState)
 
   const {
     postItem: { mutate },

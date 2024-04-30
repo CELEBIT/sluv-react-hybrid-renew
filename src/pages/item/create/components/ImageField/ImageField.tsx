@@ -11,15 +11,7 @@ interface ImageFieldProps {
 
 const ImageField = ({ hasTriedToUpload }: ImageFieldProps) => {
   const imgList = useRecoilValue(imgListState)
-  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
-  useEffect(() => {
-    const newImgList: ImgResult[] = imgList.map((img: Image, idx) => ({
-      imgUrl: img.imgUrl ? img.imgUrl : '',
-      representFlag: idx === 0,
-      sortOrder: idx,
-    }))
-    if (imgList.length > 0) setItemInfo({ ...itemInfo, imgList: newImgList })
-  }, [imgList])
+
   return (
     <>
       {imgList.length > 0 ? (

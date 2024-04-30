@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { localStorageKeys } from '../../../config/localStorageKeys'
 import { queryKeys } from '../../../config/queryKeys'
 import { useResetRecoilState } from 'recoil'
-import { celebInfoInItemState, itemInfoState } from '../../../recoil/itemInfo'
+import { createItemCelebState, itemInfoState } from '../../../recoil/itemInfo'
 import {
   parentCategoryState,
   subCategoryState,
@@ -19,7 +19,7 @@ const useItemQuery = () => {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const resetItemInfo = useResetRecoilState(itemInfoState)
-  const resetCelebInfoInItem = useResetRecoilState(celebInfoInItemState)
+  const resetCelebInfoInItem = useResetRecoilState(createItemCelebState)
   const resetCategory = useResetRecoilState(subCategoryState)
   const resetParentCategory = useResetRecoilState(parentCategoryState)
   const resetImgListState = useResetRecoilState(imgListState)

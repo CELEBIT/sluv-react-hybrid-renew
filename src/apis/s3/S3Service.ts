@@ -65,7 +65,7 @@ export default class S3Service {
         }
       }),
     )
-    return await resultList
+    return resultList
   }
 
   // 커뮤니티 이미지 업로드

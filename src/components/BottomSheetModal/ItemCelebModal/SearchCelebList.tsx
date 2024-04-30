@@ -8,7 +8,11 @@ import { useObserver } from '../../../hooks/useObserver'
 import { ISearchCeleb } from '../../../apis/celeb/CelebService'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { selectedCelebState, selectedGroupState } from '../../SelectCeleb/SelectCeleb'
-import { celebInfoInItemState, itemInfoState } from '../../../recoil/itemInfo'
+import {
+  createItemCelebState,
+  createItemNewCelebState,
+  itemInfoState,
+} from '../../../recoil/itemInfo'
 import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
 import useModals from '../../Modals/hooks/useModals'
 import { modals } from '../../Modals'
@@ -42,7 +46,8 @@ const SearchCelebList = ({ keyword }: SearchCelebListProps) => {
   })
   const setSelectedCeleb = useSetRecoilState(selectedCelebState)
   const setSelectedGroup = useSetRecoilState(selectedGroupState)
-  const setCelebInfoInItem = useSetRecoilState(celebInfoInItemState)
+  const setCelebInfoInItem = useSetRecoilState(createItemCelebState)
+  const setNewCeleb = useSetRecoilState(createItemNewCelebState)
   const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
 
   const onClickExistingCeleb = (celeb: ISearchCeleb) => {

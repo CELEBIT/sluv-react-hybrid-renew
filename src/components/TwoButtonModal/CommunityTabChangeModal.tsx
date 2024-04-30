@@ -13,23 +13,19 @@ import {
 import { communityMenuState } from '../Header/CommunityHeader/CommunityHeader'
 import { CommunityMenu } from '../../config/communityMenu'
 import { useNavigate } from 'react-router-dom'
-import {
-  selectedCelebState,
-  selectedGroupState,
-  selectedNewCelebState,
-} from '../SelectCeleb/SelectCeleb'
-import { celebInfoInItemState } from '../../recoil/itemInfo'
+import { selectedCelebState, selectedGroupState } from '../SelectCeleb/SelectCeleb'
+import { createItemCelebState, createItemNewCelebState } from '../../recoil/itemInfo'
 
 const CommunityTabChangeModal = ({ name, url }: CommunityMenu) => {
   const { closeModal } = useModals()
   const navigate = useNavigate()
   const setCommunityMenu = useSetRecoilState(communityMenuState)
-  const resetCelebInfoInItemState = useResetRecoilState(celebInfoInItemState)
+  const resetCelebInfoInItemState = useResetRecoilState(createItemCelebState)
   const resetQuestionItem = useResetRecoilState(communityItemState)
 
   const resetSelectedCeleb = useResetRecoilState(selectedCelebState)
   const resetSelectedGroup = useResetRecoilState(selectedGroupState)
-  const resetNewCeleb = useResetRecoilState(selectedNewCelebState)
+  const resetNewCeleb = useResetRecoilState(createItemNewCelebState)
 
   const resetFirstItem = useResetRecoilState(firstItemState)
   const resetSecondItem = useResetRecoilState(secondItemState)

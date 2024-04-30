@@ -7,28 +7,15 @@ import Header from '../Header/Header'
 import DefaultTextfield from '../TextField/DefaultTextfield/DefaultTextfield'
 import ButtonLarge from '../ButtonLarge/ButtonLarge'
 import { useRecoilState } from 'recoil'
-import { itemInfoState } from '../../recoil/itemInfo'
+import { createItemNameState, itemInfoState } from '../../recoil/itemInfo'
 
 const ItemNameInputModal = () => {
-  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
-  const [inputValue, setInputValue] = useState<string>((itemInfo.itemName as string) || '')
+  const [name, setName] = useRecoilState(createItemNameState)
+  const [inputValue, setInputValue] = useState<string>(name || '')
   const { closeModal } = useModals()
 
-  const onSetItemName = () => {
-    closeModal(modals.ItemNameInputModal, () =>
-      setItemInfo({
-        ...itemInfo,
-        itemName: inputValue,
-      }),
-    )
-  }
-  const onClose = () => {
-    closeModal(modals.ItemNameInputModal, () =>
-      setItemInfo({
-        ...itemInfo,
-        itemName: inputValue,
-      }),
-    )
+  const onSubmit = () => {
+    closeModal(modals.ItemNameInputModal, () => setName(inputValue))
   }
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -47,10 +34,10 @@ const ItemNameInputModal = () => {
           <DefaultTextfield
             value={inputValue}
             setValue={setInputValue}
-            onEnter={onSetItemName}
+            onEnter={onSubmit}
             placeholder='상품명을 입력해 주세요'
           ></DefaultTextfield>
-          <ButtonLarge text='완료' active={true} onClick={onClose}></ButtonLarge>
+          <ButtonLarge text='완료' active={true} onClick={onSubmit}></ButtonLarge>
         </div>
       </ModalWrapper>
     </BottomSheetModal>

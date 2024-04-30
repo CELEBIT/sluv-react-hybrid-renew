@@ -37,7 +37,7 @@ import {
   ICategory,
   IHashTag,
   IItemInfo,
-  celebInfoInItemState,
+  createItemCelebState,
   itemInfoState,
 } from '../../../recoil/itemInfo'
 import useUploadStateObserver from '../../../hooks/useUploadStateObserver'
@@ -51,7 +51,7 @@ import { Image, imgListState } from '../../../components/AddPhotos/AddPhotos'
 import useTempItemQuery from '../../../apis/item/hooks/useTempItemQuery'
 
 const ItemCreate = () => {
-  // useUploadStateObserver()
+  useUploadStateObserver()
 
   const { openModal } = useModals()
   const navigate = useNavigate()
@@ -63,7 +63,7 @@ const ItemCreate = () => {
   const imgList = useRecoilValue(imgListState)
   const setImgList = useSetRecoilState(imgListState)
 
-  const resetCelebInfoInItem = useResetRecoilState(celebInfoInItemState)
+  const resetCelebInfoInItem = useResetRecoilState(createItemCelebState)
 
   const { getTempItem } = useTempItemQuery()
   const { data } = getTempItem()
@@ -179,7 +179,7 @@ const ItemCreate = () => {
           {/* <ImageField error={false}></ImageField> */}
           <ImageField hasTriedToUpload={hasTriedToUpload}></ImageField>
         </ComponentWrapper>
-        <ComponentWrapper>
+        {/* <ComponentWrapper>
           <LabelContainer>
             {hasTriedToUpload && !celeb.id && <Error></Error>}
             <Label>누가 착용했나요?</Label>
@@ -222,10 +222,10 @@ const ItemCreate = () => {
               )}
             </>
           )}
-        </ComponentWrapper>
+        </ComponentWrapper> */}
       </ComponentContainer>
 
-      <BottomBar>
+      {/* <BottomBar>
         <div className='left'>
           <div className='button' onClick={() => navigate('/item/create/addInfo')}>
             {(itemInfo.additionalInfo && itemInfo.additionalInfo?.length > 0) ||
@@ -253,7 +253,7 @@ const ItemCreate = () => {
             <StorageOff onClick={() => navigate('/item/create/temporary-storage')}></StorageOff>
           )}
         </div>
-      </BottomBar>
+      </BottomBar> */}
     </ItemCreatePageStyle>
   )
 }

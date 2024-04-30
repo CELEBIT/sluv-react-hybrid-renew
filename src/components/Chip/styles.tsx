@@ -15,8 +15,9 @@ export const ChipWrapper = styled.div<{ canDelete?: boolean }>`
 
   background-color: ${Common.colors.BG};
   color: ${Common.colors.PRI};
-  font-family: Pretendard;
+  font-family: 'Pretendard';
   font-weight: 500;
+  font-size: 0.9375rem;
 
   p {
     margin: 0;

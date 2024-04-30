@@ -5,17 +5,22 @@ import TextArea from '../../../components/TextField/TextArea/TextArea'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import SourceInput from './components/sourceInput/SourceInput'
 import HashtagInput, { hashTagState } from './components/HashTags/HashTag'
-import { itemInfoState } from '../../../recoil/itemInfo'
+import {
+  createItemAddInfoState,
+  createItemSourceState,
+  itemInfoState,
+} from '../../../recoil/itemInfo'
 import { useNavigate } from 'react-router-dom'
 
 const AddInfo = () => {
   const navigate = useNavigate()
 
-  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
-
-  const [addInfoText, setAddInfoText] = useState<string | null>(itemInfo.additionalInfo ?? '')
-  const [source, setSource] = useState<string | null>(itemInfo.infoSource)
+  const [additionalInfo, setAdditionalInfo] = useRecoilState(createItemAddInfoState)
   const hashTags = useRecoilValue(hashTagState)
+  const [itemSource, setItemSource] = useRecoilState(createItemSourceState)
+
+  const [addInfoText, setAddInfoText] = useState<string | null>(additionalInfo ?? '')
+  const [source, setSource] = useState<string | null>(itemSource)
 
   const [infoValid, setInfoValid] = useState(true)
   const [hasSubmitted, setHasSubmitted] = useState(false)
@@ -24,12 +29,8 @@ const AddInfo = () => {
     setHasSubmitted(true)
 
     if (addInfoText || source || hashTags.length > 0) {
-      setItemInfo({
-        ...itemInfo,
-        additionalInfo: addInfoText === '' ? null : addInfoText,
-        infoSource: source === '' ? null : source,
-        hashTagList: hashTags.length === 0 ? null : hashTags,
-      })
+      setAdditionalInfo(addInfoText === '' ? null : addInfoText)
+      setItemSource(source === '' ? null : source)
       setInfoValid(true)
       navigate(-1)
     } else {

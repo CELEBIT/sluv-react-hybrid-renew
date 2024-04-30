@@ -5,7 +5,7 @@ import useModals from '../Modals/hooks/useModals'
 import { BtnModalContent } from '../Modals/styles'
 import useTempItemQuery from '../../apis/item/hooks/useTempItemQuery'
 import { localStorageKeys } from '../../config/localStorageKeys'
-import { IHashTag, celebInfoInItemState, itemInfoState } from '../../recoil/itemInfo'
+import { IHashTag, createItemCelebState, itemInfoState } from '../../recoil/itemInfo'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { imgListState } from '../AddPhotos/AddPhotos'
 import { parentCategoryState, subCategoryState } from '../BottomSheetModal/ItemCategoryModal'
@@ -18,7 +18,7 @@ const AskRecentPostWritingModal = () => {
   const tempData = data?.pages[0].content[0]
 
   const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
-  const setCelebInfoInItem = useSetRecoilState(celebInfoInItemState)
+  const setCelebInfoInItem = useSetRecoilState(createItemCelebState)
   const setImgListState = useSetRecoilState(imgListState)
   const setSubCategory = useSetRecoilState(subCategoryState)
   const setParentCategory = useSetRecoilState(parentCategoryState)

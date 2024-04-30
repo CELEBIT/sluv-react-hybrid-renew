@@ -31,7 +31,7 @@ import {
   ICategory,
   IHashTag,
   IItemInfo,
-  celebInfoInItemState,
+  createItemCelebState,
   itemInfoState,
 } from '../../../recoil/itemInfo'
 import useModals from '../../../components/Modals/hooks/useModals'
@@ -130,7 +130,7 @@ const ItemEdit = () => {
     }
   }, [data])
 
-  const setCelebInfoInItem = useSetRecoilState(celebInfoInItemState)
+  const setCelebInfoInItem = useSetRecoilState(createItemCelebState)
 
   useEffect(() => {
     const newImgList: ImgResult[] = imgList.map((img: Image, idx) => ({
@@ -209,7 +209,7 @@ const ItemEdit = () => {
   }
 
   const resetItemInfo = useResetRecoilState(itemInfoState)
-  const resetCelebInfoInItem = useResetRecoilState(celebInfoInItemState)
+  const resetCelebInfoInItem = useResetRecoilState(createItemCelebState)
   const resetCategory = useResetRecoilState(subCategoryState)
   const resetParentCategory = useResetRecoilState(parentCategoryState)
   const resetImgListState = useResetRecoilState(imgListState)
