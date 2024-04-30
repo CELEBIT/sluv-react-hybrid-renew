@@ -10,7 +10,6 @@ import {
 import SelectCeleb, {
   selectedCelebState,
   selectedGroupState,
-  selectedNewCelebState,
 } from '../../../../components/SelectCeleb/SelectCeleb'
 import { ErrorText } from '../../../../components/TextField/DefaultTextfield/styles'
 import { ReactComponent as Error } from '../../../../assets/error_20.svg'
@@ -28,14 +27,14 @@ import {
   imgListUpdatedState,
 } from '../../../../recoil/communityInfo'
 import useCommunityImgUpload from '../../../../apis/s3/hooks/useCommunityImgUpload'
-import { celebInfoInItemState } from '../../../../recoil/itemInfo'
+import { createItemCelebState, createItemNewCelebState } from '../../../../recoil/itemInfo'
 
 const FindRequest = () => {
   const navigate = useNavigate()
   const [findRequestInfo, setFindRequestInfo] = useRecoilState(communityItemState)
 
   const celeb = useRecoilValue(selectedCelebState)
-  const newCeleb = useRecoilValue(selectedNewCelebState)
+  const newCeleb = useRecoilValue(createItemNewCelebState)
   const [hasTriedToUpload, setHasTriedToUpload] = useState(false)
 
   const [title, setTitle] = useState<string | null>(findRequestInfo.title)
@@ -43,11 +42,11 @@ const FindRequest = () => {
   const [imgItemList, setImageItemList] = useRecoilState(imgItemListState)
 
   const resetFindRequestInfo = useResetRecoilState(communityItemState)
-  const resetCelebInfoInItem = useResetRecoilState(celebInfoInItemState)
+  const resetCelebInfoInItem = useResetRecoilState(createItemCelebState)
   const resetImageItemList = useResetRecoilState(imgItemListState)
   const resetSelectedCeleb = useResetRecoilState(selectedCelebState)
   const resetSelectedGroup = useResetRecoilState(selectedGroupState)
-  const resetNewCeleb = useResetRecoilState(selectedNewCelebState)
+  const resetNewCeleb = useResetRecoilState(createItemNewCelebState)
 
   const {
     postCommunityImg: { mutate: mutateByImgUpload },

@@ -1,5 +1,5 @@
 import { useRecoilValue } from 'recoil'
-import { celebInfoInItemState, itemInfoState } from '../recoil/itemInfo'
+import { createItemCelebState, itemInfoState } from '../recoil/itemInfo'
 import { useEffect, useMemo } from 'react'
 import { useDebounce } from 'use-debounce'
 import useTempItemQuery from '../apis/item/hooks/useTempItemQuery'
@@ -20,7 +20,7 @@ const useUploadStateObserver = () => {
   const location = useLocation()
 
   const itemInfo = useRecoilValue(itemInfoState)
-  const celebInfo = useRecoilValue(celebInfoInItemState)
+  const celebInfo = useRecoilValue(createItemCelebState)
   const imgList = useRecoilValue(imgListState)
   const [debounceItemInfo] = useDebounce(itemInfo, 500)
   const [debounceCelebInfo] = useDebounce(celebInfo, 500)

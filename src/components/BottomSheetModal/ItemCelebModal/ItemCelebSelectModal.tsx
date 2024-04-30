@@ -1,5 +1,5 @@
-import React from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import React, { useState } from 'react'
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 import styled from '@emotion/styled'
 import BottomSheetModal from '..'
 import { modals } from '../../Modals'
@@ -10,9 +10,9 @@ import { ButtonWrapper } from '../ItemPlaceInputModal/ItemPlaceInputModal'
 import Header from '../../Header/Header'
 import ButtonMedium from '../../ButtonMedium/ButtonMedium'
 import ButtonLarge from '../../ButtonLarge/ButtonLarge'
-import { selectedCelebState, selectedGroupState } from '../../SelectCeleb/SelectCeleb'
+import { CelebData, selectedCelebState, selectedGroupState } from '../../SelectCeleb/SelectCeleb'
 import { ICelebResult } from '../../../apis/user/userService'
-import { celebInfoInItemState, itemInfoState } from '../../../recoil/itemInfo'
+import { createItemCelebState, itemInfoState } from '../../../recoil/itemInfo'
 import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
 
 const ItemCelebSelectModal = () => {
@@ -22,8 +22,9 @@ const ItemCelebSelectModal = () => {
 
   const selectedGroup = useRecoilValue(selectedGroupState)
   const [selectedCeleb, setSelectedCeleb] = useRecoilState(selectedCelebState)
-  const [celebInfoInItem, setCelebInfoInItem] = useRecoilState(celebInfoInItemState)
-  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
+
+  const [itemCeleb, setItemCeleb] = useRecoilState(createItemCelebState)
+  const resetItemCeleb = useResetRecoilState(createItemCelebState)
 
   const { closeModal } = useModals()
   const onClose = () => {
@@ -35,17 +36,11 @@ const ItemCelebSelectModal = () => {
       {
         onSuccess: () => {
           closeModal(modals.ItemCelebSelectModal, () => {
-            setCelebInfoInItem({
-              ...celebInfoInItem,
+            setItemCeleb({
+              groupId: selectedGroup.id,
+              groupName: selectedGroup.celebNameKr,
               soloId: selectedCeleb.id,
               soloName: selectedCeleb.celebNameKr,
-            })
-            setItemInfo({
-              ...itemInfo,
-              celeb: {
-                celebId: selectedCeleb.id,
-                celebName: selectedCeleb.celebNameKr,
-              },
             })
           })
         },

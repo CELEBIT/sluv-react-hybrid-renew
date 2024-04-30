@@ -12,7 +12,6 @@ const modalsAtom = atom<
 
 const useModals = () => {
   const [modalList, setModals] = useRecoilState(modalsAtom)
-  console.log('modals', modalList)
 
   // useEffect(() => {
   //   const goBack = () => setModals([])

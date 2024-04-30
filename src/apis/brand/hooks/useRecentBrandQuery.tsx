@@ -38,8 +38,9 @@ const useRecentBrandQuery = () => {
     ({ brandId, newBrandId }: IPostBrand) => brand.postRecentBrand(brandId, newBrandId),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(queryKeys.brandRecentSelected)
-        closeModal(modals.ItemBrandSelectModal)
+        closeModal(modals.ItemBrandSelectModal, () =>
+          queryClient.invalidateQueries(queryKeys.brandRecentSelected),
+        )
       },
     },
   )

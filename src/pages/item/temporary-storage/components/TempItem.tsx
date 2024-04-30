@@ -11,7 +11,7 @@ import { checkListState } from '..'
 import { TempItemResult } from '../../../../apis/item/itemService.type'
 import { useNavigate } from 'react-router-dom'
 import { localStorageKeys } from '../../../../config/localStorageKeys'
-import { IHashTag, celebInfoInItemState, itemInfoState } from '../../../../recoil/itemInfo'
+import { IHashTag, createItemCelebState, itemInfoState } from '../../../../recoil/itemInfo'
 import { imgListState } from '../../../../components/AddPhotos/AddPhotos'
 import {
   parentCategoryState,
@@ -31,7 +31,7 @@ const TempItem = ({ data, isFirst, isEditMode }: TempItemProps) => {
   const [isChecked, setIsChecked] = useState(false)
   const [checkedList, setCheckedList] = useRecoilState(checkListState)
   const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
-  const setCelebInfoInItem = useSetRecoilState(celebInfoInItemState)
+  const setCelebInfoInItem = useSetRecoilState(createItemCelebState)
   const setImgListState = useSetRecoilState(imgListState)
   const setSubCategory = useSetRecoilState(subCategoryState)
   const setParentCategory = useSetRecoilState(parentCategoryState)

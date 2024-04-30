@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import {
   InputFieldWrapper,
   LabelWrapper,
@@ -14,66 +14,51 @@ import ToolTip from '../../../../../components/ToolTip/ToolTip'
 import { ToolTipVisibility } from '../../../../../components/ToolTip/ToolTip.util'
 import { addCommas, formatPrice, sanitizePriceInput } from './price.util'
 import { MAX_INT } from '../../../../../config/constant'
-import { itemInfoState } from '../../../../../recoil/itemInfo'
+import { createItemPriceState, itemInfoState } from '../../../../../recoil/itemInfo'
 
 const PriceField = () => {
-  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
+  const [price, setPrice] = useRecoilState(createItemPriceState)
   const [priceUnknown, setPriceUnknown] = useState<boolean>(false)
   const [infoVisible, setInfoVisible] = useState<boolean>(false)
-  const displayText = useMemo(() => formatPrice(itemInfo.price), [itemInfo.price])
+  const displayText = useMemo(() => formatPrice(price), [price])
 
   const stringPrice = useMemo(() => {
-    if (!itemInfo.price) {
+    if (!price) {
       return undefined
     }
-    return addCommas(itemInfo.price.toString())
-  }, [itemInfo.price])
+    return addCommas(price.toString())
+  }, [price])
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(sanitizePriceInput(e.target.value))
     if (!isNaN(value) && value <= MAX_INT) {
       if (value > 0) {
-        setItemInfo({
-          ...itemInfo,
-          price: value,
-        })
+        setPrice(value)
       }
     } else if (value > MAX_INT) {
-      setItemInfo({
-        ...itemInfo,
-        price: MAX_INT,
-      })
+      setPrice(MAX_INT)
     }
     if (e.target.value === '') {
-      setItemInfo({
-        ...itemInfo,
-        price: null,
-      })
+      setPrice(null)
     }
   }
 
   const onClick = () => {
     setPriceUnknown(!priceUnknown)
-    if (!itemInfo.price || itemInfo?.price > 0) {
+    if (!price || price > 0) {
       // 모르겠어요로 전환
-      setItemInfo({
-        ...itemInfo,
-        price: -1,
-      })
-    } else if (itemInfo.price === -1) {
+      setPrice(-1)
+    } else if (price === -1) {
       // 모르겠어요 풀기
-      setItemInfo({
-        ...itemInfo,
-        price: null,
-      })
+      setPrice(null)
     }
   }
 
   useEffect(() => {
-    if (itemInfo.price === -1) {
+    if (price === -1) {
       setPriceUnknown(true)
     }
-  }, [itemInfo.price])
+  }, [price])
 
   return (
     <PriceFieldWrapper>
@@ -101,20 +86,20 @@ const PriceField = () => {
             </>
           )}
         </InputFieldWrapper>
-        {!itemInfo.price ? (
+        {price === null ? (
           <LabelWrapper>
             <span className='valueText'>~ 원&nbsp;</span>
             <span className='labelText'>대로 표시돼요</span>
           </LabelWrapper>
         ) : (
           <>
-            {itemInfo.price === -1 ? (
+            {price === -1 ? (
               <LabelWrapper>
                 <span className='labelText'>가격이 표시되지 않아요</span>
               </LabelWrapper>
             ) : (
               <LabelWrapper>
-                {itemInfo.price >= 500000000 ? (
+                {price >= 500000000 ? (
                   <>
                     <span className='valueText'>5억원 &nbsp;</span>
                     <span className='labelText'>대 이상으로 표시돼요</span>

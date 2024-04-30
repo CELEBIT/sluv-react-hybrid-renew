@@ -2,8 +2,8 @@ import React from 'react'
 import Chip from '../../Chip/Chip'
 import useRecentPlaceQuery from '../../../apis/place/hooks/useRecentPlaceQuery'
 import usePostPlaceQuery from '../../../apis/place/hooks/usePostPlaceQuery'
-import { useRecoilState } from 'recoil'
-import { itemInfoState } from '../../../recoil/itemInfo'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { createItemPlaceState, itemInfoState } from '../../../recoil/itemInfo'
 
 interface ItemPlaceChipProps {
   placeName: string
@@ -15,23 +15,21 @@ const ItemPlaceChip = ({ placeName, canDelete }: ItemPlaceChipProps) => {
    * canDelete가 true인 경우 : 최근 입력한 장소 Chip
    * canDelete가 false인 경우 : 핫 플레이스 Chip
    */
+  const setWhereDiscovery = useSetRecoilState(createItemPlaceState)
+
   const {
     deleteRecentPlace: { mutate: mutateByDeleteRecentPlace },
   } = useRecentPlaceQuery()
   const {
     postItemPlace: { mutate: mutateByPostItemPlace },
   } = usePostPlaceQuery()
-  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
 
   const onDeletePlace = () => {
     mutateByDeleteRecentPlace({ placeName })
   }
   const onClickPlace = () => {
     mutateByPostItemPlace({ placeName })
-    setItemInfo({
-      ...itemInfo,
-      whereDiscovery: placeName,
-    })
+    setWhereDiscovery(placeName)
   }
 
   return (
@@ -44,4 +42,4 @@ const ItemPlaceChip = ({ placeName, canDelete }: ItemPlaceChipProps) => {
   )
 }
 
-export default ItemPlaceChip
+export default React.memo(ItemPlaceChip)

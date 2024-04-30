@@ -7,8 +7,8 @@ import useModals from '../Modals/hooks/useModals'
 import { modals } from '../Modals'
 import Header from '../Header/Header'
 import { convertToKoDate, convertToUTC } from '../../utils/utility'
-import { useRecoilState } from 'recoil'
-import { itemInfoState } from '../../recoil/itemInfo'
+import { useSetRecoilState } from 'recoil'
+import { createItemWhenDateState } from '../../recoil/itemInfo'
 
 const ItemDatePickerModal = () => {
   const { closeModal } = useModals()
@@ -17,18 +17,14 @@ const ItemDatePickerModal = () => {
   today.setHours(0, 0, 0, 0)
   const utcToday = convertToUTC(today)
   const [date, setDate] = useState<Date | undefined>(utcToday)
-  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
+  const setWhenDiscovery = useSetRecoilState(createItemWhenDateState)
 
   const onComplete = () => {
     closeModal(modals.ItemDatePickerModal, () => {
-      setItemInfo({
-        ...itemInfo,
-        whenDiscovery: date ?? null,
-      })
+      setWhenDiscovery(date ?? null)
     })
   }
   const onCancel = () => {
-    setDate(undefined)
     closeModal(modals.ItemDatePickerModal)
   }
   return (

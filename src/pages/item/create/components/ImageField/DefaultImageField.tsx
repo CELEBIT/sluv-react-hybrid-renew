@@ -24,6 +24,8 @@ const DefaultImageField = ({ error }: ImageFieldProps) => {
       temp.push({
         representFlag: i == 0 ? true : false,
         imgFile: imgFileList[i],
+        imgFileUrl: URL.createObjectURL(imgFileList[i]),
+        // 이미지 url변경 안되도록
       })
     }
     setImgList([...temp])

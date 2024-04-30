@@ -1,19 +1,36 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from '@emotion/styled'
 import { Common, Pretendard } from '../../styles'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 import { selectedCelebState, selectedGroupState } from '../../SelectCeleb/SelectCeleb'
 import { MemberWrapper } from './ItemCelebSelectModal'
 import ButtonMedium from '../../ButtonMedium/ButtonMedium'
 import { ICelebResult } from '../../../apis/user/userService'
 import useInterestCelebQuery from '../../../apis/user/hooks/useInterestCelebQuery'
+import { createItemCelebState } from '../../../recoil/itemInfo'
 
 const MyCeleb = () => {
   const {
     getInterestCeleb: { data: interestCelebList },
   } = useInterestCelebQuery()
+
+  const celebInfoInItem = useRecoilValue(createItemCelebState)
   const [selectedCeleb, setSelectedCeleb] = useRecoilState(selectedCelebState)
   const [selectedGroup, setSelectedGroup] = useRecoilState(selectedGroupState)
+
+  useEffect(() => {
+    if (
+      celebInfoInItem.groupId &&
+      celebInfoInItem.groupName &&
+      celebInfoInItem.soloId &&
+      celebInfoInItem.soloName
+    ) {
+      setSelectedGroup({ id: celebInfoInItem.groupId, celebNameKr: celebInfoInItem.groupName })
+      setSelectedCeleb({ id: celebInfoInItem.soloId, celebNameKr: celebInfoInItem.soloName })
+    } else if (celebInfoInItem.soloId && celebInfoInItem.soloName) {
+      setSelectedCeleb({ id: celebInfoInItem.soloId, celebNameKr: celebInfoInItem.soloName })
+    }
+  }, [])
 
   const onClickCeleb = (celebResult: ICelebResult) => {
     if (celebResult.subCelebList) {
@@ -55,14 +72,14 @@ const MyCeleb = () => {
               <>
                 {selectedGroup && selectedGroup.id === celeb.id && (
                   <MemberWrapper>
-                    {selectedGroup.subCelebList &&
-                      selectedGroup.subCelebList.map((member) => {
+                    {celeb.subCelebList &&
+                      celeb.subCelebList.map((member) => {
                         return (
                           <ButtonMedium
                             key={member.id}
                             text={member.celebNameKr}
                             type='pri'
-                            active={selectedCeleb === member}
+                            active={selectedCeleb.id === member.id}
                             onClick={() => onClickMember(member)}
                           ></ButtonMedium>
                         )

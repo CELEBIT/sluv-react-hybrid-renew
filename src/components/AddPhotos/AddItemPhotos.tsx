@@ -117,7 +117,7 @@ const AddItemPhotos = ({ onClick, size }: IAddPhotosProps) => {
                         size={size ? size : 74}
                         borderRadius={8}
                         imgUrl={img.imgUrl ? img.imgUrl : undefined}
-                        imgFile={img.imgFile ? img.imgFile : undefined}
+                        // imgFile={img.imgFile ? img.imgFile : undefined}
                         representFlag={img.representFlag || false}
                         candelete={true}
                         onDelete={() => handleRemovePhoto(index)}

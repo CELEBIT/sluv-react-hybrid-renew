@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { Common } from '../../styles'
 import React, { useRef } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { Brand } from '../../../pages/item/create/components/BrandItemField/BrandItemField'
 import BrandLogo from '../../BrandLogo/BrandLogo'
 import useBrandSearchQuery from '../../../apis/brand/hooks/useBrandSearchQuery'
@@ -11,10 +11,17 @@ import { useDebounce } from 'use-debounce'
 import useRecentBrandQuery from '../../../apis/brand/hooks/useRecentBrandQuery'
 import HighlightedText from '../../HighlightedText/HighlightedText'
 import useNewBrandQuery from '../../../apis/brand/hooks/useNewBrandQuery'
-import { itemInfoState } from '../../../recoil/itemInfo'
+import {
+  createItemBrandState,
+  createItemNewBrandState,
+  itemInfoState,
+} from '../../../recoil/itemInfo'
 
 const BrandList = () => {
   const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
+  const setBrand = useSetRecoilState(createItemBrandState)
+  const setNewBrand = useSetRecoilState(createItemNewBrandState)
+
   const brandName = useRecoilValue(brandNameSearchState)
   const [debouncedBrandName] = useDebounce(brandName, 300)
 
@@ -41,14 +48,10 @@ const BrandList = () => {
       brandId: brand.id ?? null,
       newBrandId: null,
     })
-    setItemInfo({
-      ...itemInfo,
-      brand: {
-        brandId: brand.id,
-        brandName: brand.brandKr,
-        brandImgUrl: brand.brandImgUrl,
-      },
-      newBrand: null,
+    setBrand({
+      brandId: brand.id ?? 0,
+      brandName: brand.brandKr ?? '',
+      brandImgUrl: brand.brandImgUrl,
     })
   }
 

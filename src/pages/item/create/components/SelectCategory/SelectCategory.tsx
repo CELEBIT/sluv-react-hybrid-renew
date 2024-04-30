@@ -1,35 +1,35 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import useModals from '../../../../../components/Modals/hooks/useModals'
 import useItemCategoryQuery from '../../../../../apis/item/hooks/useItemCategoryQuery'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import {
   Category,
   parentCategoryState,
-  subCategoryState,
 } from '../../../../../components/BottomSheetModal/ItemCategoryModal'
 import ButtonMedium from '../../../../../components/ButtonMedium/ButtonMedium'
 import { modals } from '../../../../../components/Modals'
 import { ChipWrapper } from './styles'
-import { itemInfoState } from '../../../../../recoil/itemInfo'
+import { createItemCategoryState, itemInfoState } from '../../../../../recoil/itemInfo'
 
 function SelectCategory() {
   const { openModal } = useModals()
   const activeCategoryRef = useRef<HTMLDivElement>(null)
-  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
+
+  const category = useRecoilValue(createItemCategoryState)
 
   const {
     getItemCategory: { data },
   } = useItemCategoryQuery()
 
+  // display용 value
   const [parentCategory, setParentCategory] = useRecoilState(parentCategoryState)
-  const subCategory = useRecoilValue(subCategoryState)
 
-  const onCategoryClick = (category: Category) => {
+  const onCategoryClick = (each: Category) => {
     setParentCategory({
       ...parentCategory,
-      id: category.id,
-      name: category.name,
-      subCategoryList: category.subCategoryList,
+      id: each.id,
+      name: each.name,
+      subCategoryList: each.subCategoryList,
     })
     openModal(modals.ItemCategoryModal)
   }
@@ -39,17 +39,6 @@ function SelectCategory() {
       setParentCategory({
         ...parentCategory,
         subCategoryList: data[parentCategory.id - 1].subCategoryList,
-      })
-    }
-    if (parentCategory.id !== 0 && subCategory.id !== 0) {
-      setItemInfo({
-        ...itemInfo,
-        itemCategory: {
-          categoryId: subCategory.id,
-          childName: subCategory.name,
-          parentCategoryId: parentCategory.id,
-          parentName: parentCategory.name,
-        },
       })
     }
   }, [])
@@ -62,25 +51,27 @@ function SelectCategory() {
         block: 'end',
       })
     }
-  }, [parentCategory])
+  }, [category])
 
   return (
     <ChipWrapper>
-      {data?.map((category) => {
+      {data?.map((each) => {
         return (
           <ButtonMedium
-            key={category.id}
+            key={each.id}
             // 상위 + > + 하위
             text={
-              parentCategory.id && subCategory.id && category.id === parentCategory.id
-                ? `${parentCategory.name}>${subCategory.name}`
-                : category.name
+              category?.parentCategoryId &&
+              category.categoryId &&
+              each.id === category?.parentCategoryId
+                ? `${category.parentName}>${category.childName}`
+                : each.name
             }
             icon={true}
             type='pri'
-            active={parentCategory.id === category.id}
-            onClick={() => onCategoryClick(category)}
-            ref={parentCategory.id === category.id ? activeCategoryRef : null}
+            active={category?.parentCategoryId === each.id && category.categoryId !== 0}
+            onClick={() => onCategoryClick(each)}
+            ref={category?.parentCategoryId === each.id ? activeCategoryRef : null}
           ></ButtonMedium>
         )
       })}

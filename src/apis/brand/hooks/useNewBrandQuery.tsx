@@ -1,8 +1,8 @@
 import BrandService from '../brandService'
 import { useMutation } from '@tanstack/react-query'
 import useRecentBrandQuery from './useRecentBrandQuery'
-import { useRecoilState } from 'recoil'
-import { itemInfoState } from '../../../recoil/itemInfo'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { createItemNewBrandState, itemInfoState } from '../../../recoil/itemInfo'
 
 interface INewBrand {
   newBrandName: string
@@ -14,7 +14,8 @@ const useNewBrandQuery = () => {
     postRecentBrand: { mutate: mutateByPostRecentBrand },
   } = useRecentBrandQuery()
 
-  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
+  // const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
+  const setNewBrand = useSetRecoilState(createItemNewBrandState)
 
   const postNewBrand = useMutation(
     ({ newBrandName }: INewBrand) => brand.postNewBrand(newBrandName),
@@ -24,15 +25,19 @@ const useNewBrandQuery = () => {
           brandId: null,
           newBrandId: res?.newBrandId ?? null,
         })
-        setItemInfo({
-          ...itemInfo,
-          newBrand: {
-            brandId: res?.newBrandId,
-            brandName: res?.newBrandName,
-            brandImgUrl: '',
-          },
-          brand: null,
+        setNewBrand({
+          brandId: res?.newBrandId ?? 0,
+          brandName: res?.newBrandName ?? '',
         })
+        // setItemInfo({
+        //   ...itemInfo,
+        //   newBrand: {
+        //     brandId: res?.newBrandId,
+        //     brandName: res?.newBrandName,
+        //     brandImgUrl: '',
+        //   },
+        //   brand: null,
+        // })
       },
     },
   )
