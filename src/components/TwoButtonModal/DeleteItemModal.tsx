@@ -22,10 +22,10 @@ const DeleteItemModal = ({ itemId }: DeleteItemModalProps) => {
   } = useItemDetailQuery()
 
   const onDelete = () => {
-    mutateItemDeleted(itemId)
-    closeModal(modals.DeleteItemModal)
-    closeModal(modals.ItemEditModal)
-    navigate(-1)
+    closeModal(modals.DeleteItemModal, () => {
+      mutateItemDeleted(itemId)
+      navigate('/home')
+    })
   }
 
   return (

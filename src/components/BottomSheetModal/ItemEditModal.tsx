@@ -34,10 +34,7 @@ const ItemEditModal = ({ itemId }: ItemEditModalProps) => {
   return (
     <BottomSheetModal>
       <ModalWrapper>
-        <Header
-          isModalHeader={true}
-          modalCloseBtnClick={() => closeModal(modals.ItemEditRequestModal)}
-        />
+        <Header isModalHeader={true} modalCloseBtnClick={() => closeModal(modals.ItemEditModal)} />
         <MenuWrapper>
           <Menu onClick={onClickEdit}>
             <Share stroke={Common.colors.BK}></Share>게시글 수정하기
