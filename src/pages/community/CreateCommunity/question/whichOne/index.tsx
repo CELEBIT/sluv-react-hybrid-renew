@@ -18,7 +18,7 @@ import VoteDisplayField from '../components/VoteDisplayField'
 import { useNavigate } from 'react-router-dom'
 
 const WhichOne = () => {
-  console.log('whichone render')
+  // console.log('whichone render')
   const { openModal } = useModals()
   const hasTriedToUpload = useRecoilValue<boolean>(hasTriedUpload)
 
