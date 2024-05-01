@@ -11,7 +11,22 @@ import { checkListState } from '..'
 import { TempItemResult } from '../../../../apis/item/itemService.type'
 import { useNavigate } from 'react-router-dom'
 import { localStorageKeys } from '../../../../config/localStorageKeys'
-import { IHashTag, createItemCelebState, itemInfoState } from '../../../../recoil/itemInfo'
+import {
+  IHashTag,
+  createItemAddInfoState,
+  createItemBrandState,
+  createItemCategoryState,
+  createItemCelebState,
+  createItemLinkState,
+  createItemNameState,
+  createItemNewBrandState,
+  createItemNewCelebState,
+  createItemPlaceState,
+  createItemPriceState,
+  createItemSourceState,
+  createItemWhenDateState,
+  currentTempIdState,
+} from '../../../../recoil/itemInfo'
 import { imgListState } from '../../../../components/AddPhotos/AddPhotos'
 import {
   parentCategoryState,
@@ -30,12 +45,35 @@ const TempItem = ({ data, isFirst, isEditMode }: TempItemProps) => {
 
   const [isChecked, setIsChecked] = useState(false)
   const [checkedList, setCheckedList] = useRecoilState(checkListState)
-  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
+
+  const setCurrentTempId = useSetRecoilState(currentTempIdState)
+
+  // Item 이미지 리스트
+  const setImgList = useSetRecoilState(imgListState)
+  // Celeb ID
   const setCelebInfoInItem = useSetRecoilState(createItemCelebState)
-  const setImgListState = useSetRecoilState(imgListState)
-  const setSubCategory = useSetRecoilState(subCategoryState)
-  const setParentCategory = useSetRecoilState(parentCategoryState)
+  // NewCeleb ID
+  const setNewCeleb = useSetRecoilState(createItemNewCelebState)
+  // 착용 날짜
+  const setWhenDiscovery = useSetRecoilState(createItemWhenDateState)
+  // 착용 장소
+  const setWhereDiscovery = useSetRecoilState(createItemPlaceState)
+  // 아이템 카테고리
+  const setCategory = useSetRecoilState(createItemCategoryState)
+  // 브랜드 ID
+  const setBrand = useSetRecoilState(createItemBrandState)
+  // NewBrand ID
+  const setNewBrand = useSetRecoilState(createItemNewBrandState)
+  // 아이템 이름
+  const setItemName = useSetRecoilState(createItemNameState)
+  // 가격
+  const setPrice = useSetRecoilState(createItemPriceState)
+  // 추가정보
+  const setAdditionalInfo = useSetRecoilState(createItemAddInfoState)
   const setHashTags = useSetRecoilState(hashTagState)
+  const setSource = useSetRecoilState(createItemSourceState)
+  // 구매링크
+  const setLinkList = useSetRecoilState(createItemLinkState)
 
   const [title, imgUrl] = useMemo(() => {
     const processedTitle = String(processTempTitle(data))
@@ -67,9 +105,53 @@ const TempItem = ({ data, isFirst, isEditMode }: TempItemProps) => {
       return
     }
     localStorage.setItem(localStorageKeys.TEMP_ITEM_ID, String(data.id))
-
+    setCurrentTempId(data.id)
+    setImgList(data.imgList ?? [])
+    // 셀럽 설정
+    setCelebInfoInItem({
+      groupId: data.celeb.parentId !== null ? data.celeb.parentId : null,
+      groupName: data.celeb.parentCelebNameKr !== null ? data.celeb.parentCelebNameKr : null,
+      soloId: data.celeb.id !== null ? data.celeb.id : null,
+      soloName: data.celeb.celebNameKr !== null ? data.celeb.celebNameKr : null,
+    })
+    setNewCeleb(
+      data.newCeleb && {
+        id: data.newCeleb.newCelebId,
+        newCelebName: data.newCeleb.newCelebName,
+      },
+    )
+    setWhenDiscovery(data.whenDiscovery ? new Date(data.whenDiscovery) : null)
+    setWhereDiscovery(data.whereDiscovery)
+    setCategory(
+      data.category && {
+        categoryId: data.category.id,
+        childName: data.category.name,
+        parentCategoryId: data.category.parentId,
+        parentName: data.category.parentName,
+      },
+    )
+    setBrand(
+      data.brand && {
+        brandId: data.brand.id,
+        brandName: data.brand.brandKr,
+        brandImgUrl: data.brand.brandImgUrl,
+      },
+    )
+    setNewBrand(
+      data.newBrand && {
+        brandId: data.newBrand.newBrandId,
+        brandName: data.newBrand.newBrandName,
+      },
+    )
+    setItemName(data.itemName)
+    setPrice(data.price)
+    setAdditionalInfo(data.additionalInfo)
+    setLinkList(data.linkList ? data.linkList : null)
+    setSource(data.infoSource)
+    // 해시태그 설정
     const hashtags: Array<IHashTag> = []
     data.hashTagList &&
+      data.hashTagList.length > 0 &&
       data.hashTagList.map((item) => {
         hashtags.push({
           hashtagId: item.hashtagId,
@@ -77,63 +159,6 @@ const TempItem = ({ data, isFirst, isEditMode }: TempItemProps) => {
         })
       })
     setHashTags(hashtags)
-
-    // 사진 설정
-    setImgListState(data.imgList ?? [])
-    if (data.category) {
-      if (data.category.parentId && data.category.parentName) {
-        setParentCategory({ id: data.category.parentId, name: data.category.parentName })
-      }
-      if (data.category.id && data.category.name) {
-        setSubCategory({ id: data.category.id, name: data.category.name })
-      }
-    }
-    // 셀럽 설정
-    if (data.celeb) {
-      setCelebInfoInItem((prevState) => ({
-        ...prevState,
-        groupId: data.celeb.parentId !== null ? data.celeb.parentId : null,
-        groupName: data.celeb.parentCelebNameKr !== null ? data.celeb.parentCelebNameKr : null,
-        soloId: data.celeb.id !== null ? data.celeb.id : null,
-        soloName: data.celeb.celebNameKr !== null ? data.celeb.celebNameKr : null,
-      }))
-    }
-
-    setItemInfo({
-      ...itemInfo,
-      imgList: data.imgList ?? null,
-      celeb: data.celeb && {
-        celebId: data.celeb.id,
-        celebName: data.celeb.celebNameKr,
-      },
-      whenDiscovery: data.whenDiscovery ? new Date(data.whenDiscovery) : null,
-      whereDiscovery: data.whereDiscovery,
-      itemCategory: data.category && {
-        categoryId: data.category.id,
-        childName: data.category.name,
-        parentCategoryId: data.category.parentId,
-        parentName: data.category.parentName,
-      },
-      brand: data.brand && {
-        brandId: data.brand.id,
-        brandName: data.brand.brandKr,
-        brandImgUrl: data.brand.brandImgUrl,
-      },
-      itemName: data.itemName,
-      price: data.price,
-      additionalInfo: data.additionalInfo,
-      hashTagList: !hashtags ? null : hashtags,
-      linkList: !data.linkList ? null : data.linkList,
-      infoSource: data.infoSource,
-      newCeleb: data.newCeleb && {
-        celebId: data.newCeleb.newCelebId,
-        celebName: data.newCeleb.newCelebName,
-      },
-      newBrand: data.newBrand && {
-        brandId: data.newBrand.newBrandId,
-        brandName: data.newBrand.newBrandName,
-      },
-    })
 
     navigate(-1)
   }

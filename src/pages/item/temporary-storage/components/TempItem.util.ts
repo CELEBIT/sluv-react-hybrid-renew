@@ -24,7 +24,7 @@ export const processTempTitle = (
     } else {
       return data.newCeleb.newCelebName
     }
-  } else if ((data.imgList?.length ?? 0) > 0) {
+  } else if ((data.imgList && data.imgList.length) > 0) {
     return '사진'
   } else if (data.whenDiscovery) {
     return data.whenDiscovery
@@ -47,10 +47,10 @@ export const processTempTitle = (
   }
 }
 
-export const filterRepresentImg = (imgList: Array<ImgResult>): string => {
+export const filterRepresentImg = (imgList: Array<ImgResult>): string | undefined => {
   if (imgList) {
     const representImg = imgList.filter((img) => img.representFlag)
     return representImg[0].imgUrl
   }
-  return ''
+  return undefined
 }

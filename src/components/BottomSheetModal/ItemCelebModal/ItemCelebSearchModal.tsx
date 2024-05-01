@@ -42,12 +42,12 @@ const ItemCelebSearchModal = () => {
   const onClose = () => {
     closeModal(modals.ItemCelebSearchModal, () => {
       setSelectedGroup({
-        id: celebInfoInItem.groupId ?? 0,
-        celebNameKr: celebInfoInItem.groupName ?? '',
+        id: celebInfoInItem?.groupId ?? 0,
+        celebNameKr: celebInfoInItem?.groupName ?? '',
       })
       setSelectedCeleb({
-        id: celebInfoInItem.soloId ?? 0,
-        celebNameKr: celebInfoInItem.soloName ?? '',
+        id: celebInfoInItem?.soloId ?? 0,
+        celebNameKr: celebInfoInItem?.soloName ?? '',
       })
     })
   }

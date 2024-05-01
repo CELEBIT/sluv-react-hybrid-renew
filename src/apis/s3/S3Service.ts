@@ -61,6 +61,11 @@ export default class S3Service {
             // 에러를 반환하거나, 에러 처리를 적절히 수행합니다.
           }
         }
+      } else {
+        resultList.push({
+          representFlag: item.representFlag,
+          imgUrl: item.imgUrl,
+        })
       }
     }
     return resultList

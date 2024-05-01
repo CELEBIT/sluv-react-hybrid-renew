@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import BrandItemField from './components/BrandItemField/BrandItemField'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 import DatePlaceField from './components/DatePlaceField/DatePlaceField'
@@ -42,6 +42,7 @@ import {
   createItemPriceState,
   createItemSourceState,
   createItemWhenDateState,
+  currentTempIdState,
   itemS3ImgListState,
 } from '../../../recoil/itemInfo'
 import useUploadStateObserver from '../../../hooks/useUploadStateObserver'
@@ -55,9 +56,10 @@ import { imgListState } from '../../../components/AddPhotos/AddPhotos'
 import useTempItemQuery from '../../../apis/item/hooks/useTempItemQuery'
 import { hashTagState } from '../addInfo/components/HashTags/HashTag'
 import useItemImgUpload from '../../../apis/s3/hooks/useItemImgUpload'
+import { checkListState } from '../temporary-storage'
 
 const ItemCreateCopy = () => {
-  // useUploadStateObserver()
+  useUploadStateObserver()
 
   const navigate = useNavigate()
 
@@ -90,31 +92,68 @@ const ItemCreateCopy = () => {
   const source = useRecoilValue(createItemSourceState)
   // 구매링크
   const linkList = useRecoilValue(createItemLinkState)
+  // 임시저장 아이템
+  const [currentTempId, setCurrentTempId] = useRecoilState(currentTempIdState)
 
-  const resetCategory = useResetRecoilState(subCategoryState)
-  const resetParentCategory = useResetRecoilState(parentCategoryState)
+  const { openModal } = useModals()
+  useEffect(() => {
+    console.log('useEffect')
+    const id = Number(localStorage.getItem(localStorageKeys.TEMP_ITEM_ID))
+    if (id && id !== currentTempId) {
+      openModal(modals.AskRecentPostWritingModal)
+    }
+  }, [])
+
+  const resetS3ImgList = useResetRecoilState(itemS3ImgListState)
   const resetImgListState = useResetRecoilState(imgListState)
+  const resetCelebInfoInItem = useResetRecoilState(createItemCelebState)
+  const resetNewCeleb = useResetRecoilState(createItemNewCelebState)
+  const resetWhenDiscovery = useResetRecoilState(createItemWhenDateState)
+  const resetwhereDiscovery = useResetRecoilState(createItemPlaceState)
+  const resetCategory = useResetRecoilState(createItemCategoryState)
+  const resetBrand = useResetRecoilState(createItemBrandState)
+  const resetNewBrand = useResetRecoilState(createItemNewBrandState)
+  const resetItemName = useResetRecoilState(createItemNameState)
+  const resetPrice = useResetRecoilState(createItemPriceState)
+  const resetAdditionalInfo = useResetRecoilState(createItemAddInfoState)
+  const resetHashTags = useResetRecoilState(hashTagState)
+  const resetSource = useResetRecoilState(createItemSourceState)
+  const resetLinkList = useResetRecoilState(createItemLinkState)
+
+  // const resetCategory = useResetRecoilState(subCategoryState)
+  // const resetParentCategory = useResetRecoilState(parentCategoryState)
 
   const onBackClick = () => {
-    // resetItemInfo()
-    // resetCelebInfoInItem()
-    resetCategory()
-    resetParentCategory()
+    setCurrentTempId(null)
+    resetS3ImgList()
     resetImgListState()
+    resetCelebInfoInItem()
+    resetNewCeleb()
+    resetWhenDiscovery()
+    resetwhereDiscovery()
+    resetCategory()
+    resetBrand()
+    resetNewBrand()
+    resetItemName()
+    resetPrice()
+    resetAdditionalInfo()
+    resetHashTags()
+    resetSource()
+    resetLinkList()
     navigate('/home', { replace: true })
   }
 
-  const { getTempCount } = useTempItemQuery()
+  const { getTempCount, getTempItem } = useTempItemQuery()
   const { data: tempCount } = getTempCount()
-  console.log(tempCount)
+  const { data: tempList } = getTempItem()
+
   const {
     postItemImg: { mutate: mutateByImgUpload },
   } = useItemImgUpload()
 
-  const hashTagIdList: Array<number> | null =
-    hashTags && hashTags.length > 0 ? hashTags.map((item) => item.hashtagId) : null
-
   const onSubmit = async () => {
+    const hashTagIdList: Array<number> | null =
+      hashTags && hashTags.length > 0 ? hashTags.map((item) => item.hashtagId) : null
     setHasTriedToUpload(true)
     // 아무 값이 없을 때
     if (
@@ -145,7 +184,6 @@ const ItemCreateCopy = () => {
       price
     ) {
       mutateByImgUpload(imgList)
-      console.log(imgList)
     }
   }
 
@@ -157,6 +195,8 @@ const ItemCreateCopy = () => {
   useEffect(() => {
     if (s3ImgList && s3ImgList.length > 0) {
       // s3ImgList가 업데이트 되었을 때 실행할 로직
+      const hashTagIdList: Array<number> | null =
+        hashTags && hashTags.length > 0 ? hashTags.map((item) => item.hashtagId) : null
       const item: TempItemReq = {
         id: null,
         imgList: s3ImgList ?? null,
@@ -193,11 +233,11 @@ const ItemCreateCopy = () => {
         </ComponentWrapper>
         <ComponentWrapper>
           <LabelContainer>
-            {hasTriedToUpload && !(celebInfoInItem.soloId || newCeleb?.id) && <Error></Error>}
+            {hasTriedToUpload && !(celebInfoInItem?.soloId || newCeleb?.id) && <Error></Error>}
             <Label>누가 착용했나요?</Label>
           </LabelContainer>
           <SelectCeleb></SelectCeleb>
-          {hasTriedToUpload && !(celebInfoInItem.soloId || newCeleb?.id) && (
+          {hasTriedToUpload && !(celebInfoInItem?.soloId || newCeleb?.id) && (
             <ErrorText className='error'>필수 항목입니다</ErrorText>
           )}
         </ComponentWrapper>
