@@ -62,10 +62,8 @@ const useItemQuery = () => {
     onSuccess: (res) => {
       console.log(res)
       if (res?.itemId) {
-        if (location.pathname.includes('edit')) {
-          alert('게시글이 수정되었어요')
-        }
-
+        queryClient.invalidateQueries()
+        navigate(`/item/detail/${res.itemId}`)
         resetS3ImgList()
         resetImgListState()
         resetCelebInfoInItem()
@@ -82,10 +80,12 @@ const useItemQuery = () => {
         resetSource()
         resetLinkList()
         if (currentTempId) mutateItemDeleted([currentTempId])
-        localStorage.removeItem(localStorageKeys.TEMP_ITEM_ID)
-        setCurrentTempId(null)
-        queryClient.invalidateQueries()
-        navigate(`/item/detail/${res.itemId}`)
+        if (location.pathname.includes('edit')) {
+          alert('게시글이 수정되었어요')
+        } else {
+          localStorage.removeItem(localStorageKeys.TEMP_ITEM_ID)
+          setCurrentTempId(null)
+        }
       }
     },
   })

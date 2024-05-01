@@ -86,6 +86,6 @@ export const Brand = styled.div`
   width: 100%;
   span {
     margin-left: 0.5rem;
-    ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.GR600 })}
+    ${Pretendard({ size: 15, weight: Common.bold.thin, color: Common.colors.BK })}
   }
 `

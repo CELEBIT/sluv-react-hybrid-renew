@@ -26,7 +26,6 @@ const Page500 = React.lazy(() => import('./pages/page404'))
 const Home = React.lazy(() => import('./pages/home'))
 const Community = React.lazy(() => import('./pages/community'))
 const ItemCreate = React.lazy(() => import('./pages/item/create'))
-const ItemCreateCopy = React.lazy(() => import('./pages/item/create/indexCopy'))
 const Closet = React.lazy(() => import('./pages/closet'))
 const User = React.lazy(() => import('./pages/user'))
 
@@ -188,7 +187,7 @@ const App = () => {
             <Route path='/community/detail/report-user/reason' element={<RequestReason />} />
             {/* 정보 공유하기 */}
 
-            <Route path='/item/create' element={<ItemCreateCopy />} />
+            <Route path='/item/create' element={<ItemCreate />} />
             <Route path='/item/create/addinfo' element={<AddInfo />} />
             <Route path='/item/create/addlink' element={<AddLink />} />
             {/* <Route path='/item/create/confirm' element={<ItemConfirm />} /> */}
