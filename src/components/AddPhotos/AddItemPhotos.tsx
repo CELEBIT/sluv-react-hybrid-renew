@@ -19,8 +19,6 @@ const AddItemPhotos = ({ onClick, size }: IAddPhotosProps) => {
   const setCommunityUploadInfo = useSetRecoilState(communityItemState)
   const setCommentObject = useSetRecoilState(commentState)
 
-  console.log('imgItemList in AddItemPhotos', imgItemList)
-
   const onDragEnd = useCallback(
     (result: any) => {
       if (!result.destination) {
@@ -116,7 +114,7 @@ const AddItemPhotos = ({ onClick, size }: IAddPhotosProps) => {
                         key='image'
                         size={size ? size : 74}
                         borderRadius={8}
-                        imgUrl={img.imgUrl ? img.imgUrl : undefined}
+                        imgUrl={img.imgUrl || img.imgFileUrl}
                         // imgFile={img.imgFile ? img.imgFile : undefined}
                         representFlag={img.representFlag || false}
                         candelete={true}

@@ -75,7 +75,7 @@ const SelectItemOrPhoto = () => {
   ]
   const onComplete = () => {
     // 대표사진 설정
-    console.log('imgItemList in selectITem ', imgItemList)
+    // console.log('imgItemList in selectITem ', imgItemList)
     if (imgItemList.length > 0) {
       setImageItemList((prevList) => {
         const updatedList = prevList.map((item, index) => ({
@@ -167,7 +167,7 @@ const SelectItemOrPhoto = () => {
           reader.onloadend = () => {
             const fileSelected = {
               imgFile: file,
-              // imgUrl: null,
+              imgFileUrl: URL.createObjectURL(file),
               description: null,
               vote: null,
               representFlag: !imgItemList && i === 0,
@@ -180,13 +180,13 @@ const SelectItemOrPhoto = () => {
                     // firstItem이 비어있을 때
                     setFirstItem((prev) => ({
                       ...prev,
-                      ...{ imgFile: file },
+                      ...{ imgFile: file, imgUrl: URL.createObjectURL(file) },
                     }))
                   } else if (firstItem.imgFile || firstItem.itemId) {
                     // first가 존재할 때
                     setSecondItem((prev) => ({
                       ...prev,
-                      ...{ imgFile: file },
+                      ...{ imgFile: file, imgUrl: URL.createObjectURL(file) },
                     }))
                   }
                 } else {
@@ -197,7 +197,7 @@ const SelectItemOrPhoto = () => {
                     // console.log('seconds 아이템 null')
                     setSecondItem((prev) => ({
                       ...prev,
-                      ...{ imgFile: file },
+                      ...{ imgFile: file, imgUrl: URL.createObjectURL(file) },
                     }))
                     // console.log('secondItem', secondItem)
                   }
@@ -240,7 +240,7 @@ const SelectItemOrPhoto = () => {
                   // console.log('first item 없음')
                   setFirstItem((prev) => ({
                     ...prev,
-                    ...{ imgFile: file },
+                    ...{ imgFile: file, imgFileUrl: URL.createObjectURL(file) },
                   }))
                   // console.log('firstItem', firstItem)
                 } else if (firstItem.imgFile || firstItem.itemId) {
@@ -248,7 +248,7 @@ const SelectItemOrPhoto = () => {
                   // console.log('seconds 아이템 null')
                   setSecondItem((prev) => ({
                     ...prev,
-                    ...{ imgFile: file },
+                    ...{ imgFile: file, imgFileUrl: URL.createObjectURL(file) },
                   }))
                 }
               } else {
