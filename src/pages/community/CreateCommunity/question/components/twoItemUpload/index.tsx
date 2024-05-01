@@ -43,7 +43,7 @@ const TwoItemUpload = ({ onClick }: TwoItemUploadProps) => {
   const [secondItemName, setSecondItemName] = useState<string | null>(secondItem.description)
   // console.log('two item render')
 
-  console.log('imgItemList', imgItemList)
+  // console.log('imgItemList', imgItemList)
   const onDeleteItem = (item: IselectedItem) => {
     let newItemList
 
@@ -90,7 +90,7 @@ const TwoItemUpload = ({ onClick }: TwoItemUploadProps) => {
         }))
       }
     }
-    console.log('imgItemList after delete', imgItemList)
+    // console.log('imgItemList after delete', imgItemList)
   }
 
   useEffect(() => {
@@ -123,7 +123,7 @@ const TwoItemUpload = ({ onClick }: TwoItemUploadProps) => {
             <>
               {firstItem?.imgFile && (
                 <UploadPhoto
-                  imgFile={firstItem.imgFile}
+                  imgUrl={firstItem.imgUrl ?? ''}
                   className='left'
                   onDelete={() => onDeleteItem(firstItem)}
                 ></UploadPhoto>
@@ -143,7 +143,7 @@ const TwoItemUpload = ({ onClick }: TwoItemUploadProps) => {
               {secondItem.imgFile && (
                 // 유저 갤러리에서 선택
                 <UploadPhoto
-                  imgFile={secondItem.imgFile}
+                  imgUrl={secondItem.imgUrl ?? ''}
                   className='right'
                   onDelete={() => onDeleteItem(secondItem)}
                 ></UploadPhoto>
