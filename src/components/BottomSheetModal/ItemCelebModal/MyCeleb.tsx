@@ -20,15 +20,15 @@ const MyCeleb = () => {
 
   useEffect(() => {
     if (
-      celebInfoInItem.groupId &&
-      celebInfoInItem.groupName &&
-      celebInfoInItem.soloId &&
-      celebInfoInItem.soloName
+      celebInfoInItem?.groupId &&
+      celebInfoInItem?.groupName &&
+      celebInfoInItem?.soloId &&
+      celebInfoInItem?.soloName
     ) {
-      setSelectedGroup({ id: celebInfoInItem.groupId, celebNameKr: celebInfoInItem.groupName })
-      setSelectedCeleb({ id: celebInfoInItem.soloId, celebNameKr: celebInfoInItem.soloName })
-    } else if (celebInfoInItem.soloId && celebInfoInItem.soloName) {
-      setSelectedCeleb({ id: celebInfoInItem.soloId, celebNameKr: celebInfoInItem.soloName })
+      setSelectedGroup({ id: celebInfoInItem?.groupId, celebNameKr: celebInfoInItem?.groupName })
+      setSelectedCeleb({ id: celebInfoInItem?.soloId, celebNameKr: celebInfoInItem?.soloName })
+    } else if (celebInfoInItem?.soloId && celebInfoInItem?.soloName) {
+      setSelectedCeleb({ id: celebInfoInItem?.soloId, celebNameKr: celebInfoInItem?.soloName })
     }
   }, [])
 

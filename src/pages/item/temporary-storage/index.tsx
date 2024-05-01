@@ -12,10 +12,12 @@ import {
 import useTempItemQuery from '../../../apis/item/hooks/useTempItemQuery'
 import { useObserver } from '../../../hooks/useObserver'
 import TempItem from './components/TempItem'
-import { atom, useRecoilValue } from 'recoil'
+import { atom, useRecoilState, useRecoilValue } from 'recoil'
 import { atomKeys } from '../../../config/atomKeys'
 import useModals from '../../../components/Modals/hooks/useModals'
 import { modals } from '../../../components/Modals'
+import { currentTempIdState } from '../../../recoil/itemInfo'
+import { localStorageKeys } from '../../../config/localStorageKeys'
 
 export const checkListState = atom<Array<number>>({
   key: atomKeys.checkListState,
@@ -27,10 +29,13 @@ const TemporaryStorage = () => {
 
   const [isEditMode, setIsEditMode] = useState(false)
   const checkedList = useRecoilValue(checkListState)
+  const [currentTempId, setCurrentTempId] = useRecoilState(currentTempIdState)
+
   const bottom = useRef(null)
 
   const { getTempItem } = useTempItemQuery()
   const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } = getTempItem()
+  console.log('temp data', data)
   const onIntersect = ([entry]: IntersectionObserverEntry[]) => {
     entry.isIntersecting && fetchNextPage()
   }
@@ -49,6 +54,8 @@ const TemporaryStorage = () => {
   const onDeleteAll = () => {
     openModal(modals.DeleteTempItemModal, { type: '전체삭제' })
   }
+
+  const localTempId = Number(localStorage.getItem(localStorageKeys.TEMP_ITEM_ID))
 
   return (
     <TStoragePageStyle>
@@ -82,7 +89,7 @@ const TemporaryStorage = () => {
                   <TempItem
                     key={temp.id}
                     data={temp}
-                    isFirst={idx === 0 && index === 0}
+                    isFirst={currentTempId && localTempId ? currentTempId === temp.id : false}
                     isEditMode={isEditMode}
                   />
                 )

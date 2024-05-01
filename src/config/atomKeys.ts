@@ -17,6 +17,7 @@ export const atomKeys = {
   // Item 정보 공유
   itemIdtoEditState: 'itemIdtoEditState' as const, // 아이템 수정 시 id
   itemS3ImgListState: 'itemS3ImgListState' as const,
+  tempS3ImgListState: 'tempS3ImgListState' as const,
   createItemCelebState: 'createItemCelebState' as const,
   createItemNewCelebState: 'createItemNewCelebState' as const,
   createItemWhenDateState: 'createItemWhenDateState' as const,
@@ -29,6 +30,7 @@ export const atomKeys = {
   createItemAddInfoState: 'createItemAddInfoState' as const,
   createItemSourceState: 'createItemSourceState' as const,
   createItemLinkState: 'createItemLinkState' as const,
+  currentTempId: 'currentTempId' as const,
   // 수정 요청
   requestEditItemState: 'requestEditItemState' as const,
   requestEditReasonState: 'requestEditReasonState' as const,

@@ -89,14 +89,14 @@ export const itemS3ImgListState = atom<ImgResult[] | null>({
   default: null,
 })
 
-export const createItemCelebState = atom<ICelebInfo>({
+export const tempS3ImgListState = atom<ImgResult[] | null>({
+  key: atomKeys.tempS3ImgListState,
+  default: null,
+})
+
+export const createItemCelebState = atom<ICelebInfo | null>({
   key: atomKeys.createItemCelebState,
-  default: {
-    groupId: null,
-    groupName: null,
-    soloId: null,
-    soloName: null,
-  },
+  default: null,
 })
 
 export const createItemNewCelebState = atom<NewCeleb | null>({
@@ -151,5 +151,10 @@ export const createItemSourceState = atom<string | null>({
 
 export const createItemLinkState = atom<ILink[] | null>({
   key: atomKeys.createItemLinkState,
+  default: null,
+})
+
+export const currentTempIdState = atom<number | null>({
+  key: atomKeys.currentTempId,
   default: null,
 })

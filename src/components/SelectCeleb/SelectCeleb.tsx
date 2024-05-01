@@ -73,12 +73,12 @@ const SelectCeleb = () => {
     openModal(modals.ItemCelebSearchModal, {
       callbackFunc: () => {
         setSelectedGroup({
-          id: celebInfoInItem.groupId ?? 0,
-          celebNameKr: celebInfoInItem.groupName ?? '',
+          id: celebInfoInItem?.groupId ?? 0,
+          celebNameKr: celebInfoInItem?.groupName ?? '',
         })
         setSelectedCeleb({
-          id: celebInfoInItem.soloId ?? 0,
-          celebNameKr: celebInfoInItem.soloName ?? '',
+          id: celebInfoInItem?.soloId ?? 0,
+          celebNameKr: celebInfoInItem?.soloName ?? '',
         })
       },
     })
@@ -89,8 +89,8 @@ const SelectCeleb = () => {
     if (newCeleb?.id === celebResult.id) {
       resetNewCeleb()
     } else if (
-      celebInfoInItem.soloId == celebResult.id ||
-      celebInfoInItem.groupId == celebResult.id
+      celebInfoInItem?.soloId == celebResult.id ||
+      celebInfoInItem?.groupId == celebResult.id
     ) {
       setCelebInfoInItem({
         groupId: null,
@@ -107,12 +107,12 @@ const SelectCeleb = () => {
         openModal(modals.ItemCelebSelectModal, {
           callbackFunc: () => {
             setSelectedGroup({
-              id: celebInfoInItem.groupId ?? 0,
-              celebNameKr: celebInfoInItem.groupName ?? '',
+              id: celebInfoInItem?.groupId ?? 0,
+              celebNameKr: celebInfoInItem?.groupName ?? '',
             })
             setSelectedCeleb({
-              id: celebInfoInItem.soloId ?? 0,
-              celebNameKr: celebInfoInItem.soloName ?? '',
+              id: celebInfoInItem?.soloId ?? 0,
+              celebNameKr: celebInfoInItem?.soloName ?? '',
             })
           },
         })
@@ -135,7 +135,7 @@ const SelectCeleb = () => {
     if ((interestCelebList?.length ?? 0) <= 0) {
       // 관심셀럽이 없으므로 리턴
       return
-    } else if (!celebInfoInItem.groupId && !celebInfoInItem.soloId) {
+    } else if (!celebInfoInItem?.groupId && !celebInfoInItem?.soloId) {
       // Celeb 선택 전
       if (newCeleb) {
         setDisplayList((prevList) => [
@@ -150,36 +150,36 @@ const SelectCeleb = () => {
         setDisplayList(interestCelebList ?? null)
         return
       }
-    } else if (celebInfoInItem.groupId && !celebInfoInItem.soloId) {
+    } else if (celebInfoInItem?.groupId && !celebInfoInItem?.soloId) {
       // 그룹은 선택했지만, 멤버 선택 전
       setDisplayList(interestCelebList ?? null)
       return
-    } else if (celebInfoInItem.soloId && !celebInfoInItem.groupId) {
+    } else if (celebInfoInItem?.soloId && !celebInfoInItem?.groupId) {
       // 선택한 셀럽이 솔로인 경우
       // 관심셀럽 리스트에 해당 솔로가 있다면
       // 기존 관심셀럽 리스트에서 삭제 후 리스트 맨 앞으로 보냄
-      const newList = interestCelebList?.filter((celeb) => celeb.id !== celebInfoInItem.soloId)
+      const newList = interestCelebList?.filter((celeb) => celeb.id !== celebInfoInItem?.soloId)
       if (newList) {
         setDisplayList([
           {
-            id: celebInfoInItem.soloId,
-            celebNameKr: celebInfoInItem.soloName ?? '',
+            id: celebInfoInItem?.soloId,
+            celebNameKr: celebInfoInItem?.soloName ?? '',
           },
           ...newList,
         ])
       }
       return
-    } else if (celebInfoInItem.groupId && celebInfoInItem.soloId) {
+    } else if (celebInfoInItem?.groupId && celebInfoInItem?.soloId) {
       // 선택한 셀럽이 그룹의 멤버인 경우
       // 관심셀럽 리스트에서 해당 그룹이 있다면
       // 기존 관심셀럽 리스트에서 삭제 후 리스트 맨 앞으로 보내고
       // 그룹명 + 멤버명 형태로 보여줌
-      const newList = interestCelebList?.filter((celeb) => celeb.id !== celebInfoInItem.groupId)
+      const newList = interestCelebList?.filter((celeb) => celeb.id !== celebInfoInItem?.groupId)
       if (newList) {
         setDisplayList([
           {
-            id: celebInfoInItem.soloId,
-            celebNameKr: celebInfoInItem.groupName + ' ' + celebInfoInItem.soloName,
+            id: celebInfoInItem?.soloId,
+            celebNameKr: celebInfoInItem?.groupName + ' ' + celebInfoInItem?.soloName,
           },
           ...newList,
         ])
@@ -200,7 +200,7 @@ const SelectCeleb = () => {
                 key={index}
                 text={celeb.celebNameKr}
                 type='pri'
-                active={celebInfoInItem.soloId === celeb.id}
+                active={celebInfoInItem?.soloId === celeb.id}
                 onClick={() => onClickCeleb(celeb)}
               ></ButtonMedium>
             )

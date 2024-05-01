@@ -111,10 +111,10 @@ const ItemConfirm = () => {
           </LabelContainer>
           <div className='padding'>
             <DisplayField disabled={true}>
-              {celebInfo.groupName ? (
-                <span>{celebInfo.groupName + ' ' + celebInfo.soloName}</span>
+              {celebInfo?.groupName ? (
+                <span>{celebInfo?.groupName + ' ' + celebInfo?.soloName}</span>
               ) : (
-                <span>{celebInfo.soloName}</span>
+                <span>{celebInfo?.soloName}</span>
               )}
             </DisplayField>
           </div>
