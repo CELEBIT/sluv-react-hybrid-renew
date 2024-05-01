@@ -104,9 +104,9 @@ const ItemCreateCopy = () => {
     navigate('/home', { replace: true })
   }
 
-  const { getTempItem } = useTempItemQuery()
-  const { data } = getTempItem()
-
+  const { getTempCount } = useTempItemQuery()
+  const { data: tempCount } = getTempCount()
+  console.log(tempCount)
   const {
     postItemImg: { mutate: mutateByImgUpload },
   } = useItemImgUpload()
@@ -253,7 +253,7 @@ const ItemCreateCopy = () => {
           </div>
         </div>
         <div className='right'>
-          {data?.pages[0].countNum && data?.pages[0].countNum > 0 ? (
+          {tempCount && tempCount?.tempItemCount > 0 ? (
             <StorageOn onClick={() => navigate('/item/create/temporary-storage')}></StorageOn>
           ) : (
             <StorageOff onClick={() => navigate('/item/create/temporary-storage')}></StorageOff>

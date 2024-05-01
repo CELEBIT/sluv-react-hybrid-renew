@@ -6,6 +6,7 @@ export const queryKeys = {
   brandRecentSelected: ['brandRecentSelected'] as const,
   brandTop: ['brandTop'] as const,
   tempItem: ['tempItem'] as const,
+  getTempCount: ['getTempCount'] as const,
   searchBrand: (brandName: string) => ['searchBrand', brandName] as const,
   hotPlace: ['hotPlace'] as const,
   recentPlace: ['recentPlace'] as const,
