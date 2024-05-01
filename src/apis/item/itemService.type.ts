@@ -144,6 +144,10 @@ export interface TempItemReq {
   newBrandId: number | null
 }
 
+export interface TempCount {
+  tempItemCount: number
+}
+
 export interface ItemId {
   itemId: number
 }

@@ -2,6 +2,7 @@ import {
   UseInfiniteQueryResult,
   useInfiniteQuery,
   useMutation,
+  useQuery,
   useQueryClient,
 } from '@tanstack/react-query'
 import ItemService from '../itemService'
@@ -29,6 +30,11 @@ const useTempItemQuery = () => {
       },
     )
   }
+
+  const getTempCount = () => {
+    return useQuery(queryKeys.getTempCount, () => item.getTempCount())
+  }
+
   const deleteTempItem = useMutation((checkList: Array<number>) => item.deleteTempItem(checkList), {
     onSuccess: () => {
       closeModal(modals.DeleteTempItemModal)
@@ -50,7 +56,7 @@ const useTempItemQuery = () => {
       }
     },
   })
-  return { getTempItem, deleteTempItem, deleteTempItemAll, postTempItem }
+  return { getTempItem, getTempCount, deleteTempItem, deleteTempItemAll, postTempItem }
 }
 
 export default useTempItemQuery
