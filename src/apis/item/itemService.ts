@@ -9,6 +9,7 @@ import {
   ItemResult,
   ParentCategoryResult,
   RecommendItemResult,
+  TempCount,
   TempItemId,
   TempItemReq,
   TempItemResult,
@@ -50,6 +51,12 @@ export default class ItemService {
     )
     return data.result
   }
+  // 아이템 게시글 상세 조회
+  async getTempCount() {
+    const data: ResponseType<TempCount> = await request.get(`${this.tempItemUrl}/count`)
+    return data.result
+  }
+
   // 아이템 게시글 상세 조회
   async getItemDetail(itemId: number) {
     const data: ResponseType<ItemDetailResult> = await request.get(`${this.itemUrl}/${itemId}`)

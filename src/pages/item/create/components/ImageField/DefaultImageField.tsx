@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { useCallback, useEffect, useRef, memo } from 'react'
 import styled from '@emotion/styled'
 import { ReactComponent as Add } from '../../../../../assets/add_18.svg'
 import { ReactComponent as Error } from '../../../../../assets/error_20.svg'
@@ -24,6 +24,8 @@ const DefaultImageField = ({ error }: ImageFieldProps) => {
       temp.push({
         representFlag: i == 0 ? true : false,
         imgFile: imgFileList[i],
+        imgFileUrl: URL.createObjectURL(imgFileList[i]),
+        // 이미지 url변경 안되도록
       })
     }
     setImgList([...temp])
@@ -70,7 +72,7 @@ const DefaultImageField = ({ error }: ImageFieldProps) => {
   )
 }
 
-export default DefaultImageField
+export default memo(DefaultImageField)
 
 const DefaultImageFieldWrapper = styled.div<{ error: boolean }>`
   display: flex;

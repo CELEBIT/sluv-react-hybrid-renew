@@ -190,7 +190,7 @@ const App = () => {
             <Route path='/item/create' element={<ItemCreate />} />
             <Route path='/item/create/addinfo' element={<AddInfo />} />
             <Route path='/item/create/addlink' element={<AddLink />} />
-            <Route path='/item/create/confirm' element={<ItemConfirm />} />
+            {/* <Route path='/item/create/confirm' element={<ItemConfirm />} /> */}
             <Route path='/item/create/temporary-storage' element={<TemporaryStorage />} />
 
             <Route path='/item/edit/:id' element={<ItemEdit />} />

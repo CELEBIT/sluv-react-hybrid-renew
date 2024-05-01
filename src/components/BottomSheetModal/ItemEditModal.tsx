@@ -12,11 +12,11 @@ import { useNavigate } from 'react-router-dom'
 import { RequestEditItemState } from '../../pages/item/editRequest'
 import { ReactComponent as Share } from '../../assets/share_24.svg'
 
-interface IProps {
+export interface ItemEditModalProps {
   itemId: number
 }
 
-const ItemEditModal = ({ itemId }: IProps) => {
+const ItemEditModal = ({ itemId }: ItemEditModalProps) => {
   const navigate = useNavigate()
   const { openModal, closeModal } = useModals()
 
@@ -34,10 +34,7 @@ const ItemEditModal = ({ itemId }: IProps) => {
   return (
     <BottomSheetModal>
       <ModalWrapper>
-        <Header
-          isModalHeader={true}
-          modalCloseBtnClick={() => closeModal(modals.ItemEditRequestModal)}
-        />
+        <Header isModalHeader={true} modalCloseBtnClick={() => closeModal(modals.ItemEditModal)} />
         <MenuWrapper>
           <Menu onClick={onClickEdit}>
             <Share stroke={Common.colors.BK}></Share>게시글 수정하기

@@ -5,8 +5,12 @@ import Chip from '../../Chip/Chip'
 import { ChipWrapper } from '../ItemBrandSelectModal/ItemBrandSelectModal'
 import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
 import { IRecentCeleb } from '../../../apis/celeb/CelebService'
-import { useRecoilState } from 'recoil'
-import { celebInfoInItemState, itemInfoState } from '../../../recoil/itemInfo'
+import { useRecoilState, useResetRecoilState } from 'recoil'
+import {
+  createItemCelebState,
+  createItemNewCelebState,
+  itemInfoState,
+} from '../../../recoil/itemInfo'
 import useModals from '../../Modals/hooks/useModals'
 import { modals } from '../../Modals'
 
@@ -18,8 +22,9 @@ const RecentSelectCeleb = () => {
     deleteRecentCeleb: { mutate: mutateByDeleteRecentCeleb },
     deleteAllRecentCeleb: { mutate: mutateByDeleteAllRecentCeleb },
   } = useRecentCelebQuery()
-  const [celebInfoInItem, setCelebInfoInItem] = useRecoilState(celebInfoInItemState)
-  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
+  const [celebInfoInItem, setCelebInfoInItem] = useRecoilState(createItemCelebState)
+  const resetCelebInfoInItem = useResetRecoilState(createItemCelebState)
+  const [newCeleb, setNewCeleb] = useRecoilState(createItemNewCelebState)
 
   const onDeleteAllSearchLog = () => {
     mutateByDeleteAllRecentCeleb()
@@ -30,30 +35,34 @@ const RecentSelectCeleb = () => {
 
   const onChipClick = (recentCeleb: IRecentCeleb) => {
     if (recentCeleb.flag == 'Y') {
-      setCelebInfoInItem({
-        ...celebInfoInItem,
-        groupId: recentCeleb.parentId,
-        groupName: recentCeleb.parentCelebName,
-        soloId: recentCeleb.id,
-        soloName: recentCeleb.childCelebName,
-      })
-      setItemInfo({
-        ...itemInfo,
-        celeb: {
-          celebId: recentCeleb.id,
-          celebName: recentCeleb.childCelebName,
-        },
-      })
       mutateByPostRecentCeleb(
         { celebId: recentCeleb.id, newCelebId: null },
         {
           onSuccess: () => {
-            closeModal(modals.ItemCelebSearchModal)
+            closeModal(modals.ItemCelebSearchModal, () => {
+              setCelebInfoInItem({
+                ...celebInfoInItem,
+                groupId: recentCeleb.parentId,
+                groupName: recentCeleb.parentCelebName,
+                soloId: recentCeleb.id,
+                soloName: recentCeleb.childCelebName,
+              })
+            })
           },
         },
       )
     } else {
-      alert('NewCeleb에 대한 처리 필요!!')
+      mutateByPostRecentCeleb(
+        { celebId: null, newCelebId: recentCeleb.id },
+        {
+          onSuccess: () => {
+            closeModal(modals.ItemCelebSearchModal, () => {
+              resetCelebInfoInItem()
+              setNewCeleb({ id: recentCeleb.id, newCelebName: recentCeleb.childCelebName })
+            })
+          },
+        },
+      )
     }
   }
 

@@ -7,7 +7,12 @@ import useModals from '../../../../../components/Modals/hooks/useModals'
 import { modals } from '../../../../../components/Modals'
 import BrandLogo from '../../../../../components/BrandLogo/BrandLogo'
 import { BrandFlag } from '../../../../../apis/core/type'
-import { itemInfoState } from '../../../../../recoil/itemInfo'
+import {
+  createItemBrandState,
+  createItemNameState,
+  createItemNewBrandState,
+  itemInfoState,
+} from '../../../../../recoil/itemInfo'
 interface BrandItemFieldProps {
   brandValid: boolean
   itemNameValid: boolean
@@ -22,31 +27,32 @@ export interface Brand {
 
 const BrandItemField = ({ brandValid, itemNameValid }: BrandItemFieldProps) => {
   const { openModal } = useModals()
-  const itemInfo = useRecoilValue(itemInfoState)
-  // 날짜 선택 모달
+
+  const brand = useRecoilValue(createItemBrandState)
+  const newBrand = useRecoilValue(createItemNewBrandState)
+  const name = useRecoilValue(createItemNameState)
+
   const onBrandSelect = () => {
     openModal(modals.ItemBrandSelectModal)
   }
   const onItemNameSelect = () => {
     openModal(modals.ItemNameInputModal)
   }
-  console.log(itemInfo.brand)
+
   const brandErrorMsg = '필수 항목입니다'
   const itemErrorMsg = '상품명은 필수 항목입니다'
-  if (!itemInfo.brand?.brandId && !itemInfo.newBrand?.brandId && !itemInfo.itemName) {
+  if (!brand?.brandId && !newBrand?.brandId && !name) {
     return (
       <DisplayField valid={brandValid} errorMsg={brandErrorMsg}>
         <PlaceHolder onClick={onBrandSelect}>브랜드를 검색해주세요</PlaceHolder>
       </DisplayField>
     )
-  } else if ((itemInfo.brand?.brandId || itemInfo.newBrand?.brandId) && !itemInfo.itemName) {
+  } else if ((brand?.brandId || newBrand?.brandId) && !name) {
     return (
       <DisplayField valid={itemNameValid} errorMsg={itemErrorMsg}>
         <Brand onClick={onBrandSelect}>
-          <BrandLogo size={32} url={itemInfo.brand?.brandId ? itemInfo.brand?.brandImgUrl : ''} />
-          <span>
-            {itemInfo.newBrand?.brandId ? itemInfo.newBrand.brandName : itemInfo.brand?.brandName}
-          </span>
+          <BrandLogo size={32} url={brand?.brandId ? brand?.brandImgUrl : ''} />
+          <span>{newBrand?.brandId ? newBrand.brandName : brand?.brandName}</span>
         </Brand>
         <PlaceHolder onClick={onItemNameSelect}>상품명 예) PRODUCT 123</PlaceHolder>
       </DisplayField>
@@ -55,12 +61,10 @@ const BrandItemField = ({ brandValid, itemNameValid }: BrandItemFieldProps) => {
     return (
       <DisplayField>
         <Brand onClick={onBrandSelect}>
-          <BrandLogo size={32} url={itemInfo.brand?.brandId ? itemInfo.brand?.brandImgUrl : ''} />
-          <span>
-            {itemInfo.newBrand?.brandId ? itemInfo.newBrand.brandName : itemInfo.brand?.brandName}
-          </span>
+          <BrandLogo size={32} url={brand?.brandId ? brand?.brandImgUrl : ''} />
+          <span>{newBrand?.brandId ? newBrand.brandName : brand?.brandName}</span>
         </Brand>
-        <span onClick={onItemNameSelect}>{itemInfo.itemName}</span>
+        <span onClick={onItemNameSelect}>{name}</span>
       </DisplayField>
     )
   }
@@ -82,6 +86,6 @@ export const Brand = styled.div`
   width: 100%;
   span {
     margin-left: 0.5rem;
-    ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.GR600 })}
+    ${Pretendard({ size: 15, weight: Common.bold.thin, color: Common.colors.BK })}
   }
 `

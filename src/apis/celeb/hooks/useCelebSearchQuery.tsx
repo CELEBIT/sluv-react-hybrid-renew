@@ -4,7 +4,11 @@ import { queryKeys } from '../../../config/queryKeys'
 import { GetPaginationResult } from '../../core/type'
 import useRecentCelebQuery from './useRecentCelebQuery'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { celebInfoInItemState, itemInfoState } from '../../../recoil/itemInfo'
+import {
+  createItemCelebState,
+  createItemNewCelebState,
+  itemInfoState,
+} from '../../../recoil/itemInfo'
 import { selectedCelebState } from '../../../components/SelectCeleb/SelectCeleb'
 
 interface INewCeleb {
@@ -34,7 +38,8 @@ const useCelebSearchQuery = () => {
   } = useRecentCelebQuery()
   const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
   const setSelectedCeleb = useSetRecoilState(selectedCelebState)
-  const setCelebInfoInItem = useSetRecoilState(celebInfoInItemState)
+  const setCelebInfoInItem = useSetRecoilState(createItemCelebState)
+  const setNewCeleb = useSetRecoilState(createItemNewCelebState)
 
   const postNewCeleb = useMutation(
     ({ newCelebName }: INewCeleb) => celeb.postNewCeleb(newCelebName),
@@ -44,18 +49,15 @@ const useCelebSearchQuery = () => {
           newCelebId: res?.newCelebId ?? null,
         })
         if (res?.newCelebId && res.newCelebName) {
-          setItemInfo({
-            ...itemInfo,
-            newCeleb: { celebId: res?.newCelebId, celebName: res.newCelebName },
-          })
+          setNewCeleb({ id: res.newCelebId, newCelebName: res.newCelebName })
           setSelectedCeleb({
             id: res?.newCelebId,
             celebNameKr: res.newCelebName,
           })
-          setCelebInfoInItem({
-            soloId: res?.newCelebId,
-            soloName: res.newCelebName,
-          })
+          // setCelebInfoInItem({
+          //   soloId: res?.newCelebId,
+          //   soloName: res.newCelebName,
+          // })
         }
       },
     },

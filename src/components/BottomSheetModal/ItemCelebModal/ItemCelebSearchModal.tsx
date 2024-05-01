@@ -8,10 +8,10 @@ import Header from '../../Header/Header'
 import HotCeleb from './HotCeleb'
 import ButtonLarge from '../../ButtonLarge/ButtonLarge'
 import { selectedCelebState, selectedGroupState } from '../../SelectCeleb/SelectCeleb'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 import MyCeleb from './MyCeleb'
 import RecentSelectCeleb from './RecentSelectCeleb'
-import { celebInfoInItemState, itemInfoState } from '../../../recoil/itemInfo'
+import { createItemCelebState, itemInfoState } from '../../../recoil/itemInfo'
 import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
 import SearchCelebList from './SearchCelebList'
 
@@ -22,13 +22,16 @@ const ItemCelebSearchModal = () => {
 
   const [searchValue, setSearchValue] = useState<string>('')
   const [isFocused, setIsFocused] = useState<boolean>(false)
-  // const setNewCeleb = useSetRecoilState(selectedNewCelebState)
+
+  const [celebInfoInItem, setCelebInfoInItem] = useRecoilState(createItemCelebState)
+
   const [selectedCeleb, setSelectedCeleb] = useRecoilState(selectedCelebState)
   const [selectedGroup, setSelectedGroup] = useRecoilState(selectedGroupState)
-  const setCelebInfoInItem = useSetRecoilState(celebInfoInItemState)
-  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
+  const resetSelectedCeleb = useResetRecoilState(selectedCelebState)
+  const resetSelectedGroup = useResetRecoilState(selectedGroupState)
 
   const { closeModal } = useModals()
+
   const defaultRef = useRef<HTMLDivElement>(null)
   const myCelebRef = useRef<HTMLDivElement>(null)
   const handleBlur = () => {
@@ -36,54 +39,42 @@ const ItemCelebSearchModal = () => {
       setIsFocused(false)
     }, 100)
   }
-
   const onClose = () => {
-    setSelectedCeleb({ id: 0, celebNameKr: '' })
-    setSelectedGroup({ id: 0, celebNameKr: '' })
-    closeModal(modals.ItemCelebSearchModal)
+    closeModal(modals.ItemCelebSearchModal, () => {
+      setSelectedGroup({
+        id: celebInfoInItem?.groupId ?? 0,
+        celebNameKr: celebInfoInItem?.groupName ?? '',
+      })
+      setSelectedCeleb({
+        id: celebInfoInItem?.soloId ?? 0,
+        celebNameKr: celebInfoInItem?.soloName ?? '',
+      })
+    })
   }
   const onComplete = () => {
-    if (selectedCeleb.id && !selectedGroup.id) {
-      // 솔로
-      setCelebInfoInItem({
-        soloId: selectedCeleb.id,
-        soloName: selectedCeleb.celebNameKr,
-        groupId: null,
-        groupName: null,
-      })
-      setItemInfo({
-        ...itemInfo,
-        celeb: {
-          celebId: selectedCeleb.id,
-          celebName: selectedCeleb.celebNameKr,
-        },
-      })
-    } else if (selectedCeleb.id && selectedGroup.id) {
-      // 그룹의 멤버
-      setCelebInfoInItem({
-        soloId: selectedCeleb.id,
-        soloName: selectedCeleb.celebNameKr,
-        groupId: selectedGroup.id,
-        groupName: selectedGroup.celebNameKr,
-      })
-      setItemInfo({
-        ...itemInfo,
-        celeb: {
-          celebId: selectedCeleb.id,
-          celebName: selectedCeleb.celebNameKr,
-        },
-      })
-    } else {
-      alert('오류')
-    }
-    setSelectedCeleb({ id: 0, celebNameKr: '' })
-    setSelectedGroup({ id: 0, celebNameKr: '' })
-
     mutateByPostRecentCeleb(
       { celebId: selectedCeleb.id, newCelebId: null },
       {
         onSuccess: () => {
-          closeModal(modals.ItemCelebSearchModal)
+          closeModal(modals.ItemCelebSearchModal, () => {
+            if (selectedCeleb.id && !selectedGroup.id) {
+              // 솔로
+              setCelebInfoInItem({
+                soloId: selectedCeleb.id,
+                soloName: selectedCeleb.celebNameKr,
+                groupId: null,
+                groupName: null,
+              })
+            } else if (selectedCeleb.id && selectedGroup.id) {
+              // 그룹의 멤버
+              setCelebInfoInItem({
+                soloId: selectedCeleb.id,
+                soloName: selectedCeleb.celebNameKr,
+                groupId: selectedGroup.id,
+                groupName: selectedGroup.celebNameKr,
+              })
+            }
+          })
         },
       },
     )
@@ -93,7 +84,7 @@ const ItemCelebSearchModal = () => {
     <BottomSheetModal>
       <ModalWrapper>
         <div className='Header'>
-          <Header title='셀럽 검색' isModalHeader={true} modalCloseBtnClick={onClose} />
+          <Header title='셀럽 검색' isModalHeader={true} modalCloseBtnClick={() => onClose()} />
         </div>
         {/* 입력내용 없을 시 */}
         <SearchWrapper onFocus={() => setIsFocused(true)} onBlur={handleBlur}>

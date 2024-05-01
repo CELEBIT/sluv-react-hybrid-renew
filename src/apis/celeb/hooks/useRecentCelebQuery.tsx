@@ -17,8 +17,13 @@ const useRecentCelebQuery = () => {
 
   const getRecentCeleb = useQuery(queryKeys.recentCeleb, () => celeb.getRecentCeleb())
 
-  const postRecentCeleb = useMutation(({ celebId, newCelebId }: IPostRecentCeleb) =>
-    celeb.postRecentCeleb(celebId, newCelebId),
+  const postRecentCeleb = useMutation(
+    ({ celebId, newCelebId }: IPostRecentCeleb) => celeb.postRecentCeleb(celebId, newCelebId),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(queryKeys.recentCeleb)
+      },
+    },
   )
   const deleteRecentCeleb = useMutation(
     ({ celebId, flag }: IDeleteRecentCeleb) => celeb.deleteRecentCeleb(celebId, flag),

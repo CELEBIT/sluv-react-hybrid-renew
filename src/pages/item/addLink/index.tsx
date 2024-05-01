@@ -6,11 +6,12 @@ import Header from '../../../components/Header/Header'
 import LinkInput, { Link, linksState } from './components/LinkInput/LinkInput'
 import { AddLinkContainer } from './styles'
 import { urlRegex } from '../../../config/constant'
-import { itemInfoState } from '../../../recoil/itemInfo'
+import { createItemLinkState, itemInfoState } from '../../../recoil/itemInfo'
 
 const AddLink = () => {
   const navigate = useNavigate()
-  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
+  const [linkList, setLinkList] = useRecoilState(createItemLinkState)
+
   const [links, setLinks] = useRecoilState(linksState)
   const [hasError, setHasError] = useState(false)
 
@@ -20,7 +21,7 @@ const AddLink = () => {
   }
 
   useEffect(() => {
-    if (itemInfo.linkList) setLinks(itemInfo.linkList)
+    if (linkList) setLinks(linkList)
   }, [])
 
   const handleComplete = (updatedLinks: Link[]) => {
@@ -31,10 +32,7 @@ const AddLink = () => {
 
     if (!isLinkNameEmpty && !isUrlEmpty && isUrlValid) {
       setHasError(false)
-      setItemInfo({
-        ...itemInfo,
-        linkList: [...links],
-      })
+      setLinkList(links)
       navigate(-1)
       return
     } else {

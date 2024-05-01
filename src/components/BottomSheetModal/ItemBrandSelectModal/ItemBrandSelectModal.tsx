@@ -32,7 +32,7 @@ const ItemBrandSelectModal = () => {
           <Header
             title='브랜드 검색'
             isModalHeader={true}
-            modalCloseBtnClick={() => closeModal(modals.ItemCategoryModal)}
+            modalCloseBtnClick={() => closeModal(modals.ItemBrandSelectModal)}
           />
         </div>
         <SearchWrapper>

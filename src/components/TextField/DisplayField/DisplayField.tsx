@@ -32,7 +32,7 @@ const DisplayField = ({ children, disabled, valid, errorMsg, onClick }: DisplayF
         </MiddleField>
       ))}
       <LastField disabled={disabled}>{childrenArray[childrenCount - 1]}</LastField>
-      {valid === false && <ErrorText>{errorMsg}</ErrorText>}
+      {!valid && <ErrorText>{errorMsg}</ErrorText>}
     </DisplayFieldWrapper>
   )
 }

@@ -1,6 +1,7 @@
 import { atom } from 'recoil'
 import { atomKeys } from '../config/atomKeys'
 import { ImgResult } from '../apis/item/itemService.type'
+import { NewCeleb } from '../components/SelectCeleb/SelectCeleb'
 
 export interface ICeleb {
   celebId: number
@@ -17,6 +18,13 @@ interface IBrand {
   brandName?: string
   brandImgUrl?: string
 }
+
+interface Brand {
+  brandId: number
+  brandName: string
+  brandImgUrl?: string
+}
+
 interface ILink {
   itemLinkUrl: string
   linkName: string
@@ -47,8 +55,8 @@ export interface IItemInfo {
 interface ICelebInfo {
   groupId?: number | null
   groupName?: string | null
-  soloId?: number | null
-  soloName?: string | null
+  soloId: number | null
+  soloName: string | null
 }
 
 export const itemInfoState = atom<IItemInfo>({
@@ -71,12 +79,82 @@ export const itemInfoState = atom<IItemInfo>({
   },
 })
 
-export const celebInfoInItemState = atom<ICelebInfo>({
-  key: atomKeys.celebInfoInItemState,
-  default: {
-    groupId: null,
-    groupName: null,
-    soloId: null,
-    soloName: null,
-  },
+export const itemIdtoEditState = atom<number | null>({
+  key: atomKeys.itemIdtoEditState,
+  default: null,
+})
+
+export const itemS3ImgListState = atom<ImgResult[] | null>({
+  key: atomKeys.itemS3ImgListState,
+  default: null,
+})
+
+export const tempS3ImgListState = atom<ImgResult[] | null>({
+  key: atomKeys.tempS3ImgListState,
+  default: null,
+})
+
+export const createItemCelebState = atom<ICelebInfo | null>({
+  key: atomKeys.createItemCelebState,
+  default: null,
+})
+
+export const createItemNewCelebState = atom<NewCeleb | null>({
+  key: atomKeys.createItemNewCelebState,
+  default: null,
+})
+
+export const createItemWhenDateState = atom<Date | null>({
+  key: atomKeys.createItemWhenDateState,
+  default: null,
+})
+
+export const createItemPlaceState = atom<string | null>({
+  key: atomKeys.createItemPlaceState,
+  default: null,
+})
+
+export const createItemBrandState = atom<Brand | null>({
+  key: atomKeys.createItemBrandState,
+  default: null,
+})
+
+export const createItemNewBrandState = atom<Brand | null>({
+  key: atomKeys.createItemNewBrandState,
+  default: null,
+})
+
+export const createItemPriceState = atom<number | null>({
+  key: atomKeys.createItemPriceState,
+  default: null,
+})
+
+export const createItemNameState = atom<string | null>({
+  key: atomKeys.createItemNameState,
+  default: null,
+})
+
+export const createItemCategoryState = atom<ICategory | null>({
+  key: atomKeys.createItemCategoryState,
+  default: null,
+})
+
+export const createItemAddInfoState = atom<string | null>({
+  key: atomKeys.createItemAddInfoState,
+  default: null,
+})
+
+export const createItemSourceState = atom<string | null>({
+  key: atomKeys.createItemSourceState,
+  default: null,
+})
+
+export const createItemLinkState = atom<ILink[] | null>({
+  key: atomKeys.createItemLinkState,
+  default: null,
+})
+
+export const currentTempIdState = atom<number | null>({
+  key: atomKeys.currentTempId,
+  default: null,
 })
