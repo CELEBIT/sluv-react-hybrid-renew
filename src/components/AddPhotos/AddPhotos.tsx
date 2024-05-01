@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, memo } from 'react'
 import { atomKeys } from '../../config/atomKeys'
 import { atom, useRecoilState, useRecoilValue } from 'recoil'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
@@ -9,7 +9,8 @@ import { useLocation } from 'react-router-dom'
 import { convertToImageList, openGallery } from '../../utils/utility'
 
 export interface Image {
-  imgFile?: File
+  imgFile?: File // 이미지 업로드 용 파일
+  imgFileUrl?: string // 이미지 사진 display용 URL.createObjectURL
   representFlag: boolean
   imgUrl?: string
 }
@@ -120,8 +121,7 @@ const AddPhotos = () => {
                         key='image'
                         size={74}
                         borderRadius={8}
-                        imgUrl={img.imgUrl}
-                        imgFile={img.imgFile}
+                        imgUrl={img.imgUrl || img.imgFileUrl}
                         representFlag={index === 0}
                         candelete={
                           location.pathname.includes('edit') && imgList.length === 1 ? false : true
@@ -141,4 +141,4 @@ const AddPhotos = () => {
   )
 }
 
-export default AddPhotos
+export default memo(AddPhotos)

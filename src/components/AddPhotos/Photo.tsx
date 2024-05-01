@@ -18,7 +18,7 @@ interface PhotoProps {
   size?: number
   borderRadius: number
   imgUrl?: string
-  imgFile?: File
+  // imgFile?: File
   candelete?: boolean // 정보 공유하기 -> 삭제 여부를 위해 존재
   onDelete?: () => void
   representFlag?: boolean // 정보 공유하기 -> 대표사진 여부를 위해 존재
@@ -31,7 +31,7 @@ const Photo = ({
   size,
   borderRadius,
   imgUrl,
-  imgFile,
+  // imgFile,
   candelete,
   onDelete,
   representFlag,
@@ -57,7 +57,7 @@ const Photo = ({
   }
 
   return (
-    <Img size={size} borderRadius={borderRadius} imgUrl={imgUrl} imgFile={imgFile}>
+    <Img size={size} borderRadius={borderRadius} imgUrl={imgUrl}>
       {imgUrl && <ItemCardDim size={size} borderRadius={borderRadius}></ItemCardDim>}
       {candelete && <DeleteList className='delete' onClick={onDelete}></DeleteList>}
       {representFlag && <Represent className='represent'></Represent>}
@@ -89,7 +89,7 @@ export const Img = styled.div<{
   size?: number
   borderRadius: number
   imgUrl?: string
-  imgFile?: File
+  // imgFile?: File
 }>`
   display: flex;
   position: relative;
@@ -99,8 +99,7 @@ export const Img = styled.div<{
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50%;
-  background-image: ${(props) =>
-    props.imgFile ? `url(${URL.createObjectURL(props.imgFile)})` : `url(${props.imgUrl})`};
+  background-image: ${(props) => `url(${props.imgUrl})`};
   background-color: ${Common.colors.GR300};
   .delete {
     position: absolute;

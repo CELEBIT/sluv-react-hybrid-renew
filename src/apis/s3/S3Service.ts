@@ -32,40 +32,43 @@ export default class S3Service {
 
   // 아이템 이미지 업로드
   async postItemImg(fileList: Array<Image>) {
-    // console.log('fileList in postItemImg', fileList)
     const resultList: Array<Image> = []
-    const data = await Promise.allSettled(
-      fileList.map(async (item) => {
-        if (item.imgFile) {
-          // 새로 추가한 사진인 경우에만 (게시글 수정에서)
-          const response: ResponseType<S3Result> = await request.post(
-            `${this.presignedUrl}/item`,
-            {},
-            {
-              params: {
-                imgExtension: String(item.imgFile?.type.split('/')[1]).toUpperCase(),
-              },
+    // for...of 루프를 사용하여 순차적 비동기 처리
+    for (const item of fileList) {
+      if (item.imgFile) {
+        // 새로 추가한 사진인 경우에만 (게시글 수정에서)
+        const response: ResponseType<S3Result> = await request.post(
+          `${this.presignedUrl}/item`,
+          {},
+          {
+            params: {
+              imgExtension: String(item.imgFile?.type.split('/')[1]).toUpperCase(),
             },
-          )
-          if (response.isSuccess && response.result?.preSignedUrl && item.imgFile) {
-            try {
-              const data = await this.uploadImg(response.result.preSignedUrl, item.imgFile)
-              if (data.status === 200) {
-                const { preSignedUrl } = response.result
-                resultList.push({
-                  representFlag: item.representFlag,
-                  imgUrl: preSignedUrl.split('?')[0],
-                })
-              }
-            } catch (err: any) {
-              console.error(err)
-              return err
+          },
+        )
+        if (response.isSuccess && response.result?.preSignedUrl && item.imgFile) {
+          try {
+            const data = await this.uploadImg(response.result.preSignedUrl, item.imgFile)
+            if (data.status === 200) {
+              const { preSignedUrl } = response.result
+              resultList.push({
+                representFlag: item.representFlag,
+                imgUrl: preSignedUrl.split('?')[0],
+              })
             }
+          } catch (err: any) {
+            console.error(err)
+            // 에러를 반환하거나, 에러 처리를 적절히 수행합니다.
           }
         }
-      }),
-    )
-    return await resultList
+      } else {
+        resultList.push({
+          representFlag: item.representFlag,
+          imgUrl: item.imgUrl,
+        })
+      }
+    }
+    return resultList
   }
 
   // 커뮤니티 이미지 업로드

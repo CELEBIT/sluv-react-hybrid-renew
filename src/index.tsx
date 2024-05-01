@@ -32,14 +32,14 @@ const queryClient = new QueryClient({
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
-  // <StrictMode>
+  // <React.StrictMode>
   <QueryClientProvider client={queryClient}>
     {/* <ReactQueryDevtools initialIsOpen /> */}
     <RecoilRoot>
-      <DebugObserver />
+      {/* <DebugObserver /> */}
       <Global styles={reset} />
       <App />
     </RecoilRoot>
   </QueryClientProvider>,
-  // </StrictMode>,
+  // </React.StrictMode>,
 )

@@ -11,14 +11,14 @@ import useHotPlaceQuery from '../../../apis/place/hooks/useHotPlaceQuery'
 import useRecentPlaceQuery from '../../../apis/place/hooks/useRecentPlaceQuery'
 import ItemPlaceChip from './ItemPlaceChip'
 import usePostPlaceQuery from '../../../apis/place/hooks/usePostPlaceQuery'
-import { itemInfoState } from '../../../recoil/itemInfo'
-import { useRecoilState } from 'recoil'
+import { createItemPlaceState } from '../../../recoil/itemInfo'
+import { useRecoilState, useRecoilValue } from 'recoil'
 
 const ItemPlaceInputModal = () => {
-  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
-  const [placeName, setPlaceName] = useState(itemInfo.whereDiscovery ?? '')
-  const { closeModal } = useModals()
+  const [whereDiscovery, setWhereDiscovery] = useRecoilState(createItemPlaceState)
+  const [placeName, setPlaceName] = useState(whereDiscovery ?? '')
 
+  // 최근 입력 장소, hot 장소 GET
   const {
     getHotPlace: { data: hotPlaceData },
   } = useHotPlaceQuery()
@@ -26,20 +26,21 @@ const ItemPlaceInputModal = () => {
     getRecentPlace: { data: recentPlaceData },
     deleteAllRecentPlace: { mutate: mutateByDeleteAllRecentPlace },
   } = useRecentPlaceQuery()
+
+  // 최근 입력 장소 POST
   const {
     postItemPlace: { mutate: mutateByPostItemPlace },
   } = usePostPlaceQuery()
 
+  const { closeModal } = useModals()
   const onComplete = () => {
-    if (placeName) {
-      mutateByPostItemPlace({ placeName })
-    } else {
-      closeModal(modals.ItemPlaceInputModal)
+    if (placeName !== '' || placeName !== whereDiscovery) {
+      if (placeName !== '') {
+        mutateByPostItemPlace({ placeName })
+      }
+      setWhereDiscovery(placeName)
     }
-    setItemInfo({
-      ...itemInfo,
-      whereDiscovery: placeName,
-    })
+    closeModal(modals.ItemPlaceInputModal)
   }
   const onDeleteAllSearchLog = () => {
     mutateByDeleteAllRecentPlace()
@@ -51,7 +52,7 @@ const ItemPlaceInputModal = () => {
         <Header
           title='착용 장소'
           isModalHeader={true}
-          modalCloseBtnClick={() => closeModal(modals.ItemDatePickerModal)}
+          modalCloseBtnClick={() => closeModal(modals.ItemPlaceInputModal)}
         />
         <DefaultTextfield
           value={placeName}
@@ -87,7 +88,11 @@ const ItemPlaceInputModal = () => {
           )}
         </HotPlaceWrapper>
         <ButtonWrapper>
-          <ButtonLarge text='완료' active={true} onClick={onComplete}></ButtonLarge>
+          <ButtonLarge
+            text='완료'
+            active={placeName !== '' || placeName !== whereDiscovery}
+            onClick={placeName !== '' || placeName !== whereDiscovery ? onComplete : undefined}
+          ></ButtonLarge>
         </ButtonWrapper>
       </ModalWrapper>
     </BottomSheetModal>

@@ -13,12 +13,12 @@ import { RequestEditItemState } from '../../pages/item/editRequest'
 import { ReactComponent as Share } from '../../assets/share_24.svg'
 import { commentState } from '../../pages/community/detail/CommunityDetail'
 
-interface IProps {
+export interface CommentEditModalProps {
   commentId: number
   questionId: number
 }
 
-const CommentEditModal = ({ commentId, questionId }: IProps) => {
+const CommentEditModal = ({ commentId, questionId }: CommentEditModalProps) => {
   const navigate = useNavigate()
   const { openModal, closeModal } = useModals()
   const resetCommentObject = useResetRecoilState(commentState)

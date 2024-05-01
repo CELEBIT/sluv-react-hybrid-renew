@@ -7,11 +7,11 @@ import useTempItemQuery from '../../apis/item/hooks/useTempItemQuery'
 import { useRecoilValue } from 'recoil'
 import { checkListState } from '../../pages/item/temporary-storage'
 
-interface IProps {
+export interface DeleteTempItemModalProps {
   type: string
 }
 
-const DeleteTempItemModal = ({ type }: IProps) => {
+const DeleteTempItemModal = ({ type }: DeleteTempItemModalProps) => {
   const { closeModal } = useModals()
   const {
     deleteTempItem: { mutate: mutateItemDeleted },

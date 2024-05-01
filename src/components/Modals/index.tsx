@@ -1,6 +1,6 @@
 import useModals from './hooks/useModals'
 import { Dimmed, Dimmer } from './styles'
-import React, { ComponentProps, FunctionComponent } from 'react'
+import React, { ComponentProps, FunctionComponent, memo } from 'react'
 import loadable from '@loadable/component'
 import PropTypes from 'prop-types'
 import { QuestionChangeModalProps } from '../TwoButtonModal/QuestionChangeModal'
@@ -153,10 +153,10 @@ export const modals = {
 }
 
 const Modals = () => {
-  const { modals, closeModal } = useModals()
+  const { modalList, closeModal } = useModals()
   return (
     <>
-      {modals.map(({ Component, props }, idx) => {
+      {modalList.map(({ Component, props }, idx) => {
         const { onSubmit, ...restProps } = props
         const clickDimmed = () => {
           if (props.callbackFunc) {
@@ -190,7 +190,7 @@ const Modals = () => {
   )
 }
 
-export default Modals
+export default memo(Modals)
 
 Modals.propTypes = {
   onSubmit: PropTypes.func,

@@ -2,6 +2,7 @@ import {
   UseInfiniteQueryResult,
   useInfiniteQuery,
   useMutation,
+  useQuery,
   useQueryClient,
 } from '@tanstack/react-query'
 import ItemService from '../itemService'
@@ -11,6 +12,8 @@ import useModals from '../../../components/Modals/hooks/useModals'
 import { modals } from '../../../components/Modals'
 import { TempItemReq, TempItemResult } from '../itemService.type'
 import { localStorageKeys } from '../../../config/localStorageKeys'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { currentTempIdState } from '../../../recoil/itemInfo'
 
 const useTempItemQuery = () => {
   const item = new ItemService()
@@ -29,10 +32,17 @@ const useTempItemQuery = () => {
       },
     )
   }
+
+  const getTempCount = () => {
+    return useQuery(queryKeys.getTempCount, () => item.getTempCount())
+  }
+
   const deleteTempItem = useMutation((checkList: Array<number>) => item.deleteTempItem(checkList), {
     onSuccess: () => {
-      closeModal(modals.DeleteTempItemModal)
-      queryClient.invalidateQueries(queryKeys.tempItem)
+      closeModal(modals.DeleteTempItemModal, () => {
+        queryClient.invalidateQueries()
+        console.log('deleted')
+      })
     },
   })
   const deleteTempItemAll = useMutation(() => item.deleteTempItemAll(), {
@@ -41,16 +51,19 @@ const useTempItemQuery = () => {
       queryClient.invalidateQueries(queryKeys.tempItem)
     },
   })
+
+  const setCurrentTempId = useSetRecoilState(currentTempIdState)
   const postTempItem = useMutation((tempItem: TempItemReq) => item.postTempItem(tempItem), {
     onSuccess: (res) => {
+      console.log(res)
       if (res?.tempItemId) {
         localStorage.setItem(localStorageKeys.TEMP_ITEM_ID, String(res?.tempItemId))
-        // console.log('post complete')
+        setCurrentTempId(res?.tempItemId)
         queryClient.invalidateQueries(queryKeys.tempItem)
       }
     },
   })
-  return { getTempItem, deleteTempItem, deleteTempItemAll, postTempItem }
+  return { getTempItem, getTempCount, deleteTempItem, deleteTempItemAll, postTempItem }
 }
 
 export default useTempItemQuery

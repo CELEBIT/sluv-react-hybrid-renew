@@ -1,5 +1,5 @@
-import React from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import React, { useState } from 'react'
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 import styled from '@emotion/styled'
 import BottomSheetModal from '..'
 import { modals } from '../../Modals'
@@ -10,9 +10,9 @@ import { ButtonWrapper } from '../ItemPlaceInputModal/ItemPlaceInputModal'
 import Header from '../../Header/Header'
 import ButtonMedium from '../../ButtonMedium/ButtonMedium'
 import ButtonLarge from '../../ButtonLarge/ButtonLarge'
-import { selectedCelebState, selectedGroupState } from '../../SelectCeleb/SelectCeleb'
+import { CelebData, selectedCelebState, selectedGroupState } from '../../SelectCeleb/SelectCeleb'
 import { ICelebResult } from '../../../apis/user/userService'
-import { celebInfoInItemState, itemInfoState } from '../../../recoil/itemInfo'
+import { createItemCelebState, itemInfoState } from '../../../recoil/itemInfo'
 import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
 
 const ItemCelebSelectModal = () => {
@@ -22,22 +22,12 @@ const ItemCelebSelectModal = () => {
 
   const selectedGroup = useRecoilValue(selectedGroupState)
   const [selectedCeleb, setSelectedCeleb] = useRecoilState(selectedCelebState)
-  const [celebInfoInItem, setCelebInfoInItem] = useRecoilState(celebInfoInItemState)
-  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
+
+  const [itemCeleb, setItemCeleb] = useRecoilState(createItemCelebState)
+  const resetItemCeleb = useResetRecoilState(createItemCelebState)
 
   const { closeModal } = useModals()
   const onClose = () => {
-    setCelebInfoInItem({
-      groupId: null,
-      groupName: null,
-      soloId: null,
-      soloName: null,
-    })
-    setItemInfo({
-      ...itemInfo,
-      celeb: null,
-    })
-    setSelectedCeleb({ id: 0, celebNameKr: '' })
     closeModal(modals.ItemCelebSelectModal)
   }
   const onComplete = () => {
@@ -45,25 +35,20 @@ const ItemCelebSelectModal = () => {
       { celebId: selectedCeleb.id, newCelebId: null },
       {
         onSuccess: () => {
-          closeModal(modals.ItemCelebSelectModal)
+          closeModal(modals.ItemCelebSelectModal, () => {
+            setItemCeleb({
+              groupId: selectedGroup.id,
+              groupName: selectedGroup.celebNameKr,
+              soloId: selectedCeleb.id,
+              soloName: selectedCeleb.celebNameKr,
+            })
+          })
         },
       },
     )
   }
   const onClickMember = (member: ICelebResult) => {
     setSelectedCeleb(member)
-    setCelebInfoInItem({
-      ...celebInfoInItem,
-      soloId: member.id,
-      soloName: member.celebNameKr,
-    })
-    setItemInfo({
-      ...itemInfo,
-      celeb: {
-        celebId: member.id,
-        celebName: member.celebNameKr,
-      },
-    })
   }
   return (
     <BottomSheetModal>

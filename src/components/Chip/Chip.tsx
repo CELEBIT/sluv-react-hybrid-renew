@@ -29,4 +29,4 @@ const Chip = ({ text, canDelete, onClick, onDelete }: ChipProps) => {
   )
 }
 
-export default Chip
+export default React.memo(Chip)
