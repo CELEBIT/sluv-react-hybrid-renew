@@ -32,6 +32,7 @@ export interface IselectedItem {
   imgFile?: File | null
   itemId?: number | null
   imgUrl?: string | null
+  imgFileUrl?: string
   description: string | null
   vote?: number | null
   representFlag: boolean | null
