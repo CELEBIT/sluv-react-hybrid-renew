@@ -28,11 +28,20 @@ import {
 } from '../../../components/BottomSheetModal/ItemCategoryModal'
 import ImageField from '../create/components/ImageField/ImageField'
 import {
-  ICategory,
   IHashTag,
-  IItemInfo,
+  createItemAddInfoState,
+  createItemBrandState,
+  createItemCategoryState,
   createItemCelebState,
-  itemInfoState,
+  createItemLinkState,
+  createItemNameState,
+  createItemNewBrandState,
+  createItemNewCelebState,
+  createItemPlaceState,
+  createItemPriceState,
+  createItemSourceState,
+  createItemWhenDateState,
+  itemS3ImgListState,
 } from '../../../recoil/itemInfo'
 import useModals from '../../../components/Modals/hooks/useModals'
 import useItemQuery from '../../../apis/item/hooks/useItemQuery'
@@ -45,182 +54,221 @@ import SelectCategory from '../create/components/SelectCategory/SelectCategory'
 import ButtonMedium from '../../../components/ButtonMedium/ButtonMedium'
 import { CelebWrapper } from './styles'
 import { hashTagState } from '../addInfo/components/HashTags/HashTag'
+import useItemImgUpload from '../../../apis/s3/hooks/useItemImgUpload'
 
 const ItemEdit = () => {
-  const { openModal } = useModals()
   const navigate = useNavigate()
-  const [celeb, setCeleb] = useRecoilState(selectedCelebState)
-
-  const [category, setCategory] = useRecoilState(subCategoryState)
-  const [parentCategory, setParentCategory] = useRecoilState(parentCategoryState)
-
   const [hasTriedToUpload, setHasTriedToUpload] = useState(false)
-  const [imgList, setImgListState] = useRecoilState(imgListState)
-  const hashTag = useRecoilValue(hashTagState)
 
   const { id: itemId } = useParams()
   const { getItemDetail } = useItemDetailQuery()
 
   // 1. 아이템 정보 불러오기
-  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
   const { data } = getItemDetail(Number(itemId))
+
+  // Item 이미지 리스트
+  const [imgList, setImgList] = useRecoilState(imgListState)
+  const [s3ImgList, setS3ImgList] = useRecoilState(itemS3ImgListState)
+  // Celeb ID
+  const [celebInfoInItem, setCelebInfoInItem] = useRecoilState(createItemCelebState)
+  // NewCeleb ID
+  const [newCeleb, setNewCeleb] = useRecoilState(createItemNewCelebState)
+  // 착용 날짜
+  const [whenDiscovery, setWhenDiscovery] = useRecoilState(createItemWhenDateState)
+  // 착용 장소
+  const [whereDiscovery, setWhereDiscovery] = useRecoilState(createItemPlaceState)
+  // 아이템 카테고리
+  const [category, setCategory] = useRecoilState(createItemCategoryState)
+  // 브랜드 ID
+  const [brand, setBrand] = useRecoilState(createItemBrandState)
+  // NewBrand ID
+  const [newBrand, setNewBrand] = useRecoilState(createItemNewBrandState)
+  // 아이템 이름
+  const [itemName, setItemName] = useRecoilState(createItemNameState)
+  // 가격
+  const [price, setPrice] = useRecoilState(createItemPriceState)
+  // 추가정보
+  const [additionalInfo, setAdditionalInfo] = useRecoilState(createItemAddInfoState)
+  const [hashTags, setHashTags] = useRecoilState(hashTagState)
+  const [source, setSource] = useRecoilState(createItemSourceState)
+  // 구매링크
+  const [linkList, setLinkList] = useRecoilState(createItemLinkState)
 
   useEffect(() => {
     if (data) {
-      // 사진
-      setImgListState(data.imgList)
-
-      // 셀럽
-      setCeleb({ id: data.celeb.id, celebNameKr: data.celeb.celebTotalNameKr })
-      setCelebInfoInItem({
-        soloId: data.celeb.id,
-        soloName: data.celeb.celebChildNameKr,
-        groupId: data.celeb.parentId,
-        groupName: data.celeb.celebParentNameKr,
-      })
-
-      // 카테고리
-      // parent category
-      setParentCategory({ id: data.category.parentId, name: data.category.parentName })
-      // sub category
-      setCategory({
-        id: data.category.id,
-        name: data.category.name,
-      })
-      // itemInfo 저장용 Category
-      const editItemCategory: ICategory | null = {
-        categoryId: data.category.id,
-        childName: data.category.name,
-        parentCategoryId: data.category.parentId,
-        parentName: data.category.parentName,
-      }
-
-      // itemInfo 저장용 Hashtag
-      const editHashTagList: Array<IHashTag> | null = data.hashTagList.map(
-        (tag: HashTagResult) => ({
-          hashtagId: tag.hashtagId,
-          hashtagContent: tag.hashtagContent,
-        }),
+      setImgList(data.imgList ?? [])
+      // 셀럽 설정
+      setCelebInfoInItem(
+        data.celeb
+          ? {
+              groupId: data.celeb.parentId !== null ? data.celeb.parentId : null,
+              groupName:
+                data.celeb.celebParentNameKr !== null ? data.celeb.celebParentNameKr : null,
+              soloId: data.celeb.id !== null ? data.celeb.id : null,
+              soloName: data.celeb.celebChildNameKr !== null ? data.celeb.celebChildNameKr : null,
+            }
+          : null,
       )
-      const newState: IItemInfo = {
-        id: Number(itemId),
-        imgList: itemInfo.imgList ?? data.imgList,
-        whenDiscovery: data.whenDiscovery ? new Date(data.whenDiscovery) : null,
-        whereDiscovery: data.whereDiscovery ?? '',
-        itemCategory: editItemCategory,
-        brand: {
-          brandId: data.brand.id,
-          brandName: data.brand.brandKr,
-          brandImgUrl: data.brand.brandImgUrl,
-        },
-        celeb: {
-          celebId: data.celeb.id,
-          celebName: data.celeb.celebTotalNameKr,
-        },
-        itemName: data.itemName,
-        price: data.price,
-        color: data.color,
-        additionalInfo: data.additionalInfo,
-        hashTagList: editHashTagList,
-        linkList: data.linkList,
-        infoSource: data.infoSource,
-        newBrand: { brandName: data.newBrandName },
-      }
-      setItemInfo(newState)
+      setNewCeleb(
+        data.newCelebName
+          ? {
+              id: data.celeb.id,
+              newCelebName: data.newCelebName,
+            }
+          : null,
+      )
+      setWhenDiscovery(data.whenDiscovery ? new Date(data.whenDiscovery) : null)
+      setWhereDiscovery(data.whereDiscovery)
+      setCategory(
+        data.category
+          ? {
+              categoryId: data.category.id,
+              childName: data.category.name,
+              parentCategoryId: data.category.parentId,
+              parentName: data.category.parentName,
+            }
+          : null,
+      )
+      setBrand(
+        data.brand
+          ? {
+              brandId: data.brand.id,
+              brandName: data.brand.brandKr,
+              brandImgUrl: data.brand.brandImgUrl,
+            }
+          : null,
+      )
+      setNewBrand(
+        data.newBrandName
+          ? {
+              brandId: data.brand.id,
+              brandName: data.newBrandName,
+            }
+          : null,
+      )
+      setItemName(data.itemName ?? data.itemName)
+      setPrice(data.price ?? data.price)
+      setAdditionalInfo(data.additionalInfo ?? data.additionalInfo)
+      setLinkList(data.linkList ?? data.linkList)
+      setSource(data.infoSource)
+      // 해시태그 설정
+      const hashtags: Array<IHashTag> = []
+      data.hashTagList &&
+        data.hashTagList.length > 0 &&
+        data.hashTagList.map((item) => {
+          hashtags.push({
+            hashtagId: item.hashtagId,
+            hashtagContent: item.hashtagContent,
+          })
+        })
+      setHashTags(hashtags ?? null)
     }
   }, [data])
 
-  const setCelebInfoInItem = useSetRecoilState(createItemCelebState)
+  const {
+    postItemImg: { mutate: mutateByImgUpload },
+  } = useItemImgUpload()
 
-  useEffect(() => {
-    const newImgList: ImgResult[] = imgList.map((img: Image, idx) => ({
-      imgUrl: img.imgUrl ? img.imgUrl : '',
-      representFlag: idx === 0,
-      sortOrder: idx,
-    }))
-    if (imgList.length > 0) setItemInfo({ ...itemInfo, imgList: newImgList })
-  }, [imgList])
+  const onSubmit = async () => {
+    const hashTagIdList: Array<number> | null =
+      hashTags && hashTags.length > 0 ? hashTags.map((item) => item.hashtagId) : null
+    setHasTriedToUpload(true)
+    // 아무 값이 없을 때
+    if (
+      !(
+        imgList ||
+        celebInfoInItem ||
+        whenDiscovery ||
+        whereDiscovery ||
+        category ||
+        brand ||
+        itemName ||
+        price ||
+        additionalInfo ||
+        hashTagIdList ||
+        linkList ||
+        source ||
+        newCeleb ||
+        newBrand
+      )
+    ) {
+      return
+    } else if (
+      imgList &&
+      (celebInfoInItem || newCeleb) &&
+      category &&
+      (brand?.brandId || newBrand?.brandId) &&
+      itemName &&
+      price
+    ) {
+      mutateByImgUpload(imgList)
+    }
+  }
 
   const {
     postItem: { mutate },
   } = useItemQuery()
 
-  const onSubmit = () => {
-    setHasTriedToUpload(true)
-    if (
-      itemInfo.imgList &&
-      (itemInfo.celeb || itemInfo.newCeleb) &&
-      itemInfo.itemCategory &&
-      (itemInfo.brand?.brandId || itemInfo.newBrand?.brandId) &&
-      itemInfo.itemName &&
-      itemInfo.price
-    ) {
-      const finalHashTags: Array<number> | null = []
-      if ((itemInfo.hashTagList?.length ?? 0) > 0) {
-        itemInfo?.hashTagList?.map((item) => {
-          if (item.hashtagId) finalHashTags?.push(item.hashtagId)
-        })
-      }
-
-      if (
-        !(
-          itemInfo.imgList ||
-          itemInfo.celeb ||
-          itemInfo.whenDiscovery ||
-          itemInfo.whereDiscovery ||
-          itemInfo.itemCategory ||
-          itemInfo.brand ||
-          itemInfo.itemName ||
-          itemInfo.price ||
-          itemInfo.additionalInfo ||
-          itemInfo.hashTagList ||
-          itemInfo.linkList ||
-          itemInfo.infoSource ||
-          itemInfo.newCeleb ||
-          itemInfo.newBrand
-        )
-      ) {
-        return
-      }
+  // s3ImgList의 변화 감지를 위한 useEffect
+  useEffect(() => {
+    if (s3ImgList && s3ImgList.length > 0) {
+      // s3ImgList가 업데이트 되었을 때 실행할 로직
+      const hashTagIdList: Array<number> | null =
+        hashTags && hashTags.length > 0 ? hashTags.map((item) => item.hashtagId) : null
       const item: TempItemReq = {
-        id: itemInfo.id ? itemInfo.id : null,
-        imgList: itemInfo.imgList,
-        celebId: itemInfo.celeb?.celebId ?? null,
-        whenDiscovery: itemInfo.whenDiscovery
-          ? (itemInfo.whenDiscovery as Date).toISOString()
-          : null,
-        whereDiscovery: itemInfo.whereDiscovery === '' ? null : itemInfo.whereDiscovery,
-        categoryId: itemInfo.itemCategory?.categoryId ?? null,
-        brandId: itemInfo.brand?.brandId ?? null,
-        itemName: itemInfo.itemName === '' ? null : itemInfo.itemName,
-        price: itemInfo.price ?? null,
-        additionalInfo: itemInfo.additionalInfo === '' ? null : itemInfo.additionalInfo,
-        hashTagIdList: finalHashTags,
-        linkList: itemInfo.linkList,
-        infoSource: itemInfo.infoSource === '' ? null : itemInfo.infoSource,
-        newCelebId: itemInfo.newCeleb?.celebId ?? null,
-        newBrandId: itemInfo.newBrand?.brandId ?? null,
+        id: Number(itemId),
+        imgList: s3ImgList ?? null,
+        celebId: celebInfoInItem?.soloId ?? null,
+        whenDiscovery: whenDiscovery && (whenDiscovery as Date).toISOString(),
+        whereDiscovery: whereDiscovery === '' ? null : whereDiscovery,
+        categoryId: category?.categoryId ?? null,
+        brandId: brand?.brandId ?? null,
+        itemName: itemName === '' ? null : itemName,
+        price: price ?? null,
+        additionalInfo: additionalInfo ?? null,
+        hashTagIdList: hashTagIdList ?? null,
+        linkList: linkList ?? null,
+        infoSource: source ?? null,
+        newCelebId: newCeleb?.id ?? null,
+        newBrandId: newBrand?.brandId ?? null,
       }
-      console.log(item)
       mutate(item)
-    } else {
-      alert('오류가 발생했어요. 다시 시도해주세요')
     }
-  }
+  }, [s3ImgList])
 
-  const resetItemInfo = useResetRecoilState(itemInfoState)
-  const resetCelebInfoInItem = useResetRecoilState(createItemCelebState)
-  const resetCategory = useResetRecoilState(subCategoryState)
-  const resetParentCategory = useResetRecoilState(parentCategoryState)
+  const resetS3ImgList = useResetRecoilState(itemS3ImgListState)
   const resetImgListState = useResetRecoilState(imgListState)
+  const resetCelebInfoInItem = useResetRecoilState(createItemCelebState)
+  const resetNewCeleb = useResetRecoilState(createItemNewCelebState)
+  const resetWhenDiscovery = useResetRecoilState(createItemWhenDateState)
+  const resetwhereDiscovery = useResetRecoilState(createItemPlaceState)
+  const resetCategory = useResetRecoilState(createItemCategoryState)
+  const resetBrand = useResetRecoilState(createItemBrandState)
+  const resetNewBrand = useResetRecoilState(createItemNewBrandState)
+  const resetItemName = useResetRecoilState(createItemNameState)
+  const resetPrice = useResetRecoilState(createItemPriceState)
+  const resetAdditionalInfo = useResetRecoilState(createItemAddInfoState)
+  const resetHashTags = useResetRecoilState(hashTagState)
+  const resetSource = useResetRecoilState(createItemSourceState)
+  const resetLinkList = useResetRecoilState(createItemLinkState)
 
   const onBackClick = () => {
-    resetItemInfo()
-    resetCelebInfoInItem()
-    resetCategory()
-    resetParentCategory()
+    resetS3ImgList()
     resetImgListState()
-    navigate('/home', { replace: true })
+    resetCelebInfoInItem()
+    resetNewCeleb()
+    resetWhenDiscovery()
+    resetwhereDiscovery()
+    resetCategory()
+    resetBrand()
+    resetNewBrand()
+    resetItemName()
+    resetPrice()
+    resetAdditionalInfo()
+    resetHashTags()
+    resetSource()
+    resetLinkList()
+    navigate(`/item/detail/${itemId}`)
   }
 
   return (
@@ -239,16 +287,23 @@ const ItemEdit = () => {
       </HeaderWrapper>
       <ComponentContainer>
         <ComponentWrapper>
-          {/* <ImageField error={false}></ImageField> */}
           <ImageField hasTriedToUpload={hasTriedToUpload}></ImageField>
         </ComponentWrapper>
         <ComponentWrapper>
           <LabelContainer>
-            {hasTriedToUpload && !celeb.id && <Error></Error>}
+            {hasTriedToUpload && !(celebInfoInItem?.soloId || newCeleb?.id) && <Error></Error>}
             <Label>누가 착용했나요?</Label>
           </LabelContainer>
           <CelebWrapper>
-            <ButtonMedium text={celeb.celebNameKr} type='pri' active={true}></ButtonMedium>
+            <ButtonMedium
+              text={
+                celebInfoInItem?.groupName
+                  ? celebInfoInItem?.groupName + ' ' + celebInfoInItem.soloName
+                  : celebInfoInItem?.soloName ?? ''
+              }
+              type='pri'
+              active={true}
+            ></ButtonMedium>
           </CelebWrapper>
         </ComponentWrapper>
         <ComponentWrapper>
@@ -260,27 +315,25 @@ const ItemEdit = () => {
         <ComponentWrapper>
           <LabelContainer>
             {hasTriedToUpload &&
-              (!category.id ||
-                !itemInfo.brand ||
-                // !itemInfo.newBrand ||
-                !itemInfo.itemName ||
-                !itemInfo.price) && <Error></Error>}
+              (!category?.categoryId || !(brand?.brandId || newBrand) || !itemName || !price) && (
+                <Error></Error>
+              )}
             <Label>어떤 아이템인가요?</Label>
           </LabelContainer>
           <SelectCategory />
-          {hasTriedToUpload && !category.id && (
+          {hasTriedToUpload && !category?.categoryId && (
             <ErrorText className='error'>필수 항목입니다</ErrorText>
           )}
           <ComponentWrapper className='padding'>
             <BrandItemField
-              brandValid={hasTriedToUpload ? !itemInfo.brand || !itemInfo.newBrand : true}
-              itemNameValid={hasTriedToUpload ? itemInfo.itemName !== '' : true}
+              brandValid={hasTriedToUpload ? !(!brand && !newBrand) : true}
+              itemNameValid={hasTriedToUpload ? itemName === '' && itemName === null : true}
             ></BrandItemField>
           </ComponentWrapper>
-          {(itemInfo.brand?.brandId || itemInfo.newBrand?.brandId) && (
+          {(brand?.brandId || newBrand?.brandId) && (
             <>
               <PriceField></PriceField>
-              {hasTriedToUpload && !itemInfo.price && (
+              {hasTriedToUpload && !price && (
                 <ErrorText className='error'>필수 항목입니다</ErrorText>
               )}
             </>
@@ -291,7 +344,7 @@ const ItemEdit = () => {
       <BottomBar>
         <div className='left'>
           <div className='button' onClick={() => navigate('/item/edit/addInfo')}>
-            {itemInfo.additionalInfo && itemInfo.additionalInfo?.length > 0 ? (
+            {(additionalInfo && additionalInfo?.length > 0) || (hashTags && hashTags.length > 0) ? (
               <InfoAddOn></InfoAddOn>
             ) : (
               <InfoAddOff></InfoAddOff>
@@ -299,12 +352,8 @@ const ItemEdit = () => {
 
             <span>추가 정보</span>
           </div>
-          <div className='button' onClick={() => navigate('/item/edit/addlink')}>
-            {itemInfo.linkList && itemInfo.linkList.length > 0 ? (
-              <LinkAddOn></LinkAddOn>
-            ) : (
-              <LinkAddOff></LinkAddOff>
-            )}
+          <div className='button' onClick={() => navigate('/item/create/addlink')}>
+            {linkList && linkList.length > 0 ? <LinkAddOn></LinkAddOn> : <LinkAddOff></LinkAddOff>}
             <span>구매 링크</span>
           </div>
         </div>

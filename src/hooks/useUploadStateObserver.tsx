@@ -37,58 +37,58 @@ const useUploadStateObserver = () => {
 
   // Item 이미지 리스트
   const imgList = useRecoilValue(imgListState)
-  const [debouncedImgList] = useDebounce(imgList, 1000)
+  const [debouncedImgList] = useDebounce(imgList, 500)
   const tempS3ImgList = useRecoilValue(tempS3ImgListState)
-  const [debouncedTempS3ImgList] = useDebounce(tempS3ImgList, 1000)
+  const [debouncedTempS3ImgList] = useDebounce(tempS3ImgList, 500)
 
   // Celeb ID
   const celebInfoInItem = useRecoilValue(createItemCelebState)
-  const [debouncedCelebInfoInItem] = useDebounce(celebInfoInItem, 1000)
+  const [debouncedCelebInfoInItem] = useDebounce(celebInfoInItem, 500)
   // NewCeleb ID
   const newCeleb = useRecoilValue(createItemNewCelebState)
-  const [debouncedNewCeleb] = useDebounce(newCeleb, 1000)
+  const [debouncedNewCeleb] = useDebounce(newCeleb, 500)
 
   // 착용 날짜
   const whenDiscovery = useRecoilValue(createItemWhenDateState)
-  const [debouncedWhenDiscovery] = useDebounce(whenDiscovery, 1000)
+  const [debouncedWhenDiscovery] = useDebounce(whenDiscovery, 500)
 
   // 착용 장소
   const whereDiscovery = useRecoilValue(createItemPlaceState)
-  const [debouncedWhereDiscovery] = useDebounce(whereDiscovery, 1000)
+  const [debouncedWhereDiscovery] = useDebounce(whereDiscovery, 500)
 
   // 아이템 카테고리
   const category = useRecoilValue(createItemCategoryState)
-  const [debouncedCategory] = useDebounce(category, 1000)
+  const [debouncedCategory] = useDebounce(category, 500)
 
   // 브랜드 ID
   const brand = useRecoilValue(createItemBrandState)
-  const [debouncedBrand] = useDebounce(brand, 1000)
+  const [debouncedBrand] = useDebounce(brand, 500)
 
   // NewBrand ID
   const newBrand = useRecoilValue(createItemNewBrandState)
-  const [debouncedNewbrand] = useDebounce(newBrand, 1000)
+  const [debouncedNewbrand] = useDebounce(newBrand, 500)
 
   // 아이템 이름
   const itemName = useRecoilValue(createItemNameState)
-  const [debouncedItemName] = useDebounce(itemName, 1000)
+  const [debouncedItemName] = useDebounce(itemName, 500)
 
   // 가격
   const price = useRecoilValue(createItemPriceState)
-  const [debouncedPrice] = useDebounce(price, 1000)
+  const [debouncedPrice] = useDebounce(price, 500)
 
   // 추가정보
   const additionalInfo = useRecoilValue(createItemAddInfoState)
-  const [debouncedAdditionalInfo] = useDebounce(additionalInfo, 1000)
+  const [debouncedAdditionalInfo] = useDebounce(additionalInfo, 500)
 
   const hashTags = useRecoilValue(hashTagState)
-  const [debouncedHashTags] = useDebounce(hashTags, 1000)
+  const [debouncedHashTags] = useDebounce(hashTags, 500)
 
   const source = useRecoilValue(createItemSourceState)
-  const [debouncedSource] = useDebounce(source, 1000)
+  const [debouncedSource] = useDebounce(source, 500)
 
   // 구매링크
   const linkList = useRecoilValue(createItemLinkState)
-  const [debouncedinkList] = useDebounce(linkList, 1000)
+  const [debouncedinkList] = useDebounce(linkList, 500)
 
   // const hashTags = useMemo(() => {
   //   const temp: Array<number> = []

@@ -71,65 +71,66 @@ const AskRecentPostWritingModal = () => {
     if (!tempData) {
       return
     }
-    localStorage.setItem(localStorageKeys.TEMP_ITEM_ID, String(tempData.id))
-    setCurrentTempId(tempData.id)
-    // 사진 설정
-    setImgList(tempData.imgList ?? [])
-    // 셀럽 설정
-    setCelebInfoInItem({
-      groupId: tempData.celeb.parentId !== null ? tempData.celeb.parentId : null,
-      groupName:
-        tempData.celeb.parentCelebNameKr !== null ? tempData.celeb.parentCelebNameKr : null,
-      soloId: tempData.celeb.id !== null ? tempData.celeb.id : null,
-      soloName: tempData.celeb.celebNameKr !== null ? tempData.celeb.celebNameKr : null,
-    })
-    setNewCeleb(
-      tempData.newCeleb && {
-        id: tempData.newCeleb.newCelebId,
-        newCelebName: tempData.newCeleb.newCelebName,
-      },
-    )
-    setWhenDiscovery(tempData.whenDiscovery ? new Date(tempData.whenDiscovery) : null)
-    setWhereDiscovery(tempData.whereDiscovery)
-    setCategory(
-      tempData.category && {
-        categoryId: tempData.category.id,
-        childName: tempData.category.name,
-        parentCategoryId: tempData.category.parentId,
-        parentName: tempData.category.parentName,
-      },
-    )
-    setBrand(
-      tempData.brand && {
-        brandId: tempData.brand.id,
-        brandName: tempData.brand.brandKr,
-        brandImgUrl: tempData.brand.brandImgUrl,
-      },
-    )
-    setNewBrand(
-      tempData.newBrand && {
-        brandId: tempData.newBrand.newBrandId,
-        brandName: tempData.newBrand.newBrandName,
-      },
-    )
-    setItemName(tempData.itemName)
-    setPrice(tempData.price)
-    setAdditionalInfo(tempData.additionalInfo)
-    setLinkList(tempData.linkList ? tempData.linkList : null)
-    setSource(tempData.infoSource)
-    // 해시태그 설정
-    const hashtags: Array<IHashTag> = []
-    tempData.hashTagList &&
-      tempData.hashTagList.length > 0 &&
-      tempData.hashTagList.map((item) => {
-        hashtags.push({
-          hashtagId: item.hashtagId,
-          hashtagContent: item.hashtagContent,
-        })
-      })
-    setHashTags(hashtags)
 
-    closeModal(modals.AskRecentPostWritingModal)
+    closeModal(modals.AskRecentPostWritingModal, () => {
+      localStorage.setItem(localStorageKeys.TEMP_ITEM_ID, String(tempData.id))
+      setCurrentTempId(tempData.id)
+      // 사진 설정
+      setImgList(tempData.imgList ?? [])
+      // 셀럽 설정
+      setCelebInfoInItem({
+        groupId: tempData.celeb.parentId !== null ? tempData.celeb.parentId : null,
+        groupName:
+          tempData.celeb.parentCelebNameKr !== null ? tempData.celeb.parentCelebNameKr : null,
+        soloId: tempData.celeb.id !== null ? tempData.celeb.id : null,
+        soloName: tempData.celeb.celebNameKr !== null ? tempData.celeb.celebNameKr : null,
+      })
+      setNewCeleb(
+        tempData.newCeleb && {
+          id: tempData.newCeleb.newCelebId,
+          newCelebName: tempData.newCeleb.newCelebName,
+        },
+      )
+      setWhenDiscovery(tempData.whenDiscovery ? new Date(tempData.whenDiscovery) : null)
+      setWhereDiscovery(tempData.whereDiscovery)
+      setCategory(
+        tempData.category && {
+          categoryId: tempData.category.id,
+          childName: tempData.category.name,
+          parentCategoryId: tempData.category.parentId,
+          parentName: tempData.category.parentName,
+        },
+      )
+      setBrand(
+        tempData.brand && {
+          brandId: tempData.brand.id,
+          brandName: tempData.brand.brandKr,
+          brandImgUrl: tempData.brand.brandImgUrl,
+        },
+      )
+      setNewBrand(
+        tempData.newBrand && {
+          brandId: tempData.newBrand.newBrandId,
+          brandName: tempData.newBrand.newBrandName,
+        },
+      )
+      setItemName(tempData.itemName)
+      setPrice(tempData.price)
+      setAdditionalInfo(tempData.additionalInfo)
+      setLinkList(tempData.linkList ? tempData.linkList : null)
+      setSource(tempData.infoSource)
+      // 해시태그 설정
+      const hashtags: Array<IHashTag> = []
+      tempData.hashTagList &&
+        tempData.hashTagList.length > 0 &&
+        tempData.hashTagList.map((item) => {
+          hashtags.push({
+            hashtagId: item.hashtagId,
+            hashtagContent: item.hashtagContent,
+          })
+        })
+      setHashTags(hashtags)
+    })
   }
 
   return (

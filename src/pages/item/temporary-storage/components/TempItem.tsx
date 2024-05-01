@@ -108,12 +108,16 @@ const TempItem = ({ data, isFirst, isEditMode }: TempItemProps) => {
     setCurrentTempId(data.id)
     setImgList(data.imgList ?? [])
     // 셀럽 설정
-    setCelebInfoInItem({
-      groupId: data.celeb.parentId !== null ? data.celeb.parentId : null,
-      groupName: data.celeb.parentCelebNameKr !== null ? data.celeb.parentCelebNameKr : null,
-      soloId: data.celeb.id !== null ? data.celeb.id : null,
-      soloName: data.celeb.celebNameKr !== null ? data.celeb.celebNameKr : null,
-    })
+    setCelebInfoInItem(
+      data.celeb
+        ? {
+            groupId: data.celeb.parentId !== null ? data.celeb.parentId : null,
+            groupName: data.celeb.parentCelebNameKr !== null ? data.celeb.parentCelebNameKr : null,
+            soloId: data.celeb.id !== null ? data.celeb.id : null,
+            soloName: data.celeb.celebNameKr !== null ? data.celeb.celebNameKr : null,
+          }
+        : null,
+    )
     setNewCeleb(
       data.newCeleb && {
         id: data.newCeleb.newCelebId,
@@ -160,7 +164,7 @@ const TempItem = ({ data, isFirst, isEditMode }: TempItemProps) => {
       })
     setHashTags(hashtags)
 
-    navigate(-1)
+    navigate(-2)
   }
 
   return (
