@@ -27,6 +27,7 @@ import { ReactComponent as DefaultProfile } from '../../../assets/defaultProfile
 import {
   AdditionalInfoWrapper,
   BasicInfoWrapper,
+  Brand,
   Category,
   ColorCircle,
   Divider,
@@ -51,7 +52,6 @@ import {
 } from './styles'
 import Badge from '../../../components/Badge/Badge'
 import BrandLogo from '../../../components/BrandLogo/BrandLogo'
-import { Brand } from '../create/components/BrandItemField/BrandItemField'
 import { Label } from '../create/styles'
 import DisplayField from '../../../components/TextField/DisplayField/DisplayField'
 import ButtonSmall from '../../../components/ButtonSmall/ButtonSmall'
@@ -253,7 +253,7 @@ const ItemDetail = () => {
               <ItemName>{data?.itemName}</ItemName>
               <Brand>
                 <BrandLogo size={32} url={data?.brand.brandImgUrl} />
-                <span>{data?.brand.brandEn}</span>
+                <span>{data?.brand.brandKr}</span>
                 {/* <Arrow></Arrow> */}
               </Brand>
             </ItemInfo>
