@@ -1,9 +1,13 @@
 import React from 'react'
 import Chip from '../../Chip/Chip'
 import { TopBrandResult } from '../../../apis/brand/brandService'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
 import useRecentBrandQuery from '../../../apis/brand/hooks/useRecentBrandQuery'
-import { createItemBrandState, itemInfoState } from '../../../recoil/itemInfo'
+import {
+  createItemBrandState,
+  createItemNewBrandState,
+  itemInfoState,
+} from '../../../recoil/itemInfo'
 
 interface HotBrandChipProps {
   hotBrandData: TopBrandResult
@@ -11,6 +15,7 @@ interface HotBrandChipProps {
 
 const HotBrandChip = ({ hotBrandData }: HotBrandChipProps) => {
   const setBrand = useSetRecoilState(createItemBrandState)
+  const resetNewBrand = useResetRecoilState(createItemNewBrandState)
 
   const {
     postRecentBrand: { mutate },
@@ -26,6 +31,7 @@ const HotBrandChip = ({ hotBrandData }: HotBrandChipProps) => {
       brandName: brand.brandKr,
       brandImgUrl: brand.brandImgUrl,
     })
+    resetNewBrand()
   }
 
   return (
