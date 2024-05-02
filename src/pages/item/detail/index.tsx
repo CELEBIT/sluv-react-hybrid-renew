@@ -83,7 +83,7 @@ const ItemDetail = () => {
 
   const { getItemDetail } = useItemDetailQuery()
   const { data } = getItemDetail(Number(itemId))
-  console.log(data)
+  // console.log(data)
 
   const setEditReportItemState = useSetRecoilState(RequestEditItemState)
   const colors = ['gray', 'pink', 'orange', 'yellow', 'green', 'blue']

@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import useHotCelebItemQuery from '../../../../apis/item/hooks/useHotCelebItemQuery'
 import ItemListGrid from '../../../../components/ItemListGrid/ItemListGrid'
 import useUserItemQuery from '../../../../apis/user/hooks/useUserItemQuery'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { ContentContainer, HeaderWrapper, PageContainer } from '../../styles'
 import Header from '../../../../components/Header/Header'
 import EmptyState from '../../../../components/EmptyState'
@@ -12,6 +12,7 @@ import { EmptyStateWrapper } from '../FollowList/Follower/Follower'
 
 const UserItem = () => {
   const { id } = useParams()
+  const navigate = useNavigate()
   if (id) {
     // 타 유저의 마이페이지
     const { getOtherUserUploadItem } = useUserItemQuery()
@@ -61,7 +62,7 @@ const UserItem = () => {
                 <ButtonSmall
                   text='정보 공유하러 가기'
                   type='pri'
-                  onClick={() => alert('clicked')}
+                  onClick={() => navigate('/item/create')}
                 />
               </EmptyState>
             </EmptyStateWrapper>

@@ -4,6 +4,7 @@ import { queryKeys } from '../../../config/queryKeys'
 import { EditRequestReason } from '../../../pages/item/editRequest'
 import useModals from '../../../components/Modals/hooks/useModals'
 import { modals } from '../../../components/Modals'
+import { useNavigate } from 'react-router-dom'
 
 interface IReportItem {
   itemId: number
@@ -13,6 +14,7 @@ interface IReportItem {
 const useItemDetailQuery = () => {
   const item = new ItemService()
   const queryClient = useQueryClient()
+  const navigate = useNavigate()
   const { openModal } = useModals()
 
   const getItemDetail = (itemId: number) => {
@@ -35,7 +37,9 @@ const useItemDetailQuery = () => {
     },
   })
   const deleteItem = useMutation((itemId: number) => item.deleteItem(itemId), {
-    onSuccess: () => {
+    onSuccess: (res) => {
+      console.log(res)
+      navigate(-1)
       queryClient.invalidateQueries()
     },
   })
