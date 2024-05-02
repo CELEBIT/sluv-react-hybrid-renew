@@ -118,6 +118,7 @@ export const convertToImageList = (base64DataArray: any, imgList: Image[] | Isel
     return {
       representFlag: imgList.length === 0 && index === 0,
       imgFile: file,
+      imgFileUrl: URL.createObjectURL(file),
     }
   })
 

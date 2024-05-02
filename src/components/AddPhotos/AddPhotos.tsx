@@ -34,6 +34,7 @@ const AddPhotos = () => {
       temp.push({
         representFlag: i == 0 ? true : false,
         imgFile: imgFileList[i],
+        imgFileUrl: URL.createObjectURL(imgFileList[i]),
       })
     }
     setImgList([...imgList, ...temp])
