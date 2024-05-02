@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { Common } from '../../styles'
 import React, { useRef } from 'react'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { Brand } from '../../../pages/item/create/components/BrandItemField/BrandItemField'
 import BrandLogo from '../../BrandLogo/BrandLogo'
 import useBrandSearchQuery from '../../../apis/brand/hooks/useBrandSearchQuery'
