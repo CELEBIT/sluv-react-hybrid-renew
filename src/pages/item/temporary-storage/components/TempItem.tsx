@@ -164,7 +164,7 @@ const TempItem = ({ data, isFirst, isEditMode }: TempItemProps) => {
       })
     setHashTags(hashtags)
 
-    navigate(-2)
+    navigate(-1)
   }
 
   return (
