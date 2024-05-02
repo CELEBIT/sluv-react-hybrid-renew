@@ -110,7 +110,10 @@ const TwoItemUpload = ({ onClick }: TwoItemUploadProps) => {
   return (
     <TwoItemUploadWrapper>
       {/* 둘중에 하나라도 선택 되었을 경우 */}
-      {firstItem?.imgUrl || secondItem?.imgUrl || firstItem?.imgFile || secondItem?.imgFile ? (
+      {firstItem?.imgUrl ||
+      secondItem?.imgUrl ||
+      firstItem?.imgFileUrl ||
+      secondItem?.imgFileUrl ? (
         <ImageWrapper>
           {firstItem.itemId ? (
             // 스럽에 존재하는 아이템 선택
@@ -121,16 +124,16 @@ const TwoItemUpload = ({ onClick }: TwoItemUploadProps) => {
             ></ExistingItem>
           ) : (
             <>
-              {firstItem?.imgFile && (
+              {firstItem?.imgFileUrl && (
                 <UploadPhoto
-                  imgUrl={firstItem.imgUrl ?? ''}
+                  imgUrl={firstItem.imgFileUrl ?? ''}
                   className='left'
                   onDelete={() => onDeleteItem(firstItem)}
                 ></UploadPhoto>
               )}
             </>
           )}
-          {!firstItem.itemId && !firstItem.imgFile && <AddItem onClick={handleClick}></AddItem>}
+          {!firstItem.itemId && !firstItem.imgFileUrl && <AddItem onClick={handleClick}></AddItem>}
           {/* 2번째 아이템 */}
           {secondItem?.itemId !== null ? (
             <ExistingItem
@@ -143,14 +146,14 @@ const TwoItemUpload = ({ onClick }: TwoItemUploadProps) => {
               {secondItem.imgFile && (
                 // 유저 갤러리에서 선택
                 <UploadPhoto
-                  imgUrl={secondItem.imgUrl ?? ''}
+                  imgUrl={secondItem.imgFileUrl ?? ''}
                   className='right'
                   onDelete={() => onDeleteItem(secondItem)}
                 ></UploadPhoto>
               )}
             </>
           )}
-          {!secondItem.imgUrl && !secondItem.imgFile && (
+          {!secondItem.imgUrl && !secondItem.imgFileUrl && (
             <AddItem onClick={() => onClick()}></AddItem>
           )}
         </ImageWrapper>
