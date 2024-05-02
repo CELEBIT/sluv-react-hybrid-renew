@@ -87,8 +87,8 @@ const WhichOne = () => {
           <TwoItemUpload onClick={handleTwoItemUploadClick}></TwoItemUpload>
         </div>
         {hasTriedToUpload &&
-          (!firstItem.description || (!firstItem.imgUrl && !firstItem.imgFile)) &&
-          (!secondItem.description || (!secondItem.imgUrl && !secondItem.imgFile)) && (
+          (!firstItem.description || (!firstItem.imgUrl && !firstItem.imgFileUrl)) &&
+          (!secondItem.description || (!secondItem.imgUrl && !secondItem.imgFileUrl)) && (
             <ErrorText className='error'>필수 항목입니다</ErrorText>
           )}
       </ComponentWrapper>

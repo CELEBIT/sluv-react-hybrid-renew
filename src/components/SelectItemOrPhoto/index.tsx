@@ -260,7 +260,7 @@ const SelectItemOrPhoto = () => {
                   // console.log('seconds 아이템 null')
                   setSecondItem((prev) => ({
                     ...prev,
-                    ...{ imgFile: file },
+                    ...{ imgFile: file, imgFileUrl: URL.createObjectURL(file) },
                   }))
                   // console.log('secondItem', secondItem)
                 }
