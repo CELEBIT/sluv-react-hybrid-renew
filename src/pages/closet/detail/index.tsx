@@ -76,7 +76,7 @@ const ClosetDetailPage = () => {
               <br />
               저장하여 나만의 옷장을 만들어봐요
             </p>
-            <button>인기 아이템 보러가기</button>
+            {/* <button>인기 아이템 보러가기</button> */}
           </S.EmptyBoxContainer>
         </S.EmptyPageRoot>
       )}
