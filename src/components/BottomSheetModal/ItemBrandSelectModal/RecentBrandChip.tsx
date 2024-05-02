@@ -3,7 +3,7 @@ import Chip from '../../Chip/Chip'
 import { RecentBrandResult } from '../../../apis/brand/brandService'
 import useRecentBrandQuery from '../../../apis/brand/hooks/useRecentBrandQuery'
 import { BrandFlag } from '../../../apis/core/type'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
 import {
   createItemBrandState,
   createItemNewBrandState,
@@ -21,7 +21,10 @@ const RecentBrandChip = ({ brandData }: RecentBrandChipProps) => {
   } = useRecentBrandQuery()
 
   const setBrand = useSetRecoilState(createItemBrandState)
+  const resetBrand = useResetRecoilState(createItemBrandState)
+
   const setNewBrand = useSetRecoilState(createItemNewBrandState)
+  const resetNewBrand = useResetRecoilState(createItemNewBrandState)
 
   const onDeleteRecentBrandChip = () => {
     mutateByDeleteRecentBrand({
@@ -42,12 +45,14 @@ const RecentBrandChip = ({ brandData }: RecentBrandChipProps) => {
         brandName: brand.brandName,
         brandImgUrl: brandData.brandImgUrl,
       })
+      resetNewBrand()
     } else {
       // New 브랜드
       setNewBrand({
         brandId: brand.id,
         brandName: brand.brandName,
       })
+      resetBrand()
     }
   }
 
