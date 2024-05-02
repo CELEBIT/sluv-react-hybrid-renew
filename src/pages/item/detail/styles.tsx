@@ -27,6 +27,17 @@ export const ColorCircle = styled.div<ColorCircleProps>`
   background-color: ${({ color }) => color};
 `
 
+export const Brand = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  span {
+    margin-left: 0.5rem;
+    ${Pretendard({ size: 17, weight: Common.bold.regular, color: Common.colors.GR600 })}
+  }
+`
+
 export const ItemWrapper = styled.div`
   display: flex;
   flex-direction: column;
