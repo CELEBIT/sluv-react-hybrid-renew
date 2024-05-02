@@ -16,7 +16,6 @@ export interface DeleteItemModalProps {
 const DeleteItemModal = ({ itemId }: DeleteItemModalProps) => {
   const { closeModal } = useModals()
   const navigate = useNavigate()
-
   const {
     deleteItem: { mutate: mutateItemDeleted },
   } = useItemDetailQuery()
@@ -24,7 +23,6 @@ const DeleteItemModal = ({ itemId }: DeleteItemModalProps) => {
   const onDelete = () => {
     closeModal(modals.DeleteItemModal, () => {
       mutateItemDeleted(itemId)
-      navigate('/home')
     })
   }
 
