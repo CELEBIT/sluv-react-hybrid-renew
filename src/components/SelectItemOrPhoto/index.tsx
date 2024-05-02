@@ -225,6 +225,7 @@ const SelectItemOrPhoto = () => {
         if (imgItemList.length + i + 1 <= maxItemPhotoCount) {
           const fileSelected = {
             imgFile: file,
+            imgFileUrl: URL.createObjectURL(file),
             imgUrl: null,
             description: null,
             vote: null,
