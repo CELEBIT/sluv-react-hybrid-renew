@@ -32,17 +32,17 @@ const CommunityTabChangeModal = ({ name, url }: CommunityMenu) => {
   const resetImageItemList = useResetRecoilState(imgItemListState)
 
   const changeMenu = () => {
-    resetQuestionItem()
-    resetCelebInfoInItemState()
-    resetFirstItem()
-    resetSecondItem()
-    resetImageItemList()
-    setCommunityMenu(name)
-    resetSelectedCeleb()
-    resetSelectedGroup()
-    resetNewCeleb()
     closeModal(modals.CommunityTabChangeModal, () => {
-      navigate(url)
+      resetQuestionItem()
+      resetCelebInfoInItemState()
+      resetFirstItem()
+      resetSecondItem()
+      resetImageItemList()
+      setCommunityMenu(name)
+      resetSelectedCeleb()
+      resetSelectedGroup()
+      resetNewCeleb()
+      navigate(url, { replace: true })
     })
   }
 

@@ -130,26 +130,6 @@ const Question = () => {
     resetNewCeleb()
     navigate('/community')
   }
-  useEffect(() => {
-    // popstate 이벤트 핸들러 등록
-    const handlePopstate = () => {
-      resetFirstItem()
-      resetSecondItem()
-      resetQuestionItem()
-      resetImgItemList()
-      resetCelebInfoInItem()
-      resetSelectedCeleb()
-      resetSelectedGroup()
-      resetNewCeleb()
-    }
-    // 이벤트 핸들러 등록
-    window.addEventListener('popstate', handlePopstate)
-
-    // 컴포넌트가 언마운트될 때 이벤트 핸들러 제거
-    return () => {
-      window.removeEventListener('popstate', handlePopstate)
-    }
-  }, [])
 
   return (
     <QuestionContainer>

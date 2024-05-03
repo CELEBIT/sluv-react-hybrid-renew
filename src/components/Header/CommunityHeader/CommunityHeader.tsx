@@ -38,33 +38,34 @@ const CommunityHeader = ({ children, backBtnClick }: HeaderProps) => {
     if (
       menu.name !== communityMenu &&
       (questionInfo.id ||
-        questionInfo.celebId ||
+        questionInfo.celebId !== 0 ||
         questionInfo.newCelebId ||
         questionInfo.title ||
         questionInfo.content ||
         questionInfo.imgList ||
         questionInfo.itemList ||
         questionInfo.categoryNameList ||
-        imgItemList)
+        imgItemList.length !== 0)
     ) {
       setMenuOpen(!menuOpen)
       openModal(modals.CommunityTabChangeModal, { name: menu.name, url: menu.url })
     } else {
+      setMenuOpen(!menuOpen)
       setCommunityMenu(menu.name)
       navigate(menu.url)
     }
   }
   useEffect(() => {
-    if (pathname.includes('/community/create/find-request')) {
+    if (pathname.includes('create/find-request')) {
       setCommunityMenu('찾아주세요')
     }
-    if (pathname.includes('/community/create/buy')) {
+    if (pathname.includes('create/buy')) {
       setCommunityMenu('이 중에 뭐 살까')
     }
-    if (pathname.includes('/community/create/howabout')) {
+    if (pathname.includes('create/howabout')) {
       setCommunityMenu('이거 어때')
     }
-    if (pathname.includes('/community/create/recommend')) {
+    if (pathname.includes('create/recommend')) {
       setCommunityMenu('추천해 줘')
     }
   }, [])
