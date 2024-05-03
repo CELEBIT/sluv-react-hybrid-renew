@@ -41,7 +41,7 @@ const ClosetInnerItem = ({ service, isEditMode, onSelectItem }: ClosetInnerItemP
   }
 
   return (
-    <S.Root onClick={handleMoveItemDetail}>
+    <S.Root onClick={isEditMode ? handleClickCheckBox : handleMoveItemDetail}>
       <S.Layout>
         <S.ImageContainer>
           <img alt={'아이템 이미지'} src={service.imgUrl ?? ''} />

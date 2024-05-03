@@ -6,6 +6,7 @@ import { AnotherClosetListModal, DeleteReCheckModal } from './index'
 import { useNavigate } from 'react-router-dom'
 import { patchClosetItemsDelete } from '../../../apis/closet'
 import { queryToObject } from '../../../utils/utility'
+import { useQueryClient } from '@tanstack/react-query'
 
 type ClosetInnerItemContextType = ReturnType<typeof useEditClosetInnerItemContext>
 export const ClosetInnerItemContext = createContext<ClosetInnerItemContextType | null>(null)
@@ -14,7 +15,7 @@ export const useEditClosetInnerItemContext = () => {
   const [isEditMode, setIsEditMode] = useState<boolean>(false)
   const { id } = queryToObject(window.location.search.split('?')[1])
   const [selectedIds, setSelectedIds] = useState<number[]>([])
-
+  const queryClient = useQueryClient()
   const { openModal, closeModal } = useModals()
 
   const navigate = useNavigate()
@@ -36,15 +37,22 @@ export const useEditClosetInnerItemContext = () => {
   }
 
   const handleMoveItemsToAnotherCloset = (id: string) => {
-    openModal(AnotherClosetListModal, { fromClosetId: id, selectedIds })
+    openModal(AnotherClosetListModal, {
+      fromClosetId: id,
+      selectedIds,
+      setSelectedIds: setSelectedIds,
+      setIsEditMode: setIsEditMode,
+    })
   }
 
-  const handleMoveItems = () => {
-    // TODO API Call
-
-    closeModal(AnotherClosetListModal)
-    setIsEditMode(false)
-  }
+  // const handleMoveItems = () => {
+  //   closeModal(AnotherClosetListModal, () => {
+  //     console.log('handleMoveItems called')
+  //     setIsEditMode(false)
+  //     setSelectedIds([])
+  //     queryClient.invalidateQueries()
+  //   })
+  // }
 
   const handleRemoveItems = () => {
     // TODO API CAll
@@ -54,9 +62,14 @@ export const useEditClosetInnerItemContext = () => {
       },
       handleConfirm: async () => {
         const res = await patchClosetItemsDelete(id, selectedIds)
-        if (res.isSuccess) alert('성공적으로 삭제되었습니다.')
-        setIsEditMode(false)
-        closeModal(DeleteReCheckModal)
+        if (res.isSuccess) {
+          alert('성공적으로 삭제되었습니다.')
+
+          closeModal(DeleteReCheckModal, () => {
+            setIsEditMode(false)
+            setSelectedIds([])
+          })
+        }
       },
     })
   }
@@ -71,7 +84,7 @@ export const useEditClosetInnerItemContext = () => {
       handleSubHeaderClick,
       handleSelectItem,
       handleMoveItemsToAnotherCloset,
-      handleMoveItems,
+      // handleMoveItems,
       handleRemoveItems,
     },
   }
