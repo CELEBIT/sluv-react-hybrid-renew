@@ -15,6 +15,11 @@ import {
 } from '../../../../recoil/communityInfo'
 import { Outlet, useNavigate } from 'react-router-dom'
 import useCommunityImgUpload from '../../../../apis/s3/hooks/useCommunityImgUpload'
+import { createItemCelebState, createItemNewCelebState } from '../../../../recoil/itemInfo'
+import {
+  selectedCelebState,
+  selectedGroupState,
+} from '../../../../components/SelectCeleb/SelectCeleb'
 
 const Question = () => {
   const navigate = useNavigate()
@@ -30,6 +35,10 @@ const Question = () => {
   const resetFirstItem = useResetRecoilState(firstItemState)
   const resetSecondItem = useResetRecoilState(secondItemState)
   const resetImgItemList = useResetRecoilState(imgItemListState)
+  const resetCelebInfoInItem = useResetRecoilState(createItemCelebState)
+  const resetSelectedCeleb = useResetRecoilState(selectedCelebState)
+  const resetSelectedGroup = useResetRecoilState(selectedGroupState)
+  const resetNewCeleb = useResetRecoilState(createItemNewCelebState)
 
   const {
     postCommunityImg: { mutate: mutateByImgUpload },
@@ -115,8 +124,32 @@ const Question = () => {
     resetSecondItem()
     resetQuestionItem()
     resetImgItemList()
+    resetCelebInfoInItem()
+    resetSelectedCeleb()
+    resetSelectedGroup()
+    resetNewCeleb()
     navigate('/community')
   }
+  useEffect(() => {
+    // popstate 이벤트 핸들러 등록
+    const handlePopstate = () => {
+      resetFirstItem()
+      resetSecondItem()
+      resetQuestionItem()
+      resetImgItemList()
+      resetCelebInfoInItem()
+      resetSelectedCeleb()
+      resetSelectedGroup()
+      resetNewCeleb()
+    }
+    // 이벤트 핸들러 등록
+    window.addEventListener('popstate', handlePopstate)
+
+    // 컴포넌트가 언마운트될 때 이벤트 핸들러 제거
+    return () => {
+      window.removeEventListener('popstate', handlePopstate)
+    }
+  }, [])
 
   return (
     <QuestionContainer>
