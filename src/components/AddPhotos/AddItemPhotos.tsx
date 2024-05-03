@@ -114,7 +114,7 @@ const AddItemPhotos = ({ onClick, size }: IAddPhotosProps) => {
                         key='image'
                         size={size ? size : 74}
                         borderRadius={8}
-                        imgUrl={img.imgUrl || img.imgFileUrl}
+                        imgUrl={img.imgUrl || img.imgFileUrl || undefined}
                         // imgFile={img.imgFile ? img.imgFile : undefined}
                         representFlag={img.representFlag || false}
                         candelete={true}

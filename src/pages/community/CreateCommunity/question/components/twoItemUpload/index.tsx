@@ -80,13 +80,13 @@ const TwoItemUpload = ({ onClick }: TwoItemUploadProps) => {
       if (firstItem.itemId === null && firstItem.imgFile === item.imgFile) {
         setFirstItem((prev) => ({
           ...prev,
-          ...{ imgFile: null },
+          ...{ imgFile: null, imgFileUrl: null },
         }))
       }
       if (secondItem.itemId === null && secondItem.imgFile === item.imgFile) {
         setSecondItem((prev) => ({
           ...prev,
-          ...{ imgFile: null },
+          ...{ imgFile: null, imgFileUrl: null },
         }))
       }
     }
