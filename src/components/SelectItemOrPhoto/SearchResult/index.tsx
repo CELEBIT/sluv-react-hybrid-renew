@@ -66,25 +66,22 @@ const SearchItemPhotoResult = () => {
       if (communityQuestionMenu === '이 중에 뭐 살까') {
         // 왼쪽 사진/아이템 삭제
         if (firstItem.itemId === item.itemId) {
-          resetFirstItem()
+          setFirstItem((prev) => ({
+            ...prev,
+            ...{ itemId: null, imgUrl: null, brandName: null, celebName: null, itemName: null },
+          }))
         }
         // 오른쪽 사진/아이템 삭제
         if (secondItem.itemId === item.itemId) {
-          resetSecondItem()
+          // resetSecondItem()
+          setSecondItem((prev) => ({
+            ...prev,
+            ...{ itemId: null, imgUrl: null, brandName: null, celebName: null, itemName: null },
+          }))
         }
       }
     } else {
       // 추가되어있지 않은 아이템 communityUploadInfo.itemList에 item 추가
-      const newItemList = [
-        ...(imgItemList || []),
-        {
-          itemId: item.itemId,
-          description: null,
-          vote: null,
-          representFlag: false,
-        },
-      ]
-
       if (imgItemList.length + 1 > maxItemPhotoCount) {
         alert('아이템의 개수가 최대값을 초과하였습니다.')
       } else {
@@ -99,7 +96,7 @@ const SearchItemPhotoResult = () => {
           },
         ])
 
-        if (CommunityMenu === '질문해요' && communityQuestionMenu === '이 중에 뭐 살까') {
+        if (CommunityMenu === '이 중에 뭐 살까') {
           const newItem = {
             itemId: item.itemId,
             imgUrl: item.imgUrl,
@@ -107,12 +104,14 @@ const SearchItemPhotoResult = () => {
             brandName: item.brandName,
             itemName: item.itemName,
           }
-          if (firstItem?.itemId === null && firstItem?.imgUrl === null) {
+          if (firstItem?.itemId === null && firstItem?.imgFile === null) {
+            console.log(firstItem)
             setFirstItem((prevFirstItem) => ({
               ...prevFirstItem,
               ...newItem,
             }))
-          } else if (secondItem?.itemId === null && secondItem?.imgUrl === null) {
+          } else if (secondItem?.itemId === null && secondItem?.imgFile === null) {
+            console.log(secondItem)
             setSecondItem((prevSecondItem) => ({
               ...prevSecondItem,
               ...newItem,
@@ -122,6 +121,7 @@ const SearchItemPhotoResult = () => {
       }
     }
   }
+
   return (
     <SearchResultWrapper>
       {data && data.pages[0].content.length > 0 ? (
