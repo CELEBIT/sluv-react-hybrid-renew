@@ -180,13 +180,13 @@ const SelectItemOrPhoto = () => {
                     // firstItem이 비어있을 때
                     setFirstItem((prev) => ({
                       ...prev,
-                      ...{ imgFile: file, imgUrl: URL.createObjectURL(file) },
+                      ...{ imgFile: file, imgFileUrl: URL.createObjectURL(file) },
                     }))
                   } else if (firstItem.imgFile || firstItem.itemId) {
                     // first가 존재할 때
                     setSecondItem((prev) => ({
                       ...prev,
-                      ...{ imgFile: file, imgUrl: URL.createObjectURL(file) },
+                      ...{ imgFile: file, imgFileUrl: URL.createObjectURL(file) },
                     }))
                   }
                 } else {
@@ -197,7 +197,7 @@ const SelectItemOrPhoto = () => {
                     // console.log('seconds 아이템 null')
                     setSecondItem((prev) => ({
                       ...prev,
-                      ...{ imgFile: file, imgUrl: URL.createObjectURL(file) },
+                      ...{ imgFile: file, imgFileUrl: URL.createObjectURL(file) },
                     }))
                     // console.log('secondItem', secondItem)
                   }
