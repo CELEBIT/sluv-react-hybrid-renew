@@ -8,7 +8,7 @@ import { BtnModalContent } from '../../../../components/Modals/styles'
 import { DeleteRecheckModalParam } from '../../deleteAndSort'
 import { queryToObject } from '../../../../utils/utility'
 import { patchClosetItems, patchClosetScrap } from '../../../../apis/closet'
-import { AnotherClosetListModal } from '../../detail'
+import { AnotherClosetListModal, ItemClosetListModal } from '../../detail'
 import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '../../../../config/queryKeys'
 
@@ -45,10 +45,11 @@ export const ScrapClosetList = ({
   const handleScrapItem = async (toClosetId: string) => {
     const res = await patchClosetScrap(itemId, toClosetId)
     if (res.isSuccess) {
-      alert('성공적으로 스크랩되었습니다.')
-      queryClient.invalidateQueries()
+      closeModal(ItemClosetListModal, () => {
+        alert('성공적으로 스크랩되었습니다.')
+        queryClient.invalidateQueries()
+      })
     }
-    closeModal(AnotherClosetListModal)
   }
 
   return (
