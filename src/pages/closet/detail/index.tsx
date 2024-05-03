@@ -131,12 +131,22 @@ const ClosetDetailPage = () => {
         <S.EditFooter>
           <S.FooterLayout>
             <S.FooterContentContainer
-              onClick={() => context.handlers.handleMoveItemsToAnotherCloset(id)}
+              onClick={
+                context.states.selectedIds.length > 0
+                  ? () => context.handlers.handleMoveItemsToAnotherCloset(id)
+                  : undefined
+              }
             >
               <MoveIcon />
               <p>옷장 이동</p>
             </S.FooterContentContainer>
-            <S.FooterContentContainer onClick={context.handlers.handleRemoveItems}>
+            <S.FooterContentContainer
+              onClick={
+                context.states.selectedIds.length > 0
+                  ? () => context.handlers.handleRemoveItems()
+                  : undefined
+              }
+            >
               <TrashIcon />
               <p>아이템 삭제</p>
             </S.FooterContentContainer>
@@ -150,16 +160,20 @@ const ClosetDetailPage = () => {
 export const AnotherClosetListModal = ({
   fromClosetId,
   selectedIds,
+  setSelectedIds,
+  setIsEditMode,
 }: {
   fromClosetId: string
   selectedIds: number[]
+  setSelectedIds: any
+  setIsEditMode: any
 }) => {
   const { data, status } = useQuery({ ...closetQueryConfig.getClosetList() })
-  const context = useContext(ClosetInnerItemContext)
   const { closeModal } = useModals()
   if (status === 'error' || !data?.result?.closetList) {
     return <div>error</div>
   }
+  // const context = useEditClosetInnerItemContext()
 
   const handleCloseModal = () => {
     closeModal(AnotherClosetListModal)
@@ -171,7 +185,12 @@ export const AnotherClosetListModal = ({
         <Header modalCloseBtnClick={handleCloseModal} isModalHeader={true} title={'나의 옷장'} />
       </S.HeaderWrapper>
       <S.AnotherClosetBodyContainer>
-        <ReClosetList data={data.result.closetList} selectedIds={selectedIds} />
+        <ReClosetList
+          data={data.result.closetList}
+          selectedIds={selectedIds}
+          setSelectedIds={setSelectedIds}
+          setIsEditMode={setIsEditMode}
+        />
         <DefaultCreateBox />
       </S.AnotherClosetBodyContainer>
     </BottomSheetModal>
