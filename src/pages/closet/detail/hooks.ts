@@ -68,6 +68,7 @@ export const useEditClosetInnerItemContext = () => {
           closeModal(DeleteReCheckModal, () => {
             setIsEditMode(false)
             setSelectedIds([])
+            queryClient.invalidateQueries()
           })
         }
       },
