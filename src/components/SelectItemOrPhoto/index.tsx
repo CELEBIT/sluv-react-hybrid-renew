@@ -137,6 +137,7 @@ const SelectItemOrPhoto = () => {
         }
       })
     }
+    resetSearchValue()
     navigate(-1)
   }
 
