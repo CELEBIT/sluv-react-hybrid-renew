@@ -164,7 +164,7 @@ export const EditFooter = styled.footer`
   z-index: 99;
   position: fixed;
   bottom: 0;
-  height: 5.75rem;
+  height: 3.75rem;
   width: 100%;
   background: #454381;
 `

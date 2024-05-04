@@ -31,7 +31,7 @@ const DEFAULT_PAGE_PARAMS: PageParams = {
 const ClosetDetailPage = () => {
   const { id } = queryToObject(window.location.search.split('?')[1])
   const observerRef = useRef(null)
-  const [contentTop, setContentTop] = useState('29%')
+  const [contentTop, setContentTop] = useState('220px')
 
   const context = useEditClosetInnerItemContext()
   if (!id) return <div>Error Occurred</div>
