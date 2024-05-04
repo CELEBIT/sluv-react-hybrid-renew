@@ -12,6 +12,7 @@ export const getClosetBoxBackground = (
   if (closetBox.coverImgUrl || closetBox.coverImageMode === 'IMAGE') {
     return css`
       background-image: url(${closetBox.coverImgUrl});
+      background-size: cover;
     `
   }
 
