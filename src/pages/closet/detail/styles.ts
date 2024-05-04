@@ -215,4 +215,5 @@ export const AnotherClosetBodyContainer = styled.section`
   margin-bottom: 0.625rem;
   padding: 0.875rem 1.5rem;
   overflow-y: scroll;
+  overflow-x: hidden;
 `
