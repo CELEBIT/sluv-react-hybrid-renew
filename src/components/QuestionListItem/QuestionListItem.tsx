@@ -57,7 +57,6 @@ const QuestionListItem = ({ item, detail }: QuestionItemProps) => {
   ]
   const sortedList = combinedList.sort((a, b) => a.sortOrder - b.sortOrder)
   const titleContent = item.title + (item.content ?? '')
-
   return (
     <RecommendContainer
       detail={detail}
@@ -88,13 +87,20 @@ const QuestionListItem = ({ item, detail }: QuestionItemProps) => {
 
         {item.qtype !== 'Buy' ? (
           <>
-            {Array.isArray(item.itemImgList) &&
-              item.itemImgList.length > 0 &&
-              item.itemImgList[0] !== null && (
-                <RecommendPhoto imgUrl={item.itemImgList[0].imgUrl}></RecommendPhoto>
-              )}
-            {Array.isArray(item.imgList) && item.imgList.length > 0 && item.imgList[0] !== null && (
-              <RecommendPhoto imgUrl={item.imgList[0].imgUrl}></RecommendPhoto>
+            {item.itemImgList && item.itemImgList?.length > 0 ? (
+              <>
+                {Array.isArray(item.itemImgList) &&
+                  item.itemImgList.length > 0 &&
+                  item.itemImgList[0] !== null && (
+                    <RecommendPhoto imgUrl={item.itemImgList[0].imgUrl}></RecommendPhoto>
+                  )}
+              </>
+            ) : (
+              <>
+                {item.imgList && item.imgList.length > 0 && item.imgList[0] !== null && (
+                  <RecommendPhoto imgUrl={item.imgList[0].imgUrl}></RecommendPhoto>
+                )}
+              </>
             )}
           </>
         ) : (

@@ -61,17 +61,17 @@ export function getRankingUpdateTime(date: Date): string {
   const targetTime = new Date(date)
   targetTime.setHours(17, 0, 0, 0) // 17:00 설정
   const currentTime = new Date()
-  const options: Intl.DateTimeFormatOptions = { month: '2-digit', day: '2-digit' }
-  const dateString = currentTime.toLocaleDateString(undefined, options)
+  const options: Intl.DateTimeFormatOptions = { month: '2-digit', day: '2-digit' } // 옵션 수정
 
   if (currentTime < targetTime) {
     // 17:00 전
-    return `${currentTime.getTime() - 24 * 60 * 60 * 1000} 17:00 기준`
+    targetTime.setDate(targetTime.getDate() - 1) // 전날로 설정
+    const prevDayString = targetTime.toLocaleDateString(undefined, options)
+    return `${prevDayString} 17:00 기준`
   } else {
     // 17:00 후
-    const nextDay = new Date(currentTime.getTime())
-    const nextDayString = nextDay.toLocaleDateString()
-    return `${nextDayString} 17:00 기준`
+    const currentDayString = currentTime.toLocaleDateString(undefined, options)
+    return `${currentDayString} 17:00 기준`
   }
 }
 

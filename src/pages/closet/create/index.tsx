@@ -94,6 +94,7 @@ const ClosetBoxCreatePage = ({ service, isEditMode = false }: ClosetBoxCreatePag
         callback: () => {
           // TODO: 웹뷰 통신
           contextValue.handlers.setCoverImageMode('DEFAULT')
+          contextValue.handlers.setCoverImgUrl(null)
           closeModal(ClosetBoxCreateBottomSheetModal)
         },
       },
