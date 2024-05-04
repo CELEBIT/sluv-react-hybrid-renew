@@ -164,7 +164,7 @@ export const EditFooter = styled.footer`
   z-index: 99;
   position: fixed;
   bottom: 0;
-  height: 5.75rem;
+  height: 3.75rem;
   width: 100%;
   background: #454381;
 `
@@ -215,4 +215,5 @@ export const AnotherClosetBodyContainer = styled.section`
   margin-bottom: 0.625rem;
   padding: 0.875rem 1.5rem;
   overflow-y: scroll;
+  overflow-x: hidden;
 `
