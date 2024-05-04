@@ -23,11 +23,28 @@ interface RecommendListProps {
 const RecommendList = ({ questionId, nickName, qType }: RecommendListProps) => {
   const { getWaitQuestion } = useQuestionDetailQuery()
   const { data } = getWaitQuestion(Number(questionId), qType)
-
   return (
     <RecommendListWrapper>
       {(data?.length ?? 0) > 0 && (
-        <span className='title'>{nickName} 님의 추천을 기다리고 있어요</span>
+        <>
+          {qType === 'Find' ? (
+            <span className='title'>아이템 정보를 기다리고 있어요</span>
+          ) : (
+            <>
+              {qType === 'Buy' ? (
+                <span className='title'>{nickName} 님의 투표를 기다리고 있어요</span>
+              ) : (
+                <>
+                  {qType === 'How' ? (
+                    <span className='title'>{nickName} 님의 답변을 기다리고 있어요</span>
+                  ) : (
+                    <span className='title'>{nickName} 님의 추천을 기다리고 있어요</span>
+                  )}
+                </>
+              )}
+            </>
+          )}
+        </>
       )}
       {data &&
         data.map((each, index) => {
