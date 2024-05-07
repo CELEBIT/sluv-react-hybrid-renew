@@ -33,9 +33,13 @@ const Recommend = () => {
     <SubComponentContainer>
       <ComponentWrapper className='top'>
         <LabelContainer>
+          {hasTriedToUpload && !questionInfo.categoryNameList?.length && <Error></Error>}
           <Label>주제를 골라주세요</Label>
         </LabelContainer>
         <SelectRecommendCategory></SelectRecommendCategory>
+        {hasTriedToUpload && !questionInfo.categoryNameList?.length && (
+          <ErrorText className='error'>필수 항목입니다</ErrorText>
+        )}
       </ComponentWrapper>
       <ComponentWrapper>
         <LabelContainer>
