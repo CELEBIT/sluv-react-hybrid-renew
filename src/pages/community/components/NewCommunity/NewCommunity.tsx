@@ -38,10 +38,14 @@ function NewCommunity() {
         data?.pages.map((list) =>
           list.content.map((each) => {
             return (
-              <>
-                <QuestionListItem key={each.id} item={each} detail={true}></QuestionListItem>
+              <div key={each.id + each.title} style={{ display: 'flex', flexDirection: 'column' }}>
+                <QuestionListItem
+                  key={each.id + each.title}
+                  item={each}
+                  detail={true}
+                ></QuestionListItem>
                 <Line></Line>
-              </>
+              </div>
             )
           }),
         )}
