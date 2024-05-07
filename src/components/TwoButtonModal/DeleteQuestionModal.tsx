@@ -20,17 +20,18 @@ const DeleteQuestionModal = () => {
   } = useQuestionDetailQuery()
 
   const onDelete = () => {
-    mutateByDeleteQuestion(EditReportItem.itemId)
-    resetQuestionItem()
-    alert('삭제되었습니다')
-    closeModal(modals.DeleteTempItemModal)
+    closeModal(modals.DeleteQuestionModal, () => {
+      mutateByDeleteQuestion(EditReportItem.itemId)
+      resetQuestionItem()
+      alert('삭제되었습니다')
+    })
   }
 
   return (
     <TwoButtonModal
       leftButtonName='취소하기'
       rightButtonName='삭제하기'
-      leftButtonOnClick={() => closeModal(modals.DeleteTempItemModal)}
+      leftButtonOnClick={() => closeModal(modals.DeleteQuestionModal)}
       rightButtonOnClick={onDelete}
     >
       <BtnModalContent>
