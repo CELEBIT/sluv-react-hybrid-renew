@@ -127,6 +127,7 @@ export const DimmedItemContainer = styled.div<{ userImgUrl: string }>`
   background-size: cover;
   overflow: hidden;
   gap: 0.75rem;
+  text-overflow: ellipsis;
   background-image: url(${(props) => props.userImgUrl});
   backdrop-filter: blur(40px);
 `
@@ -169,6 +170,7 @@ export const UserInfoRow = styled.div`
 `
 
 const UserNickName = styled.span`
+  line-height: 14.32px;
   ${Pretendard({ size: 12, weight: Common.bold.thin, color: Common.colors.WH })}
 `
 const QuestionTitle = styled.span`
@@ -177,5 +179,11 @@ const QuestionTitle = styled.span`
 
 const QuestionTitleContent = styled.span`
   z-index: 5;
-  ${Pretendard({ size: 17, weight: Common.bold.regular, color: Common.colors.WH })}
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5625rem;
+  ${Pretendard({ size: 17, weight: Common.bold.regular, color: Common.colors.WH })};
 `
