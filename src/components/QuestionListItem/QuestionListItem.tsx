@@ -112,7 +112,7 @@ const QuestionListItem = ({ item, detail }: QuestionItemProps) => {
                   {sortedList.map((vote) => {
                     return (
                       <EachVotePhoto
-                        key={vote.sortOrder}
+                        key={vote.sortOrder + vote.imgUrl}
                         imgUrl={vote.imgUrl ?? ''}
                       ></EachVotePhoto>
                     )
