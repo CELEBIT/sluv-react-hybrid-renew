@@ -46,12 +46,13 @@ const useModals = () => {
   const closeModal = useCallback(
     <T extends FunctionComponent<any>>(Component: T, callbackFunc?: () => void) => {
       setModals((modals) => modals.filter((modal) => modal.Component !== Component))
-      history.back()
       // callbackFunc가 제공되었을 경우
       if (callbackFunc) {
         setTimeout(() => {
           callbackFunc() // 500ms 후에 callbackFunc를 호출합니다.
         }, 50)
+      } else {
+        history.back()
       }
     },
     [setModals],
