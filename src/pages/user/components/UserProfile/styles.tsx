@@ -13,14 +13,13 @@ export const UserInfoWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  padding-left: 1.5rem;
+  padding: 0 1.5rem;
 `
 export const UserImg = styled.div<{ imgUrl?: string }>`
   flex-shrink: 0;
   width: 4.625rem;
   height: 4.625rem;
   border-radius: 50%;
-  border: 1px solid orange;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50%;
@@ -28,18 +27,29 @@ export const UserImg = styled.div<{ imgUrl?: string }>`
 `
 export const InfoRightWrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
   width: 100%;
   gap: 0.5rem;
   padding: 0.5625rem 0;
+  /* border: 1px solid red; */
+`
+
+export const InfoRightLeftWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 10.3125rem;
+  gap: 0.5rem;
+  padding: 0.5625rem 0;
+  /* border: 1px solid red; */
 `
 
 export const InfoTopWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
+  max-width: 10.0625rem;
+
   ${Pretendard({ size: 18, weight: Common.bold.semiBold, color: Common.colors.BK })}
 `
 export const InfoBottomWrapper = styled.div`
