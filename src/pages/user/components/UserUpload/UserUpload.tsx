@@ -27,8 +27,13 @@ const UserUpload = ({ data }: UserUploadProps) => {
           아이템
           <BottomInfo>
             <PreviewWrapper>
-              <ItemPreviewImg imgUrl={data?.imgList[0]}></ItemPreviewImg>
-              <ItemPreviewImg className='second' imgUrl={data?.imgList[1]}></ItemPreviewImg>
+              <ItemPreviewImg
+                imgUrl={data && data?.imgList.length > 0 ? data?.imgList[0] : undefined}
+              ></ItemPreviewImg>
+              <ItemPreviewImg
+                className='second'
+                imgUrl={data && data?.imgList.length > 0 ? data?.imgList[1] : undefined}
+              ></ItemPreviewImg>
             </PreviewWrapper>
             <Count>{data?.itemCount}</Count>
           </BottomInfo>
