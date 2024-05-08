@@ -39,16 +39,15 @@ export const InfoRightLeftWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 10.3125rem;
   gap: 0.5rem;
   padding: 0.5625rem 0;
   /* border: 1px solid red; */
 `
 
-export const InfoTopWrapper = styled.div`
+export const InfoTopWrapper = styled.div<{ isMine?: boolean }>`
   display: flex;
   flex-direction: row;
-  max-width: 10.0625rem;
+  width: ${(props) => (props.isMine ? '100%' : '10.3125rem')};
 
   ${Pretendard({ size: 18, weight: Common.bold.semiBold, color: Common.colors.BK })}
 `
