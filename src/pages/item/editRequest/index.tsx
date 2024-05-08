@@ -67,7 +67,7 @@ const EditRequest = () => {
       setPageName(pathname === '/community/comment/report-comment' ? '댓글 신고' : '게시글 신고')
       setTitle(
         pathname === '/community/comment/report-comment'
-          ? '댓글을 신고하는 이류를 알려주세요'
+          ? '댓글을 신고하는 이유를 알려주세요'
           : '게시글을 신고하는 이유를 알려주세요',
       )
       setReasonList(reportItemReasonList)

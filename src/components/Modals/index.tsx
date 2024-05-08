@@ -61,6 +61,7 @@ const SelectedInterestCelebModal = loadable(
 const UserInterestCelebModal = loadable(() => import('../BottomSheetModal/UserInterestCelebModal'))
 const UserModal = loadable(() => import('../BottomSheetModal/UserModal'))
 const CommentEditModal = loadable(() => import('../BottomSheetModal/CommentEditModal'))
+const SubCommentEditModal = loadable(() => import('../BottomSheetModal/SubCommentEditModal'))
 const DeleteCommentModal = loadable(() => import('../TwoButtonModal/DeleteCommentModal'))
 const CommentReportModal = loadable(() => import('../BottomSheetModal/CommentReportModal'))
 const LogoutModal = loadable(() => import('../TwoButtonModal/LogoutModal'))
@@ -139,6 +140,10 @@ export const modals = {
   UserInterestCelebModal: UserInterestCelebModal as FunctionComponent<userIdProps>,
   UserModal: UserModal as FunctionComponent<ComponentProps<typeof UserModal>>,
   CommentEditModal: CommentEditModal as FunctionComponent<ComponentProps<typeof CommentEditModal>>,
+  SubCommentEditModal: SubCommentEditModal as FunctionComponent<
+    ComponentProps<typeof SubCommentEditModal>
+  >,
+
   DeleteCommentModal: DeleteCommentModal as FunctionComponent<
     ComponentProps<typeof DeleteCommentModal>
   >,

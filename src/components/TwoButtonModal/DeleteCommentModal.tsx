@@ -23,15 +23,16 @@ const DeleteCommentModal = ({ commentId, questionId }: DeleteCommentModalProps) 
   } = useSearchCommentQuery()
 
   const onDelete = () => {
-    mutateCommentDeleted({ commentId, questionId })
-    closeModal(modals.DeleteCommentModal)
-    resetCommentObject()
-    navigate(-1)
+    closeModal(modals.DeleteCommentModal, () => {
+      mutateCommentDeleted({ commentId, questionId })
+      resetCommentObject()
+    })
   }
 
   const onClose = () => {
-    resetCommentObject()
-    closeModal(modals.DeleteCommentModal)
+    closeModal(modals.DeleteCommentModal, () => {
+      resetCommentObject()
+    })
   }
 
   return (
