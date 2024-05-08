@@ -36,8 +36,9 @@ const CommentEditModal = ({ commentId, questionId }: CommentEditModalProps) => {
   }
 
   const onClose = () => {
-    resetCommentObject()
-    closeModal(modals.ItemEditRequestModal)
+    closeModal(modals.CommentEditModal, () => {
+      resetCommentObject()
+    })
   }
 
   return (

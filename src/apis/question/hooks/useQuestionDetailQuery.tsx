@@ -81,7 +81,7 @@ const useQuestionDetailQuery = () => {
     {
       onSuccess: (res) => {
         if (res.code == 1000) {
-          openModal(modals.ReportQuestionCompleteModal)
+          openModal(modals.ReportCommentCompleteModal)
         }
       },
       onError: (error: any) => {

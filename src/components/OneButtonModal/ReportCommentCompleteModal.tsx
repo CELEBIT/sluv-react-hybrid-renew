@@ -4,18 +4,19 @@ import { modals } from '../Modals'
 import useModals from '../Modals/hooks/useModals'
 import { BtnModalContent } from '../Modals/styles'
 import { useNavigate } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
+import { useRecoilValue, useResetRecoilState } from 'recoil'
 import { RequestEditItemState } from '../../pages/item/editRequest'
 
 const ReportCommentCompleteModal = () => {
   const { closeModal } = useModals()
   const requestedItem = useRecoilValue(RequestEditItemState)
+  const resetRequestedItem = useResetRecoilState(RequestEditItemState)
   const navigate = useNavigate()
-  console.log(requestedItem)
   const onComplete = () => {
-    closeModal(modals.ReportCommentCompleteModal, () =>
-      navigate('/community/detail/' + requestedItem.questionId),
-    )
+    closeModal(modals.ReportCommentCompleteModal, () => {
+      resetRequestedItem()
+      navigate('/community/detail/' + requestedItem.questionId)
+    })
   }
   return (
     <OneButtonModal buttonName='확인' buttonOnClick={onComplete}>

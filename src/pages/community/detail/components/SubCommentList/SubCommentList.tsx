@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ShowMoreSubCommentWrapper, SubCommentListContainer } from './styles'
+import { ShowMoreLayout, ShowMoreSubCommentWrapper, SubCommentListContainer } from './styles'
 import useSearchSubCommentQuery from '../../../../../apis/comment/hooks/useSearchSubCommentQuery'
 import SubComment from './SubComment'
 import { ReactComponent as SubCommentArrow } from '../../../../../assets/arrow_comment_18.svg'
@@ -12,7 +12,7 @@ interface SubcommentProps {
   questionId: number
 }
 
-const SubCommentList = ({ comment }: SubcommentProps) => {
+const SubCommentList = ({ comment, questionId }: SubcommentProps) => {
   const [restNum, setRestNum] = useState<number | undefined>()
   const { getSubComment } = useSearchSubCommentQuery()
   const { data, refetch } = getSubComment(comment.id, restNum)
@@ -48,11 +48,16 @@ const SubCommentList = ({ comment }: SubcommentProps) => {
       <SubCommentListContainer>
         {data.content.map((subcomment) => {
           return (
-            <SubComment subcomment={subcomment} comment={comment} key={subcomment.id}></SubComment>
+            <SubComment
+              subcomment={subcomment}
+              comment={comment}
+              questionId={questionId}
+              key={subcomment.id}
+            ></SubComment>
           )
         })}
         {hasMore === true && (
-          <>
+          <ShowMoreLayout>
             {!showRest ? (
               <ShowMoreSubCommentWrapper onClick={onShowMore}>
                 <SubCommentArrow style={{ flexShrink: 0 }}></SubCommentArrow>
@@ -66,7 +71,7 @@ const SubCommentList = ({ comment }: SubcommentProps) => {
                 <ArrowUp></ArrowUp>
               </ShowMoreSubCommentWrapper>
             )}
-          </>
+          </ShowMoreLayout>
         )}
       </SubCommentListContainer>
     )

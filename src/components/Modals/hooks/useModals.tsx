@@ -50,10 +50,9 @@ const useModals = () => {
       if (callbackFunc) {
         setTimeout(() => {
           callbackFunc() // 500ms 후에 callbackFunc를 호출합니다.
-        }, 50)
-      } else {
-        history.back()
+        }, 100)
       }
+      history.back()
     },
     [setModals],
   )
