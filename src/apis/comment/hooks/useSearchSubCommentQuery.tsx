@@ -31,7 +31,7 @@ const useSearchSubCommentQuery = () => {
     {
       onSuccess: (res, { commentId }) => {
         //
-        queryClient.invalidateQueries(queryKeys.subcomment(commentId))
+        queryClient.invalidateQueries()
       },
     },
   )

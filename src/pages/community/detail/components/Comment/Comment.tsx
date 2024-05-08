@@ -34,7 +34,7 @@ import { ExpressionWrapper, LikeWrapper } from '../SubCommentList/styles'
 import { ReactComponent as LikeOff } from '../../../../../assets/like_off_18.svg'
 import { ReactComponent as LikeOn } from '../../../../../assets/like_on_18.svg'
 import { ReactComponent as Alert } from '../../../../../assets/bannedError_20.svg'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import {
   CommentResult,
   Item as CommentItem,
@@ -56,11 +56,11 @@ interface CommentProps {
 
 const Comment = ({ questionId, comment }: CommentProps) => {
   const navigate = useNavigate()
+  const location = useLocation()
   const { openModal } = useModals()
   const setCommentObject = useSetRecoilState(commentState)
   const setEditReportItemState = useSetRecoilState(RequestEditItemState)
-  console.log(comment)
-  const [imgItemList, setImageItemList] = useRecoilState(imgItemListState)
+  const setImageItemList = useSetRecoilState(imgItemListState)
   // GPT 여기에 작성해줘
   //
 
@@ -116,8 +116,8 @@ const Comment = ({ questionId, comment }: CommentProps) => {
 
     let sortedImgUrlList: CommentImg[] = []
     let sortedItemList: CommentItem[] = []
-    console.log(comment.imgUrlList)
-    console.log(comment.itemList)
+    // console.log(comment.imgUrlList)
+    // console.log(comment.itemList)
     if (comment.imgUrlList && comment.imgUrlList.length > 0) {
       const imgUrlListCopy = [...comment.imgUrlList]
       sortedImgUrlList = imgUrlListCopy.sort((a, b) => a.sortOrder - b.sortOrder)
@@ -179,7 +179,7 @@ const Comment = ({ questionId, comment }: CommentProps) => {
           <ContentTop>
             <UserInfo>
               <NickName onClick={() => onProfileClick(comment.user.id, comment.hasMine)}>
-                {comment.user.nickName}
+                {comment.user.id !== -1 ? comment.user.nickName : '탈퇴한 유저'}
               </NickName>
               <Time>{formatUpdatedAt(convertToUTC(comment.createdAt))}</Time>
             </UserInfo>
@@ -200,30 +200,6 @@ const Comment = ({ questionId, comment }: CommentProps) => {
           </BlockedBg>
         </BlockedContainer>
       )}
-      {/* {sortedList && sortedList.length > 0 && (
-        <ItemWrapper>
-          {sortedList.map((each) => {
-            return (
-              <Item key={each.sortOrder}>
-                <Img imgUrl={each.}>
-                  {each.item.scrapStatus ? (
-                    <StorageOn className='represent'></StorageOn>
-                  ) : (
-                    <StorageOff className='represent'></StorageOff>
-                  )}
-                  <Dim></Dim>
-                </Img>
-
-                <ItemTextWrapper>
-                  <CelebName>{each.item.celebName}</CelebName>
-                  <BrandName>{each.item.brandName}</BrandName>
-                  <ItemName>{each.item.itemName}</ItemName>
-                </ItemTextWrapper>
-              </Item>
-            )
-          })}
-        </ItemWrapper>
-      )} */}
       {sortedList && sortedList.length > 0 && (
         <ItemWrapper>
           {sortedList.map((each) => {
@@ -266,8 +242,11 @@ const Comment = ({ questionId, comment }: CommentProps) => {
         <CommentExpression>
           <ExpressionWrapper>
             <span
-              onClick={() =>
-                navigate('/community/comment/subcomment', { state: { comment, questionId } })
+              onClick={
+                location.pathname.includes('detail')
+                  ? () =>
+                      navigate('/community/comment/subcomment', { state: { comment, questionId } })
+                  : undefined
               }
             >
               답글 달기

@@ -107,6 +107,7 @@ export const ItemTextWrapper = styled.div`
   flex-direction: column;
   overflow: hidden;
   text-overflow: ellipsis;
+  max-width: 8.0625rem;
 `
 
 export const CelebName = styled.span`

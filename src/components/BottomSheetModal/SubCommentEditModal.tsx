@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import BottomSheetModal from '.'
 import styled from '@emotion/styled'
 
@@ -13,33 +13,44 @@ import { RequestEditItemState } from '../../pages/item/editRequest'
 import { ReactComponent as Share } from '../../assets/share_24.svg'
 import { commentState } from '../../pages/community/detail/CommunityDetail'
 
-const CommentReportModal = () => {
+export interface CommentEditModalProps {
+  commentId: number
+  questionId: number
+}
+
+const SubCommentEditModal = ({ commentId, questionId }: CommentEditModalProps) => {
   const navigate = useNavigate()
-  const { closeModal } = useModals()
+  const { openModal, closeModal } = useModals()
   const resetCommentObject = useResetRecoilState(commentState)
 
-  const onClickReportUser = () => {
-    closeModal(modals.CommentReportModal, () => {
-      navigate('/community/comment/report-comment')
+  const onClickEdit = () => {
+    closeModal(modals.SubCommentEditModal, () => {
+      navigate('/community/comment/edit')
+    })
+  }
+
+  const onClickDeleteItem = () => {
+    closeModal(modals.SubCommentEditModal, () => {
+      openModal(modals.DeleteCommentModal, { commentId, questionId })
+    })
+  }
+
+  const onClose = () => {
+    closeModal(modals.SubCommentEditModal, () => {
       resetCommentObject()
     })
   }
-  const EditReportItem = useRecoilValue(RequestEditItemState)
+
   return (
     <BottomSheetModal>
       <ModalWrapper>
-        <Header
-          isModalHeader={true}
-          modalCloseBtnClick={() =>
-            closeModal(modals.CommentReportModal, () => {
-              resetCommentObject()
-            })
-          }
-        />
+        <Header isModalHeader={true} modalCloseBtnClick={onClose} />
         <MenuWrapper>
-          <Menu onClick={onClickReportUser}>
-            <Share stroke={Common.colors.BK}></Share>
-            {EditReportItem.itemWriterName}님의 댓글 신고하기
+          <Menu onClick={onClickEdit}>
+            <Share stroke={Common.colors.BK}></Share>답글 수정하기
+          </Menu>
+          <Menu onClick={onClickDeleteItem}>
+            <Share stroke={Common.colors.BK}></Share>답글 삭제하기
           </Menu>
         </MenuWrapper>
       </ModalWrapper>
@@ -69,4 +80,4 @@ const Menu = styled.div`
   ${Pretendard({ size: 17, weight: Common.bold.regular, color: Common.colors.BK })}
 `
 
-export default CommentReportModal
+export default SubCommentEditModal

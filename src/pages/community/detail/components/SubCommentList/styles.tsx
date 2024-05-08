@@ -4,8 +4,9 @@ import { Common, Pretendard } from '../../../../../components/styles'
 export const SubCommentListContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding-bottom: 3.75rem;
+  /* padding-bottom: 3.75rem; */
   border-top: 1px solid ${Common.colors.GR200};
+  /* border: 1px solid red; */
 `
 // 대댓글
 export const SubCommentContainer = styled.div`
@@ -164,6 +165,11 @@ export const LikeWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 0.25rem;
+`
+
+export const ShowMoreLayout = styled.div`
+  display: flex;
+  padding-bottom: 1.5rem;
 `
 
 export const ShowMoreSubCommentWrapper = styled.div`
