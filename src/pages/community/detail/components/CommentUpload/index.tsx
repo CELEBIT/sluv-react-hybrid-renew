@@ -55,7 +55,7 @@ const CommentUpload = () => {
     addSubComment: { mutate: mutateByAddSubComment },
   } = useSearchSubCommentQuery()
 
-  console.log('imgItemList in comment upload', imgItemList)
+  // console.log('imgItemList in comment upload', imgItemList)
   const onAddComment = async () => {
     const itemsWithImgFile = imgItemList.filter((item) => item.imgFile)
     const s3 = new S3Service()
@@ -66,7 +66,7 @@ const CommentUpload = () => {
       imgList: itemsWithImgFile ? imgURL : null,
       itemList: commentObject.itemList,
     }
-    console.log('newComment', newComment)
+    // console.log('newComment', newComment)
 
     if (pathname === '/community/comment/upload') mutateByAddComment(newComment)
     if (pathname === '/community/subcomment/upload')
@@ -118,11 +118,11 @@ const CommentUpload = () => {
         <Header
           isModalHeader={false}
           hasArrow={true}
-          title={'댓글 달기'}
+          title={pathname !== '/community/comment/edit' ? '댓글 달기' : '댓글 수정'}
           backBtnClick={onBackClick}
         >
           <span className='submit' onClick={onSubmit}>
-            등록
+            {pathname !== '/community/comment/edit' ? '등록' : '완료'}
           </span>
         </Header>
       </HeaderWrapper>
