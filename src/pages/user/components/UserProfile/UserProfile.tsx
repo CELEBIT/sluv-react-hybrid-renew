@@ -99,7 +99,7 @@ const UserProfile = () => {
           )}
           <InfoRightWrapper>
             <InfoRightLeftWrapper>
-              <InfoTopWrapper>{data?.userInfo.nickName}</InfoTopWrapper>
+              <InfoTopWrapper isMine={true}>{data?.userInfo.nickName}</InfoTopWrapper>
               <InfoBottomWrapper>
                 <FollowWrapper onClick={() => onClickFollower(data?.userInfo.nickName || '')}>
                   <FollowText>팔로워</FollowText>
