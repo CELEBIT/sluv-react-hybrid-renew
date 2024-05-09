@@ -12,8 +12,10 @@ import { useQueryClient } from '@tanstack/react-query'
 import useModals from '../../../../components/Modals/hooks/useModals'
 import { deleteScrap } from '../../../../apis/closet'
 import { ItemClosetListModal } from '../../../closet/detail'
+import { PreviewProps } from '../..'
+import { modals } from '../../../../components/Modals'
 
-const HowAbout = () => {
+const HowAbout = ({ isPreview }: PreviewProps) => {
   const navigate = useNavigate()
 
   const { getHowAboutItem } = useHowAboutItemQuery()
@@ -21,21 +23,26 @@ const HowAbout = () => {
 
   const queryClient = useQueryClient()
   const { openModal } = useModals()
+
   const handleScrapItem = async (
     e: React.MouseEvent<SVGSVGElement, MouseEvent>,
     scrapStatus: boolean,
     itemId: number,
   ) => {
     e.stopPropagation()
-    if (scrapStatus) {
-      const res = await deleteScrap(itemId)
-
-      if (res.isSuccess) {
-        alert('아이템 저장이 취소되었어요')
-        queryClient.invalidateQueries()
-      }
+    if (isPreview) {
+      openModal(modals.LoginToContinueModal)
     } else {
-      openModal(ItemClosetListModal, { itemId: String(itemId) ?? '' })
+      if (scrapStatus) {
+        const res = await deleteScrap(itemId)
+
+        if (res.isSuccess) {
+          alert('아이템 저장이 취소되었어요')
+          queryClient.invalidateQueries()
+        }
+      } else {
+        openModal(ItemClosetListModal, { itemId: String(itemId) ?? '' })
+      }
     }
   }
 

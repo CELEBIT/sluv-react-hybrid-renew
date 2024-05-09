@@ -65,6 +65,7 @@ const SubCommentEditModal = loadable(() => import('../BottomSheetModal/SubCommen
 const DeleteCommentModal = loadable(() => import('../TwoButtonModal/DeleteCommentModal'))
 const CommentReportModal = loadable(() => import('../BottomSheetModal/CommentReportModal'))
 const LogoutModal = loadable(() => import('../TwoButtonModal/LogoutModal'))
+const LoginToContinueModal = loadable(() => import('../TwoButtonModal/LoginToContinueModal'))
 const ConfirmWithdrawModal = loadable(() => import('../OneButtonModal/ConfirmWithdrawModal'))
 
 const ProfileImgModal = loadable(() => import('../BottomSheetModal/ProfileImgModal'))
@@ -151,6 +152,9 @@ export const modals = {
     ComponentProps<typeof CommentReportModal>
   >,
   LogoutModal: LogoutModal as FunctionComponent<ComponentProps<typeof LogoutModal>>,
+  LoginToContinueModal: LoginToContinueModal as FunctionComponent<
+    ComponentProps<typeof LoginToContinueModal>
+  >,
   ConfirmWithdrawModal: ConfirmWithdrawModal as FunctionComponent<
     ComponentProps<typeof ConfirmWithdrawModal>
   >,
