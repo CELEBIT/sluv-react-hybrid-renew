@@ -5,8 +5,9 @@ import { useNavigate } from 'react-router-dom'
 import styled from '@emotion/styled'
 import { ItemList } from '../../../../components/RecommendedItem/RecommendedItemList'
 import useEfficientItemQuery from '../../../../apis/item/hooks/useEfficientItemQuery'
+import { PreviewProps } from '../..'
 
-const PresentItem = () => {
+const PresentItem = ({ isPreview }: PreviewProps) => {
   const navigate = useNavigate()
 
   const { getEfficientItem } = useEfficientItemQuery()
@@ -24,6 +25,7 @@ const PresentItem = () => {
               size={105}
               borderRadius={8}
               onClick={() => navigate(`/item/detail/${item.itemId}`)}
+              isPreview={isPreview}
             ></Item>
           )
         })}

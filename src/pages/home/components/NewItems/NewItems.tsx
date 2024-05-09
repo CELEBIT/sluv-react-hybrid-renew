@@ -5,8 +5,9 @@ import { useNavigate } from 'react-router-dom'
 import { ItemList } from '../../../../components/RecommendedItem/RecommendedItemList'
 import Item from '../../../../components/RecommendedItem/Item'
 import useNewItemQuery from '../../../../apis/item/hooks/useNewItemQuery'
+import { PreviewProps } from '../..'
 
-const NewItems = () => {
+const NewItems = ({ isPreview }: PreviewProps) => {
   const navigate = useNavigate()
 
   const { getNewItem } = useNewItemQuery()
@@ -28,6 +29,7 @@ const NewItems = () => {
               size={150}
               borderRadius={8}
               onClick={() => navigate(`/item/detail/${item.itemId}`)}
+              isPreview={isPreview}
             ></Item>
           )
         })}

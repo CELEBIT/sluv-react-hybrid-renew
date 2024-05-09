@@ -12,6 +12,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import useModals from '../Modals/hooks/useModals'
 import { queryKeys } from '../../config/queryKeys'
 import { ItemClosetListModal } from '../../pages/closet/detail'
+import { modals } from '../Modals'
 
 interface PhotoProps {
   itemId?: number
@@ -24,6 +25,7 @@ interface PhotoProps {
   representFlag?: boolean // 정보 공유하기 -> 대표사진 여부를 위해 존재
   storageFlag?: boolean // 아이템 상세 -> 바인더 저장여부
   isSelected?: boolean // 커뮤니티 아이템 선택 -> 아이템 선택 여부
+  isPreview?: boolean
 }
 
 const Photo = ({
@@ -37,22 +39,26 @@ const Photo = ({
   representFlag,
   storageFlag,
   isSelected,
+  isPreview,
 }: PhotoProps) => {
   const queryClient = useQueryClient()
   const { openModal } = useModals()
 
   const handleScrapItem = async (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     e.stopPropagation()
-
-    if (storageFlag) {
-      const res = await deleteScrap(Number(itemId))
-      //
-      if (res.isSuccess) {
-        alert('아이템 저장이 취소되었어요')
-        queryClient.invalidateQueries()
-      }
+    if (isPreview) {
+      openModal(modals.LoginToContinueModal)
     } else {
-      openModal(ItemClosetListModal, { itemId: String(itemId) ?? '' })
+      if (storageFlag) {
+        const res = await deleteScrap(Number(itemId))
+        //
+        if (res.isSuccess) {
+          alert('아이템 저장이 취소되었어요')
+          queryClient.invalidateQueries()
+        }
+      } else {
+        openModal(ItemClosetListModal, { itemId: String(itemId) ?? '' })
+      }
     }
   }
 
