@@ -5,8 +5,9 @@ import { ItemList } from '../../../../components/RecommendedItem/RecommendedItem
 import Item from '../../../../components/RecommendedItem/Item'
 import { useNavigate } from 'react-router-dom'
 import useLuxuryItemQuery from '../../../../apis/item/hooks/useLuxuryItemQuery'
+import { PreviewProps } from '../..'
 
-const LuxuryMood = () => {
+const LuxuryMood = ({ isPreview }: PreviewProps) => {
   const navigate = useNavigate()
 
   const { getLuxuryItem } = useLuxuryItemQuery()
@@ -28,6 +29,7 @@ const LuxuryMood = () => {
               size={182}
               borderRadius={8}
               onClick={() => navigate(`/item/detail/${item.itemId}`)}
+              isPreview={isPreview}
             ></Item>
           )
         })}
