@@ -87,11 +87,8 @@ const CommunityDetail = () => {
     }
   }, [])
 
-  console.log(questionId)
-
   const { getQuestionDetail } = useQuestionDetailQuery()
   const { data } = getQuestionDetail(Number(questionId))
-  console.log('data', data)
   const combinedList = [...(data?.imgList ?? []), ...(data?.itemList ?? [])]
   const sortedList = combinedList.sort((a, b) => a.sortOrder - b.sortOrder)
 

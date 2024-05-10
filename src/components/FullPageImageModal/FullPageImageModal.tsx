@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
+import 'keen-slider/keen-slider.min.css'
 import { ItemImg } from '../../apis/question/questionService.type'
 import { atom, useRecoilState } from 'recoil'
 import { atomKeys } from '../../config/atomKeys'
@@ -89,6 +90,7 @@ export const PopupLayout = styled.div`
   align-items: center;
   justify-content: center;
   width: 100vw;
+  overflow: hidden;
   span {
     color: white;
   }
@@ -96,21 +98,17 @@ export const PopupLayout = styled.div`
 
 export const ImageContainer = styled.div`
   width: 100vw;
-  height: 32.625rem;
+  height: 40.625rem;
   position: relative;
-  background-color: black;
 `
 
 const Image = styled.div<{ url: string }>`
   width: 100vw;
-  height: auto;
+  height: 100%;
   background-image: url(${(props) => props.url});
   background-size: contain;
   background-repeat: no-repeat;
   background-position: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `
 
 export const List = styled.div`
