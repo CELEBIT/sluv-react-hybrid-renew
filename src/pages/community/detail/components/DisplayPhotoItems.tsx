@@ -1,5 +1,5 @@
-import React from 'react'
-import { Img, Item } from '../../../../apis/question/questionService.type'
+import React, { useEffect, useState } from 'react'
+import { Img, Item, ItemImg } from '../../../../apis/question/questionService.type'
 import {
   BrandName,
   CelebName,
@@ -7,6 +7,10 @@ import {
   ItemName,
 } from '../../CreateCommunity/question/components/twoItemUpload/eachItemField/ExistingItem'
 import styled from '@emotion/styled'
+import { useRecoilState } from 'recoil'
+import FullPageImageModal, {
+  currentPictureIndexState,
+} from '../../../../components/FullPageImageModal/FullPageImageModal'
 
 interface DisplayPhotoItemsProps {
   imgList: Array<Img> | null | undefined
@@ -17,6 +21,30 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
   const combinedList = [...(imgList || []), ...(itemList || [])].sort(
     (a, b) => a.sortOrder - b.sortOrder,
   )
+
+  const [isImgModalOpen, setIsImgModalOpen] = useState(false)
+  const [fullPageImgList, setfullPageImgList] = useState<ItemImg[]>([])
+  const [currentPictureIndex, setCurrentPictureIndex] = useRecoilState(currentPictureIndexState)
+  const closeImageModal = () => setIsImgModalOpen(false)
+  const onClickImg = (index: number) => {
+    setCurrentPictureIndex(index)
+    setIsImgModalOpen(true)
+  }
+
+  useEffect(() => {
+    const fullPageImgList: ItemImg[] = [
+      ...(imgList || []).map((img) => ({
+        imgUrl: img.imgUrl,
+        sortOrder: img.sortOrder,
+      })),
+      ...(itemList || []).map((item) => ({
+        imgUrl: item.item.imgUrl,
+        sortOrder: item.sortOrder,
+      })),
+    ].sort((a, b) => a.sortOrder - b.sortOrder)
+    setfullPageImgList(fullPageImgList)
+  }, [])
+
   const isImg = (item: Img | Item): item is Img => {
     return (item as Img).imgUrl !== undefined
   }
@@ -25,12 +53,19 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
   } else if (combinedList.length === 1) {
     return (
       <DisplayPhotoItemWrapper>
+        {isImgModalOpen && fullPageImgList.length > 0 && (
+          <FullPageImageModal onClose={closeImageModal} imgList={fullPageImgList} />
+        )}
         {combinedList.map((each, index) => (
           <div className='full' key={index}>
             {isImg(each) ? (
-              <ImageField imgUrl={each.imgUrl} dim={true}></ImageField>
+              <ImageField
+                imgUrl={each.imgUrl}
+                dim={true}
+                onClick={() => onClickImg(index)}
+              ></ImageField>
             ) : (
-              <ImageField imgUrl={each.item.imgUrl} dim={true}>
+              <ImageField imgUrl={each.item.imgUrl} dim={true} onClick={() => onClickImg(index)}>
                 <ItemInfoWrapper>
                   <CelebName>{each.item.celebName}</CelebName>
                   <BrandName>{each.item.brandName}</BrandName>
@@ -45,10 +80,17 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
   } else if (combinedList.length === 2) {
     return (
       <DisplayPhotoItemWrapper>
+        {isImgModalOpen && (
+          <FullPageImageModal onClose={closeImageModal} imgList={fullPageImgList} />
+        )}
         {isImg(combinedList[0]) ? (
-          <ImageField imgUrl={combinedList[0].imgUrl} dim={true}></ImageField>
+          <ImageField
+            imgUrl={combinedList[0].imgUrl}
+            dim={true}
+            onClick={() => onClickImg(0)}
+          ></ImageField>
         ) : (
-          <ImageField imgUrl={combinedList[0].item.imgUrl} dim={true}>
+          <ImageField imgUrl={combinedList[0].item.imgUrl} dim={true} onClick={() => onClickImg(0)}>
             <ItemInfoWrapper>
               <CelebName>{combinedList[0].item.celebName}</CelebName>
               <BrandName>{combinedList[0].item.brandName}</BrandName>
@@ -57,9 +99,13 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
           </ImageField>
         )}
         {isImg(combinedList[1]) ? (
-          <ImageField imgUrl={combinedList[1].imgUrl} dim={true}></ImageField>
+          <ImageField
+            imgUrl={combinedList[1].imgUrl}
+            dim={true}
+            onClick={() => onClickImg(1)}
+          ></ImageField>
         ) : (
-          <ImageField imgUrl={combinedList[1].item.imgUrl} dim={true}>
+          <ImageField imgUrl={combinedList[1].item.imgUrl} dim={true} onClick={() => onClickImg(1)}>
             <ItemInfoWrapper>
               <CelebName>{combinedList[1].item.celebName}</CelebName>
               <BrandName>{combinedList[1].item.brandName}</BrandName>
@@ -72,11 +118,22 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
   } else if (combinedList.length === 3) {
     return (
       <DisplayPhotoItemWrapper>
+        {isImgModalOpen && (
+          <FullPageImageModal onClose={closeImageModal} imgList={fullPageImgList} />
+        )}
         <ColumnWrapper>
           {isImg(combinedList[0]) ? (
-            <ImageField imgUrl={combinedList[0].imgUrl} dim={true}></ImageField>
+            <ImageField
+              imgUrl={combinedList[0].imgUrl}
+              dim={true}
+              onClick={() => onClickImg(0)}
+            ></ImageField>
           ) : (
-            <ImageField imgUrl={combinedList[0].item.imgUrl} dim={true}>
+            <ImageField
+              imgUrl={combinedList[0].item.imgUrl}
+              dim={true}
+              onClick={() => onClickImg(0)}
+            >
               <ItemInfoWrapper>
                 <CelebName>{combinedList[0].item.celebName}</CelebName>
                 <BrandName>{combinedList[0].item.brandName}</BrandName>
@@ -87,9 +144,17 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
         </ColumnWrapper>
         <ColumnWrapper>
           {isImg(combinedList[1]) ? (
-            <ImageField imgUrl={combinedList[1].imgUrl} dim={true}></ImageField>
+            <ImageField
+              imgUrl={combinedList[1].imgUrl}
+              dim={true}
+              onClick={() => onClickImg(1)}
+            ></ImageField>
           ) : (
-            <ImageField imgUrl={combinedList[1].item.imgUrl} dim={true}>
+            <ImageField
+              imgUrl={combinedList[1].item.imgUrl}
+              dim={true}
+              onClick={() => onClickImg(1)}
+            >
               <ItemInfoWrapper>
                 <CelebName>{combinedList[1].item.celebName}</CelebName>
                 <BrandName>{combinedList[1].item.brandName}</BrandName>
@@ -98,9 +163,17 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
             </ImageField>
           )}
           {isImg(combinedList[2]) ? (
-            <ImageField imgUrl={combinedList[2].imgUrl} dim={true}></ImageField>
+            <ImageField
+              imgUrl={combinedList[2].imgUrl}
+              dim={true}
+              onClick={() => onClickImg(2)}
+            ></ImageField>
           ) : (
-            <ImageField imgUrl={combinedList[2].item.imgUrl} dim={true}>
+            <ImageField
+              imgUrl={combinedList[2].item.imgUrl}
+              dim={true}
+              onClick={() => onClickImg(3)}
+            >
               <ItemInfoWrapper>
                 <CelebName>{combinedList[2].item.celebName}</CelebName>
                 <BrandName>{combinedList[2].item.brandName}</BrandName>
@@ -114,11 +187,22 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
   } else if (combinedList.length === 4) {
     return (
       <DisplayPhotoItemWrapper>
+        {isImgModalOpen && fullPageImgList.length > 0 && (
+          <FullPageImageModal onClose={closeImageModal} imgList={fullPageImgList} />
+        )}
         <ColumnWrapper>
           {isImg(combinedList[0]) ? (
-            <ImageField imgUrl={combinedList[0].imgUrl} dim={true}></ImageField>
+            <ImageField
+              imgUrl={combinedList[0].imgUrl}
+              dim={true}
+              onClick={() => onClickImg(0)}
+            ></ImageField>
           ) : (
-            <ImageField imgUrl={combinedList[0].item.imgUrl} dim={true}>
+            <ImageField
+              imgUrl={combinedList[0].item.imgUrl}
+              dim={true}
+              onClick={() => onClickImg(0)}
+            >
               <ItemInfoWrapper>
                 <CelebName>{combinedList[0].item.celebName}</CelebName>
                 <BrandName>{combinedList[0].item.brandName}</BrandName>
@@ -127,9 +211,17 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
             </ImageField>
           )}
           {isImg(combinedList[1]) ? (
-            <ImageField imgUrl={combinedList[1].imgUrl} dim={true}></ImageField>
+            <ImageField
+              imgUrl={combinedList[1].imgUrl}
+              dim={true}
+              onClick={() => onClickImg(1)}
+            ></ImageField>
           ) : (
-            <ImageField imgUrl={combinedList[1].item.imgUrl} dim={true}>
+            <ImageField
+              imgUrl={combinedList[1].item.imgUrl}
+              dim={true}
+              onClick={() => onClickImg(1)}
+            >
               <ItemInfoWrapper>
                 <CelebName>{combinedList[1].item.celebName}</CelebName>
                 <BrandName>{combinedList[1].item.brandName}</BrandName>
@@ -140,9 +232,17 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
         </ColumnWrapper>
         <ColumnWrapper>
           {isImg(combinedList[2]) ? (
-            <ImageField imgUrl={combinedList[2].imgUrl} dim={true}></ImageField>
+            <ImageField
+              imgUrl={combinedList[2].imgUrl}
+              dim={true}
+              onClick={() => onClickImg(2)}
+            ></ImageField>
           ) : (
-            <ImageField imgUrl={combinedList[2].item.imgUrl} dim={true}>
+            <ImageField
+              imgUrl={combinedList[2].item.imgUrl}
+              dim={true}
+              onClick={() => onClickImg(2)}
+            >
               <ItemInfoWrapper>
                 <CelebName>{combinedList[2].item.celebName}</CelebName>
                 <BrandName>{combinedList[2].item.brandName}</BrandName>
@@ -151,9 +251,17 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
             </ImageField>
           )}
           {isImg(combinedList[3]) ? (
-            <ImageField imgUrl={combinedList[3].imgUrl} dim={true}></ImageField>
+            <ImageField
+              imgUrl={combinedList[3].imgUrl}
+              dim={true}
+              onClick={() => onClickImg(3)}
+            ></ImageField>
           ) : (
-            <ImageField imgUrl={combinedList[3].item.imgUrl} dim={true}>
+            <ImageField
+              imgUrl={combinedList[3].item.imgUrl}
+              dim={true}
+              onClick={() => onClickImg(3)}
+            >
               <ItemInfoWrapper>
                 <CelebName>{combinedList[3].item.celebName}</CelebName>
                 <BrandName>{combinedList[3].item.brandName}</BrandName>
@@ -167,11 +275,24 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
   } else {
     return (
       <FivePhotoItemWrapper>
+        {isImgModalOpen && (
+          <FullPageImageModal onClose={closeImageModal} imgList={fullPageImgList} />
+        )}
         <ColumnWrapper>
           {isImg(combinedList[0]) ? (
-            <ImageField imgUrl={combinedList[0].imgUrl} className='first' dim={true}></ImageField>
+            <ImageField
+              imgUrl={combinedList[0].imgUrl}
+              className='first'
+              dim={true}
+              onClick={() => onClickImg(0)}
+            ></ImageField>
           ) : (
-            <ImageField imgUrl={combinedList[0].item.imgUrl} className='first' dim={true}>
+            <ImageField
+              imgUrl={combinedList[0].item.imgUrl}
+              className='first'
+              dim={true}
+              onClick={() => onClickImg(0)}
+            >
               <ItemInfoWrapper>
                 <CelebName>{combinedList[0].item.celebName}</CelebName>
                 <BrandName>{combinedList[0].item.brandName}</BrandName>
@@ -180,9 +301,17 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
             </ImageField>
           )}
           {isImg(combinedList[3]) ? (
-            <ImageField imgUrl={combinedList[3].imgUrl} dim={true}></ImageField>
+            <ImageField
+              imgUrl={combinedList[3].imgUrl}
+              dim={true}
+              onClick={() => onClickImg(3)}
+            ></ImageField>
           ) : (
-            <ImageField imgUrl={combinedList[3].item.imgUrl} dim={true}>
+            <ImageField
+              imgUrl={combinedList[3].item.imgUrl}
+              dim={true}
+              onClick={() => onClickImg(3)}
+            >
               <ItemInfoWrapper>
                 <CelebName>{combinedList[3].item.celebName}</CelebName>
                 <BrandName>{combinedList[3].item.brandName}</BrandName>
@@ -193,9 +322,17 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
         </ColumnWrapper>
         <ColumnWrapper>
           {isImg(combinedList[1]) ? (
-            <ImageField imgUrl={combinedList[1].imgUrl} dim={true}></ImageField>
+            <ImageField
+              imgUrl={combinedList[1].imgUrl}
+              dim={true}
+              onClick={() => onClickImg(1)}
+            ></ImageField>
           ) : (
-            <ImageField imgUrl={combinedList[1].item.imgUrl} dim={true}>
+            <ImageField
+              imgUrl={combinedList[1].item.imgUrl}
+              dim={true}
+              onClick={() => onClickImg(1)}
+            >
               <ItemInfoWrapper>
                 <CelebName>{combinedList[1].item.celebName}</CelebName>
                 <BrandName>{combinedList[1].item.brandName}</BrandName>
@@ -204,9 +341,17 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
             </ImageField>
           )}
           {isImg(combinedList[2]) ? (
-            <ImageField imgUrl={combinedList[2].imgUrl} dim={true}></ImageField>
+            <ImageField
+              imgUrl={combinedList[2].imgUrl}
+              dim={true}
+              onClick={() => onClickImg(2)}
+            ></ImageField>
           ) : (
-            <ImageField imgUrl={combinedList[2].item.imgUrl} dim={true}>
+            <ImageField
+              imgUrl={combinedList[2].item.imgUrl}
+              dim={true}
+              onClick={() => onClickImg(2)}
+            >
               <ItemInfoWrapper>
                 <CelebName>{combinedList[2].item.celebName}</CelebName>
                 <BrandName>{combinedList[2].item.brandName}</BrandName>
@@ -215,9 +360,17 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
             </ImageField>
           )}
           {isImg(combinedList[4]) ? (
-            <ImageField imgUrl={combinedList[4].imgUrl} dim={true}></ImageField>
+            <ImageField
+              imgUrl={combinedList[4].imgUrl}
+              dim={true}
+              onClick={() => onClickImg(4)}
+            ></ImageField>
           ) : (
-            <ImageField imgUrl={combinedList[4].item.imgUrl} dim={true}>
+            <ImageField
+              imgUrl={combinedList[4].item.imgUrl}
+              dim={true}
+              onClick={() => onClickImg(4)}
+            >
               <ItemInfoWrapper>
                 <CelebName>{combinedList[4].item.celebName}</CelebName>
                 <BrandName>{combinedList[4].item.brandName}</BrandName>
