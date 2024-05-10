@@ -74,12 +74,24 @@ import SameBrand from './components/Carousel/SameBrand'
 import { deleteScrap } from '../../../apis/closet'
 import share from '../../../utils/Share/share'
 import ShowLink from './components/ShowLink'
+import storage from '../../../utils/storage'
 
 const ItemDetail = () => {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const { openModal } = useModals()
   const { id: itemId } = useParams()
+
+  const [isPreview, setIsPreview] = useState<boolean>(false)
+  const searchOnPreview = () => {
+    openModal(modals.LoginToContinueModal)
+  }
+
+  useEffect(() => {
+    if (!storage.get('accessToken')) {
+      setIsPreview(true)
+    }
+  })
 
   const { getItemDetail } = useItemDetailQuery()
   const { data } = getItemDetail(Number(itemId))
@@ -120,34 +132,52 @@ const ItemDetail = () => {
     followUser: { mutate: mutateByFollow },
   } = useFollowQuery()
   const onClickFollow = () => {
-    if (data) mutateByFollow({ userId: data?.writer.id, itemId: Number(itemId) })
+    if (isPreview) {
+      openModal(modals.LoginToContinueModal)
+    } else {
+      if (data) mutateByFollow({ userId: data?.writer.id, itemId: Number(itemId) })
+    }
   }
 
   const {
     likeItem: { mutate: mutateByLike },
   } = useItemDetailQuery()
   const onClickLike = () => {
-    if (data) mutateByLike(Number(itemId))
+    if (isPreview) {
+      openModal(modals.LoginToContinueModal)
+    } else {
+      if (data) {
+        mutateByLike(Number(itemId))
+      }
+    }
   }
 
   const handleScrapItem = async () => {
-    if (data?.scrapStatus) {
-      const res = await deleteScrap(Number(itemId))
-
-      if (res.isSuccess) {
-        alert('아이템 저장이 취소되었어요')
-        queryClient.invalidateQueries(queryKeys.itemDetail(Number(itemId)))
-      }
+    if (isPreview) {
+      openModal(modals.LoginToContinueModal)
     } else {
-      openModal(ItemClosetListModal, { itemId: itemId ?? '' })
+      if (data?.scrapStatus) {
+        const res = await deleteScrap(Number(itemId))
+
+        if (res.isSuccess) {
+          alert('아이템 저장이 취소되었어요')
+          queryClient.invalidateQueries(queryKeys.itemDetail(Number(itemId)))
+        }
+      } else {
+        openModal(ItemClosetListModal, { itemId: itemId ?? '' })
+      }
     }
   }
 
   const onClickUser = () => {
-    if (data?.hasMine) {
-      navigate('/user')
+    if (isPreview) {
+      openModal(modals.LoginToContinueModal)
     } else {
-      navigate(`/user/${data?.writer.id}`)
+      if (data?.hasMine) {
+        navigate('/user')
+      } else {
+        navigate(`/user/${data?.writer.id}`)
+      }
     }
   }
 
@@ -182,12 +212,16 @@ const ItemDetail = () => {
   }
 
   const onRequestEdit = () => {
-    setEditReportItemState({
-      itemId: Number(itemId),
-      itemWriterId: data?.writer.id,
-      itemWriterName: data?.writer.nickName,
-    })
-    navigate('/item/detail/request-edit')
+    if (isPreview) {
+      openModal(modals.LoginToContinueModal)
+    } else {
+      setEditReportItemState({
+        itemId: Number(itemId),
+        itemWriterId: data?.writer.id,
+        itemWriterName: data?.writer.nickName,
+      })
+      navigate('/item/detail/request-edit')
+    }
   }
 
   useEffect(() => {
@@ -209,8 +243,13 @@ const ItemDetail = () => {
         <Header isModalHeader={false} hasArrow={true} backBtnClick={onBackClick}>
           <div className='headerRight'>
             <Home onClick={() => navigate('/home')} />
-            <Search fill={Common.colors.BK} onClick={() => navigate('/search')}></Search>
-            <ShowMore onClick={() => onClickShowMore()}></ShowMore>
+            <Search
+              fill={Common.colors.BK}
+              onClick={isPreview ? () => searchOnPreview() : () => navigate('/search')}
+            ></Search>
+            <ShowMore
+              onClick={isPreview ? () => searchOnPreview() : () => onClickShowMore()}
+            ></ShowMore>
           </div>
         </Header>
       </HeaderWrapper>
@@ -365,9 +404,9 @@ const ItemDetail = () => {
             <ArrowLarge></ArrowLarge>
           </WrongInfo>
           <RecommendWrapper>
-            <SameCeleb itemId={Number(itemId)} />
-            <SameBrand itemId={Number(itemId)} />
-            <SameScrap itemId={Number(itemId)} />
+            <SameCeleb itemId={Number(itemId)} isPreview={isPreview} />
+            <SameBrand itemId={Number(itemId)} isPreview={isPreview} />
+            <SameScrap itemId={Number(itemId)} isPreview={isPreview} />
           </RecommendWrapper>
           {/* <ShareItemWrapper>
           <ShareWrapper>

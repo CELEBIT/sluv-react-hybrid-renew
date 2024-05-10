@@ -10,13 +10,27 @@ import InterestCelebList, {
 import useGetHotSluverQuery from '../../../../apis/user/hooks/useGetHotSluverQuery'
 import { useRecoilValue } from 'recoil'
 import { useNavigate } from 'react-router-dom'
+import { PreviewProps } from '../..'
+import useModals from '../../../../components/Modals/hooks/useModals'
+import { modals } from '../../../../components/Modals'
 
-const WeeklyTopUser = () => {
+const WeeklyTopUser = ({ isPreview }: PreviewProps) => {
+  const { openModal } = useModals()
   const selectedInterestCeleb = useRecoilValue(selectedInterestCelebState)
   const {
     getHotSluver: { data: userList },
   } = useGetHotSluverQuery(selectedInterestCeleb ? selectedInterestCeleb : undefined)
   const navigate = useNavigate()
+
+  const onClickUser = (isMine: boolean, userId: number) => {
+    if (isPreview) {
+      openModal(modals.LoginToContinueModal)
+    } else {
+      if (!isMine) {
+        navigate(`/user/${userId}`)
+      }
+    }
+  }
   return (
     <ScrollComponentWrapper bgColor='gray'>
       <HomeTitle className='title'>이번주 인기 스러버</HomeTitle>
@@ -32,7 +46,8 @@ const WeeklyTopUser = () => {
               followStatus={user.followStatus}
               user={user}
               isMine={user.isMine}
-              onClick={user.isMine ? undefined : () => navigate(`/user/${user.id}`)}
+              onClick={() => onClickUser(user.isMine, user.id)}
+              isPreview={isPreview}
             />
           )
         })}

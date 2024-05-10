@@ -7,6 +7,8 @@ import FollowMediumButton from '../../../../../components/ButtonMedium/FollowMed
 import useFollowQuery from '../../../../../apis/user/hooks/useFollowQuery'
 import { IUserResult } from '../../../../../apis/user/userService'
 import { ReactComponent as DefaultProfile } from '../../../../../assets/defaultProfile_40.svg'
+import useModals from '../../../../../components/Modals/hooks/useModals'
+import { modals } from '../../../../../components/Modals'
 
 interface UserCardProps {
   rank?: number
@@ -15,6 +17,7 @@ interface UserCardProps {
   followStatus?: boolean
   borderRadius?: number
   isMine: boolean
+  isPreview?: boolean
   onClick?: () => void
 }
 
@@ -24,15 +27,21 @@ const UserCard = ({
   followStatus,
   user,
   borderRadius,
+  isPreview,
   isMine,
   onClick,
 }: UserCardProps) => {
+  const { openModal } = useModals()
   const {
     followUser: { mutate: mutateByFollow },
   } = useFollowQuery()
   const onClickFollow = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, userId: number) => {
     e.stopPropagation() // Stop propagation here
-    mutateByFollow({ userId: userId })
+    if (isPreview) {
+      openModal(modals.LoginToContinueModal)
+    } else {
+      mutateByFollow({ userId: userId })
+    }
   }
   return (
     <UserCardWrapper borderRadius={borderRadius} onClick={onClick}>

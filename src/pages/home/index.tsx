@@ -20,17 +20,24 @@ import { Common } from '../../components/styles'
 import { useNavigate } from 'react-router-dom'
 import storage from '../../utils/storage'
 import ScrollToTop from './components/ScrollToTopButton'
+import useModals from '../../components/Modals/hooks/useModals'
+import { modals } from '../../components/Modals'
+
+export interface PreviewProps {
+  isPreview: boolean
+}
 
 const Home = () => {
   const navigate = useNavigate()
+  const { openModal } = useModals()
   const bannerRef = useRef<HTMLDivElement>(null)
   const scrollToTopRef = useRef<HTMLDivElement>(null)
   const [showScrollToTop, setShowScrollToTop] = useState<boolean>(false)
+  const [isPreview, setIsPreview] = useState<boolean>(false)
 
   useEffect(() => {
     if (!storage.get('accessToken')) {
-      confirm('스럽을 이용하시려면 로그인해주세요.')
-      navigate('/')
+      setIsPreview(true)
     }
   })
   useEffect(() => {
@@ -52,6 +59,10 @@ const Home = () => {
       behavior: 'smooth',
     })
   }
+
+  const searchOnPreview = () => {
+    openModal(modals.LoginToContinueModal)
+  }
   return (
     <HomeContainer>
       <HeaderWrapper role='heading' isModalHeader={false} style={{ padding: '0.625rem 1.25rem' }}>
@@ -59,7 +70,10 @@ const Home = () => {
           <Logo></Logo>
         </div>
         <div className='right'>
-          <Search fill={Common.colors.BK} onClick={() => navigate('/search')}></Search>
+          <Search
+            fill={Common.colors.BK}
+            onClick={isPreview ? searchOnPreview : () => navigate('/search')}
+          ></Search>
         </div>
       </HeaderWrapper>
       <ComponentContainer ref={scrollToTopRef}>
@@ -67,19 +81,19 @@ const Home = () => {
           <Banner style={{ height: '100%', width: '100vw' }}></Banner>
         </div>
         <Curation></Curation>
-        <BuyNow></BuyNow>
-        <WeeklyTopUser></WeeklyTopUser>
-        <NewItems></NewItems>
+        <BuyNow isPreview={isPreview}></BuyNow>
+        <WeeklyTopUser isPreview={isPreview}></WeeklyTopUser>
+        <NewItems isPreview={isPreview}></NewItems>
         <Divider></Divider>
-        <HotCelebItems></HotCelebItems>
+        <HotCelebItems isPreview={isPreview}></HotCelebItems>
         <Divider></Divider>
-        <HowAbout></HowAbout>
+        <HowAbout isPreview={isPreview}></HowAbout>
         <div>
           <HotCelebBanner style={{ height: '100%', width: '100vw' }}></HotCelebBanner>
         </div>
-        <LuxuryMood></LuxuryMood>
+        <LuxuryMood isPreview={isPreview}></LuxuryMood>
         <Divider></Divider>
-        <PresentItem></PresentItem>
+        <PresentItem isPreview={isPreview}></PresentItem>
         {showScrollToTop && <ScrollToTop onClick={handleClick} />}
       </ComponentContainer>
     </HomeContainer>

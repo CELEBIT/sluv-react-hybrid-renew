@@ -14,6 +14,7 @@ export interface IItem {
   borderRadius: number
   scrapStatus?: boolean
   isSelected?: boolean
+  isPreview?: boolean
 }
 
 const Item = ({
@@ -27,6 +28,7 @@ const Item = ({
   onClick,
   borderRadius,
   isSelected,
+  isPreview,
 }: IItem) => {
   return (
     <RecommendItemWrapper key={itemId} size={size} onClick={() => onClick()}>
@@ -37,6 +39,7 @@ const Item = ({
         imgUrl={imgUrl}
         storageFlag={scrapStatus}
         isSelected={isSelected}
+        isPreview={isPreview}
       ></Photo>
       <div className='infoText'>
         <CelebName>{celebName}</CelebName>
