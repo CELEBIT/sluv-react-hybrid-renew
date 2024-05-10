@@ -121,7 +121,7 @@ export const List = styled.div`
   justify-content: center;
 `
 
-export const MainImage = styled.img`
+export const MainImage = styled.div`
   width: 800px;
   height: 500px;
   object-fit: cover;
@@ -136,17 +136,11 @@ export const SubImage = styled.img`
 
 export const CloseButton = styled.button`
   position: absolute;
-  top: 0.625rem;
+  top: 0.9375rem;
   right: 0.625rem;
   background: none;
   border: none;
-  font-size: 2rem;
   cursor: pointer;
-  color: #fff;
-
-  &:hover {
-    color: #ccc;
-  }
 `
 export const PhotoCount = styled.span`
   position: absolute;
