@@ -4,9 +4,10 @@ import RecommendedItemList from '../../../../../components/RecommendedItem/Recom
 
 interface SameScrapProps {
   itemId: number
+  isPreview: boolean
 }
 
-function SameScrap({ itemId }: SameScrapProps) {
+function SameScrap({ itemId, isPreview }: SameScrapProps) {
   const { getSameScrapItem } = useItemDetailQuery()
   const { data } = getSameScrapItem(Number(itemId))
   return (
@@ -15,6 +16,7 @@ function SameScrap({ itemId }: SameScrapProps) {
         <RecommendedItemList
           title='다른 스러버들이 함께 보관한 아이템'
           list={data}
+          isPreview={isPreview}
         ></RecommendedItemList>
       )}
     </>

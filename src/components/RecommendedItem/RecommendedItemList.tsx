@@ -8,9 +8,10 @@ import styled from '@emotion/styled'
 interface RecommendedItemProps {
   title: string
   list: Array<RecommendItemResult> | undefined
+  isPreview?: boolean
 }
 
-const RecommendedItemList = ({ title, list }: RecommendedItemProps) => {
+const RecommendedItemList = ({ title, list, isPreview }: RecommendedItemProps) => {
   const navigate = useNavigate()
   return (
     <RecommendedItemListWrapper>
@@ -24,6 +25,7 @@ const RecommendedItemList = ({ title, list }: RecommendedItemProps) => {
               size={150}
               borderRadius={8}
               onClick={() => navigate(`/item/detail/${item.itemId}`)}
+              isPreview={isPreview}
             ></Item>
           )
         })}

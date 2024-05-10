@@ -4,15 +4,20 @@ import RecommendedItemList from '../../../../../components/RecommendedItem/Recom
 
 interface SameBrandProps {
   itemId: number
+  isPreview: boolean
 }
 
-function SameBrand({ itemId }: SameBrandProps) {
+function SameBrand({ itemId, isPreview }: SameBrandProps) {
   const { getSameBrandItem } = useItemDetailQuery()
   const { data } = getSameBrandItem(Number(itemId))
   return (
     <>
       {data && data?.length > 0 && (
-        <RecommendedItemList title='같은 브랜드의 아이템' list={data}></RecommendedItemList>
+        <RecommendedItemList
+          title='같은 브랜드의 아이템'
+          list={data}
+          isPreview={isPreview}
+        ></RecommendedItemList>
       )}
     </>
   )
