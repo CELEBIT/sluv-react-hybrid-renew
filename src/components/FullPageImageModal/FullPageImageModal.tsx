@@ -20,7 +20,6 @@ export const currentPictureIndexState = atom<number>({
 })
 
 function FullPageImageModal({ imgList, onClose }: ImageModalProps) {
-  const pictures = imgList
   const [currentPictureIndex, setCurrentPictureIndex] = useRecoilState(currentPictureIndexState)
 
   const onAfterOpen = () => (document.body.style.overflow = 'hidden')
@@ -69,7 +68,7 @@ function FullPageImageModal({ imgList, onClose }: ImageModalProps) {
     >
       <PopupLayout>
         <ImageContainer ref={sliderRef} className='keen-slider'>
-          {imgList.map((itemImg: ImgResult, index) => (
+          {imgList.map((itemImg, index) => (
             <Image key={index} url={itemImg.imgUrl} className='keen-slider__slide'></Image>
           ))}
         </ImageContainer>
@@ -137,8 +136,8 @@ export const SubImage = styled.img`
 
 export const CloseButton = styled.button`
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 0.625rem;
+  right: 0.625rem;
   background: none;
   border: none;
   font-size: 2rem;
