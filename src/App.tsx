@@ -114,7 +114,8 @@ const RequestWithdraw = React.lazy(() => import('./pages/settings/RequestWithdra
 const WithdrawReason = React.lazy(
   () => import('./pages/settings/RequestWithdraw/WithdrawReason/index'),
 )
-
+import Modal from 'react-modal'
+Modal.setAppElement('#root')
 const App = () => {
   useLayoutEffect(() => {
     // console.log(window.location.search)
