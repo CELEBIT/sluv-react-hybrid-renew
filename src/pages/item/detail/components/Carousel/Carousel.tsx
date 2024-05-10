@@ -3,6 +3,10 @@ import { useKeenSlider } from 'keen-slider/react'
 import 'keen-slider/keen-slider.min.css'
 import styled from '@emotion/styled'
 import { ImgResult } from '../../../../../apis/item/itemService.type'
+import { useRecoilState } from 'recoil'
+import FullPageImageModal, {
+  currentPictureIndexState,
+} from '../../../../../components/FullPageImageModal/FullPageImageModal'
 
 interface CarouselProps {
   imgList: Array<ImgResult>
@@ -11,6 +15,10 @@ interface CarouselProps {
 const Carousel = ({ imgList }: CarouselProps) => {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [loaded, setLoaded] = useState(false)
+  const [isImgModalOpen, setIsImgModalOpen] = useState(false)
+  const [currentPictureIndex, setCurrentPictureIndex] = useRecoilState(currentPictureIndexState)
+  const closeImageModal = () => setIsImgModalOpen(false)
+
   const [sliderRef, instanceRef] = useKeenSlider({
     initial: 0,
     slideChanged(slider) {
@@ -20,12 +28,23 @@ const Carousel = ({ imgList }: CarouselProps) => {
       setLoaded(true)
     },
   })
+
+  const onClickImg = (index: number) => {
+    setCurrentPictureIndex(index)
+    setIsImgModalOpen(true)
+  }
   return (
     <div className='navigation-wrapper' style={{ position: 'relative' }}>
+      {isImgModalOpen && <FullPageImageModal onClose={closeImageModal} imgList={imgList} />}
       {imgList && (
         <ImageContainer ref={sliderRef} className='keen-slider'>
           {imgList.map((itemImg: ImgResult, index) => (
-            <Image key={index} url={itemImg.imgUrl} className='keen-slider__slide'></Image>
+            <Image
+              key={index}
+              url={itemImg.imgUrl}
+              className='keen-slider__slide'
+              onClick={() => onClickImg(index)}
+            ></Image>
           ))}
         </ImageContainer>
       )}

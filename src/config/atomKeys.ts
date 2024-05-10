@@ -8,7 +8,7 @@ export const atomKeys = {
   linksState: 'linksState' as const,
   selectedGroupState: 'selectedGroupState' as const,
   selectedCelebState: 'selectedCelebState' as const,
-
+  currentPictureIndexState: 'currentPictureIndexState' as const,
   CategoryListState: 'CategoryListState' as const,
   parentCategoryIdState: 'parentCategoryIdState' as const,
   subCategoryIdState: 'subCategoryIdState' as const,
