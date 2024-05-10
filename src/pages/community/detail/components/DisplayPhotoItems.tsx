@@ -32,7 +32,8 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
   }
 
   useEffect(() => {
-    const fullPageImgList: ItemImg[] = [
+    console.log('fullpage')
+    const convertedImgList: ItemImg[] = [
       ...(imgList || []).map((img) => ({
         imgUrl: img.imgUrl,
         sortOrder: img.sortOrder,
@@ -42,7 +43,7 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
         sortOrder: item.sortOrder,
       })),
     ].sort((a, b) => a.sortOrder - b.sortOrder)
-    setfullPageImgList(fullPageImgList)
+    setfullPageImgList(convertedImgList)
   }, [])
 
   const isImg = (item: Img | Item): item is Img => {
@@ -275,7 +276,7 @@ const DisplayPhotoItems = ({ imgList, itemList }: DisplayPhotoItemsProps) => {
   } else {
     return (
       <FivePhotoItemWrapper>
-        {isImgModalOpen && (
+        {isImgModalOpen && fullPageImgList.length > 0 && (
           <FullPageImageModal onClose={closeImageModal} imgList={fullPageImgList} />
         )}
         <ColumnWrapper>
