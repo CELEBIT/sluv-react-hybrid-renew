@@ -32,6 +32,7 @@ const AskRecentPostWritingModal = () => {
   const { getTempItem } = useTempItemQuery()
   const { data } = getTempItem()
   const tempData = data?.pages[0].content[0]
+  console.log(tempData)
 
   const setCurrentTempId = useSetRecoilState(currentTempIdState)
 
@@ -73,18 +74,21 @@ const AskRecentPostWritingModal = () => {
     }
 
     closeModal(modals.AskRecentPostWritingModal, () => {
+      console.log('tempData', tempData)
       localStorage.setItem(localStorageKeys.TEMP_ITEM_ID, String(tempData.id))
       setCurrentTempId(tempData.id)
       // 사진 설정
       setImgList(tempData.imgList ?? [])
       // 셀럽 설정
-      setCelebInfoInItem({
-        groupId: tempData.celeb.parentId !== null ? tempData.celeb.parentId : null,
-        groupName:
-          tempData.celeb.parentCelebNameKr !== null ? tempData.celeb.parentCelebNameKr : null,
-        soloId: tempData.celeb.id !== null ? tempData.celeb.id : null,
-        soloName: tempData.celeb.celebNameKr !== null ? tempData.celeb.celebNameKr : null,
-      })
+      setCelebInfoInItem(
+        tempData.celeb && {
+          groupId: tempData.celeb.parentId !== null ? tempData.celeb.parentId : null,
+          groupName:
+            tempData.celeb.parentCelebNameKr !== null ? tempData.celeb.parentCelebNameKr : null,
+          soloId: tempData.celeb.id !== null ? tempData.celeb.id : null,
+          soloName: tempData.celeb.celebNameKr !== null ? tempData.celeb.celebNameKr : null,
+        },
+      )
       setNewCeleb(
         tempData.newCeleb && {
           id: tempData.newCeleb.newCelebId,
@@ -92,7 +96,7 @@ const AskRecentPostWritingModal = () => {
         },
       )
       setWhenDiscovery(tempData.whenDiscovery ? new Date(tempData.whenDiscovery) : null)
-      setWhereDiscovery(tempData.whereDiscovery)
+      setWhereDiscovery(tempData.whereDiscovery && tempData.whereDiscovery)
       setCategory(
         tempData.category && {
           categoryId: tempData.category.id,
