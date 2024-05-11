@@ -145,7 +145,6 @@ const ItemCreateCopy = () => {
 
   const { getTempCount, getTempItem } = useTempItemQuery()
   const { data: tempCount } = getTempCount()
-  const { data: tempList } = getTempItem()
 
   const {
     postItemImg: { mutate: mutateByImgUpload },
