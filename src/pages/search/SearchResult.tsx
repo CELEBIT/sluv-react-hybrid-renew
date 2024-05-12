@@ -14,14 +14,23 @@ const SearchResult = () => {
   const searchKeyword = queryToObject(search)
 
   const [keyword, setKeyword] = useState(searchKeyword.keyword)
-  const [selectedTab, setSelectedTab] = useState('all')
-
   const tabList = [
     { id: 'all', tabName: '통합' },
     { id: 'item', tabName: '아이템' },
     { id: 'community', tabName: '커뮤니티' },
     { id: 'user', tabName: '사용자' },
   ]
+
+  const savedTab = sessionStorage.getItem('searchTab') || 'all'
+  const [currentTab, setCurrentTab] = useState(savedTab)
+
+  useEffect(() => {
+    sessionStorage.setItem('searchTab', currentTab)
+  }, [currentTab])
+  const onBackClick = () => {
+    sessionStorage.removeItem('searchTab')
+    navigate(-1)
+  }
 
   return (
     <SearchResultPageStyle>
@@ -30,14 +39,14 @@ const SearchResult = () => {
           isModalHeader={false}
           title={'검색 결과'}
           hasArrow={true}
-          backBtnClick={() => navigate(-1)}
+          backBtnClick={onBackClick}
         />
       </HeaderWrap>
       <SearchBarWrap>
         <SearchBarContainer keyword={keyword} setKeyword={setKeyword} />
       </SearchBarWrap>
-      <Tabs tabList={tabList} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-      <SearchResultContainer selectedTab={selectedTab} keyword={searchKeyword.keyword} />
+      <Tabs tabList={tabList} selectedTab={currentTab} setSelectedTab={setCurrentTab} />
+      <SearchResultContainer selectedTab={currentTab} keyword={searchKeyword.keyword} />
     </SearchResultPageStyle>
   )
 }
