@@ -34,11 +34,21 @@ import { RequestEditItemState } from '../item/editRequest'
 const User = () => {
   const navigate = useNavigate()
   const { id } = useParams()
-  const [selectedTab, setSelectedTab] = useState('item')
   const tabList = [
     { id: 'item', tabName: '아이템' },
     { id: 'closet', tabName: '옷장' },
   ]
+
+  const savedTab = sessionStorage.getItem('userMypageTab') || 'item'
+  const [currentTab, setCurrentTab] = useState(savedTab)
+
+  useEffect(() => {
+    sessionStorage.setItem('userMypageTab', currentTab)
+  }, [currentTab])
+  const onBackClick = () => {
+    sessionStorage.removeItem('userMypageTab')
+    navigate(-1)
+  }
 
   const { openModal } = useModals()
   const setEditReportItemState = useSetRecoilState(RequestEditItemState)
@@ -57,7 +67,7 @@ const User = () => {
     return (
       <PageContainer>
         <HeaderWrapper>
-          <Header isModalHeader={false} hasArrow={true}>
+          <Header isModalHeader={false} hasArrow={true} backBtnClick={onBackClick}>
             <div className='headerRight'>
               <Home onClick={() => navigate('/home')} />
               <Search fill={Common.colors.BK} onClick={() => navigate('/search')}></Search>
@@ -68,13 +78,9 @@ const User = () => {
         <ContentContainer>
           <UserProfile></UserProfile>
           <StickyTabContainer>
-            <Tabs
-              tabList={tabList}
-              selectedTab={selectedTab}
-              setSelectedTab={setSelectedTab}
-            ></Tabs>
+            <Tabs tabList={tabList} selectedTab={currentTab} setSelectedTab={setCurrentTab}></Tabs>
           </StickyTabContainer>
-          {selectedTab === 'item' ? <UserItem></UserItem> : <UserCloset></UserCloset>}
+          {currentTab === 'item' ? <UserItem></UserItem> : <UserCloset></UserCloset>}
         </ContentContainer>
       </PageContainer>
     )
