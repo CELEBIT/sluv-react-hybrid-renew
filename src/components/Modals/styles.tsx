@@ -18,7 +18,7 @@ export const Dimmed = styled.div`
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
-  z-index: 10;
+  z-index: 160;
 `
 
 export const BtnModalContainer = styled.div`
@@ -31,7 +31,7 @@ export const BtnModalContainer = styled.div`
   width: calc(100% - 5.375rem);
   margin: 0 23px;
   padding: 2rem 1.25rem 1.25rem 1.25rem;
-  z-index: 30;
+  z-index: 180;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);

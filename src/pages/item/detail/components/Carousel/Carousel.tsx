@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useKeenSlider } from 'keen-slider/react'
 import 'keen-slider/keen-slider.min.css'
 import styled from '@emotion/styled'
@@ -28,6 +28,13 @@ const Carousel = ({ imgList }: CarouselProps) => {
       setLoaded(true)
     },
   })
+  useEffect(() => {
+    if (instanceRef) {
+      instanceRef.current?.update()
+      instanceRef.current?.track.init(0)
+      instanceRef.current?.track.to(0)
+    }
+  }, [imgList])
 
   const onClickImg = (index: number) => {
     setCurrentPictureIndex(index)
