@@ -5,55 +5,18 @@ import useCommunityHomeQuery from '../../../../apis/question/hooks/useCommunityH
 import { useNavigate } from 'react-router-dom'
 import useQuestionListQuery from '../../../../apis/question/hooks/useQuestionListQuery'
 import BannerBuyItem from './BannerItem/BannerBuyItem'
-import { QuestionImg } from '../../../../apis/search/searchService'
+import { QuestionImg, SearchQuestionResult } from '../../../../apis/search/searchService'
+import { InfiniteData } from '@tanstack/react-query'
+import { GetPaginationResult } from '../../../../apis/core/type'
 
-const BannerItemsList = () => {
-  const { getQuestionHotList } = useQuestionListQuery()
-  const { data } = getQuestionHotList()
+interface BannerItemsListProps {
+  data: InfiniteData<GetPaginationResult<SearchQuestionResult>> | undefined
+}
+
+const BannerItemsList = ({ data }: BannerItemsListProps) => {
+  // const { getQuestionHotList } = useQuestionListQuery()
+  // const { data } = getQuestionHotList()
   const navigate = useNavigate()
-  console.log(data)
-
-  const imgList = [
-    {
-      imgUrl:
-        'https://elasticbeanstalk-ap-northeast-2-931662394917.s3.ap-northeast-2.amazonaws.com/asset/community/post/a83faab9-8a26-40d0-8b46-3a371ba7767d.jpeg',
-      description: 'ss',
-      voteNum: 0,
-      votePercent: 0,
-      representFlag: true,
-      sortOrder: 0,
-    },
-  ]
-
-  const itemList = [
-    {
-      item: {
-        itemId: 360,
-        imgUrl:
-          'https://elasticbeanstalk-ap-northeast-2-931662394917.s3.ap-northeast-2.amazonaws.com/asset/item/11-57-1.jpeg',
-        brandName: '리포메이션',
-        itemName: '플라워 오프숄더 니트 탑',
-        celebName: '(여자)아이들 미연',
-        scrapStatus: true,
-      },
-      description: 'sss',
-      voteNum: 0,
-      votePercent: 0,
-      representFlag: false,
-      sortOrder: 1,
-    },
-  ]
-  // const combinedList = [
-  //   ...(imgList?.filter((item) => item !== null) ?? []),
-  //   ...(itemList?.filter((item) => item !== null) ?? []),
-  // ]
-  const sortedAList: QuestionImg[] = [
-    ...imgList,
-    ...itemList.map((item) => ({ imgUrl: item.item.imgUrl, sortOrder: item.sortOrder })),
-  ]
-    .map(({ imgUrl, sortOrder }) => ({ imgUrl, sortOrder }))
-    .sort((a, b) => a.sortOrder - b.sortOrder)
-
   return (
     <BannerItemsListContainer>
       {data &&
@@ -67,7 +30,7 @@ const BannerItemsList = () => {
             if (item.qtype !== 'Buy') {
               return (
                 <BannerItem
-                  key={item.id}
+                  key={item.id + item.content}
                   qtype={item.qtype}
                   imgUrl={item.imgList?.at(0)?.imgUrl ?? ''}
                   title={item.title}

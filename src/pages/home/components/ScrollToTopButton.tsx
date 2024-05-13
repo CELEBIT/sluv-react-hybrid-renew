@@ -16,7 +16,7 @@ const ScrollToTop = ({ onClick }: ScrollToTopButtonProps) => {
         height: 40,
         bottom: 74,
         right: 20,
-        zIndex: 250,
+        zIndex: 160,
       }}
     ></ScrollToTopButton>
   )
