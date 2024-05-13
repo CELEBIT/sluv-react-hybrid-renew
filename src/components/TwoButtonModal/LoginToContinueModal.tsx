@@ -18,7 +18,7 @@ const LoginToContinueModal = () => {
       closeModal(modals.LoginToContinueModal, () => {
         window.webkit.messageHandlers.IOSBridge.postMessage(
           JSON.stringify({
-            type: 'needLogin ',
+            type: 'needLogin',
           }),
         )
       })
