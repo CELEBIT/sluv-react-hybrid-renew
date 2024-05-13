@@ -16,6 +16,7 @@ import { useResetRecoilState } from 'recoil'
 import { communityItemState, imgItemListState } from '../../recoil/communityInfo'
 import { createItemCelebState, createItemNewCelebState } from '../../recoil/itemInfo'
 import { selectedCelebState, selectedGroupState } from '../../components/SelectCeleb/SelectCeleb'
+import useQuestionListQuery from '../../apis/question/hooks/useQuestionListQuery'
 
 const Community = () => {
   const navigate = useNavigate()
@@ -24,11 +25,15 @@ const Community = () => {
   const stickyRef = useRef<HTMLDivElement>(null)
   const [isStickyAtTop, setIsStickyAtTop] = useState(false)
 
+  const { getQuestionHotList } = useQuestionListQuery()
+  const { data } = getQuestionHotList()
+
   useEffect(() => {
     const handleScroll = () => {
       if (stickyRef.current) {
         const { top } = stickyRef.current.getBoundingClientRect()
-        setIsStickyAtTop(top <= 65)
+        if (data && data?.pages[0].content.length > 0) setIsStickyAtTop(top <= 106)
+        else setIsStickyAtTop(top <= 47)
       }
     }
     ComponentContainerRef.current?.addEventListener('scroll', handleScroll)
@@ -62,7 +67,7 @@ const Community = () => {
         </Header>
       </HeaderWrapper>
       <ComponentLayout ref={ComponentContainerRef}>
-        <BannerItemsList></BannerItemsList>
+        {data && data.pages[0].content.length && <BannerItemsList data={data}></BannerItemsList>}
         <Menu menuRef={stickyRef} isStickyAtTop={isStickyAtTop}></Menu>
         <NewCommunity></NewCommunity>
         <WriteCommunityItemButton isTop={!isStickyAtTop}></WriteCommunityItemButton>
