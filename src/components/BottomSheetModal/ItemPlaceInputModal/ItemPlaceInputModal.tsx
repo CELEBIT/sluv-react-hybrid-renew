@@ -40,7 +40,6 @@ const ItemPlaceInputModal = () => {
       }
       setWhereDiscovery(placeName)
     }
-    closeModal(modals.ItemPlaceInputModal)
   }
   const onDeleteAllSearchLog = () => {
     mutateByDeleteAllRecentPlace()
@@ -91,7 +90,9 @@ const ItemPlaceInputModal = () => {
           <ButtonLarge
             text='완료'
             active={placeName !== '' || placeName !== whereDiscovery}
-            onClick={placeName !== '' || placeName !== whereDiscovery ? onComplete : undefined}
+            onClick={
+              placeName !== '' || placeName !== whereDiscovery ? () => onComplete() : undefined
+            }
           ></ButtonLarge>
         </ButtonWrapper>
       </ModalWrapper>

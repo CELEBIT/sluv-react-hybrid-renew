@@ -94,7 +94,7 @@ const useQuestionDetailQuery = () => {
 
   const deleteQuestion = useMutation((questionId: number) => question.deleteQuestion(questionId), {
     onSuccess: () => {
-      queryClient.invalidateQueries(queryKeys.getQuestionTotalList)
+      queryClient.invalidateQueries()
       navigate('/community')
     },
   })
@@ -102,7 +102,7 @@ const useQuestionDetailQuery = () => {
   const likeQuestion = useMutation((questionId: number) => question.likeQusetion(questionId), {
     onSuccess: (res, questionId) => {
       //
-      queryClient.invalidateQueries(queryKeys.questionDetail(questionId))
+      queryClient.invalidateQueries()
     },
   })
 
