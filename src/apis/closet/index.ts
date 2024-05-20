@@ -62,7 +62,7 @@ export const getCloset = async (
   pageParams: number,
 ): Promise<GetClosetRes> => {
   const customPageParams = {
-    size: 12,
+    size: 21,
     page: pageParams,
   }
   return await request.get(`${BASE_PATH}/${id}`, { params: customPageParams })
