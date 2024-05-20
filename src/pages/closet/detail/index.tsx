@@ -7,6 +7,8 @@ import { getCloset, PageParams } from '../../../apis/closet'
 import { useObserver } from '../../../hooks/useObserver'
 import { queryToObject } from '../../../utils/utility'
 import { ReactComponent as SaveIcon } from '../../../assets/save_36.svg'
+import { ReactComponent as Spinner } from '../../../assets/Spinner.svg'
+
 import ColorChip from '../../../components/Chip/ColorChip'
 import NameTagChip from '../components/NameTag/NameTagChip'
 import { ClosetMainSubHeaderEditText } from '../components/SubHeader/SubHeaderText'
@@ -22,6 +24,7 @@ import useModals from '../../../components/Modals/hooks/useModals'
 import { DeleteRecheckModalParam } from '../deleteAndSort'
 import TwoButtonModal from '../../../components/TwoButtonModal'
 import { BtnModalContent } from '../../../components/Modals/styles'
+import Flex from '../../../components/Flex'
 
 const DEFAULT_PAGE_PARAMS: PageParams = {
   page: 1,
@@ -36,9 +39,9 @@ const ClosetDetailPage = () => {
   const context = useEditClosetInnerItemContext()
   if (!id) return <div>Error Occurred</div>
 
-  const { data, status, fetchNextPage, fetchPreviousPage, hasNextPage } = useInfiniteQuery({
+  const { data, status, fetchNextPage, isFetching, isFetchingNextPage } = useInfiniteQuery({
     ...closetQueryConfig.getCloset(id),
-    getNextPageParam: (lastPage, allPages) => {
+    getNextPageParam: (lastPage) => {
       if (lastPage.hasNext) {
         return lastPage.page + 1
       }
@@ -48,11 +51,11 @@ const ClosetDetailPage = () => {
     staleTime: 0,
   })
 
+  const onIntersect = ([entry]: IntersectionObserverEntry[]) =>
+    entry.isIntersecting && fetchNextPage()
   useObserver({
     target: observerRef,
-    onIntersect: () => {
-      if (hasNextPage && status !== 'loading') fetchNextPage()
-    },
+    onIntersect,
   })
 
   if (status !== 'success') return <div>...is loading...</div>
@@ -122,6 +125,17 @@ const ClosetDetailPage = () => {
                     )
                   })
                 })}
+                <div ref={observerRef} />
+                {isFetching && !isFetchingNextPage ? (
+                  <Flex
+                    justify='center'
+                    align='center'
+                    className='spinner'
+                    style={{ height: '40vh' }}
+                  >
+                    <Spinner></Spinner>
+                  </Flex>
+                ) : null}
               </S.InnerItemGridContainer>
             </ClosetInnerItemContext.Provider>
           </S.ContentContainer>
