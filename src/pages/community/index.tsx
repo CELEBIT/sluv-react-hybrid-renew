@@ -67,7 +67,9 @@ const Community = () => {
         </Header>
       </HeaderWrapper>
       <ComponentLayout ref={ComponentContainerRef}>
-        {data && data.pages[0].content.length && <BannerItemsList data={data}></BannerItemsList>}
+        {data && data.pages[0].content.length > 0 && (
+          <BannerItemsList data={data}></BannerItemsList>
+        )}
         <Menu menuRef={stickyRef} isStickyAtTop={isStickyAtTop}></Menu>
         <NewCommunity></NewCommunity>
         <WriteCommunityItemButton isTop={!isStickyAtTop}></WriteCommunityItemButton>
