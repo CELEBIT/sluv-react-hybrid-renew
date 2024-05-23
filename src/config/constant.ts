@@ -3,6 +3,9 @@ import { Term } from '../models/signup'
 export const ACCESS_TOKEN = 'accessToken'
 export const UserStatus = 'userStatus'
 export const MAX_INT = 2147483647
+
+export const appScheme = 'sluvapp://'
+export const appStoreURL = 'https://apps.apple.com/us/app/%EC%8A%A4%EB%9F%BD/id1635250785'
 export const urlRegex =
   /(?:^|\s)(?:https?:\/\/)?[\w-]+(?:\.[\w-]+)+[\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-]+/
 
