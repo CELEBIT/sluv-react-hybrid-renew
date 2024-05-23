@@ -38,29 +38,27 @@ const Following = () => {
     <FollowContainer>
       {data && data.pages[0].content.length > 0 ? (
         <>
-          {data?.pages.map(
-            (item) =>
-              item.content.length > 0 &&
-              item.content.map((user) => {
-                return (
-                  <FollowRow key={user.id} onClick={() => navigate(`/user/${user.id}`)}>
-                    <UserInfo>
-                      <UserImage imgUrl={user.profileImgUrl} size={40}></UserImage>
-                      {user.nickName}
-                    </UserInfo>
-                    <ButtonSmall
-                      text={user.followStatus ? '팔로잉' : '팔로우'}
-                      type='pri'
-                      icon={user.followStatus ? true : false}
-                      iconName='check'
-                      active={user.followStatus ? false : true}
-                      onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
-                        onClickFollow(event, user.id)
-                      }
-                    ></ButtonSmall>
-                  </FollowRow>
-                )
-              }),
+          {data?.pages.map((item) =>
+            item.content.map((user) => {
+              return (
+                <FollowRow key={user.id} onClick={() => navigate(`/user/${user.id}`)}>
+                  <UserInfo>
+                    <UserImage imgUrl={user.profileImgUrl} size={40}></UserImage>
+                    {user.nickName}
+                  </UserInfo>
+                  <ButtonSmall
+                    text={user.followStatus ? '팔로잉' : '팔로우'}
+                    type='pri'
+                    icon={user.followStatus ? true : false}
+                    iconName='check'
+                    active={user.followStatus ? false : true}
+                    onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
+                      onClickFollow(event, user.id)
+                    }
+                  ></ButtonSmall>
+                </FollowRow>
+              )
+            }),
           )}
         </>
       ) : (
