@@ -6,6 +6,9 @@ export const ItemListGridContainer = styled.div`
   flex-direction: column;
   height: 100%;
   align-items: center;
+  .closet {
+    padding: 0 1.25rem 1.25rem 1.25rem !important;
+  }
 `
 
 export const ItemListWrapper = styled.div`
