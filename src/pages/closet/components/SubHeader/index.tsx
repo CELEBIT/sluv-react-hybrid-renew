@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Ref, forwardRef } from 'react'
 import * as S from './styles'
 
 export type SubHeaderProps = {
@@ -16,16 +16,20 @@ const SubHeader = ({ leftPaneChildren, rightPaneChildren }: SubHeaderProps) => {
     </S.Root>
   )
 }
+SubHeader.displayName = 'SubHeader'
 
-export const PaddingSubHeader = ({ leftPaneChildren, rightPaneChildren }: SubHeaderProps) => {
-  return (
-    <S.PaddedRoot>
-      <S.Layout>
-        <S.LeftPaneContainer>{leftPaneChildren}</S.LeftPaneContainer>
-        <S.RightPaneContainer>{rightPaneChildren}</S.RightPaneContainer>
-      </S.Layout>
-    </S.PaddedRoot>
-  )
-}
+export const PaddingSubHeader = forwardRef<HTMLDivElement, SubHeaderProps>(
+  ({ leftPaneChildren, rightPaneChildren }, ref) => {
+    return (
+      <S.PaddedRoot ref={ref}>
+        <S.Layout>
+          <S.LeftPaneContainer>{leftPaneChildren}</S.LeftPaneContainer>
+          <S.RightPaneContainer>{rightPaneChildren}</S.RightPaneContainer>
+        </S.Layout>
+      </S.PaddedRoot>
+    )
+  },
+)
+PaddingSubHeader.displayName = 'PaddingSubHeader'
 
 export default SubHeader
