@@ -67,7 +67,7 @@ const ItemListGrid = ({
       <ItemListGridContainer>
         {canChangeView && data && data?.pages[0].content.length > 0 && (
           <ViewHeader>
-            <ViewHeaderLeft>전체 {totalLength}</ViewHeaderLeft>
+            <ViewHeaderLeft>전체 {data.pages[0].countNum ?? totalLength}</ViewHeaderLeft>
             {viewSize === 'small' ? (
               <ViewHeaderRight>
                 <ViewSmallOn></ViewSmallOn>
@@ -111,7 +111,6 @@ const ItemListGrid = ({
                     )
                   }),
               )}
-
               <div ref={bottom} />
               {isFetching && !isFetchingNextPage ? (
                 <div className='spinner'>

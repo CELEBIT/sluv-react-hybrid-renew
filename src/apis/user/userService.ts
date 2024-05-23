@@ -183,7 +183,7 @@ export default class UserService {
       {
         params: {
           page,
-          size: 20,
+          size: 21,
         },
       },
     )
@@ -260,7 +260,7 @@ export default class UserService {
       `${this.userUrl}/like/item`,
       {
         params: {
-          size: 20,
+          size: 21,
           page,
         },
       },
