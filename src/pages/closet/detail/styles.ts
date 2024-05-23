@@ -26,7 +26,7 @@ export const ItemListGridContainer = styled.div`
   flex-direction: column;
   /* height: 100%; */
   width: 100%;
-  align-items: center;
+  /* align-items: center; */
 `
 
 export const ItemListWrapper = styled.div`
