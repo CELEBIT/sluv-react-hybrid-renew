@@ -1,11 +1,28 @@
 import styled from '@emotion/styled'
 
-export const Root = styled.div`
-  min-width: 105px;
-  min-height: 170px;
-  width: 100%;
-  height: 100%;
-  max-height: 187px;
+// export const Root = styled.div`
+//   min-width: 105px;
+//   min-height: 170px;
+//   width: 100%;
+//   height: 100%;
+//   max-height: 187px;
+// `
+
+export const Root = styled.div<{ size?: number }>`
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: 0.625rem;
+  width: ${(props) => (props.size ? `${props.size * 0.0625}rem` : '100%')};
+  .infoText {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    .itemInfoText {
+      display: flex;
+      flex-direction: column;
+    }
+  }
 `
 
 export const Layout = styled.div`

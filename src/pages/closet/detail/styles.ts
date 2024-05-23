@@ -10,17 +10,38 @@ import { Common } from '../../../components/styles'
 
 export const Root = styled.div`
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
-  height: 100%;
   flex-direction: column;
-  z-index: 5;
+  overflow-y: scroll;
+  width: 100vw;
+  height: 100%;
+  margin-left: calc(-50vw + 50%);
+
+  .edit {
+    padding-bottom: 4.375rem !important;
+  }
+`
+
+export const ItemListGridContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* height: 100%; */
+  width: 100%;
+  align-items: center;
+`
+
+export const ItemListWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  gap: 0.5rem;
+  row-gap: 1.5rem;
+  width: 100%;
+  padding: 1.25rem;
 `
 
 export const HeaderContainer = styled.header`
   width: 100%;
-  margin-bottom: 0.5rem;
+  padding: 0 1.25rem;
 `
 
 export const EmptyPageRoot = styled.div`
@@ -86,8 +107,8 @@ export const EmptyBoxContainer = styled.div`
 
 export const Body = styled.div`
   display: flex;
-  position: absolute;
-  top: 3.125rem;
+  position: relative;
+  flex-direction: column;
   height: 100%;
   width: 100%;
   overflow-y: scroll;
@@ -97,7 +118,8 @@ export const BackgroundContainer = styled.div<{
   imgUrl?: ClosetBoxModel['coverImgUrl']
   colorScheme: ClosetBoxModel['colorScheme']
 }>`
-  position: fixed;
+  display: flex;
+  flex-shrink: 0;
   width: 100%;
   height: 12.5rem;
   background: ${({ imgUrl, colorScheme }) =>
@@ -105,7 +127,6 @@ export const BackgroundContainer = styled.div<{
   background-position: top;
   background-repeat: no-repeat;
   background-size: cover;
-
   z-index: -1;
 `
 
