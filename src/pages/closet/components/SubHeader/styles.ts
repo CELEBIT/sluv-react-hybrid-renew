@@ -10,6 +10,10 @@ export const PaddedRoot = styled.header`
   padding: 0 1.5rem;
   width: 100%;
   box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 10;
 `
 
 export const Layout = styled.div`
