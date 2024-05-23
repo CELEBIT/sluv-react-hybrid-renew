@@ -36,7 +36,7 @@ const Following = () => {
 
   return (
     <FollowContainer>
-      {data ? (
+      {data && data.pages[0].content.length > 0 ? (
         <>
           {data?.pages.map(
             (item) =>
