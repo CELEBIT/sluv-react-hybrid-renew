@@ -49,7 +49,26 @@ const ClosetDetailPage = () => {
     cacheTime: 0,
     staleTime: 0,
   })
+  const [showCount, setShowCount] = useState(false)
 
+  const subheaderRef = useRef<HTMLDivElement>(null)
+  const bodyRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const handleScroll = () => {
+      if (subheaderRef.current) {
+        setShowCount(subheaderRef.current.getBoundingClientRect().top < 50)
+      }
+    }
+    const bodyElement = bodyRef.current
+    if (bodyElement) {
+      bodyElement.addEventListener('scroll', handleScroll)
+    }
+    return () => {
+      if (bodyElement) {
+        bodyElement.removeEventListener('scroll', handleScroll)
+      }
+    }
+  })
   if (status !== 'success') return <div>...is loading...</div>
 
   return (
@@ -72,7 +91,7 @@ const ClosetDetailPage = () => {
         </S.EmptyPageRoot>
       )}
       {data?.pages[0].itemNum > 0 && (
-        <S.Body>
+        <S.Body ref={bodyRef}>
           <S.BackgroundContainer
             colorScheme={data?.pages[0].colorScheme}
             imgUrl={data?.pages[0].coverImgUrl}
@@ -81,11 +100,14 @@ const ClosetDetailPage = () => {
           </S.BackgroundContainer>
           <ClosetInnerItemContext.Provider value={context}>
             <PaddingSubHeader
+              ref={subheaderRef}
               leftPaneChildren={
                 <S.SubHeaderEditText>
-                  {context.states.isEditMode
-                    ? `${context.states.selectedIds.length}개 선택됨`
-                    : `${data?.pages[0].itemNum}개 보관 중`}
+                  {context.states.isEditMode ? (
+                    `${context.states.selectedIds.length}개 선택됨`
+                  ) : (
+                    <>{showCount ? `${data?.pages[0].itemNum}개 보관 중` : ''}</>
+                  )}
                 </S.SubHeaderEditText>
               }
               rightPaneChildren={
