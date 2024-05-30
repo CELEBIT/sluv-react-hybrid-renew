@@ -1,6 +1,6 @@
 import { atom } from 'recoil'
 import { atomKeys } from '../config/atomKeys'
-import { ImgResult } from '../apis/item/itemService.type'
+import { ImgResult, LinkResult } from '../apis/item/itemService.type'
 import { NewCeleb } from '../components/SelectCeleb/SelectCeleb'
 
 export interface ICeleb {
@@ -25,10 +25,6 @@ interface Brand {
   brandImgUrl?: string
 }
 
-interface ILink {
-  itemLinkUrl: string
-  linkName: string
-}
 export interface IHashTag {
   hashtagId: number
   hashtagContent: string
@@ -47,7 +43,7 @@ export interface IItemInfo {
   color?: string | null
   additionalInfo: string | null
   hashTagList: Array<IHashTag> | null
-  linkList: Array<ILink> | null
+  linkList: Array<LinkResult> | null
   infoSource: string | null
   newCeleb?: ICeleb | null
   newBrand?: IBrand | null
@@ -149,7 +145,7 @@ export const createItemSourceState = atom<string | null>({
   default: null,
 })
 
-export const createItemLinkState = atom<ILink[] | null>({
+export const createItemLinkState = atom<LinkResult[] | null>({
   key: atomKeys.createItemLinkState,
   default: null,
 })

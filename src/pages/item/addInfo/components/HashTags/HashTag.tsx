@@ -21,25 +21,11 @@ const HashtagInput: React.FC<HashtagInputProps> = ({ placeholder }) => {
     postHashtag: { mutate: mutateByPostHashtag },
   } = useItemHashtagQuery()
 
-  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
   const [hashTags, setHashtags] = useRecoilState(hashTagState)
   const [currentTag, setCurrentTag] = useState<string>('')
   const [isFocused, setIsFocused] = useState<boolean>(false)
 
   const tagInputRef = useRef<HTMLInputElement>(null)
-
-  useEffect(() => {
-    // 초기 설정
-    if (itemInfo.hashTagList) {
-      setHashtags([...itemInfo.hashTagList])
-    }
-  }, [])
-
-  useEffect(() => {
-    if (itemInfo.hashTagList) {
-      setItemInfo({ ...itemInfo, hashTagList: hashTags })
-    }
-  }, [hashTags])
 
   useEffect(() => {
     const handleBackspace = (event: KeyboardEvent) => {
