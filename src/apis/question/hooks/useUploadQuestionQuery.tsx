@@ -17,10 +17,9 @@ const useUploadQuestionQuery = () => {
   const postFindRequest = useMutation((item: CommunityItem) => question.postFindRequest(item), {
     onSuccess: (res) => {
       if (res?.id) {
-        //
         resetCommunityItem()
         resetImageItemList()
-        queryClient.invalidateQueries(queryKeys.questionDetail(res.id))
+        queryClient.invalidateQueries()
         navigate(`/community/detail/${res.id}`)
       }
     },
@@ -31,6 +30,7 @@ const useUploadQuestionQuery = () => {
       if (res?.id) {
         resetCommunityItem()
         resetImageItemList()
+        queryClient.invalidateQueries()
         navigate(`/community/detail/${res.id}`)
       }
     },
@@ -41,9 +41,9 @@ const useUploadQuestionQuery = () => {
     {
       onSuccess: (res) => {
         if (res?.id) {
-          queryClient.invalidateQueries(queryKeys.getQuestionHowAboutList())
           resetCommunityItem()
           resetImageItemList()
+          queryClient.invalidateQueries()
           navigate(`/community/detail/${res.id}`)
         }
       },
@@ -55,9 +55,9 @@ const useUploadQuestionQuery = () => {
     {
       onSuccess: (res) => {
         if (res?.id) {
-          queryClient.invalidateQueries(queryKeys.getQuestionRecommendList())
           resetCommunityItem()
           resetImageItemList()
+          queryClient.invalidateQueries()
           navigate(`/community/detail/${res.id}`)
         }
       },

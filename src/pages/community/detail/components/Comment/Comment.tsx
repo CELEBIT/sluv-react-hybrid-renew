@@ -215,7 +215,10 @@ const Comment = ({ questionId, comment }: CommentProps) => {
             } else if ('item' in each) {
               // 각 요소가 Item인지 확인
               return (
-                <Item key={each.item.imgUrl}>
+                <Item
+                  key={each.item.imgUrl}
+                  onClick={() => navigate(`/item/detail/${each.item.itemId}`)}
+                >
                   <Img imgUrl={each.item.imgUrl}>
                     {each.item.scrapStatus ? (
                       <StorageOn className='represent'></StorageOn>

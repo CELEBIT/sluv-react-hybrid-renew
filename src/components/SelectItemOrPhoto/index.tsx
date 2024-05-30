@@ -29,21 +29,16 @@ import {
   imgItemListState,
   secondItemState,
 } from '../../recoil/communityInfo'
-import RecentSelectCeleb from '../BottomSheetModal/ItemCelebModal/RecentSelectCeleb'
-import useRecentCelebQuery from '../../apis/celeb/hooks/useRecentCelebQuery'
 import RecentSelectItem from './RecentSearchItem'
 import HotSearchItem from './HotSearchItem'
 import SearchResult, { itemNameSearchState } from './SearchResult'
-import { brandNameSearchState } from '../BottomSheetModal/ItemBrandSelectModal/ItemBrandSelectModal'
 import { useNavigate } from 'react-router-dom'
 import { atomKeys } from '../../config/atomKeys'
 import { communityMenuState } from '../Header/CommunityHeader/CommunityHeader'
-import useSearchQuery from '../../apis/search/hooks/useSearchQuery'
 import { useDebounce } from 'use-debounce'
 import KeywordPreview from './KeywordPreview/KeywordPreview'
 import useRecentSearchQuery from '../../apis/search/hooks/useRecentSearchQuery'
 import { convertToFile, convertToImageList, openGallery } from '../../utils/utility'
-import HotItem from './HotItem'
 
 export const maxItemPhotoCountState = atom<number>({
   key: atomKeys.maxItemPhotoCount,
@@ -149,8 +144,6 @@ const SelectItemOrPhoto = () => {
     }
   }, [])
 
-  // api file upload용
-  const [selectedFileList, setSelectedFileList] = useState<File[]>([])
   // display
   const [imgItemList, setImageItemList] = useRecoilState(imgItemListState)
   const [firstItem, setFirstItem] = useRecoilState(firstItemState)
@@ -160,7 +153,6 @@ const SelectItemOrPhoto = () => {
   const onChangeImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileArr = e.target.files
     if (fileArr) {
-      setSelectedFileList((pre) => [...pre, ...Array.from(fileArr)])
       for (let i = 0; i < fileArr.length; i++) {
         const file = fileArr[i]
         const reader = new FileReader()
@@ -218,9 +210,7 @@ const SelectItemOrPhoto = () => {
     }
   }
   const onNativeImgUpload = (fileArr: File[]) => {
-    console.log('Native에서 받은 fileArr', fileArr)
     if (fileArr) {
-      setSelectedFileList((pre) => [...pre, ...Array.from(fileArr)])
       for (let i = 0; i < fileArr.length; i++) {
         const file = fileArr[i]
         if (imgItemList.length + i + 1 <= maxItemPhotoCount) {
