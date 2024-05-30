@@ -9,16 +9,12 @@ import { ReactComponent as DeleteList } from '../../../../../assets/delete_list_
 
 import { ErrorText } from '../../../../../components/TextField/DefaultTextfield/styles'
 import { atomKeys } from '../../../../../config/atomKeys'
+import { LinkResult } from '../../../../../apis/item/itemService.type'
 
-export const linksState = atom<Link[]>({
+export const linksState = atom<LinkResult[]>({
   key: atomKeys.linksState,
   default: [{ linkName: '', itemLinkUrl: '' }],
 })
-
-export interface Link {
-  linkName: string
-  itemLinkUrl: string
-}
 
 interface LinkInputProps {
   hasError: boolean
@@ -51,11 +47,12 @@ const LinkInput = ({ hasError }: LinkInputProps) => {
   const handleRemoveData = () => {
     setLinks([{ linkName: '', itemLinkUrl: '' }])
   }
-  const handleLinkChange = (index: number, field: keyof Link, value: string) => {
+  const handleLinkChange = (index: number, field: keyof LinkResult, value: string) => {
     setLinks((prevLinks) => {
       const updatedLinks = [...prevLinks]
       const updatedLink = { ...updatedLinks[index], [field]: value }
       updatedLinks[index] = updatedLink
+      console.log(updatedLinks[index])
       return updatedLinks
     })
   }
