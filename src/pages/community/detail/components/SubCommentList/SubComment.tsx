@@ -191,7 +191,8 @@ const SubComment = ({ subcomment, comment, questionId }: SubCommentProps) => {
           <span
             onClick={
               location.pathname.includes('detail')
-                ? () => navigate('/community/comment/subcomment', { state: { comment } })
+                ? () =>
+                    navigate('/community/comment/subcomment', { state: { comment, questionId } })
                 : undefined
             }
           >

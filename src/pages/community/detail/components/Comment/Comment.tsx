@@ -61,8 +61,6 @@ const Comment = ({ questionId, comment }: CommentProps) => {
   const setCommentObject = useSetRecoilState(commentState)
   const setEditReportItemState = useSetRecoilState(RequestEditItemState)
   const setImageItemList = useSetRecoilState(imgItemListState)
-  // GPT 여기에 작성해줘
-  //
 
   function convertToUTC(dateString: string): string {
     const date = new Date(dateString)
