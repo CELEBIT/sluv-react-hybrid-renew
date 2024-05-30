@@ -40,7 +40,7 @@ import { ReactComponent as SubCommentArrow } from '../../../../../assets/arrow_c
 import useSearchSubCommentQuery from '../../../../../apis/comment/hooks/useSearchSubCommentQuery'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Dim } from '../../../../../components/UserImage/UserImage'
-import { useSetRecoilState } from 'recoil'
+import { useResetRecoilState, useSetRecoilState } from 'recoil'
 import { commentState } from '../../CommunityDetail'
 import { RequestEditItemState } from '../../../../item/editRequest'
 import { imgItemListState } from '../../../../../recoil/communityInfo'
@@ -71,6 +71,7 @@ const SubComment = ({ subcomment, comment, questionId }: SubCommentProps) => {
   }
 
   const setCommentObject = useSetRecoilState(commentState)
+  const resetCommentObject = useResetRecoilState(commentState)
   const setEditReportItemState = useSetRecoilState(RequestEditItemState)
   const setImageItemList = useSetRecoilState(imgItemListState)
 
@@ -127,7 +128,11 @@ const SubComment = ({ subcomment, comment, questionId }: SubCommentProps) => {
 
     setImageItemList(transformedItems)
     if (subcomment.hasMine) {
-      openModal(modals.SubCommentEditModal, { commentId: subcomment.id, questionId })
+      openModal(modals.SubCommentEditModal, {
+        commentId: subcomment.id,
+        questionId,
+        callbackFunc: () => resetCommentObject(),
+      })
     } else {
       setEditReportItemState({
         itemId: Number(subcomment.id),
@@ -135,7 +140,7 @@ const SubComment = ({ subcomment, comment, questionId }: SubCommentProps) => {
         itemWriterName: subcomment.user.nickName,
         questionId: questionId,
       })
-      openModal(modals.CommentReportModal)
+      openModal(modals.CommentReportModal, { callbackFunc: () => resetCommentObject() })
     }
   }
 
