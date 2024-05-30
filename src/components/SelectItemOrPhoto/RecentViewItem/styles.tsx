@@ -13,12 +13,11 @@ export const RecentViewItemContainer = styled.div`
 export const ListWrapper = styled.div`
   display: grid;
   justify-items: center;
-  flex-grow: none;
   grid-template-columns: 1fr 1fr 1fr;
   grid-auto-rows: minmax(0, auto);
   row-gap: 1.5rem;
   column-gap: 0.625rem;
-  padding-bottom: 1.25rem;
+  padding-bottom: 1.875rem;
 
   > div {
     text-overflow: ellipsis;

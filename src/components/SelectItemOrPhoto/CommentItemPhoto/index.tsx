@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useRecoilState, useResetRecoilState } from 'recoil'
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { commentState } from '../../../pages/community/detail/CommunityDetail'
 import { finalSearchState, maxItemPhotoCountState } from '..'
 import { IselectedItem, imgItemListState } from '../../../recoil/communityInfo'
@@ -29,11 +29,12 @@ import KeywordPreviewContainer from '../../../pages/search/components/KeywordPre
 import { useDebounce } from 'use-debounce'
 import KeywordPreview from '../KeywordPreview/KeywordPreview'
 import { convertToFile, convertToImageList, openGallery } from '../../../utils/utility'
+import useRecentSearchQuery from '../../../apis/search/hooks/useRecentSearchQuery'
 
 const CommentItemPhoto = () => {
   const navigate = useNavigate()
   const location = useLocation()
-  const [commentObject, setCommentObject] = useRecoilState(commentState)
+  const setCommentObject = useSetRecoilState(commentState)
   const [maxItemPhotoCount, setMaxItemPhotoCount] = useRecoilState(maxItemPhotoCountState)
   const [imgItemList, setImgItemList] = useRecoilState(imgItemListState)
   const resetImgItemList = useResetRecoilState(imgItemListState)
@@ -46,24 +47,18 @@ const CommentItemPhoto = () => {
   const [debouncedItemName] = useDebounce(searchValue, 500)
 
   const [selectedTab, setSelectedTab] = useState('recent')
-  const [isFocused, setIsFocused] = useState<boolean>(false)
   const imgInput = useRef<HTMLInputElement>(null)
   // api file upload용
-  const [selectedFileList, setSelectedFileList] = useState<File[]>([])
 
   // API나오면 recent search로 수정
   const {
-    getRecentCeleb: { data },
-  } = useRecentCelebQuery()
+    getRecentSearch: { data },
+  } = useRecentSearchQuery()
 
   const tabList = [
     { id: 'recent', tabName: '최근 본 아이템' },
     { id: 'myUpload', tabName: '내 게시글' },
   ]
-
-  const handleBlur = () => {
-    setIsFocused(false)
-  }
 
   const onBackClick = () => {
     if (onSearch) {
@@ -124,7 +119,6 @@ const CommentItemPhoto = () => {
   const onChangeImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileArr = e.target.files
     if (fileArr) {
-      setSelectedFileList((pre) => [...pre, ...Array.from(fileArr)])
       for (let i = 0; i < fileArr.length; i++) {
         const file = fileArr[i]
         const reader = new FileReader()
@@ -164,7 +158,6 @@ const CommentItemPhoto = () => {
   const onNativeImgUpload = (fileArr: File[]) => {
     console.log('fileArr in onNativeImgUpload', fileArr)
     if (fileArr) {
-      setSelectedFileList((pre) => [...pre, ...Array.from(fileArr)])
       for (let i = 0; i < fileArr.length; i++) {
         const file = fileArr[i]
         if (imgItemList.length + i + 1 <= maxItemPhotoCount) {
@@ -217,6 +210,7 @@ const CommentItemPhoto = () => {
           <SearchTextfield
             value={searchValue}
             setValue={setSearchValue}
+            onEnter={() => setFinalValue(searchValue)}
             placeholder='셀럽/아이템을 검색해주세요'
           ></SearchTextfield>
         </ComponentWrapper>
