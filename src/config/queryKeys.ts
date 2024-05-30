@@ -33,8 +33,9 @@ export const queryKeys = {
   otherUserClosetList: (userId: number) => ['otherUserClosetList', userId] as const,
   searchItem: (keyword: string) => ['searchItem', keyword] as const,
   questionDetail: (questionId: number) => ['questionDetail', questionId] as const,
-  comment: (questionId: number) => ['comment', questionId] as const,
-  subcomment: (commentId: number, size?: number) => ['subcomment', commentId, size] as const,
+  comment: (questionId: number) => ['comment', 'questionDetail', questionId] as const,
+  subcomment: (commentId: number, size?: number) =>
+    ['subcomment', 'questionDetail', 'comment', commentId, size] as const,
   recommendWait: (questionId: number) => ['recommendWait', questionId] as const,
   howAboutWait: (questionId: number) => ['howAboutWait', questionId] as const,
   findWait: (questionId: number) => ['findWait', questionId] as const,
