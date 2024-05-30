@@ -16,16 +16,10 @@ import {
 import { ReactComponent as Error } from '../../../assets/error_20.svg'
 import { ReactComponent as LinkAddOff } from '../../../assets/link_add_off_20.svg'
 import { ReactComponent as InfoAddOff } from '../../../assets/info_add_off_20.svg'
-import { ReactComponent as StorageOff } from '../../../assets/storage_off_20.svg'
 import { ReactComponent as LinkAddOn } from '../../../assets/link_add_on_20.svg'
 import { ReactComponent as InfoAddOn } from '../../../assets/info_add_on_20.svg'
-import { ReactComponent as StorageOn } from '../../../assets/storage_on_20.svg'
 import { HeaderWrapper } from '../addInfo/styles'
 import { ErrorText } from '../../../components/TextField/DefaultTextfield/styles'
-import {
-  parentCategoryState,
-  subCategoryState,
-} from '../../../components/BottomSheetModal/ItemCategoryModal'
 import ImageField from '../create/components/ImageField/ImageField'
 import {
   IHashTag,
@@ -45,7 +39,12 @@ import {
 } from '../../../recoil/itemInfo'
 import useModals from '../../../components/Modals/hooks/useModals'
 import useItemQuery from '../../../apis/item/hooks/useItemQuery'
-import { HashTagResult, ImgResult, TempItemReq } from '../../../apis/item/itemService.type'
+import {
+  HashTagResult,
+  ImgResult,
+  LinkResult,
+  TempItemReq,
+} from '../../../apis/item/itemService.type'
 import useItemDetailQuery from '../../../apis/item/hooks/useItemDetailQuery'
 import { Image, imgListState } from '../../../components/AddPhotos/AddPhotos'
 import { selectedCelebState } from '../../../components/SelectCeleb/SelectCeleb'
@@ -55,6 +54,7 @@ import ButtonMedium from '../../../components/ButtonMedium/ButtonMedium'
 import { CelebWrapper } from './styles'
 import { hashTagState } from '../addInfo/components/HashTags/HashTag'
 import useItemImgUpload from '../../../apis/s3/hooks/useItemImgUpload'
+import { linksState } from '../addLink/components/LinkInput/LinkInput'
 
 const ItemEdit = () => {
   const navigate = useNavigate()
@@ -93,6 +93,7 @@ const ItemEdit = () => {
   const [source, setSource] = useRecoilState(createItemSourceState)
   // 구매링크
   const [linkList, setLinkList] = useRecoilState(createItemLinkState)
+  const [links, setLinks] = useRecoilState(linksState)
 
   useEffect(() => {
     if (data) {
@@ -148,20 +149,29 @@ const ItemEdit = () => {
       )
       setItemName(data.itemName ?? data.itemName)
       setPrice(data.price ?? data.price)
-      setAdditionalInfo(data.additionalInfo ?? data.additionalInfo)
-      setLinkList(data.linkList ?? data.linkList)
-      setSource(data.infoSource)
+      if (!additionalInfo) {
+        setAdditionalInfo(data.additionalInfo)
+      }
+
+      if (!linkList) {
+        setLinkList(data.linkList)
+      }
+      if (!source) {
+        setSource(data.infoSource ?? null)
+      }
       // 해시태그 설정
-      const hashtags: Array<IHashTag> = []
+      const convertedHashtags: Array<IHashTag> = []
       data.hashTagList &&
         data.hashTagList.length > 0 &&
         data.hashTagList.map((item) => {
-          hashtags.push({
+          convertedHashtags.push({
             hashtagId: item.hashtagId,
             hashtagContent: item.hashtagContent,
           })
         })
-      setHashTags(hashtags ?? null)
+      if (hashTags.length === 0) {
+        setHashTags(convertedHashtags ?? null)
+      }
     }
   }, [data])
 
@@ -352,7 +362,7 @@ const ItemEdit = () => {
 
             <span>추가 정보</span>
           </div>
-          <div className='button' onClick={() => navigate('/item/create/addlink')}>
+          <div className='button' onClick={() => navigate('/item/edit/addlink')}>
             {linkList && linkList.length > 0 ? <LinkAddOn></LinkAddOn> : <LinkAddOff></LinkAddOff>}
             <span>구매 링크</span>
           </div>
