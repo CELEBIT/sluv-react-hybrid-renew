@@ -17,6 +17,7 @@ const BannerItemsList = ({ data }: BannerItemsListProps) => {
   // const { getQuestionHotList } = useQuestionListQuery()
   // const { data } = getQuestionHotList()
   const navigate = useNavigate()
+  console.log(data)
   return (
     <BannerItemsListContainer>
       {data &&
@@ -32,7 +33,7 @@ const BannerItemsList = ({ data }: BannerItemsListProps) => {
                 <BannerItem
                   key={item.id + item.content}
                   qtype={item.qtype}
-                  imgUrl={item.imgList?.at(0)?.imgUrl ?? ''}
+                  imgUrl={sortedList.at(0)?.imgUrl ?? ''}
                   title={item.title}
                   userImgUrl={item.user.profileImgUrl}
                   userName={item.user.nickName}
