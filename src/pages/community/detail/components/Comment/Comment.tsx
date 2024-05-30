@@ -42,7 +42,7 @@ import {
 } from '../../../../../apis/comment/commentService.type'
 import useModals from '../../../../../components/Modals/hooks/useModals'
 import { modals } from '../../../../../components/Modals'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { commentState } from '../../CommunityDetail'
 import { Dim } from '../../../../../components/UserImage/UserImage'
 import { imgItemListState } from '../../../../../recoil/communityInfo'
@@ -59,6 +59,7 @@ const Comment = ({ questionId, comment }: CommentProps) => {
   const location = useLocation()
   const { openModal } = useModals()
   const setCommentObject = useSetRecoilState(commentState)
+  const resetCommentObject = useResetRecoilState(commentState)
   const setEditReportItemState = useSetRecoilState(RequestEditItemState)
   const setImageItemList = useSetRecoilState(imgItemListState)
 
@@ -144,7 +145,11 @@ const Comment = ({ questionId, comment }: CommentProps) => {
 
     setImageItemList(transformedItems)
     if (comment.hasMine) {
-      openModal(modals.CommentEditModal, { commentId: comment.id, questionId })
+      openModal(modals.CommentEditModal, {
+        commentId: comment.id,
+        questionId,
+        callbackFunc: () => resetCommentObject(),
+      })
     } else {
       setEditReportItemState({
         itemId: Number(comment.id),
@@ -152,7 +157,7 @@ const Comment = ({ questionId, comment }: CommentProps) => {
         itemWriterName: comment.user.nickName,
         questionId: questionId,
       })
-      openModal(modals.CommentReportModal)
+      openModal(modals.CommentReportModal, { callbackFunc: () => resetCommentObject() })
     }
   }
 

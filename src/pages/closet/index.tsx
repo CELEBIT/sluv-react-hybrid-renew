@@ -23,7 +23,7 @@ const Closet = () => {
   return (
     <S.Root>
       <S.HeaderContainer>
-        <Header isModalHeader={false} title={'옷장'} hasArrow>
+        <Header isModalHeader={false} title={'옷장'} hasArrow={false}>
           <SearchIcon onClick={() => navigate('/search')} />
         </Header>
         <SubHeader
