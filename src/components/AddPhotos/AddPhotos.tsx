@@ -32,7 +32,7 @@ const AddPhotos = () => {
     const temp: Image[] = []
     for (let i = 0; i < imgFileList.length; i++) {
       temp.push({
-        representFlag: i == 0 ? true : false,
+        representFlag: imgList.length === 0 && i == 0 ? true : false,
         imgFile: imgFileList[i],
         imgFileUrl: URL.createObjectURL(imgFileList[i]),
       })
