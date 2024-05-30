@@ -91,7 +91,7 @@ const User = () => {
     return (
       <PageContainer>
         <HeaderWrapper>
-          <Header isModalHeader={false} hasArrow={true} title='마이페이지'>
+          <Header isModalHeader={false} hasArrow={false} title='마이페이지'>
             <div className='headerRight'>
               <Setting onClick={() => navigate('/settings')} />
               {/* <Upload stroke={Common.colors.BK}></Upload> */}
