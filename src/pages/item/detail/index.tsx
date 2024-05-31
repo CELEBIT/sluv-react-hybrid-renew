@@ -291,8 +291,8 @@ const ItemDetail = () => {
               </Category>
               <ItemName>{data?.itemName}</ItemName>
               <Brand>
-                <BrandLogo size={32} url={data?.brand.brandImgUrl} />
-                <span>{data?.brand.brandKr}</span>
+                <BrandLogo size={32} url={data?.brand ? data.brand.brandImgUrl : ''} />
+                <span>{data?.brand ? data?.brand.brandKr : data?.newBrandName}</span>
                 {/* <Arrow></Arrow> */}
               </Brand>
             </ItemInfo>
