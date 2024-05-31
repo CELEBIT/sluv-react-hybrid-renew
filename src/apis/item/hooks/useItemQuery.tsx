@@ -63,7 +63,7 @@ const useItemQuery = () => {
       console.log(res)
       if (res?.itemId) {
         queryClient.invalidateQueries()
-        navigate(`/item/detail/${res.itemId}`)
+        navigate(`/item/detail/${res.itemId}`, { replace: true })
         resetS3ImgList()
         resetImgListState()
         resetCelebInfoInItem()

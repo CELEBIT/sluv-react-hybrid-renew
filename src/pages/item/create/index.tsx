@@ -58,7 +58,7 @@ import { hashTagState } from '../addInfo/components/HashTags/HashTag'
 import useItemImgUpload from '../../../apis/s3/hooks/useItemImgUpload'
 import { checkListState } from '../temporary-storage'
 
-const ItemCreateCopy = () => {
+const ItemCreate = () => {
   useUploadStateObserver()
 
   const navigate = useNavigate()
@@ -182,7 +182,7 @@ const ItemCreateCopy = () => {
       itemName &&
       price
     ) {
-      mutateByImgUpload(imgList)
+      await mutateByImgUpload(imgList)
     }
   }
 
@@ -303,4 +303,4 @@ const ItemCreateCopy = () => {
   )
 }
 
-export default ItemCreateCopy
+export default ItemCreate
