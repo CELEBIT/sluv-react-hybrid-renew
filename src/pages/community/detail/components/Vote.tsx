@@ -13,17 +13,21 @@ interface VoteProps {
   voteList: Array<Img | Item>
   voteStatus: number
   voteEndTime: Date
+  isMine: boolean
 }
 const isImg = (item: Img | Item): item is Img => {
   return 'imgUrl' in item
 }
-const Vote = ({ voteList, voteStatus, questionId, voteEndTime }: VoteProps) => {
+const Vote = ({ voteList, voteStatus, questionId, voteEndTime, isMine }: VoteProps) => {
   const {
     voteItem: { mutate: mutateByVote },
   } = useQuestionDetailQuery()
   const onClickVote = (questionId: number, voteSortOrder: number) => {
-    if (new Date(voteEndTime) < new Date()) alert('투표가 종료되었어요.')
-    else mutateByVote({ questionId, voteSortOrder })
+    if (isMine) alert('내가 만든 투표는 참여할 수 없어요.')
+    else {
+      if (new Date(voteEndTime) < new Date()) alert('투표가 종료되었어요.')
+      else mutateByVote({ questionId, voteSortOrder })
+    }
   }
 
   return (
@@ -37,7 +41,8 @@ const Vote = ({ voteList, voteStatus, questionId, voteEndTime }: VoteProps) => {
               <>
                 <VotePhoto imgUrl={each.imgUrl} />
                 {voteStatus !== null ||
-                getRemainingTime(voteEndTime.toDateString()) === '투표 종료' ? (
+                getRemainingTime(voteEndTime.toDateString()) === '투표 종료' ||
+                isMine === true ? (
                   <VoteInfo onClick={() => onClickVote(questionId, each.sortOrder)}>
                     <PercentageIndicator
                       percent={each.votePercent}
@@ -72,7 +77,8 @@ const Vote = ({ voteList, voteStatus, questionId, voteEndTime }: VoteProps) => {
                 </VotePhoto>
 
                 {voteStatus !== null ||
-                getRemainingTime(voteEndTime.toDateString()) === '투표 종료' ? (
+                getRemainingTime(voteEndTime.toDateString()) === '투표 종료' ||
+                isMine === true ? (
                   <VoteInfo onClick={() => onClickVote(questionId, each.sortOrder)}>
                     <PercentageIndicator
                       percent={each.votePercent}
