@@ -17,9 +17,9 @@ const useUserMypageQuery = () => {
   const user = new UserService()
   const queryClient = useQueryClient()
 
-  const getMypageInfo = useQuery(queryKeys.getMypageInfo, () => user.getUserMypageInfo())
+  const getMypageInfo = () => useQuery(queryKeys.getMypageInfo, () => user.getUserMypageInfo())
 
-  const getIdInfo = useQuery(queryKeys.getIdInfo, () => user.getIdInfo())
+  const getIdInfo = () => useQuery(queryKeys.getIdInfo, () => user.getIdInfo())
 
   const getOtherUserMypageInfo = (userId: number) => {
     return useQuery(queryKeys.getOtherUserMypageInfo(userId), () =>
