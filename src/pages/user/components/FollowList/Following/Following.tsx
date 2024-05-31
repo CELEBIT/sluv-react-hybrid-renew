@@ -46,16 +46,21 @@ const Following = () => {
                     <UserImage imgUrl={user.profileImgUrl} size={40}></UserImage>
                     {user.nickName}
                   </UserInfo>
-                  <ButtonSmall
-                    text={user.followStatus ? '팔로잉' : '팔로우'}
-                    type='pri'
-                    icon={user.followStatus ? true : false}
-                    iconName='check'
-                    active={user.followStatus ? false : true}
-                    onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
-                      onClickFollow(event, user.id)
-                    }
-                  ></ButtonSmall>
+                  {!user.isMine && (
+                    <ButtonSmall
+                      text={user.followStatus ? '팔로잉' : '팔로우'}
+                      type='pri'
+                      icon={user.followStatus ? true : false}
+                      iconName='check'
+                      active={user.followStatus ? false : true}
+                      onClick={
+                        !user.isMine
+                          ? (event: React.MouseEvent<HTMLButtonElement>) =>
+                              onClickFollow(event, user.id)
+                          : null
+                      }
+                    ></ButtonSmall>
+                  )}
                 </FollowRow>
               )
             }),
