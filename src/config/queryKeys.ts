@@ -34,6 +34,7 @@ export const queryKeys = {
   searchItem: (keyword: string) => ['searchItem', keyword] as const,
   questionDetail: (questionId: number) => ['questionDetail', questionId] as const,
   comment: (questionId: number) => ['comment', 'questionDetail', questionId] as const,
+  commentDetail: (commentId: number) => [commentId] as const,
   subcomment: (commentId: number, size?: number) =>
     ['subcomment', 'questionDetail', 'comment', commentId, size] as const,
   recommendWait: (questionId: number) => ['recommendWait', questionId] as const,
