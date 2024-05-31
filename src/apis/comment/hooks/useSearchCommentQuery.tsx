@@ -27,8 +27,11 @@ const useSearchCommentQuery = () => {
   const comment = new CommentService()
   const queryClient = useQueryClient()
 
-  const getComment = (questionId: number) => {
-    return useQuery(queryKeys.comment(questionId), () => comment.getComment(questionId))
+  const getCommentList = (questionId: number) => {
+    return useQuery(queryKeys.comment(questionId), () => comment.getCommentList(questionId))
+  }
+  const getComment = (commentId: number) => {
+    return useQuery(queryKeys.commentDetail(commentId), () => comment.getComment(commentId))
   }
 
   const addComment = useMutation(
@@ -68,7 +71,7 @@ const useSearchCommentQuery = () => {
     },
   )
 
-  return { getComment, addComment, editComment, likeComment, deleteComment }
+  return { getCommentList, getComment, addComment, editComment, likeComment, deleteComment }
 }
 
 export default useSearchCommentQuery

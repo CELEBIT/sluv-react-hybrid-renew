@@ -245,6 +245,7 @@ const CommunityDetail = () => {
                   voteStatus={data.voteStatus}
                   questionId={Number(questionId)}
                   voteEndTime={new Date(data.voteEndTime)}
+                  isMine={data.hasMine}
                 ></Vote>
               ) : (
                 <DisplayPhotoItems
