@@ -97,9 +97,8 @@ function Profile({ onNext }: { onNext?: (profile: SignupValues['profile']) => vo
     }
   }
 
-  const {
-    getMypageInfo: { data },
-  } = useUserMypageQuery()
+  const { getMypageInfo } = useUserMypageQuery()
+  const { data } = getMypageInfo()
   const [currentNickname, setcurrentNickname] = useState(data?.userInfo.nickName ?? '')
   const [currentImg, setcurrentImg] = useState(data?.userInfo.profileImgUrl ?? '')
   useEffect(() => {

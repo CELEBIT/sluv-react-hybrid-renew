@@ -20,7 +20,7 @@ const Settings = () => {
 
   const { getMarketingAgreeStatus, getIdInfo } = useUserMypageQuery()
   const { data } = getMarketingAgreeStatus
-  const { data: idInfoData } = getIdInfo
+  const { data: idInfoData } = getIdInfo()
 
   const {
     termsAgree: { mutate },
