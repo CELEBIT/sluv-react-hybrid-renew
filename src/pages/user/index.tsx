@@ -85,9 +85,9 @@ const User = () => {
       </PageContainer>
     )
   } else {
-    const {
-      getMypageInfo: { data },
-    } = useUserMypageQuery()
+    const { getMypageInfo } = useUserMypageQuery()
+    const { data } = getMypageInfo()
+
     return (
       <PageContainer>
         <HeaderWrapper>

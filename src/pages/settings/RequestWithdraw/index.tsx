@@ -38,9 +38,8 @@ export const WithdrawDisplayState = atom<reasonList>({
 })
 const RequestWithdraw = () => {
   const [confirmAgreement, setConfirmAgreement] = useState(false)
-  const {
-    getMypageInfo: { data },
-  } = useUserMypageQuery()
+  const { getMypageInfo } = useUserMypageQuery()
+  const { data } = getMypageInfo()
   const navigate = useNavigate()
 
   // API 용

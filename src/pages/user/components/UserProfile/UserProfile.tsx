@@ -73,10 +73,8 @@ const UserProfile = () => {
   }
   if (!id) {
     // 현재 유저의 마이페이지
-    const {
-      getMypageInfo: { data },
-      editProfileImage: { mutate },
-    } = useUserMypageQuery()
+    const { getMypageInfo } = useUserMypageQuery()
+    const { data } = getMypageInfo()
 
     const { openModal } = useModals()
     const onAddNewProfileImg = () => {
