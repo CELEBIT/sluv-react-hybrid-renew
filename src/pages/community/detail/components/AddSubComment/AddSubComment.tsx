@@ -68,7 +68,7 @@ const AddSubComment = () => {
       <HeaderWrapper>
         <Header isModalHeader={false} hasArrow={true} title='답글 달기'></Header>
       </HeaderWrapper>
-      <Comment questionId={Number(questionId)} comment={comment}></Comment>
+      <Comment questionId={Number(questionId)} commentId={comment.id}></Comment>
       <CommentContainer>
         {isFocused && (
           <RecommendChipWrapper>

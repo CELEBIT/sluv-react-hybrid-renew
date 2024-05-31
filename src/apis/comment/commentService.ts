@@ -10,7 +10,7 @@ export default class CommentService {
   }
 
   // 질문 게시글 댓글 조회
-  async getComment(questionId: number) {
+  async getCommentList(questionId: number) {
     const data: ResponseType<GetPaginationResult<CommentResult>> = await request.get(
       `${this.commentUrl}/${questionId}`,
       {
@@ -21,6 +21,14 @@ export default class CommentService {
       },
     )
     return data.result?.content
+  }
+
+  // 댓글 단건 조회
+  async getComment(commentId: number) {
+    const data: ResponseType<CommentResult> = await request.get(
+      `${this.commentUrl}/detail/${commentId}`,
+    )
+    return data.result
   }
 
   // 댓글 등록
