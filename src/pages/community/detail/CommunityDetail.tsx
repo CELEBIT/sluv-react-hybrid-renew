@@ -213,7 +213,11 @@ const CommunityDetail = () => {
               )}
               {data?.qtype === 'Find' && <Badge color='gray'>{data.celeb.celebName}</Badge>}
             </InfoChip>
-            <UserWrapper>
+            <UserWrapper
+              onClick={
+                data?.hasMine ? () => navigate('/user') : () => navigate(`/user/${data?.user.id}`)
+              }
+            >
               {data?.user.profileImgUrl ? (
                 <ProfileImg url={data?.user.profileImgUrl}></ProfileImg>
               ) : (
