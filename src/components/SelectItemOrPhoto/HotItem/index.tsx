@@ -96,7 +96,7 @@ const HotItem = () => {
   const { data } = getRecommendHotItem()
 
   const { getMypageInfo } = useUserMypageQuery()
-  const nickname = getMypageInfo.data?.userInfo.nickName
+  const nickname = getMypageInfo().data?.userInfo.nickName
 
   return (
     <HotItemListWrapper>

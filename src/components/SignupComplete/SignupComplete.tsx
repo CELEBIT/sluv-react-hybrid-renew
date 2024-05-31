@@ -10,9 +10,8 @@ import styled from '@emotion/styled'
 import { Common, Pretendard } from '../styles'
 
 function SignupComplete({ onNext }: { onNext: () => void }) {
-  const {
-    getMypageInfo: { data },
-  } = useUserMypageQuery()
+  const { getMypageInfo } = useUserMypageQuery()
+  const { data } = getMypageInfo()
   return (
     <Flex direction='column'>
       <Flex direction='column' justify='center' align='center'>
