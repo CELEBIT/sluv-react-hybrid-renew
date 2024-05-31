@@ -38,13 +38,13 @@ interface CommentListProps {
 }
 
 const CommentList = ({ questionId }: CommentListProps) => {
-  const { getComment } = useSearchCommentQuery()
-  const { data } = getComment(questionId)
+  const { getCommentList } = useSearchCommentQuery()
+  const { data } = getCommentList(questionId)
   if (data && data.length > 0) {
     return (
       <CommentContainer>
         {data.map((comment) => {
-          return <Comment key={comment.id} comment={comment} questionId={questionId}></Comment>
+          return <Comment key={comment.id} commentId={comment.id} questionId={questionId}></Comment>
         })}
       </CommentContainer>
     )
