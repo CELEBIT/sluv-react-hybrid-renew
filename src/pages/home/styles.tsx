@@ -3,9 +3,9 @@ import { Common, Pretendard } from '../../components/styles'
 
 export const HomeContainer = styled.div`
   display: flex;
+  position: relative;
   flex-direction: column;
-  margin-left: -1.25rem;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   overflow-x: hidden;
   padding-left: 0;

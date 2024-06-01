@@ -37,7 +37,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   overflow-x: scroll;
-
+  padding: 0 1.25rem;
   ::-webkit-scrollbar {
     display: none;
   }

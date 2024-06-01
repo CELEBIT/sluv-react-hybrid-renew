@@ -12,6 +12,7 @@ import {
   reportUserReasonList,
 } from '../../../config/editReportMenu'
 import { commentState } from '../../community/detail/CommunityDetail'
+import { HeaderWrapper } from '../addInfo/styles'
 
 interface EditRequestItem {
   itemId: number
@@ -85,12 +86,15 @@ const EditRequest = () => {
   }
   return (
     <EditReportContainer>
-      <Header
-        isModalHeader={false}
-        hasArrow={true}
-        title={pageName}
-        backBtnClick={onBackClick}
-      ></Header>
+      <HeaderWrapper>
+        <Header
+          isModalHeader={false}
+          hasArrow={true}
+          title={pageName}
+          backBtnClick={onBackClick}
+        ></Header>
+      </HeaderWrapper>
+
       <ReasonWrapper>
         <Title>{title}</Title>
         <EditReportListWrapper>
