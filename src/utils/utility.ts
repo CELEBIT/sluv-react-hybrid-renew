@@ -32,16 +32,12 @@ export const formatUpdatedAt = (updatedAt: string): string => {
   const now = new Date()
   const savedAt = new Date(updatedAt)
 
-  // Calculate the time difference in milliseconds
   const timeDiff = now.getTime() - savedAt.getTime()
+  const minutesDiff = Math.floor(timeDiff / (1000 * 60))
+  const hoursDiff = Math.floor(timeDiff / (1000 * 60 * 60))
+  const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24))
 
-  // Calculate the time difference in seconds, minutes, hours, and days
-  const secondsDiff = Math.floor(timeDiff / 1000)
-  const minutesDiff = Math.floor(secondsDiff / 60)
-  const hoursDiff = Math.floor(minutesDiff / 60)
-  const daysDiff = Math.floor(hoursDiff / 24)
-
-  if (secondsDiff < 60) {
+  if (minutesDiff < 1) {
     return '방금'
   } else if (minutesDiff < 60) {
     return `${minutesDiff}분 전`
@@ -50,10 +46,10 @@ export const formatUpdatedAt = (updatedAt: string): string => {
   } else if (daysDiff < 7) {
     return `${daysDiff}일 전`
   } else {
-    const year = savedAt.getFullYear() % 100
-    const month = savedAt.getMonth() + 1
-    const day = savedAt.getDate()
-    return `${year}.${month < 10 ? '0' : ''}${month}.${day < 10 ? '0' : ''}${day}`
+    const year = savedAt.getFullYear()
+    const month = (savedAt.getMonth() + 1).toString().padStart(2, '0')
+    const day = savedAt.getDate().toString().padStart(2, '0')
+    return `${year}.${month}.${day}`
   }
 }
 
