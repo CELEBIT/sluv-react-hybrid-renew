@@ -3,22 +3,23 @@ import { Common, Pretendard } from '../../components/styles'
 
 export const CommunityPageContainer = styled.div`
   display: flex;
-  flex-direction: column;
   position: relative;
-  margin-left: -1.25rem;
-  width: 100vw;
-  height: 100%;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: hidden;
   padding-left: 0;
-  padding-bottom: 3.125rem;
   ::-webkit-scrollbar {
     display: none;
   }
+  background-color: white;
+  padding-bottom: 1.5625rem;
 `
 export const QuestionListWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding-bottom: 3.125rem;
   .title {
     padding: 0 1.25rem;
     ${Pretendard({ size: 18, weight: Common.bold.semiBold, color: Common.colors.BK })}

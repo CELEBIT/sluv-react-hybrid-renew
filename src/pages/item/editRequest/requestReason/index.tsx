@@ -13,6 +13,7 @@ import { useLocation } from 'react-router-dom'
 import useItemDetailQuery from '../../../../apis/item/hooks/useItemDetailQuery'
 import useReportUserQuery from '../../../../apis/user/hooks/useReportUserQuery'
 import useQuestionDetailQuery from '../../../../apis/question/hooks/useQuestionDetailQuery'
+import { HeaderWrapper } from '../../addInfo/styles'
 
 const RequestReason = () => {
   const { pathname } = useLocation()
@@ -99,11 +100,13 @@ const RequestReason = () => {
 
   return (
     <EditReportContainer>
-      <Header isModalHeader={false} hasArrow={true} title={title}>
-        <span className='submit' onClick={onSubmit}>
-          완료
-        </span>
-      </Header>
+      <HeaderWrapper>
+        <Header isModalHeader={false} hasArrow={true} title={title}>
+          <span className='submit' onClick={onSubmit}>
+            완료
+          </span>
+        </Header>
+      </HeaderWrapper>
       <ReasonWrapper>
         <Title>{requestDisplay?.displayText}</Title>
         <TextArea

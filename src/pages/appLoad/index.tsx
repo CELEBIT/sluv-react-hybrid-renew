@@ -9,8 +9,8 @@ const AppLoad = () => {
 
   useEffect(() => {
     const token = storage.get(ACCESS_TOKEN)
-    const status = storage.get(UserStatus)
-    if (token && status === 'ACTIVE') {
+    if (!storage.get(UserStatus)) storage.set('userStatus', 'VIEW')
+    if ((token && storage.get(UserStatus) === 'ACTIVE') || storage.get(UserStatus) === 'VIEW') {
       navigate('/home')
     } else {
       navigate('/signup')

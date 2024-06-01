@@ -77,7 +77,7 @@ export const InterestCelebWrapper = styled.div`
   align-items: center;
   position: relative;
   height: 100%;
-  width: 100vw;
+  width: 100%;
 `
 
 export const ChipWrapper = styled.div`

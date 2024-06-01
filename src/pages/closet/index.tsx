@@ -12,6 +12,7 @@ import SubHeader from './components/SubHeader'
 import { ClosetMainSubHeaderEditText } from './components/SubHeader/SubHeaderText'
 import ClosetList from './components/ClosetList'
 import { useNavigate } from 'react-router-dom'
+import { HeaderWrapper } from '../item/addInfo/styles'
 
 const Closet = () => {
   const { data, status } = useQuery({ ...closetQueryConfig.getClosetList() })
@@ -23,17 +24,19 @@ const Closet = () => {
   return (
     <S.Root>
       <S.HeaderContainer>
-        <Header isModalHeader={false} title={'옷장'} hasArrow={false}>
-          <SearchIcon onClick={() => navigate('/search')} />
-        </Header>
-        <SubHeader
-          leftPaneChildren={
-            <S.SubHeaderTitleWrapper>
-              나의 옷장 {data?.result?.closetCount || 0}
-            </S.SubHeaderTitleWrapper>
-          }
-          rightPaneChildren={<ClosetMainSubHeaderEditText />}
-        />
+        <HeaderWrapper>
+          <Header isModalHeader={false} title={'옷장'} hasArrow={false}>
+            <SearchIcon onClick={() => navigate('/search')} />
+          </Header>
+          <SubHeader
+            leftPaneChildren={
+              <S.SubHeaderTitleWrapper>
+                나의 옷장 {data?.result?.closetCount || 0}
+              </S.SubHeaderTitleWrapper>
+            }
+            rightPaneChildren={<ClosetMainSubHeaderEditText />}
+          />
+        </HeaderWrapper>
       </S.HeaderContainer>
       <S.BodyContainer>
         <ClosetList data={data.result.closetList} />

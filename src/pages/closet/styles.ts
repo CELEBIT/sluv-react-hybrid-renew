@@ -2,11 +2,18 @@ import styled from '@emotion/styled'
 
 export const Root = styled.div`
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
-  height: 100%;
+  position: relative;
   flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  padding-left: 0;
+  background-color: white;
+  /* padding-bottom: 3.125rem;/ */
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 export const HeaderContainer = styled.header`
@@ -22,7 +29,8 @@ export const BodyContainer = styled.section`
   height: 100%;
   gap: 0.75rem;
   flex-direction: column;
-  padding-bottom: 4.375rem;
+  padding: 0 1.25rem 4.375rem 1.25rem;
+  /* padding-bottom: 4.375rem; */
   overflow-y: scroll;
   ::-webkit-scrollbar {
     display: none;
