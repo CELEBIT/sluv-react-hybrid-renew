@@ -23,10 +23,9 @@ export const HeaderWrap = styled.div`
 // SearchResult
 export const SearchResultPageStyle = styled.main`
   display: flex;
-  position: relative;
   flex-direction: column;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
   padding-left: 0;

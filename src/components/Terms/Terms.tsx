@@ -43,7 +43,7 @@ function Terms({ onNext }: { onNext: (terms: SignupValues['terms']) => void }) {
   } = useUserMypageQuery()
 
   return (
-    <Flex direction='column'>
+    <Flex direction='column' style={{ padding: '0 1.25rem' }}>
       <Title>
         스럽 서비스 이용약관에 <br />
         동의해주세요
