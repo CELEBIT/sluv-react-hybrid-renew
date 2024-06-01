@@ -2,8 +2,17 @@ import styled from '@emotion/styled'
 import { Common, Pretendard } from '../styles'
 
 export const Dimmer = styled.div`
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
   width: 100%;
-  height: 100vh;
+  height: 100%;
+  z-index: 160;
 `
 
 export const Dimmed = styled.div`
@@ -29,7 +38,7 @@ export const BtnModalContainer = styled.div`
   align-items: center;
   background-color: #fff;
   width: calc(100% - 5.375rem);
-  margin: 0 23px;
+  /* margin: 0 23px; */
   padding: 2rem 1.25rem 1.25rem 1.25rem;
   z-index: 180;
   position: absolute;

@@ -2,10 +2,9 @@ import styled from '@emotion/styled'
 import { Common, Pretendard } from '../../components/styles'
 export const PageContainer = styled.div`
   display: flex;
-  position: relative;
   flex-direction: column;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   overflow-x: hidden;
   padding-left: 0;
   background-color: white;
