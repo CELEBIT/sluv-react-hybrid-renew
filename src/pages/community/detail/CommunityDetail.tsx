@@ -55,6 +55,7 @@ import CommentList from './components/Comment/CommentList'
 import { ReactComponent as Spinner } from '../../../assets/Spinner.svg'
 import Flex from '../../../components/Flex'
 import Share from '../../../utils/Share/share'
+import useUserMypageQuery from '../../../apis/user/hooks/useUserMypageQuery'
 
 export const commentState = atom<NewComment>({
   key: atomKeys.commentState,
@@ -169,6 +170,8 @@ const CommunityDetail = () => {
     if (data) mutateByLike(Number(questionId))
   }
 
+  const { getMypageInfo } = useUserMypageQuery()
+  const { data: currentUser } = getMypageInfo()
   useEffect(() => {
     setCommentObject({ ...commentObject, content: commentString })
   }, [commentString])
@@ -286,7 +289,7 @@ const CommunityDetail = () => {
           {data?.qtype && (
             <RecommendList
               questionId={Number(questionId)}
-              nickName={data?.user.nickName}
+              nickName={currentUser?.userInfo.nickName}
               qType={data?.qtype}
             ></RecommendList>
           )}
