@@ -8,7 +8,7 @@ export const ItemCreatePageStyle = styled.div`
   width: 100%;
   height: 100vh;
   overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-y: scroll;
   padding-left: 0;
   background-color: white;
   padding-bottom: 3.125rem;
@@ -71,6 +71,7 @@ export const BottomBar = styled.div`
   position: absolute;
   justify-content: space-between;
   bottom: 0;
+  z-index: 10;
   padding: 0 1rem;
   background-color: white;
   border-top: 1px solid ${Common.colors.GR300};
