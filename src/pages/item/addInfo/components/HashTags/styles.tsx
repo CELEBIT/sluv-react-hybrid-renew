@@ -23,7 +23,7 @@ export const HashTagInput = styled.input`
 `
 export const TagInputContainer = styled.div`
   display: block;
-
+  padding: 0 1.25rem;
   border: none;
   outline: none;
   width: 100%;

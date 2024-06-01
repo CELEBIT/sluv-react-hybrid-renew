@@ -180,7 +180,7 @@ export default SearchItemPhotoResult
 const SearchResultWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100vw;
+  width: 100%;
   padding-top: 1rem;
   padding: 1rem 1.25rem 1.25rem 1.25rem;
   .full {

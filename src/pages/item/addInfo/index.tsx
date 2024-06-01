@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../../../components/Header/Header'
-import { AddInfoContainer, TextFieldWrapper } from './styles'
+import { AddInfoContainer, HeaderWrapper, TextFieldWrapper } from './styles'
 import TextArea from '../../../components/TextField/TextArea/TextArea'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import SourceInput from './components/sourceInput/SourceInput'
@@ -11,6 +11,7 @@ import {
   itemInfoState,
 } from '../../../recoil/itemInfo'
 import { useNavigate } from 'react-router-dom'
+import { ComponentContainer } from '../../home/styles'
 
 const AddInfo = () => {
   const navigate = useNavigate()
@@ -50,11 +51,13 @@ const AddInfo = () => {
 
   return (
     <AddInfoContainer>
-      <Header isModalHeader={false} hasArrow={true} title={'추가 정보'}>
-        <span className='submit' onClick={onSubmit}>
-          완료
-        </span>
-      </Header>
+      <HeaderWrapper>
+        <Header isModalHeader={false} hasArrow={true} title={'추가 정보'}>
+          <span className='submit' onClick={onSubmit}>
+            완료
+          </span>
+        </Header>
+      </HeaderWrapper>
       <TextFieldWrapper>
         <TextArea
           value={addInfoText ?? ''}

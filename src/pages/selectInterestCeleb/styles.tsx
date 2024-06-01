@@ -3,16 +3,14 @@ import { Common, Pretendard } from '../../components/styles'
 
 export const SelectCelebContainer = styled.div`
   display: flex;
-  flex-shrink: 0;
+  position: relative;
   flex-direction: column;
-  justify-content: space-between;
-  margin-left: -1.25rem;
-  width: 100vw;
-  max-height: 100vh;
+  width: 100%;
+  height: 100vh;
+  overflow-x: hidden;
   padding-left: 0;
   background-color: white;
-  /* overflow: hidden; */
-  position: relative;
+
   ::-webkit-scrollbar {
     display: none;
   }
@@ -25,6 +23,9 @@ export const ContentWrapper = styled.div`
   height: 100%;
 
   overflow-y: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 export const TitleSearchWrapper = styled.div`

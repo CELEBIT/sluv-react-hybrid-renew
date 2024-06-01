@@ -2,7 +2,6 @@ import styled from '@emotion/styled'
 
 export const SelectCelebWrapper = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
   width: 100%;
   padding-right: 1.25rem;

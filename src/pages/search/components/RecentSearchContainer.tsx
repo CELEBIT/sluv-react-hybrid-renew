@@ -57,11 +57,13 @@ export default RecentSearchContainer
 const RecentSearchWrap = styled.div`
   display: flex;
   flex-direction: column;
-  overflow-x: scroll;
   width: 100%;
   margin-top: 1.5rem;
   span {
     ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.GR600 })}
+  }
+  ::-webkit-scrollbar {
+    display: none;
   }
 `
 

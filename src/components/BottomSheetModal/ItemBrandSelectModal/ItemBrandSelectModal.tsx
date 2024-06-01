@@ -85,8 +85,8 @@ export const ChipWrapper = styled.div`
   white-space: nowrap;
   box-sizing: border-box;
   padding: 0.5rem 0 0 1.25rem;
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
+  width: 100%;
+  /* margin-left: calc(-50vw + 50%); */
   gap: 0.5rem;
   & > *:last-child {
     margin-right: 1.25rem;

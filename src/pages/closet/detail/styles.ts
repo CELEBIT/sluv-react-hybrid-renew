@@ -10,11 +10,17 @@ import { Common } from '../../../components/styles'
 
 export const Root = styled.div`
   display: flex;
+  position: relative;
   flex-direction: column;
+  width: 100%;
+  height: 100vh;
   overflow-y: scroll;
-  width: 100vw;
-  height: 100%;
-  margin-left: calc(-50vw + 50%);
+  overflow-x: hidden;
+  padding-left: 0;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 
   .edit {
     padding-bottom: 4.375rem !important;

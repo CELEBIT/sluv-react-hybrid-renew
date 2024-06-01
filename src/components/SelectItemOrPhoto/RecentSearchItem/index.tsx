@@ -64,6 +64,9 @@ export const RecentSearchWrapper = styled.div`
   span {
     ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.GR600 })}
   }
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `
 const SearchLogWrapper = styled.div`
   display: flex;
