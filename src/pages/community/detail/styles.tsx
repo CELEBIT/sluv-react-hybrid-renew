@@ -7,9 +7,9 @@ export const DetailContainer = styled.div`
   position: relative;
   flex-direction: column;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   overflow-x: hidden;
-  padding-left: 0;
+  /* padding-left: 0; */
   padding-bottom: 2rem;
   ::-webkit-scrollbar {
     display: none;
@@ -234,7 +234,7 @@ export const CommentContainer = styled.div`
   flex-direction: column;
   width: 100%;
   position: absolute;
-
+  z-index: 10;
   bottom: 0;
   background-color: white;
   border-top: 1px solid ${Common.colors.GR300};
