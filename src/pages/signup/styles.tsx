@@ -3,10 +3,9 @@ import { Common, Pretendard } from '../../components/styles'
 
 export const Layout = styled.div`
   display: flex;
-  position: relative;
   flex-direction: column;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   overflow-x: hidden;
   padding-left: 0;
   background-color: white;
@@ -22,9 +21,7 @@ export const Layout = styled.div`
     gap: 1.25rem;
   }
 `
-export const Content = styled.div`
-  padding: 0 20px;
-`
+export const Content = styled.div``
 
 export const Line = styled.div`
   width: 100%;

@@ -201,10 +201,9 @@ function Profile({ onNext }: { onNext?: (profile: SignupValues['profile']) => vo
 
 export const Layout = styled.div`
   display: flex;
-  position: relative;
   flex-direction: column;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   overflow-x: hidden;
   padding-left: 0;
   background-color: white;

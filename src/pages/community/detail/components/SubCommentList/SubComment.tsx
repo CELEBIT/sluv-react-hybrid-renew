@@ -161,7 +161,7 @@ const SubComment = ({ subcomment, comment, questionId }: SubCommentProps) => {
                   <NickName>
                     {subcomment.user.id !== -1 ? subcomment.user.nickName : '탈퇴한 유저'}
                   </NickName>
-                  <Time>{formatUpdatedAt(convertToUTC(subcomment.createdAt))}</Time>
+                  <Time>{formatUpdatedAt(subcomment.createdAt)}</Time>
                 </UserInfo>
                 <ShowMore onClick={onShowMore}></ShowMore>
               </ContentTop>

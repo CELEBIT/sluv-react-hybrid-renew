@@ -101,14 +101,14 @@ function SignUp() {
         </HeaderWrap>
       ) : null}
 
-      <S.Content>
+      <>
         {signupValues.step === 0 ? <Terms onNext={handleTermsChange} /> : null}
         {signupValues.step === 1 ? <Profile onNext={handleProfileChange} /> : null}
         {signupValues.step === 2 ? (
           <SelectInterestCeleb onNext={handleSetCelebs} backBtnClick={handleBackClick} />
         ) : null}
         {signupValues.step === 3 ? <SignupComplete onNext={handleSignupComplete} /> : null}
-      </S.Content>
+      </>
     </S.Layout>
   )
 }

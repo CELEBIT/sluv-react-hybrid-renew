@@ -190,7 +190,7 @@ const Comment = ({ questionId, commentId }: CommentProps) => {
                 <NickName onClick={() => onProfileClick(comment.user.id, comment.hasMine)}>
                   {comment.user.id !== -1 ? comment.user.nickName : '탈퇴한 유저'}
                 </NickName>
-                <Time>{formatUpdatedAt(convertToUTC(comment.createdAt))}</Time>
+                <Time>{formatUpdatedAt(comment.createdAt)}</Time>
               </UserInfo>
               {comment.commentStatus === 'ACTIVE' && <ShowMore onClick={onShowMore}></ShowMore>}
             </ContentTop>
