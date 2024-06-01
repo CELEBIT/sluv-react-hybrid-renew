@@ -3,15 +3,14 @@ import { Common, Pretendard } from '../../../components/styles'
 
 export const ItemCreatePageStyle = styled.div`
   display: flex;
-  position: relative;
   flex-direction: column;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
   padding-left: 0;
   background-color: white;
-  padding-bottom: 3.125rem;
+  padding-bottom: 3.4375rem;
   ::-webkit-scrollbar {
     display: none;
   }
