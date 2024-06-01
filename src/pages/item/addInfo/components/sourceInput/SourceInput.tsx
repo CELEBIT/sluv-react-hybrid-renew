@@ -48,8 +48,7 @@ const InputWrapper = styled.div`
   height: 3.5rem;
   width: 100vw;
   border-top: 1px solid ${Common.colors.GR200};
-  margin-left: calc(-1.25rem);
-  padding: 1.25rem;
+  padding: 0 1.25rem;
   .linkWrapper {
     display: flex;
     align-items: center;

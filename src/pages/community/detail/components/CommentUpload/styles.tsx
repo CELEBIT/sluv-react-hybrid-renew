@@ -44,8 +44,6 @@ export const HashTagWrapper = styled.div`
     margin-left: calc(-50vw + 50%);
     gap: 0.5rem;
 
-    border: 1px solid blue;
-
     & > *:last-child {
       margin-right: 1.25rem;
     }

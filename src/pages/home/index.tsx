@@ -78,7 +78,7 @@ const Home = () => {
       </HeaderWrapper>
       <ComponentContainer ref={scrollToTopRef}>
         <div ref={bannerRef}>
-          <Banner style={{ height: '100%', width: '100vw' }}></Banner>
+          <Banner style={{ height: '100%', width: '100%' }}></Banner>
         </div>
         <Curation></Curation>
         <BuyNow isPreview={isPreview}></BuyNow>
@@ -89,7 +89,7 @@ const Home = () => {
         <Divider></Divider>
         <HowAbout isPreview={isPreview}></HowAbout>
         <div>
-          <HotCelebBanner style={{ height: '100%', width: '100vw' }}></HotCelebBanner>
+          <HotCelebBanner style={{ height: '100%', width: '100%' }}></HotCelebBanner>
         </div>
         <LuxuryMood isPreview={isPreview}></LuxuryMood>
         <Divider></Divider>

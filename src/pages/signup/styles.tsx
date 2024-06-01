@@ -3,11 +3,18 @@ import { Common, Pretendard } from '../../components/styles'
 
 export const Layout = styled.div`
   display: flex;
+  position: relative;
   flex-direction: column;
-  overflow-y: scroll;
-  width: 100vw;
-  height: 100%;
-  margin-left: calc(-50vw + 50%);
+  width: 100%;
+  height: 100vh;
+  overflow-x: hidden;
+  padding-left: 0;
+  background-color: white;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
   .headerRight {
     display: flex;
     justify-content: space-between;

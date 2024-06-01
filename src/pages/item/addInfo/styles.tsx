@@ -22,7 +22,7 @@ export const HeaderWrapper = styled.div`
 export const TextFieldWrapper = styled.div`
   width: 100%;
   height: auto;
-  padding: 1rem 0;
+  padding: 1rem 1.25rem;
 `
 export const HashTagWrapper = styled.div`
   display: flex;
@@ -41,8 +41,6 @@ export const HashTagWrapper = styled.div`
     width: 100vw;
     margin-left: calc(-50vw + 50%);
     gap: 0.5rem;
-
-    border: 1px solid blue;
 
     & > *:last-child {
       margin-right: 1.25rem;
