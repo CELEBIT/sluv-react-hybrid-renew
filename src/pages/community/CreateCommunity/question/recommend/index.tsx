@@ -43,7 +43,7 @@ const Recommend = () => {
       </ComponentWrapper>
       <ComponentWrapper>
         <LabelContainer>
-          {hasTriedToUpload && (!title || (title && title.length < 10)) && <Error></Error>}
+          {hasTriedToUpload && (!title || (title && title.length <= 10)) && <Error></Error>}
           <Label>자유롭게 물어보세요</Label>
         </LabelContainer>
         <div className='padding'>
