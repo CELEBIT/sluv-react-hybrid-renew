@@ -62,7 +62,7 @@ const WhichOne = () => {
       <ComponentWrapper className='top'>
         <LabelContainer>
           {hasTriedToUpload &&
-            (!questionInfo.title || (questionInfo.title && questionInfo.title.length < 10)) && (
+            (!questionInfo.title || (questionInfo.title && questionInfo.title.length <= 10)) && (
               <Error></Error>
             )}
           <Label>고민되는 아이템을 물어보세요</Label>
