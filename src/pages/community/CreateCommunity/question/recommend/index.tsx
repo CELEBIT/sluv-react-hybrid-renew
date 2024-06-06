@@ -54,7 +54,7 @@ const Recommend = () => {
           ></DefaultTextfield>
         </div>
         {hasTriedToUpload && !title && <ErrorText className='error'>필수 항목입니다</ErrorText>}
-        {hasTriedToUpload && title && title.length < 10 && (
+        {hasTriedToUpload && title && title.length <= 10 && (
           <ErrorText className='error'>제목을 10자 이상 입력해 주세요</ErrorText>
         )}
         {hasTriedToUpload && title && title.length > 60 && (
