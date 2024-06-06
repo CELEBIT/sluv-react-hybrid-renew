@@ -37,7 +37,7 @@ const FindRequest = () => {
   const newCeleb = useRecoilValue(createItemNewCelebState)
   const [hasTriedToUpload, setHasTriedToUpload] = useState(false)
 
-  const [title, setTitle] = useState<string | null>(findRequestInfo.title)
+  const [title, setTitle] = useState<string | null>(findRequestInfo.title ?? null)
   const [content, setContent] = useState<string | null>(findRequestInfo.content ?? null)
   const [imgItemList, setImageItemList] = useRecoilState(imgItemListState)
 
@@ -127,7 +127,7 @@ const FindRequest = () => {
         {/* 아이템 정보를 물어보세요 */}
         <ComponentWrapper>
           <LabelContainer>
-            {hasTriedToUpload && (!title || (title && title.length < 10)) && <Error></Error>}
+            {hasTriedToUpload && (!title || (title && title.length <= 10)) && <Error></Error>}
             <Label>아이템 정보를 물어보세요</Label>
           </LabelContainer>
           <div className='padding'>
@@ -138,7 +138,7 @@ const FindRequest = () => {
             ></DefaultTextfield>
           </div>
           {hasTriedToUpload && !title && <ErrorText className='error'>필수 항목입니다</ErrorText>}
-          {hasTriedToUpload && title && title.length < 10 && (
+          {hasTriedToUpload && title && title.length <= 10 && (
             <ErrorText className='error'>제목을 10자 이상 입력해 주세요</ErrorText>
           )}
           {hasTriedToUpload && title && title.length > 60 && (
