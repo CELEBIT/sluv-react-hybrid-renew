@@ -41,11 +41,17 @@ const AddPhotos = () => {
 
     if (fileInputRef.current?.value) fileInputRef.current.value = ''
   }
+
   const onClickOpenGallery = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click()
-      // console.log('open gallery called')
+    if (
+      typeof window !== 'undefined' &&
+      window.webkit &&
+      window.webkit.messageHandlers &&
+      window.webkit.messageHandlers.IOSBridge
+    ) {
       openGallery(5, 5 - imgList.length)
+    } else if (fileInputRef.current) {
+      fileInputRef.current.click()
     }
   }
 
