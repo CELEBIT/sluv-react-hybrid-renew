@@ -34,9 +34,15 @@ const DefaultImageField = ({ error }: ImageFieldProps) => {
   }
 
   const onClickOpenGallery = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click()
+    if (
+      typeof window !== 'undefined' &&
+      window.webkit &&
+      window.webkit.messageHandlers &&
+      window.webkit.messageHandlers.IOSBridge
+    ) {
       openGallery(5, 5 - imgList.length)
+    } else if (fileInputRef.current) {
+      fileInputRef.current.click()
     }
   }
 
