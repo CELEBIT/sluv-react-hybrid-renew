@@ -207,7 +207,8 @@ const ItemDetail = () => {
       } else {
         setLink('http://' + link)
       }
-      setShowLink(!showLink)
+      window.open(link, '_blank')
+      // setShowLink(!showLink)
     }
   }
 
