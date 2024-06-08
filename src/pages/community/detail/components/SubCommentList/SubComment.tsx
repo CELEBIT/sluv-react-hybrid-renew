@@ -158,7 +158,7 @@ const SubComment = ({ subcomment, comment, questionId }: SubCommentProps) => {
               {subcomment.user.profileImgUrl ? (
                 <UserImg imgUrl={subcomment.user.profileImgUrl}></UserImg>
               ) : (
-                <DefaultProfile style={{ width: '2.25rem', height: '2.25rem' }}></DefaultProfile>
+                <DefaultProfile style={{ width: '1.875rem', height: '1.875rem' }}></DefaultProfile>
               )}
             </ContentLeft>
             <ContentRight>
