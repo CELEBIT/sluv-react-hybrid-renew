@@ -37,6 +37,8 @@ import { ReactComponent as StorageOn } from '../../../../../assets/storage_on_24
 import { ReactComponent as LikeOff } from '../../../../../assets/like_off_18.svg'
 import { ReactComponent as LikeOn } from '../../../../../assets/like_on_18.svg'
 import { ReactComponent as SubCommentArrow } from '../../../../../assets/arrow_comment_18.svg'
+import { ReactComponent as DefaultProfile } from '../../../../../assets/defaultProfile_40.svg'
+
 import useSearchSubCommentQuery from '../../../../../apis/comment/hooks/useSearchSubCommentQuery'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Dim } from '../../../../../components/UserImage/UserImage'
@@ -153,7 +155,11 @@ const SubComment = ({ subcomment, comment, questionId }: SubCommentProps) => {
         <ContentWrapper>
           <Content>
             <ContentLeft>
-              <UserImg imgUrl={subcomment.user.profileImgUrl}></UserImg>
+              {subcomment.user.profileImgUrl ? (
+                <UserImg imgUrl={subcomment.user.profileImgUrl}></UserImg>
+              ) : (
+                <DefaultProfile style={{ width: '2.25rem', height: '2.25rem' }}></DefaultProfile>
+              )}
             </ContentLeft>
             <ContentRight>
               <ContentTop>
