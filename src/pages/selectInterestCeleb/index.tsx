@@ -449,7 +449,14 @@ const SelectInterestCeleb = ({
             ) > 0
           }
           color='BK'
-          onClick={onComplete}
+          onClick={
+            selectedInterestCeleb.reduce(
+              (total, category) => total + category.celebList.length,
+              0,
+            ) > 0
+              ? onComplete
+              : () => alert('관심 셀럽을 선택해주세요')
+          }
         ></ButtonLarge>
       </BottomWrapper>
     </SelectCelebContainer>

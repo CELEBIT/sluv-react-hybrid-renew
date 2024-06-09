@@ -48,7 +48,7 @@ export const CelebCategoryWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 1rem 0 5.625rem 0;
+  padding: 1rem 0 1.25rem 0;
 `
 export const CategoryContentWrapper = styled.div`
   display: flex;
