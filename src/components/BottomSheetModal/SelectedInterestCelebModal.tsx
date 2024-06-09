@@ -59,7 +59,7 @@ const SelectedInterestCelebModal = () => {
                 <CelebCategoryWrapper key={Category.categoryId}>
                   <CategoryContentWrapper>
                     <CategoryTitle>{Category.categoryName}</CategoryTitle>
-                    <CelebListWrapper>
+                    <CelebListWrapper open={true}>
                       {Category.celebList.map((celeb) => {
                         return (
                           <ColorChip
