@@ -1,5 +1,6 @@
 import { IHashTag } from '../../recoil/itemInfo'
 import request from '../core'
+import dev from '../core/dev'
 import { GetPaginationResult, ResponseType } from '../core/type'
 import { SearchQuestionResult } from '../search/searchService'
 import {
@@ -60,6 +61,11 @@ export default class ItemService {
   // 아이템 게시글 상세 조회
   async getItemDetail(itemId: number) {
     const data: ResponseType<ItemDetailResult> = await request.get(`${this.itemUrl}/${itemId}`)
+
+    return data.result
+  }
+  async testItemDetail(itemId: number) {
+    const data: ResponseType<ItemDetailResult> = await dev.get(`${this.itemUrl}/${itemId}`)
 
     return data.result
   }
