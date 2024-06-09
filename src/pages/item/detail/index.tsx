@@ -95,7 +95,8 @@ const ItemDetail = () => {
 
   const { getItemDetail } = useItemDetailQuery()
   const { data } = getItemDetail(Number(itemId))
-  console.log(data)
+  // const { data } = testItemDetail(Number(itemId))
+  // console.log(data)
 
   const setEditReportItemState = useSetRecoilState(RequestEditItemState)
   const colors = ['gray', 'pink', 'orange', 'yellow', 'green', 'blue']
@@ -263,7 +264,7 @@ const ItemDetail = () => {
           <BasicInfoWrapper>
             <Top>
               <Badge color='gray'>
-                {data?.celeb ? data?.celeb.celebTotalNameKr : data?.newCelebName}
+                {data?.celeb ? data?.celeb.celebTotalNameKr : data?.newCeleb.newCelebName}
               </Badge>
 
               <Interactions>
@@ -295,7 +296,7 @@ const ItemDetail = () => {
               <ItemName>{data?.itemName}</ItemName>
               <Brand>
                 <BrandLogo size={32} url={data?.brand ? data.brand.brandImgUrl : ''} />
-                <span>{data?.brand ? data?.brand.brandKr : data?.newBrandName}</span>
+                <span>{data?.brand ? data?.brand.brandKr : data?.newBrand.newBrandName}</span>
                 {/* <Arrow></Arrow> */}
               </Brand>
             </ItemInfo>
