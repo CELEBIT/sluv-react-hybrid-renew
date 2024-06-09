@@ -20,6 +20,9 @@ const useItemDetailQuery = () => {
   const getItemDetail = (itemId: number) => {
     return useQuery(queryKeys.itemDetail(itemId), () => item.getItemDetail(itemId))
   }
+  const testItemDetail = (itemId: number) => {
+    return useQuery(queryKeys.itemDetail(itemId), () => item.testItemDetail(itemId))
+  }
   const getSameCelebItem = (itemId: number) => {
     return useQuery(queryKeys.sameCelebItem(itemId), () => item.getSameCelebItem(itemId))
   }
@@ -80,6 +83,7 @@ const useItemDetailQuery = () => {
     getSameCelebItem,
     getSameBrandItem,
     getSameScrapItem,
+    testItemDetail,
   }
 }
 

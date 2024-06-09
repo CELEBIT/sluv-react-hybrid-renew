@@ -111,10 +111,10 @@ const ItemEdit = () => {
           : null,
       )
       setNewCeleb(
-        data.newCelebName
+        data.newCeleb
           ? {
-              id: data.celeb.id,
-              newCelebName: data.newCelebName,
+              id: data.newCeleb.newCelebId,
+              newCelebName: data.newCeleb.newCelebName,
             }
           : null,
       )
@@ -140,10 +140,10 @@ const ItemEdit = () => {
           : null,
       )
       setNewBrand(
-        data.newBrandName
+        data.newBrand
           ? {
-              brandId: data.brand.id,
-              brandName: data.newBrandName,
+              brandId: data.newBrand.newBrandId,
+              brandName: data.newBrand.newBrandName,
             }
           : null,
       )

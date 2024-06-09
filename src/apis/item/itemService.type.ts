@@ -96,11 +96,11 @@ export interface UserResult {
 export interface ItemDetailResult {
   imgList: Array<ImgResult>
   celeb: ItemDetailCeleb
-  newCelebName: string
+  newCeleb: NewCelebResult
   category: ItemCategoryResult
   itemName: string
   brand: BrandResult
-  newBrandName: string
+  newBrand: NewBrandResult
   likeNum: number
   likeStatus: boolean
   scrapNum: number
