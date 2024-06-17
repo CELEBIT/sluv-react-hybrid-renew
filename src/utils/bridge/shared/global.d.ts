@@ -36,6 +36,9 @@ declare global {
         }
       }
     }
+    ReactNativeWebView: {
+      postMessage: (msg: any) => void
+    }
     sendToWebview: (message: string) => void
   }
 }
