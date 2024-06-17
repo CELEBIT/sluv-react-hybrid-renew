@@ -155,6 +155,14 @@ export const openGallery = (totalPhotos: number, photosToSelect: number) => {
         photosToSelect: photosToSelect,
       }),
     )
+  } else if (window.ReactNativeWebView) {
+    window.ReactNativeWebView.postMessage(
+      JSON.stringify({
+        type: 'openGallery',
+        totalPhotos: totalPhotos,
+        photosToSelect: photosToSelect,
+      }),
+    )
   } else {
     console.error('The app is not running in a WebView or server-side rendering is in process.')
   }
