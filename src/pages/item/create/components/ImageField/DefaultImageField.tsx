@@ -41,6 +41,8 @@ const DefaultImageField = ({ error }: ImageFieldProps) => {
       window.webkit.messageHandlers.IOSBridge
     ) {
       openGallery(5, 5 - imgList.length)
+    } else if (window.ReactNativeWebView) {
+      openGallery(5, 5 - imgList.length)
     } else if (fileInputRef.current) {
       fileInputRef.current.click()
     }
