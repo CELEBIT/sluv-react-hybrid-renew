@@ -48,18 +48,30 @@ const AddPhotos = () => {
 
   useEffect(() => {
     const handlePhotosMessage = (event: any) => {
-      const data = event.detail || JSON.parse(event.data)
+      const data = event.detail
       const images = convertToImageList(data, imgList)
       setImgList([...imgList, ...images])
     }
 
     window.addEventListener('getImageFromIOS', handlePhotosMessage)
-    document.addEventListener('message', handlePhotosMessage)
     return () => {
       window.removeEventListener('getImageFromIOS', handlePhotosMessage)
-      document.removeEventListener('message', handlePhotosMessage)
     }
   }, [imgList, setImgList])
+
+  useEffect(() => {
+    // 메시지 리스너 함수
+    const handlePhotosMessage = (event: any) => {
+      const parsedData = JSON.parse(event.data)
+      const images = convertToImageList(parsedData.detail, imgList)
+      setImgList([...imgList, ...images])
+    }
+
+    document.addEventListener('message', handlePhotosMessage)
+    return () => {
+      document.removeEventListener('message', handlePhotosMessage)
+    }
+  }, [])
 
   const onDragEnd = (result: any) => {
     if (!result.destination) {

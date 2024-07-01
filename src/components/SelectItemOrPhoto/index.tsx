@@ -292,16 +292,7 @@ const SelectItemOrPhoto = () => {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const onClickOpenGallery = () => {
-    if (
-      typeof window !== 'undefined' &&
-      window.webkit &&
-      window.webkit.messageHandlers &&
-      window.webkit.messageHandlers.IOSBridge
-    ) {
-      openGallery(5, 5 - imgItemList.length)
-    } else if (fileInputRef.current) {
-      fileInputRef.current.click()
-    }
+    openGallery(5, 5 - imgItemList.length, fileInputRef)
   }
 
   useEffect(() => {
@@ -314,6 +305,20 @@ const SelectItemOrPhoto = () => {
     window.addEventListener('getImageFromIOS', handlePhotosMessage)
     return () => {
       window.removeEventListener('getImageFromIOS', handlePhotosMessage)
+    }
+  }, [])
+
+  useEffect(() => {
+    // 메시지 리스너 함수
+    const handlePhotosMessage = (event: any) => {
+      const parsedData = JSON.parse(event.data) // 문자열을 객체로 변환
+      const images = convertToFile(parsedData.detail)
+      onNativeImgUpload(images)
+    }
+
+    document.addEventListener('message', handlePhotosMessage)
+    return () => {
+      document.removeEventListener('message', handlePhotosMessage)
     }
   }, [])
 
