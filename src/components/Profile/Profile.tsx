@@ -117,21 +117,12 @@ function Profile({ onNext }: { onNext?: (profile: SignupValues['profile']) => vo
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const onClickOpenGallery = () => {
-    // if (
-    //   typeof window !== 'undefined' &&
-    //   window.webkit &&
-    //   window.webkit.messageHandlers &&
-    //   window.webkit.messageHandlers.IOSBridge
-    // ) {
-    //   openGallery(1, 1,fileInputRef)
-    // }
     openGallery(1, 1, fileInputRef)
   }
 
   useEffect(() => {
     // 메시지 리스너 함수
     const handlePhotosMessage = async (event: any) => {
-      console.log(event.detail)
       const images = convertToFile(event.detail)
       const s3 = new S3Service()
       const imgURL = await s3.postProfileImg(images[0])
@@ -144,6 +135,25 @@ function Profile({ onNext }: { onNext?: (profile: SignupValues['profile']) => vo
     window.addEventListener('getImageFromIOS', handlePhotosMessage)
     return () => {
       window.removeEventListener('getImageFromIOS', handlePhotosMessage)
+    }
+  }, [])
+
+  useEffect(() => {
+    // 메시지 리스너 함수
+    const handlePhotosMessage = async (event: any) => {
+      const parsedData = JSON.parse(event.data)
+      const images = convertToFile(parsedData.detail)
+      const s3 = new S3Service()
+      const imgURL = await s3.postProfileImg(images[0])
+      if (imgURL)
+        setProfileValues((prevValues) => ({
+          ...prevValues,
+          userImg: imgURL,
+        }))
+    }
+    document.addEventListener('message', handlePhotosMessage)
+    return () => {
+      document.removeEventListener('message', handlePhotosMessage)
     }
   }, [])
 

@@ -48,18 +48,7 @@ const ClosetBoxCreatePage = ({ service, isEditMode = false }: ClosetBoxCreatePag
   )
 
   const onClickOpenGallery = () => {
-    if (
-      typeof window !== 'undefined' &&
-      window.webkit &&
-      window.webkit.messageHandlers &&
-      window.webkit.messageHandlers.IOSBridge
-    ) {
-      openGallery(1, 1)
-    } else {
-      if (coverImageRef.current) {
-        coverImageRef.current.click() // 파일 선택 창 열기
-      }
-    }
+    openGallery(1, 1, coverImageRef)
   }
 
   useEffect(() => {
@@ -77,6 +66,25 @@ const ClosetBoxCreatePage = ({ service, isEditMode = false }: ClosetBoxCreatePag
     window.addEventListener('getImageFromIOS', handlePhotosMessage)
     return () => {
       window.removeEventListener('getImageFromIOS', handlePhotosMessage)
+    }
+  }, [])
+
+  useEffect(() => {
+    // 메시지 리스너 함수
+    const handlePhotosMessage = async (event: any) => {
+      const parsedData = JSON.parse(event.data)
+      const images = convertToFile(parsedData.detail)
+      const s3 = new S3Service()
+      const imgURL = await s3.postProfileImg(images[0])
+      if (imgURL) {
+        console.log('이미지 url', imgURL)
+        contextValue.handlers.setCoverImgUrl(imgURL)
+        contextValue.handlers.setCoverImageMode('IMAGE')
+      }
+    }
+    document.addEventListener('message', handlePhotosMessage)
+    return () => {
+      document.removeEventListener('message', handlePhotosMessage)
     }
   }, [])
 
