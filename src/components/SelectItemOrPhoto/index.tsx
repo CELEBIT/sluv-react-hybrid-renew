@@ -292,16 +292,7 @@ const SelectItemOrPhoto = () => {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const onClickOpenGallery = () => {
-    if (
-      typeof window !== 'undefined' &&
-      window.webkit &&
-      window.webkit.messageHandlers &&
-      window.webkit.messageHandlers.IOSBridge
-    ) {
-      openGallery(5, 5 - imgItemList.length)
-    } else if (fileInputRef.current) {
-      fileInputRef.current.click()
-    }
+    openGallery(5, 5 - imgItemList.length, fileInputRef)
   }
 
   useEffect(() => {
@@ -312,8 +303,10 @@ const SelectItemOrPhoto = () => {
     }
 
     window.addEventListener('getImageFromIOS', handlePhotosMessage)
+    document.addEventListener('message', handlePhotosMessage)
     return () => {
       window.removeEventListener('getImageFromIOS', handlePhotosMessage)
+      document.removeEventListener('message', handlePhotosMessage)
     }
   }, [])
 
