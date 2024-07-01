@@ -45,7 +45,6 @@ function Profile({ onNext }: { onNext?: (profile: SignupValues['profile']) => vo
 
   const handleChangeFile = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
-    console.log(file)
     if (!file) {
       alert('파일이 없습니다.')
       return
@@ -118,14 +117,15 @@ function Profile({ onNext }: { onNext?: (profile: SignupValues['profile']) => vo
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const onClickOpenGallery = () => {
-    if (
-      typeof window !== 'undefined' &&
-      window.webkit &&
-      window.webkit.messageHandlers &&
-      window.webkit.messageHandlers.IOSBridge
-    ) {
-      openGallery(1, 1)
-    }
+    // if (
+    //   typeof window !== 'undefined' &&
+    //   window.webkit &&
+    //   window.webkit.messageHandlers &&
+    //   window.webkit.messageHandlers.IOSBridge
+    // ) {
+    //   openGallery(1, 1,fileInputRef)
+    // }
+    openGallery(1, 1, fileInputRef)
   }
 
   useEffect(() => {
@@ -168,7 +168,18 @@ function Profile({ onNext }: { onNext?: (profile: SignupValues['profile']) => vo
               ) : (
                 <DefaultProfile />
               )}
-              <input type='file' accept='image/*' ref={fileInputRef} onChange={handleChangeFile} />
+              {/* <input type='file' accept='image/*' ref={fileInputRef} onChange={handleChangeFile} /> */}
+              <input
+                id='inputFile'
+                type='file'
+                accept='image/*'
+                onChange={(e) => handleChangeFile(e)}
+                // onClick={onClickOpenGallery}
+                style={{ display: 'none' }}
+                multiple
+                max={1}
+                ref={fileInputRef}
+              ></input>
               <AddPhoto className='add' />
             </ProfileContainer>
             <TextField
