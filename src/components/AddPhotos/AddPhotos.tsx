@@ -43,30 +43,23 @@ const AddPhotos = () => {
   }
 
   const onClickOpenGallery = () => {
-    if (
-      typeof window !== 'undefined' &&
-      window.webkit &&
-      window.webkit.messageHandlers &&
-      window.webkit.messageHandlers.IOSBridge
-    ) {
-      openGallery(5, 5 - imgList.length)
-    } else if (fileInputRef.current) {
-      fileInputRef.current.click()
-    }
+    openGallery(5, 5 - imgList.length, fileInputRef)
   }
 
   useEffect(() => {
-    // 메시지 리스너 함수
     const handlePhotosMessage = (event: any) => {
-      const images = convertToImageList(event.detail, imgList)
+      const data = event.detail || JSON.parse(event.data)
+      const images = convertToImageList(data, imgList)
       setImgList([...imgList, ...images])
     }
 
     window.addEventListener('getImageFromIOS', handlePhotosMessage)
+    document.addEventListener('message', handlePhotosMessage)
     return () => {
       window.removeEventListener('getImageFromIOS', handlePhotosMessage)
+      document.removeEventListener('message', handlePhotosMessage)
     }
-  }, [])
+  }, [imgList, setImgList])
 
   const onDragEnd = (result: any) => {
     if (!result.destination) {

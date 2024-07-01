@@ -141,7 +141,11 @@ export const convertToFile = (base64DataArray: any) => {
   return temp
 }
 
-export const openGallery = (totalPhotos: number, photosToSelect: number) => {
+export const openGallery = (
+  totalPhotos: number,
+  photosToSelect: number,
+  fileInputRef?: React.RefObject<HTMLInputElement>,
+) => {
   if (
     typeof window !== 'undefined' &&
     window.webkit &&
@@ -164,6 +168,7 @@ export const openGallery = (totalPhotos: number, photosToSelect: number) => {
       }),
     )
   } else {
+    if (fileInputRef?.current) fileInputRef.current.click()
     console.error('The app is not running in a WebView or server-side rendering is in process.')
   }
 }
