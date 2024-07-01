@@ -38,19 +38,30 @@ const DefaultImageField = ({ error }: ImageFieldProps) => {
   }
 
   useEffect(() => {
+    // 메시지 리스너 함수
     const handlePhotosMessage = (event: any) => {
-      const data = event.detail || JSON.parse(event.data)
-      const images = convertToImageList(data, imgList)
+      const images = convertToImageList(event.detail, imgList)
       setImgList([...imgList, ...images])
     }
 
     window.addEventListener('getImageFromIOS', handlePhotosMessage)
-    document.addEventListener('message', handlePhotosMessage)
     return () => {
       window.removeEventListener('getImageFromIOS', handlePhotosMessage)
+    }
+  }, [])
+  useEffect(() => {
+    // 메시지 리스너 함수
+    const handlePhotosMessage = (event: any) => {
+      const parsedData = JSON.parse(event.data) // 문자열을 객체로 변환
+      const images = convertToImageList(parsedData.detail, imgList)
+      setImgList([...imgList, ...images])
+    }
+
+    document.addEventListener('message', handlePhotosMessage)
+    return () => {
       document.removeEventListener('message', handlePhotosMessage)
     }
-  }, [imgList, setImgList])
+  }, [])
 
   return (
     <DefaultImageFieldWrapper error={error} onClick={onClickOpenGallery}>

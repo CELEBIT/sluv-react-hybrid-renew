@@ -143,16 +143,7 @@ const CommentItemPhoto = () => {
 
   // Native Img Picker
   const onClickOpenGallery = () => {
-    if (
-      typeof window !== 'undefined' &&
-      window.webkit &&
-      window.webkit.messageHandlers &&
-      window.webkit.messageHandlers.IOSBridge
-    ) {
-      openGallery(5, 5 - imgItemList.length)
-    } else if (imgInput.current) {
-      imgInput.current.click()
-    }
+    openGallery(5, 5 - imgItemList.length, imgInput)
   }
 
   const onNativeImgUpload = (fileArr: File[]) => {
@@ -189,6 +180,20 @@ const CommentItemPhoto = () => {
     window.addEventListener('getImageFromIOS', handlePhotosMessage)
     return () => {
       window.removeEventListener('getImageFromIOS', handlePhotosMessage)
+    }
+  }, [])
+  useEffect(() => {
+    // 메시지 리스너 함수
+    const handlePhotosMessage = (event: any) => {
+      const parsedData = JSON.parse(event.data)
+      const images = convertToFile(parsedData.detail)
+      console.log(images)
+      onNativeImgUpload(images)
+    }
+
+    document.addEventListener('message', handlePhotosMessage)
+    return () => {
+      document.removeEventListener('message', handlePhotosMessage)
     }
   }, [])
 

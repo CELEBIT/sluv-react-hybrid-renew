@@ -25,18 +25,7 @@ const ProfileImgModal = ({ imgExist }: ProfileImgModalProps) => {
   } = useUserMypageQuery()
 
   const onOpengallery = () => {
-    if (
-      typeof window !== 'undefined' &&
-      window.webkit &&
-      window.webkit.messageHandlers &&
-      window.webkit.messageHandlers.IOSBridge
-    ) {
-      openGallery(1, 1)
-    } else {
-      if (fileInputRef.current) {
-        fileInputRef.current.click() // 파일 선택 창 열기
-      }
-    }
+    openGallery(1, 1, fileInputRef)
   }
 
   const onDeleteImg = () => {
@@ -74,6 +63,21 @@ const ProfileImgModal = ({ imgExist }: ProfileImgModalProps) => {
     window.addEventListener('getImageFromIOS', handlePhotosMessage)
     return () => {
       window.removeEventListener('getImageFromIOS', handlePhotosMessage)
+    }
+  }, [])
+  useEffect(() => {
+    // 메시지 리스너 함수
+    const handlePhotosMessage = async (event: any) => {
+      const parsedData = JSON.parse(event.data)
+      const images = convertToFile(parsedData.detail)
+      const s3 = new S3Service()
+      const imgURL = await s3.postProfileImg(images[0])
+      if (imgURL) mutateByEdit(imgURL)
+      closeModal(modals.ProfileImgModal)
+    }
+    document.addEventListener('message', handlePhotosMessage)
+    return () => {
+      document.removeEventListener('message', handlePhotosMessage)
     }
   }, [])
 

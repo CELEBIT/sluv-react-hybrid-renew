@@ -303,9 +303,21 @@ const SelectItemOrPhoto = () => {
     }
 
     window.addEventListener('getImageFromIOS', handlePhotosMessage)
-    document.addEventListener('message', handlePhotosMessage)
     return () => {
       window.removeEventListener('getImageFromIOS', handlePhotosMessage)
+    }
+  }, [])
+
+  useEffect(() => {
+    // 메시지 리스너 함수
+    const handlePhotosMessage = (event: any) => {
+      const parsedData = JSON.parse(event.data) // 문자열을 객체로 변환
+      const images = convertToFile(parsedData.detail)
+      onNativeImgUpload(images)
+    }
+
+    document.addEventListener('message', handlePhotosMessage)
+    return () => {
       document.removeEventListener('message', handlePhotosMessage)
     }
   }, [])
