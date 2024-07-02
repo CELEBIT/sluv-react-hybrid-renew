@@ -87,11 +87,12 @@ const FindRequest = () => {
   useEffect(() => {
     setFindRequestInfo({
       ...findRequestInfo,
-      celebId: celeb.id,
+      celebId: newCeleb?.id ? null : celeb.id,
       title: title,
       content: content,
+      newCelebId: newCeleb?.id,
     })
-  }, [title, content, celeb])
+  }, [title, content, celeb, newCeleb])
 
   const onBackClick = () => {
     resetFindRequestInfo()
