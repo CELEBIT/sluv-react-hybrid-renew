@@ -15,6 +15,7 @@ export const BodyContainer = styled.section`
   flex-direction: column;
   overflow-y: auto;
   margin-bottom: 1.25rem;
+  padding: 0 1.25rem;
 `
 
 export const ClosetCreateFooterElementWrapper = styled.div`

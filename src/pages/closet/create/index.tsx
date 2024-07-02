@@ -16,6 +16,7 @@ import OneButtonModal from '../../../components/OneButtonModal'
 import { BtnModalContent } from '../../../components/Modals/styles'
 import S3Service from '../../../apis/s3/S3Service'
 import { convertToFile, openGallery } from '../../../utils/utility'
+import { HeaderWrapper } from '../../item/addInfo/styles'
 
 type CreateClosetFormContextType = ReturnType<typeof useCreateClosetFormContext>
 export const CreateClosetFormContext = createContext<CreateClosetFormContextType | null>(null)
@@ -134,9 +135,11 @@ const ClosetBoxCreatePage = ({ service, isEditMode = false }: ClosetBoxCreatePag
   return (
     <CreateClosetFormContext.Provider value={contextValue}>
       <S.CreateRoot>
-        <S.CreateHeaderContainer>
-          <Header isModalHeader={false} hasArrow title={'옷장 만들기'} />
-        </S.CreateHeaderContainer>
+        <HeaderWrapper>
+          <S.CreateHeaderContainer>
+            <Header isModalHeader={false} hasArrow title={'옷장 만들기'} />
+          </S.CreateHeaderContainer>
+        </HeaderWrapper>
         <S.BodyContainer>
           <ClosetCreateBox onForwardingCreate={handleOpenSelectCoverModal} />
           <ColorSelector />
