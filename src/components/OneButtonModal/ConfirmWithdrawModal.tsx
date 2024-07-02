@@ -24,6 +24,15 @@ const ConfirmWithdrawModal = () => {
           type: 'withdraw',
         }),
       )
+    } else if (window.ReactNativeWebView) {
+      closeModal(modals.LogoutModal, () => {
+        storage.clear()
+      })
+      window.ReactNativeWebView.postMessage(
+        JSON.stringify({
+          type: 'withdraw',
+        }),
+      )
     } else {
       closeModal(modals.ConfirmWithdrawModal, () => {
         storage.clear()

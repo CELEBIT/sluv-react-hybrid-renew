@@ -362,4 +362,13 @@ export default class UserService {
     const data: ResponseType<ITermsAgreement> = await request.get(`${this.userUrl}/terms`)
     return data.result
   }
+
+  // 유저 탈퇴
+  async withdrawUser(reason: string, content: string) {
+    const data: ResponseType = await request.post(`${this.userUrl}/withdraw`, {
+      reason,
+      content,
+    })
+    return data
+  }
 }
