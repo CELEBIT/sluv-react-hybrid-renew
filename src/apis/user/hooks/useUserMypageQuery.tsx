@@ -12,10 +12,14 @@ import { RecommendItemResult } from '../../item/itemService.type'
 import { SearchQuestionResult } from '../../search/searchService'
 import { SignupValues } from '../../../models/signup'
 import { error } from 'console'
+import { WithdrawReason } from '../../../pages/settings/RequestWithdraw'
+import { modals } from '../../../components/Modals'
+import useModals from '../../../components/Modals/hooks/useModals'
 
 const useUserMypageQuery = () => {
   const user = new UserService()
   const queryClient = useQueryClient()
+  const { openModal } = useModals()
 
   const getMypageInfo = () => useQuery(queryKeys.getMypageInfo, () => user.getUserMypageInfo())
 
@@ -165,6 +169,17 @@ const useUserMypageQuery = () => {
     user.getMarketingAgreement(),
   )
 
+  const withdrawUser = useMutation(
+    ({ reason, content }: WithdrawReason) => user.withdrawUser(reason, content),
+    {
+      onSuccess: (res) => {
+        if (res.code == 1000) {
+          openModal(modals.ConfirmWithdrawModal)
+        }
+      },
+    },
+  )
+
   return {
     getMypageInfo,
     getIdInfo,
@@ -180,6 +195,7 @@ const useUserMypageQuery = () => {
     deleteProfileImage,
     termsAgree,
     getMarketingAgreeStatus,
+    withdrawUser,
   }
 }
 

@@ -8,11 +8,17 @@ import { WithdrawDisplayState, WithdrawReasonState } from '..'
 import useModals from '../../../../components/Modals/hooks/useModals'
 import { modals } from '../../../../components/Modals'
 import { ReasonWrapper } from '../../../item/editRequest/styles'
+import useUserMypageQuery from '../../../../apis/user/hooks/useUserMypageQuery'
+import { HeaderWrapper, PageContainer } from '../../../user/styles'
 
 const WithdrawReason = () => {
   const { openModal } = useModals()
   const { pathname } = useLocation()
   const [reasonText, setReasonText] = useState<string>('')
+
+  const {
+    withdrawUser: { mutate: mutateByWithdrawUser },
+  } = useUserMypageQuery()
 
   // API 용
   const [withdrawReason, setWithdrawReason] = useRecoilState(WithdrawReasonState)
@@ -26,8 +32,9 @@ const WithdrawReason = () => {
     setHasSubmitted(true)
     if (reasonText) {
       setInfoValid(true)
-      openModal(modals.ConfirmWithdrawModal)
       // mutate
+      console.log(withdrawReason)
+      // mutateByWithdrawUser(withdrawReason)
     } else {
       setInfoValid(false)
     }
@@ -48,12 +55,14 @@ const WithdrawReason = () => {
   }, [reasonText])
 
   return (
-    <EditReportContainer>
-      <Header isModalHeader={false} hasArrow={true} title='탈퇴하기'>
-        <span className='submit' onClick={onSubmit}>
-          완료
-        </span>
-      </Header>
+    <PageContainer>
+      <HeaderWrapper>
+        <Header isModalHeader={false} hasArrow={true} title='탈퇴하기'>
+          <span className='submit' onClick={onSubmit}>
+            완료
+          </span>
+        </Header>
+      </HeaderWrapper>
       <ReasonWrapper>
         <Title>{RequestDisplay?.displayText}</Title>
         <TextArea
@@ -67,7 +76,7 @@ const WithdrawReason = () => {
           errorMsg='내용을 입력해 주세요'
         ></TextArea>
       </ReasonWrapper>
-    </EditReportContainer>
+    </PageContainer>
   )
 }
 
