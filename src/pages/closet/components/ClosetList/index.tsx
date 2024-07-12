@@ -11,6 +11,7 @@ import { patchClosetItems, patchClosetScrap } from '../../../../apis/closet'
 import { AnotherClosetListModal, ItemClosetListModal } from '../../detail'
 import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '../../../../config/queryKeys'
+import { toast } from 'react-toastify'
 
 type ClosetListContainerProps = {
   status?: ClosetStatus
@@ -46,7 +47,7 @@ export const ScrapClosetList = ({
     const res = await patchClosetScrap(itemId, toClosetId)
     if (res.isSuccess) {
       closeModal(ItemClosetListModal, () => {
-        alert('성공적으로 스크랩되었습니다.')
+        toast('성공적으로 스크랩되었습니다.')
         queryClient.invalidateQueries()
       })
     }
@@ -89,7 +90,7 @@ export const ReClosetList = ({
     const res = await patchClosetItems(id, toClosetId, { itemList: selectedIds })
     if (res.isSuccess) {
       closeModal(AnotherClosetListModal, () => {
-        alert('성공적으로 이동되었습니다.')
+        toast('성공적으로 이동되었습니다.')
         setIsEditMode(false)
         setSelectedIds([])
         queryClient.invalidateQueries()

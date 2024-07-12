@@ -10,6 +10,7 @@ import { ReactComponent as Share } from '../../assets/share_24.svg'
 import { convertToFile, openGallery } from '../../utils/utility'
 import useUserMypageQuery from '../../apis/user/hooks/useUserMypageQuery'
 import S3Service from '../../apis/s3/S3Service'
+import { toast } from 'react-toastify'
 
 export interface ProfileImgModalProps {
   imgExist: boolean
@@ -39,7 +40,7 @@ const ProfileImgModal = ({ imgExist }: ProfileImgModalProps) => {
   const changeImg = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) {
-      alert('파일이 없습니다.')
+      toast('파일을 선택해주세요.')
       return
     }
     const s3 = new S3Service()

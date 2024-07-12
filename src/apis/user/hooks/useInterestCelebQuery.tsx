@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import UserService from '../userService'
 import { queryKeys } from '../../../config/queryKeys'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 const useInterestCelebQuery = () => {
   const navigate = useNavigate()
@@ -32,7 +33,7 @@ const useInterestCelebQuery = () => {
       onSuccess: (res) => {
         queryClient.invalidateQueries()
         if (currentRoute === '/settings/select-celeb') {
-          alert('관심셀럽이 수정되었어요')
+          toast('관심셀럽이 수정되었어요')
           navigate('/settings')
         }
       },

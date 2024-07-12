@@ -16,6 +16,7 @@ import Header from '../Header/Header'
 import { ContentContainer, PageContainer } from '../../pages/user/styles'
 import { HeaderWrapper } from '../Header/CommunityHeader/styles'
 import { convertToFile, convertToImageList, openGallery } from '../../utils/utility'
+import { toast } from 'react-toastify'
 
 function Profile({ onNext }: { onNext?: (profile: SignupValues['profile']) => void }) {
   const [profileValues, setProfileValues] = useState<SignupValues['profile']>({
@@ -46,7 +47,7 @@ function Profile({ onNext }: { onNext?: (profile: SignupValues['profile']) => vo
   const handleChangeFile = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (!file) {
-      alert('파일이 없습니다.')
+      toast('파일을 선택해주세요.')
       return
     }
     const s3 = new S3Service()

@@ -7,6 +7,7 @@ import useQuestionDetailQuery, {
   IVote,
 } from '../../../../apis/question/hooks/useQuestionDetailQuery'
 import { getRemainingTime } from '../../../../utils/utility'
+import { toast } from 'react-toastify'
 
 interface VoteProps {
   questionId: number
@@ -23,9 +24,9 @@ const Vote = ({ voteList, voteStatus, questionId, voteEndTime, isMine }: VotePro
     voteItem: { mutate: mutateByVote },
   } = useQuestionDetailQuery()
   const onClickVote = (questionId: number, voteSortOrder: number) => {
-    if (isMine) alert('내가 만든 투표는 참여할 수 없어요.')
+    if (isMine) toast('내가 만든 투표는 참여할 수 없어요.')
     else {
-      if (new Date(voteEndTime) < new Date()) alert('투표가 종료되었어요.')
+      if (new Date(voteEndTime) < new Date()) toast('투표가 종료되었어요.')
       else mutateByVote({ questionId, voteSortOrder })
     }
   }

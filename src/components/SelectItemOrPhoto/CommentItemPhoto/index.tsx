@@ -30,6 +30,7 @@ import { useDebounce } from 'use-debounce'
 import KeywordPreview from '../KeywordPreview/KeywordPreview'
 import { convertToFile, convertToImageList, openGallery } from '../../../utils/utility'
 import useRecentSearchQuery from '../../../apis/search/hooks/useRecentSearchQuery'
+import { toast } from 'react-toastify'
 
 const CommentItemPhoto = () => {
   const navigate = useNavigate()
@@ -134,7 +135,7 @@ const CommentItemPhoto = () => {
           }
           reader.readAsDataURL(file)
         } else {
-          alert(`아이템/사진은 ${maxItemPhotoCount}개까지 선택할 수 있어요. `)
+          toast(`아이템/사진은 ${maxItemPhotoCount}개까지 선택할 수 있어요. `)
           break
         }
       }
@@ -162,7 +163,7 @@ const CommentItemPhoto = () => {
           }
           setImgItemList((prevList) => [...prevList, fileSelected])
         } else {
-          alert(`아이템/사진은 ${maxItemPhotoCount}개까지 선택할 수 있어요. `)
+          toast(`아이템/사진은 ${maxItemPhotoCount}개까지 선택할 수 있어요. `)
           break
         }
       }
