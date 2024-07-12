@@ -18,6 +18,7 @@ import useModals from '../../../components/Modals/hooks/useModals'
 import { modals } from '../../../components/Modals'
 import { currentTempIdState } from '../../../recoil/itemInfo'
 import { localStorageKeys } from '../../../config/localStorageKeys'
+import { toast } from 'react-toastify'
 
 export const checkListState = atom<Array<number>>({
   key: atomKeys.checkListState,
@@ -46,7 +47,7 @@ const TemporaryStorage = () => {
 
   const onDeleteSelected = () => {
     if (checkedList.length === 0) {
-      alert('삭제할 아이템을 선택해주세요')
+      toast('삭제할 아이템을 선택해주세요')
       return
     }
     openModal(modals.DeleteTempItemModal, { type: '선택삭제' })

@@ -6,6 +6,7 @@ import { IRecentSearch } from '../../../apis/search/searchService'
 import Chip from '../../../components/Chip/Chip'
 import { useNavigate } from 'react-router-dom'
 import useRecentSearchQuery from '../../../apis/search/hooks/useRecentSearchQuery'
+import { toast } from 'react-toastify'
 
 interface RecentSearchContainerProps {
   dataList?: Array<IRecentSearch>
@@ -19,7 +20,7 @@ const RecentSearchContainer = ({ dataList }: RecentSearchContainerProps) => {
   } = useRecentSearchQuery()
 
   const onDeleteAllSearchLog = () => {
-    alert('전체삭제')
+    toast('전체삭제')
   }
   const onDeleteEachSearchLog = (item: IRecentSearch) => {
     mutate(item.keyword)

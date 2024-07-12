@@ -9,6 +9,7 @@ import { Common, Pretendard } from '../styles'
 import { useNavigate } from 'react-router-dom'
 import { ReactComponent as ShareIcon } from '../../assets/share_24.svg'
 import Share from '../../utils/Share/share'
+import { toast } from 'react-toastify'
 
 export interface UserModalProps {
   userName: string
@@ -32,9 +33,9 @@ const UserModal = ({ userName }: UserModalProps) => {
   const handleShare = async () => {
     const result = await Share()
     if (result === 'copiedToClipboard') {
-      alert('링크를 클립보드에 복사했습니다.')
+      toast('링크를 클립보드에 복사했습니다.')
     } else if (result === 'failed') {
-      alert('공유하기가 지원되지 않는 환경입니다.')
+      toast('공유하기가 지원되지 않는 환경입니다.')
     }
     closeModal(modals.UserModal)
   }

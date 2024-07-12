@@ -17,6 +17,7 @@ import { ItemResult } from '../../../apis/item/itemService.type'
 import { Divider } from '../../../pages/item/detail/styles'
 import HotItem from '../HotItem'
 import { maxItemPhotoCountState } from '..'
+import { toast } from 'react-toastify'
 
 const ScrapItem = () => {
   const [communityUploadInfo, setCommunityUploadInfo] = useRecoilState(communityItemState)
@@ -68,7 +69,7 @@ const ScrapItem = () => {
       ]
 
       if (imgItemList.length + 1 > maxItemPhotoCount) {
-        alert('아이템의 개수가 최대값을 초과하였습니다.')
+        toast('아이템의 개수가 최대값을 초과하였습니다.')
       } else {
         setImageItemList([
           ...imgItemList,

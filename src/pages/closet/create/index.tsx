@@ -17,6 +17,7 @@ import { BtnModalContent } from '../../../components/Modals/styles'
 import S3Service from '../../../apis/s3/S3Service'
 import { convertToFile, openGallery } from '../../../utils/utility'
 import { HeaderWrapper } from '../../item/addInfo/styles'
+import { toast } from 'react-toastify'
 
 type CreateClosetFormContextType = ReturnType<typeof useCreateClosetFormContext>
 export const CreateClosetFormContext = createContext<CreateClosetFormContextType | null>(null)
@@ -122,7 +123,7 @@ const ClosetBoxCreatePage = ({ service, isEditMode = false }: ClosetBoxCreatePag
     const file = event.target.files?.[0]
     console.log(file)
     if (!file) {
-      alert('파일이 없습니다.')
+      toast('파일이 없습니다.')
       return
     }
     const s3 = new S3Service()

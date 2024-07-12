@@ -11,6 +11,7 @@ import { Divider } from '../../../pages/item/detail/styles'
 import HotItem from '../HotItem'
 import { maxItemPhotoCountState } from '..'
 import useUserItemQuery from '../../../apis/user/hooks/useUserItemQuery'
+import { toast } from 'react-toastify'
 
 const UserUploadItem = () => {
   const maxItemPhotoCount = useRecoilValue(maxItemPhotoCountState)
@@ -37,7 +38,7 @@ const UserUploadItem = () => {
       ]
 
       if (imgItemList.length + 1 > maxItemPhotoCount) {
-        alert('아이템의 개수가 최대값을 초과하였습니다.')
+        toast('아이템의 개수가 최대값을 초과하였습니다.')
       } else {
         setImageItemList([
           ...imgItemList,
