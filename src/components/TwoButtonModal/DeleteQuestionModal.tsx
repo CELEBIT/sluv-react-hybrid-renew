@@ -8,6 +8,7 @@ import { useRecoilValue, useResetRecoilState } from 'recoil'
 import { RequestEditItemState } from '../../pages/item/editRequest'
 import { useNavigate } from 'react-router-dom'
 import { communityItemState } from '../../recoil/communityInfo'
+import { toast } from 'react-toastify'
 
 const DeleteQuestionModal = () => {
   const { closeModal } = useModals()
@@ -23,7 +24,7 @@ const DeleteQuestionModal = () => {
     closeModal(modals.DeleteQuestionModal, () => {
       mutateByDeleteQuestion(EditReportItem.itemId)
       resetQuestionItem()
-      alert('삭제되었습니다')
+      toast('삭제되었습니다')
     })
   }
 

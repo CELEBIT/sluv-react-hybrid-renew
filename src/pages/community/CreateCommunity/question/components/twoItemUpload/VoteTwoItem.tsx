@@ -20,6 +20,7 @@ import useQuestionDetailQuery from '../../../../../../apis/question/hooks/useQue
 import VotePercent from './VotePercent'
 import styled from '@emotion/styled'
 import { Common, Pretendard } from '../../../../../../components/styles'
+import { toast } from 'react-toastify'
 
 interface VoteTwoItemProps {
   item: BuyHomeResult
@@ -194,10 +195,10 @@ function VoteButton({ hasMine, questionId, voteSortOrder }: VoteButtonProps) {
     voteSortOrder: number,
   ) => {
     event.stopPropagation() // Stop propagation here
-    if (hasMine) alert('자신의 게시글은 투표할 수 없어요.')
+    if (hasMine) toast('자신의 게시글은 투표할 수 없어요.')
     else {
       mutateByVote({ questionId, voteSortOrder })
-      alert('투표되었습니다')
+      toast('투표되었습니다')
     }
   }
   return (

@@ -19,6 +19,7 @@ import { Divider } from '../../../pages/item/detail/styles'
 import HotItem from '../HotItem'
 import { maxItemPhotoCountState } from '..'
 import { communityMenuState } from '../../Header/CommunityHeader/CommunityHeader'
+import { toast } from 'react-toastify'
 
 const RecentViewItem = () => {
   const bottom = useRef(null)
@@ -68,7 +69,7 @@ const RecentViewItem = () => {
     } else {
       // 추가되어있지 않은 아이템 communityUploadInfo.itemList에 item 추가
       if (imgItemList.length + 1 > maxItemPhotoCount) {
-        alert('아이템의 개수가 최대값을 초과하였습니다.')
+        toast('아이템의 개수가 최대값을 초과하였습니다.')
       } else {
         setImageItemList([
           ...imgItemList,

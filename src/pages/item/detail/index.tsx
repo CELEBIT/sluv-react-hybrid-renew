@@ -75,6 +75,7 @@ import { deleteScrap } from '../../../apis/closet'
 import share from '../../../utils/Share/share'
 import ShowLink from './components/ShowLink'
 import storage from '../../../utils/storage'
+import { toast } from 'react-toastify'
 
 const ItemDetail = () => {
   const navigate = useNavigate()
@@ -104,7 +105,7 @@ const ItemDetail = () => {
   const handleShare = async () => {
     const result = await share()
     if (result === 'copiedToClipboard') {
-      alert('링크를 클립보드에 복사했습니다.')
+      toast('링크를 클립보드에 복사했습니다.')
     }
   }
 
@@ -161,7 +162,7 @@ const ItemDetail = () => {
         const res = await deleteScrap(Number(itemId))
 
         if (res.isSuccess) {
-          alert('아이템 저장이 취소되었어요')
+          toast('아이템 저장이 취소되었어요')
           queryClient.invalidateQueries(queryKeys.itemDetail(Number(itemId)))
         }
       } else {

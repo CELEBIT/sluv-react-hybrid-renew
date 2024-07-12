@@ -8,6 +8,7 @@ import Header from '../Header/Header'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { communityItemState } from '../../recoil/communityInfo'
 import SetVoteDateTime from '../../pages/community/CreateCommunity/question/components/setVoteTime'
+import { toast } from 'react-toastify'
 
 const QuestionDateTimePickerModal = () => {
   const { closeModal } = useModals()
@@ -21,7 +22,7 @@ const QuestionDateTimePickerModal = () => {
       questionInfo?.voteEndTime < new Date(new Date().setHours(today.getHours() + 3))
     ) {
       // console.log(new Date(new Date().setHours(today.getHours() + 3)))
-      alert('마감시간은 지금으로부터 최소 3시간 이후로 설정할 수 있습니다')
+      toast('마감시간은 지금으로부터 최소 3시간 이후로 설정할 수 있습니다')
     } else {
       closeModal(modals.QuestionDateTimePickerModal)
     }

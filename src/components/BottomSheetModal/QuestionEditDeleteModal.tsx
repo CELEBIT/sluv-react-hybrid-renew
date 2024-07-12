@@ -17,6 +17,7 @@ import {
   imgItemListState,
 } from '../../recoil/communityInfo'
 import { communityMenuState } from '../Header/CommunityHeader/CommunityHeader'
+import { toast } from 'react-toastify'
 
 export const questionTypeState = atom<string>({
   key: atomKeys.questionType,
@@ -48,7 +49,7 @@ const QuestionEditDeleteModal = () => {
       if (questionType === 'Buy') {
         resetQuestionItem()
         resetImgItemList()
-        alert('투표가 시작되어 수정할 수 없어요')
+        toast('투표가 시작되어 수정할 수 없어요')
       }
     })
   }

@@ -48,6 +48,7 @@ import CelebSearchResult from './CelebSearchResult/CelebSearchResult'
 import useInterestCelebQuery from '../../apis/user/hooks/useInterestCelebQuery'
 import { colorList } from '../../config/constant'
 import { useLocation } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 export const selectInterestCelebState = atom<Array<ISelectCelebResult>>({
   key: atomKeys.selectedInterestCeleb,
@@ -455,7 +456,7 @@ const SelectInterestCeleb = ({
               0,
             ) > 0
               ? onComplete
-              : () => alert('관심 셀럽을 선택해주세요')
+              : () => toast('관심 셀럽을 선택해주세요')
           }
         ></ButtonLarge>
       </BottomWrapper>

@@ -6,6 +6,7 @@ import * as S from './styles'
 import { Line } from '../../../community/detail/styles'
 import ButtonLarge from '../../../../components/ButtonLarge/ButtonLarge'
 import copyToClipboard from '../../../../utils/Share/copyToClipboard'
+import { toast } from 'react-toastify'
 
 const Help = () => {
   return (
@@ -37,7 +38,7 @@ const Help = () => {
           active={true}
           onClick={() => {
             copyToClipboard('celebit.sluv@gmail.com')
-            alert('이메일 주소가 복사되었어요')
+            toast('이메일 주소가 복사되었어요')
           }}
         ></ButtonLarge>
       </S.BottomContainer>

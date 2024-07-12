@@ -4,6 +4,7 @@ import { communityItemState } from '../../../../../../recoil/communityInfo'
 import { MenuSelectWrapper } from '../selectQuestionMenu/styles'
 import ButtonMedium from '../../../../../../components/ButtonMedium/ButtonMedium'
 import { RecommendCategory } from '../../../../../../config/communityMenu'
+import { toast } from 'react-toastify'
 
 const SelectRecommendCategory = () => {
   const [questionItem, setQuestionItem] = useRecoilState(communityItemState)
@@ -15,7 +16,7 @@ const SelectRecommendCategory = () => {
 
     if (categoryIndex === -1) {
       if (updatedCategoryList.length >= 3) {
-        alert('최대 3개까지 선택할 수 있어요')
+        toast('최대 3개까지 선택할 수 있어요')
         return
       }
       updatedCategoryList.push(menu)

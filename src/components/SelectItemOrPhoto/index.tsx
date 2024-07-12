@@ -39,6 +39,7 @@ import { useDebounce } from 'use-debounce'
 import KeywordPreview from './KeywordPreview/KeywordPreview'
 import useRecentSearchQuery from '../../apis/search/hooks/useRecentSearchQuery'
 import { convertToFile, convertToImageList, openGallery } from '../../utils/utility'
+import { toast } from 'react-toastify'
 
 export const maxItemPhotoCountState = atom<number>({
   key: atomKeys.maxItemPhotoCount,
@@ -203,7 +204,7 @@ const SelectItemOrPhoto = () => {
           }
           reader.readAsDataURL(file)
         } else {
-          alert(`아이템/사진은 ${maxItemPhotoCount}개까지 선택할 수 있어요. `)
+          toast(`아이템/사진은 ${maxItemPhotoCount}개까지 선택할 수 있어요. `)
           break
         }
       }
@@ -262,7 +263,7 @@ const SelectItemOrPhoto = () => {
             setImageItemList((prevList) => [...prevList, fileSelected])
           }
         } else {
-          alert(`아이템/사진은 ${maxItemPhotoCount}개까지 선택할 수 있어요. `)
+          toast(`아이템/사진은 ${maxItemPhotoCount}개까지 선택할 수 있어요. `)
           break
         }
       }

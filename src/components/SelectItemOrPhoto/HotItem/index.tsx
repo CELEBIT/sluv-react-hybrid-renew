@@ -15,6 +15,7 @@ import {
 import { maxItemPhotoCountState } from '..'
 import useRecommendHotItemQuery from '../../../apis/item/hooks/useRecommendHotItemQuery'
 import useUserMypageQuery from '../../../apis/user/hooks/useUserMypageQuery'
+import { toast } from 'react-toastify'
 
 const HotItem = () => {
   const [communityUploadInfo, setCommunityUploadInfo] = useRecoilState(communityItemState)
@@ -54,7 +55,7 @@ const HotItem = () => {
     } else {
       // 추가되어있지 않은 아이템 communityUploadInfo.itemList에 item 추가
       if (imgItemList.length + 1 > maxItemPhotoCount) {
-        alert('아이템의 개수가 최대값을 초과하였습니다.')
+        toast('아이템의 개수가 최대값을 초과하였습니다.')
       } else {
         setImageItemList([
           ...imgItemList,

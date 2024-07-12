@@ -30,6 +30,7 @@ import { imgListState } from '../../../components/AddPhotos/AddPhotos'
 import { checkListState } from '../../../pages/item/temporary-storage'
 import useTempItemQuery from './useTempItemQuery'
 import { hashTagState } from '../../../pages/item/addInfo/components/HashTags/HashTag'
+import { toast } from 'react-toastify'
 
 const useItemQuery = () => {
   const item = new ItemService()
@@ -81,7 +82,7 @@ const useItemQuery = () => {
         resetLinkList()
         if (currentTempId) mutateItemDeleted([currentTempId])
         if (location.pathname.includes('edit')) {
-          alert('게시글이 수정되었어요')
+          toast('게시글이 수정되었어요')
         } else {
           localStorage.removeItem(localStorageKeys.TEMP_ITEM_ID)
           setCurrentTempId(null)
