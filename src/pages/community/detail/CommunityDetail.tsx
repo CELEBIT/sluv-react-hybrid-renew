@@ -56,6 +56,7 @@ import { ReactComponent as Spinner } from '../../../assets/Spinner.svg'
 import Flex from '../../../components/Flex'
 import Share from '../../../utils/Share/share'
 import useUserMypageQuery from '../../../apis/user/hooks/useUserMypageQuery'
+import { toast } from 'react-toastify'
 
 export const commentState = atom<NewComment>({
   key: atomKeys.commentState,
@@ -181,9 +182,9 @@ const CommunityDetail = () => {
   const handleShare = async () => {
     const result = await Share()
     if (result === 'copiedToClipboard') {
-      alert('링크를 클립보드에 복사했습니다.')
+      toast('링크를 클립보드에 복사했습니다.')
     } else if (result === 'failed') {
-      alert('공유하기가 지원되지 않는 환경입니다.')
+      toast('공유하기가 지원되지 않는 환경입니다.')
     }
   }
 

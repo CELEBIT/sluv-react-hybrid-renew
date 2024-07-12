@@ -14,6 +14,7 @@ import { deleteScrap } from '../../../../apis/closet'
 import { ItemClosetListModal } from '../../../closet/detail'
 import { PreviewProps } from '../..'
 import { modals } from '../../../../components/Modals'
+import { toast } from 'react-toastify'
 
 const HowAbout = ({ isPreview }: PreviewProps) => {
   const navigate = useNavigate()
@@ -37,7 +38,7 @@ const HowAbout = ({ isPreview }: PreviewProps) => {
         const res = await deleteScrap(itemId)
 
         if (res.isSuccess) {
-          alert('아이템 저장이 취소되었어요')
+          toast('아이템 저장이 취소되었어요')
           queryClient.invalidateQueries()
         }
       } else {

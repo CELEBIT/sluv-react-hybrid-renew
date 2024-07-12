@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { patchClosetItemsDelete } from '../../../apis/closet'
 import { queryToObject } from '../../../utils/utility'
 import { useQueryClient } from '@tanstack/react-query'
+import { toast } from 'react-toastify'
 
 type ClosetInnerItemContextType = ReturnType<typeof useEditClosetInnerItemContext>
 export const ClosetInnerItemContext = createContext<ClosetInnerItemContextType | null>(null)
@@ -63,7 +64,7 @@ export const useEditClosetInnerItemContext = () => {
       handleConfirm: async () => {
         const res = await patchClosetItemsDelete(id, selectedIds)
         if (res.isSuccess) {
-          alert('성공적으로 삭제되었습니다.')
+          toast('성공적으로 삭제되었습니다.')
 
           closeModal(DeleteReCheckModal, () => {
             setIsEditMode(false)

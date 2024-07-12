@@ -13,6 +13,7 @@ import useModals from '../Modals/hooks/useModals'
 import { queryKeys } from '../../config/queryKeys'
 import { ItemClosetListModal } from '../../pages/closet/detail'
 import { modals } from '../Modals'
+import { toast } from 'react-toastify'
 
 interface PhotoProps {
   itemId?: number
@@ -53,7 +54,7 @@ const Photo = ({
         const res = await deleteScrap(Number(itemId))
         //
         if (res.isSuccess) {
-          alert('아이템 저장이 취소되었어요')
+          toast('아이템 저장이 취소되었어요')
           queryClient.invalidateQueries()
         }
       } else {
