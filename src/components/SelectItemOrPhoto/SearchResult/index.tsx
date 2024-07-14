@@ -84,7 +84,7 @@ const SearchItemPhotoResult = () => {
     } else {
       // 추가되어있지 않은 아이템 communityUploadInfo.itemList에 item 추가
       if (imgItemList.length + 1 > maxItemPhotoCount) {
-        toast('아이템의 개수가 최대값을 초과하였습니다.')
+        toast('아이템 개수가 최대값을 초과했어요')
       } else {
         setImageItemList([
           ...imgItemList,
