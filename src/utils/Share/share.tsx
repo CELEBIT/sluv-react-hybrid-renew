@@ -25,12 +25,11 @@ export const isShareSupported = () => navigator.share ?? false
  * ```
  */
 
-export const Share = async (file?: File) => {
+export const Share = async (text?: string) => {
   const data = {
-    // title: 'SLUV',
-    // text: '셀럽의 아이템 정보를 공유해보아요!',
+    title: 'SLUV',
+    text: text,
     url: `https://sluv.co.kr${window.location.pathname}`,
-    // files: file ? [file] : undefined,
   }
   return new Promise<'shared' | 'copiedToClipboard' | 'failed'>((resolve) => {
     if (isShareSupported()) {
@@ -46,8 +45,9 @@ export const Share = async (file?: File) => {
     }
 
     if (data.url) {
-      copyToClipboard(data.url).then((result) => {
+      copyToClipboard(text + data.url).then((result) => {
         if (result) {
+          console.log(text + data.url)
           resolve('copiedToClipboard')
         } else {
           resolve('failed')
