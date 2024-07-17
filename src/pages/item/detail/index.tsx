@@ -109,7 +109,7 @@ const ItemDetail = () => {
       data?.celeb ? data?.celeb.celebTotalNameKr : data?.newCeleb.newCelebName
     }
 종류 : ${data?.category.parentName} > ${data?.category.name}
-브랜드 : ${data?.brand.id ? data?.brand.brandKr : data?.newBrand.newBrandName}
+브랜드 : ${data?.brand ? data?.brand.brandKr : data?.newBrand.newBrandName}
 상품명 : ${data?.itemName}
 `)
     if (result === 'copiedToClipboard') {
