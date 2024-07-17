@@ -55,7 +55,7 @@ export const StyledToastContainer = styled(ToastContainer)`
 const container = document.getElementById('root') as HTMLElement
 const root = createRoot(container)
 // const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
-if (document.getElementById('root')?.hasChildNodes()) {
+if (container.hasChildNodes()) {
   ReactDOM.hydrateRoot(
     container,
     <QueryClientProvider client={queryClient}>

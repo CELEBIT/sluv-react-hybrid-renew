@@ -250,18 +250,19 @@ const ItemDetail = () => {
 
   return (
     <ItemDetailContainer>
-      <MetaTag
-        title='스럽'
-        description={`셀럽 : ${
-          data?.celeb ? data?.celeb.celebTotalNameKr : data?.newCeleb.newCelebName
-        }
-종류 : ${data?.category.parentName} > ${data?.category.name}
-브랜드 : ${data?.brand.id ? data?.brand.brandKr : data?.newBrand.newBrandName}
-상품명 : ${data?.itemName}
-`}
-        imgSrc={data?.imgList[0].imgUrl}
-        url={window.location.pathname}
-      />
+      {data && (
+        <Helmet>
+          <title>스럽</title>
+          <meta name='description' content={'연예인의 아이템 정보를 공유하는 커뮤니티'} />
+          <meta property='og:type' content='website' />
+          <meta property='og:title' content={'스럽'} />
+          <meta property='og:site_name' content='스럽' />
+          <meta property='og:description' content={'연예인의 아이템 정보를 공유하는 커뮤니티'} />
+          <meta property='og:image' content={data?.imgList[0].imgUrl || '/public/ogImage.png'} />
+          <meta property='og:url' content={`https://sluv.co.kr${window.location.pathname}`} />
+        </Helmet>
+      )}
+
       <HeaderWrapper>
         <Header isModalHeader={false} hasArrow={true} backBtnClick={onBackClick}>
           <div className='headerRight'>
