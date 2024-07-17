@@ -77,6 +77,7 @@ import share from '../../../utils/Share/share'
 import ShowLink from './components/ShowLink'
 import storage from '../../../utils/storage'
 import { toast } from 'react-toastify'
+import MetaTag from '../../../utils/Share/MetaTag'
 
 const ItemDetail = () => {
   const navigate = useNavigate()
@@ -104,7 +105,13 @@ const ItemDetail = () => {
   const colors = ['gray', 'pink', 'orange', 'yellow', 'green', 'blue']
 
   const handleShare = async () => {
-    const result = await share()
+    const result = await share(`셀럽 : ${
+      data?.celeb ? data?.celeb.celebTotalNameKr : data?.newCeleb.newCelebName
+    }
+종류 : ${data?.category.parentName} > ${data?.category.name}
+브랜드 : ${data?.brand.id ? data?.brand.brandKr : data?.newBrand.newBrandName}
+상품명 : ${data?.itemName}
+`)
     if (result === 'copiedToClipboard') {
       toast('링크를 클립보드에 복사했습니다.')
     }
@@ -243,17 +250,18 @@ const ItemDetail = () => {
 
   return (
     <ItemDetailContainer>
-      <Helmet>
-        <meta property='og:title' content='스럽' />
-        <meta property='og:description' content='연예인의 아이템 정보를 공유하는 커뮤니티' />
-        <meta property='og:image' content={data?.imgList[0].imgUrl} />
-        {/* Twitter */}
-        <meta property='twitter:card' content='summary_large_image' />
-        <meta property='twitter:url' content={`https://sluv.co.kr${window.location.pathname}`} />
-        <meta property='twitter:title' content={'스럽'} />
-        <meta property='twitter:description' content={'연예인의 아이템 정보를 공유하는 커뮤니티'} />
-        <meta property='twitter:image' content={data?.imgList[0].imgUrl} />
-      </Helmet>
+      <MetaTag
+        title='스럽'
+        description={`셀럽 : ${
+          data?.celeb ? data?.celeb.celebTotalNameKr : data?.newCeleb.newCelebName
+        }
+종류 : ${data?.category.parentName} > ${data?.category.name}
+브랜드 : ${data?.brand.id ? data?.brand.brandKr : data?.newBrand.newBrandName}
+상품명 : ${data?.itemName}
+`}
+        imgSrc={data?.imgList[0].imgUrl}
+        url={window.location.pathname}
+      />
       <HeaderWrapper>
         <Header isModalHeader={false} hasArrow={true} backBtnClick={onBackClick}>
           <div className='headerRight'>

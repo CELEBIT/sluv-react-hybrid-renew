@@ -1,6 +1,6 @@
 // 라이브러리/패키지
 import React, { useEffect } from 'react'
-import ReactDOM from 'react-dom/client'
+import ReactDOM, { createRoot } from 'react-dom/client'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 // import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { RecoilRoot, useRecoilSnapshot } from 'recoil'
@@ -9,9 +9,9 @@ import { Global } from '@emotion/react'
 import App from './App'
 import { Common, Pretendard, reset } from './components/styles'
 import { ToastContainer } from 'react-toastify'
-import { HelmetProvider } from 'react-helmet-async'
 import 'react-toastify/dist/ReactToastify.css'
 import styled from '@emotion/styled'
+import { HelmetProvider } from 'react-helmet-async'
 
 function DebugObserver() {
   const snapshot = useRecoilSnapshot()
@@ -52,26 +52,52 @@ export const StyledToastContainer = styled(ToastContainer)`
     margin: 0;
   }
 `
-
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
-root.render(
-  <QueryClientProvider client={queryClient}>
-    {/* <ReactQueryDevtools initialIsOpen /> */}
-    <RecoilRoot>
-      {/* <DebugObserver /> */}
-      <Global styles={reset} />
-      <StyledToastContainer
-        position='bottom-center'
-        autoClose={1500}
-        hideProgressBar={true}
-        closeButton={false}
-        closeOnClick={false}
-        pauseOnHover={false}
-        limit={1}
-      />
-      <HelmetProvider>
-        <App />
-      </HelmetProvider>
-    </RecoilRoot>
-  </QueryClientProvider>,
-)
+const container = document.getElementById('root') as HTMLElement
+const root = createRoot(container)
+// const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
+if (document.getElementById('root')?.hasChildNodes()) {
+  ReactDOM.hydrateRoot(
+    container,
+    <QueryClientProvider client={queryClient}>
+      {/* <ReactQueryDevtools initialIsOpen /> */}
+      <RecoilRoot>
+        {/* <DebugObserver /> */}
+        <Global styles={reset} />
+        <StyledToastContainer
+          position='bottom-center'
+          autoClose={1500}
+          hideProgressBar={true}
+          closeButton={false}
+          closeOnClick={false}
+          pauseOnHover={false}
+          limit={1}
+        />
+        <HelmetProvider>
+          <App />
+        </HelmetProvider>
+      </RecoilRoot>
+    </QueryClientProvider>,
+  )
+} else {
+  root.render(
+    <QueryClientProvider client={queryClient}>
+      {/* <ReactQueryDevtools initialIsOpen /> */}
+      <RecoilRoot>
+        {/* <DebugObserver /> */}
+        <Global styles={reset} />
+        <StyledToastContainer
+          position='bottom-center'
+          autoClose={1500}
+          hideProgressBar={true}
+          closeButton={false}
+          closeOnClick={false}
+          pauseOnHover={false}
+          limit={1}
+        />
+        <HelmetProvider>
+          <App />
+        </HelmetProvider>
+      </RecoilRoot>
+    </QueryClientProvider>,
+  )
+}
