@@ -115,6 +115,9 @@ const WithdrawReason = React.lazy(
   () => import('./pages/settings/RequestWithdraw/WithdrawReason/index'),
 )
 import Modal from 'react-modal'
+import { HelmetProvider } from 'react-helmet-async'
+import MetaTag from './utils/Share/MetaTag'
+
 Modal.setAppElement('#root')
 const App = () => {
   useLayoutEffect(() => {
@@ -140,6 +143,7 @@ const App = () => {
 
   return (
     <S.Root>
+      <MetaTag />
       <BrowserRouter>
         <Suspense fallback={loading}>
           <Routes>
