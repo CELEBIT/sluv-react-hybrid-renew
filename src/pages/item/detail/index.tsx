@@ -3,6 +3,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import useModals from '../../../components/Modals/hooks/useModals'
 import { modals } from '../../../components/Modals'
 import Header from '../../../components/Header/Header'
+import { Helmet } from 'react-helmet-async'
 import { ReactComponent as Home } from '../../../assets/home_24.svg'
 import { ReactComponent as Search } from '../../../assets/search_24.svg'
 import { ReactComponent as ShowMore } from '../../../assets/add_24.svg'
@@ -242,6 +243,17 @@ const ItemDetail = () => {
 
   return (
     <ItemDetailContainer>
+      <Helmet>
+        <meta property='og:title' content='스럽' />
+        <meta property='og:description' content='연예인의 아이템 정보를 공유하는 커뮤니티' />
+        <meta property='og:image' content={data?.imgList[0].imgUrl} />
+        {/* Twitter */}
+        <meta property='twitter:card' content='summary_large_image' />
+        <meta property='twitter:url' content={`https://sluv.co.kr${window.location.pathname}`} />
+        <meta property='twitter:title' content={'스럽'} />
+        <meta property='twitter:description' content={'연예인의 아이템 정보를 공유하는 커뮤니티'} />
+        <meta property='twitter:image' content={data?.imgList[0].imgUrl} />
+      </Helmet>
       <HeaderWrapper>
         <Header isModalHeader={false} hasArrow={true} backBtnClick={onBackClick}>
           <div className='headerRight'>

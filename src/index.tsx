@@ -9,6 +9,7 @@ import { Global } from '@emotion/react'
 import App from './App'
 import { Common, Pretendard, reset } from './components/styles'
 import { ToastContainer } from 'react-toastify'
+import { HelmetProvider } from 'react-helmet-async'
 import 'react-toastify/dist/ReactToastify.css'
 import styled from '@emotion/styled'
 
@@ -68,7 +69,9 @@ root.render(
         pauseOnHover={false}
         limit={1}
       />
-      <App />
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
     </RecoilRoot>
   </QueryClientProvider>,
 )
