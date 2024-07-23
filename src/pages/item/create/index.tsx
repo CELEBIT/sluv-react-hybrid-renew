@@ -57,6 +57,8 @@ import useTempItemQuery from '../../../apis/item/hooks/useTempItemQuery'
 import { hashTagState } from '../addInfo/components/HashTags/HashTag'
 import useItemImgUpload from '../../../apis/s3/hooks/useItemImgUpload'
 import { checkListState } from '../temporary-storage'
+import { brandNameSearchState } from '../../../components/BottomSheetModal/ItemBrandSelectModal/ItemBrandSelectModal'
+import { linksState } from '../addLink/components/LinkInput/LinkInput'
 
 const ItemCreate = () => {
   useUploadStateObserver()
@@ -119,6 +121,8 @@ const ItemCreate = () => {
   const resetHashTags = useResetRecoilState(hashTagState)
   const resetSource = useResetRecoilState(createItemSourceState)
   const resetLinkList = useResetRecoilState(createItemLinkState)
+  const resetBrandSearch = useResetRecoilState(brandNameSearchState)
+  const resetLinks = useResetRecoilState(linksState)
 
   // const resetCategory = useResetRecoilState(subCategoryState)
   // const resetParentCategory = useResetRecoilState(parentCategoryState)
@@ -140,6 +144,8 @@ const ItemCreate = () => {
     resetHashTags()
     resetSource()
     resetLinkList()
+    resetBrandSearch()
+    resetLinks()
     navigate('/home', { replace: true })
   }
 
