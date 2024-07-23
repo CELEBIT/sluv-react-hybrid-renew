@@ -28,7 +28,7 @@ export const isShareSupported = () => navigator.share ?? false
 export const Share = async (text?: string) => {
   const data = {
     title: 'SLUV',
-    text: text,
+    text: text || '',
     url: `https://sluv.co.kr${window.location.pathname}`,
   }
   return new Promise<'shared' | 'copiedToClipboard' | 'failed'>((resolve) => {
