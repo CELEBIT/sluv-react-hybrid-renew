@@ -419,7 +419,55 @@ const ItemDetail = () => {
             <SourceWrapper>
               <LinkIcon></LinkIcon>
               <span className='label'>출처</span>
-              <span className='source'>{data?.infoSource}</span>
+              {/* <span className='source'>{data?.infoSource}</span> */}
+              <div className='source'>
+                {data?.infoSource
+                  ?.trim()
+                  .split(/\s+/)
+                  .reduce((acc, item) => {
+                    if (item.includes('http') || item.startsWith('@')) {
+                      if (item.startsWith('@')) {
+                        const instagramId = item.slice(1)
+                        acc.push({
+                          type: 'link' as const,
+                          text: item,
+                          url: `https://www.instagram.com/${instagramId}`,
+                        })
+                      } else {
+                        acc.push({
+                          type: 'link' as const,
+                          text: item,
+                          url: item.startsWith('http') ? item : `https://${item}`,
+                        })
+                      }
+                    } else {
+                      if (acc.length > 0 && acc[acc.length - 1].type === 'text') {
+                        acc[acc.length - 1].text += ' ' + item
+                      } else {
+                        acc.push({
+                          type: 'text' as const,
+                          text: item,
+                        })
+                      }
+                    }
+                    return acc
+                  }, [] as Array<{ type: 'link' | 'text'; text: string; url?: string }>)
+                  .map((item, index) => {
+                    if (item.type === 'link') {
+                      return (
+                        <a key={index} href={item.url} className='source'>
+                          {item.text}
+                        </a>
+                      )
+                    } else {
+                      return (
+                        <span key={index} className='source'>
+                          {item.text}
+                        </span>
+                      )
+                    }
+                  })}
+              </div>
             </SourceWrapper>
           )}
           <WrongInfo>
