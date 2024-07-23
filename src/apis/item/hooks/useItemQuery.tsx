@@ -31,6 +31,8 @@ import { checkListState } from '../../../pages/item/temporary-storage'
 import useTempItemQuery from './useTempItemQuery'
 import { hashTagState } from '../../../pages/item/addInfo/components/HashTags/HashTag'
 import { toast } from 'react-toastify'
+import { brandNameSearchState } from '../../../components/BottomSheetModal/ItemBrandSelectModal/ItemBrandSelectModal'
+import { linksState } from '../../../pages/item/addLink/components/LinkInput/LinkInput'
 
 const useItemQuery = () => {
   const item = new ItemService()
@@ -53,6 +55,8 @@ const useItemQuery = () => {
   const resetHashTags = useResetRecoilState(hashTagState)
   const resetSource = useResetRecoilState(createItemSourceState)
   const resetLinkList = useResetRecoilState(createItemLinkState)
+  const resetBrandSearch = useResetRecoilState(brandNameSearchState)
+  const resetLinks = useResetRecoilState(linksState)
   const [currentTempId, setCurrentTempId] = useRecoilState(currentTempIdState)
 
   const {
@@ -80,6 +84,8 @@ const useItemQuery = () => {
         resetHashTags()
         resetSource()
         resetLinkList()
+        resetBrandSearch()
+        resetLinks()
         if (currentTempId) mutateItemDeleted([currentTempId])
         if (location.pathname.includes('edit')) {
           toast('게시글이 수정되었어요')
