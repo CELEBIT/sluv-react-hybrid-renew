@@ -192,16 +192,26 @@ export const HashTags = styled.div`
 export const SourceWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   border-top: 1px solid ${Common.colors.GR200};
   padding: 1.25rem;
+  gap: 0.25rem;
+  width: 100%;
 
   .label {
-    margin-left: 0.25rem;
+    display: flex;
+    flex-shrink: 0;
     ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.GR400 })}
   }
 
   .source {
-    margin-left: 0.25rem;
+    display: flex;
+    white-space: pre-wrap;
+    word-break: break-all;
+    flex-wrap: wrap;
+    word-wrap: break-word;
+    width: 100%;
+
     ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.GR600 })}
   }
 `

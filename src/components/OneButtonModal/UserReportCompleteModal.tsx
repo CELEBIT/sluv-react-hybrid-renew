@@ -12,9 +12,7 @@ const UserReportCompleteModal = () => {
   const requestedItem = useRecoilValue(RequestEditItemState)
   const navigate = useNavigate()
   const onComplete = () => {
-    closeModal(modals.UserReportCompleteModal, () =>
-      navigate('/item/detail/' + requestedItem.itemId),
-    )
+    closeModal(modals.UserReportCompleteModal, () => navigate(-2))
   }
   return (
     <OneButtonModal buttonName='확인' buttonOnClick={onComplete}>
