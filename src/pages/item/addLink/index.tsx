@@ -11,11 +11,11 @@ import { LinkResult } from '../../../apis/item/itemService.type'
 
 const AddLink = () => {
   const navigate = useNavigate()
+  // 완료를 눌렀을 때 최종적으로 아이템 정보 배열에 추가용
   const [linkList, setLinkList] = useRecoilState(createItemLinkState)
-  console.log('linkList in addLink', linkList)
 
+  // 페이지 입력 용 state
   const [links, setLinks] = useRecoilState(linksState)
-  console.log('links in addLink', links)
   const [hasError, setHasError] = useState(false)
 
   const onBackClick = () => {
