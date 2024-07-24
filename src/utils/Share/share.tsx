@@ -45,7 +45,7 @@ export const Share = async (text?: string) => {
     }
 
     if (data.url) {
-      copyToClipboard(text + data.url).then((result) => {
+      copyToClipboard(data.text + ' ' + data.url).then((result) => {
         if (result) {
           resolve('copiedToClipboard')
         } else {
