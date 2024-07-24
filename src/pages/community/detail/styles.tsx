@@ -121,8 +121,8 @@ export const RecommendListWrapper = styled.div`
 export const RecommendContainer = styled.div<{ detail?: boolean }>`
   display: flex;
   flex-direction: column;
-  gap: ${(props) => (props.detail ? '0.5rem' : '0')};
-  padding-bottom: 1rem;
+  gap: ${(props) => (props.detail ? '0' : '0')};
+  /* padding-bottom: 1rem; */
 `
 
 export const Recommend = styled.div`
@@ -130,8 +130,8 @@ export const Recommend = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  min-height: 5rem;
-  padding: 0.75rem 1.5rem 0 1.5rem;
+  /* min-height: 5rem; */
+  padding: 0.75rem 1.5rem 0.75rem 1.5rem;
   gap: 0.625rem;
   text-overflow: ellipsis;
 `
@@ -162,7 +162,7 @@ export const DetailInfo = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 0 1.25rem;
+  padding: 0 1.25rem 1rem 1.25rem;
 `
 export const DetailLeft = styled.div`
   display: flex;
