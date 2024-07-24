@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { SearchResultPageStyle } from './styles'
 import Header from '../../components/Header/Header'
 import SearchBarContainer from './components/SearchBarContainer'
@@ -7,6 +7,13 @@ import Tabs from '../../components/Tabs'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { queryToObject } from '../../utils/utility'
 import SearchResultContainer from './components/SearchResultContainer'
+import { atom, useRecoilState, useResetRecoilState } from 'recoil'
+import { atomKeys } from '../../config/atomKeys'
+
+export const searchTabState = atom<string>({
+  key: atomKeys.searchTab,
+  default: 'all',
+})
 
 const SearchResult = () => {
   const navigate = useNavigate()
@@ -14,6 +21,8 @@ const SearchResult = () => {
   const searchKeyword = queryToObject(search)
 
   const [keyword, setKeyword] = useState(searchKeyword.keyword)
+  const [currentTab, setCurrentTab] = useRecoilState(searchTabState)
+  const resetCurrentTab = useResetRecoilState(searchTabState)
   const tabList = [
     { id: 'all', tabName: '통합' },
     { id: 'item', tabName: '아이템' },
@@ -21,16 +30,19 @@ const SearchResult = () => {
     { id: 'user', tabName: '사용자' },
   ]
 
-  const savedTab = sessionStorage.getItem('searchTab') || 'all'
-  const [currentTab, setCurrentTab] = useState(savedTab)
-
-  useEffect(() => {
-    sessionStorage.setItem('searchTab', currentTab)
-  }, [currentTab])
   const onBackClick = () => {
-    sessionStorage.removeItem('searchTab')
+    resetCurrentTab()
     navigate(-1)
   }
+  const scrollToTopRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    console.log(scrollToTopRef.current?.scrollTop)
+    scrollToTopRef.current?.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
+  }, [currentTab])
 
   return (
     <SearchResultPageStyle>
@@ -42,11 +54,13 @@ const SearchResult = () => {
           backBtnClick={onBackClick}
         />
       </HeaderWrap>
-      <SearchBarWrap>
-        <SearchBarContainer keyword={keyword} setKeyword={setKeyword} />
-      </SearchBarWrap>
-      <Tabs tabList={tabList} selectedTab={currentTab} setSelectedTab={setCurrentTab} />
-      <SearchResultContainer selectedTab={currentTab} keyword={searchKeyword.keyword} />
+      <ScrollContainer ref={scrollToTopRef}>
+        <SearchBarWrap>
+          <SearchBarContainer keyword={keyword} setKeyword={setKeyword} />
+        </SearchBarWrap>
+        <Tabs tabList={tabList} selectedTab={currentTab} setSelectedTab={setCurrentTab} />
+        <SearchResultContainer selectedTab={currentTab} keyword={searchKeyword.keyword} />
+      </ScrollContainer>
     </SearchResultPageStyle>
   )
 }
@@ -60,4 +74,10 @@ const SearchBarWrap = styled.div`
 `
 const HeaderWrap = styled.div`
   padding: 0 1.25rem;
+`
+const ScrollContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  height: 100%;
 `
