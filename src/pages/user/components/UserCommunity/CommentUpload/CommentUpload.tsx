@@ -5,6 +5,9 @@ import CommentListItem from '../../../../../components/CommentListItem/CommentLi
 import { Line } from '../../../../community/detail/styles'
 import { EmptyStateWrapper } from '../../FollowList/Follower/Follower'
 import EmptyState from '../../../../../components/EmptyState'
+import { ViewHeader, ViewHeaderLeft } from '../../../../../components/ItemListGrid/styles'
+import { Common, Pretendard } from '../../../../../components/styles'
+import styled from '@emotion/styled'
 
 const CommentUpload = () => {
   const { getUserUploadComment } = useUserMypageQuery()
@@ -12,6 +15,9 @@ const CommentUpload = () => {
   const tempData = data?.pages[0].content
   return (
     <QuestionListWrapper>
+      <CountHeader>
+        <CountHeaderLeft>전체 {data && data.pages[0].countNum}</CountHeaderLeft>
+      </CountHeader>
       {tempData && tempData.length > 0 ? (
         tempData?.map((each, index) => {
           return (
@@ -35,3 +41,18 @@ const CommentUpload = () => {
 }
 
 export default CommentUpload
+
+export const CountHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 1rem 1.5rem;
+`
+
+export const CountHeaderLeft = styled.div`
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.GR600 })}
+`
