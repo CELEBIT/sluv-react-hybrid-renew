@@ -180,7 +180,7 @@ const CommunityDetail = () => {
 
   // 공유하기
   const handleShare = async () => {
-    const result = await Share()
+    const result = await Share(data?.title)
     if (result === 'copiedToClipboard') {
       toast('링크를 클립보드에 복사했습니다.')
     } else if (result === 'failed') {
