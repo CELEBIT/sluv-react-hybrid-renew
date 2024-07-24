@@ -10,6 +10,9 @@ import { Line } from '../../community/detail/styles'
 import { ReactComponent as Right } from '../../../assets/arrow_black_20.svg'
 import EmptyState from '../../../components/EmptyState'
 import { Divider as Divide } from '../../item/detail/styles'
+import { useSetRecoilState } from 'recoil'
+import { searchTabState } from '../SearchResult'
+import ItemListGrid from '../../../components/ItemListGrid/ItemListGrid'
 
 interface TotalResultProps {
   keyword: string
@@ -19,6 +22,7 @@ const TotalResult = ({ keyword }: TotalResultProps) => {
   const navigate = useNavigate()
   const { searchTotal } = useSearchQuery()
   const { data } = searchTotal(keyword)
+  const setSearchTab = useSetRecoilState(searchTabState)
 
   return (
     <>
@@ -39,6 +43,7 @@ const TotalResult = ({ keyword }: TotalResultProps) => {
         <>
           <TitleBar>
             <span>아이템</span>
+            <Right onClick={() => setSearchTab('item')}></Right>
           </TitleBar>
           <GridListWrap>
             {data?.itemList.map((item) => (
@@ -51,6 +56,7 @@ const TotalResult = ({ keyword }: TotalResultProps) => {
                 celebName={item.celebName}
                 size={105}
                 borderRadius={8}
+                scrapStatus={item.scrapStatus}
                 onClick={() => navigate(`/item/detail/${item.itemId}`)}
               />
             ))}
@@ -62,7 +68,7 @@ const TotalResult = ({ keyword }: TotalResultProps) => {
         <CommunityListWrap>
           <TitleBar>
             <span>커뮤니티</span>
-            <Right></Right>
+            <Right onClick={() => setSearchTab('community')}></Right>
           </TitleBar>
 
           {data?.questionList.map((q, index) => (
@@ -78,6 +84,7 @@ const TotalResult = ({ keyword }: TotalResultProps) => {
         <>
           <TitleBar>
             <span>사용자</span>
+            <Right onClick={() => setSearchTab('user')}></Right>
           </TitleBar>
           <UserListWrap>
             {data?.userList.map((user) => (
@@ -119,14 +126,13 @@ const TitleBar = styled.div`
 `
 
 const GridListWrap = styled.div`
-  display: grid;
-  justify-items: center;
-  flex-grow: none;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-auto-rows: minmax(0, auto);
+  display: flex;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  gap: 0.5rem;
   row-gap: 1.5rem;
-  column-gap: 0.625rem;
-  padding: 1rem 1.25rem 0 1.25rem;
+  width: 100%;
+  padding: 1.25rem;
 
   > div {
     text-overflow: ellipsis;

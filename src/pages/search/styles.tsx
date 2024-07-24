@@ -27,9 +27,8 @@ export const SearchResultPageStyle = styled.main`
   width: 100%;
   height: 100%;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: hidden;
   padding-left: 0;
-  padding-bottom: 2rem;
   ::-webkit-scrollbar {
     display: none;
   }
