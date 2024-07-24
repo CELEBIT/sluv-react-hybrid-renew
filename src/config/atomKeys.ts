@@ -57,4 +57,5 @@ export const atomKeys = {
   imgListUpdatedState: 'imgListUpdatedState' as const,
   withdrawReasonState: 'withdrawReasonState' as const,
   withdrawDisplayState: 'withdrawDisplayState' as const,
+  searchTab: 'searchTab' as const,
 }
