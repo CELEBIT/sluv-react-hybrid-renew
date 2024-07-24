@@ -6,6 +6,7 @@ import useQuestionListQuery from '../../../../../apis/question/hooks/useQuestion
 import useUserMypageQuery from '../../../../../apis/user/hooks/useUserMypageQuery'
 import { EmptyStateWrapper } from '../../FollowList/Follower/Follower'
 import EmptyState from '../../../../../components/EmptyState'
+import { CountHeader, CountHeaderLeft } from '../CommentUpload/CommentUpload'
 
 const CommunityUpload = () => {
   const { getUserUploadQuestion } = useUserMypageQuery()
@@ -14,6 +15,9 @@ const CommunityUpload = () => {
 
   return (
     <QuestionListWrapper>
+      <CountHeader>
+        <CountHeaderLeft>전체 {data && data.pages[0].countNum}</CountHeaderLeft>
+      </CountHeader>
       {tempData && tempData?.length > 0 ? (
         tempData?.map((each, index) => {
           return (

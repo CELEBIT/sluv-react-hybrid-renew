@@ -24,9 +24,8 @@ const CommentListItem = ({ comment }: CommentListItemProps) => {
   )
 }
 
-export const QuestionTitle = styled.span`
+const QuestionTitle = styled.span`
   ${Pretendard({ size: 13, weight: Common.bold.thin, color: Common.colors.GR600 })}
-  padding-top: 0.375rem;
 `
 
 export default CommentListItem
