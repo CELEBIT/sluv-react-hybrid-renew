@@ -67,6 +67,9 @@ const FindRequest = () => {
         sortOrder: sortOrder,
       }))
     await mutateByImgUpload(newImgList)
+    resetFindRequestInfo()
+    resetCelebInfoInItem()
+    resetImageItemList()
   }
 
   const onSubmit = async () => {
@@ -78,9 +81,6 @@ const FindRequest = () => {
       findRequestInfo.title.length < 60
     ) {
       await uploadImg()
-      resetFindRequestInfo()
-      resetCelebInfoInItem()
-      resetImageItemList()
     }
   }
 
