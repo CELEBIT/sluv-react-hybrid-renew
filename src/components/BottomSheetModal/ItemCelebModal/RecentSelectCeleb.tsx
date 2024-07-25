@@ -5,7 +5,7 @@ import Chip from '../../Chip/Chip'
 import { ChipWrapper } from '../ItemBrandSelectModal/ItemBrandSelectModal'
 import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
 import { IRecentCeleb } from '../../../apis/celeb/CelebService'
-import { useRecoilState, useResetRecoilState } from 'recoil'
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
 import {
   createItemCelebState,
   createItemNewCelebState,
@@ -13,9 +13,11 @@ import {
 } from '../../../recoil/itemInfo'
 import useModals from '../../Modals/hooks/useModals'
 import { modals } from '../../Modals'
+import { selectedCelebState } from '../../SelectCeleb/SelectCeleb'
 
 const RecentSelectCeleb = () => {
   const { closeModal } = useModals()
+
   const {
     getRecentCeleb: { data },
     postRecentCeleb: { mutate: mutateByPostRecentCeleb },
@@ -24,8 +26,8 @@ const RecentSelectCeleb = () => {
   } = useRecentCelebQuery()
   const [celebInfoInItem, setCelebInfoInItem] = useRecoilState(createItemCelebState)
   const resetCelebInfoInItem = useResetRecoilState(createItemCelebState)
-  const [newCeleb, setNewCeleb] = useRecoilState(createItemNewCelebState)
-
+  const setCelebInCommunity = useSetRecoilState(selectedCelebState)
+  const setNewCeleb = useSetRecoilState(createItemNewCelebState)
   const onDeleteAllSearchLog = () => {
     mutateByDeleteAllRecentCeleb()
   }
@@ -46,6 +48,10 @@ const RecentSelectCeleb = () => {
                 groupName: recentCeleb.parentCelebName,
                 soloId: recentCeleb.id,
                 soloName: recentCeleb.childCelebName,
+              })
+              setCelebInCommunity({
+                id: recentCeleb.id,
+                celebNameKr: recentCeleb.childCelebName,
               })
             })
           },
