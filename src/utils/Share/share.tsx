@@ -31,15 +31,19 @@ export const Share = async (text?: string) => {
     text: text || '',
     url: `https://sluv.co.kr${window.location.pathname}`,
   }
-  return new Promise<'shared' | 'copiedToClipboard' | 'failed'>((resolve) => {
+  return new Promise<'shared' | 'copiedToClipboard' | 'failed' | 'closed'>((resolve) => {
     if (isShareSupported()) {
       navigator
         .share(data)
         .then(() => {
           resolve('shared')
         })
-        .catch(() => {
-          resolve('failed')
+        .catch((err) => {
+          if (err.name === 'AbortError') {
+            resolve('closed')
+          } else {
+            resolve('failed')
+          }
         })
       return
     }
