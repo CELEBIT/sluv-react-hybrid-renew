@@ -112,8 +112,12 @@ const ItemDetail = () => {
 브랜드 : ${data?.brand ? data?.brand.brandKr : data?.newBrand.newBrandName}
 상품명 : ${data?.itemName}
 `)
-    if (result === 'copiedToClipboard') {
+    if (result === 'shared') {
+      toast('공유되었습니다.')
+    } else if (result === 'copiedToClipboard') {
       toast('링크를 클립보드에 복사했습니다.')
+    } else if (result === 'failed') {
+      toast('공유하기가 실패했습니다. 다시 시도해 주세요.')
     }
   }
 

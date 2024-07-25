@@ -181,10 +181,12 @@ const CommunityDetail = () => {
   // 공유하기
   const handleShare = async () => {
     const result = await Share(data?.title)
-    if (result === 'copiedToClipboard') {
+    if (result === 'shared') {
+      toast('공유되었습니다.')
+    } else if (result === 'copiedToClipboard') {
       toast('링크를 클립보드에 복사했습니다.')
     } else if (result === 'failed') {
-      toast('공유하기가 지원되지 않는 환경입니다.')
+      toast('공유하기가 실패했습니다. 다시 시도해 주세요.')
     }
   }
 
