@@ -33,7 +33,27 @@ const queryClient = new QueryClient({
     },
   },
 })
+// export const StyledToastContainer = styled(ToastContainer)`
+//   .Toastify__toast {
+//     text-align: center;
+//     width: 14.625rem;
+//     border-radius: 0.5rem;
+//     opacity: 0.8;
+//     background: ${Common.colors.BK};
+//     min-height: 2.3125rem;
+//     /* max-width: 14.6875rem; */
+//     left: 50% !important;
+//     bottom: 50vh !important;
+//     transform: translateX(-50%) !important;
+//     ${Pretendard({ size: 14, weight: Common.bold.regular, color: Common.colors.WH })}
+//   }
+//   .Toastify__toast-body {
+//     padding: 0;
+//     margin: 0;
+//   }
+// `
 export const StyledToastContainer = styled(ToastContainer)`
+  height: 100%;
   .Toastify__toast {
     text-align: center;
     width: 14.625rem;
@@ -41,10 +61,10 @@ export const StyledToastContainer = styled(ToastContainer)`
     opacity: 0.8;
     background: ${Common.colors.BK};
     min-height: 2.3125rem;
-    /* max-width: 14.6875rem; */
-    left: 50% !important;
-    bottom: 50vh !important;
-    transform: translateX(-50%) !important;
+    position: fixed; // 고정 위치로 설정
+    top: 50%; // 화면의 세로 중앙
+    left: 50%; // 화면의 가로 중앙
+    transform: translate(-50%, -50%) !important; // 중앙으로 이동
     ${Pretendard({ size: 14, weight: Common.bold.regular, color: Common.colors.WH })}
   }
   .Toastify__toast-body {
@@ -63,7 +83,7 @@ if (container.hasChildNodes()) {
       <RecoilRoot>
         {/* <DebugObserver /> */}
         <Global styles={reset} />
-        <StyledToastContainer
+        {/* <StyledToastContainer
           position='bottom-center'
           autoClose={1500}
           hideProgressBar={true}
@@ -71,7 +91,7 @@ if (container.hasChildNodes()) {
           closeOnClick={false}
           pauseOnHover={false}
           limit={1}
-        />
+        /> */}
         <HelmetProvider>
           <App />
         </HelmetProvider>
@@ -85,7 +105,7 @@ if (container.hasChildNodes()) {
       <RecoilRoot>
         {/* <DebugObserver /> */}
         <Global styles={reset} />
-        <StyledToastContainer
+        {/* <StyledToastContainer
           position='bottom-center'
           autoClose={1500}
           hideProgressBar={true}
@@ -93,7 +113,7 @@ if (container.hasChildNodes()) {
           closeOnClick={false}
           pauseOnHover={false}
           limit={1}
-        />
+        /> */}
         <HelmetProvider>
           <App />
         </HelmetProvider>
