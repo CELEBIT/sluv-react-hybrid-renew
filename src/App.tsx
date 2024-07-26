@@ -117,6 +117,7 @@ const WithdrawReason = React.lazy(
 import Modal from 'react-modal'
 import { HelmetProvider } from 'react-helmet-async'
 import MetaTag from './utils/Share/MetaTag'
+import { StyledToastContainer } from '.'
 
 Modal.setAppElement('#root')
 const App = () => {
@@ -144,6 +145,14 @@ const App = () => {
   return (
     <S.Root>
       <MetaTag />
+      <StyledToastContainer
+        autoClose={1500}
+        hideProgressBar={true}
+        closeButton={false}
+        closeOnClick={false}
+        pauseOnHover={false}
+        limit={1}
+      />
       <BrowserRouter>
         <Suspense fallback={loading}>
           <Routes>
