@@ -214,6 +214,10 @@ export const SourceWrapper = styled.div`
 
     ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.GR600 })}
   }
+
+  .link {
+    text-decoration: underline;
+  }
 `
 
 export const WrongInfo = styled.div`
