@@ -78,6 +78,7 @@ import ShowLink from './components/ShowLink'
 import storage from '../../../utils/storage'
 import { toast } from 'react-toastify'
 import MetaTag from '../../../utils/Share/MetaTag'
+import { processInfoSource } from './utils'
 
 const ItemDetail = () => {
   const navigate = useNavigate()
@@ -254,19 +255,6 @@ const ItemDetail = () => {
 
   return (
     <ItemDetailContainer>
-      {data && (
-        <Helmet>
-          <title>스럽</title>
-          <meta name='description' content={'연예인의 아이템 정보를 공유하는 커뮤니티'} />
-          <meta property='og:type' content='website' />
-          <meta property='og:title' content={'스럽'} />
-          <meta property='og:site_name' content='스럽' />
-          <meta property='og:description' content={'연예인의 아이템 정보를 공유하는 커뮤니티'} />
-          <meta property='og:image' content={data?.imgList[0].imgUrl || '/public/ogImage.png'} />
-          <meta property='og:url' content={`https://sluv.co.kr${window.location.pathname}`} />
-        </Helmet>
-      )}
-
       <HeaderWrapper>
         <Header isModalHeader={false} hasArrow={true} backBtnClick={onBackClick}>
           <div className='headerRight'>
@@ -423,54 +411,26 @@ const ItemDetail = () => {
             <SourceWrapper>
               <LinkIcon></LinkIcon>
               <span className='label'>출처</span>
-              {/* <span className='source'>{data?.infoSource}</span> */}
               <div className='source'>
-                {data?.infoSource
-                  ?.trim()
-                  .split(/\s+/)
-                  .reduce((acc, item) => {
-                    if (item.includes('http') || item.startsWith('@')) {
-                      if (item.startsWith('@')) {
-                        const instagramId = item.slice(1)
-                        acc.push({
-                          type: 'link' as const,
-                          text: item,
-                          url: `https://www.instagram.com/${instagramId}`,
-                        })
-                      } else {
-                        acc.push({
-                          type: 'link' as const,
-                          text: item,
-                          url: item.startsWith('http') ? item : `https://${item}`,
-                        })
-                      }
-                    } else {
-                      if (acc.length > 0 && acc[acc.length - 1].type === 'text') {
-                        acc[acc.length - 1].text += ' ' + item
-                      } else {
-                        acc.push({
-                          type: 'text' as const,
-                          text: item,
-                        })
-                      }
-                    }
-                    return acc
-                  }, [] as Array<{ type: 'link' | 'text'; text: string; url?: string }>)
-                  .map((item, index) => {
-                    if (item.type === 'link') {
-                      return (
-                        <a key={index} href={item.url} className='source'>
-                          {item.text}
-                        </a>
-                      )
-                    } else {
-                      return (
-                        <span key={index} className='source'>
-                          {item.text}
-                        </span>
-                      )
-                    }
-                  })}
+                {processInfoSource(data?.infoSource).map((item, index) => {
+                  if (item.type === 'link' && item.url) {
+                    return (
+                      <span
+                        key={index}
+                        className='source link'
+                        onClick={() => onClickOpenLink(item.url as string)}
+                      >
+                        {item.text}
+                      </span>
+                    )
+                  } else {
+                    return (
+                      <span key={index} className='source'>
+                        {item.text}
+                      </span>
+                    )
+                  }
+                })}
               </div>
             </SourceWrapper>
           )}
