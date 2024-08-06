@@ -8,20 +8,20 @@ const dev: AxiosInstance = axios.create({
   timeout: 2500,
 })
 // 요청 인터셉터
-dev.interceptors.request.use(
-  (config) => {
-    // 요청 성공 직전 호출됨
-    const accessToken = window.localStorage.getItem(ACCESS_TOKEN)
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`
-    }
-    return config
-  },
-  (error) => {
-    console.log(error)
-    return Promise.reject(error)
-  },
-)
+// dev.interceptors.request.use(
+//   (config) => {
+//     // 요청 성공 직전 호출됨
+//     const accessToken = window.localStorage.getItem(ACCESS_TOKEN)
+//     if (accessToken) {
+//       config.headers.Authorization = `Bearer ${accessToken}`
+//     }
+//     return config
+//   },
+//   (error) => {
+//     console.log(error)
+//     return Promise.reject(error)
+//   },
+// )
 
 // 응답 인터셉터
 dev.interceptors.response.use(

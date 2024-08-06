@@ -146,6 +146,14 @@ const SubComment = ({ subcomment, comment, questionId }: SubCommentProps) => {
     }
   }
 
+  const onProfileClick = (id: number, hasMine: boolean) => {
+    if (hasMine) {
+      navigate('/user')
+    } else {
+      navigate(`/user/${id}`)
+    }
+  }
+
   return (
     <SubCommentContainer>
       <SubCommentLeft>
@@ -154,7 +162,7 @@ const SubComment = ({ subcomment, comment, questionId }: SubCommentProps) => {
       <SubCommentRight>
         <ContentWrapper>
           <Content>
-            <ContentLeft>
+            <ContentLeft onClick={() => onProfileClick(subcomment.user.id, subcomment.hasMine)}>
               {subcomment.user.profileImgUrl ? (
                 <UserImg imgUrl={subcomment.user.profileImgUrl}></UserImg>
               ) : (
@@ -164,7 +172,7 @@ const SubComment = ({ subcomment, comment, questionId }: SubCommentProps) => {
             <ContentRight>
               <ContentTop>
                 <UserInfo>
-                  <NickName>
+                  <NickName onClick={() => onProfileClick(subcomment.user.id, subcomment.hasMine)}>
                     {subcomment.user.id !== -1 ? subcomment.user.nickName : '탈퇴한 유저'}
                   </NickName>
                   <Time>{formatUpdatedAt(subcomment.createdAt)}</Time>
