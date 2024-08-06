@@ -36,6 +36,12 @@ const useQuestionDetailQuery = () => {
     )
   }
 
+  const getTestQuestionDetail = (questionId: number) => {
+    return useQuery(queryKeys.questionDetail(questionId), () =>
+      question.testQuestionDetail(questionId),
+    )
+  }
+
   const getWaitQuestion = (questionId: number, qType: string) => {
     return useQuery(queryKeys.recommendWait(questionId), () =>
       question.getWaitQusestion(questionId, qType),
@@ -108,6 +114,7 @@ const useQuestionDetailQuery = () => {
 
   return {
     getQuestionDetail,
+    getTestQuestionDetail,
     getWaitQuestion,
     voteItem,
     reportQuestion,

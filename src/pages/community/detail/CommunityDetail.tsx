@@ -57,6 +57,7 @@ import Flex from '../../../components/Flex'
 import Share from '../../../utils/Share/share'
 import useUserMypageQuery from '../../../apis/user/hooks/useUserMypageQuery'
 import { toast } from 'react-toastify'
+import storage from '../../../utils/storage'
 
 export const commentState = atom<NewComment>({
   key: atomKeys.commentState,
@@ -89,9 +90,22 @@ const CommunityDetail = () => {
     }
   }, [])
 
-  const { getQuestionDetail } = useQuestionDetailQuery()
+  const { getQuestionDetail, getTestQuestionDetail } = useQuestionDetailQuery()
   const { data } = getQuestionDetail(Number(questionId))
+  // const { data } = getTestQuestionDetail(Number(questionId))
   console.log(data)
+
+  const [isPreview, setIsPreview] = useState<boolean>(false)
+  const searchOnPreview = () => {
+    openModal(modals.LoginToContinueModal)
+  }
+
+  useEffect(() => {
+    if (!storage.get('accessToken')) {
+      setIsPreview(true)
+    }
+  })
+
   const combinedList = [...(data?.imgList ?? []), ...(data?.itemList ?? [])]
   const sortedList = combinedList.sort((a, b) => a.sortOrder - b.sortOrder)
 
@@ -196,7 +210,7 @@ const CommunityDetail = () => {
         <Header isModalHeader={false} hasArrow={true}>
           <Home onClick={() => navigate('/home')} />
           <ShareIcon stroke={Common.colors.BK} onClick={handleShare} />
-          <More onClick={() => onClickShowMore()} />
+          <More onClick={isPreview ? () => searchOnPreview() : () => onClickShowMore()} />
         </Header>
       </HeaderWrapper>
       {data ? (
@@ -265,7 +279,13 @@ const CommunityDetail = () => {
                 ></DisplayPhotoItems>
               )}
               {data?.qtype === 'Find' && !data.hasMine && (
-                <FindItemButton onClick={() => navigate('/community/comment/comment-item-photo')}>
+                <FindItemButton
+                  onClick={
+                    isPreview
+                      ? () => searchOnPreview()
+                      : () => navigate('/community/comment/comment-item-photo')
+                  }
+                >
                   아이템 찾아주기
                 </FindItemButton>
               )}
@@ -284,17 +304,21 @@ const CommunityDetail = () => {
               <Reaction>
                 <span>{data?.likeNum}</span>
                 {data?.hasLike ? (
-                  <LikeOn onClick={onClickLike}></LikeOn>
+                  <LikeOn
+                    onClick={isPreview ? () => searchOnPreview() : () => onClickLike()}
+                  ></LikeOn>
                 ) : (
-                  <LikeOff onClick={onClickLike}></LikeOff>
+                  <LikeOff
+                    onClick={isPreview ? () => searchOnPreview() : () => onClickLike()}
+                  ></LikeOff>
                 )}
               </Reaction>
             </InteractionWrapper>
           </InfoWrapper>
           <Divider></Divider>
-          <CommentList questionId={Number(questionId)}></CommentList>
+          <CommentList questionId={Number(questionId)} isPreview={isPreview}></CommentList>
           <Divider></Divider>
-          {data?.qtype && (
+          {data?.qtype && !isPreview && (
             <RecommendList
               questionId={Number(questionId)}
               nickName={currentUser?.userInfo.nickName}
@@ -316,7 +340,10 @@ const CommunityDetail = () => {
                 ></Chip>
               </RecommendChipWrapper>
             )}
-            <CommentWrapper onFocus={() => setIsFocused(true)} onBlur={onBlurHandler}>
+            <CommentWrapper
+              onFocus={isPreview ? () => searchOnPreview() : () => setIsFocused(true)}
+              onBlur={onBlurHandler}
+            >
               <CommentField
                 value={commentString}
                 setValue={setCommentString}
