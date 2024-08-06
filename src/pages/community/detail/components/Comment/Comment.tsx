@@ -48,13 +48,15 @@ import { Dim } from '../../../../../components/UserImage/UserImage'
 import { imgItemListState } from '../../../../../recoil/communityInfo'
 import { ReactComponent as DefaultProfile } from '../../../../../assets/defaultProfile_40.svg'
 import { RequestEditItemState } from '../../../../item/editRequest'
+import CommentBlur from './CommentBlur'
 
 interface CommentProps {
   questionId: number
   commentId: number
+  isPreview?: boolean
 }
 
-const Comment = ({ questionId, commentId }: CommentProps) => {
+const Comment = ({ questionId, commentId, isPreview }: CommentProps) => {
   const navigate = useNavigate()
   const location = useLocation()
   const { openModal } = useModals()
@@ -63,8 +65,9 @@ const Comment = ({ questionId, commentId }: CommentProps) => {
   const setEditReportItemState = useSetRecoilState(RequestEditItemState)
   const setImageItemList = useSetRecoilState(imgItemListState)
 
-  const { getComment } = useSearchCommentQuery()
+  const { getComment, getTestComment } = useSearchCommentQuery()
   const { data: comment } = getComment(commentId)
+  // const { data: comment } = getTestComment(commentId)
   console.log(comment)
 
   function convertToUTC(dateString: string): string {
@@ -211,6 +214,7 @@ const Comment = ({ questionId, commentId }: CommentProps) => {
             </BlockedBg>
           </BlockedContainer>
         )}
+
         {sortedList && sortedList.length > 0 && (
           <ItemWrapper>
             {sortedList.map((each) => {
@@ -251,7 +255,6 @@ const Comment = ({ questionId, commentId }: CommentProps) => {
             })}
           </ItemWrapper>
         )}
-
         {comment.commentStatus === 'ACTIVE' && (
           <CommentExpression>
             <ExpressionWrapper>

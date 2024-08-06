@@ -33,25 +33,6 @@ const queryClient = new QueryClient({
     },
   },
 })
-// export const StyledToastContainer = styled(ToastContainer)`
-//   .Toastify__toast {
-//     text-align: center;
-//     width: 14.625rem;
-//     border-radius: 0.5rem;
-//     opacity: 0.8;
-//     background: ${Common.colors.BK};
-//     min-height: 2.3125rem;
-//     /* max-width: 14.6875rem; */
-//     left: 50% !important;
-//     bottom: 50vh !important;
-//     transform: translateX(-50%) !important;
-//     ${Pretendard({ size: 14, weight: Common.bold.regular, color: Common.colors.WH })}
-//   }
-//   .Toastify__toast-body {
-//     padding: 0;
-//     margin: 0;
-//   }
-// `
 export const StyledToastContainer = styled(ToastContainer)`
   height: 100%;
   .Toastify__toast {
