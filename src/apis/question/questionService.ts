@@ -3,6 +3,7 @@ import request from '../core'
 import { GetPaginationResult, ResponseType } from '../core/type'
 import { CommunityBannerItem, QuestionResult } from './questionService.type'
 import { BuyHomeResult, SearchQuestionResult } from '../search/searchService'
+import dev from '../core/dev'
 
 export interface questionUpload {
   id: number
@@ -21,6 +22,12 @@ export default class QuestionService {
     const data: ResponseType<QuestionResult> = await request.get(
       `${this.questionUrl}/${questionId}`,
     )
+
+    return data.result
+  }
+
+  async testQuestionDetail(questionId: number) {
+    const data: ResponseType<QuestionResult> = await dev.get(`${this.questionUrl}/${questionId}`)
 
     return data.result
   }
@@ -46,6 +53,7 @@ export default class QuestionService {
 
   // 찾아주세요 게시글 등록
   async postFindRequest(item: CommunityItem) {
+    console.log('item in postFindRequest', item)
     const data: ResponseType<questionUpload> = await request.post(`${this.questionUrl}/find`, item)
     return data.result
   }

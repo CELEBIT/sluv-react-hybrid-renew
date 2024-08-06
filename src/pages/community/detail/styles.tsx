@@ -234,7 +234,7 @@ export const CommentContainer = styled.div`
   flex-direction: column;
   width: 100%;
   position: absolute;
-  z-index: 10;
+  z-index: 50;
   bottom: 0;
   background-color: white;
   border-top: 1px solid ${Common.colors.GR300};

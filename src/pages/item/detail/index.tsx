@@ -100,7 +100,7 @@ const ItemDetail = () => {
   const { getItemDetail } = useItemDetailQuery()
   const { data } = getItemDetail(Number(itemId))
   // const { data } = testItemDetail(Number(itemId))
-  // console.log(data)
+  console.log(data)
 
   const setEditReportItemState = useSetRecoilState(RequestEditItemState)
   const colors = ['gray', 'pink', 'orange', 'yellow', 'green', 'blue']
@@ -305,7 +305,7 @@ const ItemDetail = () => {
                   </>
                 )}
                 <span>{data?.category.name}</span>
-                {data?.color && <ColorCircle color={data.color}></ColorCircle>}
+                {/* {data?.color && <ColorCircle color={data.color}></ColorCircle>} */}
               </Category>
               <ItemName>{data?.itemName}</ItemName>
               <Brand>

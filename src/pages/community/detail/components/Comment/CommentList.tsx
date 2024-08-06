@@ -5,47 +5,47 @@ import EmptyState from '../../../../../components/EmptyState'
 import { ReactComponent as ShowMore } from '../../../../../assets/add_24.svg'
 import { ReactComponent as StorageOff } from '../../../../../assets/storage_list_off_24.svg'
 import { ReactComponent as StorageOn } from '../../../../../assets/storage_on_24.svg'
-import {
-  BrandName,
-  CelebName,
-  CommentContainer,
-  CommentContent,
-  CommentExpression,
-  CommentWrapper,
-  ContentLeft,
-  ContentRight,
-  ContentTop,
-  ContentWrapper,
-  Img,
-  Item,
-  ItemName,
-  ItemTextWrapper,
-  ItemWrapper,
-  NickName,
-  Time,
-  UserImg,
-  UserInfo,
-} from './styles'
-import { formatUpdatedAt } from '../../../../../utils/utility'
-import SubCommentList from '../SubCommentList/SubCommentList'
-import { ExpressionWrapper, LikeWrapper } from '../SubCommentList/styles'
-import { ReactComponent as LikeOff } from '../../../../../assets/like_off_18.svg'
-import { ReactComponent as LikeOn } from '../../../../../assets/like_on_18.svg'
-import { useNavigate } from 'react-router-dom'
+import { CommentContainer } from './styles'
 import Comment from './Comment'
+import CommentBlur from './CommentBlur'
+import styled from '@emotion/styled'
 interface CommentListProps {
   questionId: number
+  isPreview?: boolean
 }
 
-const CommentList = ({ questionId }: CommentListProps) => {
-  const { getCommentList } = useSearchCommentQuery()
+const CommentList = ({ questionId, isPreview }: CommentListProps) => {
+  const { getCommentList, getTestCommentList } = useSearchCommentQuery()
   const { data } = getCommentList(questionId)
+  // const { data } = getTestCommentList(questionId)
+  // alert(isPreview)
+  console.log(data)
   if (data && data.length > 0) {
     return (
       <CommentContainer>
-        {data.map((comment) => {
-          return <Comment key={comment.id} commentId={comment.id} questionId={questionId}></Comment>
-        })}
+        {isPreview ? (
+          <BlurLayout>
+            {data.map((comment) => {
+              return (
+                <Comment
+                  key={comment.id}
+                  commentId={comment.id}
+                  questionId={questionId}
+                  isPreview={true}
+                ></Comment>
+              )
+            })}
+            <CommentBlur></CommentBlur>
+          </BlurLayout>
+        ) : (
+          <>
+            {data.map((comment) => {
+              return (
+                <Comment key={comment.id} commentId={comment.id} questionId={questionId}></Comment>
+              )
+            })}
+          </>
+        )}
       </CommentContainer>
     )
   } else {
@@ -60,3 +60,12 @@ const CommentList = ({ questionId }: CommentListProps) => {
 }
 
 export default CommentList
+
+const BlurLayout = styled.div`
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  width: 100%;
+  height: 18.75rem;
+  overflow: hidden;
+`
