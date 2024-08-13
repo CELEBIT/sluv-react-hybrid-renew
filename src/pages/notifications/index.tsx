@@ -11,12 +11,13 @@ import { NotificationType } from './components/types'
 import EmptyState from '../../components/EmptyState'
 import { EmptyStateContainer } from '../community/styles'
 import { useRecoilValue, useResetRecoilState } from 'recoil'
+import { toast } from 'react-toastify'
 
 const Notifications = () => {
   const {
     getNotificationList,
     getDevNotificationList,
-    deleteNotification: { mutate: mutateByDeleteEach },
+    deleteNotification: { mutate: mutateByDeleteSelected },
     deleteAllNotifications: { mutate: mutateByDeleteAll },
   } = useNotificationQuery()
   const { data } = getDevNotificationList()
@@ -29,12 +30,27 @@ const Notifications = () => {
   const onEdit = () => {
     // 선택 여부 O
     if (checkedList.length > 0) {
-      // api call
-      resetCheckedList()
+      deleteSelectedNotifications()
     }
     // 선택 여부 X
-
     setIsEditMode(!isEditMode)
+  }
+  // 알림 선택 삭제
+  const deleteSelectedNotifications = () => {
+    if (checkedList.length > 0) {
+      mutateByDeleteSelected(checkedList)
+      resetCheckedList()
+      setIsEditMode(!isEditMode)
+      toast('알림이 삭제되었어요')
+    } else {
+      toast('삭제할 알림을 선택해주세요')
+    }
+  }
+  // 알림 전체 삭제
+  const deleteAllNotifications = () => {
+    mutateByDeleteAll()
+    setIsEditMode(!isEditMode)
+    toast('알림이 삭제되었어요')
   }
 
   return (
@@ -86,9 +102,9 @@ const Notifications = () => {
       {isEditMode && (
         <DeleteFloatingContainer>
           <div className='wrapper'>
-            <button onClick={() => mutateByDeleteAll}>전체 삭제</button>
+            <button onClick={deleteAllNotifications}>전체 삭제</button>
             <span className='line'></span>
-            <button onClick={() => mutateByDeleteEach}>선택 삭제</button>
+            <button onClick={deleteSelectedNotifications}>선택 삭제</button>
           </div>
         </DeleteFloatingContainer>
       )}

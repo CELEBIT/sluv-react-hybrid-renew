@@ -3,12 +3,12 @@ import {
   useInfiniteQuery,
   useMutation,
   useQuery,
+  useQueryClient,
 } from '@tanstack/react-query'
 import { GetPaginationResult } from '../../core/type'
 import NotificationService from '../notificationService'
 import { queryKeys } from '../../../config/queryKeys'
 import { INotification } from '../../../pages/notifications/components/types'
-import { useQueryClient } from 'react-query'
 
 const useNotificationQuery = () => {
   const notification = new NotificationService()
@@ -48,11 +48,11 @@ const useNotificationQuery = () => {
 
   // 알림 선택 삭제
   const deleteNotification = useMutation(
-    (notificationIdList: number[]) => notification.deleteNotification(notificationIdList),
+    (notificationIdList: Array<number>) => notification.deleteNotification(notificationIdList),
     {
       onSuccess: (res) => {
         console.log(res)
-        queryClient.invalidateQueries('getNotificationList')
+        queryClient.invalidateQueries(queryKeys.getNotificationList)
       },
     },
   )
@@ -60,7 +60,7 @@ const useNotificationQuery = () => {
   const deleteAllNotifications = useMutation(() => notification.deleteAllNotifications(), {
     onSuccess: (res) => {
       console.log(res)
-      queryClient.invalidateQueries('getNotificationList')
+      queryClient.invalidateQueries(queryKeys.getNotificationList)
     },
   })
 

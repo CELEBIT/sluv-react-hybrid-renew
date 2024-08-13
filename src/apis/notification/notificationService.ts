@@ -40,7 +40,7 @@ export default class NotificationService {
   async deleteNotification(idArray: Array<number>) {
     const result = await Promise.allSettled(
       idArray.map(async (id) => {
-        const data: ResponseType = await request.delete(`${this.notificationUrl}/${id}`)
+        const data: ResponseType = await dev.delete(`${this.notificationUrl}/${id}`)
         return data
       }),
     )
