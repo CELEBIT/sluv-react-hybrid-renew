@@ -75,7 +75,7 @@ const Notifications = () => {
                     data={each}
                     hasPreviewImg={
                       !!(
-                        (each.mainImageUrl || each.userImageUrl) &&
+                        (each.images || each.userImageUrl) &&
                         each.type !== NotificationType.NOTICE &&
                         each.type !== NotificationType.REPORT
                       )

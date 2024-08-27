@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { ReactComponent as Banner } from '../../assets/최예나배너.svg'
-import { ReactComponent as HotCelebBanner } from '../../assets/HotCelebBanner.svg'
+import { ReactComponent as Banner } from '../../assets/MainBanner/최예나배너.svg'
+import { ReactComponent as HotCelebBanner } from '../../assets/MainBanner/OctoberBanner.svg'
 import { ReactComponent as Logo } from '../../assets/logo.svg'
 
 import { ReactComponent as Search } from '../../assets/search_24.svg'

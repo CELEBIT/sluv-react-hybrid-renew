@@ -8,6 +8,8 @@ import { atom, useRecoilState } from 'recoil'
 import { atomKeys } from '../../../config/atomKeys'
 import { Common } from '../../../components/styles'
 import { useNavigate } from 'react-router-dom'
+import { EachVotePhoto } from '../../community/detail/styles'
+import Photo from '../../../components/AddPhotos/Photo'
 
 interface NotificationProps {
   hasPreviewImg?: boolean
@@ -88,7 +90,22 @@ const Notification = ({ hasPreviewImg, data, isEditMode }: NotificationProps) =>
         </S.TitleText>
         <S.TimeText>1분 전</S.TimeText>
       </S.CenterLayout>
-      {hasPreviewImg && <S.RightLayout></S.RightLayout>}
+      {hasPreviewImg && data.images.length > 0 && (
+        <S.RightLayout>
+          {data.images.length > 1 ? (
+            data.images.map((vote) => {
+              return (
+                <EachVotePhoto
+                  key={vote.sortOrder + vote.imgUrl}
+                  imgUrl={vote.imgUrl ?? ''}
+                ></EachVotePhoto>
+              )
+            })
+          ) : (
+            <Photo size={40} borderRadius={4} imgUrl={data.images[0].imgUrl}></Photo>
+          )}
+        </S.RightLayout>
+      )}
     </S.Layout>
   )
 }
