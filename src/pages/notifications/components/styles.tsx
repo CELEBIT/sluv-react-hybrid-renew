@@ -31,7 +31,6 @@ export const RightLayout = styled.div`
   height: 2.5rem;
   flex-shrink: 0;
   flex-grow: 0;
-  background-color: green;
   overflow: hidden;
   border-radius: 0.25rem;
 `

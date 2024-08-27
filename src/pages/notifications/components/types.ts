@@ -1,3 +1,5 @@
+import { Img } from '../../../apis/comment/commentService.type'
+
 export enum AlarmStatus {
   ACTIVE = 'ACTIVE',
   READ = 'READ',
@@ -24,7 +26,7 @@ export interface INotification {
   questionId: number
   commentId: number
   followerId: number
-  mainImageUrl: string
+  images: Array<Img>
   userImageUrl: string
   cratedAt: string
   alarmStatus: AlarmStatus
