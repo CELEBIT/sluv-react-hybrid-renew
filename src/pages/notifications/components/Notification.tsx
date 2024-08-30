@@ -43,8 +43,8 @@ const Notification = ({ hasPreviewImg, data, isEditMode }: NotificationProps) =>
   }
 
   const onClickNotification = (type: NotificationType) => {
-    if (data.alarmStatus === 'ACTIVE') mutateByRead(data.alarmId)
     if (isEditMode) return
+    if (data.alarmStatus === 'ACTIVE') mutateByRead(data.alarmId)
     if (type === NotificationType.ITEM || type === NotificationType.EDIT) {
       navigate(`/item/detail/${data.itemId}`)
     }
@@ -66,7 +66,11 @@ const Notification = ({ hasPreviewImg, data, isEditMode }: NotificationProps) =>
   const sortedList = data.images.sort((a, b) => a.sortOrder - b.sortOrder)
 
   return (
-    <S.Layout onClick={() => onClickNotification(data.type)} isRead={data.alarmStatus === 'READ'}>
+    <S.Layout
+      onClick={() => onClickNotification(data.type)}
+      isRead={data.alarmStatus === 'READ'}
+      isEditMode={isEditMode}
+    >
       <S.LeftLayout>
         {isEditMode ? (
           <S.Checkbox>
