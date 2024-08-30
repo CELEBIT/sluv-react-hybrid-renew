@@ -36,6 +36,13 @@ export default class NotificationService {
     return data.result
   }
 
+  async readNotification(notificationId: number) {
+    const data: ResponseType = await dev.patch(
+      `${this.notificationUrl}/read?alarmId=${notificationId}`,
+    )
+    return data
+  }
+
   // 푸쉬알림 선택 삭제
   async deleteNotification(idArray: Array<number>) {
     const result = await Promise.allSettled(
