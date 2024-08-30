@@ -46,6 +46,16 @@ const useNotificationQuery = () => {
     )
   }
 
+  const readNotification = useMutation(
+    (notificationId: number) => notification.readNotification(notificationId),
+    {
+      onSuccess: (res) => {
+        console.log(res)
+        queryClient.invalidateQueries(queryKeys.getNotificationList)
+      },
+    },
+  )
+
   // 알림 선택 삭제
   const deleteNotification = useMutation(
     (notificationIdList: Array<number>) => notification.deleteNotification(notificationIdList),
@@ -64,7 +74,13 @@ const useNotificationQuery = () => {
     },
   })
 
-  return { getNotificationList, getDevNotificationList, deleteNotification, deleteAllNotifications }
+  return {
+    getNotificationList,
+    getDevNotificationList,
+    readNotification,
+    deleteNotification,
+    deleteAllNotifications,
+  }
 }
 
 export default useNotificationQuery

@@ -74,6 +74,7 @@ export const queryKeys = {
   noticeList: ['noticeList'] as const,
   getNotificationList: ['getNotificationList'] as const,
   noticeDetail: (noticeId: number) => ['noticeDetail', noticeId] as const,
+  readNofitication: (notificationId: number) => ['readNofitication', notificationId] as const,
   getCommunityBannerItems: ['getCommunityBannerItems'] as const,
   getSearchRank: ['getSearchRank'] as const,
   getQuestionFindList: (celebId?: number) => ['getQuestionFindList', celebId] as const,

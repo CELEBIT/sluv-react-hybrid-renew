@@ -10,6 +10,7 @@ import { Common } from '../../../components/styles'
 import { useNavigate } from 'react-router-dom'
 import { EachVotePhoto } from '../../community/detail/styles'
 import Photo from '../../../components/AddPhotos/Photo'
+import useNotificationQuery from '../../../apis/notification/hooks/useNotificationQuery'
 
 interface NotificationProps {
   hasPreviewImg?: boolean
@@ -24,9 +25,12 @@ export const deleteNotificationsState = atom<Array<number>>({
 
 const Notification = ({ hasPreviewImg, data, isEditMode }: NotificationProps) => {
   const navigate = useNavigate()
+  const {
+    readNotification: { mutate: mutateByRead },
+  } = useNotificationQuery()
+
   const [checkedList, setCheckedList] = useRecoilState(deleteNotificationsState)
   const [isChecked, setIsChecked] = useState(checkedList.includes(data.alarmId))
-  console.log(checkedList.includes(data.alarmId))
 
   const onCheck = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     if (isChecked) {
@@ -39,6 +43,7 @@ const Notification = ({ hasPreviewImg, data, isEditMode }: NotificationProps) =>
   }
 
   const onClickNotification = (type: NotificationType) => {
+    if (data.alarmStatus === 'ACTIVE') mutateByRead(data.alarmId)
     if (isEditMode) return
     if (type === NotificationType.ITEM || type === NotificationType.EDIT) {
       navigate(`/item/detail/${data.itemId}`)
@@ -57,8 +62,11 @@ const Notification = ({ hasPreviewImg, data, isEditMode }: NotificationProps) =>
       navigate('/notice')
     }
   }
+
+  const sortedList = data.images.sort((a, b) => a.sortOrder - b.sortOrder)
+
   return (
-    <S.Layout onClick={() => onClickNotification(data.type)}>
+    <S.Layout onClick={() => onClickNotification(data.type)} isRead={data.alarmStatus === 'READ'}>
       <S.LeftLayout>
         {isEditMode ? (
           <S.Checkbox>
@@ -92,8 +100,8 @@ const Notification = ({ hasPreviewImg, data, isEditMode }: NotificationProps) =>
       </S.CenterLayout>
       {hasPreviewImg && data.images.length > 0 && (
         <S.RightLayout>
-          {data.images.length > 1 ? (
-            data.images.map((vote) => {
+          {sortedList.length > 1 ? (
+            sortedList.map((vote) => {
               return (
                 <EachVotePhoto
                   key={vote.sortOrder + vote.imgUrl}

@@ -1,13 +1,14 @@
 import styled from '@emotion/styled'
 import { Common, Pretendard } from '../../../components/styles'
 
-export const Layout = styled.label`
+export const Layout = styled.div<{ isRead: boolean }>`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 1rem 1.25rem;
   gap: 1rem;
   /* border: 1px solid red; */
+  opacity: ${(props) => props.isRead && '30%'};
 `
 export const LeftLayout = styled.div`
   width: 2.5rem;

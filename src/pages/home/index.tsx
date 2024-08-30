@@ -2,7 +2,8 @@ import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { ReactComponent as Banner } from '../../assets/MainBanner/최예나배너.svg'
 import { ReactComponent as HotCelebBanner } from '../../assets/MainBanner/OctoberBanner.svg'
 import { ReactComponent as Logo } from '../../assets/logo.svg'
-
+import { ReactComponent as BellOn } from '../../assets/bell_on_24.svg'
+import { ReactComponent as BellOff } from '../../assets/bell_off_24.svg'
 import { ReactComponent as Search } from '../../assets/search_24.svg'
 
 import { ComponentContainer, HomeContainer } from './styles'
@@ -74,6 +75,7 @@ const Home = () => {
             fill={Common.colors.BK}
             onClick={isPreview ? searchOnPreview : () => navigate('/search')}
           ></Search>
+          <BellOn onClick={() => navigate('/notifications')}></BellOn>
         </div>
       </HeaderWrapper>
       <ComponentContainer ref={scrollToTopRef}>
