@@ -1,10 +1,6 @@
 import { Img } from '../../../apis/comment/commentService.type'
 
-export enum AlarmStatus {
-  ACTIVE = 'ACTIVE',
-  READ = 'READ',
-  DELETED = 'DELETED',
-}
+export type AlarmStatus = 'ACTIVE' | 'READ' | 'DELETED'
 
 export enum NotificationType {
   ITEM = 'item', // 게시글 좋아요
