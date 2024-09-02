@@ -14,6 +14,17 @@ const useNotificationQuery = () => {
   const notification = new NotificationService()
   const queryClient = useQueryClient()
 
+  const getNotificationReadStatus = () => {
+    return useQuery(
+      queryKeys.getNotificationReadStatus,
+      () => notification.getNotificationReadStatus(),
+      {
+        cacheTime: 60000, // 1분 동안 캐시로 저장
+        staleTime: 1000,
+      },
+    )
+  }
+
   const getNotificationList = (): UseInfiniteQueryResult<
     GetPaginationResult<INotification>,
     any
@@ -75,6 +86,7 @@ const useNotificationQuery = () => {
   })
 
   return {
+    getNotificationReadStatus,
     getNotificationList,
     getDevNotificationList,
     readNotification,

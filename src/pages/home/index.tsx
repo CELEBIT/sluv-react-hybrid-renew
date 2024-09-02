@@ -23,6 +23,7 @@ import storage from '../../utils/storage'
 import ScrollToTop from './components/ScrollToTopButton'
 import useModals from '../../components/Modals/hooks/useModals'
 import { modals } from '../../components/Modals'
+import Header from '../../components/Header/Header'
 
 export interface PreviewProps {
   isPreview: boolean
@@ -66,18 +67,19 @@ const Home = () => {
   }
   return (
     <HomeContainer>
-      <HeaderWrapper role='heading' isModalHeader={false} style={{ padding: '0.625rem 1.25rem' }}>
-        <div className='left' onClick={() => navigate('/home')}>
-          <Logo></Logo>
-        </div>
-        <div className='right'>
-          <Search
-            fill={Common.colors.BK}
-            onClick={isPreview ? searchOnPreview : () => navigate('/search')}
-          ></Search>
-          <BellOn onClick={() => navigate('/notifications')}></BellOn>
-        </div>
-      </HeaderWrapper>
+      <Header
+        isMainHeader={true}
+        isModalHeader={false}
+        title='커뮤니티'
+        hasArrow={false}
+        hasNotification={true}
+      >
+        <Search
+          fill='black'
+          onClick={isPreview ? searchOnPreview : () => navigate('/search')}
+        ></Search>
+        {/* <NoticeOff></NoticeOff> */}
+      </Header>
       <ComponentContainer ref={scrollToTopRef}>
         <div ref={bannerRef}>
           <Banner style={{ height: '100%', width: '100%' }}></Banner>
