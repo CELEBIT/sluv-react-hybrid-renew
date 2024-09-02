@@ -31,3 +31,7 @@ export interface INotification {
   cratedAt: string
   alarmStatus: AlarmStatus
 }
+
+export interface INotificationRead {
+  isAllRead: boolean
+}
