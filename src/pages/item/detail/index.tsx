@@ -351,7 +351,7 @@ const ItemDetail = () => {
           )}
           <UploaderInfoWrapper>
             <div className='user' onClick={data?.writer.id !== null ? onClickUser : undefined}>
-              {data?.writer.profileImgUrl !== null ? (
+              {data?.writer.profileImgUrl ? (
                 <UserImg imgUrl={data?.writer.profileImgUrl} />
               ) : (
                 <DefaultProfile></DefaultProfile>
