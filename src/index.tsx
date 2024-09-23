@@ -1,5 +1,5 @@
 // 라이브러리/패키지
-import React, { useEffect } from 'react'
+import React, { StrictMode, useEffect } from 'react'
 import ReactDOM, { createRoot } from 'react-dom/client'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 // import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
@@ -59,12 +59,13 @@ const root = createRoot(container)
 if (container.hasChildNodes()) {
   ReactDOM.hydrateRoot(
     container,
-    <QueryClientProvider client={queryClient}>
-      {/* <ReactQueryDevtools initialIsOpen /> */}
-      <RecoilRoot>
-        {/* <DebugObserver /> */}
-        <Global styles={reset} />
-        {/* <StyledToastContainer
+    <StrictMode>
+      <QueryClientProvider client={queryClient}>
+        {/* <ReactQueryDevtools initialIsOpen /> */}
+        <RecoilRoot>
+          {/* <DebugObserver /> */}
+          <Global styles={reset} />
+          {/* <StyledToastContainer
           position='bottom-center'
           autoClose={1500}
           hideProgressBar={true}
@@ -73,20 +74,22 @@ if (container.hasChildNodes()) {
           pauseOnHover={false}
           limit={1}
         /> */}
-        <HelmetProvider>
-          <App />
-        </HelmetProvider>
-      </RecoilRoot>
-    </QueryClientProvider>,
+          <HelmetProvider>
+            <App />
+          </HelmetProvider>
+        </RecoilRoot>
+      </QueryClientProvider>
+    </StrictMode>,
   )
 } else {
   root.render(
-    <QueryClientProvider client={queryClient}>
-      {/* <ReactQueryDevtools initialIsOpen /> */}
-      <RecoilRoot>
-        {/* <DebugObserver /> */}
-        <Global styles={reset} />
-        {/* <StyledToastContainer
+    <StrictMode>
+      <QueryClientProvider client={queryClient}>
+        {/* <ReactQueryDevtools initialIsOpen /> */}
+        <RecoilRoot>
+          {/* <DebugObserver /> */}
+          <Global styles={reset} />
+          {/* <StyledToastContainer
           position='bottom-center'
           autoClose={1500}
           hideProgressBar={true}
@@ -95,10 +98,11 @@ if (container.hasChildNodes()) {
           pauseOnHover={false}
           limit={1}
         /> */}
-        <HelmetProvider>
-          <App />
-        </HelmetProvider>
-      </RecoilRoot>
-    </QueryClientProvider>,
+          <HelmetProvider>
+            <App />
+          </HelmetProvider>
+        </RecoilRoot>
+      </QueryClientProvider>
+    </StrictMode>,
   )
 }
