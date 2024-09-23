@@ -1,9 +1,6 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { ReactComponent as Banner } from '../../assets/MainBanner/최예나배너.svg'
+import React, { useEffect, useRef, useState } from 'react'
+import { ReactComponent as Banner } from '../../assets/MainBanner/정보공유방법안내배너.svg'
 import { ReactComponent as HotCelebBanner } from '../../assets/MainBanner/OctoberBanner.svg'
-import { ReactComponent as Logo } from '../../assets/logo.svg'
-import { ReactComponent as BellOn } from '../../assets/bell_on_24.svg'
-import { ReactComponent as BellOff } from '../../assets/bell_off_24.svg'
 import { ReactComponent as Search } from '../../assets/search_24.svg'
 
 import { ComponentContainer, HomeContainer } from './styles'
@@ -16,8 +13,6 @@ import HowAbout from './components/HowAbout/HowAbout'
 import LuxuryMood from './components/LuxuryMood/LuxuryMood'
 import PresentItem from './components/PresentItem/PresentItem'
 import { Divider } from '../item/detail/styles'
-import { HeaderWrapper } from '../../components/Header/styles'
-import { Common } from '../../components/styles'
 import { useNavigate } from 'react-router-dom'
 import storage from '../../utils/storage'
 import ScrollToTop from './components/ScrollToTopButton'
@@ -67,18 +62,11 @@ const Home = () => {
   }
   return (
     <HomeContainer>
-      <Header
-        isMainHeader={true}
-        isModalHeader={false}
-        title='커뮤니티'
-        hasArrow={false}
-        hasNotification={true}
-      >
+      <Header isMainHeader={true} isModalHeader={false} hasArrow={false} hasNotification={true}>
         <Search
           fill='black'
           onClick={isPreview ? searchOnPreview : () => navigate('/search')}
         ></Search>
-        {/* <NoticeOff></NoticeOff> */}
       </Header>
       <ComponentContainer ref={scrollToTopRef}>
         <div ref={bannerRef}>
