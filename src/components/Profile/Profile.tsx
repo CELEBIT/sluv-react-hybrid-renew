@@ -13,15 +13,14 @@ import { AxiosError } from 'axios'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { HeaderWrap } from '../../pages/search/styles'
 import Header from '../Header/Header'
-import { ContentContainer, PageContainer } from '../../pages/user/styles'
-import { HeaderWrapper } from '../Header/CommunityHeader/styles'
-import { convertToFile, convertToImageList, openGallery } from '../../utils/utility'
+import { ContentContainer } from '../../pages/user/styles'
+import { convertToFile, openGallery } from '../../utils/utility'
 import { toast } from 'react-toastify'
 
 function Profile({ onNext }: { onNext?: (profile: SignupValues['profile']) => void }) {
   const [profileValues, setProfileValues] = useState<SignupValues['profile']>({
     nickname: '',
-    userImg: '',
+    userImg: null,
   })
   const { pathname } = useLocation()
   const navigate = useNavigate()
@@ -56,7 +55,6 @@ function Profile({ onNext }: { onNext?: (profile: SignupValues['profile']) => vo
       ...prevValues,
       userImg: imgURL,
     }))
-    console.log(imgURL)
   }
 
   const {
@@ -66,7 +64,11 @@ function Profile({ onNext }: { onNext?: (profile: SignupValues['profile']) => vo
 
   const handleSubmit = () => {
     if (제출가능한상태인가) {
-      if (pathname === '/settings/edit-profile' && currentNickname === profileValues.nickname) {
+      if (
+        pathname === '/settings/edit-profile' &&
+        currentNickname === profileValues.nickname &&
+        profileValues.userImg
+      ) {
         mutateByEditImg(profileValues.userImg, {
           onSuccess: () => {
             if (onNext) onNext(profileValues)

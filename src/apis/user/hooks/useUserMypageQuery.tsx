@@ -131,7 +131,7 @@ const useUserMypageQuery = () => {
 
   type IProfile = {
     nickname: string
-    userImg: string
+    userImg: string | null
   }
 
   // 프로필 등록 & 수정
