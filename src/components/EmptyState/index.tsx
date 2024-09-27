@@ -6,7 +6,7 @@ import { ReactComponent as Comment } from '../../assets/list_36.svg'
 import { ReactComponent as Item } from '../../assets/item_36.svg'
 import { ReactComponent as Search } from '../../assets/search_36.svg'
 import { ReactComponent as Like } from '../../assets/like_36.svg'
-
+import { ReactComponent as Bell } from '../../assets/bell_36.svg'
 type EmptyStateProps = {
   icon: string
   // clock, save, comment, item, search, like
@@ -28,6 +28,8 @@ const getIconComponent = (icon: string) => {
       return <Search />
     case 'like':
       return <Like />
+    case 'bell':
+      return <Bell />
     default:
       return null
   }

@@ -14,5 +14,5 @@ export interface Term {
 
 export interface Profile {
   nickname: string
-  userImg: string
+  userImg: string | null
 }

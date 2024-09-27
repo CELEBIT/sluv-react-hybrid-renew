@@ -114,6 +114,10 @@ const RequestWithdraw = React.lazy(() => import('./pages/settings/RequestWithdra
 const WithdrawReason = React.lazy(
   () => import('./pages/settings/RequestWithdraw/WithdrawReason/index'),
 )
+
+// 알림
+const Notifications = React.lazy(() => import('./pages/notifications/index'))
+
 import Modal from 'react-modal'
 import { HelmetProvider } from 'react-helmet-async'
 import MetaTag from './utils/Share/MetaTag'
@@ -258,6 +262,8 @@ const App = () => {
             <Route path='/settings/edit-profile' element={<EditProfile />} />
             <Route path='/settings/withdraw' element={<RequestWithdraw />} />
             <Route path='/settings/withdraw/reason' element={<WithdrawReason />} />
+            {/* 알림 */}
+            <Route path='/notifications' element={<Notifications />} />
           </Routes>
         </Suspense>
         <Modals />

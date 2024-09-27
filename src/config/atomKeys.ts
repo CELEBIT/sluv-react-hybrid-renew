@@ -58,4 +58,5 @@ export const atomKeys = {
   withdrawReasonState: 'withdrawReasonState' as const,
   withdrawDisplayState: 'withdrawDisplayState' as const,
   searchTab: 'searchTab' as const,
+  deleteNotificationsState: 'deleteNotificationsState' as const,
 }

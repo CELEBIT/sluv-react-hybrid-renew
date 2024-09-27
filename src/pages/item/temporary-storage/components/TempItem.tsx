@@ -226,7 +226,7 @@ const TempItemWrap = styled.label<{ isGray: boolean; isFirst: boolean }>`
   }
 `
 
-const Checkbox = styled.div`
+export const Checkbox = styled.div`
   input[type='checkbox'] {
     -webkit-appearance: none;
     display: none;

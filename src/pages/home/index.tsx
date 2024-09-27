@@ -1,8 +1,6 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { ReactComponent as Banner } from '../../assets/최예나배너.svg'
-import { ReactComponent as HotCelebBanner } from '../../assets/HotCelebBanner.svg'
-import { ReactComponent as Logo } from '../../assets/logo.svg'
-
+import React, { useEffect, useRef, useState } from 'react'
+import { ReactComponent as Banner } from '../../assets/MainBanner/정보공유방법안내배너.svg'
+import { ReactComponent as HotCelebBanner } from '../../assets/MainBanner/OctoberBanner.svg'
 import { ReactComponent as Search } from '../../assets/search_24.svg'
 
 import { ComponentContainer, HomeContainer } from './styles'
@@ -15,13 +13,12 @@ import HowAbout from './components/HowAbout/HowAbout'
 import LuxuryMood from './components/LuxuryMood/LuxuryMood'
 import PresentItem from './components/PresentItem/PresentItem'
 import { Divider } from '../item/detail/styles'
-import { HeaderWrapper } from '../../components/Header/styles'
-import { Common } from '../../components/styles'
 import { useNavigate } from 'react-router-dom'
 import storage from '../../utils/storage'
 import ScrollToTop from './components/ScrollToTopButton'
 import useModals from '../../components/Modals/hooks/useModals'
 import { modals } from '../../components/Modals'
+import Header from '../../components/Header/Header'
 
 export interface PreviewProps {
   isPreview: boolean
@@ -65,17 +62,12 @@ const Home = () => {
   }
   return (
     <HomeContainer>
-      <HeaderWrapper role='heading' isModalHeader={false} style={{ padding: '0.625rem 1.25rem' }}>
-        <div className='left' onClick={() => navigate('/home')}>
-          <Logo></Logo>
-        </div>
-        <div className='right'>
-          <Search
-            fill={Common.colors.BK}
-            onClick={isPreview ? searchOnPreview : () => navigate('/search')}
-          ></Search>
-        </div>
-      </HeaderWrapper>
+      <Header isMainHeader={true} isModalHeader={false} hasArrow={false} hasNotification={true}>
+        <Search
+          fill='black'
+          onClick={isPreview ? searchOnPreview : () => navigate('/search')}
+        ></Search>
+      </Header>
       <ComponentContainer ref={scrollToTopRef}>
         <div ref={bannerRef}>
           <Banner style={{ height: '100%', width: '100%' }}></Banner>
