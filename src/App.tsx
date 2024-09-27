@@ -29,6 +29,9 @@ const ItemCreate = React.lazy(() => import('./pages/item/create'))
 const Closet = React.lazy(() => import('./pages/closet'))
 const User = React.lazy(() => import('./pages/user'))
 
+// 홈 사용 가이드
+const Guide = React.lazy(() => import('./pages/home/Guide/index'))
+
 // 회원가입 페이지
 const SignUp = React.lazy(() => import('./pages/signup/SignUp'))
 
@@ -164,6 +167,7 @@ const App = () => {
             <Route path='/500' element={<Page500 />} />
             {/* 홈 */}
             <Route path='/home' element={<Home />} />
+            <Route path='/home/guide' element={<Guide />} />
             {/* 회원가입 */}
             <Route path='/' element={<AppLoad />} />
 

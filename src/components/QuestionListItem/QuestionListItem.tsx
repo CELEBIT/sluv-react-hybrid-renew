@@ -56,7 +56,7 @@ const QuestionListItem = ({ item, detail }: QuestionItemProps) => {
     ...(item?.itemImgList?.filter((item) => item !== null) ?? []),
   ]
   const sortedList = combinedList.sort((a, b) => a.sortOrder - b.sortOrder)
-  const titleContent = item.title + (item.content ?? '')
+  const titleContent = item.title + ' ' + (item.content ?? '')
   return (
     <RecommendContainer
       detail={detail}
