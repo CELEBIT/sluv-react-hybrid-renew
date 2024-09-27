@@ -7,9 +7,11 @@ import { RecoilRoot, useRecoilSnapshot } from 'recoil'
 import { Global } from '@emotion/react'
 // 상대 경로 파일
 import App from './App'
-import { reset } from './components/styles'
+import { Common, Pretendard, reset } from './components/styles'
 import 'react-toastify/dist/ReactToastify.css'
 import { HelmetProvider } from 'react-helmet-async'
+import styled from '@emotion/styled'
+import { ToastContainer } from 'react-toastify'
 
 function DebugObserver() {
   const snapshot = useRecoilSnapshot()
@@ -31,26 +33,26 @@ export const queryClient = new QueryClient({
     },
   },
 })
-// export const StyledToastContainer = styled(ToastContainer)`
-//   height: 100%;
-//   .Toastify__toast {
-//     text-align: center;
-//     width: 14.625rem;
-//     border-radius: 0.5rem;
-//     opacity: 0.8;
-//     background: ${Common.colors.BK};
-//     min-height: 2.3125rem;
-//     position: fixed; // 고정 위치로 설정
-//     top: 50%; // 화면의 세로 중앙
-//     left: 50%; // 화면의 가로 중앙
-//     transform: translate(-50%, -50%) !important; // 중앙으로 이동
-//     ${Pretendard({ size: 14, weight: Common.bold.regular, color: Common.colors.WH })}
-//   }
-//   .Toastify__toast-body {
-//     padding: 0;
-//     margin: 0;
-//   }
-// `
+export const StyledToastContainer = styled(ToastContainer)`
+  height: 100%;
+  .Toastify__toast {
+    text-align: center;
+    width: 14.625rem;
+    border-radius: 0.5rem;
+    opacity: 0.8;
+    background: ${Common.colors.BK};
+    min-height: 2.3125rem;
+    position: fixed; // 고정 위치로 설정
+    top: 50%; // 화면의 세로 중앙
+    left: 50%; // 화면의 가로 중앙
+    transform: translate(-50%, -50%) !important; // 중앙으로 이동
+    ${Pretendard({ size: 14, weight: Common.bold.regular, color: Common.colors.WH })}
+  }
+  .Toastify__toast-body {
+    padding: 0;
+    margin: 0;
+  }
+`
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
