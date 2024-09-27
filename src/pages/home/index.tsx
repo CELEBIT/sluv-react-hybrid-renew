@@ -69,7 +69,7 @@ const Home = () => {
         ></Search>
       </Header>
       <ComponentContainer ref={scrollToTopRef}>
-        <div ref={bannerRef}>
+        <div ref={bannerRef} onClick={() => navigate('./guide')}>
           <Banner style={{ height: '100%', width: '100%' }}></Banner>
         </div>
         <Curation></Curation>
