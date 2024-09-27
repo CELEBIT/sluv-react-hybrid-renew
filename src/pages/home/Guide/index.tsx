@@ -6,23 +6,39 @@ import { ReactComponent as Top } from '../../../assets/MainBanner/HowToSluv/TOP.
 import { ReactComponent as First } from '../../../assets/MainBanner/HowToSluv/01.svg'
 import { ReactComponent as Second } from '../../../assets/MainBanner/HowToSluv/02.svg'
 import { ReactComponent as Last } from '../../../assets/MainBanner/HowToSluv/03.svg'
+import ButtonLarge from '../../../components/ButtonLarge/ButtonLarge'
+import { useNavigate } from 'react-router-dom'
 
 const Guide = () => {
+  const navigate = useNavigate()
   return (
-    <Flex direction='column' style={{ overflowY: 'scroll', width: '100%' }}>
-      <HeaderWrapper>
+    <Flex direction='column' style={{ height: '100vh', backgroundColor: '#EEEBE9' }}>
+      <HeaderWrapper style={{ backgroundColor: 'white' }}>
         <Header isModalHeader={false} title='스럽 사용 가이드' hasArrow={true}></Header>
       </HeaderWrapper>
-      <Top style={{ height: '100%', width: '100%' }} />
-      <Flex
-        direction='column'
-        align='center'
-        justify='center'
-        style={{ backgroundColor: '#EEEBE9', height: '100%', width: '100%', padding: '32px 20px' }}
-      >
-        <First />
-        <Second />
-        <Last />
+      <Flex direction='column' style={{ overflowY: 'scroll', width: '100%' }}>
+        <div>
+          <Top style={{ width: '100%', height: '100%' }} />
+        </div>
+        <Flex
+          direction='column'
+          justify='center'
+          style={{
+            padding: '2rem 1.25rem 3.75rem 1.25rem',
+            width: '100%',
+            gap: '1.5rem',
+          }}
+        >
+          <First style={{ width: '100%', height: '100%' }} />
+          <Second style={{ width: '100%', height: '100%' }} />
+          <Last style={{ width: '100%', height: '100%', marginBottom: '0.5rem' }} />
+          <ButtonLarge
+            text='정보 공유하러 가기'
+            active={true}
+            color='BK'
+            onClick={() => navigate('/item/create')}
+          />
+        </Flex>
       </Flex>
     </Flex>
   )
