@@ -11,7 +11,7 @@ export default class NotificationService {
   }
 
   async getNotificationReadStatus() {
-    const data: ResponseType<INotificationRead> = await dev.get(`${this.notificationUrl}/check`)
+    const data: ResponseType<INotificationRead> = await request.get(`${this.notificationUrl}/check`)
     return data.result
   }
 

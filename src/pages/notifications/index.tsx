@@ -16,13 +16,12 @@ import { toast } from 'react-toastify'
 const Notifications = () => {
   const {
     getNotificationList,
-    getDevNotificationList,
+    // getDevNotificationList,
     deleteNotification: { mutate: mutateByDeleteSelected },
     deleteAllNotifications: { mutate: mutateByDeleteAll },
   } = useNotificationQuery()
-  const { data } = getDevNotificationList()
+  const { data } = getNotificationList()
   const notificationList = data?.pages[0].content
-  console.log('notificationList', notificationList)
   const [isEditMode, setIsEditMode] = useState<boolean>(false)
   const checkedList = useRecoilValue(deleteNotificationsState)
   const resetCheckedList = useResetRecoilState(deleteNotificationsState)
