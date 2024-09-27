@@ -70,7 +70,7 @@ const Notifications = () => {
           <>
             {notificationList?.map((each) => {
               return (
-                <>
+                <React.Fragment key={each.alarmId}>
                   <Notification
                     data={each}
                     hasPreviewImg={
@@ -83,7 +83,7 @@ const Notifications = () => {
                     isEditMode={isEditMode}
                   ></Notification>
                   <Line></Line>
-                </>
+                </React.Fragment>
               )
             })}
             <InfoText>최근 60일간의 알림만 확인할 수 있어요</InfoText>
