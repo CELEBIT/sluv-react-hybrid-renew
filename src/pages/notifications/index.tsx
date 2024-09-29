@@ -21,6 +21,7 @@ const Notifications = () => {
     deleteAllNotifications: { mutate: mutateByDeleteAll },
   } = useNotificationQuery()
   const { data } = getNotificationList()
+  console.log(data)
   const notificationList = data?.pages[0].content
   const [isEditMode, setIsEditMode] = useState<boolean>(false)
   const checkedList = useRecoilValue(deleteNotificationsState)
@@ -65,7 +66,7 @@ const Notifications = () => {
         </Header>
       </HeaderWrapper>
       <ContentFullContainer>
-        {data ? (
+        {notificationList?.length ? (
           <>
             {notificationList?.map((each) => {
               return (

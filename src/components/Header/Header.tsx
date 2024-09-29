@@ -61,7 +61,7 @@ const Header = ({
         {children}
         {hasNotification && (
           <>
-            {data && data.isAllRead ? (
+            {data?.isAllRead ? (
               <BellOff onClick={() => navigate('/notifications')}></BellOff>
             ) : (
               <BellOn onClick={() => navigate('/notifications')}></BellOn>
