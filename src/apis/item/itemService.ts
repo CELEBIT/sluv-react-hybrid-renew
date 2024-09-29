@@ -306,4 +306,10 @@ export default class ItemService {
     )
     return data.result
   }
+
+  // Trend Bannder 아이템 조회
+  async getTrendItem() {
+    const data: ResponseType<RecommendItemResult[]> = await request.get(`${this.itemUrl}/trend`)
+    return data.result
+  }
 }
