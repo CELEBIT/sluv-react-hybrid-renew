@@ -11,13 +11,13 @@ export default class NotificationService {
   }
 
   async getNotificationReadStatus() {
-    const data: ResponseType<INotificationRead> = await request.get(`${this.notificationUrl}/check`)
+    const data: ResponseType<INotificationRead> = await dev.get(`${this.notificationUrl}/check`)
     return data.result
   }
 
   // 푸쉬알림 전체
   async getNotificationList(page: number) {
-    const data: ResponseType<GetPaginationResult<INotification>> = await request.get(
+    const data: ResponseType<GetPaginationResult<INotification>> = await dev.get(
       `${this.notificationUrl}`,
       {
         params: {

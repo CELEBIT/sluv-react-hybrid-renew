@@ -125,7 +125,7 @@ const TitleBar = styled.div`
   }
 `
 
-const GridListWrap = styled.div`
+export const GridListWrap = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-shrink: 0;

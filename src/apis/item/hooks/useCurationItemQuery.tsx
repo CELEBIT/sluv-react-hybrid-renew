@@ -10,7 +10,11 @@ const useCurationItemQuery = () => {
   const getCurationItem = () => {
     return useQuery(queryKeys.curationItem, () => item.getCurationItem())
   }
-  return { getCurationItem }
+
+  const getTrendItem = () => {
+    return useQuery(queryKeys.trendItem, () => item.getTrendItem())
+  }
+  return { getCurationItem, getTrendItem }
 }
 
 export default useCurationItemQuery
