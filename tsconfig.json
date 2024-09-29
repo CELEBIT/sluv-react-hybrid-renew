@@ -10,7 +10,7 @@
     "allowSyntheticDefaultImports": true, // default export 가 없는 모듈에서 default imports 를 허용합니다. 코드 방출에는 영향을 주지 않으며, 타입 검사만 수행합니다.
     "resolveJsonModule": true, // .json 확장자로 import 된 모듈을 포함합니다.
     "noEmit": true, // js 컴파일된 소스 파일 노출 안하기
-    "jsx": "react", // tsx 파일을 jsx로 어떻게 컴파일할 것인지 'preserve', 'react-native', 'react'
+    // "jsx": "react", // tsx 파일을 jsx로 어떻게 컴파일할 것인지 'preserve', 'react-native', 'react'
     "removeComments": true, //컴파일시 주석제거
     "declaration": true, //컴파일시 .d.ts 파일도 자동으로 함께생성 (현재쓰는 모든 타입이 정의된 파일)
     "forceConsistentCasingInFileNames": true, // 파일 이름에 일관된 케이싱 적용
@@ -23,10 +23,13 @@
     "strictPropertyInitialization": true, //class constructor 작성시 타입체크 강하게
     "noImplicitThis": true, //this 키워드가 any 타입일 경우 에러내기
     "alwaysStrict": true, //자바스크립트 "use strict" 모드 켜기
-    "noUnusedLocals": true, //쓰지않는 지역변수 있으면 에러내기
-    "noUnusedParameters": true, //쓰지않는 파라미터 있으면 에러내기
+    "noUnusedLocals": false, //쓰지않는 지역변수 있으면 에러내기
+    "noUnusedParameters": false, //쓰지않는 파라미터 있으면 에러내기
     "noImplicitReturns": true, //함수에서 return 빼먹으면 에러내기
-    "noFallthroughCasesInSwitch": true //switch문 이상하면 에러내기
+    "noFallthroughCasesInSwitch": true, //switch문 이상하면 에러내기
+    "jsx": "react-jsx",
+    "types": ["node", "jest", "@testing-library/jest-dom"],
+    "jsxImportSource": "@emotion/react"
   },
-  "include": ["src", "svg.d.ts"]
+  "include": ["src", "svg.d.ts", "gif.d.ts", "png.d.ts"]
 }

@@ -1,13 +1,14 @@
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import { Link } from 'react-router-dom'
+import styled from '@emotion/styled'
+import { Common, Pretendard } from '../styles'
 
 export const Root = styled.div<{ isOpen: boolean }>`
-  z-index: 50;
+  z-index: 150;
   position: fixed;
   bottom: ${(props) => (props.isOpen ? '0' : '-50px')};
   left: 0;
   right: 0;
-  height: 50px;
+  height: 3.625rem;
 
   display: flex;
   justify-content: space-between;
@@ -16,7 +17,8 @@ export const Root = styled.div<{ isOpen: boolean }>`
   opacity: ${(props) => (props.isOpen ? '1' : '0')};
   transition: bottom 300ms ease-in-out;
 
-  border: 1px red solid;
+  background-color: ${Common.colors.WH};
+  border-top: 1px solid ${Common.colors.GR100};
 `
 
 export const BottomNavItemLink = styled(Link)`
@@ -26,12 +28,20 @@ export const BottomNavItemLink = styled(Link)`
   flex: 1;
   align-items: center;
   justify-content: center;
-
-
-  margin: 0 5px;
-  background-color: yellow;
-`;
+  gap: 0.1875rem;
+  .active {
+    ${Pretendard({
+      size: 12,
+      weight: Common.bold.regular,
+      color: Common.colors.COMPLETE,
+    })};
+  }
+`
 
 export const BottomNavLabel = styled.span`
-  
-`;
+  ${Pretendard({
+    size: 12,
+    weight: Common.bold.regular,
+    color: Common.colors.GR500,
+  })};
+`
