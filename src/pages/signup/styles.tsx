@@ -33,3 +33,6 @@ export const Title = styled.span`
   ${Pretendard({ size: 24, weight: Common.bold.semiBold, color: Common.colors.BK })}
   margin-bottom: 1.5rem;
 `
+export const SubTitle = styled.span`
+  ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.GR600 })}
+`

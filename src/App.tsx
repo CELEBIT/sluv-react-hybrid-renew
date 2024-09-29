@@ -31,6 +31,7 @@ const User = React.lazy(() => import('./pages/user'))
 
 // 홈 사용 가이드
 const Guide = React.lazy(() => import('./pages/home/Guide/index'))
+const Collection = React.lazy(() => import('./pages/home/Collection/index'))
 
 // 회원가입 페이지
 const SignUp = React.lazy(() => import('./pages/signup/SignUp'))
@@ -168,6 +169,7 @@ const App = () => {
             {/* 홈 */}
             <Route path='/home' element={<Home />} />
             <Route path='/home/guide' element={<Guide />} />
+            <Route path='/home/collection' element={<Collection />} />
             {/* 회원가입 */}
             <Route path='/' element={<AppLoad />} />
 

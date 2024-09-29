@@ -80,7 +80,7 @@ const Home = () => {
         <HotCelebItems isPreview={isPreview}></HotCelebItems>
         <Divider></Divider>
         <HowAbout isPreview={isPreview}></HowAbout>
-        <div>
+        <div onClick={() => navigate('./collection')}>
           <HotCelebBanner style={{ height: '100%', width: '100%' }}></HotCelebBanner>
         </div>
         <LuxuryMood isPreview={isPreview}></LuxuryMood>

@@ -48,6 +48,7 @@ export const queryKeys = {
   recommendHotItem: ['recommendHotItem'] as const,
   buyNowItem: ['buyNowItem'] as const,
   curationItem: ['curationItem'] as const,
+  trendItem: ['trendItem'] as const,
   howAboutItem: ['howAboutItem'] as const,
   luxuryItem: ['luxuryItem'] as const,
   newItem: ['newItem'] as const,
