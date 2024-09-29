@@ -41,22 +41,6 @@ const useNotificationQuery = () => {
     )
   }
 
-  const getDevNotificationList = (): UseInfiniteQueryResult<
-    GetPaginationResult<INotification>,
-    any
-  > => {
-    return useInfiniteQuery(
-      queryKeys.getNotificationList,
-      ({ pageParam = 0 }) => notification.getDevNotificationList(pageParam),
-      {
-        getNextPageParam: (lastPage) => {
-          if (lastPage?.hasNext) return lastPage.page + 1
-          return undefined
-        },
-      },
-    )
-  }
-
   const readNotification = useMutation(
     (notificationId: number) => notification.readNotification(notificationId),
     {
@@ -88,7 +72,6 @@ const useNotificationQuery = () => {
   return {
     getNotificationReadStatus,
     getNotificationList,
-    getDevNotificationList,
     readNotification,
     deleteNotification,
     deleteAllNotifications,
