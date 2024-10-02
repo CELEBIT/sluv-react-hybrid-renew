@@ -96,10 +96,7 @@ const Notification = ({ hasPreviewImg, data, isEditMode }: NotificationProps) =>
         )}
       </S.LeftLayout>
       <S.CenterLayout>
-        <S.TitleText>
-          {data.title}&nbsp;
-          {data.body}
-        </S.TitleText>
+        <S.TitleText>{data.body}</S.TitleText>
         <S.TimeText>1분 전</S.TimeText>
       </S.CenterLayout>
       {hasPreviewImg && data.images.length > 0 && (
