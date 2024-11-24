@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom'
 import { EachVotePhoto } from '../../community/detail/styles'
 import Photo from '../../../components/AddPhotos/Photo'
 import useNotificationQuery from '../../../apis/notification/hooks/useNotificationQuery'
+import { formatUpdatedAt } from '../../../utils/utility'
 
 interface NotificationProps {
   hasPreviewImg?: boolean
@@ -96,11 +97,8 @@ const Notification = ({ hasPreviewImg, data, isEditMode }: NotificationProps) =>
         )}
       </S.LeftLayout>
       <S.CenterLayout>
-        <S.TitleText>
-          {data.title}&nbsp;
-          {data.body}
-        </S.TitleText>
-        <S.TimeText>1분 전</S.TimeText>
+        <S.TitleText>{data.body}</S.TitleText>
+        <S.TimeText>{formatUpdatedAt(data.cratedAt)}</S.TimeText>
       </S.CenterLayout>
       {hasPreviewImg && data.images.length > 0 && (
         <S.RightLayout>
