@@ -77,7 +77,7 @@ const Home = () => {
         <WeeklyTopUser isPreview={isPreview}></WeeklyTopUser>
         <NewItems isPreview={isPreview}></NewItems>
         <Divider></Divider>
-        <HotCelebItems isPreview={isPreview}></HotCelebItems>
+        {/* <HotCelebItems isPreview={isPreview}></HotCelebItems> */}
         <Divider></Divider>
         <HowAbout isPreview={isPreview}></HowAbout>
         <div onClick={() => navigate('./collection')}>
