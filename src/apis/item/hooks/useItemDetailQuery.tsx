@@ -32,6 +32,9 @@ const useItemDetailQuery = () => {
   const getSameScrapItem = (itemId: number) => {
     return useQuery(queryKeys.sameScrapItem(itemId), () => item.getSameScrapItem(itemId))
   }
+  const getEditItemRequest = (editReqId: number) => {
+    return useQuery(queryKeys.editItemReq(editReqId), () => item.getEditRequested(editReqId))
+  }
 
   const likeItem = useMutation((itemId: number) => item.likeItem(itemId), {
     onSuccess: (res, itemId) => {
@@ -80,6 +83,7 @@ const useItemDetailQuery = () => {
     deleteItem,
     reportItem,
     requestEditItem,
+    getEditItemRequest,
     getSameCelebItem,
     getSameBrandItem,
     getSameScrapItem,

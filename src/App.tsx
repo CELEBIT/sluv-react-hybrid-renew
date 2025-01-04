@@ -121,6 +121,7 @@ const WithdrawReason = React.lazy(
 
 // 알림
 const Notifications = React.lazy(() => import('./pages/notifications/index'))
+const EditRequestDetail = React.lazy(() => import('./pages/notifications/EditRequestDetail/index'))
 
 import Modal from 'react-modal'
 import { HelmetProvider } from 'react-helmet-async'
@@ -270,6 +271,7 @@ const App = () => {
             <Route path='/settings/withdraw/reason' element={<WithdrawReason />} />
             {/* 알림 */}
             <Route path='/notifications' element={<Notifications />} />
+            <Route path='/notifications/editRequest/:id' element={<EditRequestDetail />} />
           </Routes>
         </Suspense>
         <Modals />

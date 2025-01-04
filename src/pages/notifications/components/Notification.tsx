@@ -46,20 +46,19 @@ const Notification = ({ hasPreviewImg, data, isEditMode }: NotificationProps) =>
   const onClickNotification = (type: NotificationType) => {
     if (isEditMode) return
     if (data.alarmStatus === 'ACTIVE') mutateByRead(data.alarmId)
-    if (type === NotificationType.ITEM || type === NotificationType.EDIT) {
+    if (type === NotificationType.ITEM) {
       navigate(`/item/detail/${data.itemId}`)
-    }
-    if (
+    } else if (type === NotificationType.EDIT) {
+      navigate(`/notifications/editRequest/${data.itemEditId}`)
+    } else if (
       type === NotificationType.QUESTION ||
       type === NotificationType.VOTE ||
       type === NotificationType.COMMENT
     ) {
       navigate(`/community/detail/${data.questionId}`)
-    }
-    if (type === NotificationType.USER) {
+    } else if (type === NotificationType.USER) {
       navigate(`/user/${data.followerId}`)
-    }
-    if (type === NotificationType.NOTICE) {
+    } else if (type === NotificationType.NOTICE) {
       navigate('/notice')
     }
   }
@@ -88,7 +87,11 @@ const Notification = ({ hasPreviewImg, data, isEditMode }: NotificationProps) =>
           </S.Checkbox>
         ) : (
           <>
-            {data.userImageUrl ? (
+            {data.userImageUrl &&
+            data.type !== NotificationType.NOTICE &&
+            data.type !== NotificationType.REPORT &&
+            data.type !== NotificationType.EDIT &&
+            data.type !== NotificationType.VOTE ? (
               <UserImage imgUrl={data.userImageUrl} size={40}></UserImage>
             ) : (
               <Icon iconType={data.type} />

@@ -26,6 +26,7 @@ export interface INotification {
   userImageUrl: string
   cratedAt: string
   alarmStatus: AlarmStatus
+  itemEditId?: number
 }
 
 export interface INotificationRead {
