@@ -1,36 +1,24 @@
-import React, { UIEventHandler, useContext, useEffect, useRef, useState } from 'react'
-import * as S from './styles'
-import Header from '../../../components/Header/Header'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
+import { useEffect, useRef, useState } from 'react'
 import { closetQueryConfig } from '../../../apis/closet/hooks'
-import { getCloset, PageParams } from '../../../apis/closet'
-import { useObserver } from '../../../hooks/useObserver'
-import { queryToObject } from '../../../utils/utility'
 import { ReactComponent as SaveIcon } from '../../../assets/save_36.svg'
-import { ReactComponent as Spinner } from '../../../assets/Spinner.svg'
+import Header from '../../../components/Header/Header'
+import { queryToObject } from '../../../utils/utility'
+import * as S from './styles'
 
-import ColorChip from '../../../components/Chip/ColorChip'
-import NameTagChip from '../components/NameTag/NameTagChip'
-import { ClosetMainSubHeaderEditText } from '../components/SubHeader/SubHeaderText'
-import SubHeader, { PaddingSubHeader } from '../components/SubHeader'
-import ClosetInnerItem from '../components/ClosetInnerItem'
-import { ClosetInnerItemContext, useEditClosetInnerItemContext } from './hooks'
 import { ReactComponent as MoveIcon } from '../../../assets/move_24.svg'
 import { ReactComponent as TrashIcon } from '../../../assets/trash_can_24.svg'
 import BottomSheetModal from '../../../components/BottomSheetModal'
-import ClosetList, { ReClosetList, ScrapClosetList } from '../components/ClosetList'
-import DefaultCreateBox from '../components/ClosetCreateBox/DefaultCreateBox'
-import useModals from '../../../components/Modals/hooks/useModals'
-import { DeleteRecheckModalParam } from '../deleteAndSort'
-import TwoButtonModal from '../../../components/TwoButtonModal'
-import { BtnModalContent } from '../../../components/Modals/styles'
-import Flex from '../../../components/Flex'
 import ItemListGrid from '../../../components/ItemListGrid/ItemListGrid'
-
-const DEFAULT_PAGE_PARAMS: PageParams = {
-  page: 1,
-  size: 12,
-}
+import useModals from '../../../components/Modals/hooks/useModals'
+import { BtnModalContent } from '../../../components/Modals/styles'
+import TwoButtonModal from '../../../components/TwoButtonModal'
+import DefaultCreateBox from '../components/ClosetCreateBox/DefaultCreateBox'
+import { ReClosetList, ScrapClosetList } from '../components/ClosetList'
+import NameTagChip from '../components/NameTag/NameTagChip'
+import { PaddingSubHeader } from '../components/SubHeader'
+import { DeleteRecheckModalParam } from '../deleteAndSort'
+import { ClosetInnerItemContext, useEditClosetInnerItemContext } from './hooks'
 
 const ClosetDetailPage = () => {
   const { id } = queryToObject(window.location.search.split('?')[1])

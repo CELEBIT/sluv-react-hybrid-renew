@@ -1,5 +1,15 @@
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
+import { toast } from 'react-toastify'
+import { atom, useRecoilState, useRecoilValue } from 'recoil'
+import useTempItemQuery from '../../../apis/item/hooks/useTempItemQuery'
 import Header from '../../../components/Header/Header'
+import { modals } from '../../../components/Modals'
+import useModals from '../../../components/Modals/hooks/useModals'
+import { atomKeys } from '../../../config/atomKeys'
+import { localStorageKeys } from '../../../config/localStorageKeys'
+import { useObserver } from '../../../hooks/useObserver'
+import { currentTempIdState } from '../../../recoil/itemInfo'
+import TempItem from './components/TempItem'
 import {
   DeleteFloatingContainer,
   EditBtn,
@@ -9,16 +19,6 @@ import {
   SelectedCtnDiv,
   TStoragePageStyle,
 } from './styles'
-import useTempItemQuery from '../../../apis/item/hooks/useTempItemQuery'
-import { useObserver } from '../../../hooks/useObserver'
-import TempItem from './components/TempItem'
-import { atom, useRecoilState, useRecoilValue } from 'recoil'
-import { atomKeys } from '../../../config/atomKeys'
-import useModals from '../../../components/Modals/hooks/useModals'
-import { modals } from '../../../components/Modals'
-import { currentTempIdState } from '../../../recoil/itemInfo'
-import { localStorageKeys } from '../../../config/localStorageKeys'
-import { toast } from 'react-toastify'
 
 export const checkListState = atom<Array<number>>({
   key: atomKeys.checkListState,
@@ -83,9 +83,9 @@ const TemporaryStorage = () => {
         {status === 'error' && <p>{JSON.stringify(error.response.data)}</p>}
         {status === 'success' &&
           data?.pages.map(
-            (item, index) =>
+            (item) =>
               item.content.length > 0 &&
-              item.content.map((temp, idx) => {
+              item.content.map((temp) => {
                 return (
                   <TempItem
                     key={temp.id}

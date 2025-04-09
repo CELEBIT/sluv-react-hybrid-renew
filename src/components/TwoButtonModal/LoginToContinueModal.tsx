@@ -1,13 +1,11 @@
 import TwoButtonModal from '.'
-import useModals from '../Modals/hooks/useModals'
-import { modals } from '../Modals'
-import { BtnModalContent } from '../Modals/styles'
-import { useNavigate } from 'react-router-dom'
 import { appStoreURL } from '../../config/constant'
+import { modals } from '../Modals'
+import useModals from '../Modals/hooks/useModals'
+import { BtnModalContent } from '../Modals/styles'
 
 const LoginToContinueModal = () => {
   const { closeModal } = useModals()
-  const navigate = useNavigate()
 
   const onLogin = () => {
     if (

@@ -21,9 +21,8 @@ import {
   createItemWhenDateState,
   currentTempIdState,
 } from '../../recoil/itemInfo'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useSetRecoilState } from 'recoil'
 import { imgListState } from '../AddPhotos/AddPhotos'
-import { parentCategoryState, subCategoryState } from '../BottomSheetModal/ItemCategoryModal'
 import { hashTagState } from '../../pages/item/addInfo/components/HashTags/HashTag'
 
 const AskRecentPostWritingModal = () => {

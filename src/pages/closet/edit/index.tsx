@@ -1,7 +1,6 @@
 import ClosetBoxCreatePage from '../create'
-import { useQuery } from '@tanstack/react-query'
 import React from 'react'
-import { useLocation, useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { ClosetBoxService } from '../services'
 
 export const ClosetBoxEditPage = () => {

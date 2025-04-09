@@ -1,6 +1,5 @@
 import request from '../core'
 import { GetPaginationResult, ResponseType } from '../core/type'
-import dev from '../core/dev'
 import { INotification, INotificationRead } from '../../pages/notifications/components/types'
 
 export default class NotificationService {

@@ -6,7 +6,6 @@ import {
   CategoryTitle,
   CelebCategoryWrapper,
   CelebListWrapper,
-  ContentWrapper,
   SearchResultContainer,
 } from '../styles'
 import ColorChip from '../../../components/Chip/ColorChip'

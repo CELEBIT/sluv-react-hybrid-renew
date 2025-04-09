@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState } from 'recoil'
 import {
   InputFieldWrapper,
   LabelWrapper,
@@ -14,7 +14,7 @@ import ToolTip from '../../../../../components/ToolTip/ToolTip'
 import { ToolTipVisibility } from '../../../../../components/ToolTip/ToolTip.util'
 import { addCommas, formatPrice, sanitizePriceInput } from './price.util'
 import { MAX_INT } from '../../../../../config/constant'
-import { createItemPriceState, itemInfoState } from '../../../../../recoil/itemInfo'
+import { createItemPriceState } from '../../../../../recoil/itemInfo'
 
 const PriceField = () => {
   const [price, setPrice] = useRecoilState(createItemPriceState)

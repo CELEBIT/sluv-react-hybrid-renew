@@ -11,7 +11,6 @@ import {
   createItemBrandState,
   createItemNameState,
   createItemNewBrandState,
-  itemInfoState,
 } from '../../../../../recoil/itemInfo'
 interface BrandItemFieldProps {
   brandValid: boolean

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import storage from '../../utils/storage'
 import { ACCESS_TOKEN, UserStatus } from '../../config/constant'

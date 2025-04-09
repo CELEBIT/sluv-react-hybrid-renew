@@ -1,7 +1,7 @@
+import { CoverBoxColorKey } from '../../pages/closet/utils/consts'
 import request from '../core'
 import { ResponseType } from '../core/type'
 import { ClosetBoxModel, ClosetItemModel, ClosetStatus } from './model'
-import { CoverBoxColorKey } from '../../pages/closet/utils/consts'
 
 export interface GetClosetListResult {
   closetCount: number
@@ -24,7 +24,7 @@ export type PostClosetParams = {
   colorScheme: CoverBoxColorKey
 }
 export const postCloset = async (params: PostClosetParams): Promise<ResponseType<undefined>> => {
-  const newCloset = { ...params, colorScheme: params.colorScheme }
+  // const newCloset = { ...params, colorScheme: params.colorScheme }
   return await request.post(`${BASE_PATH}`, params)
 }
 

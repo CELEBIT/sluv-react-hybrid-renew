@@ -23,6 +23,7 @@ export const queryKeys = {
   sameBrandItem: (itemId: number) => ['sameBrandItem', itemId] as const,
   sameScrapItem: (itemId: number) => ['sameScrapItem', itemId] as const,
   searchHashtag: (name: string) => ['searchHashtag', name] as const,
+  editItemReq: (editReqId: number) => ['editItemReq', editReqId] as const,
   searchRank: () => ['searchRank'] as const,
   recentViewItem: ['recentViewItem'] as const,
   scrapItem: ['scrapItem'] as const,

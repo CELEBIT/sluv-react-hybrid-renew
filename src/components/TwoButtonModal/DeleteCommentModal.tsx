@@ -1,13 +1,10 @@
-import React from 'react'
-import TwoButtonModal from '.'
-import useModals from '../Modals/hooks/useModals'
-import { modals } from '../Modals'
-import { BtnModalContent } from '../Modals/styles'
-import useItemDetailQuery from '../../apis/item/hooks/useItemDetailQuery'
-import { useNavigate } from 'react-router-dom'
-import useSearchCommentQuery from '../../apis/comment/hooks/useSearchCommentQuery'
 import { useResetRecoilState } from 'recoil'
+import TwoButtonModal from '.'
+import useSearchCommentQuery from '../../apis/comment/hooks/useSearchCommentQuery'
 import { commentState } from '../../pages/community/detail/CommunityDetail'
+import { modals } from '../Modals'
+import useModals from '../Modals/hooks/useModals'
+import { BtnModalContent } from '../Modals/styles'
 
 export interface DeleteCommentModalProps {
   commentId: number
@@ -16,7 +13,6 @@ export interface DeleteCommentModalProps {
 
 const DeleteCommentModal = ({ commentId, questionId }: DeleteCommentModalProps) => {
   const { closeModal } = useModals()
-  const navigate = useNavigate()
   const resetCommentObject = useResetRecoilState(commentState)
   const {
     deleteComment: { mutate: mutateCommentDeleted },

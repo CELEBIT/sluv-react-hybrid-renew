@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import styled from '@emotion/styled'
 import { Img } from '../../../../components/AddPhotos/Photo'
 import { Label } from '../../create/styles'
@@ -28,10 +28,7 @@ import {
   currentTempIdState,
 } from '../../../../recoil/itemInfo'
 import { imgListState } from '../../../../components/AddPhotos/AddPhotos'
-import {
-  parentCategoryState,
-  subCategoryState,
-} from '../../../../components/BottomSheetModal/ItemCategoryModal'
+
 import { hashTagState } from '../../addInfo/components/HashTags/HashTag'
 
 interface TempItemProps {

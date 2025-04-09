@@ -8,38 +8,32 @@ import {
   SelectItemOrPhotoContainer,
 } from './styles'
 
-import RecentViewItem from './RecentViewItem'
-import Header from '../Header/Header'
-import SearchTextfield from '../TextField/SearchTextfield/SearchTextfield'
-import { HeaderWrapper } from '../../pages/item/addInfo/styles'
-import Tabs from '../Tabs'
-import ScrapItem from './ScrapItem'
-import ButtonLarge from '../ButtonLarge/ButtonLarge'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { atom, useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
+import { useDebounce } from 'use-debounce'
+import useRecentSearchQuery from '../../apis/search/hooks/useRecentSearchQuery'
 import { ReactComponent as Gallery } from '../../assets/gallery_24.svg'
-import {
-  atom,
-  useRecoilState,
-  useRecoilValue,
-  useResetRecoilState,
-  useSetRecoilState,
-} from 'recoil'
+import { atomKeys } from '../../config/atomKeys'
+import { HeaderWrapper } from '../../pages/item/addInfo/styles'
 import {
   communityItemState,
   firstItemState,
   imgItemListState,
   secondItemState,
 } from '../../recoil/communityInfo'
-import RecentSelectItem from './RecentSearchItem'
-import HotSearchItem from './HotSearchItem'
-import SearchResult, { itemNameSearchState } from './SearchResult'
-import { useNavigate } from 'react-router-dom'
-import { atomKeys } from '../../config/atomKeys'
+import { convertToFile, openGallery } from '../../utils/utility'
+import ButtonLarge from '../ButtonLarge/ButtonLarge'
 import { communityMenuState } from '../Header/CommunityHeader/CommunityHeader'
-import { useDebounce } from 'use-debounce'
+import Header from '../Header/Header'
+import Tabs from '../Tabs'
+import SearchTextfield from '../TextField/SearchTextfield/SearchTextfield'
+import HotSearchItem from './HotSearchItem'
 import KeywordPreview from './KeywordPreview/KeywordPreview'
-import useRecentSearchQuery from '../../apis/search/hooks/useRecentSearchQuery'
-import { convertToFile, convertToImageList, openGallery } from '../../utils/utility'
-import { toast } from 'react-toastify'
+import RecentSelectItem from './RecentSearchItem'
+import RecentViewItem from './RecentViewItem'
+import ScrapItem from './ScrapItem'
+import SearchResult, { itemNameSearchState } from './SearchResult'
 
 export const maxItemPhotoCountState = atom<number>({
   key: atomKeys.maxItemPhotoCount,
@@ -88,7 +82,7 @@ const SelectItemOrPhoto = () => {
           ...updatedList[0],
           representFlag: true,
         }
-        const { itemList, imgList } = prevInfo
+        const { itemList } = prevInfo
         const updatedItemList = itemList ? [...itemList] : []
 
         updatedList.forEach((item, index) => {

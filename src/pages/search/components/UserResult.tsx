@@ -10,8 +10,6 @@ import Flex from '../../../components/Flex'
 import styled from '@emotion/styled'
 import { Common, Pretendard } from '../../../components/styles'
 import { ReactComponent as Spinner } from '../../../assets/Spinner.svg'
-import { EmptyStateWrapper } from '../../user/components/FollowList/Follower/Follower'
-import { EmptyStateContainer } from '../../../components/EmptyState/styles'
 import { Divider } from '../../item/detail/styles'
 
 type Props = {

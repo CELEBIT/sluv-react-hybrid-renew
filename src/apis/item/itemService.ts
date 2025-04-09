@@ -2,8 +2,8 @@ import { IHashTag } from '../../recoil/itemInfo'
 import request from '../core'
 import dev from '../core/dev'
 import { GetPaginationResult, ResponseType } from '../core/type'
-import { SearchQuestionResult } from '../search/searchService'
 import {
+  EditRequestedResult,
   HashtagContent,
   ItemDetailResult,
   ItemId,
@@ -310,6 +310,14 @@ export default class ItemService {
   // Trend Bannder 아이템 조회
   async getTrendItem() {
     const data: ResponseType<RecommendItemResult[]> = await request.get(`${this.itemUrl}/trend`)
+    return data.result
+  }
+
+  // 수정요청 아이템 조회
+  async getEditRequested(itemId: number) {
+    const data: ResponseType<EditRequestedResult> = await request.get(
+      `${this.itemUrl}/edit-req/${itemId}`,
+    )
     return data.result
   }
 }

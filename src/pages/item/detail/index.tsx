@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import useModals from '../../../components/Modals/hooks/useModals'
 import { modals } from '../../../components/Modals'
 import Header from '../../../components/Header/Header'
-import { Helmet } from 'react-helmet-async'
 import { ReactComponent as Home } from '../../../assets/home_24.svg'
 import { ReactComponent as Search } from '../../../assets/search_24.svg'
 import { ReactComponent as ShowMore } from '../../../assets/add_24.svg'
@@ -14,15 +13,11 @@ import { ReactComponent as LikeOff } from '../../../assets/like_off_24.svg'
 import { ReactComponent as Share } from '../../../assets/share_24.svg'
 import { ReactComponent as Arrow } from '../../../assets/arrow_18.svg'
 import { ReactComponent as LikeSmall } from '../../../assets/Like_18.svg'
-import { ReactComponent as ShareSmall } from '../../../assets/Share_18.svg'
 import { ReactComponent as Storage } from '../../../assets/storage_18.svg'
 import { ReactComponent as View } from '../../../assets/page view_18.svg'
 import { ReactComponent as LinkIcon } from '../../../assets/link_add_20.svg'
 import { ReactComponent as ArrowLarge } from '../../../assets/arrow_20.svg'
 import { ReactComponent as Comment } from '../../../assets/comment_18.svg'
-import { ReactComponent as Kakao } from '../../../assets/share_kakao_40.svg'
-import { ReactComponent as Twitter } from '../../../assets/share_twitter_40.svg'
-import { ReactComponent as ShareAdd } from '../../../assets/share_add_40.svg'
 import { ReactComponent as DefaultProfile } from '../../../assets/defaultProfile_40.svg'
 
 import {
@@ -30,7 +25,6 @@ import {
   BasicInfoWrapper,
   Brand,
   Category,
-  ColorCircle,
   Divider,
   HashTags,
   Interactions,
@@ -43,8 +37,6 @@ import {
   LinkInfoWrapper,
   Reaction,
   RecommendWrapper,
-  ShareItemWrapper,
-  ShareWrapper,
   SourceWrapper,
   Top,
   UploaderInfoWrapper,
@@ -77,7 +69,6 @@ import share from '../../../utils/Share/share'
 import ShowLink from './components/ShowLink'
 import storage from '../../../utils/storage'
 import { toast } from 'react-toastify'
-import MetaTag from '../../../utils/Share/MetaTag'
 import { processInfoSource } from './utils'
 
 const ItemDetail = () => {

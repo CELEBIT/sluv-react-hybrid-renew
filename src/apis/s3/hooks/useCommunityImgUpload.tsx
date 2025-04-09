@@ -1,23 +1,7 @@
-import React from 'react'
 import S3Service from '../S3Service'
 import { useMutation } from '@tanstack/react-query'
-import { Image } from '../../../components/AddPhotos/AddPhotos'
-import {
-  useRecoilCallback,
-  useRecoilState,
-  useRecoilValue,
-  useResetRecoilState,
-  useSetRecoilState,
-} from 'recoil'
-import { itemInfoState } from '../../../recoil/itemInfo'
-import { ImgResult } from '../../item/itemService.type'
-import {
-  IimgList,
-  IselectedItem,
-  communityItemState,
-  imgItemListState,
-  imgListUpdatedState,
-} from '../../../recoil/communityInfo'
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
+import { IselectedItem, communityItemState, imgItemListState } from '../../../recoil/communityInfo'
 import useUploadQuestionQuery from '../../question/hooks/useUploadQuestionQuery'
 import { communityMenuState } from '../../../components/Header/CommunityHeader/CommunityHeader'
 import { convertToSeoulTimeISOString } from '../../../utils/utility'

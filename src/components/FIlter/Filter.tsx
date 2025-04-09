@@ -1,7 +1,6 @@
 import React from 'react'
 import { ColorIndicator, FilterWrapper } from './styles'
 import { ReactComponent as ArrowDown } from '../../assets/arrow_down_18.svg'
-import { Common } from '../styles'
 
 interface FilterProps {
   children: any

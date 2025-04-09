@@ -1,18 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react'
+import styled from '@emotion/styled'
+import { useEffect, useRef, useState } from 'react'
+import { atom, useRecoilState } from 'recoil'
 import BottomSheetModal from '.'
 import useItemCategoryQuery from '../../apis/item/hooks/useItemCategoryQuery'
+import { atomKeys } from '../../config/atomKeys'
+import { createItemCategoryState } from '../../recoil/itemInfo'
+import ButtonLarge from '../ButtonLarge/ButtonLarge'
+import ButtonMedium from '../ButtonMedium/ButtonMedium'
 import Header from '../Header/Header'
 import { modals } from '../Modals'
 import useModals from '../Modals/hooks/useModals'
-import { atom, useRecoilState } from 'recoil'
-import { atomKeys } from '../../config/atomKeys'
+import { Common, Pretendard } from '../styles'
 import { ModalWrapper } from './ItemBrandSelectModal/ItemBrandSelectModal'
 import { ButtonWrapper, ChipWrapper } from './ItemPlaceInputModal/ItemPlaceInputModal'
-import ButtonMedium from '../ButtonMedium/ButtonMedium'
-import styled from '@emotion/styled'
-import { Common, Pretendard } from '../styles'
-import ButtonLarge from '../ButtonLarge/ButtonLarge'
-import { createItemCategoryState, itemInfoState } from '../../recoil/itemInfo'
 
 export const parentCategoryState = atom<Category>({
   key: atomKeys.parentCategoryIdState,
@@ -41,7 +41,7 @@ const ItemCategoryModal = () => {
   const [category, setCategory] = useRecoilState(createItemCategoryState)
 
   const [selectedParentCategory, setSelectedParentCategory] = useRecoilState(parentCategoryState)
-  const [subCategory, setsubCategory] = useRecoilState(subCategoryState)
+  const [_, setsubCategory] = useRecoilState(subCategoryState)
 
   const [selectedParent, setSelectedParent] = useState<Category>({
     id:

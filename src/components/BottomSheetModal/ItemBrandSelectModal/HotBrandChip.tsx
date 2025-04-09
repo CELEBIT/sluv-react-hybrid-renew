@@ -1,13 +1,9 @@
 import React from 'react'
 import Chip from '../../Chip/Chip'
 import { TopBrandResult } from '../../../apis/brand/brandService'
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
+import { useResetRecoilState, useSetRecoilState } from 'recoil'
 import useRecentBrandQuery from '../../../apis/brand/hooks/useRecentBrandQuery'
-import {
-  createItemBrandState,
-  createItemNewBrandState,
-  itemInfoState,
-} from '../../../recoil/itemInfo'
+import { createItemBrandState, createItemNewBrandState } from '../../../recoil/itemInfo'
 
 interface HotBrandChipProps {
   hotBrandData: TopBrandResult

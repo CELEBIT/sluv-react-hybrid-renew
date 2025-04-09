@@ -2,7 +2,7 @@ import { IHotCeleb } from '../celeb/CelebService'
 import request from '../core'
 import { GetPaginationResult, ResponseType } from '../core/type'
 import { BrandResult } from '../item/itemService.type'
-import { Celeb, Img, Item } from '../question/questionService.type'
+import { Img, Item } from '../question/questionService.type'
 import { IUserResult } from '../user/userService'
 
 export interface SearchItemResult {

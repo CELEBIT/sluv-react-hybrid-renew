@@ -1,6 +1,5 @@
 import { BtnModalContainer } from '../Modals/styles'
 import React from 'react'
-import ButtonHalf from '../ButtonHalf/ButtonHalf'
 import styled from '@emotion/styled'
 import ButtonLarge from '../ButtonLarge/ButtonLarge'
 

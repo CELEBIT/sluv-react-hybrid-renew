@@ -1,21 +1,21 @@
-import { useState, useEffect, ChangeEvent, useCallback, useMemo, useRef } from 'react'
 import styled from '@emotion/styled'
-import { SignupValues } from '../../models/signup'
-import Flex from '../Flex'
-import S3Service from '../../apis/s3/S3Service'
-import FixedBottomButton from '../FixedBottomButton/FixedBottomButton'
-import useUserMypageQuery from '../../apis/user/hooks/useUserMypageQuery'
-import TextField from './TextField'
-import { Title } from '../../pages/signup/styles'
-import { ReactComponent as DefaultProfile } from '../../assets/profile_big.svg'
-import { ReactComponent as AddPhoto } from '../../assets/add_photo_30.svg'
 import { AxiosError } from 'axios'
+import { ChangeEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import S3Service from '../../apis/s3/S3Service'
+import useUserMypageQuery from '../../apis/user/hooks/useUserMypageQuery'
+import { ReactComponent as AddPhoto } from '../../assets/add_photo_30.svg'
+import { ReactComponent as DefaultProfile } from '../../assets/profile_big.svg'
+import { SignupValues } from '../../models/signup'
 import { HeaderWrap } from '../../pages/search/styles'
-import Header from '../Header/Header'
+import { Title } from '../../pages/signup/styles'
 import { ContentContainer } from '../../pages/user/styles'
 import { convertToFile, openGallery } from '../../utils/utility'
-import { toast } from 'react-toastify'
+import FixedBottomButton from '../FixedBottomButton/FixedBottomButton'
+import Flex from '../Flex'
+import Header from '../Header/Header'
+import TextField from './TextField'
 
 function Profile({ onNext }: { onNext?: (profile: SignupValues['profile']) => void }) {
   const [profileValues, setProfileValues] = useState<SignupValues['profile']>({
@@ -280,13 +280,6 @@ export const ProfileContainer = styled.div`
     transform: translateX(-50%);
     z-index: 10;
   }
-`
-
-const DefaultImage = styled.img`
-  border-radius: 50%; /* 100% -> 50% 수정 */
-  width: 128px;
-  height: 128px;
-  object-fit: cover; /* 추가 */
 `
 
 const validate = (profile: SignupValues['profile']) => {

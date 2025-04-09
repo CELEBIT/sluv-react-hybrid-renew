@@ -71,11 +71,11 @@ const RecommendItemWrapper = styled.div<{ size?: number }>`
   }
 `
 
-const CelebName = styled.span`
+export const CelebName = styled.span`
   white-space: pre-wrap;
   ${Pretendard({ size: 15, weight: Common.bold.regular, color: Common.colors.BK })}
 `
-const Name = styled.span`
+export const Name = styled.span`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;

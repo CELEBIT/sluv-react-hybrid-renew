@@ -1,4 +1,10 @@
-import React from 'react'
+import {
+  Img as CommentImg,
+  Item as CommentItem,
+  CommentResult,
+  SubCommentResult,
+} from '../../../../../apis/comment/commentService.type'
+import { formatUpdatedAt } from '../../../../../utils/utility'
 import {
   BrandName,
   CelebName,
@@ -23,31 +29,24 @@ import {
   UserImg,
   UserInfo,
 } from './styles'
-import {
-  CommentResult,
-  SubCommentResult,
-  Item as CommentItem,
-  Img as CommentImg,
-} from '../../../../../apis/comment/commentService.type'
-import { formatUpdatedAt } from '../../../../../utils/utility'
 
 import { ReactComponent as ShowMore } from '../../../../../assets/add_24.svg'
-import { ReactComponent as StorageOff } from '../../../../../assets/storage_list_off_24.svg'
-import { ReactComponent as StorageOn } from '../../../../../assets/storage_on_24.svg'
-import { ReactComponent as LikeOff } from '../../../../../assets/like_off_18.svg'
-import { ReactComponent as LikeOn } from '../../../../../assets/like_on_18.svg'
 import { ReactComponent as SubCommentArrow } from '../../../../../assets/arrow_comment_18.svg'
 import { ReactComponent as DefaultProfile } from '../../../../../assets/defaultProfile_40.svg'
+import { ReactComponent as LikeOff } from '../../../../../assets/like_off_18.svg'
+import { ReactComponent as LikeOn } from '../../../../../assets/like_on_18.svg'
+import { ReactComponent as StorageOff } from '../../../../../assets/storage_list_off_24.svg'
+import { ReactComponent as StorageOn } from '../../../../../assets/storage_on_24.svg'
 
-import useSearchSubCommentQuery from '../../../../../apis/comment/hooks/useSearchSubCommentQuery'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { Dim } from '../../../../../components/UserImage/UserImage'
 import { useResetRecoilState, useSetRecoilState } from 'recoil'
-import { commentState } from '../../CommunityDetail'
-import { RequestEditItemState } from '../../../../item/editRequest'
-import { imgItemListState } from '../../../../../recoil/communityInfo'
-import useModals from '../../../../../components/Modals/hooks/useModals'
+import useSearchSubCommentQuery from '../../../../../apis/comment/hooks/useSearchSubCommentQuery'
 import { modals } from '../../../../../components/Modals'
+import useModals from '../../../../../components/Modals/hooks/useModals'
+import { Dim } from '../../../../../components/UserImage/UserImage'
+import { imgItemListState } from '../../../../../recoil/communityInfo'
+import { RequestEditItemState } from '../../../../item/editRequest'
+import { commentState } from '../../CommunityDetail'
 interface SubCommentProps {
   subcomment: SubCommentResult
   comment: CommentResult
@@ -58,12 +57,6 @@ const SubComment = ({ subcomment, comment, questionId }: SubCommentProps) => {
   const navigate = useNavigate()
   const location = useLocation()
   const { openModal } = useModals()
-
-  function convertToUTC(dateString: string): string {
-    const date = new Date(dateString)
-    date.setHours(date.getHours() + 9)
-    return date.toUTCString()
-  }
 
   const {
     likeSubComment: { mutate: mutateByLike },

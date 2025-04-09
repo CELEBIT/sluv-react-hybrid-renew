@@ -2,8 +2,8 @@ import React from 'react'
 import Chip from '../../Chip/Chip'
 import useRecentPlaceQuery from '../../../apis/place/hooks/useRecentPlaceQuery'
 import usePostPlaceQuery from '../../../apis/place/hooks/usePostPlaceQuery'
-import { useRecoilState, useSetRecoilState } from 'recoil'
-import { createItemPlaceState, itemInfoState } from '../../../recoil/itemInfo'
+import { useSetRecoilState } from 'recoil'
+import { createItemPlaceState } from '../../../recoil/itemInfo'
 
 interface ItemPlaceChipProps {
   placeName: string

@@ -1,30 +1,23 @@
-import React, { useState } from 'react'
-import Item from '../../RecommendedItem/Item'
-import useItemDetailQuery from '../../../apis/item/hooks/useItemDetailQuery'
-import { HotItemListWrapper, ListWrapper, TitleText } from './styles'
+import { toast } from 'react-toastify'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { maxItemPhotoCountState } from '..'
+import useRecommendHotItemQuery from '../../../apis/item/hooks/useRecommendHotItemQuery'
 import { ItemResult } from '../../../apis/item/itemService.type'
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
+import useUserMypageQuery from '../../../apis/user/hooks/useUserMypageQuery'
 import {
-  IselectedItem,
-  communityItemState,
   communityQuestionMenuState,
   firstItemState,
   imgItemListState,
   secondItemState,
 } from '../../../recoil/communityInfo'
-import { maxItemPhotoCountState } from '..'
-import useRecommendHotItemQuery from '../../../apis/item/hooks/useRecommendHotItemQuery'
-import useUserMypageQuery from '../../../apis/user/hooks/useUserMypageQuery'
-import { toast } from 'react-toastify'
+import Item from '../../RecommendedItem/Item'
+import { HotItemListWrapper, ListWrapper, TitleText } from './styles'
 
 const HotItem = () => {
-  const [communityUploadInfo, setCommunityUploadInfo] = useRecoilState(communityItemState)
   const maxItemPhotoCount = useRecoilValue(maxItemPhotoCountState)
   const communityQuestionMenu = useRecoilValue(communityQuestionMenuState)
   const [firstItem, setFirstItem] = useRecoilState(firstItemState)
   const [secondItem, setSecondItem] = useRecoilState(secondItemState)
-  const resetFirstItem = useResetRecoilState(firstItemState)
-  const resetSecondItem = useResetRecoilState(secondItemState)
 
   const [imgItemList, setImageItemList] = useRecoilState(imgItemListState)
 

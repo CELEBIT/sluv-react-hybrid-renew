@@ -1,16 +1,34 @@
-import React from 'react'
 import useSearchCommentQuery from '../../../../../apis/comment/hooks/useSearchCommentQuery'
 
+import { useLocation, useNavigate } from 'react-router-dom'
+import { useResetRecoilState, useSetRecoilState } from 'recoil'
+import {
+  Img as CommentImg,
+  Item as CommentItem,
+  CommentResult,
+} from '../../../../../apis/comment/commentService.type'
 import { ReactComponent as ShowMore } from '../../../../../assets/add_24.svg'
+import { ReactComponent as Alert } from '../../../../../assets/bannedError_20.svg'
+import { ReactComponent as DefaultProfile } from '../../../../../assets/defaultProfile_40.svg'
+import { ReactComponent as LikeOff } from '../../../../../assets/like_off_18.svg'
+import { ReactComponent as LikeOn } from '../../../../../assets/like_on_18.svg'
 import { ReactComponent as StorageOff } from '../../../../../assets/storage_list_off_24.svg'
 import { ReactComponent as StorageOn } from '../../../../../assets/storage_on_24.svg'
+import { modals } from '../../../../../components/Modals'
+import useModals from '../../../../../components/Modals/hooks/useModals'
+import { Dim } from '../../../../../components/UserImage/UserImage'
+import { imgItemListState } from '../../../../../recoil/communityInfo'
+import { formatUpdatedAt } from '../../../../../utils/utility'
+import { RequestEditItemState } from '../../../../item/editRequest'
+import { commentState } from '../../CommunityDetail'
+import SubCommentList from '../SubCommentList/SubCommentList'
+import { ExpressionWrapper, LikeWrapper } from '../SubCommentList/styles'
 import {
   BannedContent,
   BlockedBg,
   BlockedContainer,
   BrandName,
   CelebName,
-  CommentContainer,
   CommentContent,
   CommentExpression,
   CommentWrapper,
@@ -28,27 +46,6 @@ import {
   UserImg,
   UserInfo,
 } from './styles'
-import { formatUpdatedAt } from '../../../../../utils/utility'
-import SubCommentList from '../SubCommentList/SubCommentList'
-import { ExpressionWrapper, LikeWrapper } from '../SubCommentList/styles'
-import { ReactComponent as LikeOff } from '../../../../../assets/like_off_18.svg'
-import { ReactComponent as LikeOn } from '../../../../../assets/like_on_18.svg'
-import { ReactComponent as Alert } from '../../../../../assets/bannedError_20.svg'
-import { useLocation, useNavigate } from 'react-router-dom'
-import {
-  CommentResult,
-  Item as CommentItem,
-  Img as CommentImg,
-} from '../../../../../apis/comment/commentService.type'
-import useModals from '../../../../../components/Modals/hooks/useModals'
-import { modals } from '../../../../../components/Modals'
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
-import { commentState } from '../../CommunityDetail'
-import { Dim } from '../../../../../components/UserImage/UserImage'
-import { imgItemListState } from '../../../../../recoil/communityInfo'
-import { ReactComponent as DefaultProfile } from '../../../../../assets/defaultProfile_40.svg'
-import { RequestEditItemState } from '../../../../item/editRequest'
-import CommentBlur from './CommentBlur'
 
 interface CommentProps {
   questionId: number
@@ -56,7 +53,7 @@ interface CommentProps {
   isPreview?: boolean
 }
 
-const Comment = ({ questionId, commentId, isPreview }: CommentProps) => {
+const Comment = ({ questionId, commentId }: CommentProps) => {
   const navigate = useNavigate()
   const location = useLocation()
   const { openModal } = useModals()
@@ -65,16 +62,9 @@ const Comment = ({ questionId, commentId, isPreview }: CommentProps) => {
   const setEditReportItemState = useSetRecoilState(RequestEditItemState)
   const setImageItemList = useSetRecoilState(imgItemListState)
 
-  const { getComment, getTestComment } = useSearchCommentQuery()
+  const { getComment } = useSearchCommentQuery()
   const { data: comment } = getComment(commentId)
-  // const { data: comment } = getTestComment(commentId)
-  console.log(comment)
 
-  function convertToUTC(dateString: string): string {
-    const date = new Date(dateString)
-    date.setHours(date.getHours() + 9)
-    return date.toUTCString()
-  }
   const {
     likeComment: { mutate: mutateByLike },
   } = useSearchCommentQuery()

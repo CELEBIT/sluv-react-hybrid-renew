@@ -1,13 +1,8 @@
-import React from 'react'
 import TwoButtonModal from '.'
-import useModals from '../Modals/hooks/useModals'
-import { modals } from '../Modals'
-import { BtnModalContent } from '../Modals/styles'
-import useTempItemQuery from '../../apis/item/hooks/useTempItemQuery'
-import { useRecoilValue } from 'recoil'
-import { checkListState } from '../../pages/item/temporary-storage'
 import useItemDetailQuery from '../../apis/item/hooks/useItemDetailQuery'
-import { useNavigate } from 'react-router-dom'
+import { modals } from '../Modals'
+import useModals from '../Modals/hooks/useModals'
+import { BtnModalContent } from '../Modals/styles'
 
 export interface DeleteItemModalProps {
   itemId: number
@@ -15,7 +10,6 @@ export interface DeleteItemModalProps {
 
 const DeleteItemModal = ({ itemId }: DeleteItemModalProps) => {
   const { closeModal } = useModals()
-  const navigate = useNavigate()
   const {
     deleteItem: { mutate: mutateItemDeleted },
   } = useItemDetailQuery()

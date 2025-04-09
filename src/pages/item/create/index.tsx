@@ -1,12 +1,21 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
+import { ReactComponent as Error } from '../../../assets/error_20.svg'
+import { ReactComponent as InfoAddOff } from '../../../assets/info_add_off_20.svg'
+import { ReactComponent as InfoAddOn } from '../../../assets/info_add_on_20.svg'
+import { ReactComponent as LinkAddOff } from '../../../assets/link_add_off_20.svg'
+import { ReactComponent as LinkAddOn } from '../../../assets/link_add_on_20.svg'
+import { ReactComponent as StorageOff } from '../../../assets/storage_off_20.svg'
+import { ReactComponent as StorageOn } from '../../../assets/storage_on_20.svg'
+import Header from '../../../components/Header/Header'
+import SelectCeleb from '../../../components/SelectCeleb/SelectCeleb'
+import { ErrorText } from '../../../components/TextField/DefaultTextfield/styles'
+import { HeaderWrapper } from '../addInfo/styles'
 import BrandItemField from './components/BrandItemField/BrandItemField'
-import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 import DatePlaceField from './components/DatePlaceField/DatePlaceField'
 import PriceField from './components/PriceField/PriceField'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import SelectCeleb from '../../../components/SelectCeleb/SelectCeleb'
 import SelectCategory from './components/SelectCategory/SelectCategory'
-import Header from '../../../components/Header/Header'
 import {
   BottomBar,
   ComponentContainer,
@@ -15,20 +24,17 @@ import {
   Label,
   LabelContainer,
 } from './styles'
-import { ReactComponent as Error } from '../../../assets/error_20.svg'
-import { ReactComponent as LinkAddOff } from '../../../assets/link_add_off_20.svg'
-import { ReactComponent as InfoAddOff } from '../../../assets/info_add_off_20.svg'
-import { ReactComponent as LinkAddOn } from '../../../assets/link_add_on_20.svg'
-import { ReactComponent as InfoAddOn } from '../../../assets/info_add_on_20.svg'
-import { ReactComponent as StorageOn } from '../../../assets/storage_on_20.svg'
-import { ReactComponent as StorageOff } from '../../../assets/storage_off_20.svg'
-import { HeaderWrapper } from '../addInfo/styles'
-import { ErrorText } from '../../../components/TextField/DefaultTextfield/styles'
-import {
-  parentCategoryState,
-  subCategoryState,
-} from '../../../components/BottomSheetModal/ItemCategoryModal'
-import ImageField from './components/ImageField/ImageField'
+
+import useItemQuery from '../../../apis/item/hooks/useItemQuery'
+import useTempItemQuery from '../../../apis/item/hooks/useTempItemQuery'
+import { TempItemReq } from '../../../apis/item/itemService.type'
+import useItemImgUpload from '../../../apis/s3/hooks/useItemImgUpload'
+import { imgListState } from '../../../components/AddPhotos/AddPhotos'
+import { brandNameSearchState } from '../../../components/BottomSheetModal/ItemBrandSelectModal/ItemBrandSelectModal'
+import { modals } from '../../../components/Modals'
+import useModals from '../../../components/Modals/hooks/useModals'
+import { localStorageKeys } from '../../../config/localStorageKeys'
+import useUploadStateObserver from '../../../hooks/useUploadStateObserver'
 import {
   createItemAddInfoState,
   createItemBrandState,
@@ -45,20 +51,9 @@ import {
   currentTempIdState,
   itemS3ImgListState,
 } from '../../../recoil/itemInfo'
-import useUploadStateObserver from '../../../hooks/useUploadStateObserver'
-import { localStorageKeys } from '../../../config/localStorageKeys'
-import useModals from '../../../components/Modals/hooks/useModals'
-import { modals } from '../../../components/Modals'
-import useItemQuery from '../../../apis/item/hooks/useItemQuery'
-import { HashTagResult, ImgResult, TempItemReq } from '../../../apis/item/itemService.type'
-import useItemDetailQuery from '../../../apis/item/hooks/useItemDetailQuery'
-import { imgListState } from '../../../components/AddPhotos/AddPhotos'
-import useTempItemQuery from '../../../apis/item/hooks/useTempItemQuery'
 import { hashTagState } from '../addInfo/components/HashTags/HashTag'
-import useItemImgUpload from '../../../apis/s3/hooks/useItemImgUpload'
-import { checkListState } from '../temporary-storage'
-import { brandNameSearchState } from '../../../components/BottomSheetModal/ItemBrandSelectModal/ItemBrandSelectModal'
 import { linksState } from '../addLink/components/LinkInput/LinkInput'
+import ImageField from './components/ImageField/ImageField'
 
 const ItemCreate = () => {
   useUploadStateObserver()
@@ -149,7 +144,7 @@ const ItemCreate = () => {
     navigate('/home', { replace: true })
   }
 
-  const { getTempCount, getTempItem } = useTempItemQuery()
+  const { getTempCount } = useTempItemQuery()
   const { data: tempCount } = getTempCount()
 
   const {

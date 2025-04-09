@@ -1,4 +1,12 @@
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
+import { useRecoilValue } from 'recoil'
+import { useDebounce } from 'use-debounce'
+import useTempItemQuery from '../apis/item/hooks/useTempItemQuery'
+import { TempItemReq } from '../apis/item/itemService.type'
+import useItemImgUpload from '../apis/s3/hooks/useItemImgUpload'
+import { imgListState } from '../components/AddPhotos/AddPhotos'
+import { hashTagState } from '../pages/item/addInfo/components/HashTags/HashTag'
 import {
   createItemAddInfoState,
   createItemBrandState,
@@ -12,18 +20,8 @@ import {
   createItemPriceState,
   createItemSourceState,
   createItemWhenDateState,
-  currentTempIdState,
-  itemS3ImgListState,
   tempS3ImgListState,
 } from '../recoil/itemInfo'
-import { useEffect, useMemo } from 'react'
-import useTempItemQuery from '../apis/item/hooks/useTempItemQuery'
-import { TempItemReq } from '../apis/item/itemService.type'
-import useItemImgUpload from '../apis/s3/hooks/useItemImgUpload'
-import { useLocation } from 'react-router-dom'
-import { imgListState } from '../components/AddPhotos/AddPhotos'
-import { hashTagState } from '../pages/item/addInfo/components/HashTags/HashTag'
-import { useDebounce } from 'use-debounce'
 
 const useUploadStateObserver = () => {
   const {
@@ -37,7 +35,7 @@ const useUploadStateObserver = () => {
 
   // Item 이미지 리스트
   const imgList = useRecoilValue(imgListState)
-  const [debouncedImgList] = useDebounce(imgList, 500)
+  // const [debouncedImgList] = useDebounce(imgList, 500)
   const tempS3ImgList = useRecoilValue(tempS3ImgListState)
   const [debouncedTempS3ImgList] = useDebounce(tempS3ImgList, 500)
 

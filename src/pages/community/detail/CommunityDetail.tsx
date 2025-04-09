@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import Header from '../../../components/Header/Header'
 import {
   CommentContainer,
   CommentWrapper,
@@ -14,50 +15,49 @@ import {
   UserTextWrapper,
   UserWrapper,
 } from './styles'
-import Header from '../../../components/Header/Header'
 
-import { ReactComponent as Home } from '../../../assets/home_24.svg'
-import { ReactComponent as ShareIcon } from '../../../assets/share_24.svg'
 import { ReactComponent as More } from '../../../assets/add_24.svg'
 import { ReactComponent as CommentIcon } from '../../../assets/comment_18.svg'
-import { ReactComponent as View } from '../../../assets/page view_18.svg'
-import { ReactComponent as LikeOn } from '../../../assets/like_on_24.svg'
+import { ReactComponent as Home } from '../../../assets/home_24.svg'
 import { ReactComponent as LikeOff } from '../../../assets/like_off_24.svg'
+import { ReactComponent as LikeOn } from '../../../assets/like_on_24.svg'
+import { ReactComponent as View } from '../../../assets/page view_18.svg'
+import { ReactComponent as DefaultProfile } from '../../../assets/profile_medium_74.svg'
+import { ReactComponent as ShareIcon } from '../../../assets/share_24.svg'
 import { ReactComponent as SubmitOff } from '../../../assets/submit_off_32.svg'
 import { ReactComponent as SubmitOn } from '../../../assets/submit_on_32.svg'
-import { ReactComponent as DefaultProfile } from '../../../assets/profile_medium_74.svg'
 
-import Badge from '../../../components/Badge/Badge'
-import { Divider, Reaction } from '../../item/detail/styles'
-import { HeaderWrapper } from '../../item/addInfo/styles'
-import CommentField from '../../../components/TextField/CommentField/CommentField'
 import { useNavigate, useParams } from 'react-router-dom'
-import useQuestionDetailQuery from '../../../apis/question/hooks/useQuestionDetailQuery'
-import CountDown from './components/CountDown'
-import DisplayPhotoItems from './components/DisplayPhotoItems'
-import Vote from './components/Vote'
+import { toast } from 'react-toastify'
+import { atom, useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
+import { NewComment } from '../../../apis/comment/commentService.type'
 import useSearchCommentQuery, {
   IAddComment,
 } from '../../../apis/comment/hooks/useSearchCommentQuery'
-import { NewComment } from '../../../apis/comment/commentService.type'
-import { atomKeys } from '../../../config/atomKeys'
-import { atom, useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
-import Chip from '../../../components/Chip/Chip'
-import { formatUpdatedAt, getRemainingTime } from '../../../utils/utility'
-import RecommendList from './components/RecommendList'
-import { Common } from '../../../components/styles'
-import useModals from '../../../components/Modals/hooks/useModals'
-import { modals } from '../../../components/Modals'
-import { RequestEditItemState } from '../../item/editRequest'
-import { IselectedItem, communityItemState, imgItemListState } from '../../../recoil/communityInfo'
-import { questionTypeState } from '../../../components/BottomSheetModal/QuestionEditDeleteModal'
-import CommentList from './components/Comment/CommentList'
-import { ReactComponent as Spinner } from '../../../assets/Spinner.svg'
-import Flex from '../../../components/Flex'
-import Share from '../../../utils/Share/share'
+import useQuestionDetailQuery from '../../../apis/question/hooks/useQuestionDetailQuery'
 import useUserMypageQuery from '../../../apis/user/hooks/useUserMypageQuery'
-import { toast } from 'react-toastify'
+import { ReactComponent as Spinner } from '../../../assets/Spinner.svg'
+import Badge from '../../../components/Badge/Badge'
+import { questionTypeState } from '../../../components/BottomSheetModal/QuestionEditDeleteModal'
+import Chip from '../../../components/Chip/Chip'
+import Flex from '../../../components/Flex'
+import { modals } from '../../../components/Modals'
+import useModals from '../../../components/Modals/hooks/useModals'
+import { Common } from '../../../components/styles'
+import CommentField from '../../../components/TextField/CommentField/CommentField'
+import { atomKeys } from '../../../config/atomKeys'
+import { IselectedItem, communityItemState, imgItemListState } from '../../../recoil/communityInfo'
+import Share from '../../../utils/Share/share'
 import storage from '../../../utils/storage'
+import { formatUpdatedAt, getRemainingTime } from '../../../utils/utility'
+import { HeaderWrapper } from '../../item/addInfo/styles'
+import { Divider, Reaction } from '../../item/detail/styles'
+import { RequestEditItemState } from '../../item/editRequest'
+import CommentList from './components/Comment/CommentList'
+import CountDown from './components/CountDown'
+import DisplayPhotoItems from './components/DisplayPhotoItems'
+import RecommendList from './components/RecommendList'
+import Vote from './components/Vote'
 
 export const commentState = atom<NewComment>({
   key: atomKeys.commentState,
@@ -90,7 +90,7 @@ const CommunityDetail = () => {
     }
   }, [])
 
-  const { getQuestionDetail, getTestQuestionDetail } = useQuestionDetailQuery()
+  const { getQuestionDetail } = useQuestionDetailQuery()
   const { data } = getQuestionDetail(Number(questionId))
   // const { data } = getTestQuestionDetail(Number(questionId))
   console.log(data)

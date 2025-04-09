@@ -1,7 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import Icon from '../Icon/Icon'
-import { BottomNavItemData } from './BottomNav.type'
 import { BOTTOM_NAV_ITEM_DATA, BOTTOM_NAV_PATH_INFO } from './BottomNav.util'
 import { BottomNavItemLink, BottomNavLabel, Root } from './styles'
 import { ReactComponent as Home } from './../../assets/BottomNav/home_off.svg'

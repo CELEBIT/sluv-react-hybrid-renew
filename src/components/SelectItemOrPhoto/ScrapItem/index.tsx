@@ -1,33 +1,28 @@
-import React, { useRef } from 'react'
-import { useObserver } from '../../../hooks/useObserver'
-import EmptyState from '../../EmptyState'
-import Item from '../../RecommendedItem/Item'
-import { ListWrapper, RecentViewItemContainer } from '../RecentViewItem/styles'
+import { useRef } from 'react'
+import { toast } from 'react-toastify'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { maxItemPhotoCountState } from '..'
 import useScrapItemQuery from '../../../apis/item/hooks/useScrapItemQuery'
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
+import { ItemResult } from '../../../apis/item/itemService.type'
+import { useObserver } from '../../../hooks/useObserver'
+import { Divider } from '../../../pages/item/detail/styles'
 import {
-  IselectedItem,
-  communityItemState,
   communityQuestionMenuState,
   firstItemState,
   imgItemListState,
   secondItemState,
 } from '../../../recoil/communityInfo'
-import { ItemResult } from '../../../apis/item/itemService.type'
-import { Divider } from '../../../pages/item/detail/styles'
+import EmptyState from '../../EmptyState'
+import Item from '../../RecommendedItem/Item'
 import HotItem from '../HotItem'
-import { maxItemPhotoCountState } from '..'
-import { toast } from 'react-toastify'
+import { ListWrapper, RecentViewItemContainer } from '../RecentViewItem/styles'
 
 const ScrapItem = () => {
-  const [communityUploadInfo, setCommunityUploadInfo] = useRecoilState(communityItemState)
   const maxItemPhotoCount = useRecoilValue(maxItemPhotoCountState)
   const communityQuestionMenu = useRecoilValue(communityQuestionMenuState)
 
   const [firstItem, setFirstItem] = useRecoilState(firstItemState)
   const [secondItem, setSecondItem] = useRecoilState(secondItemState)
-  const resetFirstItem = useResetRecoilState(firstItemState)
-  const resetSecondItem = useResetRecoilState(secondItemState)
 
   const [imgItemList, setImageItemList] = useRecoilState(imgItemListState)
 

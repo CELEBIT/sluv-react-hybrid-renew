@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Tab, TabName, TabIndicator, ScrollTabContainer } from './styles'
 
 interface TabProps {

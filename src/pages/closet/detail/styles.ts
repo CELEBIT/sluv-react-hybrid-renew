@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { ClosetBoxModel, ClosetItemModel } from '../../../apis/closet/model'
+import { ClosetBoxModel } from '../../../apis/closet/model'
 import blueImage from '../../../assets/default_closet_inner_cover_blue.svg'
 import orangeImage from '../../../assets/default_closet_inner_cover_yellow.svg'
 import purpleImage from '../../../assets/default_closet_inner_cover_purple.svg'

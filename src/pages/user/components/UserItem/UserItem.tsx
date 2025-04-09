@@ -1,13 +1,10 @@
-import React, { useRef } from 'react'
-import useHotCelebItemQuery from '../../../../apis/item/hooks/useHotCelebItemQuery'
-import ItemListGrid from '../../../../components/ItemListGrid/ItemListGrid'
-import useUserItemQuery from '../../../../apis/user/hooks/useUserItemQuery'
 import { useNavigate, useParams } from 'react-router-dom'
-import { ContentContainer, HeaderWrapper, PageContainer } from '../../styles'
-import Header from '../../../../components/Header/Header'
-import EmptyState from '../../../../components/EmptyState'
+import useUserItemQuery from '../../../../apis/user/hooks/useUserItemQuery'
 import ButtonSmall from '../../../../components/ButtonSmall/ButtonSmall'
-import { useObserver } from '../../../../hooks/useObserver'
+import EmptyState from '../../../../components/EmptyState'
+import Header from '../../../../components/Header/Header'
+import ItemListGrid from '../../../../components/ItemListGrid/ItemListGrid'
+import { ContentContainer, HeaderWrapper, PageContainer } from '../../styles'
 import { EmptyStateWrapper } from '../FollowList/Follower/Follower'
 
 const UserItem = () => {
@@ -16,8 +13,9 @@ const UserItem = () => {
   if (id) {
     // 타 유저의 마이페이지
     const { getOtherUserUploadItem } = useUserItemQuery()
-    const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } =
-      getOtherUserUploadItem(Number(id))
+    const { data, status, isFetching, isFetchingNextPage, fetchNextPage } = getOtherUserUploadItem(
+      Number(id),
+    )
 
     const tempData = data?.pages[0].content
     return (

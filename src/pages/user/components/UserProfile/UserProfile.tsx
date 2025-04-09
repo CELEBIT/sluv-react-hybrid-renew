@@ -1,4 +1,17 @@
-import React, { useEffect } from 'react'
+import React from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { atom, useSetRecoilState } from 'recoil'
+import useFollowQuery from '../../../../apis/user/hooks/useFollowQuery'
+import useUserMypageQuery from '../../../../apis/user/hooks/useUserMypageQuery'
+import { ReactComponent as MoreDown } from '../../../../assets/arrow_down_18.svg'
+import { ReactComponent as DefaultProfile } from '../../../../assets/profile_medium_74.svg'
+import { ReactComponent as DefaultProfileWithAdd } from '../../../../assets/profile_medium_add_74.svg'
+import FollowMediumButton from '../../../../components/ButtonMedium/FollowMediumButton'
+import { modals } from '../../../../components/Modals'
+import useModals from '../../../../components/Modals/hooks/useModals'
+import { Common } from '../../../../components/styles'
+import { atomKeys } from '../../../../config/atomKeys'
+import InterestCelebList from './InterestCelebList/InterestCelebList'
 import {
   ArrowDim,
   ArrowRight,
@@ -16,21 +29,6 @@ import {
   UserImg,
   UserInfoWrapper,
 } from './styles'
-import { ReactComponent as MoreDown } from '../../../../assets/arrow_down_18.svg'
-import { ReactComponent as DefaultProfile } from '../../../../assets/profile_medium_74.svg'
-import { ReactComponent as DefaultProfileWithAdd } from '../../../../assets/profile_medium_add_74.svg'
-import { Common } from '../../../../components/styles'
-import useModals from '../../../../components/Modals/hooks/useModals'
-import { modals } from '../../../../components/Modals'
-import { useNavigate, useParams } from 'react-router-dom'
-import useUserMypageQuery from '../../../../apis/user/hooks/useUserMypageQuery'
-import { atom, useSetRecoilState } from 'recoil'
-import { atomKeys } from '../../../../config/atomKeys'
-import InterestCelebList from './InterestCelebList/InterestCelebList'
-import { convertToFile } from '../../../../utils/utility'
-import S3Service from '../../../../apis/s3/S3Service'
-import FollowMediumButton from '../../../../components/ButtonMedium/FollowMediumButton'
-import useFollowQuery from '../../../../apis/user/hooks/useFollowQuery'
 
 export const selectedFollowTabState = atom<string>({
   key: atomKeys.selectedFollowTab,
@@ -157,35 +155,41 @@ const UserProfile = () => {
               </InfoBottomWrapper>
             </InfoRightLeftWrapper>
             <div style={{ flexShrink: 0, padding: '0.5625rem 0' }}>
-              {data?.followStatus ? (
-                <FollowMediumButton
-                  icon={true}
-                  active={false}
-                  onClick={(e) => onClickFollow(e, Number(id))}
-                >
-                  팔로잉
-                </FollowMediumButton>
-              ) : (
-                <FollowMediumButton
-                  icon={false}
-                  active={true}
-                  onClick={(e) => onClickFollow(e, Number(id))}
-                >
-                  팔로우
-                </FollowMediumButton>
+              {!data?.blockStatus && (
+                <>
+                  {data?.followStatus ? (
+                    <FollowMediumButton
+                      icon={true}
+                      active={false}
+                      onClick={(e) => onClickFollow(e, Number(id))}
+                    >
+                      팔로잉
+                    </FollowMediumButton>
+                  ) : (
+                    <FollowMediumButton
+                      icon={false}
+                      active={true}
+                      onClick={(e) => onClickFollow(e, Number(id))}
+                    >
+                      팔로우
+                    </FollowMediumButton>
+                  )}
+                </>
               )}
             </div>
           </InfoRightWrapper>
         </UserInfoWrapper>
-        <InterestCelebWrapper>
-          <InterestCelebList></InterestCelebList>
-          <ArrowRight>
-            <ArrowDim></ArrowDim>
-            <ArrowWrapper onClick={showMoreInterestCeleb}>
-              <MoreDown stroke={Common.colors.GR600} style={{ flexShrink: 0 }}></MoreDown>
-            </ArrowWrapper>
-          </ArrowRight>
-        </InterestCelebWrapper>
+        {!data?.blockStatus && (
+          <InterestCelebWrapper>
+            <InterestCelebList></InterestCelebList>
+            <ArrowRight>
+              <ArrowDim></ArrowDim>
+              <ArrowWrapper onClick={showMoreInterestCeleb}>
+                <MoreDown stroke={Common.colors.GR600} style={{ flexShrink: 0 }}></MoreDown>
+              </ArrowWrapper>
+            </ArrowRight>
+          </InterestCelebWrapper>
+        )}
       </ProfileContainer>
     )
   }

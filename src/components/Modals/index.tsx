@@ -1,12 +1,12 @@
-import useModals from './hooks/useModals'
-import { Dimmed, Dimmer } from './styles'
-import React, { ComponentProps, FunctionComponent, memo } from 'react'
 import loadable from '@loadable/component'
 import PropTypes from 'prop-types'
-import { QuestionChangeModalProps } from '../TwoButtonModal/QuestionChangeModal'
+import { ComponentProps, FunctionComponent, memo } from 'react'
 import { CommunityMenu } from '../../config/communityMenu'
 import ClosetBoxCreateBottomSheetModal from '../BottomSheetModal/ClosetBoxCreateBottomSheetModal'
 import { userIdProps } from '../BottomSheetModal/UserInterestCelebModal'
+import { QuestionChangeModalProps } from '../TwoButtonModal/QuestionChangeModal'
+import useModals from './hooks/useModals'
+import { Dimmed, Dimmer } from './styles'
 
 const AskRecentPostWritingModal = loadable(
   () => import('../TwoButtonModal/AskRecentPostWritingModal'),
@@ -32,6 +32,7 @@ const EditRequestCompleteModal = loadable(
   () => import('../OneButtonModal/EditRequestCompleteModal'),
 )
 const UserReportCompleteModal = loadable(() => import('../OneButtonModal/UserReportCompleteModal'))
+const BlockUserModal = loadable(() => import('../TwoButtonModal/BlockUserModal'))
 const DuplicateReportModal = loadable(() => import('../OneButtonModal/DuplicateReportModal'))
 
 const QuestionDateTimePickerModal = loadable(
@@ -109,6 +110,7 @@ export const modals = {
   UserReportCompleteModal: UserReportCompleteModal as FunctionComponent<
     ComponentProps<typeof UserReportCompleteModal>
   >,
+  BlockUserModal: BlockUserModal as FunctionComponent<ComponentProps<typeof BlockUserModal>>,
   QuestionDateTimePickerModal: QuestionDateTimePickerModal as FunctionComponent<
     ComponentProps<typeof QuestionDateTimePickerModal>
   >,

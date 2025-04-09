@@ -1,19 +1,11 @@
-import React from 'react'
-import { useRecoilState, useSetRecoilState } from 'recoil'
-import Chip from '../../Chip/Chip'
-import { selectedCelebState, selectedGroupState } from '../../SelectCeleb/SelectCeleb'
-import useHotCelebQuery from '../../../apis/celeb/hooks/useHotCelebQuery'
-import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
-import { createItemCelebState, itemInfoState } from '../../../recoil/itemInfo'
-import { IHotCeleb } from '../../../apis/celeb/CelebService'
-import useModals from '../../Modals/hooks/useModals'
-import { modals } from '../../Modals'
-import { ChipWrapper } from '../../BottomSheetModal/ItemCelebModal/ItemCelebSearchModal'
 import styled from '@emotion/styled'
-import { Common, Pretendard } from '../../styles'
-import useSearchRankQuery from '../../../apis/search/hooks/useSearchRankQuery'
-import { itemNameSearchState } from '../SearchResult'
+import { useSetRecoilState } from 'recoil'
 import { finalSearchState } from '..'
+import useSearchRankQuery from '../../../apis/search/hooks/useSearchRankQuery'
+import { ChipWrapper } from '../../BottomSheetModal/ItemCelebModal/ItemCelebSearchModal'
+import Chip from '../../Chip/Chip'
+import { Common, Pretendard } from '../../styles'
+import { itemNameSearchState } from '../SearchResult'
 const HotSearchItem = () => {
   const setSearchValue = useSetRecoilState<string>(itemNameSearchState)
   const setFinalValue = useSetRecoilState<string>(finalSearchState)
@@ -22,9 +14,9 @@ const HotSearchItem = () => {
     getSearchRank: { data },
   } = useSearchRankQuery()
 
-  const {
-    postRecentCeleb: { mutate: mutateByPostRecentCeleb },
-  } = useRecentCelebQuery()
+  // const {
+  //   postRecentCeleb: { mutate: mutateByPostRecentCeleb },
+  // } = useRecentCelebQuery()
 
   const onChipClick = (keyword: string) => {
     setSearchValue(keyword)

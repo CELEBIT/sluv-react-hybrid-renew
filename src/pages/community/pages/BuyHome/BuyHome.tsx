@@ -19,7 +19,6 @@ import BuyVote from './components/BuyVote'
 import ButtonSmall from '../../../../components/ButtonSmall/ButtonSmall'
 import { useNavigate } from 'react-router-dom'
 import Flex from '../../../../components/Flex'
-import { url } from 'inspector'
 
 const BuyHome = () => {
   const navigate = useNavigate()

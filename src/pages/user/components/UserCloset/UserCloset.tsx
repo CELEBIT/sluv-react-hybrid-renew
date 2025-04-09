@@ -1,17 +1,13 @@
-import React from 'react'
 import { useParams } from 'react-router-dom'
-import * as S from '../../../closet/styles'
-import ClosetList from '../../../closet/components/ClosetList'
-import EmptyState from '../../../../components/EmptyState'
-import { Root, ScrollRoot } from './styles'
 import useGetOtherUserClosetQuery from '../../../../apis/user/hooks/useGetOtherUserClosetQuery'
+import EmptyState from '../../../../components/EmptyState'
+import ClosetList from '../../../closet/components/ClosetList'
 import { EmptyStateWrapper } from '../FollowList/Follower/Follower'
-import { ContentContainer } from '../../styles'
+import { ScrollRoot } from './styles'
 const UserCloset = () => {
   const { id } = useParams()
   const { getOtherUserClosetList } = useGetOtherUserClosetQuery()
-  const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } =
-    getOtherUserClosetList(Number(id))
+  const { data } = getOtherUserClosetList(Number(id))
   if (!data?.pages[0].content.length) {
     return (
       // <ContentContainer>

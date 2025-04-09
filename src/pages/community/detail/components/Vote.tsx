@@ -3,9 +3,7 @@ import React from 'react'
 import { Common, Pretendard } from '../../../../components/styles'
 import { Img, Item } from '../../../../apis/question/questionService.type'
 import { ReactComponent as Voted } from '../../../../assets/check_on_24.svg'
-import useQuestionDetailQuery, {
-  IVote,
-} from '../../../../apis/question/hooks/useQuestionDetailQuery'
+import useQuestionDetailQuery from '../../../../apis/question/hooks/useQuestionDetailQuery'
 import { getRemainingTime } from '../../../../utils/utility'
 import { toast } from 'react-toastify'
 

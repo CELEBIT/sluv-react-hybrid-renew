@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import CommentService from '../commentService'
 import { queryKeys } from '../../../config/queryKeys'
-import { Img, ItemPost, NewComment } from '../commentService.type'
+import CommentService from '../commentService'
+import { Img, ItemPost } from '../commentService.type'
 
 export interface IAddComment {
   questionId: number
@@ -45,8 +45,7 @@ const useSearchCommentQuery = () => {
     ({ questionId, content, imgList, itemList }: IAddComment) =>
       comment.addComment(questionId, content, imgList, itemList),
     {
-      onSuccess: (res, { questionId }) => {
-        //
+      onSuccess: () => {
         queryClient.invalidateQueries()
       },
     },
@@ -56,15 +55,14 @@ const useSearchCommentQuery = () => {
     ({ commentId, content, imgList, itemList }: IEditComment) =>
       comment.editComment(commentId, content, imgList, itemList),
     {
-      onSuccess: (res, { questionId }) => {
-        //
+      onSuccess: () => {
         queryClient.invalidateQueries()
       },
     },
   )
 
   const likeComment = useMutation(({ commentId }: ILikeComment) => comment.likeComment(commentId), {
-    onSuccess: (res, { questionId }) => {
+    onSuccess: () => {
       queryClient.invalidateQueries()
     },
   })
@@ -72,7 +70,7 @@ const useSearchCommentQuery = () => {
   const deleteComment = useMutation(
     ({ commentId }: ILikeComment) => comment.deleteComment(commentId),
     {
-      onSuccess: (res, { questionId }) => {
+      onSuccess: () => {
         queryClient.invalidateQueries()
       },
     },

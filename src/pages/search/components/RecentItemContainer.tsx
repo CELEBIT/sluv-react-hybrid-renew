@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import React from 'react'
 import { Common, Pretendard } from '../../../components/styles'
-import { ItemResult, RecommendItemResult } from '../../../apis/item/itemService.type'
+import { RecommendItemResult } from '../../../apis/item/itemService.type'
 import Item from '../../../components/RecommendedItem/Item'
 import { useNavigate } from 'react-router-dom'
 

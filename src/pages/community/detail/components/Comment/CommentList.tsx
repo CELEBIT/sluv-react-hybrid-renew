@@ -1,25 +1,19 @@
-import React from 'react'
 import useSearchCommentQuery from '../../../../../apis/comment/hooks/useSearchCommentQuery'
 import EmptyState from '../../../../../components/EmptyState'
 
-import { ReactComponent as ShowMore } from '../../../../../assets/add_24.svg'
-import { ReactComponent as StorageOff } from '../../../../../assets/storage_list_off_24.svg'
-import { ReactComponent as StorageOn } from '../../../../../assets/storage_on_24.svg'
-import { CommentContainer } from './styles'
+import styled from '@emotion/styled'
 import Comment from './Comment'
 import CommentBlur from './CommentBlur'
-import styled from '@emotion/styled'
+import { CommentContainer } from './styles'
 interface CommentListProps {
   questionId: number
   isPreview?: boolean
 }
 
 const CommentList = ({ questionId, isPreview }: CommentListProps) => {
-  const { getCommentList, getTestCommentList } = useSearchCommentQuery()
+  const { getCommentList } = useSearchCommentQuery()
   const { data } = getCommentList(questionId)
-  // const { data } = getTestCommentList(questionId)
-  // alert(isPreview)
-  console.log(data)
+
   if (data && data.length > 0) {
     return (
       <CommentContainer>

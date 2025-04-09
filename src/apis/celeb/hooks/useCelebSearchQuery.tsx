@@ -1,15 +1,11 @@
 import { UseInfiniteQueryResult, useInfiniteQuery, useMutation } from '@tanstack/react-query'
-import CelebService, { ISearchCeleb } from '../CelebService'
-import { queryKeys } from '../../../config/queryKeys'
-import { GetPaginationResult } from '../../core/type'
-import useRecentCelebQuery from './useRecentCelebQuery'
-import { useRecoilState, useSetRecoilState } from 'recoil'
-import {
-  createItemCelebState,
-  createItemNewCelebState,
-  itemInfoState,
-} from '../../../recoil/itemInfo'
+import { useSetRecoilState } from 'recoil'
 import { selectedCelebState } from '../../../components/SelectCeleb/SelectCeleb'
+import { queryKeys } from '../../../config/queryKeys'
+import { createItemNewCelebState } from '../../../recoil/itemInfo'
+import { GetPaginationResult } from '../../core/type'
+import CelebService, { ISearchCeleb } from '../CelebService'
+import useRecentCelebQuery from './useRecentCelebQuery'
 
 interface INewCeleb {
   newCelebName: string
@@ -36,9 +32,7 @@ const useCelebSearchQuery = () => {
   const {
     postRecentCeleb: { mutate: mutateByPostRecentCeleb },
   } = useRecentCelebQuery()
-  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
   const setSelectedCeleb = useSetRecoilState(selectedCelebState)
-  const setCelebInfoInItem = useSetRecoilState(createItemCelebState)
   const setNewCeleb = useSetRecoilState(createItemNewCelebState)
 
   const postNewCeleb = useMutation(

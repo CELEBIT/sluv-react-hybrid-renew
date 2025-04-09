@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, memo } from 'react'
 import { atomKeys } from '../../config/atomKeys'
-import { atom, useRecoilState, useRecoilValue } from 'recoil'
+import { atom, useRecoilState } from 'recoil'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { AddPhotosWrapper } from './styles'
 import AddButton from './AddButton'

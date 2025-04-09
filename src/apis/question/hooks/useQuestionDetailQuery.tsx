@@ -1,12 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import QuestionService from '../questionService'
-import { queryKeys } from '../../../config/queryKeys'
-import { EditRequestReason } from '../../../pages/item/editRequest'
-import useModals from '../../../components/Modals/hooks/useModals'
-import { modals } from '../../../components/Modals'
 import { useNavigate } from 'react-router-dom'
 import { useResetRecoilState } from 'recoil'
+import { modals } from '../../../components/Modals'
+import useModals from '../../../components/Modals/hooks/useModals'
+import { queryKeys } from '../../../config/queryKeys'
 import { commentState } from '../../../pages/community/detail/CommunityDetail'
+import { EditRequestReason } from '../../../pages/item/editRequest'
+import QuestionService from '../questionService'
 
 export interface IVote {
   questionId: number
@@ -51,14 +51,8 @@ const useQuestionDetailQuery = () => {
   const voteItem = useMutation(
     ({ questionId, voteSortOrder }: IVote) => question.voteItem(questionId, voteSortOrder),
     {
-      onSuccess: (res, { questionId }) => {
-        //
+      onSuccess: () => {
         queryClient.invalidateQueries()
-        // queryClient.invalidateQueries(queryKeys.questionDetail(questionId))
-        // queryClient.invalidateQueries(queryKeys.getQuestionBuyList('전체'))
-        // queryClient.invalidateQueries(queryKeys.getQuestionBuyList('진행 중'))
-        // queryClient.invalidateQueries(queryKeys.getQuestionBuyList('종료 임박'))
-        // queryClient.invalidateQueries(queryKeys.getQuestionBuyList('종료'))
       },
     },
   )
@@ -106,8 +100,7 @@ const useQuestionDetailQuery = () => {
   })
 
   const likeQuestion = useMutation((questionId: number) => question.likeQusetion(questionId), {
-    onSuccess: (res, questionId) => {
-      //
+    onSuccess: () => {
       queryClient.invalidateQueries()
     },
   })

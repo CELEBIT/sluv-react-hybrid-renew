@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import { Common } from '../styles'
 
 const Input = styled.input`
   padding: 0;

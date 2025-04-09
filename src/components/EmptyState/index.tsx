@@ -1,12 +1,13 @@
-import React from 'react'
-import { EmptyStateContainer, SubTitle, TextWrapper, Title } from './styles'
-import { ReactComponent as Clock } from '../../assets/clock_36.svg'
-import { ReactComponent as Storage } from '../../assets/storage_36.svg'
-import { ReactComponent as Comment } from '../../assets/list_36.svg'
-import { ReactComponent as Item } from '../../assets/item_36.svg'
-import { ReactComponent as Search } from '../../assets/search_36.svg'
-import { ReactComponent as Like } from '../../assets/like_36.svg'
+import { ReactComponent as Alert } from '../../assets/alert_36.svg'
 import { ReactComponent as Bell } from '../../assets/bell_36.svg'
+import { ReactComponent as Clock } from '../../assets/clock_36.svg'
+import { ReactComponent as Item } from '../../assets/item_36.svg'
+import { ReactComponent as Like } from '../../assets/like_36.svg'
+import { ReactComponent as Comment } from '../../assets/list_36.svg'
+import { ReactComponent as Search } from '../../assets/search_36.svg'
+import { ReactComponent as Storage } from '../../assets/storage_36.svg'
+import { EmptyStateContainer, SubTitle, TextWrapper, Title } from './styles'
+
 type EmptyStateProps = {
   icon: string
   // clock, save, comment, item, search, like
@@ -30,6 +31,8 @@ const getIconComponent = (icon: string) => {
       return <Like />
     case 'bell':
       return <Bell />
+    case 'alert':
+      return <Alert />
     default:
       return null
   }

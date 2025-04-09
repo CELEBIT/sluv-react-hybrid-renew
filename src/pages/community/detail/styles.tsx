@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import { css } from '@emotion/react'
 import { Common, Pretendard } from '../../../components/styles'
 
 export const DetailContainer = styled.div`

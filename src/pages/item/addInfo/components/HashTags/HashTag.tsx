@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Tag, TagInput, TagInputContainer } from './styles'
-import { atom, useRecoilState, useRecoilValue } from 'recoil'
+import { atom, useRecoilState } from 'recoil'
 import { atomKeys } from '../../../../../config/atomKeys'
 import { HashTagWrapper } from '../../styles'
 import HashTagSearchList from './HashTagSearchList'
-import { IHashTag, itemInfoState } from '../../../../../recoil/itemInfo'
+import { IHashTag } from '../../../../../recoil/itemInfo'
 import useItemHashtagQuery from '../../../../../apis/item/hooks/useItemHashtagQuery'
 
 interface HashtagInputProps {

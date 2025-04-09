@@ -6,7 +6,7 @@ import Header from '../../../components/Header/Header'
 import LinkInput, { linksState } from './components/LinkInput/LinkInput'
 import { AddLinkContainer } from './styles'
 import { urlRegex } from '../../../config/constant'
-import { createItemLinkState, itemInfoState } from '../../../recoil/itemInfo'
+import { createItemLinkState } from '../../../recoil/itemInfo'
 import { LinkResult } from '../../../apis/item/itemService.type'
 
 const AddLink = () => {

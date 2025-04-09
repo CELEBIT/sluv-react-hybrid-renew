@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo } from 'react'
+import React, { useRef, useMemo } from 'react'
 import { InputContainer } from '../../../../../../components/TextField/DefaultTextfield/styles'
 import styled from '@emotion/styled'
 import { Common, Pretendard } from '../../../../../../components/styles'

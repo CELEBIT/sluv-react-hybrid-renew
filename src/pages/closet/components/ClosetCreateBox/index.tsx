@@ -1,17 +1,10 @@
-import React, {
-  createRef,
-  HTMLAttributes,
-  PropsWithChildren,
-  ReactElement,
-  useContext,
-} from 'react'
+import React, { createRef, PropsWithChildren, useContext } from 'react'
 
 import * as S from '../ClosetCreateBox/styles'
 
 import { CreateClosetFormContext } from '../../create'
 import { useLocation, useNavigate } from 'react-router-dom'
 import NameTag from '../NameTag'
-import { CoverBoxColorKey, DEFAULT_COVER_COLOR_SET } from '../../utils/consts'
 import { CoverImageMode } from '../../../../apis/closet/model'
 import ClosetBoxGrabIcon from '../GrabIcon'
 
