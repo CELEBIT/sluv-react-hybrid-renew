@@ -1,8 +1,8 @@
-import { useMutation } from '@tanstack/react-query'
-import UserService from '../userService'
-import { EditRequestReason } from '../../../pages/item/editRequest'
-import useModals from '../../../components/Modals/hooks/useModals'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { modals } from '../../../components/Modals'
+import useModals from '../../../components/Modals/hooks/useModals'
+import { EditRequestReason } from '../../../pages/item/editRequest'
+import UserService from '../userService'
 
 interface IReportUser {
   userId: number | undefined
@@ -11,7 +11,8 @@ interface IReportUser {
 
 const useReportUserQuery = () => {
   const user = new UserService()
-  const { openModal } = useModals()
+  const { openModal, closeModal } = useModals()
+  const queryClient = useQueryClient()
 
   const reportUser = useMutation(
     ({ userId, requestContent }: IReportUser) =>
@@ -30,7 +31,17 @@ const useReportUserQuery = () => {
     },
   )
 
-  return { reportUser }
+  const blockUser = useMutation((userId: number) => user.blockUser(userId), {
+    onSuccess: (res) => {
+      console.log('res', res)
+      if (res.code == 1000) {
+        closeModal(modals.BlockUserModal)
+        queryClient.invalidateQueries()
+      }
+    },
+  })
+
+  return { reportUser, blockUser }
 }
 
 export default useReportUserQuery
