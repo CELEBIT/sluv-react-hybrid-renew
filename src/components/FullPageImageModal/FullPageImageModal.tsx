@@ -3,7 +3,7 @@ import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
 import { useState } from 'react'
 import Modal from 'react-modal'
-import { atom, useRecoilValue } from 'recoil'
+import { atom, useRecoilState } from 'recoil'
 import { ImgResult } from '../../apis/item/itemService.type'
 import { ItemImg } from '../../apis/question/questionService.type'
 import { ReactComponent as Close } from '../../assets/close_24_white.svg'
@@ -21,7 +21,7 @@ export const currentPictureIndexState = atom<number>({
 })
 
 function FullPageImageModal({ imgList, onClose }: ImageModalProps) {
-  const currentPictureIndex = useRecoilValue(currentPictureIndexState)
+  const [currentPictureIndex, setCurrentPictureIndex] = useRecoilState(currentPictureIndexState)
 
   const onAfterOpen = () => (document.body.style.overflow = 'hidden')
 
@@ -31,9 +31,9 @@ function FullPageImageModal({ imgList, onClose }: ImageModalProps) {
   }
 
   const [currentSlide, setCurrentSlide] = useState(currentPictureIndex)
-  const [_, setLoaded] = useState(false)
+  const [loaded, setLoaded] = useState(false)
 
-  const [sliderRef, _] = useKeenSlider({
+  const [sliderRef, instanceRef] = useKeenSlider({
     initial: currentPictureIndex,
     slideChanged(slider) {
       setCurrentSlide(slider.track.details.rel)

@@ -145,7 +145,7 @@ export default class ItemService {
   }
 
   // 최근 본 아이템
-  async getRecentViewItem(page: number) {
+  async getRecentViewItem(page: number, size?: number) {
     const data: ResponseType<GetPaginationResult<ItemResult>> = await request.get(
       `${this.itemUrl}/recent`,
       {
