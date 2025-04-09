@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 // import { Common } from '../styles'
-import { ChipWrapper, ColorChipWrapper } from './styles'
+import { ColorChipWrapper } from './styles'
 import { ReactComponent as Delete } from '../../assets/delete_18.svg'
 import { Common } from '../styles'
 

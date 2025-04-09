@@ -1,21 +1,19 @@
 import styled from '@emotion/styled'
+import { useSetRecoilState } from 'recoil'
+import { finalSearchState } from '..'
+import useSearchQuery from '../../../apis/search/hooks/useSearchQuery'
 import HighlightedText from '../../../components/HighlightedText/HighlightedText'
 import { Common, Pretendard } from '../../../components/styles'
-import useSearchQuery from '../../../apis/search/hooks/useSearchQuery'
-import EmptyState from '../../EmptyState'
 import { Divider } from '../../../pages/item/detail/styles'
+import EmptyState from '../../EmptyState'
 import HotItem from '../HotItem'
-import { useSetRecoilState } from 'recoil'
 import { itemNameSearchState } from '../SearchResult'
-import { finalSearchState } from '..'
-import { useNavigate } from 'react-router-dom'
 
 interface KeywordPreviewProps {
   keyword: string
 }
 
 const KeywordPreview = ({ keyword }: KeywordPreviewProps) => {
-  const navigate = useNavigate()
   const { searchAllData } = useSearchQuery()
   const { data } = searchAllData(keyword)
   const setSearchValue = useSetRecoilState<string>(itemNameSearchState)

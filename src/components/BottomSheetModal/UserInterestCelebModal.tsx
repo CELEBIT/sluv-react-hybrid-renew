@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import useModals from '../Modals/hooks/useModals'
-import { modals } from '../Modals'
-import BottomSheetModal from '.'
-import { ModalWrapper } from './ItemBrandSelectModal/ItemBrandSelectModal'
-import Header from '../Header/Header'
 import styled from '@emotion/styled'
+import { useEffect, useState } from 'react'
+import BottomSheetModal from '.'
+import useInterestCelebQuery from '../../apis/user/hooks/useInterestCelebQuery'
+import { colorList } from '../../config/constant'
 import {
   CategoryTitle,
   CelebCategoryWrapper,
   CelebListWrapper,
 } from '../../pages/selectInterestCeleb/styles'
 import ColorChip from '../Chip/ColorChip'
+import Header from '../Header/Header'
+import { modals } from '../Modals'
+import useModals from '../Modals/hooks/useModals'
 import { Common } from '../styles'
-import useInterestCelebQuery from '../../apis/user/hooks/useInterestCelebQuery'
-import { useParams } from 'react-router-dom'
-import { colorList } from '../../config/constant'
+import { ModalWrapper } from './ItemBrandSelectModal/ItemBrandSelectModal'
 
 export interface userIdProps {
   id: number
@@ -26,19 +25,19 @@ const UserInterestCelebModal = ({ id }: userIdProps) => {
     closeModal(modals.UserInterestCelebModal)
   }
 
-  const deleteCeleb = (categoryId: number, celebId: number) => {
-    // setSelectedCelebList((prevState) =>
-    //   prevState.map((category) =>
-    //     category.categoryId === categoryId
-    //       ? {
-    //           ...category,
-    //           celebList: category.celebList.filter((celeb) => celeb.celebId !== celebId),
-    //         }
-    //       : category,
-    //   ),
-    // )
-  }
-  const [expanded, setExpanded] = useState(false)
+  // const deleteCeleb = (categoryId: number, celebId: number) => {
+  //   // setSelectedCelebList((prevState) =>
+  //   //   prevState.map((category) =>
+  //   //     category.categoryId === categoryId
+  //   //       ? {
+  //   //           ...category,
+  //   //           celebList: category.celebList.filter((celeb) => celeb.celebId !== celebId),
+  //   //         }
+  //   //       : category,
+  //   //   ),
+  //   // )
+  // }
+  const [_, setExpanded] = useState(false)
 
   if (id) {
     // 다른 유저

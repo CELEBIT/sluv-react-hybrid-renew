@@ -1,5 +1,18 @@
-import React, { useRef, useState } from 'react'
+import { InfiniteData } from '@tanstack/react-query'
+import { useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { GetClosetRes } from '../../apis/closet'
+import { GetPaginationResult } from '../../apis/core/type'
 import { RecommendItemResult } from '../../apis/item/itemService.type'
+import { ReactComponent as ViewBigOff } from '../../assets/view_big_off_24.svg'
+import { ReactComponent as ViewBigOn } from '../../assets/view_big_on_24.svg'
+import { ReactComponent as ViewSmallOff } from '../../assets/view_small_off_24.svg'
+import { ReactComponent as ViewSmallOn } from '../../assets/view_small_on_24.svg'
+import { useObserver } from '../../hooks/useObserver'
+import ClosetInnerItem from '../../pages/closet/components/ClosetInnerItem'
+import EmptyState from '../EmptyState'
+import { EmptyStateContainer } from '../EmptyState/styles'
+import Item from '../RecommendedItem/Item'
 import {
   ItemListGridContainer,
   ItemListWrapper,
@@ -7,19 +20,6 @@ import {
   ViewHeaderLeft,
   ViewHeaderRight,
 } from './styles'
-import Item from '../RecommendedItem/Item'
-import { useNavigate } from 'react-router-dom'
-import EmptyState from '../EmptyState'
-import { ReactComponent as ViewSmallOff } from '../../assets/view_small_off_24.svg'
-import { ReactComponent as ViewSmallOn } from '../../assets/view_small_on_24.svg'
-import { ReactComponent as ViewBigOff } from '../../assets/view_big_off_24.svg'
-import { ReactComponent as ViewBigOn } from '../../assets/view_big_on_24.svg'
-import { useObserver } from '../../hooks/useObserver'
-import { InfiniteData } from '@tanstack/react-query'
-import { GetPaginationResult } from '../../apis/core/type'
-import { EmptyStateContainer } from '../EmptyState/styles'
-import { GetClosetRes } from '../../apis/closet'
-import ClosetInnerItem from '../../pages/closet/components/ClosetInnerItem'
 
 interface ItemListGridProps {
   data?: InfiniteData<GetPaginationResult<RecommendItemResult>> | undefined
@@ -42,7 +42,6 @@ const ItemListGrid = ({
   canChangeView,
   emptyIcon,
   emptyTitle,
-  emptySubTitle,
   isFetching,
   isFetchingNextPage,
   fetchNextPage,

@@ -1,18 +1,15 @@
-import React from 'react'
-import TwoButtonModal from '.'
-import useModals from '../Modals/hooks/useModals'
-import { modals } from '../Modals'
-import { BtnModalContent } from '../Modals/styles'
-import useQuestionDetailQuery from '../../apis/question/hooks/useQuestionDetailQuery'
-import { useRecoilValue, useResetRecoilState } from 'recoil'
-import { RequestEditItemState } from '../../pages/item/editRequest'
-import { useNavigate } from 'react-router-dom'
-import { communityItemState } from '../../recoil/communityInfo'
 import { toast } from 'react-toastify'
+import { useRecoilValue, useResetRecoilState } from 'recoil'
+import TwoButtonModal from '.'
+import useQuestionDetailQuery from '../../apis/question/hooks/useQuestionDetailQuery'
+import { RequestEditItemState } from '../../pages/item/editRequest'
+import { communityItemState } from '../../recoil/communityInfo'
+import { modals } from '../Modals'
+import useModals from '../Modals/hooks/useModals'
+import { BtnModalContent } from '../Modals/styles'
 
 const DeleteQuestionModal = () => {
   const { closeModal } = useModals()
-  const navigate = useNavigate()
   const EditReportItem = useRecoilValue(RequestEditItemState)
   const resetQuestionItem = useResetRecoilState(communityItemState)
 

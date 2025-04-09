@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useRef } from 'react'
 import useFollowQuery from '../../../../../apis/user/hooks/useFollowQuery'
 import { EmptyStateWrapper, FollowContainer, FollowRow, UserInfo } from '../Follower/Follower'
 import UserImage from '../../../../../components/UserImage/UserImage'

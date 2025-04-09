@@ -1,9 +1,7 @@
-import { ChangeEvent, FocusEvent, useState, MouseEvent, useContext, useEffect } from 'react'
-import { VALIDATION_ERROR_CASE } from './consts'
-import { NameTagService } from '../../services'
-import { useDebouncedCallback } from 'use-debounce'
-import { getClosetCheckName } from '../../../../apis/closet'
+import { ChangeEvent, FocusEvent, MouseEvent, useContext, useEffect, useState } from 'react'
 import { CreateClosetFormContext } from '../../create'
+import { NameTagService } from '../../services'
+import { VALIDATION_ERROR_CASE } from './consts'
 
 export const validateEditInputText = (text: string): keyof typeof VALIDATION_ERROR_CASE | null => {
   if (text) {
@@ -18,10 +16,10 @@ type UseNameTagProps = Pick<NameTagService, 'onSave' | 'closetBox'> & {
   editMode: boolean
 }
 
-export const useNameTag = ({ onSave, closetBox, editMode }: UseNameTagProps) => {
+export const useNameTag = ({ onSave, editMode }: UseNameTagProps) => {
   const [showTooltipValidation, setShowTooltipValidation] = useState<boolean>(false)
   const [tooltipText, setTooltipText] = useState<string>('')
-  const [hasValidationError, setHasValidationError] = useState<boolean>(false)
+  // const [hasValidationError, setHasValidationError] = useState<boolean>(false)
   const context = useContext(CreateClosetFormContext)
   const nameText = context?.states.name
   const setNameText = context?.handlers.setName

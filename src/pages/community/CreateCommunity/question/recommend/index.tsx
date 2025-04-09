@@ -3,7 +3,6 @@ import { ComponentWrapper, Label, LabelContainer } from '../../../../item/create
 import DefaultTextfield from '../../../../../components/TextField/DefaultTextfield/DefaultTextfield'
 import { ErrorText } from '../../../../../components/TextField/DefaultTextfield/styles'
 import TextArea from '../../../../../components/TextField/TextArea/TextArea'
-import AddPhotos from '../../../../../components/AddPhotos/AddPhotos'
 import { ReactComponent as Error } from '../../../../../assets/error_20.svg'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { communityItemState, hasTriedUpload } from '../../../../../recoil/communityInfo'

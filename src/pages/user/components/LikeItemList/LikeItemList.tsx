@@ -1,16 +1,13 @@
-import React from 'react'
-import useUserItemQuery from '../../../../apis/user/hooks/useUserItemQuery'
-import { UserItemListContainer } from '../UserItem/styles'
-import { ContentFullContainer, HeaderWrapper } from '../../styles'
+import useUserMypageQuery from '../../../../apis/user/hooks/useUserMypageQuery'
 import Header from '../../../../components/Header/Header'
 import ItemListGrid from '../../../../components/ItemListGrid/ItemListGrid'
-import useUserMypageQuery from '../../../../apis/user/hooks/useUserMypageQuery'
+import { ContentFullContainer, HeaderWrapper } from '../../styles'
+import { UserItemListContainer } from '../UserItem/styles'
 
 const LikeItemList = () => {
   const { getUserLikeItem } = useUserMypageQuery()
-  const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } = getUserLikeItem()
+  const { data, status, isFetching, isFetchingNextPage, fetchNextPage } = getUserLikeItem()
 
-  const tempData = data?.pages[0].content
   return (
     <UserItemListContainer>
       <HeaderWrapper>

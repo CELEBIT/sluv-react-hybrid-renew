@@ -1,19 +1,18 @@
-import React, { useState } from 'react'
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 import styled from '@emotion/styled'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import BottomSheetModal from '..'
+import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
+import { ICelebResult } from '../../../apis/user/userService'
+import { createItemCelebState } from '../../../recoil/itemInfo'
+import ButtonLarge from '../../ButtonLarge/ButtonLarge'
+import ButtonMedium from '../../ButtonMedium/ButtonMedium'
+import Header from '../../Header/Header'
 import { modals } from '../../Modals'
 import useModals from '../../Modals/hooks/useModals'
+import { selectedCelebState, selectedGroupState } from '../../SelectCeleb/SelectCeleb'
 import { Common, Pretendard } from '../../styles'
 import { ChipWrapper } from '../ItemBrandSelectModal/ItemBrandSelectModal'
 import { ButtonWrapper } from '../ItemPlaceInputModal/ItemPlaceInputModal'
-import Header from '../../Header/Header'
-import ButtonMedium from '../../ButtonMedium/ButtonMedium'
-import ButtonLarge from '../../ButtonLarge/ButtonLarge'
-import { CelebData, selectedCelebState, selectedGroupState } from '../../SelectCeleb/SelectCeleb'
-import { ICelebResult } from '../../../apis/user/userService'
-import { createItemCelebState, itemInfoState } from '../../../recoil/itemInfo'
-import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
 
 const ItemCelebSelectModal = () => {
   const {
@@ -23,8 +22,7 @@ const ItemCelebSelectModal = () => {
   const selectedGroup = useRecoilValue(selectedGroupState)
   const [selectedCeleb, setSelectedCeleb] = useRecoilState(selectedCelebState)
 
-  const [itemCeleb, setItemCeleb] = useRecoilState(createItemCelebState)
-  const resetItemCeleb = useResetRecoilState(createItemCelebState)
+  const [_, setItemCeleb] = useRecoilState(createItemCelebState)
 
   const { closeModal } = useModals()
   const onClose = () => {

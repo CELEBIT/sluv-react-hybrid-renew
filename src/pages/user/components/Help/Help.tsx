@@ -5,8 +5,6 @@ import { ReactComponent as Arrow } from '../../../../assets/arrow_18.svg'
 import * as S from './styles'
 import { Line } from '../../../community/detail/styles'
 import ButtonLarge from '../../../../components/ButtonLarge/ButtonLarge'
-import copyToClipboard from '../../../../utils/Share/copyToClipboard'
-import { toast } from 'react-toastify'
 
 const Help = () => {
   const handleButtonClick = () => {

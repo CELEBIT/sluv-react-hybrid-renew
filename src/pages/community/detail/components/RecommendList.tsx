@@ -1,17 +1,6 @@
-import e from 'express'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import useQuestionDetailQuery from '../../../../apis/question/hooks/useQuestionDetailQuery'
-import {
-  Category,
-  EachVotePhoto,
-  InfoTop,
-  Line,
-  Recommend,
-  RecommendInfo,
-  RecommendListWrapper,
-  RecommendPhoto,
-  RecommendVote,
-} from '../styles'
+import { Line, RecommendListWrapper } from '../styles'
 import QuestionListItem from '../../../../components/QuestionListItem/QuestionListItem'
 
 interface RecommendListProps {

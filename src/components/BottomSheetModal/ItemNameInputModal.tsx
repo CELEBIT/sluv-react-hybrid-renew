@@ -7,7 +7,7 @@ import Header from '../Header/Header'
 import DefaultTextfield from '../TextField/DefaultTextfield/DefaultTextfield'
 import ButtonLarge from '../ButtonLarge/ButtonLarge'
 import { useRecoilState } from 'recoil'
-import { createItemNameState, itemInfoState } from '../../recoil/itemInfo'
+import { createItemNameState } from '../../recoil/itemInfo'
 
 const ItemNameInputModal = () => {
   const [name, setName] = useRecoilState(createItemNameState)

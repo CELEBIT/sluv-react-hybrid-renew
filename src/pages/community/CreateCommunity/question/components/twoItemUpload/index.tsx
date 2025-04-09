@@ -8,7 +8,7 @@ import {
 } from './styles'
 import { ReactComponent as Add } from '../../../../../../assets/add_18.svg'
 import ItemNameInput from '../itemNameInput'
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
+import { useRecoilState } from 'recoil'
 import {
   IselectedItem,
   communityItemState,

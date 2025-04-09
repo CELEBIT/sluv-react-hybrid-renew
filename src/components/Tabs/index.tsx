@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { TabContainer, Tab, TabName, TabIndicator } from './styles'
 import { SetterOrUpdater } from 'recoil'
 

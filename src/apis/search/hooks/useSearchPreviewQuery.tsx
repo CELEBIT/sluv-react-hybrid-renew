@@ -1,4 +1,3 @@
-import React from 'react'
 import SearchService, { IRecentSearch } from '../searchService'
 import { UseInfiniteQueryResult, useInfiniteQuery } from '@tanstack/react-query'
 import { queryKeys } from '../../../config/queryKeys'

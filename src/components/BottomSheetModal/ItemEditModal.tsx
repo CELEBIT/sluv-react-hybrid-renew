@@ -2,14 +2,12 @@ import React from 'react'
 import BottomSheetModal from '.'
 import styled from '@emotion/styled'
 
-import { useRecoilValue } from 'recoil'
 // import { atomKeys } from '../../config/atomKeys'
 import Header from '../Header/Header'
 import useModals from '../Modals/hooks/useModals'
 import { modals } from '../Modals'
 import { Common, Pretendard } from '../styles'
 import { useNavigate } from 'react-router-dom'
-import { RequestEditItemState } from '../../pages/item/editRequest'
 import { ReactComponent as Share } from '../../assets/share_24.svg'
 
 export interface ItemEditModalProps {

@@ -1,5 +1,4 @@
-import styled from '@emotion/styled'
-import React, { useState } from 'react'
+import React from 'react'
 import SearchTextfield from '../../../components/TextField/SearchTextfield/SearchTextfield'
 import { useNavigate } from 'react-router-dom'
 

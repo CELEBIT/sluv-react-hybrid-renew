@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { AddPhotosWrapper } from './styles'
 import AddButton from './AddButton'

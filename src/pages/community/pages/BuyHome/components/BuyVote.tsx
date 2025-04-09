@@ -1,7 +1,7 @@
 import React from 'react'
 import * as S from './styles'
 import VoteTwoItem from '../../../CreateCommunity/question/components/twoItemUpload/VoteTwoItem'
-import { BuyHomeResult, SearchQuestionResult } from '../../../../../apis/search/searchService'
+import { BuyHomeResult } from '../../../../../apis/search/searchService'
 import UserImage from '../../../../../components/UserImage/UserImage'
 import { Dot } from '../../../../../components/Dot/Dot'
 import { ReactComponent as DefaultProfile } from '../../../../../assets/defaultProfile_40.svg'

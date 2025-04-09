@@ -1,8 +1,6 @@
-import React from 'react'
-import { css, keyframes } from '@emotion/react'
+import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 import ButtonLarge from '../ButtonLarge/ButtonLarge'
-import { Common } from '../styles'
 
 // import Button from '@shared/Button'
 
@@ -40,7 +38,4 @@ const Container = styled.div`
   animation: ${slideup} 0.5s ease-in-out forwards;
 `
 
-const buttonStyles = css`
-  border-radius: 8px;
-`
 export default FixedBottomButton

@@ -1,26 +1,20 @@
 import styled from '@emotion/styled'
-import { Common } from '../../styles'
-import React, { useRef } from 'react'
-import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
-import { Brand } from '../../../pages/item/create/components/BrandItemField/BrandItemField'
-import BrandLogo from '../../BrandLogo/BrandLogo'
-import useBrandSearchQuery from '../../../apis/brand/hooks/useBrandSearchQuery'
-import { brandNameSearchState } from './ItemBrandSelectModal'
-import { useObserver } from '../../../hooks/useObserver'
+import { useRef } from 'react'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { useDebounce } from 'use-debounce'
-import useRecentBrandQuery from '../../../apis/brand/hooks/useRecentBrandQuery'
-import HighlightedText from '../../HighlightedText/HighlightedText'
+import useBrandSearchQuery from '../../../apis/brand/hooks/useBrandSearchQuery'
 import useNewBrandQuery from '../../../apis/brand/hooks/useNewBrandQuery'
-import {
-  createItemBrandState,
-  createItemNewBrandState,
-  itemInfoState,
-} from '../../../recoil/itemInfo'
+import useRecentBrandQuery from '../../../apis/brand/hooks/useRecentBrandQuery'
+import { useObserver } from '../../../hooks/useObserver'
+import { Brand } from '../../../pages/item/create/components/BrandItemField/BrandItemField'
+import { createItemBrandState } from '../../../recoil/itemInfo'
+import BrandLogo from '../../BrandLogo/BrandLogo'
+import HighlightedText from '../../HighlightedText/HighlightedText'
+import { Common } from '../../styles'
+import { brandNameSearchState } from './ItemBrandSelectModal'
 
 const BrandList = () => {
-  const [itemInfo, setItemInfo] = useRecoilState(itemInfoState)
   const setBrand = useSetRecoilState(createItemBrandState)
-  const setNewBrand = useSetRecoilState(createItemNewBrandState)
 
   const brandName = useRecoilValue(brandNameSearchState)
   const [debouncedBrandName] = useDebounce(brandName, 300)

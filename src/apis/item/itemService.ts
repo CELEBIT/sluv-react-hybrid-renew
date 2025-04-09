@@ -2,7 +2,6 @@ import { IHashTag } from '../../recoil/itemInfo'
 import request from '../core'
 import dev from '../core/dev'
 import { GetPaginationResult, ResponseType } from '../core/type'
-import { SearchQuestionResult } from '../search/searchService'
 import {
   EditRequestedResult,
   HashtagContent,
@@ -146,7 +145,7 @@ export default class ItemService {
   }
 
   // 최근 본 아이템
-  async getRecentViewItem(page: number, size?: number) {
+  async getRecentViewItem(page: number) {
     const data: ResponseType<GetPaginationResult<ItemResult>> = await request.get(
       `${this.itemUrl}/recent`,
       {

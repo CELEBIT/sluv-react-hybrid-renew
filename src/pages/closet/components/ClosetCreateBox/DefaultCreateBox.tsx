@@ -1,7 +1,6 @@
-import ClosetCreateBox from './index'
-import { useCreateClosetFormContext } from '../../create/hooks'
 import { CreateClosetFormContext } from '../../create'
-import React from 'react'
+import { useCreateClosetFormContext } from '../../create/hooks'
+import ClosetCreateBox from './index'
 
 export const DefaultCreateBox = () => {
   const context = useCreateClosetFormContext()

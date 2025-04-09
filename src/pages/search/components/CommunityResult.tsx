@@ -1,6 +1,4 @@
 import React, { useRef } from 'react'
-import ItemListGrid from '../../../components/ItemListGrid/ItemListGrid'
-import useItemSearchQuery from '../../../apis/search/hooks/useItemSearchQuery'
 import useSearchQuery from '../../../apis/search/hooks/useSearchQuery'
 import Flex from '../../../components/Flex'
 import QuestionListItem from '../../../components/QuestionListItem/QuestionListItem'

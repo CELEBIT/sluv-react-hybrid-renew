@@ -1,7 +1,6 @@
 import React from 'react'
 import Header from '../../components/Header/Header'
 
-import { ReactComponent as BellOnIcon } from '../../assets/bell_on_24.svg'
 import { ReactComponent as SearchIcon } from '../../assets/closet_search_24.svg'
 
 import * as S from './styles'

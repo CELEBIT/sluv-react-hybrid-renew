@@ -1,10 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import ItemService from '../itemService'
+import { useNavigate } from 'react-router-dom'
+import { modals } from '../../../components/Modals'
+import useModals from '../../../components/Modals/hooks/useModals'
 import { queryKeys } from '../../../config/queryKeys'
 import { EditRequestReason } from '../../../pages/item/editRequest'
-import useModals from '../../../components/Modals/hooks/useModals'
-import { modals } from '../../../components/Modals'
-import { useNavigate } from 'react-router-dom'
+import ItemService from '../itemService'
 
 interface IReportItem {
   itemId: number
@@ -37,8 +37,7 @@ const useItemDetailQuery = () => {
   }
 
   const likeItem = useMutation((itemId: number) => item.likeItem(itemId), {
-    onSuccess: (res, itemId) => {
-      // queryClient.invalidateQueries(queryKeys.itemDetail(itemId))
+    onSuccess: () => {
       queryClient.invalidateQueries()
     },
   })
@@ -54,7 +53,7 @@ const useItemDetailQuery = () => {
     ({ itemId, requestContent }: IReportItem) =>
       item.requsetEditItem(itemId, requestContent.reason, requestContent.content),
     {
-      onSuccess: (res) => {
+      onSuccess: () => {
         openModal(modals.EditRequestCompleteModal)
       },
     },

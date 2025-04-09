@@ -1,4 +1,4 @@
-import React, { useState, useEffect, forwardRef } from 'react'
+import React, { forwardRef } from 'react'
 
 import { ReactComponent as Check } from '../../assets/check_13.svg'
 import { Common, Pretendard } from '../styles'

@@ -1,5 +1,5 @@
 import { atom, useRecoilState } from 'recoil'
-import { useCallback, ComponentProps, FunctionComponent, useEffect } from 'react'
+import { useCallback, ComponentProps, FunctionComponent } from 'react'
 const modalsAtom = atom<
   Array<{
     Component: FunctionComponent<any>

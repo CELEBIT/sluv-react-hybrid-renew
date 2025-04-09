@@ -1,15 +1,13 @@
-import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useRecoilValue, useResetRecoilState } from 'recoil'
 import OneButtonModal from '.'
+import { RequestEditItemState } from '../../pages/item/editRequest'
 import { modals } from '../Modals'
 import useModals from '../Modals/hooks/useModals'
 import { BtnModalContent } from '../Modals/styles'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { useRecoilValue, useResetRecoilState } from 'recoil'
-import { RequestEditItemState } from '../../pages/item/editRequest'
 
 const ReportQuestionCompleteModal = () => {
   const { closeModal } = useModals()
-  const location = useLocation()
   const requestedItem = useRecoilValue(RequestEditItemState)
   const resetRequestedItem = useResetRecoilState(RequestEditItemState)
   console.log(RequestEditItemState)

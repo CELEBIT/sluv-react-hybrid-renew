@@ -1,8 +1,6 @@
 import React from 'react'
 import { HomeTitle, ScrollComponentWrapper } from '../../styles'
-import Filter from '../../../../components/FIlter/Filter'
-import BlackFilter from '../../../../components/FIlter/BlackFilter'
-import { FilterListWrapper, UserCardListWrapper } from './styles'
+import { UserCardListWrapper } from './styles'
 import UserCard from './UserCard/UserCard'
 import InterestCelebList, {
   selectedInterestCelebState,

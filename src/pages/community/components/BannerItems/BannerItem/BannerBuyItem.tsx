@@ -4,7 +4,6 @@ import Badge from '../../../../../components/Badge/Badge'
 import UserImage from '../../../../../components/UserImage/UserImage'
 import { Common, Pretendard } from '../../../../../components/styles'
 import { ReactComponent as DefaultProfile } from '../../../../../assets/defaultProfile_40.svg'
-import CommunityBannerDefaultBg from '../../../../../assets/CommunityBannerDefaultBg.png'
 import { QuestionImg } from '../../../../../apis/search/searchService'
 
 export interface BannerItemProps {

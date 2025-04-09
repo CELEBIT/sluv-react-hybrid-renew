@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import styled from '@emotion/styled'
 import { Common, Pretendard } from '../../styles'
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { selectedCelebState, selectedGroupState } from '../../SelectCeleb/SelectCeleb'
 import { MemberWrapper } from './ItemCelebSelectModal'
 import ButtonMedium from '../../ButtonMedium/ButtonMedium'

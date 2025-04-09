@@ -1,4 +1,4 @@
-import { getCloset, getClosetList, PageParams, postCloset, PostClosetParams, putCloset } from '.'
+import { getCloset, getClosetList, postCloset, PostClosetParams, putCloset } from '.'
 import { ClosetBoxModel } from './model'
 
 export const closetQueryConfig = {

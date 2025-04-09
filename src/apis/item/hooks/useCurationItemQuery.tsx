@@ -1,8 +1,6 @@
-import { UseInfiniteQueryResult, useInfiniteQuery, useQuery } from '@tanstack/react-query'
-import { GetPaginationResult } from '../../core/type'
+import { useQuery } from '@tanstack/react-query'
 import ItemService from '../itemService'
 import { queryKeys } from '../../../config/queryKeys'
-import { ItemResult } from '../itemService.type'
 
 const useCurationItemQuery = () => {
   const item = new ItemService()

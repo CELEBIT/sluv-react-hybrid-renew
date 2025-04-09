@@ -1,19 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { EditReportContainer, Title } from '../styles'
+import { useEffect, useState } from 'react'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { WithdrawDisplayState, WithdrawReasonState } from '..'
+import useUserMypageQuery from '../../../../apis/user/hooks/useUserMypageQuery'
 import Header from '../../../../components/Header/Header'
 import TextArea from '../../../../components/TextField/TextArea/TextArea'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { useLocation } from 'react-router-dom'
-import { WithdrawDisplayState, WithdrawReasonState } from '..'
-import useModals from '../../../../components/Modals/hooks/useModals'
-import { modals } from '../../../../components/Modals'
 import { ReasonWrapper } from '../../../item/editRequest/styles'
-import useUserMypageQuery from '../../../../apis/user/hooks/useUserMypageQuery'
 import { HeaderWrapper, PageContainer } from '../../../user/styles'
+import { Title } from '../styles'
 
 const WithdrawReason = () => {
-  const { openModal } = useModals()
-  const { pathname } = useLocation()
   const [reasonText, setReasonText] = useState<string>('')
 
   const {

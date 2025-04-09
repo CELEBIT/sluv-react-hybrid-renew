@@ -1,10 +1,10 @@
 import axios from 'axios'
-import request from '../core'
-import { ResponseType } from '../core/type'
+import { SetterOrUpdater } from 'recoil'
 import { Image } from '../../components/AddPhotos/AddPhotos'
 import { CommunityItem, IimgList, IselectedItem } from '../../recoil/communityInfo'
-import { SetterOrUpdater } from 'recoil'
-import { Img, NewComment } from '../comment/commentService.type'
+import { Img } from '../comment/commentService.type'
+import request from '../core'
+import { ResponseType } from '../core/type'
 
 export interface S3Result {
   preSignedUrl: string
@@ -154,7 +154,7 @@ export default class S3Service {
       {},
       { params: { imgExtension: String(img.type.split('/')[1]).toUpperCase() } },
     )
-    const res = await this.uploadImg(data.result?.preSignedUrl ?? '', img)
+    // const res = await this.uploadImg(data.result?.preSignedUrl ?? '', img)
 
     return data.result?.preSignedUrl.split('?')[0] ?? ''
   }
@@ -165,7 +165,7 @@ export default class S3Service {
       {},
       { params: { imgExtension: String(img.type.split('/')[1]).toUpperCase() } },
     )
-    const res = await this.uploadImg(data.result?.preSignedUrl ?? '', img)
+    // const res = await this.uploadImg(data.result?.preSignedUrl ?? '', img)
 
     return data.result?.preSignedUrl.split('?')[0] ?? ''
   }

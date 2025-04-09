@@ -1,4 +1,3 @@
-import React from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import UserService from '../userService'
 import { queryKeys } from '../../../config/queryKeys'
@@ -30,7 +29,7 @@ const useInterestCelebQuery = () => {
   const postInterestCeleb = useMutation(
     (celebIdList: Array<number>) => user.postInterestCeleb(celebIdList),
     {
-      onSuccess: (res) => {
+      onSuccess: () => {
         queryClient.invalidateQueries()
         if (currentRoute === '/settings/select-celeb') {
           toast('관심셀럽이 수정되었어요')

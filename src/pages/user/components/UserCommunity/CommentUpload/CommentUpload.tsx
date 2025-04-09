@@ -5,7 +5,6 @@ import CommentListItem from '../../../../../components/CommentListItem/CommentLi
 import { Line } from '../../../../community/detail/styles'
 import { EmptyStateWrapper } from '../../FollowList/Follower/Follower'
 import EmptyState from '../../../../../components/EmptyState'
-import { ViewHeader, ViewHeaderLeft } from '../../../../../components/ItemListGrid/styles'
 import { Common, Pretendard } from '../../../../../components/styles'
 import styled from '@emotion/styled'
 

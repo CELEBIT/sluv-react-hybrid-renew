@@ -20,12 +20,7 @@ import TextArea from '../../../../components/TextField/TextArea/TextArea'
 
 import { useNavigate } from 'react-router-dom'
 import AddItemPhotos from '../../../../components/AddPhotos/AddItemPhotos'
-import useUploadQuestionQuery from '../../../../apis/question/hooks/useUploadQuestionQuery'
-import {
-  communityItemState,
-  imgItemListState,
-  imgListUpdatedState,
-} from '../../../../recoil/communityInfo'
+import { communityItemState, imgItemListState } from '../../../../recoil/communityInfo'
 import useCommunityImgUpload from '../../../../apis/s3/hooks/useCommunityImgUpload'
 import { createItemCelebState, createItemNewCelebState } from '../../../../recoil/itemInfo'
 

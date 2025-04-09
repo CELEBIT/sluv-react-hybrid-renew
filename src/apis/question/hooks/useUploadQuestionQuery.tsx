@@ -1,10 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { localStorageKeys } from '../../../config/localStorageKeys'
 import QuestionService from '../questionService'
 import { CommunityItem, communityItemState, imgItemListState } from '../../../recoil/communityInfo'
-import { queryKeys } from '../../../config/queryKeys'
 import { useResetRecoilState } from 'recoil'
 
 const useUploadQuestionQuery = () => {

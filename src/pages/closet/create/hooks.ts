@@ -4,7 +4,7 @@ import { ClosetStatus, CoverImageMode } from '../../../apis/closet/model'
 import { ClosetBoxService } from '../services'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { closetQueryConfig } from '../../../apis/closet/hooks'
-import { getClosetCheckName, putCloset } from '../../../apis/closet'
+import { getClosetCheckName } from '../../../apis/closet'
 import { useNavigate } from 'react-router-dom'
 
 const useClosetFormStates = (service?: ClosetBoxService) => {

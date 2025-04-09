@@ -12,7 +12,7 @@ import useModals from '../../../components/Modals/hooks/useModals'
 import { modals } from '../../../components/Modals'
 import { TempItemReq, TempItemResult } from '../itemService.type'
 import { localStorageKeys } from '../../../config/localStorageKeys'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useSetRecoilState } from 'recoil'
 import { currentTempIdState } from '../../../recoil/itemInfo'
 
 const useTempItemQuery = () => {

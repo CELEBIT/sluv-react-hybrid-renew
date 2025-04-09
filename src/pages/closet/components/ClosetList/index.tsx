@@ -1,17 +1,11 @@
-import { ClosetBoxModel, ClosetStatus } from '../../../../apis/closet/model'
-import ClosetCoverBox from '../ClosetCoverBox'
-import React, { useContext } from 'react'
-import { ClosetInnerItemContext, useEditClosetInnerItemContext } from '../../detail/hooks'
-import useModals from '../../../../components/Modals/hooks/useModals'
-import TwoButtonModal from '../../../../components/TwoButtonModal'
-import { BtnModalContent } from '../../../../components/Modals/styles'
-import { DeleteRecheckModalParam } from '../../deleteAndSort'
-import { queryToObject } from '../../../../utils/utility'
-import { patchClosetItems, patchClosetScrap } from '../../../../apis/closet'
-import { AnotherClosetListModal, ItemClosetListModal } from '../../detail'
 import { useQueryClient } from '@tanstack/react-query'
-import { queryKeys } from '../../../../config/queryKeys'
 import { toast } from 'react-toastify'
+import { patchClosetItems, patchClosetScrap } from '../../../../apis/closet'
+import { ClosetBoxModel, ClosetStatus } from '../../../../apis/closet/model'
+import useModals from '../../../../components/Modals/hooks/useModals'
+import { queryToObject } from '../../../../utils/utility'
+import { AnotherClosetListModal, ItemClosetListModal } from '../../detail'
+import ClosetCoverBox from '../ClosetCoverBox'
 
 type ClosetListContainerProps = {
   status?: ClosetStatus
@@ -39,8 +33,7 @@ export const ScrapClosetList = ({
 }: ClosetListContainerProps & { itemId: string }) => {
   const filteredClosetBoxList =
     status === 'PRIVATE' ? data.filter((closet) => closet.closetStatus === 'PRIVATE') : data
-  const { openModal, closeModal } = useModals()
-  const { id } = queryToObject(window.location.search.split('?')[1])
+  const { closeModal } = useModals()
   const queryClient = useQueryClient()
 
   const handleScrapItem = async (toClosetId: string) => {
@@ -86,7 +79,7 @@ export const ReClosetList = ({
   const { closeModal } = useModals()
   const queryClient = useQueryClient()
 
-  const MoveItems = async (toClosetId: string, closetName: string) => {
+  const MoveItems = async (toClosetId: string) => {
     const res = await patchClosetItems(id, toClosetId, { itemList: selectedIds })
     if (res.isSuccess) {
       closeModal(AnotherClosetListModal, () => {
@@ -105,7 +98,7 @@ export const ReClosetList = ({
           <ClosetCoverBox
             service={closet}
             key={closet.id}
-            handleClickBox={() => MoveItems(closet.id, closet.name)}
+            handleClickBox={() => MoveItems(closet.id)}
           />
         )
       })}

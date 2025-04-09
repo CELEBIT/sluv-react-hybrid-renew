@@ -3,7 +3,6 @@ import { GetPaginationResult } from '../../core/type'
 import ItemService from '../itemService'
 import { queryKeys } from '../../../config/queryKeys'
 import { RecommendItemResult } from '../itemService.type'
-import { SearchQuestionResult } from '../../search/searchService'
 
 const useRecentViewItemQuery = (size?: number) => {
   const item = new ItemService()

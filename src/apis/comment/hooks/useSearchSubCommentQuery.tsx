@@ -1,8 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import CommentService from '../commentService'
 import { queryKeys } from '../../../config/queryKeys'
-import { Img, ItemPost, NewComment } from '../commentService.type'
-import { ILikeComment } from './useSearchCommentQuery'
+import CommentService from '../commentService'
+import { Img, ItemPost } from '../commentService.type'
 
 export interface IAddSubComment {
   questionId: number
@@ -29,7 +28,7 @@ const useSearchSubCommentQuery = () => {
     ({ questionId, commentId, content, imgList, itemList }: IAddSubComment) =>
       comment.addSubComment(questionId, commentId, content, imgList, itemList),
     {
-      onSuccess: (res, { commentId }) => {
+      onSuccess: () => {
         //
         queryClient.invalidateQueries()
       },
@@ -40,7 +39,6 @@ const useSearchSubCommentQuery = () => {
     ({ subCommentId }: ILikeSubComment) => comment.likeComment(subCommentId),
     {
       onSuccess: (res, { commentId }) => {
-        // console.log('clicked')
         queryClient.invalidateQueries(queryKeys.subcomment(commentId))
       },
     },

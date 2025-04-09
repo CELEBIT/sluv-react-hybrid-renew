@@ -1,5 +1,4 @@
 import { CoverBoxColorKey } from '../../pages/closet/utils/consts'
-import { ClosetBoxService } from '../../pages/closet/services'
 
 export type CoverImageMode = 'NONE' | 'DEFAULT' | 'IMAGE'
 

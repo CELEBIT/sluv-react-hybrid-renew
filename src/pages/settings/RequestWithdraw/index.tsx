@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
-  EditReportContainer,
   EditReportListWrapper,
   ReasonWrapper,
   Title,
@@ -15,8 +14,8 @@ import {
 import Header from '../../../components/Header/Header'
 import DisplayField from '../../../components/TextField/DisplayField/DisplayField'
 import { atomKeys } from '../../../config/atomKeys'
-import { atom, useRecoilValue, useSetRecoilState } from 'recoil'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { atom, useSetRecoilState } from 'recoil'
+import { useNavigate } from 'react-router-dom'
 import { reasonList, withdrawReasonList } from '../../../config/editReportMenu'
 import useUserMypageQuery from '../../../apis/user/hooks/useUserMypageQuery'
 import { HeaderWrapper, PageContainer } from '../../user/styles'

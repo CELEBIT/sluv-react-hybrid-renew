@@ -1,26 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useRecoilState, useResetRecoilState } from 'recoil'
 import BrandItemField from '../create/components/BrandItemField/BrandItemField'
-import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 import DatePlaceField from '../create/components/DatePlaceField/DatePlaceField'
 import PriceField from '../create/components/PriceField/PriceField'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
-import {
-  BottomBar,
-  ComponentContainer,
-  ComponentWrapper,
-  ItemCreatePageStyle,
-  Label,
-  LabelContainer,
-} from '../create/styles'
+import useItemDetailQuery from '../../../apis/item/hooks/useItemDetailQuery'
+import useItemQuery from '../../../apis/item/hooks/useItemQuery'
+import { TempItemReq } from '../../../apis/item/itemService.type'
+import useItemImgUpload from '../../../apis/s3/hooks/useItemImgUpload'
 import { ReactComponent as Error } from '../../../assets/error_20.svg'
-import { ReactComponent as LinkAddOff } from '../../../assets/link_add_off_20.svg'
 import { ReactComponent as InfoAddOff } from '../../../assets/info_add_off_20.svg'
-import { ReactComponent as LinkAddOn } from '../../../assets/link_add_on_20.svg'
 import { ReactComponent as InfoAddOn } from '../../../assets/info_add_on_20.svg'
-import { HeaderWrapper } from '../addInfo/styles'
+import { ReactComponent as LinkAddOff } from '../../../assets/link_add_off_20.svg'
+import { ReactComponent as LinkAddOn } from '../../../assets/link_add_on_20.svg'
+import { imgListState } from '../../../components/AddPhotos/AddPhotos'
+import ButtonMedium from '../../../components/ButtonMedium/ButtonMedium'
+import Header from '../../../components/Header/Header'
 import { ErrorText } from '../../../components/TextField/DefaultTextfield/styles'
-import ImageField from '../create/components/ImageField/ImageField'
 import {
   IHashTag,
   createItemAddInfoState,
@@ -37,24 +34,19 @@ import {
   createItemWhenDateState,
   itemS3ImgListState,
 } from '../../../recoil/itemInfo'
-import useModals from '../../../components/Modals/hooks/useModals'
-import useItemQuery from '../../../apis/item/hooks/useItemQuery'
-import {
-  HashTagResult,
-  ImgResult,
-  LinkResult,
-  TempItemReq,
-} from '../../../apis/item/itemService.type'
-import useItemDetailQuery from '../../../apis/item/hooks/useItemDetailQuery'
-import { Image, imgListState } from '../../../components/AddPhotos/AddPhotos'
-import { selectedCelebState } from '../../../components/SelectCeleb/SelectCeleb'
-import Header from '../../../components/Header/Header'
-import SelectCategory from '../create/components/SelectCategory/SelectCategory'
-import ButtonMedium from '../../../components/ButtonMedium/ButtonMedium'
-import { CelebWrapper } from './styles'
 import { hashTagState } from '../addInfo/components/HashTags/HashTag'
-import useItemImgUpload from '../../../apis/s3/hooks/useItemImgUpload'
-import { linksState } from '../addLink/components/LinkInput/LinkInput'
+import { HeaderWrapper } from '../addInfo/styles'
+import ImageField from '../create/components/ImageField/ImageField'
+import SelectCategory from '../create/components/SelectCategory/SelectCategory'
+import {
+  BottomBar,
+  ComponentContainer,
+  ComponentWrapper,
+  ItemCreatePageStyle,
+  Label,
+  LabelContainer,
+} from '../create/styles'
+import { CelebWrapper } from './styles'
 
 const ItemEdit = () => {
   const navigate = useNavigate()
@@ -93,7 +85,6 @@ const ItemEdit = () => {
   const [source, setSource] = useRecoilState(createItemSourceState)
   // 구매링크
   const [linkList, setLinkList] = useRecoilState(createItemLinkState)
-  const [links, setLinks] = useRecoilState(linksState)
 
   useEffect(() => {
     if (data) {
