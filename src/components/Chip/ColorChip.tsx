@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 // import { Common } from '../styles'
-import { ColorChipWrapper } from './styles'
 import { ReactComponent as Delete } from '../../assets/delete_18.svg'
 import { Common } from '../styles'
+import { ColorChipWrapper } from './styles'
 
 interface ColorChipProps {
   children: React.ReactNode
@@ -39,6 +39,8 @@ const ColorChip = ({
       setChipColor(Common.colors.GRN)
     } else if (color === 'blue') {
       setChipColor(Common.colors.BL)
+    } else if (color === 'purple') {
+      setChipColor(Common.colors.PRI)
     }
   })
 

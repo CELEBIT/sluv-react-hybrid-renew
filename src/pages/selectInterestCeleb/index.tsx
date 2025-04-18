@@ -1,7 +1,15 @@
-import React, { useEffect, useState, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useSwipeable } from 'react-swipeable'
 
+import useSelectCelebQuery from '../../apis/celeb/hooks/useSelectCelebQuery'
+import { ReactComponent as CelebrityListActive } from '../../assets/celebrity_list_active_24.svg'
+import { ReactComponent as CelebrityListDefault } from '../../assets/celebrity_list_default_24.svg'
+import { ReactComponent as MoreDown } from '../../assets/more_down_20.svg'
+import { ReactComponent as MoreUp } from '../../assets/more_up_20.svg'
 import ColorChip from '../../components/Chip/ColorChip'
+import Header from '../../components/Header/Header'
+import SearchTextfield from '../../components/TextField/SearchTextfield/SearchTextfield'
+import { HeaderWrapper } from '../item/addInfo/styles'
 import {
   CategoryContentWrapper,
   CategoryTitle,
@@ -19,36 +27,29 @@ import {
   SmallSideBar,
   TitleSearchWrapper,
 } from './styles'
-import Header from '../../components/Header/Header'
-import SearchTextfield from '../../components/TextField/SearchTextfield/SearchTextfield'
-import { HeaderWrapper } from '../item/addInfo/styles'
-import useSelectCelebQuery from '../../apis/celeb/hooks/useSelectCelebQuery'
-import { ReactComponent as MoreDown } from '../../assets/more_down_20.svg'
-import { ReactComponent as MoreUp } from '../../assets/more_up_20.svg'
-import { ReactComponent as CelebrityListDefault } from '../../assets/celebrity_list_default_24.svg'
-import { ReactComponent as CelebrityListActive } from '../../assets/celebrity_list_active_24.svg'
 
-import { ReactComponent as Search } from '../../assets/search_24.svg'
-import { ReactComponent as Singer } from '../../assets/ico_singer_32.svg'
 import { ReactComponent as Actor } from '../../assets/ico_actor_32.svg'
 import { ReactComponent as BroadCaster } from '../../assets/ico_broadcaster_32.svg'
-import { ReactComponent as Sports } from '../../assets/ico_sport_32.svg'
 import { ReactComponent as Influencer } from '../../assets/ico_creator_32.svg'
+import { ReactComponent as Singer } from '../../assets/ico_singer_32.svg'
+import { ReactComponent as Sports } from '../../assets/ico_sport_32.svg'
+import { ReactComponent as Search } from '../../assets/search_24.svg'
 
-import { BottomWrapper } from '../../components/SelectItemOrPhoto/styles'
-import ButtonLarge from '../../components/ButtonLarge/ButtonLarge'
-import { atomKeys } from '../../config/atomKeys'
-import { atom, useRecoilState } from 'recoil'
-import { ISelectCelebResult } from '../../apis/celeb/CelebService'
-import { Common } from '../../components/styles'
-import CelebCategoryTooltip from '../../components/ToolTip/CelebCategoryTooltip/CelebCategoryTooltip'
-import useModals from '../../components/Modals/hooks/useModals'
-import { modals } from '../../components/Modals'
-import CelebSearchResult from './CelebSearchResult/CelebSearchResult'
-import useInterestCelebQuery from '../../apis/user/hooks/useInterestCelebQuery'
-import { colorList } from '../../config/constant'
 import { useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { atom, useRecoilState } from 'recoil'
+import { ISelectCelebResult } from '../../apis/celeb/CelebService'
+import useInterestCelebQuery from '../../apis/user/hooks/useInterestCelebQuery'
+import { IInterestCeleb } from '../../apis/user/userService'
+import ButtonLarge from '../../components/ButtonLarge/ButtonLarge'
+import { modals } from '../../components/Modals'
+import useModals from '../../components/Modals/hooks/useModals'
+import { BottomWrapper } from '../../components/SelectItemOrPhoto/styles'
+import { Common } from '../../components/styles'
+import CelebCategoryTooltip from '../../components/ToolTip/CelebCategoryTooltip/CelebCategoryTooltip'
+import { atomKeys } from '../../config/atomKeys'
+import { colorList } from '../../config/constant'
+import CelebSearchResult from './CelebSearchResult/CelebSearchResult'
 
 export const selectInterestCelebState = atom<Array<ISelectCelebResult>>({
   key: atomKeys.selectedInterestCeleb,
@@ -76,6 +77,11 @@ export const selectInterestCelebState = atom<Array<ISelectCelebResult>>({
     {
       categoryId: 6,
       categoryName: '인플루언서',
+      celebList: [],
+    },
+    {
+      categoryId: 7,
+      categoryName: '추가된 셀럽',
       celebList: [],
     },
   ],
@@ -133,8 +139,14 @@ const SelectInterestCeleb = ({
   ]
 
   const onComplete = () => {
-    const updatedIdList = getSelectedCelebIds(selectedInterestCeleb)
-    mutateByPostInterestCeleb(updatedIdList)
+    const updatedIdList = getSelectedCelebIds(selectedInterestCeleb).filter((id) => id > 0)
+    const newCelebNameList = selectedInterestCeleb[5].celebList.map((celeb) => celeb.celebName)
+    const celebList: IInterestCeleb = {
+      celebIdList: updatedIdList,
+      celebNameList: newCelebNameList,
+    }
+    console.log('🚀 ~ onComplete ~ celebList:', celebList)
+    mutateByPostInterestCeleb(celebList)
 
     if (onNext !== undefined) {
       if (pathname == '/signup') {
@@ -204,23 +216,37 @@ const SelectInterestCeleb = ({
     const categoryRef = celebRefs.current[categoryName]
     if (categoryRef) {
       categoryRef.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
-      // setIsFocused(false)
-      setTooltipContent(categoryName)
-      setTimeout(() => setTooltipContent(''), 3000)
+      // setTooltipContent(categoryName)
+      // setTimeout(() => setTooltipContent(''), 3000)
     }
   }
+  const contentWrapperRef = useRef<HTMLDivElement>(null)
 
   const tooltipTimeoutRef = useRef<number | null>(null)
   const handleScroll = () => {
     setSidebarSize('medium')
-    // setIsFocused(false)
     setShowSearch(false)
+    const midY = window.innerHeight / 2
     let visibleCategory = ''
+
+    // 뷰포트 중앙(midY)에 걸치는 섹션 찾기
     for (const [categoryName, ref] of Object.entries(celebRefs.current)) {
       const rect = ref?.getBoundingClientRect()
-      if (rect && rect.top >= 0 && rect.bottom <= window.innerHeight) {
+      if (rect && rect.top <= midY && rect.bottom >= midY) {
         visibleCategory = categoryName
         break
+      }
+    }
+
+    // 최하단 강제 인식 로직
+    if (!visibleCategory && data?.length) {
+      const contentWrapper = contentWrapperRef.current
+      if (contentWrapper) {
+        const { scrollTop, scrollHeight, clientHeight } = contentWrapper
+        const isAtBottom = scrollHeight - scrollTop <= clientHeight + 1
+        if (isAtBottom) {
+          visibleCategory = data[data.length - 1].categoryName
+        }
       }
     }
     setTooltipContent(visibleCategory)
@@ -230,7 +256,7 @@ const SelectInterestCeleb = ({
     tooltipTimeoutRef.current = window.setTimeout(() => {
       setTooltipContent('')
       tooltipTimeoutRef.current = null
-    }, 3000)
+    }, 2000)
   }
 
   const onClickSelectedCelebList = () => {
@@ -330,7 +356,7 @@ const SelectInterestCeleb = ({
           )}
         </HeaderWrapper>
       )}
-      <ContentWrapper onScroll={handleScroll}>
+      <ContentWrapper ref={contentWrapperRef} onScroll={handleScroll}>
         <TitleSearchWrapper>
           <span>
             관심 있는 셀럽 태그를 <br />
@@ -427,8 +453,9 @@ const SelectInterestCeleb = ({
             })}
           </>
         )}
+        <Dimmer></Dimmer>
       </ContentWrapper>
-      <Dimmer></Dimmer>
+
       <BottomWrapper>
         <ListButtonWrapper>
           {selectedInterestCeleb.reduce((total, category) => total + category.celebList.length, 0) >

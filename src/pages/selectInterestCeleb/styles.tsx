@@ -19,8 +19,6 @@ export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
-
   overflow-y: scroll;
   ::-webkit-scrollbar {
     display: none;
@@ -49,6 +47,7 @@ export const CelebCategoryWrapper = styled.div`
   flex-direction: column;
   width: 100%;
   padding: 1rem 0 1.25rem 0;
+  /* border: 5px solid blue; */
 `
 export const CategoryContentWrapper = styled.div`
   display: flex;
@@ -56,6 +55,7 @@ export const CategoryContentWrapper = styled.div`
   padding: 0 3.4375rem 0 1.25rem;
   width: 100%;
   height: 100%;
+  /* border: 5px solid red; */
 `
 export const CategoryTitle = styled.span`
   padding: 0 0.25rem 1rem 0.25rem;
@@ -159,9 +159,8 @@ export const ListButtonWrapper = styled.div`
 `
 export const Dimmer = styled.div`
   position: absolute;
-  bottom: 5rem;
-  /* border: 1px solid red; */
-  height: 1.25rem;
+  bottom: 4.8rem;
+  height: 1.875rem;
   width: 100%;
   background: linear-gradient(180deg, transparent, #ffffff 100%);
 `

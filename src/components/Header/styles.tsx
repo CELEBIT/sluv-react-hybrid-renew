@@ -8,6 +8,7 @@ export interface IHeaderWrapper {
 export const HeaderWrapper = styled.header<IHeaderWrapper>`
   display: flex;
   width: 100%;
+  height: 2.75rem;
   justify-content: space-between;
   align-items: center;
   padding: ${(props) => (props.isModalHeader ? '1rem 0' : '0.6875rem 0')};
