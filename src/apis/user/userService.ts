@@ -1,5 +1,4 @@
 import request from '../core'
-import dev from '../core/dev'
 
 import { GetPaginationResult, ResponseType } from '../core/type'
 import { RecommendItemResult } from '../item/itemService.type'
@@ -89,7 +88,7 @@ export default class UserService {
 
   // 유저의 관심셀럽 조회
   async getInterestCeleb() {
-    const data: ResponseType<Array<ICelebResult>> = await dev.get(`${this.userCelebUrl}`)
+    const data: ResponseType<Array<ICelebResult>> = await request.get(`${this.userCelebUrl}`)
     return data.result
   }
 
@@ -249,7 +248,7 @@ export default class UserService {
 
   // 유저 관심 셀럽 등록
   async postInterestCeleb(celebList: IInterestCeleb) {
-    const data: ResponseType = await dev.post(`${this.userUrl}/celeb`, celebList)
+    const data: ResponseType = await request.post(`${this.userUrl}/celeb`, celebList)
     return data
   }
 

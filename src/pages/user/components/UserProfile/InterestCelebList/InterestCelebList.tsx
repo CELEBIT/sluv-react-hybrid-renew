@@ -1,8 +1,7 @@
-import React from 'react'
-import { ChipWrapper } from '../styles'
+import { useParams } from 'react-router-dom'
 import useInterestCelebQuery from '../../../../../apis/user/hooks/useInterestCelebQuery'
 import ColorChip from '../../../../../components/Chip/ColorChip'
-import { useParams } from 'react-router-dom'
+import { ChipWrapper } from '../styles'
 
 const InterestCelebList = () => {
   const { id } = useParams()
@@ -18,6 +17,8 @@ const InterestCelebList = () => {
         return 'green'
       case '인플루언서':
         return 'blue'
+      case '추가된 셀럽':
+        return 'purple'
       default:
         return ''
     }
@@ -31,7 +32,7 @@ const InterestCelebList = () => {
         {interestCelebList?.map((celeb) => {
           return (
             <ColorChip
-              key={celeb.id}
+              key={celeb.id ?? celeb.newCelebId}
               color={getColorForCategory(celeb.celebCategory)}
               active={true}
               size='small'
@@ -46,18 +47,19 @@ const InterestCelebList = () => {
     const {
       getInterestCeleb: { data: interestCelebList },
     } = useInterestCelebQuery()
+    console.log(interestCelebList)
     return (
       <ChipWrapper>
         {interestCelebList?.map((celeb) => {
           return (
             <ColorChip
-              key={celeb.id}
+              key={celeb.id ?? celeb.newCelebId}
               color={getColorForCategory(celeb.celebCategory)}
               active={true}
               size='small'
               canDelete={false}
             >
-              {celeb.celebNameKr}
+              {celeb.celebNameKr ?? celeb.newCelebName}
             </ColorChip>
           )
         })}

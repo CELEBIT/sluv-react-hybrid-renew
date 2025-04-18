@@ -114,14 +114,16 @@ const UserInterestCelebModal = ({ id }: userIdProps) => {
                       <CategoryTitle>{Category.categoryName}</CategoryTitle>
                       <CelebListWrapper id='celebListWrapper'>
                         {Category.celebList.map((celeb) => {
+                          const celebName = celeb.newCelebName ?? celeb.celebNameKr
+
                           return (
                             <ColorChip
-                              key={celeb.id}
+                              key={celeb.id ?? celeb.newCelebName + celebName}
                               color={colorList[index]}
                               canDelete={false}
                               active={true}
                             >
-                              {celeb.celebNameKr}
+                              {celebName}
                             </ColorChip>
                           )
                         })}
