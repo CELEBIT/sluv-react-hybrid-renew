@@ -145,7 +145,6 @@ const SelectInterestCeleb = ({
       celebIdList: updatedIdList,
       celebNameList: newCelebNameList,
     }
-    console.log('🚀 ~ onComplete ~ celebList:', celebList)
     mutateByPostInterestCeleb(celebList)
 
     if (onNext !== undefined) {
@@ -158,8 +157,10 @@ const SelectInterestCeleb = ({
   const getSelectedCelebIds = (selectedCelebList: Array<ISelectCelebResult>): Array<number> => {
     const idList = []
     for (const category of selectedCelebList) {
-      for (const celeb of category.celebList) {
-        idList.push(celeb.celebId)
+      if (category.categoryId !== 7) {
+        for (const celeb of category.celebList) {
+          idList.push(celeb.celebId)
+        }
       }
     }
 
@@ -297,10 +298,13 @@ const SelectInterestCeleb = ({
           if (interestCelebList) {
             const updatedCelebList = interestCelebList
               .filter((celeb) => category.categoryName === celeb.celebCategory)
-              .map((celeb) => ({
-                celebId: celeb.id,
-                celebName: celeb.celebNameKr,
-              }))
+              .map((celeb) => {
+                const isAddedCeleb = celeb.celebCategory === '추가된 셀럽'
+                return {
+                  celebId: isAddedCeleb ? celeb.newCelebId ?? 0 : celeb.id ?? 0,
+                  celebName: isAddedCeleb ? celeb.newCelebName ?? '' : celeb.celebNameKr ?? '',
+                }
+              })
 
             return {
               ...category,

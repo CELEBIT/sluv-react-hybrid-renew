@@ -10,6 +10,8 @@ export interface ICelebResult {
   celebNameKr: string
   celebCategory?: string
   subCelebList?: Array<ICelebResult>
+  newCelebId?: number
+  newCelebName?: string
 }
 
 export interface ICategoryInterestResult {
