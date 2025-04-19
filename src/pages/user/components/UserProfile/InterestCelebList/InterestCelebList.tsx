@@ -1,12 +1,11 @@
-import React from 'react'
-import { ChipWrapper } from '../styles'
-import useInterestCelebQuery from '../../../../../apis/user/hooks/useInterestCelebQuery'
-import ColorChip from '../../../../../components/Chip/ColorChip'
 import { useParams } from 'react-router-dom'
+import useInterestCelebQuery from '../../../../../apis/user/hooks/useInterestCelebQuery'
+import ColorChip, { ColorType } from '../../../../../components/Chip/ColorChip'
+import { ChipWrapper } from '../styles'
 
 const InterestCelebList = () => {
   const { id } = useParams()
-  const getColorForCategory = (category: string | undefined) => {
+  const getColorForCategory = (category: string | undefined): ColorType => {
     switch (category) {
       case '가수':
         return 'pink'
@@ -19,7 +18,7 @@ const InterestCelebList = () => {
       case '인플루언서':
         return 'blue'
       default:
-        return ''
+        return 'gray'
     }
   }
   if (id) {
