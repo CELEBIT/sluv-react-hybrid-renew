@@ -1,10 +1,8 @@
-import React from 'react'
 import { HalfWrapper } from './styles'
 
 interface HalfButtonProps {
   text: string
-  type: string
-  // type = 'confirm' | 'cancel'
+  type: 'confirm' | 'cancel'
   isbottom?: boolean
   onClick: any
 }
