@@ -1,14 +1,14 @@
-import React from 'react'
+import { ReactNode } from 'react'
 import { BadgeWrapper } from './styles'
-// /import { Common } from '../styles'
+
+type BadgeColor = 'gray' | 'pink' | 'orange' | 'yellow' | 'green' | 'blue'
 
 interface BadgeProps {
-  color: string
-  // gray, pink, orange, yellow, green, blue
-  children: any
+  color: BadgeColor
+  children: ReactNode
 }
 
-const Badge = ({ color, children }: BadgeProps) => {
+const Badge = ({ color = 'gray', children }: BadgeProps) => {
   return (
     <BadgeWrapper color={color}>
       <span>{children}</span>
