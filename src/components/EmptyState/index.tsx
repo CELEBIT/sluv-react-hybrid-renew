@@ -6,46 +6,36 @@ import { ReactComponent as Like } from '../../assets/like_36.svg'
 import { ReactComponent as Comment } from '../../assets/list_36.svg'
 import { ReactComponent as Search } from '../../assets/search_36.svg'
 import { ReactComponent as Storage } from '../../assets/storage_36.svg'
+
 import { EmptyStateContainer, SubTitle, TextWrapper, Title } from './styles'
 
-type EmptyStateProps = {
-  icon: string
-  // clock, save, comment, item, search, like
+export type IconType = 'clock' | 'save' | 'comment' | 'item' | 'search' | 'like' | 'bell' | 'alert'
+
+interface EmptyStateProps {
+  icon: IconType
   title: string
   subtitle?: string
-  children?: any
+  children?: React.ReactNode
 }
-const getIconComponent = (icon: string) => {
-  switch (icon) {
-    case 'clock':
-      return <Clock />
-    case 'save':
-      return <Storage />
-    case 'comment':
-      return <Comment />
-    case 'item':
-      return <Item />
-    case 'search':
-      return <Search />
-    case 'like':
-      return <Like />
-    case 'bell':
-      return <Bell />
-    case 'alert':
-      return <Alert />
-    default:
-      return null
-  }
+
+const iconMap: Record<IconType, JSX.Element> = {
+  clock: <Clock />,
+  save: <Storage />,
+  comment: <Comment />,
+  item: <Item />,
+  search: <Search />,
+  like: <Like />,
+  bell: <Bell />,
+  alert: <Alert />,
 }
 
 const EmptyState = ({ icon, title, subtitle, children }: EmptyStateProps) => {
-  const iconComponent = getIconComponent(icon)
   return (
     <EmptyStateContainer>
-      {iconComponent}
+      {iconMap[icon]}
       <TextWrapper>
         <Title>{title}</Title>
-        <SubTitle>{subtitle}</SubTitle>
+        {subtitle && <SubTitle>{subtitle}</SubTitle>}
       </TextWrapper>
       {children}
     </EmptyStateContainer>
