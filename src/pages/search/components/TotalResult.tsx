@@ -1,18 +1,16 @@
-import React from 'react'
-import useSearchQuery from '../../../apis/search/hooks/useSearchQuery'
 import styled from '@emotion/styled'
-import { Common, Pretendard } from '../../../components/styles'
-import Item from '../../../components/RecommendedItem/Item'
 import { useNavigate } from 'react-router-dom'
-import QuestionListItem from '../../../components/QuestionListItem/QuestionListItem'
-import UserCard from '../../home/components/WeeklyTopUser/UserCard/UserCard'
-import { Line } from '../../community/detail/styles'
+import { useSetRecoilState } from 'recoil'
+import useSearchQuery from '../../../apis/search/hooks/useSearchQuery'
 import { ReactComponent as Right } from '../../../assets/arrow_black_20.svg'
 import EmptyState from '../../../components/EmptyState'
+import QuestionListItem from '../../../components/QuestionListItem/QuestionListItem'
+import Item from '../../../components/RecommendedItem/Item'
+import { Common, Pretendard } from '../../../components/styles'
+import { Line } from '../../community/detail/styles'
+import UserCard from '../../home/components/WeeklyTopUser/UserCard/UserCard'
 import { Divider as Divide } from '../../item/detail/styles'
-import { useSetRecoilState } from 'recoil'
 import { searchTabState } from '../SearchResult'
-import ItemListGrid from '../../../components/ItemListGrid/ItemListGrid'
 
 interface TotalResultProps {
   keyword: string
@@ -106,11 +104,6 @@ const TotalResult = ({ keyword }: TotalResultProps) => {
 }
 
 export default TotalResult
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-`
 
 const TitleBar = styled.div`
   display: flex;

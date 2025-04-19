@@ -1,17 +1,13 @@
-import React from 'react'
-import { ReactComponent as Now } from '../../../../assets/badge_title_now.svg'
-import { HomeTitle, HomeTitleWrapper, ScrollComponentWrapper } from '../../styles'
 import { useNavigate } from 'react-router-dom'
-import { ItemList } from '../../../../components/RecommendedItem/RecommendedItemList'
-import Item from '../../../../components/RecommendedItem/Item'
-import useBuyNowItemQuery from '../../../../apis/item/hooks/useBuyNowItemQuery'
 import { PreviewProps } from '../..'
-import useModals from '../../../../components/Modals/hooks/useModals'
-import { modals } from '../../../../components/Modals'
+import useBuyNowItemQuery from '../../../../apis/item/hooks/useBuyNowItemQuery'
+import { ReactComponent as Now } from '../../../../assets/badge_title_now.svg'
+import Item from '../../../../components/RecommendedItem/Item'
+import { ItemList } from '../../../../components/RecommendedItem/RecommendedItemList'
+import { HomeTitle, HomeTitleWrapper, ScrollComponentWrapper } from '../../styles'
 
 const BuyNow = ({ isPreview }: PreviewProps) => {
   const navigate = useNavigate()
-  const { openModal } = useModals()
   const { getBuyNowItem } = useBuyNowItemQuery()
   const { data } = getBuyNowItem()
   const tempData = data?.pages[0].content

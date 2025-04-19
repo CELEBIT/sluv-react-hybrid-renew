@@ -1,4 +1,4 @@
-import React, { useState, useMemo, forwardRef, ForwardedRef } from 'react'
+import React, { useState, useMemo } from 'react'
 import { InputField, InputWrapper } from './styles'
 import { ReactComponent as Delete } from '../../../assets/delete_textfield_24.svg'
 import { ReactComponent as Search } from '../../../assets/search_24.svg'

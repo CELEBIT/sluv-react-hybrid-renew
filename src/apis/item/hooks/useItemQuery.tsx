@@ -1,11 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import React from 'react'
 import ItemService from '../itemService'
 import { TempItemReq } from '../itemService.type'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { localStorageKeys } from '../../../config/localStorageKeys'
-import { queryKeys } from '../../../config/queryKeys'
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState, useResetRecoilState } from 'recoil'
 import {
   createItemAddInfoState,
   createItemBrandState,
@@ -22,12 +20,8 @@ import {
   currentTempIdState,
   itemS3ImgListState,
 } from '../../../recoil/itemInfo'
-import {
-  parentCategoryState,
-  subCategoryState,
-} from '../../../components/BottomSheetModal/ItemCategoryModal'
+
 import { imgListState } from '../../../components/AddPhotos/AddPhotos'
-import { checkListState } from '../../../pages/item/temporary-storage'
 import useTempItemQuery from './useTempItemQuery'
 import { hashTagState } from '../../../pages/item/addInfo/components/HashTags/HashTag'
 import { toast } from 'react-toastify'

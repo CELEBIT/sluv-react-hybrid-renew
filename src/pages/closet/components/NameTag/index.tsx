@@ -1,22 +1,22 @@
-import React, { forwardRef, useCallback, useMemo } from 'react'
+import { forwardRef, useCallback, useMemo } from 'react'
 import * as S from './NameTag.styles'
 
-import { SideDotsIcon, LockIcon } from './NameTag.styles'
-import ToolTip from '../../../../components/ToolTip/ToolTip'
-import NameTagEditIcon from '../../../../assets/closet_name_tag_edit_icon.svg'
-import { useNameTag } from './hooks'
-import { ClosetBoxService, NameTagService } from '../../services'
-import useModals from '../../../../components/Modals/hooks/useModals'
 import { useNavigate } from 'react-router-dom'
+import NameTagEditIcon from '../../../../assets/closet_name_tag_edit_icon.svg'
 import ClosetBoxCreateBottomSheetModal, {
   ClosetBoxBottomSheetListItem,
 } from '../../../../components/BottomSheetModal/ClosetBoxCreateBottomSheetModal'
+import useModals from '../../../../components/Modals/hooks/useModals'
+import ToolTip from '../../../../components/ToolTip/ToolTip'
+import { ClosetBoxService, NameTagService } from '../../services'
+import { useNameTag } from './hooks'
+import { LockIcon, SideDotsIcon } from './NameTag.styles'
 
+import { useQueryClient } from '@tanstack/react-query'
+import { deleteCloset } from '../../../../apis/closet'
+import { ClosetBoxModel } from '../../../../apis/closet/model'
 import { ReactComponent as SideArrayIcon } from '../../../../assets/array_24.svg'
 import { DeleteReCheckModal } from '../../deleteAndSort'
-import { ClosetBoxModel } from '../../../../apis/closet/model'
-import { deleteCloset } from '../../../../apis/closet'
-import { useQueryClient } from '@tanstack/react-query'
 
 export type NameTagProps = { service: NameTagService }
 
@@ -95,7 +95,7 @@ export const NameTagSideDotsIcon = ({ editMode, closetBox }: AddIconProps) => {
       },
       handleConfirm: async () => {
         const serialized = Number(id)
-        const res = await deleteCloset(serialized)
+        await deleteCloset(serialized)
         closeModal(DeleteReCheckModal)
         await queryClient.refetchQueries({ queryKey: ['get', 'closet', 'list'], exact: false })
         navigate('/closet')

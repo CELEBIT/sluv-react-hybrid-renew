@@ -1,14 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import {
-  DefaultImageField,
-  ImageWrapper,
-  ItemName,
-  ItemNameWrapper,
-  TwoItemUploadWrapper,
-} from './styles'
+import { useRecoilState } from 'recoil'
 import { ReactComponent as Add } from '../../../../../../assets/add_18.svg'
-import ItemNameInput from '../itemNameInput'
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 import {
   IselectedItem,
   communityItemState,
@@ -16,12 +8,20 @@ import {
   imgItemListState,
   secondItemState,
 } from '../../../../../../recoil/communityInfo'
+import ItemNameInput from '../itemNameInput'
+import AddItem from './eachItemField/AddItem'
 import ExistingItem from './eachItemField/ExistingItem'
 import UploadPhoto from './eachItemField/UploadPhoto'
-import AddItem from './eachItemField/AddItem'
+import {
+  DefaultImageField,
+  ImageWrapper,
+  ItemName,
+  ItemNameWrapper,
+  TwoItemUploadWrapper,
+} from './styles'
 
 interface TwoItemUploadProps {
-  onClick: any
+  onClick: () => void
 }
 
 const TwoItemUpload = ({ onClick }: TwoItemUploadProps) => {

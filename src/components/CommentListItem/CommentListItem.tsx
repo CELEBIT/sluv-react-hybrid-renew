@@ -1,6 +1,5 @@
 import React from 'react'
 import { InfoTop, Recommend, RecommendInfo } from '../../pages/community/detail/styles'
-import { Category } from '../../pages/item/detail/styles'
 import { useNavigate } from 'react-router-dom'
 import { ICommentResult } from '../../apis/user/userService'
 import styled from '@emotion/styled'

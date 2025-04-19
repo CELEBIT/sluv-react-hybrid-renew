@@ -1,17 +1,16 @@
-import React, { useRef } from 'react'
+import styled from '@emotion/styled'
+import { useRef } from 'react'
 import useQuestionListQuery from '../../../../apis/question/hooks/useQuestionListQuery'
+import { ReactComponent as Spinner } from '../../../../assets/Spinner.svg'
+import { ReactComponent as ConnectionError } from '../../../../assets/connectionError_36.svg'
+import Flex from '../../../../components/Flex'
 import QuestionListItem from '../../../../components/QuestionListItem/QuestionListItem'
 import { useObserver } from '../../../../hooks/useObserver'
 import { Line } from '../../detail/styles'
-import Flex from '../../../../components/Flex'
-import { ReactComponent as Spinner } from '../../../../assets/Spinner.svg'
-import { ReactComponent as ConnectionError } from '../../../../assets/connectionError_36.svg'
-import styled from '@emotion/styled'
 
 function NewCommunity() {
   const { getQuestionTotalList } = useQuestionListQuery()
-  const { data, error, fetchNextPage, status, isFetching, isFetchingNextPage } =
-    getQuestionTotalList()
+  const { data, fetchNextPage, status, isFetching, isFetchingNextPage } = getQuestionTotalList()
   const bottom = useRef(null)
 
   const onIntersect = ([entry]: IntersectionObserverEntry[]) =>

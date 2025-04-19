@@ -1,12 +1,8 @@
 import BrandService from '../brandService'
 import { useMutation } from '@tanstack/react-query'
 import useRecentBrandQuery from './useRecentBrandQuery'
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
-import {
-  createItemBrandState,
-  createItemNewBrandState,
-  itemInfoState,
-} from '../../../recoil/itemInfo'
+import { useResetRecoilState, useSetRecoilState } from 'recoil'
+import { createItemBrandState, createItemNewBrandState } from '../../../recoil/itemInfo'
 
 interface INewBrand {
   newBrandName: string

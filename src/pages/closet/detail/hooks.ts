@@ -1,13 +1,10 @@
-import { createContext, useState } from 'react'
-import { useCreateClosetFormContext } from '../create/hooks'
-import { ClosetBoxService } from '../services'
-import useModals from '../../../components/Modals/hooks/useModals'
-import { AnotherClosetListModal, DeleteReCheckModal } from './index'
-import { useNavigate } from 'react-router-dom'
-import { patchClosetItemsDelete } from '../../../apis/closet'
-import { queryToObject } from '../../../utils/utility'
 import { useQueryClient } from '@tanstack/react-query'
+import { createContext, useState } from 'react'
 import { toast } from 'react-toastify'
+import { patchClosetItemsDelete } from '../../../apis/closet'
+import useModals from '../../../components/Modals/hooks/useModals'
+import { queryToObject } from '../../../utils/utility'
+import { AnotherClosetListModal, DeleteReCheckModal } from './index'
 
 type ClosetInnerItemContextType = ReturnType<typeof useEditClosetInnerItemContext>
 export const ClosetInnerItemContext = createContext<ClosetInnerItemContextType | null>(null)
@@ -18,8 +15,6 @@ export const useEditClosetInnerItemContext = () => {
   const [selectedIds, setSelectedIds] = useState<number[]>([])
   const queryClient = useQueryClient()
   const { openModal, closeModal } = useModals()
-
-  const navigate = useNavigate()
 
   const handleSubHeaderClick = () => {
     if (!isEditMode) {

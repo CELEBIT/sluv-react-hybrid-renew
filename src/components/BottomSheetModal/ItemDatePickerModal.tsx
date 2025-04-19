@@ -6,7 +6,7 @@ import ButtonLarge from '../ButtonLarge/ButtonLarge'
 import useModals from '../Modals/hooks/useModals'
 import { modals } from '../Modals'
 import Header from '../Header/Header'
-import { convertToKoDate, convertToUTC } from '../../utils/utility'
+import { convertToUTC } from '../../utils/utility'
 import { useSetRecoilState } from 'recoil'
 import { createItemWhenDateState } from '../../recoil/itemInfo'
 

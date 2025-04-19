@@ -160,3 +160,8 @@ export interface ItemResult {
   celebName: string
   scrapStatus: boolean
 }
+
+export interface EditRequestedResult {
+  itemSimpleDto: ItemResult
+  content: string
+}

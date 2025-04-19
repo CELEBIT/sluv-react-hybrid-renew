@@ -12,7 +12,6 @@ import { deleteCloset } from '../../../apis/closet'
 import NameTag from '../components/NameTag'
 
 import { ReactComponent as DeleteIcon } from '../../../assets/delete_list_24.svg'
-import { MockedIcon } from '../create/styles'
 import { useNavigate } from 'react-router-dom'
 
 export type DeleteRecheckModalParam = {

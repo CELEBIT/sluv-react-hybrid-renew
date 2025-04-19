@@ -1,7 +1,6 @@
-import React from 'react'
-import ItemListGrid from '../../../components/ItemListGrid/ItemListGrid'
 import useItemSearchQuery from '../../../apis/search/hooks/useItemSearchQuery'
 import EmptyState from '../../../components/EmptyState'
+import ItemListGrid from '../../../components/ItemListGrid/ItemListGrid'
 import { Divider } from '../../item/detail/styles'
 
 type Props = {
@@ -10,7 +9,7 @@ type Props = {
 
 const ItemResult = ({ keyword }: Props) => {
   const { searchItem } = useItemSearchQuery()
-  const { data, error, status, isFetching, isFetchingNextPage, fetchNextPage } = searchItem(keyword)
+  const { data, status, isFetching, isFetchingNextPage, fetchNextPage } = searchItem(keyword)
 
   return (
     <>

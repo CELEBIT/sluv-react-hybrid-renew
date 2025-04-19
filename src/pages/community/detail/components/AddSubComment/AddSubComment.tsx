@@ -3,14 +3,11 @@ import { HeaderWrapper } from '../../../../item/addInfo/styles'
 import Header from '../../../../../components/Header/Header'
 import { AddSubCommentContainer } from './styles'
 import Comment from '../Comment/Comment'
-import { CommentResult } from '../../../../../apis/comment/commentService.type'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { CommentContainer, CommentWrapper, RecommendChipWrapper } from '../../styles'
 import Chip from '../../../../../components/Chip/Chip'
 import CommentField from '../../../../../components/TextField/CommentField/CommentField'
-import useSearchCommentQuery, {
-  IAddComment,
-} from '../../../../../apis/comment/hooks/useSearchCommentQuery'
+
 import { useRecoilState, useResetRecoilState } from 'recoil'
 import { commentState } from '../../CommunityDetail'
 import { ReactComponent as SubmitOff } from '../../../../../assets/submit_off_32.svg'

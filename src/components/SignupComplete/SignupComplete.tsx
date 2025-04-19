@@ -1,6 +1,5 @@
 import React from 'react'
 import Flex from '../Flex'
-import { Title } from '../../pages/signup/styles'
 import { ProfileContainer } from '../Profile/Profile'
 import FixedBottomButton from '../FixedBottomButton/FixedBottomButton'
 import { ReactComponent as DefaultProfile } from '../../assets/profile_big.svg'

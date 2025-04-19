@@ -1,8 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
-import { commentState } from '../../../pages/community/detail/CommunityDetail'
+import { useDebounce } from 'use-debounce'
 import { finalSearchState, maxItemPhotoCountState } from '..'
+import useRecentSearchQuery from '../../../apis/search/hooks/useRecentSearchQuery'
+import { ReactComponent as Gallery } from '../../../assets/gallery_24.svg'
+import { commentState } from '../../../pages/community/detail/CommunityDetail'
+import { HeaderWrapper } from '../../../pages/item/addInfo/styles'
 import { IselectedItem, imgItemListState } from '../../../recoil/communityInfo'
+import { convertToFile, openGallery } from '../../../utils/utility'
+import ButtonLarge from '../../ButtonLarge/ButtonLarge'
+import Header from '../../Header/Header'
+import Tabs from '../../Tabs'
+import SearchTextfield from '../../TextField/SearchTextfield/SearchTextfield'
+import HotSearchItem from '../HotSearchItem'
+import KeywordPreview from '../KeywordPreview/KeywordPreview'
+import RecentSearchItem from '../RecentSearchItem'
+import RecentViewItem from '../RecentViewItem'
 import SearchResult, { itemNameSearchState } from '../SearchResult'
 import {
   BottomWrapper,
@@ -12,25 +27,7 @@ import {
   GalleryButton,
   SelectItemOrPhotoContainer,
 } from '../styles'
-import { HeaderWrapper } from '../../../pages/item/addInfo/styles'
-import Header from '../../Header/Header'
-import SearchTextfield from '../../TextField/SearchTextfield/SearchTextfield'
-import Tabs from '../../Tabs'
-import RecentViewItem from '../RecentViewItem'
-import RecentSearchItem from '../RecentSearchItem'
-import HotSearchItem from '../HotSearchItem'
-import { ReactComponent as Gallery } from '../../../assets/gallery_24.svg'
-import ButtonLarge from '../../ButtonLarge/ButtonLarge'
-import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
-import { useLocation, useNavigate } from 'react-router-dom'
-import ScrapItem from '../ScrapItem'
 import UserUploadItem from '../UserUploadItem'
-import KeywordPreviewContainer from '../../../pages/search/components/KeywordPreviewContainer'
-import { useDebounce } from 'use-debounce'
-import KeywordPreview from '../KeywordPreview/KeywordPreview'
-import { convertToFile, convertToImageList, openGallery } from '../../../utils/utility'
-import useRecentSearchQuery from '../../../apis/search/hooks/useRecentSearchQuery'
-import { toast } from 'react-toastify'
 
 const CommentItemPhoto = () => {
   const navigate = useNavigate()
@@ -89,7 +86,7 @@ const CommentItemPhoto = () => {
       })
       // 댓글 아이템 설정
       setCommentObject((prevInfo) => {
-        const { itemList, imgList } = prevInfo
+        const { itemList } = prevInfo
         const updatedItemList = itemList ? [...itemList] : []
 
         imgItemList.forEach((item, index) => {
@@ -271,7 +268,7 @@ const CommentItemPhoto = () => {
           text={`선택완료(${imgItemList?.length}/${maxItemPhotoCount}) `}
           active={imgItemList?.length > 0}
           color='BK'
-          onClick={imgItemList?.length > 0 ? () => onComplete() : ''}
+          onClick={imgItemList?.length > 0 ? onComplete : undefined}
         ></ButtonLarge>
       </BottomWrapper>
     </SelectItemOrPhotoContainer>

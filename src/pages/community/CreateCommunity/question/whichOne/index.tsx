@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import TwoItemUpload from '../components/twoItemUpload'
 import { SubComponentContainer } from '../howAboutThis/styles'
 import { ComponentWrapper, Label, LabelContainer } from '../../../../item/create/styles'
 import DefaultTextfield from '../../../../../components/TextField/DefaultTextfield/DefaultTextfield'
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import {
   communityItemState,
   firstItemState,

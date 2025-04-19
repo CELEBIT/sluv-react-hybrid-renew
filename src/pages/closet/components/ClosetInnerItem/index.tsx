@@ -1,4 +1,4 @@
-import React, { EventHandler, HTMLAttributes, MouseEventHandler, useState } from 'react'
+import React, { HTMLAttributes, MouseEventHandler, useState } from 'react'
 import * as S from './styles'
 import { ClosetItemModel } from '../../../../apis/closet/model'
 import { ReactComponent as CheckOffIcon } from '../../../../assets/checkbox_off_32.svg'

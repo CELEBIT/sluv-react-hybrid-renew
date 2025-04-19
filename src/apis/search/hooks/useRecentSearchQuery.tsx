@@ -1,4 +1,3 @@
-import React from 'react'
 import SearchService from '../searchService'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '../../../config/queryKeys'

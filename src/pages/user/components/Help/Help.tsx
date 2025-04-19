@@ -5,10 +5,13 @@ import { ReactComponent as Arrow } from '../../../../assets/arrow_18.svg'
 import * as S from './styles'
 import { Line } from '../../../community/detail/styles'
 import ButtonLarge from '../../../../components/ButtonLarge/ButtonLarge'
-import copyToClipboard from '../../../../utils/Share/copyToClipboard'
-import { toast } from 'react-toastify'
 
 const Help = () => {
+  const handleButtonClick = () => {
+    const url =
+      'https://docs.google.com/forms/d/e/1FAIpQLSdep3GXMbWXpZxJWJhjtYL6JdQeCOd8HxGUDY7vKsDTv_5HcQ/viewform?pli=1'
+    window.open(url, '_blank')
+  }
   return (
     <PageContainer>
       <HeaderWrapper>
@@ -33,14 +36,7 @@ const Help = () => {
         </S.AnswerContainer>
       </S.Layout>
       <S.BottomContainer>
-        <ButtonLarge
-          text='이메일 문의'
-          active={true}
-          onClick={() => {
-            copyToClipboard('celebit.sluv@gmail.com')
-            toast('이메일 주소가 복사되었어요')
-          }}
-        ></ButtonLarge>
+        <ButtonLarge text='1:1 문의' active={true} onClick={handleButtonClick}></ButtonLarge>
       </S.BottomContainer>
     </PageContainer>
   )

@@ -1,16 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
-import {
-  CommunityPageContainer,
-  EmptyStateContainer,
-  QuestionListWrapper,
-  TabContainer,
-} from '../../styles'
+import { CommunityPageContainer, EmptyStateContainer, QuestionListWrapper } from '../../styles'
 import { HeaderWrapper } from '../../../user/styles'
 import Header from '../../../../components/Header/Header'
 import { ComponentContainer } from '../../../home/styles'
 import QuestionListItem from '../../../../components/QuestionListItem/QuestionListItem'
 import WriteCommunityItemButton from '../../components/WriteCommunityItemButton/WriteCommunityItemButton'
-import BlackFilter from '../../../../components/FIlter/BlackFilter'
 import useQuestionListQuery from '../../../../apis/question/hooks/useQuestionListQuery'
 import { Line } from '../../detail/styles'
 import { ReactComponent as HowAboutBanner } from '../../../../assets/CommunityEachBanner/HowAboutBanner.svg'

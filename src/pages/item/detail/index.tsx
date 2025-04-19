@@ -1,36 +1,39 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import useModals from '../../../components/Modals/hooks/useModals'
-import { modals } from '../../../components/Modals'
-import Header from '../../../components/Header/Header'
-import { Helmet } from 'react-helmet-async'
-import { ReactComponent as Home } from '../../../assets/home_24.svg'
-import { ReactComponent as Search } from '../../../assets/search_24.svg'
+import { useNavigate, useParams } from 'react-router-dom'
 import { ReactComponent as ShowMore } from '../../../assets/add_24.svg'
-import { ReactComponent as StorageOn } from '../../../assets/storage_on_24.svg'
-import { ReactComponent as StorageOff } from '../../../assets/storage_off_24.svg'
-import { ReactComponent as LikeOn } from '../../../assets/like_on_24.svg'
-import { ReactComponent as LikeOff } from '../../../assets/like_off_24.svg'
-import { ReactComponent as Share } from '../../../assets/share_24.svg'
 import { ReactComponent as Arrow } from '../../../assets/arrow_18.svg'
-import { ReactComponent as LikeSmall } from '../../../assets/Like_18.svg'
-import { ReactComponent as ShareSmall } from '../../../assets/Share_18.svg'
-import { ReactComponent as Storage } from '../../../assets/storage_18.svg'
-import { ReactComponent as View } from '../../../assets/page view_18.svg'
-import { ReactComponent as LinkIcon } from '../../../assets/link_add_20.svg'
 import { ReactComponent as ArrowLarge } from '../../../assets/arrow_20.svg'
 import { ReactComponent as Comment } from '../../../assets/comment_18.svg'
-import { ReactComponent as Kakao } from '../../../assets/share_kakao_40.svg'
-import { ReactComponent as Twitter } from '../../../assets/share_twitter_40.svg'
-import { ReactComponent as ShareAdd } from '../../../assets/share_add_40.svg'
 import { ReactComponent as DefaultProfile } from '../../../assets/defaultProfile_40.svg'
+import { ReactComponent as Home } from '../../../assets/home_24.svg'
+import { ReactComponent as LikeSmall } from '../../../assets/Like_18.svg'
+import { ReactComponent as LikeOff } from '../../../assets/like_off_24.svg'
+import { ReactComponent as LikeOn } from '../../../assets/like_on_24.svg'
+import { ReactComponent as LinkIcon } from '../../../assets/link_add_20.svg'
+import { ReactComponent as View } from '../../../assets/page view_18.svg'
+import { ReactComponent as Search } from '../../../assets/search_24.svg'
+import { ReactComponent as Share } from '../../../assets/share_24.svg'
+import { ReactComponent as Storage } from '../../../assets/storage_18.svg'
+import { ReactComponent as StorageOff } from '../../../assets/storage_off_24.svg'
+import { ReactComponent as StorageOn } from '../../../assets/storage_on_24.svg'
+import Header from '../../../components/Header/Header'
+import { modals } from '../../../components/Modals'
+import useModals from '../../../components/Modals/hooks/useModals'
 
+import useItemDetailQuery from '../../../apis/item/hooks/useItemDetailQuery'
+import Badge from '../../../components/Badge/Badge'
+import BrandLogo from '../../../components/BrandLogo/BrandLogo'
+import ButtonSmall from '../../../components/ButtonSmall/ButtonSmall'
+import DisplayField from '../../../components/TextField/DisplayField/DisplayField'
+import { HeaderWrapper } from '../addInfo/styles'
+import { formatPrice } from '../create/components/PriceField/price.util'
+import { Label } from '../create/styles'
+import Carousel from './components/Carousel/Carousel'
 import {
   AdditionalInfoWrapper,
   BasicInfoWrapper,
   Brand,
   Category,
-  ColorCircle,
   Divider,
   HashTags,
   Interactions,
@@ -43,41 +46,29 @@ import {
   LinkInfoWrapper,
   Reaction,
   RecommendWrapper,
-  ShareItemWrapper,
-  ShareWrapper,
   SourceWrapper,
   Top,
   UploaderInfoWrapper,
   UserImg,
   WrongInfo,
 } from './styles'
-import Badge from '../../../components/Badge/Badge'
-import BrandLogo from '../../../components/BrandLogo/BrandLogo'
-import { Label } from '../create/styles'
-import DisplayField from '../../../components/TextField/DisplayField/DisplayField'
-import ButtonSmall from '../../../components/ButtonSmall/ButtonSmall'
-import { formatPrice } from '../create/components/PriceField/price.util'
-import { HeaderWrapper } from '../addInfo/styles'
-import Carousel from './components/Carousel/Carousel'
-import useItemDetailQuery from '../../../apis/item/hooks/useItemDetailQuery'
 
-import { convertToKoDate, openLink } from '../../../utils/utility'
-import useFollowQuery from '../../../apis/user/hooks/useFollowQuery'
 import { useQueryClient } from '@tanstack/react-query'
-import { queryKeys } from '../../../config/queryKeys'
-import { RequestEditItemState } from '../editRequest'
+import { toast } from 'react-toastify'
 import { useSetRecoilState } from 'recoil'
+import { deleteScrap } from '../../../apis/closet'
+import useFollowQuery from '../../../apis/user/hooks/useFollowQuery'
 import { Common } from '../../../components/styles'
+import { queryKeys } from '../../../config/queryKeys'
+import share from '../../../utils/Share/share'
+import storage from '../../../utils/storage'
+import { convertToKoDate, openLink } from '../../../utils/utility'
 import { ItemClosetListModal } from '../../closet/detail'
+import { RequestEditItemState } from '../editRequest'
+import SameBrand from './components/Carousel/SameBrand'
 import SameCeleb from './components/Carousel/SameCeleb'
 import SameScrap from './components/Carousel/SameScrap'
-import SameBrand from './components/Carousel/SameBrand'
-import { deleteScrap } from '../../../apis/closet'
-import share from '../../../utils/Share/share'
 import ShowLink from './components/ShowLink'
-import storage from '../../../utils/storage'
-import { toast } from 'react-toastify'
-import MetaTag from '../../../utils/Share/MetaTag'
 import { processInfoSource } from './utils'
 
 const ItemDetail = () => {
@@ -103,7 +94,7 @@ const ItemDetail = () => {
   console.log(data)
 
   const setEditReportItemState = useSetRecoilState(RequestEditItemState)
-  const colors = ['gray', 'pink', 'orange', 'yellow', 'green', 'blue']
+  const colors = ['gray', 'pink', 'orange', 'yellow', 'green', 'blue'] as const
 
   const handleShare = async () => {
     const result = await share(`셀럽 : ${

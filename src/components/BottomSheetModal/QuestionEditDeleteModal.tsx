@@ -11,11 +11,7 @@ import { Common, Pretendard } from '../styles'
 import { useNavigate } from 'react-router-dom'
 import { ReactComponent as Share } from '../../assets/share_24.svg'
 import { atomKeys } from '../../config/atomKeys'
-import {
-  communityItemState,
-  communityQuestionMenuState,
-  imgItemListState,
-} from '../../recoil/communityInfo'
+import { communityItemState, imgItemListState } from '../../recoil/communityInfo'
 import { communityMenuState } from '../Header/CommunityHeader/CommunityHeader'
 import { toast } from 'react-toastify'
 

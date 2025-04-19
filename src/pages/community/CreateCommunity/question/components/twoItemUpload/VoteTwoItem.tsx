@@ -1,4 +1,12 @@
+import styled from '@emotion/styled'
 import React from 'react'
+import { toast } from 'react-toastify'
+import useQuestionDetailQuery from '../../../../../../apis/question/hooks/useQuestionDetailQuery'
+import { BuyHomeResult } from '../../../../../../apis/search/searchService'
+import { Common, Pretendard } from '../../../../../../components/styles'
+import { InputContainer } from '../../../../../../components/TextField/DefaultTextfield/styles'
+import { NameInputWrapper } from '../itemNameInput'
+import { ImageField, ItemInfoWrapper } from './eachItemField/ExistingItem'
 import {
   Description,
   ImageWrapper,
@@ -6,21 +14,7 @@ import {
   ItemNameWrapper,
   TwoItemUploadWrapper,
 } from './styles'
-import ExistingItem, {
-  BrandName,
-  CelebName,
-  ImageField,
-  ItemInfoWrapper,
-} from './eachItemField/ExistingItem'
-import ItemNameInput, { NameInputWrapper } from '../itemNameInput'
-import { InputContainer } from '../../../../../../components/TextField/DefaultTextfield/styles'
-import { BuyHomeResult, SearchQuestionResult } from '../../../../../../apis/search/searchService'
-import { QuestionResult } from '../../../../../../apis/question/questionService.type'
-import useQuestionDetailQuery from '../../../../../../apis/question/hooks/useQuestionDetailQuery'
 import VotePercent from './VotePercent'
-import styled from '@emotion/styled'
-import { Common, Pretendard } from '../../../../../../components/styles'
-import { toast } from 'react-toastify'
 
 interface VoteTwoItemProps {
   item: BuyHomeResult

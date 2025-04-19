@@ -3,7 +3,7 @@ import TwoButtonModal from '.'
 import { modals } from '../Modals'
 import useModals from '../Modals/hooks/useModals'
 import { BtnModalContent } from '../Modals/styles'
-import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
+import { useResetRecoilState, useSetRecoilState } from 'recoil'
 import {
   communityItemState,
   firstItemState,

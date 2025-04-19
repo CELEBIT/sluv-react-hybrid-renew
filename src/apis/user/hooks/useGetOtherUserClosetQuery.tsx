@@ -2,7 +2,6 @@ import { UseInfiniteQueryResult, useInfiniteQuery } from '@tanstack/react-query'
 import { GetPaginationResult } from '../../core/type'
 import UserService from '../userService'
 import { queryKeys } from '../../../config/queryKeys'
-import { RecommendItemResult } from '../../item/itemService.type'
 import { ClosetBoxModel } from '../../closet/model'
 
 const useGetOtherUserClosetQuery = () => {

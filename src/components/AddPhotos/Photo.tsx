@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
-import { ReactComponent as Represent } from '../../assets/represent_24.svg'
-import { ReactComponent as DeleteList } from '../../assets/delete_list_24.svg'
-import { ReactComponent as StorageOff } from '../../assets/storage_list_off_24.svg'
-import { ReactComponent as StorageOn } from '../../assets/storage_on_24.svg'
+import { useQueryClient } from '@tanstack/react-query'
+import React from 'react'
+import { toast } from 'react-toastify'
+import { deleteScrap } from '../../apis/closet'
 import { ReactComponent as CheckOff } from '../../assets/checkbox_off_32.svg'
 import { ReactComponent as CheckOn } from '../../assets/checkbox_on_32.svg'
-import { Common } from '../styles'
-import { deleteScrap } from '../../apis/closet'
-import { useQueryClient } from '@tanstack/react-query'
-import useModals from '../Modals/hooks/useModals'
-import { queryKeys } from '../../config/queryKeys'
+import { ReactComponent as DeleteList } from '../../assets/delete_list_24.svg'
+import { ReactComponent as Represent } from '../../assets/represent_24.svg'
+import { ReactComponent as StorageOff } from '../../assets/storage_list_off_24.svg'
+import { ReactComponent as StorageOn } from '../../assets/storage_on_24.svg'
 import { ItemClosetListModal } from '../../pages/closet/detail'
 import { modals } from '../Modals'
-import { toast } from 'react-toastify'
+import useModals from '../Modals/hooks/useModals'
+import { Common } from '../styles'
 
 interface PhotoProps {
   itemId?: number
@@ -140,31 +139,4 @@ const ItemCardDim = styled.div<{ size?: number; borderRadius: number }>`
   height: 100%;
   opacity: 0.4000000059604645;
   background: linear-gradient(360deg, #212529 0%, rgba(33, 37, 41, 0) 100%);
-`
-
-const ImgFileWrap = styled.div<{ size?: number; borderRadius: number }>`
-  background-color: ${Common.colors.GR300};
-  display: flex;
-  position: relative;
-  flex-shrink: 0;
-  border-radius: ${(props) => props.borderRadius * 0.0625}rem;
-
-  img {
-    width: ${(props) => props.size && `${props.size * 0.0625}rem`};
-    height: ${(props) => props.size && `${props.size * 0.0625}rem`};
-    border-radius: ${(props) => props.borderRadius * 0.0625}rem;
-  }
-
-  .delete {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    transform: translate(50%, -50%);
-  }
-
-  .represent {
-    position: absolute;
-    right: 0.25rem;
-    bottom: 0.25rem;
-  }
 `

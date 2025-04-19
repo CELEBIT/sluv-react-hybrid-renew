@@ -1,23 +1,22 @@
-import React, { memo, useEffect, useState } from 'react'
-import { Title } from '../styles'
-import { ReactComponent as ArrowBack } from '../../../assets/arrow_back_20.svg'
-import { ReactComponent as Close } from '../../../assets/close_20.svg'
-import { ReactComponent as ArrowUp } from '../../../assets/arrow_up_18.svg'
-import { ReactComponent as ArrowDown } from '../../../assets/arrow_down_18.svg'
-import { ReactComponent as Add } from '../../../assets/add_18.svg'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { memo, ReactNode, useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { atom, useRecoilState, useRecoilValue } from 'recoil'
+import { ReactComponent as Add } from '../../../assets/add_18.svg'
+import { ReactComponent as ArrowBack } from '../../../assets/arrow_back_20.svg'
+import { ReactComponent as ArrowDown } from '../../../assets/arrow_down_18.svg'
+import { ReactComponent as ArrowUp } from '../../../assets/arrow_up_18.svg'
 import { atomKeys } from '../../../config/atomKeys'
-import { HeaderWrapper } from './styles'
-import DropDownMenu from './DropDownMenu'
-import { Menu } from './DropDownMenu/styles'
 import { CommunityMenu, CommunityMenuList } from '../../../config/communityMenu'
 import { communityItemState, imgItemListState } from '../../../recoil/communityInfo'
-import useModals from '../../Modals/hooks/useModals'
 import { modals } from '../../Modals'
+import useModals from '../../Modals/hooks/useModals'
+import { Title } from '../styles'
+import DropDownMenu from './DropDownMenu'
+import { Menu } from './DropDownMenu/styles'
+import { HeaderWrapper } from './styles'
 
 interface HeaderProps {
-  children?: any
+  children?: ReactNode
   backBtnClick?: () => void
 }
 

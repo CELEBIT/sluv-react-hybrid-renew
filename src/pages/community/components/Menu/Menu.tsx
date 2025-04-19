@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { useEffect, useRef, useState } from 'react'
+import React from 'react'
 import { ReactComponent as FindMenu } from '../../../../assets/Find_Menu.svg'
 import { ReactComponent as BuyMenu } from '../../../../assets/Buy_Menu.svg'
 import { ReactComponent as HowAboutMenu } from '../../../../assets/How_Menu.svg'

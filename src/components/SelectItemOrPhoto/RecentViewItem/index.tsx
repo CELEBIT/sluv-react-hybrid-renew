@@ -1,29 +1,25 @@
-import React, { useRef } from 'react'
+import { useRef } from 'react'
+import { toast } from 'react-toastify'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { maxItemPhotoCountState } from '..'
 import useRecentViewItemQuery from '../../../apis/item/hooks/useRecentViewItemQuery'
+import { ItemResult } from '../../../apis/item/itemService.type'
 import { useObserver } from '../../../hooks/useObserver'
-import EmptyState from '../../EmptyState'
-import { ListWrapper, RecentViewItemContainer } from './styles'
-import Item from '../../RecommendedItem/Item'
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
+import { Divider } from '../../../pages/item/detail/styles'
 import {
-  IitemList,
-  IselectedItem,
-  communityItemState,
   communityQuestionMenuState,
   firstItemState,
   imgItemListState,
   secondItemState,
 } from '../../../recoil/communityInfo'
-import { ItemResult } from '../../../apis/item/itemService.type'
-import { Divider } from '../../../pages/item/detail/styles'
-import HotItem from '../HotItem'
-import { maxItemPhotoCountState } from '..'
+import EmptyState from '../../EmptyState'
 import { communityMenuState } from '../../Header/CommunityHeader/CommunityHeader'
-import { toast } from 'react-toastify'
+import Item from '../../RecommendedItem/Item'
+import HotItem from '../HotItem'
+import { ListWrapper, RecentViewItemContainer } from './styles'
 
 const RecentViewItem = () => {
   const bottom = useRef(null)
-  const [communityUploadInfo, setCommunityUploadInfo] = useRecoilState(communityItemState)
   const maxItemPhotoCount = useRecoilValue(maxItemPhotoCountState)
   const communityQuestionMenu = useRecoilValue(communityQuestionMenuState)
   const CommunityMenu = useRecoilValue(communityMenuState)
@@ -36,8 +32,6 @@ const RecentViewItem = () => {
   // 이 중에 뭐살까 추가용
   const [firstItem, setFirstItem] = useRecoilState(firstItemState)
   const [secondItem, setSecondItem] = useRecoilState(secondItemState)
-  const resetFirstItem = useResetRecoilState(firstItemState)
-  const resetSecondItem = useResetRecoilState(secondItemState)
 
   const [imgItemList, setImageItemList] = useRecoilState(imgItemListState)
 

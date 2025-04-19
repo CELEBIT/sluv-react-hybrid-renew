@@ -6,11 +6,7 @@ import { ChipWrapper } from '../ItemBrandSelectModal/ItemBrandSelectModal'
 import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
 import { IRecentCeleb } from '../../../apis/celeb/CelebService'
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
-import {
-  createItemCelebState,
-  createItemNewCelebState,
-  itemInfoState,
-} from '../../../recoil/itemInfo'
+import { createItemCelebState, createItemNewCelebState } from '../../../recoil/itemInfo'
 import useModals from '../../Modals/hooks/useModals'
 import { modals } from '../../Modals'
 import { selectedCelebState } from '../../SelectCeleb/SelectCeleb'

@@ -1,12 +1,11 @@
-import { BtnModalContainer } from '../Modals/styles'
-import React from 'react'
-import ButtonHalf from '../ButtonHalf/ButtonHalf'
 import styled from '@emotion/styled'
+import React from 'react'
 import ButtonLarge from '../ButtonLarge/ButtonLarge'
+import { BtnModalContainer } from '../Modals/styles'
 
 interface OneButtonModalProps {
   buttonName: string
-  buttonOnClick: <T>(args: T) => void
+  buttonOnClick: () => void
   children: React.ReactNode
 }
 

@@ -6,7 +6,7 @@ import { selectedCelebState, selectedGroupState } from '../../SelectCeleb/Select
 import { HotWrapper } from '../ItemBrandSelectModal/HotBrand'
 import useHotCelebQuery from '../../../apis/celeb/hooks/useHotCelebQuery'
 import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
-import { createItemCelebState, itemInfoState } from '../../../recoil/itemInfo'
+import { createItemCelebState } from '../../../recoil/itemInfo'
 import { IHotCeleb } from '../../../apis/celeb/CelebService'
 import useModals from '../../Modals/hooks/useModals'
 import { modals } from '../../Modals'

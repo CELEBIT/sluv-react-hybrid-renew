@@ -1,15 +1,12 @@
-import React from 'react'
 import SearchService, { SearchQuestionResult } from '../searchService'
 import {
   UseInfiniteQueryResult,
   useInfiniteQuery,
-  useMutation,
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query'
 import { queryKeys } from '../../../config/queryKeys'
 import { GetPaginationResult } from '../../core/type'
-import { UserResult } from '../../item/itemService.type'
 import { IUserResult } from '../../user/userService'
 
 const useSearchQuery = () => {

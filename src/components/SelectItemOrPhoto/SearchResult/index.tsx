@@ -1,27 +1,27 @@
 import styled from '@emotion/styled'
-import React, { useRef } from 'react'
-import { atom, useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
+import { useRef } from 'react'
+import { atom, useRecoilState, useRecoilValue } from 'recoil'
 
-import { useObserver } from '../../../hooks/useObserver'
+import { toast } from 'react-toastify'
 import { useDebounce } from 'use-debounce'
-import EmptyState from '../../EmptyState'
-import HotItem from '../HotItem'
-import { Divider } from '../../../pages/item/detail/styles'
-import { atomKeys } from '../../../config/atomKeys'
+import { finalSearchState, maxItemPhotoCountState } from '..'
+import { ItemResult } from '../../../apis/item/itemService.type'
 import useItemSearchQuery from '../../../apis/search/hooks/useItemSearchQuery'
-import { ListWrapper } from '../RecentViewItem/styles'
-import Item from '../../RecommendedItem/Item'
+import { atomKeys } from '../../../config/atomKeys'
+import { useObserver } from '../../../hooks/useObserver'
+import { Divider } from '../../../pages/item/detail/styles'
 import {
   communityQuestionMenuState,
   firstItemState,
   imgItemListState,
   secondItemState,
 } from '../../../recoil/communityInfo'
-import { ItemResult } from '../../../apis/item/itemService.type'
+import EmptyState from '../../EmptyState'
 import { communityMenuState } from '../../Header/CommunityHeader/CommunityHeader'
-import { finalSearchState, maxItemPhotoCountState } from '..'
 import Loading from '../../Loading'
-import { toast } from 'react-toastify'
+import Item from '../../RecommendedItem/Item'
+import HotItem from '../HotItem'
+import { ListWrapper } from '../RecentViewItem/styles'
 
 export const itemNameSearchState = atom<string>({
   key: atomKeys.itemNameSearchState,
@@ -40,8 +40,6 @@ const SearchItemPhotoResult = () => {
   // 이 중에 뭐살까 추가용
   const [firstItem, setFirstItem] = useRecoilState(firstItemState)
   const [secondItem, setSecondItem] = useRecoilState(secondItemState)
-  const resetFirstItem = useResetRecoilState(firstItemState)
-  const resetSecondItem = useResetRecoilState(secondItemState)
 
   const { searchItem } = useItemSearchQuery()
   const { data, error, fetchNextPage, status, isFetching, isFetchingNextPage } =
@@ -188,18 +186,4 @@ const SearchResultWrapper = styled.div`
     width: 100vw;
     margin-left: calc(-50vw + 50%);
   }
-`
-const EachBrand = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  width: 100%;
-  padding: 0.875rem 0 0.875rem 0.75rem;
-`
-
-const TextWrap = styled.div`
-  display: flex;
-  flex-direction: column;
 `

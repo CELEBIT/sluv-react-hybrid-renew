@@ -8,10 +8,10 @@ import Header from '../../Header/Header'
 import HotCeleb from './HotCeleb'
 import ButtonLarge from '../../ButtonLarge/ButtonLarge'
 import { selectedCelebState, selectedGroupState } from '../../SelectCeleb/SelectCeleb'
-import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState } from 'recoil'
 import MyCeleb from './MyCeleb'
 import RecentSelectCeleb from './RecentSelectCeleb'
-import { createItemCelebState, itemInfoState } from '../../../recoil/itemInfo'
+import { createItemCelebState } from '../../../recoil/itemInfo'
 import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
 import SearchCelebList from './SearchCelebList'
 
@@ -27,8 +27,6 @@ const ItemCelebSearchModal = () => {
 
   const [selectedCeleb, setSelectedCeleb] = useRecoilState(selectedCelebState)
   const [selectedGroup, setSelectedGroup] = useRecoilState(selectedGroupState)
-  const resetSelectedCeleb = useResetRecoilState(selectedCelebState)
-  const resetSelectedGroup = useResetRecoilState(selectedGroupState)
 
   const { closeModal } = useModals()
 

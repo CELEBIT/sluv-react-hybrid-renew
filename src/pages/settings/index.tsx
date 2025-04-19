@@ -1,22 +1,20 @@
-import React, { useState } from 'react'
-import { ContentContainer, HeaderWrapper, PageContainer } from '../user/styles'
-import Header from '../../components/Header/Header'
-import { DeleteAccount, IdInfoRow, Menu, MenuTitle, SettingMenu, UpdateText } from './styles'
-import { Divider } from '../item/detail/styles'
-import ToggleSwitch from '../../components/ToggleSwitch/ToggleSwitch'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import useUserMypageQuery from '../../apis/user/hooks/useUserMypageQuery'
-import storage from '../../utils/storage'
-import useModals from '../../components/Modals/hooks/useModals'
-import { modals } from '../../components/Modals'
 import { ReactComponent as Apple } from '../../assets/apple_60.svg'
 import { ReactComponent as Google } from '../../assets/google_60.svg'
 import { ReactComponent as Kakao } from '../../assets/kakao_60.svg'
+import Header from '../../components/Header/Header'
+import { modals } from '../../components/Modals'
+import useModals from '../../components/Modals/hooks/useModals'
+import ToggleSwitch from '../../components/ToggleSwitch/ToggleSwitch'
+import { Divider } from '../item/detail/styles'
+import { ContentContainer, HeaderWrapper, PageContainer } from '../user/styles'
+import { DeleteAccount, IdInfoRow, Menu, MenuTitle, SettingMenu, UpdateText } from './styles'
 
 const Settings = () => {
   const navigate = useNavigate()
   const { openModal } = useModals()
-  const [pushAlarmState, setPushAlarmState] = useState(false)
 
   const { getMarketingAgreeStatus, getIdInfo } = useUserMypageQuery()
   const { data } = getMarketingAgreeStatus
@@ -25,11 +23,6 @@ const Settings = () => {
   const {
     termsAgree: { mutate },
   } = useUserMypageQuery()
-
-  const onClickPushAlarm = () => {
-    setPushAlarmState(!pushAlarmState)
-    // api call
-  }
 
   const onClickTermsToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.stopPropagation()

@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useRef, memo } from 'react'
+import React, { useEffect, useRef, memo } from 'react'
 import styled from '@emotion/styled'
 import { ReactComponent as Add } from '../../../../../assets/add_18.svg'
 import { ReactComponent as Error } from '../../../../../assets/error_20.svg'
 import { Pretendard, Common } from '../../../../../components/styles'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState } from 'recoil'
 import { Image, imgListState } from '../../../../../components/AddPhotos/AddPhotos'
 import { convertToImageList, openGallery } from '../../../../../utils/utility'
 

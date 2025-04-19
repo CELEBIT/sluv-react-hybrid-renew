@@ -5,8 +5,8 @@ import {
   useQueryClient,
 } from '@tanstack/react-query'
 import { queryKeys } from '../../../config/queryKeys'
-import UserService, { IUserResult } from '../userService'
 import { GetPaginationResult } from '../../core/type'
+import UserService, { IUserResult } from '../userService'
 
 interface IFollow {
   userId: number
@@ -17,18 +17,11 @@ const useFollowQuery = () => {
   const user = new UserService()
   const queryClient = useQueryClient()
 
-  const followUser = useMutation(({ userId, itemId }: IFollow) => user.followUser(userId), {
+  const followUser = useMutation(({ userId }: IFollow) => user.followUser(userId), {
     onSuccess: (res, vars) => {
-      // console.log(res, vars)
       if (vars.itemId) queryClient.invalidateQueries(queryKeys.itemDetail(vars.itemId))
       else {
         queryClient.invalidateQueries()
-        // queryClient.invalidateQueries(queryKeys.userFollowerList)
-        // queryClient.invalidateQueries(queryKeys.userFollowingList)
-        // queryClient.invalidateQueries(queryKeys.otherUserFollowerList(vars.userId))
-        // queryClient.invalidateQueries(queryKeys.otherUserFollowingList(vars.userId))
-        // queryClient.invalidateQueries(queryKeys.getMypageInfo)
-        // queryClient.invalidateQueries(queryKeys.getHotSluver())
       }
     },
   })

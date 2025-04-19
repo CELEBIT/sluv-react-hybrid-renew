@@ -6,7 +6,6 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 import { commentQuestionIdState, commentState } from '../../CommunityDetail'
 import { imgItemListState } from '../../../../../recoil/communityInfo'
-import AddPhotos from '../../../../../components/AddPhotos/AddPhotos'
 import AddItemPhotos from '../../../../../components/AddPhotos/AddItemPhotos'
 import useSearchCommentQuery, {
   IAddComment,

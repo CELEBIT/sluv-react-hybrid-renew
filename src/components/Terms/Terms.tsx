@@ -1,12 +1,11 @@
 import React, { useCallback, useState, MouseEvent } from 'react'
-import Agreement, { MandatoryText } from './Agreement'
+import Agreement from './Agreement'
 import FixedBottomButton from '../FixedBottomButton/FixedBottomButton'
 
 import { 약관목록 } from '../../config/constant'
 import { SignupValues } from '../../models/signup'
 import { Line, Title } from '../../pages/signup/styles'
 import Flex from '../Flex'
-import storage from '../../utils/storage'
 import useUserMypageQuery from '../../apis/user/hooks/useUserMypageQuery'
 // import { ApplyValues } from '@models/apply'
 

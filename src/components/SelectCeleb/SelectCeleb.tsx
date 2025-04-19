@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { atom, useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
-import { atomKeys } from '../../config/atomKeys'
-import { SelectCelebWrapper } from './styles'
-import ButtonMedium from '../ButtonMedium/ButtonMedium'
-import useModals from '../Modals/hooks/useModals'
-import { modals } from '../Modals'
-import { ICelebResult } from '../../apis/user/userService'
-import { createItemCelebState, createItemNewCelebState } from '../../recoil/itemInfo'
-import useInterestCelebQuery from '../../apis/user/hooks/useInterestCelebQuery'
 import useRecentCelebQuery from '../../apis/celeb/hooks/useRecentCelebQuery'
+import useInterestCelebQuery from '../../apis/user/hooks/useInterestCelebQuery'
+import { ICelebResult } from '../../apis/user/userService'
+import { atomKeys } from '../../config/atomKeys'
+import { createItemCelebState, createItemNewCelebState } from '../../recoil/itemInfo'
+import ButtonMedium from '../ButtonMedium/ButtonMedium'
+import { modals } from '../Modals'
+import useModals from '../Modals/hooks/useModals'
+import { SelectCelebWrapper } from './styles'
 
 export interface CelebData {
   id: number
@@ -46,7 +46,6 @@ const SelectCeleb = () => {
   } = useRecentCelebQuery()
 
   const [celebInfoInItem, setCelebInfoInItem] = useRecoilState(createItemCelebState)
-  const resetItemCeleb = useResetRecoilState(createItemCelebState)
 
   const [newCeleb, setNewCeleb] = useRecoilState(createItemNewCelebState)
   const resetNewCeleb = useResetRecoilState(createItemNewCelebState)

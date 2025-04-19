@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { HeaderWrap, SearchPageStyle } from './styles'
 import Header from '../../components/Header/Header'
-import SearchTextfield from '../../components/TextField/SearchTextfield/SearchTextfield'
 import SearchBarContainer from './components/SearchBarContainer'
 import useRecentSearchQuery from '../../apis/search/hooks/useRecentSearchQuery'
 import RecentSearchContainer from './components/RecentSearchContainer'

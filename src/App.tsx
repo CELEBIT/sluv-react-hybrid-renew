@@ -1,17 +1,14 @@
-import React, { Suspense, useEffect, useLayoutEffect } from 'react'
+import React, { Suspense, useLayoutEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import BottomNav from './components/BottomNav/BottomNav'
 import Modals from './components/Modals'
 import * as S from './components/styles'
-import { queryToObject } from './utils/utility'
 import storage from './utils/storage'
+import { queryToObject } from './utils/utility'
 
 import Loading from './components/Loading'
-// import { bridgeProxyAdapter } from './utils/bridge'
-import ClosetBoxEditPage from './pages/closet/edit'
 import ClosetDetailPage from './pages/closet/detail'
-
-// bridgeProxyAdapter()
+import ClosetBoxEditPage from './pages/closet/edit'
 
 const loading = <Loading />
 
@@ -47,7 +44,6 @@ const AddInfo = React.lazy(() => import('./pages/item/addInfo'))
 const AddLink = React.lazy(() => import('./pages/item/addLink'))
 const ItemDetail = React.lazy(() => import('./pages/item/detail'))
 const ItemEdit = React.lazy(() => import('./pages/item/edit'))
-const ItemConfirm = React.lazy(() => import('./pages/item/confirm'))
 
 // 아이템 신고 / 수정요청
 const EditRequest = React.lazy(() => import('./pages/item/editRequest'))
@@ -121,11 +117,11 @@ const WithdrawReason = React.lazy(
 
 // 알림
 const Notifications = React.lazy(() => import('./pages/notifications/index'))
+const EditRequestDetail = React.lazy(() => import('./pages/notifications/EditRequestDetail/index'))
 
 import Modal from 'react-modal'
-import { HelmetProvider } from 'react-helmet-async'
-import MetaTag from './utils/Share/MetaTag'
 import { StyledToastContainer } from '.'
+import MetaTag from './utils/Share/MetaTag'
 
 Modal.setAppElement('#root')
 const App = () => {
@@ -270,6 +266,7 @@ const App = () => {
             <Route path='/settings/withdraw/reason' element={<WithdrawReason />} />
             {/* 알림 */}
             <Route path='/notifications' element={<Notifications />} />
+            <Route path='/notifications/editRequest/:id' element={<EditRequestDetail />} />
           </Routes>
         </Suspense>
         <Modals />

@@ -1,34 +1,24 @@
-import React from 'react'
 import BottomSheetModal from '.'
-import useModals from '../Modals/hooks/useModals'
-import { modals } from '../Modals'
 import Header from '../Header/Header'
+import { modals } from '../Modals'
+import useModals from '../Modals/hooks/useModals'
 
 import styled from '@emotion/styled'
-import { Common, Pretendard } from '../styles'
 import { useNavigate } from 'react-router-dom'
-import { ReactComponent as ShareIcon } from '../../assets/share_24.svg'
-import Share from '../../utils/Share/share'
 import { toast } from 'react-toastify'
+import Share from '../../utils/Share/share'
+import { Common, Pretendard } from '../styles'
 
 export interface UserModalProps {
   userName: string
+  userId: number
+  blockStatus: boolean
 }
 
-const UserModal = ({ userName }: UserModalProps) => {
+const UserModal = ({ userName, userId, blockStatus }: UserModalProps) => {
   const navigate = useNavigate()
-  const { closeModal } = useModals()
+  const { openModal, closeModal } = useModals()
 
-  const onClickShareUser = () => {
-    closeModal(modals.UserModal, () => {
-      navigate('/community/detail/report-question')
-    })
-  }
-  const onClickReportUser = () => {
-    closeModal(modals.UserModal, () => {
-      navigate('/user/report-user')
-    })
-  }
   // 공유하기
   const handleShare = async () => {
     const result = await Share()
@@ -39,19 +29,30 @@ const UserModal = ({ userName }: UserModalProps) => {
     }
     closeModal(modals.UserModal)
   }
+  const onClickReportUser = () => {
+    closeModal(modals.UserModal, () => {
+      navigate('/user/report-user')
+    })
+  }
+  const onBlockUser = () => {
+    closeModal(modals.UserModal, () => {
+      openModal(modals.BlockUserModal, { userId: userId, blockStatus: blockStatus })
+    })
+  }
   return (
     <BottomSheetModal>
       <ModalWrapper>
         <Header isModalHeader={true} modalCloseBtnClick={() => closeModal(modals.UserModal)} />
         <MenuWrapper>
-          <Menu onClick={handleShare}>
-            <ShareIcon stroke={Common.colors.BK}></ShareIcon>&apos;{userName}&apos;님 프로필
-            공유하기
-          </Menu>
-          <Menu onClick={onClickReportUser}>
-            <ShareIcon stroke={Common.colors.BK}></ShareIcon>
-            &apos;{userName}&apos;님 신고하기
-          </Menu>
+          {blockStatus ? (
+            <Menu onClick={onBlockUser}>&apos;{userName}&apos;님 차단 해제하기</Menu>
+          ) : (
+            <>
+              <Menu onClick={handleShare}>&apos;{userName}&apos;님 프로필 공유하기</Menu>
+              <Menu onClick={onClickReportUser}>&apos;{userName}&apos;님 신고하기</Menu>
+              <Menu onClick={onBlockUser}>&apos;{userName}&apos;님 차단하기</Menu>
+            </>
+          )}
         </MenuWrapper>
       </ModalWrapper>
     </BottomSheetModal>

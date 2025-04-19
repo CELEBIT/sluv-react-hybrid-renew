@@ -3,7 +3,6 @@ import { HomeTitle, ScrollComponentWrapper } from '../../styles'
 import ItemCard from './components/ItemCard'
 import styled from '@emotion/styled'
 import { ReactComponent as HeartArrow } from '../../../../assets/heart_arrow.svg'
-import { useNavigate } from 'react-router-dom'
 import useCurationItemQuery from '../../../../apis/item/hooks/useCurationItemQuery'
 
 const Curation = () => {

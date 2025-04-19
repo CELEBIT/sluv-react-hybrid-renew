@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { EditReportContainer, EditReportListWrapper, ReasonWrapper, Title } from './styles'
+import { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { atom, useResetRecoilState, useSetRecoilState } from 'recoil'
 import Header from '../../../components/Header/Header'
 import DisplayField from '../../../components/TextField/DisplayField/DisplayField'
 import { atomKeys } from '../../../config/atomKeys'
-import { atom, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
-import { useLocation, useNavigate } from 'react-router-dom'
 import {
   editReasonList,
   reasonList,
@@ -13,6 +12,7 @@ import {
 } from '../../../config/editReportMenu'
 import { commentState } from '../../community/detail/CommunityDetail'
 import { HeaderWrapper } from '../addInfo/styles'
+import { EditReportContainer, EditReportListWrapper, ReasonWrapper, Title } from './styles'
 
 interface EditRequestItem {
   itemId: number
@@ -48,7 +48,6 @@ const EditRequest = () => {
   const setRequestReason = useSetRecoilState<EditRequestReason>(RequestEditReasonState)
   // 페이지 렌더링용
   const setRequestDisplay = useSetRecoilState<reasonList>(RequestDisplayState)
-  const EditReportItemState = useRecoilValue(RequestEditItemState)
 
   const onClickReason = (reason: string, displayText: string) => {
     setRequestReason({ reason: reason, content: '' })

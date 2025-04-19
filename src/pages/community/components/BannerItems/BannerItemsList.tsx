@@ -1,11 +1,9 @@
 import styled from '@emotion/styled'
 import React from 'react'
 import BannerItem from './BannerItem/BannerItem'
-import useCommunityHomeQuery from '../../../../apis/question/hooks/useCommunityHomeQuery'
 import { useNavigate } from 'react-router-dom'
-import useQuestionListQuery from '../../../../apis/question/hooks/useQuestionListQuery'
 import BannerBuyItem from './BannerItem/BannerBuyItem'
-import { QuestionImg, SearchQuestionResult } from '../../../../apis/search/searchService'
+import { SearchQuestionResult } from '../../../../apis/search/searchService'
 import { InfiniteData } from '@tanstack/react-query'
 import { GetPaginationResult } from '../../../../apis/core/type'
 

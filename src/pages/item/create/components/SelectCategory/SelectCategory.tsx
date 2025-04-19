@@ -9,7 +9,7 @@ import {
 import ButtonMedium from '../../../../../components/ButtonMedium/ButtonMedium'
 import { modals } from '../../../../../components/Modals'
 import { ChipWrapper } from './styles'
-import { createItemCategoryState, itemInfoState } from '../../../../../recoil/itemInfo'
+import { createItemCategoryState } from '../../../../../recoil/itemInfo'
 
 function SelectCategory() {
   const { openModal } = useModals()

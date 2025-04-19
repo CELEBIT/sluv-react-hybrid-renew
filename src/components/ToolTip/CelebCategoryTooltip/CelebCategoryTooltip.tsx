@@ -1,8 +1,8 @@
-import React from 'react'
+import { ReactNode } from 'react'
 import { TooltipContent, TooltipWrapper, TriangleContainer } from './styles'
 
 interface CelebCategoryTooltipProps {
-  children: any
+  children: ReactNode
 }
 
 const CelebCategoryTooltip = ({ children }: CelebCategoryTooltipProps) => {

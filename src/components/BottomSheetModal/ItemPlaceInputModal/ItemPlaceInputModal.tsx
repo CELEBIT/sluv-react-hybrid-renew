@@ -12,7 +12,7 @@ import useRecentPlaceQuery from '../../../apis/place/hooks/useRecentPlaceQuery'
 import ItemPlaceChip from './ItemPlaceChip'
 import usePostPlaceQuery from '../../../apis/place/hooks/usePostPlaceQuery'
 import { createItemPlaceState } from '../../../recoil/itemInfo'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState } from 'recoil'
 
 const ItemPlaceInputModal = () => {
   const [whereDiscovery, setWhereDiscovery] = useRecoilState(createItemPlaceState)

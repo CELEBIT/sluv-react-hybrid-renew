@@ -1,10 +1,9 @@
-import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import OneButtonModal from '.'
+import storage from '../../utils/storage'
 import { modals } from '../Modals'
 import useModals from '../Modals/hooks/useModals'
 import { BtnModalContent } from '../Modals/styles'
-import { useNavigate } from 'react-router-dom'
-import storage from '../../utils/storage'
 
 const ConfirmWithdrawModal = () => {
   const { closeModal } = useModals()
@@ -42,7 +41,7 @@ const ConfirmWithdrawModal = () => {
   }
 
   return (
-    <OneButtonModal buttonName='확인' buttonOnClick={() => onClose()}>
+    <OneButtonModal buttonName='확인' buttonOnClick={onClose}>
       <BtnModalContent>
         탈퇴처리가 완료되었어요 <br />
         다음에 다시 만나요!

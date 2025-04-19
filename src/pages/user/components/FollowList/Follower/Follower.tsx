@@ -10,7 +10,6 @@ import { useObserver } from '../../../../../hooks/useObserver'
 import { ReactComponent as Spinner } from '../../../../../assets/Spinner.svg'
 
 import Flex from '../../../../../components/Flex'
-import FollowMediumButton from '../../../../../components/ButtonMedium/FollowMediumButton'
 
 const Follower = () => {
   const { id } = useParams()

@@ -3,7 +3,7 @@ import { useCreateClosetFormContext } from './hooks'
 import Header from '../../../components/Header/Header'
 
 import * as S from './styles'
-import ClosetCreateBox, { ClosetCreateBoxProps } from '../components/ClosetCreateBox'
+import ClosetCreateBox from '../components/ClosetCreateBox'
 import ColorSelector from '../components/ColorSelector'
 import useModals from '../../../components/Modals/hooks/useModals'
 import ClosetBoxCreateBottomSheetModal, {
@@ -11,7 +11,6 @@ import ClosetBoxCreateBottomSheetModal, {
 } from '../../../components/BottomSheetModal/ClosetBoxCreateBottomSheetModal'
 import ToggleSwitch from '../../../components/ToggleSwitch/ToggleSwitch'
 import { ClosetBoxService } from '../services'
-import { useLocation, useParams } from 'react-router-dom'
 import OneButtonModal from '../../../components/OneButtonModal'
 import { BtnModalContent } from '../../../components/Modals/styles'
 import S3Service from '../../../apis/s3/S3Service'

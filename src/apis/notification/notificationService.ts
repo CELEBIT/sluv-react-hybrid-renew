@@ -1,6 +1,5 @@
 import request from '../core'
 import { GetPaginationResult, ResponseType } from '../core/type'
-import dev from '../core/dev'
 import { INotification, INotificationRead } from '../../pages/notifications/components/types'
 
 export default class NotificationService {
@@ -29,7 +28,7 @@ export default class NotificationService {
   }
 
   async readNotification(notificationId: number) {
-    const data: ResponseType = await dev.patch(
+    const data: ResponseType = await request.patch(
       `${this.notificationUrl}/read?alarmId=${notificationId}`,
     )
     return data
@@ -39,7 +38,7 @@ export default class NotificationService {
   async deleteNotification(idArray: Array<number>) {
     const result = await Promise.allSettled(
       idArray.map(async (id) => {
-        const data: ResponseType = await dev.delete(`${this.notificationUrl}/${id}`)
+        const data: ResponseType = await request.delete(`${this.notificationUrl}/${id}`)
         return data
       }),
     )
@@ -48,7 +47,7 @@ export default class NotificationService {
 
   // 푸쉬알림 전체 삭제
   async deleteAllNotifications() {
-    const data: ResponseType = await dev.delete(`${this.notificationUrl}/all`)
+    const data: ResponseType = await request.delete(`${this.notificationUrl}/all`)
     return data
   }
 }

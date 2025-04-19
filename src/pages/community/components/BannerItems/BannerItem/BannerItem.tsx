@@ -1,10 +1,9 @@
 import styled from '@emotion/styled'
-import React from 'react'
+import CommunityBannerDefaultBg from '../../../../../assets/CommunityBannerDefaultBg.png'
+import { ReactComponent as DefaultProfile } from '../../../../../assets/defaultProfile_40.svg'
 import Badge from '../../../../../components/Badge/Badge'
 import UserImage from '../../../../../components/UserImage/UserImage'
 import { Common, Pretendard } from '../../../../../components/styles'
-import { ReactComponent as DefaultProfile } from '../../../../../assets/defaultProfile_40.svg'
-import CommunityBannerDefaultBg from '../../../../../assets/CommunityBannerDefaultBg.png'
 
 export interface BannerItemProps {
   qtype: string
@@ -16,12 +15,12 @@ export interface BannerItemProps {
   onClick: () => void
 }
 
-const BadgeColors = {
+export const BadgeColors = {
   Find: 'pink',
   Buy: 'green',
   How: 'yellow',
   default: 'blue',
-}
+} as const
 
 const BannerItem = ({
   qtype,

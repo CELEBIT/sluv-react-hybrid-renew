@@ -5,13 +5,8 @@ import TextArea from '../../../components/TextField/TextArea/TextArea'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import SourceInput from './components/sourceInput/SourceInput'
 import HashtagInput, { hashTagState } from './components/HashTags/HashTag'
-import {
-  createItemAddInfoState,
-  createItemSourceState,
-  itemInfoState,
-} from '../../../recoil/itemInfo'
+import { createItemAddInfoState, createItemSourceState } from '../../../recoil/itemInfo'
 import { useNavigate } from 'react-router-dom'
-import { ComponentContainer } from '../../home/styles'
 
 const AddInfo = () => {
   const navigate = useNavigate()

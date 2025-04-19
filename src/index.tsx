@@ -1,29 +1,29 @@
 // 라이브러리/패키지
-import { StrictMode, useEffect } from 'react'
-import ReactDOM from 'react-dom/client'
+import { Global } from '@emotion/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { RecoilRoot, useRecoilSnapshot } from 'recoil'
-import { Global } from '@emotion/react'
+import { StrictMode } from 'react'
+import ReactDOM from 'react-dom/client'
+import { RecoilRoot } from 'recoil'
 // 상대 경로 파일
+import styled from '@emotion/styled'
+import { HelmetProvider } from 'react-helmet-async'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import App from './App'
 import { Common, Pretendard, reset } from './components/styles'
-import 'react-toastify/dist/ReactToastify.css'
-import { HelmetProvider } from 'react-helmet-async'
-import styled from '@emotion/styled'
-import { ToastContainer } from 'react-toastify'
 
-function DebugObserver() {
-  const snapshot = useRecoilSnapshot()
-  useEffect(() => {
-    // console.debug('The following atoms were modified:')
-    for (const node of snapshot.getNodes_UNSTABLE({ isModified: true })) {
-      console.debug(node.key, snapshot.getLoadable(node))
-    }
-  }, [snapshot])
+// function DebugObserver() {
+//   const snapshot = useRecoilSnapshot()
+//   useEffect(() => {
+//     // console.debug('The following atoms were modified:')
+//     for (const node of snapshot.getNodes_UNSTABLE({ isModified: true })) {
+//       console.debug(node.key, snapshot.getLoadable(node))
+//     }
+//   }, [snapshot])
 
-  return null
-}
+//   return null
+// }
 
 export const queryClient = new QueryClient({
   defaultOptions: {

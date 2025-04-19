@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import Header from '../../components/Header/Header'
-import UserProfile from './components/UserProfile/UserProfile'
 import Tabs from '../../components/Tabs'
 import { Divider } from '../item/detail/styles'
+import UserCloset from './components/UserCloset/UserCloset'
+import UserItem from './components/UserItem/UserItem'
+import UserProfile from './components/UserProfile/UserProfile'
 import {
   ContentContainer,
   ContentTitle,
@@ -12,24 +15,22 @@ import {
   PageContainer,
   StickyTabContainer,
 } from './styles'
-import UserItem from './components/UserItem/UserItem'
-import UserCloset from './components/UserCloset/UserCloset'
-import { useNavigate, useParams } from 'react-router-dom'
 
-import { ReactComponent as Heart } from '../../assets/like_off_24.svg'
 import useUserMypageQuery from '../../apis/user/hooks/useUserMypageQuery'
+import { ReactComponent as Heart } from '../../assets/like_off_24.svg'
 import UserUpload from './components/UserUpload/UserUpload'
 
+import { useSetRecoilState } from 'recoil'
+import { ReactComponent as ShowMore } from '../../assets/add_24.svg'
 import { ReactComponent as Home } from '../../assets/home_24.svg'
 import { ReactComponent as Search } from '../../assets/search_24.svg'
-import { ReactComponent as ShowMore } from '../../assets/add_24.svg'
 import { ReactComponent as Setting } from '../../assets/setting_24.svg'
-import { ReactComponent as Upload } from '../../assets/share_24.svg'
-import { Common } from '../../components/styles'
+import EmptyState from '../../components/EmptyState'
 import { modals } from '../../components/Modals'
 import useModals from '../../components/Modals/hooks/useModals'
-import { useSetRecoilState } from 'recoil'
+import { Common } from '../../components/styles'
 import { RequestEditItemState } from '../item/editRequest'
+import { EmptyStateWrapper } from './components/FollowList/Follower/Follower'
 
 const User = () => {
   const navigate = useNavigate()
@@ -62,7 +63,12 @@ const User = () => {
         itemWriterId: data?.userInfo.id,
         itemWriterName: data?.userInfo.nickName,
       })
-      openModal(modals.UserModal, { userName: data?.userInfo.nickName || '' })
+      if (data)
+        openModal(modals.UserModal, {
+          userName: data.userInfo.nickName,
+          userId: Number(id),
+          blockStatus: data.blockStatus,
+        })
     }
     return (
       <PageContainer>
@@ -80,7 +86,18 @@ const User = () => {
           <StickyTabContainer>
             <Tabs tabList={tabList} selectedTab={currentTab} setSelectedTab={setCurrentTab}></Tabs>
           </StickyTabContainer>
-          {currentTab === 'item' ? <UserItem></UserItem> : <UserCloset></UserCloset>}
+          {data && data.blockStatus ? (
+            <EmptyStateWrapper>
+              <EmptyState
+                icon='alert'
+                title='차단된 사용자에요.'
+                subtitle='해당 사용자의 콘텐츠를 보려면
+차단을 해제해 주세요'
+              ></EmptyState>
+            </EmptyStateWrapper>
+          ) : (
+            <>{currentTab === 'item' ? <UserItem></UserItem> : <UserCloset></UserCloset>}</>
+          )}
         </ContentContainer>
       </PageContainer>
     )

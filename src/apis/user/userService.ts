@@ -1,4 +1,5 @@
 import request from '../core'
+
 import { GetPaginationResult, ResponseType } from '../core/type'
 import { RecommendItemResult } from '../item/itemService.type'
 import { SearchQuestionResult } from '../search/searchService'
@@ -45,6 +46,7 @@ export interface IUserMypageInfo {
   followStatus: true
   followerCount: number
   followingCount: number
+  blockStatus: boolean
   itemCount: number
   imgList: Array<string>
   communityCount: number
@@ -168,11 +170,16 @@ export default class UserService {
 
   // 유저 신고
   async reportUser(userId: number | undefined, reason: string, content: string) {
-    // console.log('유저 id', userId)
     const data: ResponseType = await request.post(`${this.userUrl}/${userId}/report`, {
       reason,
       content,
     })
+    return data
+  }
+
+  // 유저 차단
+  async blockUser(userId: number) {
+    const data: ResponseType = await request.post(`${this.userUrl}/${userId}/block`)
     return data
   }
 

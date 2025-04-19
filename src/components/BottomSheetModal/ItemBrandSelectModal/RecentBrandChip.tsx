@@ -3,12 +3,8 @@ import Chip from '../../Chip/Chip'
 import { RecentBrandResult } from '../../../apis/brand/brandService'
 import useRecentBrandQuery from '../../../apis/brand/hooks/useRecentBrandQuery'
 import { BrandFlag } from '../../../apis/core/type'
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
-import {
-  createItemBrandState,
-  createItemNewBrandState,
-  itemInfoState,
-} from '../../../recoil/itemInfo'
+import { useResetRecoilState, useSetRecoilState } from 'recoil'
+import { createItemBrandState, createItemNewBrandState } from '../../../recoil/itemInfo'
 
 export interface RecentBrandChipProps {
   brandData: RecentBrandResult
