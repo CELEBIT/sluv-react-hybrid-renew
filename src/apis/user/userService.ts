@@ -1,4 +1,5 @@
 import request from '../core'
+import dev from '../core/dev'
 
 import { GetPaginationResult, ResponseType } from '../core/type'
 import { RecommendItemResult } from '../item/itemService.type'
@@ -88,13 +89,13 @@ export default class UserService {
 
   // 유저의 관심셀럽 조회
   async getInterestCeleb() {
-    const data: ResponseType<Array<ICelebResult>> = await request.get(`${this.userCelebUrl}`)
+    const data: ResponseType<Array<ICelebResult>> = await dev.get(`${this.userCelebUrl}`)
     return data.result
   }
 
   // 유저의 관심셀럽 with 카테고리 조회
   async getInterestCelebWithCategory() {
-    const data: ResponseType<Array<ICategoryInterestResult>> = await request.get(
+    const data: ResponseType<Array<ICategoryInterestResult>> = await dev.get(
       `${this.userCelebUrl}/category`,
     )
     return data.result
@@ -102,15 +103,13 @@ export default class UserService {
 
   // 다른 유저의 관심셀럽 조회
   async getOtherUserInterestCeleb(userId: number) {
-    const data: ResponseType<Array<ICelebResult>> = await request.get(
-      `${this.userUrl}/${userId}/celeb`,
-    )
+    const data: ResponseType<Array<ICelebResult>> = await dev.get(`${this.userUrl}/${userId}/celeb`)
     return data.result
   }
 
   // 다른 유저의 관심셀럽 with 카테고리 조회
   async getOtherUserInterestCelebWithCategory(userId: number) {
-    const data: ResponseType<Array<ICategoryInterestResult>> = await request.get(
+    const data: ResponseType<Array<ICategoryInterestResult>> = await dev.get(
       `${this.userUrl}/${userId}/celeb/category`,
     )
     return data.result
@@ -238,7 +237,7 @@ export default class UserService {
   }
 
   async getHotSluver(celebId: number | undefined) {
-    const data: ResponseType<Array<IUserResult>> = await request.get(`${this.userUrl}/hotSluver`, {
+    const data: ResponseType<Array<IUserResult>> = await dev.get(`${this.userUrl}/hotSluver`, {
       params: {
         celebId: celebId,
       },
@@ -248,7 +247,7 @@ export default class UserService {
 
   // 유저 관심 셀럽 등록
   async postInterestCeleb(celebList: IInterestCeleb) {
-    const data: ResponseType = await request.post(`${this.userUrl}/celeb`, celebList)
+    const data: ResponseType = await dev.post(`${this.userUrl}/celeb`, celebList)
     return data
   }
 

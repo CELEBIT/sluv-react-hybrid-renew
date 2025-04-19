@@ -1,25 +1,25 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import useQuestionListQuery from '../../../../apis/question/hooks/useQuestionListQuery'
+import useInterestCelebQuery from '../../../../apis/user/hooks/useInterestCelebQuery'
+import { ReactComponent as FindHomeBanner } from '../../../../assets/CommunityEachBanner/FindBanner.svg'
+import { ReactComponent as ConnectionError } from '../../../../assets/connectionError_36.svg'
+import ButtonSmall from '../../../../components/ButtonSmall/ButtonSmall'
+import EmptyState from '../../../../components/EmptyState'
+import BlackFilter from '../../../../components/FIlter/BlackFilter'
+import Flex from '../../../../components/Flex'
+import Header from '../../../../components/Header/Header'
+import QuestionListItem from '../../../../components/QuestionListItem/QuestionListItem'
+import { ComponentContainer } from '../../../home/styles'
+import { HeaderWrapper } from '../../../user/styles'
+import WriteCommunityItemButton from '../../components/WriteCommunityItemButton/WriteCommunityItemButton'
+import { Line } from '../../detail/styles'
 import {
   CommunityPageContainer,
   EmptyStateContainer,
   QuestionListWrapper,
   TabContainer,
 } from '../../styles'
-import { HeaderWrapper } from '../../../user/styles'
-import Header from '../../../../components/Header/Header'
-import { ComponentContainer } from '../../../home/styles'
-import QuestionListItem from '../../../../components/QuestionListItem/QuestionListItem'
-import WriteCommunityItemButton from '../../components/WriteCommunityItemButton/WriteCommunityItemButton'
-import BlackFilter from '../../../../components/FIlter/BlackFilter'
-import useQuestionListQuery from '../../../../apis/question/hooks/useQuestionListQuery'
-import { Line } from '../../detail/styles'
-import { ReactComponent as FindHomeBanner } from '../../../../assets/CommunityEachBanner/FindBanner.svg'
-import { ReactComponent as ConnectionError } from '../../../../assets/connectionError_36.svg'
-import EmptyState from '../../../../components/EmptyState'
-import useInterestCelebQuery from '../../../../apis/user/hooks/useInterestCelebQuery'
-import ButtonSmall from '../../../../components/ButtonSmall/ButtonSmall'
-import { useNavigate } from 'react-router-dom'
-import Flex from '../../../../components/Flex'
 
 const FindHome = () => {
   const navigate = useNavigate()
@@ -73,11 +73,11 @@ const FindHome = () => {
           {celebList.data?.map((celeb) => {
             return (
               <BlackFilter
-                key={celeb.id}
-                isSelected={selectedTab === celeb.id}
-                onClick={() => setSelectedTab(celeb.id)}
+                key={celeb.id ?? celeb.newCelebId}
+                isSelected={celeb.id ? selectedTab === celeb.id : selectedTab === celeb.newCelebId}
+                onClick={() => setSelectedTab(celeb.id ?? celeb.newCelebId)}
               >
-                {celeb.celebNameKr}
+                {celeb.celebNameKr ?? celeb.newCelebName}
               </BlackFilter>
             )
           })}
@@ -102,7 +102,7 @@ const FindHome = () => {
                     return (
                       <>
                         <QuestionListItem
-                          key={each.id}
+                          key={each.id + each.title}
                           item={each}
                           detail={true}
                         ></QuestionListItem>

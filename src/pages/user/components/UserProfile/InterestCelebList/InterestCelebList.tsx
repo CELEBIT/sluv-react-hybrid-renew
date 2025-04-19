@@ -26,7 +26,6 @@ const InterestCelebList = () => {
   if (id) {
     const { getOtherUserInterestCeleb } = useInterestCelebQuery()
     const { data: interestCelebList } = getOtherUserInterestCeleb(Number(id))
-
     return (
       <ChipWrapper>
         {interestCelebList?.map((celeb) => {
@@ -37,7 +36,7 @@ const InterestCelebList = () => {
               active={true}
               size='small'
             >
-              {celeb.celebNameKr}
+              {celeb.celebNameKr ?? celeb.newCelebName}
             </ColorChip>
           )
         })}

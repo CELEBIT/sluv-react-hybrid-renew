@@ -1,16 +1,15 @@
-import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useRecoilValue } from 'recoil'
+import { PreviewProps } from '../..'
+import useGetHotSluverQuery from '../../../../apis/user/hooks/useGetHotSluverQuery'
+import { modals } from '../../../../components/Modals'
+import useModals from '../../../../components/Modals/hooks/useModals'
 import { HomeTitle, ScrollComponentWrapper } from '../../styles'
-import { UserCardListWrapper } from './styles'
-import UserCard from './UserCard/UserCard'
 import InterestCelebList, {
   selectedInterestCelebState,
 } from './InterestCelebList/interestCelebList'
-import useGetHotSluverQuery from '../../../../apis/user/hooks/useGetHotSluverQuery'
-import { useRecoilValue } from 'recoil'
-import { useNavigate } from 'react-router-dom'
-import { PreviewProps } from '../..'
-import useModals from '../../../../components/Modals/hooks/useModals'
-import { modals } from '../../../../components/Modals'
+import { UserCardListWrapper } from './styles'
+import UserCard from './UserCard/UserCard'
 
 const WeeklyTopUser = ({ isPreview }: PreviewProps) => {
   const { openModal } = useModals()

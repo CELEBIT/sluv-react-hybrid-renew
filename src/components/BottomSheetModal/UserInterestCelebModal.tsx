@@ -72,7 +72,7 @@ const UserInterestCelebModal = ({ id }: userIdProps) => {
                               canDelete={false}
                               active={true}
                             >
-                              {celeb.celebNameKr}
+                              {celeb.celebNameKr ?? celeb.newCelebName}
                             </ColorChip>
                           )
                         })}
