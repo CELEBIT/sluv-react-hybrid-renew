@@ -1,7 +1,7 @@
 import React from 'react'
 // import { Common } from '../styles'
-import { ChipWrapper } from './styles'
 import { ReactComponent as Delete } from '../../assets/chipDelete_24.svg'
+import { ChipWrapper } from './styles'
 
 interface ChipProps {
   text: string

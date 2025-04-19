@@ -268,7 +268,7 @@ const CommentItemPhoto = () => {
           text={`선택완료(${imgItemList?.length}/${maxItemPhotoCount}) `}
           active={imgItemList?.length > 0}
           color='BK'
-          onClick={imgItemList?.length > 0 ? () => onComplete() : ''}
+          onClick={imgItemList?.length > 0 ? onComplete : undefined}
         ></ButtonLarge>
       </BottomWrapper>
     </SelectItemOrPhotoContainer>

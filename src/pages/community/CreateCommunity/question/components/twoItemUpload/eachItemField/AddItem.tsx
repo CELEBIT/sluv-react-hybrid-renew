@@ -1,4 +1,3 @@
-import React from 'react'
 import { ReactComponent as Add } from '../../../../../../../assets/add_18.svg'
 
 import styled from '@emotion/styled'
@@ -6,7 +5,7 @@ import { Common, Pretendard } from '../../../../../../../components/styles'
 
 interface UploadPhotoProps {
   className?: string
-  onClick: any
+  onClick: () => void
 }
 
 const AddItem = ({ className, onClick }: UploadPhotoProps) => {

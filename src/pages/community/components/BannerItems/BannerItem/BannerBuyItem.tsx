@@ -1,10 +1,10 @@
 import styled from '@emotion/styled'
-import React from 'react'
+import { QuestionImg } from '../../../../../apis/search/searchService'
+import { ReactComponent as DefaultProfile } from '../../../../../assets/defaultProfile_40.svg'
 import Badge from '../../../../../components/Badge/Badge'
 import UserImage from '../../../../../components/UserImage/UserImage'
 import { Common, Pretendard } from '../../../../../components/styles'
-import { ReactComponent as DefaultProfile } from '../../../../../assets/defaultProfile_40.svg'
-import { QuestionImg } from '../../../../../apis/search/searchService'
+import { BadgeColors } from './BannerItem'
 
 export interface BannerItemProps {
   qtype: string
@@ -13,13 +13,6 @@ export interface BannerItemProps {
   userName: string
   title: string
   onClick: () => void
-}
-
-const BadgeColors = {
-  Find: 'pink',
-  Buy: 'green',
-  How: 'yellow',
-  default: 'blue',
 }
 
 const BannerBuyItem = ({

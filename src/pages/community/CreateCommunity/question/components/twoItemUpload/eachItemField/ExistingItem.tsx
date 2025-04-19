@@ -1,13 +1,12 @@
-import React from 'react'
 import styled from '@emotion/styled'
+import { ReactComponent as Delete } from '../../../../../../../assets/delete_textfield_24.svg'
 import { Common, Pretendard } from '../../../../../../../components/styles'
 import { IselectedItem } from '../../../../../../../recoil/communityInfo'
-import { ReactComponent as Delete } from '../../../../../../../assets/delete_textfield_24.svg'
 
 interface ExistingItemProps {
   item: IselectedItem
   className?: string
-  onDelete: any
+  onDelete: () => void
 }
 
 const ExistingItem = ({ item, className, onDelete }: ExistingItemProps) => {

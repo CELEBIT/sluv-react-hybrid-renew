@@ -1,17 +1,14 @@
-import React from 'react'
-import { SmallWrapper } from './styles'
 import { ReactComponent as Add } from '../../assets/add_13.svg'
 import { ReactComponent as Check } from '../../assets/check_13.svg'
 import { Common } from '../styles'
+import { SmallWrapper } from './styles'
 
 interface ButtonSmallProps {
   text: string
   icon?: boolean
-  iconName?: string
+  iconName?: 'add' | 'check'
   active?: boolean
-  // iconName: add or check
-  type: string
-  //  type 상태는 pri or sec
+  type: 'pri' | 'sec'
   onClick: any
 }
 
