@@ -1,5 +1,5 @@
-import React from 'react'
-import { TooltipWrapper, TooltipContainer, Arrow } from './styles'
+import { ReactNode } from 'react'
+import { Arrow, TooltipContainer, TooltipWrapper } from './styles'
 
 interface ITooltipProps {
   left?: string
@@ -8,7 +8,7 @@ interface ITooltipProps {
   bottom?: string
   arrowPosition: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
   isVisible: boolean
-  children?: any
+  children?: ReactNode
 }
 
 const ToolTip = ({

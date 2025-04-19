@@ -4,7 +4,7 @@ interface HalfButtonProps {
   text: string
   type: 'confirm' | 'cancel'
   isbottom?: boolean
-  onClick: any
+  onClick: <T>(args: T) => void
 }
 
 const ButtonHalf = ({ text, type, isbottom, onClick }: HalfButtonProps) => {

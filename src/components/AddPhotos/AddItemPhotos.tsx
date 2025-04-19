@@ -1,12 +1,12 @@
-import React, { useCallback } from 'react'
+import { useCallback } from 'react'
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
+import { useLocation } from 'react-router-dom'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import { AddPhotosWrapper } from './styles'
+import { commentState } from '../../pages/community/detail/CommunityDetail'
+import { communityItemState, imgItemListState } from '../../recoil/communityInfo'
 import AddButton from './AddButton'
 import Photo from './Photo'
-import { communityItemState, imgItemListState } from '../../recoil/communityInfo'
-import { commentState } from '../../pages/community/detail/CommunityDetail'
-import { useLocation } from 'react-router-dom'
+import { AddPhotosWrapper } from './styles'
 interface IAddPhotosProps {
   onClick?: any
   size?: number
