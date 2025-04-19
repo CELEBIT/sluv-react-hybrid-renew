@@ -1,12 +1,12 @@
-import React, { memo } from 'react'
-import { HeaderWrapper, Title } from './styles'
-import { ReactComponent as ArrowBack } from '../../assets/arrow_back_20.svg'
-import { ReactComponent as Close } from '../../assets/close_20.svg'
-import { ReactComponent as Logo } from '../../assets/logo.svg'
-import { ReactComponent as BellOn } from '../../assets/bell_on_24.svg'
-import { ReactComponent as BellOff } from '../../assets/bell_off_24.svg'
+import { memo, ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useNotificationQuery from '../../apis/notification/hooks/useNotificationQuery'
+import { ReactComponent as ArrowBack } from '../../assets/arrow_back_20.svg'
+import { ReactComponent as BellOff } from '../../assets/bell_off_24.svg'
+import { ReactComponent as BellOn } from '../../assets/bell_on_24.svg'
+import { ReactComponent as Close } from '../../assets/close_20.svg'
+import { ReactComponent as Logo } from '../../assets/logo.svg'
+import { HeaderWrapper, Title } from './styles'
 
 interface HeaderProps {
   isMainHeader?: boolean
@@ -14,7 +14,7 @@ interface HeaderProps {
   hasNotification?: boolean
   hasArrow?: boolean
   title?: string
-  children?: any
+  children?: ReactNode
   backBtnClick?: () => void
   modalCloseBtnClick?: () => void
 }
