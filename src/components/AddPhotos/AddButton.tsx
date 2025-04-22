@@ -1,13 +1,13 @@
-import React from 'react'
 import styled from '@emotion/styled'
-import { Common, Pretendard } from '../styles'
+import { ReactNode } from 'react'
 import { ReactComponent as Add } from '../../assets/add_18.svg'
+import { Common, Pretendard } from '../styles'
 
 type AddButtonProps = {
   itemCnt: number
-  onClick: any
+  onClick: () => void
   size?: number
-  children?: any
+  children?: ReactNode
 }
 
 const AddButton = ({ itemCnt, onClick, size, children }: AddButtonProps) => {

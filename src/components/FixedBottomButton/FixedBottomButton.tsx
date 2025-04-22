@@ -13,11 +13,7 @@ interface FixedBottomButtonProps {
 function FixedBottomButton({ label, onClick, disabled }: FixedBottomButtonProps) {
   return (
     <Container>
-      <ButtonLarge
-        text={label}
-        active={!disabled}
-        onClick={disabled ? null : onClick}
-      ></ButtonLarge>
+      <ButtonLarge text={label} active={!disabled} onClick={onClick}></ButtonLarge>
     </Container>
   )
 }

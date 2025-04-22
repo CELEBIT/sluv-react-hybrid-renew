@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from '@emotion/styled'
 import Photo from '../AddPhotos/Photo'
 import { Common, Pretendard } from '../styles'
@@ -10,7 +9,7 @@ export interface IItem {
   itemName: string
   celebName: string
   size?: number
-  onClick: any
+  onClick: () => void
   borderRadius: number
   scrapStatus?: boolean
   isSelected?: boolean

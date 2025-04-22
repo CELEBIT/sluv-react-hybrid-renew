@@ -10,7 +10,7 @@ import { ReactComponent as ViewSmallOff } from '../../assets/view_small_off_24.s
 import { ReactComponent as ViewSmallOn } from '../../assets/view_small_on_24.svg'
 import { useObserver } from '../../hooks/useObserver'
 import ClosetInnerItem from '../../pages/closet/components/ClosetInnerItem'
-import EmptyState from '../EmptyState'
+import EmptyState, { IconType } from '../EmptyState'
 import { EmptyStateContainer } from '../EmptyState/styles'
 import Item from '../RecommendedItem/Item'
 import {
@@ -26,7 +26,7 @@ interface ItemListGridProps {
   closetData?: InfiniteData<GetClosetRes>
   context?: any
   canChangeView: boolean
-  emptyIcon?: string
+  emptyIcon?: IconType
   emptyTitle?: string
   emptySubTitle?: string
   isFetching?: boolean

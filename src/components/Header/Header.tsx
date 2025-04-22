@@ -1,4 +1,4 @@
-import { memo } from 'react'
+import { memo, ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useNotificationQuery from '../../apis/notification/hooks/useNotificationQuery'
 import { ReactComponent as ArrowBack } from '../../assets/arrow_back_20.svg'
@@ -14,7 +14,7 @@ interface HeaderProps {
   hasNotification?: boolean
   hasArrow?: boolean
   title?: string
-  children?: any
+  children?: ReactNode
   backBtnClick?: () => void
   modalCloseBtnClick?: () => void
 }

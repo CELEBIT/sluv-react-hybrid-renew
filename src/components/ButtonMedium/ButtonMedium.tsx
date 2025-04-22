@@ -1,12 +1,12 @@
-import React, { useState, useEffect, forwardRef } from 'react'
-import { MediumWrapper } from './styles'
+import { forwardRef, useEffect, useState } from 'react'
 import { ReactComponent as Search } from '../../assets/search_18.svg'
 import { Common } from '../styles'
+import { MediumWrapper } from './styles'
 
 interface ButtonMediumProps {
   text: string
   icon?: boolean
-  type: string
+  type: 'pri' | 'sec' | 'disable'
   active?: boolean
   error?: boolean
   onClick?: () => void

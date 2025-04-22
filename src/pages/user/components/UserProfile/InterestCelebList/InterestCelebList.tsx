@@ -1,11 +1,11 @@
 import { useParams } from 'react-router-dom'
 import useInterestCelebQuery from '../../../../../apis/user/hooks/useInterestCelebQuery'
-import ColorChip from '../../../../../components/Chip/ColorChip'
+import ColorChip, { ColorType } from '../../../../../components/Chip/ColorChip'
 import { ChipWrapper } from '../styles'
 
 const InterestCelebList = () => {
   const { id } = useParams()
-  const getColorForCategory = (category: string | undefined) => {
+  const getColorForCategory = (category: string | undefined): ColorType => {
     switch (category) {
       case '가수':
         return 'pink'
@@ -20,7 +20,7 @@ const InterestCelebList = () => {
       case '추가된 셀럽':
         return 'purple'
       default:
-        return ''
+        return 'gray'
     }
   }
   if (id) {

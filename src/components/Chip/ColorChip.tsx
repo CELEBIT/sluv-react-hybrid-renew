@@ -1,17 +1,27 @@
-import React, { useEffect, useState } from 'react'
-// import { Common } from '../styles'
+import { ReactNode } from 'react'
 import { ReactComponent as Delete } from '../../assets/delete_18.svg'
 import { Common } from '../styles'
 import { ColorChipWrapper } from './styles'
 
+export type ColorType = 'pink' | 'orange' | 'yellow' | 'green' | 'blue' | 'gray'
+
 interface ColorChipProps {
-  children: React.ReactNode
-  color: string
+  children: ReactNode
+  color: ColorType
   active: boolean
   size?: string
   canDelete?: boolean
   onClick?: () => void
   onDelete?: () => void
+}
+
+const colorMap: Record<ColorType, string> = {
+  pink: Common.colors.PK,
+  orange: Common.colors.ORG,
+  yellow: Common.colors.YL,
+  green: Common.colors.GRN,
+  blue: Common.colors.BL,
+  gray: Common.colors.GR100,
 }
 
 const ColorChip = ({
@@ -27,32 +37,15 @@ const ColorChip = ({
     event.stopPropagation()
     onDelete?.()
   }
-  const [chipColor, setChipColor] = useState('black')
-  useEffect(() => {
-    if (color === 'pink') {
-      setChipColor(Common.colors.PK)
-    } else if (color === 'orange') {
-      setChipColor(Common.colors.ORG)
-    } else if (color === 'yellow') {
-      setChipColor(Common.colors.YL)
-    } else if (color === 'green') {
-      setChipColor(Common.colors.GRN)
-    } else if (color === 'blue') {
-      setChipColor(Common.colors.BL)
-    } else if (color === 'purple') {
-      setChipColor(Common.colors.PRI)
-    }
-  })
+  const chipColor = colorMap[color]
 
   return (
     <ColorChipWrapper active={active} canDelete={canDelete} color={color} size={size}>
       <p onClick={onClick}>{children}</p>
-      {canDelete ? (
+      {canDelete && (
         <div onClick={handleDeleteClick}>
           <Delete stroke={chipColor} />
         </div>
-      ) : (
-        <></>
       )}
     </ColorChipWrapper>
   )

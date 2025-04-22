@@ -1,11 +1,11 @@
-import React, { forwardRef } from 'react'
+import { forwardRef, ReactNode } from 'react'
 
+import styled from '@emotion/styled'
 import { ReactComponent as Check } from '../../assets/check_13.svg'
 import { Common, Pretendard } from '../styles'
-import styled from '@emotion/styled'
 
 interface ButtonMediumProps {
-  children: any
+  children: ReactNode
   icon?: boolean
   type?: string
   active: boolean

@@ -1,4 +1,3 @@
-import React from 'react'
 import OneButtonModal from '.'
 import { modals } from '../Modals'
 import useModals from '../Modals/hooks/useModals'
