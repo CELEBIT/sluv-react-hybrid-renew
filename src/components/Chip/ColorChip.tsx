@@ -3,7 +3,7 @@ import { ReactComponent as Delete } from '../../assets/delete_18.svg'
 import { Common } from '../styles'
 import { ColorChipWrapper } from './styles'
 
-export type ColorType = 'pink' | 'orange' | 'yellow' | 'green' | 'blue' | 'gray'
+export type ColorType = 'pink' | 'orange' | 'yellow' | 'green' | 'blue' | 'purple' | 'gray'
 
 interface ColorChipProps {
   children: ReactNode
@@ -21,6 +21,7 @@ const colorMap: Record<ColorType, string> = {
   yellow: Common.colors.YL,
   green: Common.colors.GRN,
   blue: Common.colors.BL,
+  purple: Common.colors.PRI,
   gray: Common.colors.GR100,
 }
 
