@@ -1,7 +1,7 @@
 import request from '../core'
+import dev from '../core/dev'
 import { GetPaginationResult, ResponseType } from '../core/type'
 import { CommentResult, Img, ItemPost } from './commentService.type'
-import dev from '../core/dev'
 
 export default class CommentService {
   commentUrl: string
@@ -40,13 +40,6 @@ export default class CommentService {
   // 댓글 단건 조회
   async getComment(commentId: number) {
     const data: ResponseType<CommentResult> = await request.get(
-      `${this.commentUrl}/detail/${commentId}`,
-    )
-    return data.result
-  }
-  // 댓글 단건 조회
-  async getTestComment(commentId: number) {
-    const data: ResponseType<CommentResult> = await dev.get(
       `${this.commentUrl}/detail/${commentId}`,
     )
     return data.result

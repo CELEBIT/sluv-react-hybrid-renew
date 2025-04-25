@@ -10,6 +10,7 @@ import BlackFilter from '../../../../components/FIlter/BlackFilter'
 import Flex from '../../../../components/Flex'
 import Header from '../../../../components/Header/Header'
 import QuestionListItem from '../../../../components/QuestionListItem/QuestionListItem'
+import { TCeleb } from '../../../home/components/WeeklyTopUser/InterestCelebList/interestCelebList'
 import { ComponentContainer } from '../../../home/styles'
 import { HeaderWrapper } from '../../../user/styles'
 import WriteCommunityItemButton from '../../components/WriteCommunityItemButton/WriteCommunityItemButton'
@@ -26,13 +27,16 @@ const FindHome = () => {
   const ComponentContainerRef = useRef<HTMLDivElement>(null)
   const stickyRef = useRef<HTMLDivElement>(null)
   const [isStickyAtTop, setIsStickyAtTop] = useState(false)
-  const [selectedTab, setSelectedTab] = useState<number>(0)
+  const [selectedTab, setSelectedTab] = useState<TCeleb>({
+    celebId: 0,
+    isNewCeleb: false,
+  })
 
   const { getInterestCeleb } = useInterestCelebQuery()
   const celebList = getInterestCeleb
 
   const { getQuestionFindList } = useQuestionListQuery()
-  const { data, status } = getQuestionFindList(selectedTab ? selectedTab : undefined)
+  const { data, status } = getQuestionFindList(selectedTab.celebId ? selectedTab : undefined)
   const tempData = data?.pages[0].content
 
   useEffect(() => {
@@ -67,17 +71,27 @@ const FindHome = () => {
           }}
         ></FindHomeBanner>
         <TabContainer ref={stickyRef}>
-          <BlackFilter isSelected={selectedTab === 0} onClick={() => setSelectedTab(0)}>
+          <BlackFilter
+            isSelected={selectedTab.celebId === 0}
+            onClick={() =>
+              setSelectedTab({
+                celebId: 0,
+                isNewCeleb: false,
+              })
+            }
+          >
             전체
           </BlackFilter>
           {celebList.data?.map((celeb) => {
             return (
               <BlackFilter
-                key={celeb.id ?? celeb.newCelebId}
-                isSelected={celeb.id ? selectedTab === celeb.id : selectedTab === celeb.newCelebId}
-                onClick={() => setSelectedTab(celeb.id ?? celeb.newCelebId)}
+                key={celeb.id + celeb?.isNewCeleb.toString()}
+                isSelected={
+                  selectedTab.celebId === celeb.id && selectedTab.isNewCeleb === celeb.isNewCeleb
+                }
+                onClick={() => setSelectedTab({ celebId: celeb.id, isNewCeleb: celeb.isNewCeleb })}
               >
-                {celeb.celebNameKr ?? celeb.newCelebName}
+                {celeb.celebNameKr}
               </BlackFilter>
             )
           })}

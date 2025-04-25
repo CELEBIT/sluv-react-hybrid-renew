@@ -301,8 +301,8 @@ const SelectInterestCeleb = ({
               .map((celeb) => {
                 const isAddedCeleb = celeb.celebCategory === '추가된 셀럽'
                 return {
-                  celebId: isAddedCeleb ? celeb.newCelebId ?? 0 : celeb.id ?? 0,
-                  celebName: isAddedCeleb ? celeb.newCelebName ?? '' : celeb.celebNameKr ?? '',
+                  celebId: isAddedCeleb ? celeb.id : 0,
+                  celebName: isAddedCeleb ? celeb.celebNameKr : '',
                 }
               })
 

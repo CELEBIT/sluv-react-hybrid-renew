@@ -2,14 +2,13 @@ import styled from '@emotion/styled'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import BottomSheetModal from '..'
 import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
-import { ICelebResult } from '../../../apis/user/userService'
 import { createItemCelebState } from '../../../recoil/itemInfo'
 import ButtonLarge from '../../ButtonLarge/ButtonLarge'
 import ButtonMedium from '../../ButtonMedium/ButtonMedium'
 import Header from '../../Header/Header'
 import { modals } from '../../Modals'
 import useModals from '../../Modals/hooks/useModals'
-import { selectedCelebState, selectedGroupState } from '../../SelectCeleb/SelectCeleb'
+import { CelebData, selectedCelebState, selectedGroupState } from '../../SelectCeleb/SelectCeleb'
 import { Common, Pretendard } from '../../styles'
 import { ChipWrapper } from '../ItemBrandSelectModal/ItemBrandSelectModal'
 import { ButtonWrapper } from '../ItemPlaceInputModal/ItemPlaceInputModal'
@@ -45,7 +44,7 @@ const ItemCelebSelectModal = () => {
       },
     )
   }
-  const onClickMember = (member: ICelebResult) => {
+  const onClickMember = (member: CelebData) => {
     setSelectedCeleb(member)
   }
   return (

@@ -1,8 +1,9 @@
 import { UseInfiniteQueryResult, useInfiniteQuery } from '@tanstack/react-query'
-import QuestionService from '../questionService'
 import { queryKeys } from '../../../config/queryKeys'
+import { TCeleb } from '../../../pages/home/components/WeeklyTopUser/InterestCelebList/interestCelebList'
 import { GetPaginationResult } from '../../core/type'
 import { BuyHomeResult, SearchQuestionResult } from '../../search/searchService'
+import QuestionService from '../questionService'
 
 export interface IVote {
   questionId: number
@@ -45,11 +46,11 @@ const useQuestionListQuery = () => {
   }
 
   const getQuestionFindList = (
-    celebId?: number,
+    celebData?: TCeleb,
   ): UseInfiniteQueryResult<GetPaginationResult<SearchQuestionResult>, any> => {
     return useInfiniteQuery(
-      queryKeys.getQuestionFindList(celebId),
-      ({ pageParam = 0 }) => question.getQuestionFindList(pageParam, celebId),
+      queryKeys.getQuestionFindList(celebData),
+      ({ pageParam = 0 }) => question.getQuestionFindList(pageParam, celebData),
       {
         getNextPageParam: (lastPage) => {
           if (lastPage?.hasNext) return lastPage.page + 1

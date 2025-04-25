@@ -16,7 +16,7 @@ const WeeklyTopUser = ({ isPreview }: PreviewProps) => {
   const selectedInterestCeleb = useRecoilValue(selectedInterestCelebState)
   const {
     getHotSluver: { data: userList },
-  } = useGetHotSluverQuery(selectedInterestCeleb ? selectedInterestCeleb : undefined)
+  } = useGetHotSluverQuery(selectedInterestCeleb.celebId ? selectedInterestCeleb : undefined)
   const navigate = useNavigate()
 
   const onClickUser = (isMine: boolean, userId: number) => {

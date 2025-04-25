@@ -4,9 +4,14 @@ import BlackFilter from '../../../../../components/FIlter/BlackFilter'
 import { atomKeys } from '../../../../../config/atomKeys'
 import { FilterListWrapper } from '../styles'
 
-export const selectedInterestCelebState = atom<number>({
+export type TCeleb = {
+  celebId: number
+  isNewCeleb: boolean
+}
+
+export const selectedInterestCelebState = atom<TCeleb>({
   key: atomKeys.selectedInterestCelebState,
-  default: 0,
+  default: { celebId: 0, isNewCeleb: false },
 })
 
 const InterestCelebList = () => {
@@ -16,12 +21,11 @@ const InterestCelebList = () => {
   const {
     getInterestCeleb: { data: interestCelebList },
   } = useInterestCelebQuery()
-  console.log(interestCelebList)
   return (
     <FilterListWrapper>
       <BlackFilter
-        isSelected={selectedInterestCeleb === 0}
-        onClick={() => setselectedInterestCeleb(0)}
+        isSelected={selectedInterestCeleb.celebId === 0}
+        onClick={() => setselectedInterestCeleb({ celebId: 0, isNewCeleb: false })}
       >
         전체
       </BlackFilter>
@@ -29,15 +33,16 @@ const InterestCelebList = () => {
         interestCelebList?.map((celeb) => {
           return (
             <BlackFilter
-              key={celeb.id ? 'interest' + celeb.id : 'interest' + celeb.newCelebId}
+              key={celeb.id + celeb.isNewCeleb.toString()}
               isSelected={
-                celeb.id
-                  ? selectedInterestCeleb === celeb.id
-                  : selectedInterestCeleb === celeb.newCelebId
+                celeb.id === selectedInterestCeleb.celebId &&
+                celeb.isNewCeleb === selectedInterestCeleb.isNewCeleb
               }
-              onClick={() => setselectedInterestCeleb(celeb.id ?? celeb.newCelebId)}
+              onClick={() =>
+                setselectedInterestCeleb({ celebId: celeb.id, isNewCeleb: celeb.isNewCeleb })
+              }
             >
-              {celeb.celebNameKr ?? celeb.newCelebName}
+              {celeb.celebNameKr}
             </BlackFilter>
           )
         })}

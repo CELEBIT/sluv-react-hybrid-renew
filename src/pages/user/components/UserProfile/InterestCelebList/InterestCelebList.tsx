@@ -31,12 +31,12 @@ const InterestCelebList = () => {
         {interestCelebList?.map((celeb) => {
           return (
             <ColorChip
-              key={celeb.id ?? celeb.newCelebId}
+              key={celeb.id + celeb.isNewCeleb.toString()}
               color={getColorForCategory(celeb.celebCategory)}
               active={true}
               size='small'
             >
-              {celeb.celebNameKr ?? celeb.newCelebName}
+              {celeb.celebNameKr}
             </ColorChip>
           )
         })}
@@ -52,13 +52,13 @@ const InterestCelebList = () => {
         {interestCelebList?.map((celeb) => {
           return (
             <ColorChip
-              key={celeb.id ?? celeb.newCelebId}
+              key={celeb.id + celeb.isNewCeleb.toString()}
               color={getColorForCategory(celeb.celebCategory)}
               active={true}
               size='small'
               canDelete={false}
             >
-              {celeb.celebNameKr ?? celeb.newCelebName}
+              {celeb.celebNameKr}
             </ColorChip>
           )
         })}

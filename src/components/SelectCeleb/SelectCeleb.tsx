@@ -141,6 +141,7 @@ const SelectCeleb = () => {
           {
             id: newCeleb.id,
             celebNameKr: newCeleb.newCelebName,
+            isNewCeleb: true,
           },
           ...(prevList || []),
         ])
@@ -163,6 +164,7 @@ const SelectCeleb = () => {
           {
             id: celebInfoInItem?.soloId,
             celebNameKr: celebInfoInItem?.soloName ?? '',
+            isNewCeleb: false,
           },
           ...newList,
         ])
@@ -179,6 +181,7 @@ const SelectCeleb = () => {
           {
             id: celebInfoInItem?.soloId,
             celebNameKr: celebInfoInItem?.groupName + ' ' + celebInfoInItem?.soloName,
+            isNewCeleb: false,
           },
           ...newList,
         ])

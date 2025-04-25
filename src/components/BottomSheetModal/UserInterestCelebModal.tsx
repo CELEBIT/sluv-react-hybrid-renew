@@ -72,7 +72,7 @@ const UserInterestCelebModal = ({ id }: userIdProps) => {
                               canDelete={false}
                               active={true}
                             >
-                              {celeb.celebNameKr ?? celeb.newCelebName}
+                              {celeb.celebNameKr}
                             </ColorChip>
                           )
                         })}
@@ -114,16 +114,14 @@ const UserInterestCelebModal = ({ id }: userIdProps) => {
                       <CategoryTitle>{Category.categoryName}</CategoryTitle>
                       <CelebListWrapper id='celebListWrapper'>
                         {Category.celebList.map((celeb) => {
-                          const celebName = celeb.newCelebName ?? celeb.celebNameKr
-
                           return (
                             <ColorChip
-                              key={celeb.id ?? celeb.newCelebName + celebName}
+                              key={celeb.id + celeb.celebNameKr}
                               color={colorList[index]}
                               canDelete={false}
                               active={true}
                             >
-                              {celebName}
+                              {celeb.celebNameKr}
                             </ColorChip>
                           )
                         })}
