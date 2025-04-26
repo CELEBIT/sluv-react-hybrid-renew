@@ -31,9 +31,6 @@ const useSearchCommentQuery = () => {
     return useQuery(queryKeys.comment(questionId), () => comment.getCommentList(questionId))
   }
 
-  const getTestCommentList = (questionId: number) => {
-    return useQuery(queryKeys.comment(questionId), () => comment.getTestCommentList(questionId))
-  }
   const getComment = (commentId: number) => {
     return useQuery(queryKeys.commentDetail(commentId), () => comment.getComment(commentId))
   }
@@ -75,7 +72,6 @@ const useSearchCommentQuery = () => {
 
   return {
     getCommentList,
-    getTestCommentList,
     getComment,
     addComment,
     editComment,

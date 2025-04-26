@@ -1,6 +1,5 @@
 import { TCeleb } from '../../pages/home/components/WeeklyTopUser/InterestCelebList/interestCelebList'
 import request from '../core'
-import dev from '../core/dev'
 
 import { GetPaginationResult, ResponseType } from '../core/type'
 import { RecommendItemResult } from '../item/itemService.type'
@@ -89,7 +88,7 @@ export default class UserService {
 
   // 유저의 관심셀럽 조회
   async getInterestCeleb() {
-    const data: ResponseType<Array<ICelebResult>> = await dev.get(`${this.userCelebUrl}`)
+    const data: ResponseType<Array<ICelebResult>> = await request.get(`${this.userCelebUrl}`)
     return data.result
   }
 
@@ -260,7 +259,7 @@ export default class UserService {
     return data.result
   }
 
-  // 현재 유저 마이페이지 조회
+  // 다른른 유저 마이페이지 조회
   async getOtherUserMypageInfo(userId: number) {
     const data: ResponseType<IUserMypageInfo> = await request.get(
       `${this.userUrl}/${userId}/mypage`,

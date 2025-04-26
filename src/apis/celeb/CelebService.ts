@@ -1,5 +1,4 @@
 import request from '../core'
-import dev from '../core/dev'
 import { GetPaginationResult, ResponseType } from '../core/type'
 
 export interface IHotCeleb {
@@ -77,7 +76,7 @@ export default class CelebService {
   }
   // 유저가 최근 선택한 셀럽 등록
   async postRecentCeleb(celebId?: number | null, newCelebId?: number | null) {
-    const data: ResponseType = await dev.post(`${this.celebUrl}/recent`, {
+    const data: ResponseType = await request.post(`${this.celebUrl}/recent`, {
       celebId: celebId,
       newCelebId: newCelebId,
     })

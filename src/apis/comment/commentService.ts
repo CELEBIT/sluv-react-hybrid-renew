@@ -1,5 +1,4 @@
 import request from '../core'
-import dev from '../core/dev'
 import { GetPaginationResult, ResponseType } from '../core/type'
 import { CommentResult, Img, ItemPost } from './commentService.type'
 
@@ -13,19 +12,6 @@ export default class CommentService {
   // 질문 게시글 댓글 조회
   async getCommentList(questionId: number) {
     const data: ResponseType<GetPaginationResult<CommentResult>> = await request.get(
-      `${this.commentUrl}/${questionId}`,
-      {
-        params: {
-          page: 0,
-          size: 20,
-        },
-      },
-    )
-    return data.result?.content
-  }
-
-  async getTestCommentList(questionId: number) {
-    const data: ResponseType<GetPaginationResult<CommentResult>> = await dev.get(
       `${this.commentUrl}/${questionId}`,
       {
         params: {
