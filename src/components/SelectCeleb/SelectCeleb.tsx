@@ -13,9 +13,11 @@ import { SelectCelebWrapper } from './styles'
 export interface CelebData {
   id: number
   celebNameKr: string
+  isNewCeleb: boolean
   subCelebList?: {
     id: number
     celebNameKr: string
+    isNewCeleb: boolean
   }[]
 }
 
@@ -26,12 +28,12 @@ export interface NewCeleb {
 
 export const selectedGroupState = atom<CelebData>({
   key: atomKeys.selectedGroupState,
-  default: { id: 0, celebNameKr: '' },
+  default: { id: 0, celebNameKr: '', isNewCeleb: false },
 })
 
 export const selectedCelebState = atom<CelebData>({
   key: atomKeys.selectedCelebState,
-  default: { id: 0, celebNameKr: '' },
+  default: { id: 0, celebNameKr: '', isNewCeleb: false },
 })
 
 const SelectCeleb = () => {
@@ -46,6 +48,7 @@ const SelectCeleb = () => {
   } = useRecentCelebQuery()
 
   const [celebInfoInItem, setCelebInfoInItem] = useRecoilState(createItemCelebState)
+  console.log('celebInfoInItem', celebInfoInItem)
 
   const [newCeleb, setNewCeleb] = useRecoilState(createItemNewCelebState)
   const resetNewCeleb = useResetRecoilState(createItemNewCelebState)
@@ -74,10 +77,12 @@ const SelectCeleb = () => {
         setSelectedGroup({
           id: celebInfoInItem?.groupId ?? 0,
           celebNameKr: celebInfoInItem?.groupName ?? '',
+          isNewCeleb: celebInfoInItem?.isNewCeleb ?? false,
         })
         setSelectedCeleb({
           id: celebInfoInItem?.soloId ?? 0,
           celebNameKr: celebInfoInItem?.soloName ?? '',
+          isNewCeleb: celebInfoInItem?.isNewCeleb ?? false,
         })
       },
     })
@@ -96,6 +101,7 @@ const SelectCeleb = () => {
         groupName: null,
         soloId: null,
         soloName: null,
+        isNewCeleb: false,
       })
       resetSelectedCeleb()
       resetSelectedGroup()
@@ -108,10 +114,12 @@ const SelectCeleb = () => {
             setSelectedGroup({
               id: celebInfoInItem?.groupId ?? 0,
               celebNameKr: celebInfoInItem?.groupName ?? '',
+              isNewCeleb: celebInfoInItem?.isNewCeleb ?? false,
             })
             setSelectedCeleb({
               id: celebInfoInItem?.soloId ?? 0,
               celebNameKr: celebInfoInItem?.soloName ?? '',
+              isNewCeleb: celebInfoInItem?.isNewCeleb ?? false,
             })
           },
         })
@@ -120,14 +128,20 @@ const SelectCeleb = () => {
         setCelebInfoInItem({
           soloId: celebResult.id,
           soloName: celebResult.celebNameKr,
+          isNewCeleb: celebResult.isNewCeleb,
           groupId: null,
           groupName: null,
         })
         setSelectedCeleb(celebResult)
-        // resetSelectedGroup()
-        mutateByPostRecentCeleb({ celebId: celebResult.id, newCelebId: null })
+
+        if (celebResult.isNewCeleb) {
+          mutateByPostRecentCeleb({ celebId: null, newCelebId: celebResult.id })
+        } else {
+          mutateByPostRecentCeleb({ celebId: celebResult.id, newCelebId: null })
+        }
       }
     }
+    console.log(celebInfoInItem)
   }
 
   useEffect(() => {
@@ -137,13 +151,14 @@ const SelectCeleb = () => {
     } else if (!celebInfoInItem?.groupId && !celebInfoInItem?.soloId) {
       // Celeb 선택 전
       if (newCeleb) {
-        setDisplayList((prevList) => [
+        const newList = interestCelebList?.filter((celeb) => celeb.id !== newCeleb?.id)
+        setDisplayList(() => [
           {
             id: newCeleb.id,
             celebNameKr: newCeleb.newCelebName,
             isNewCeleb: true,
           },
-          ...(prevList || []),
+          ...(newList || []),
         ])
         return
       } else {

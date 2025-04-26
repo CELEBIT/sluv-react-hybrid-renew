@@ -38,6 +38,7 @@ const ItemCelebSelectModal = () => {
               groupName: selectedGroup.celebNameKr,
               soloId: selectedCeleb.id,
               soloName: selectedCeleb.celebNameKr,
+              isNewCeleb: selectedCeleb.isNewCeleb,
             })
           })
         },

@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react'
 import styled from '@emotion/styled'
-import { Common, Pretendard } from '../../styles'
+import { useEffect } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { selectedCelebState, selectedGroupState } from '../../SelectCeleb/SelectCeleb'
-import { MemberWrapper } from './ItemCelebSelectModal'
-import ButtonMedium from '../../ButtonMedium/ButtonMedium'
-import { ICelebResult } from '../../../apis/user/userService'
 import useInterestCelebQuery from '../../../apis/user/hooks/useInterestCelebQuery'
+import { ICelebResult } from '../../../apis/user/userService'
 import { createItemCelebState } from '../../../recoil/itemInfo'
+import ButtonMedium from '../../ButtonMedium/ButtonMedium'
+import { selectedCelebState, selectedGroupState } from '../../SelectCeleb/SelectCeleb'
+import { Common, Pretendard } from '../../styles'
+import { MemberWrapper } from './ItemCelebSelectModal'
 
 const MyCeleb = () => {
   const {
@@ -25,10 +25,22 @@ const MyCeleb = () => {
       celebInfoInItem?.soloId &&
       celebInfoInItem?.soloName
     ) {
-      setSelectedGroup({ id: celebInfoInItem?.groupId, celebNameKr: celebInfoInItem?.groupName })
-      setSelectedCeleb({ id: celebInfoInItem?.soloId, celebNameKr: celebInfoInItem?.soloName })
+      setSelectedGroup({
+        id: celebInfoInItem?.groupId,
+        celebNameKr: celebInfoInItem?.groupName,
+        isNewCeleb: celebInfoInItem.isNewCeleb,
+      })
+      setSelectedCeleb({
+        id: celebInfoInItem?.soloId,
+        celebNameKr: celebInfoInItem?.soloName,
+        isNewCeleb: celebInfoInItem.isNewCeleb,
+      })
     } else if (celebInfoInItem?.soloId && celebInfoInItem?.soloName) {
-      setSelectedCeleb({ id: celebInfoInItem?.soloId, celebNameKr: celebInfoInItem?.soloName })
+      setSelectedCeleb({
+        id: celebInfoInItem?.soloId,
+        celebNameKr: celebInfoInItem?.soloName,
+        isNewCeleb: celebInfoInItem.isNewCeleb,
+      })
     }
   }, [])
 
@@ -36,11 +48,16 @@ const MyCeleb = () => {
     if (celebResult.subCelebList) {
       // 그룹
       setSelectedGroup(celebResult)
-      setSelectedCeleb({ id: 0, celebNameKr: '' })
+      setSelectedCeleb({ id: 0, celebNameKr: '', isNewCeleb: false })
     } else {
       // 솔로
       setSelectedCeleb(celebResult)
-      setSelectedGroup({ id: 0, celebNameKr: '', subCelebList: [] })
+      setSelectedGroup({
+        id: 0,
+        celebNameKr: '',
+        isNewCeleb: celebResult.isNewCeleb,
+        subCelebList: [],
+      })
     }
   }
   const onClickMember = (member: ICelebResult) => {
@@ -79,7 +96,10 @@ const MyCeleb = () => {
                             key={member.id}
                             text={member.celebNameKr}
                             type='pri'
-                            active={selectedCeleb.id === member.id}
+                            active={
+                              selectedCeleb.id === member.id &&
+                              selectedCeleb.isNewCeleb === member.isNewCeleb
+                            }
                             onClick={() => onClickMember(member)}
                           ></ButtonMedium>
                         )

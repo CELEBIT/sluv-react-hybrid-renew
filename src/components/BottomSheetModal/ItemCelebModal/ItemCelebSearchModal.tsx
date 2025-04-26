@@ -1,18 +1,18 @@
-import React, { useState, useRef } from 'react'
-import BottomSheetModal from '..'
 import styled from '@emotion/styled'
-import useModals from '../../Modals/hooks/useModals'
-import { modals } from '../../Modals'
-import SearchTextfield from '../../TextField/SearchTextfield/SearchTextfield'
-import Header from '../../Header/Header'
-import HotCeleb from './HotCeleb'
-import ButtonLarge from '../../ButtonLarge/ButtonLarge'
-import { selectedCelebState, selectedGroupState } from '../../SelectCeleb/SelectCeleb'
+import { useRef, useState } from 'react'
 import { useRecoilState } from 'recoil'
+import BottomSheetModal from '..'
+import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
+import { createItemCelebState } from '../../../recoil/itemInfo'
+import ButtonLarge from '../../ButtonLarge/ButtonLarge'
+import Header from '../../Header/Header'
+import { modals } from '../../Modals'
+import useModals from '../../Modals/hooks/useModals'
+import { selectedCelebState, selectedGroupState } from '../../SelectCeleb/SelectCeleb'
+import SearchTextfield from '../../TextField/SearchTextfield/SearchTextfield'
+import HotCeleb from './HotCeleb'
 import MyCeleb from './MyCeleb'
 import RecentSelectCeleb from './RecentSelectCeleb'
-import { createItemCelebState } from '../../../recoil/itemInfo'
-import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
 import SearchCelebList from './SearchCelebList'
 
 const ItemCelebSearchModal = () => {
@@ -42,16 +42,21 @@ const ItemCelebSearchModal = () => {
       setSelectedGroup({
         id: celebInfoInItem?.groupId ?? 0,
         celebNameKr: celebInfoInItem?.groupName ?? '',
+        isNewCeleb: celebInfoInItem?.isNewCeleb ?? false,
       })
       setSelectedCeleb({
         id: celebInfoInItem?.soloId ?? 0,
         celebNameKr: celebInfoInItem?.soloName ?? '',
+        isNewCeleb: celebInfoInItem?.isNewCeleb ?? false,
       })
     })
   }
   const onComplete = () => {
     mutateByPostRecentCeleb(
-      { celebId: selectedCeleb.id, newCelebId: null },
+      {
+        celebId: selectedCeleb.isNewCeleb ? null : selectedCeleb.id,
+        newCelebId: selectedCeleb.isNewCeleb ? selectedCeleb.id : null,
+      },
       {
         onSuccess: () => {
           closeModal(modals.ItemCelebSearchModal, () => {
@@ -60,6 +65,7 @@ const ItemCelebSearchModal = () => {
               setCelebInfoInItem({
                 soloId: selectedCeleb.id,
                 soloName: selectedCeleb.celebNameKr,
+                isNewCeleb: selectedCeleb.isNewCeleb,
                 groupId: null,
                 groupName: null,
               })
@@ -70,6 +76,7 @@ const ItemCelebSearchModal = () => {
                 soloName: selectedCeleb.celebNameKr,
                 groupId: selectedGroup.id,
                 groupName: selectedGroup.celebNameKr,
+                isNewCeleb: selectedGroup.isNewCeleb,
               })
             }
           })

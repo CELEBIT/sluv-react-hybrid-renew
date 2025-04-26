@@ -98,6 +98,7 @@ const ItemEdit = () => {
                 data.celeb.celebParentNameKr !== null ? data.celeb.celebParentNameKr : null,
               soloId: data.celeb.id !== null ? data.celeb.id : null,
               soloName: data.celeb.celebChildNameKr !== null ? data.celeb.celebChildNameKr : null,
+              isNewCeleb: data.newCeleb.newCelebId ? true : false,
             }
           : null,
       )

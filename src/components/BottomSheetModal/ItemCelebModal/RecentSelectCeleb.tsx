@@ -1,15 +1,14 @@
 import styled from '@emotion/styled'
-import React from 'react'
-import { Common, Pretendard } from '../../styles'
-import Chip from '../../Chip/Chip'
-import { ChipWrapper } from '../ItemBrandSelectModal/ItemBrandSelectModal'
-import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
-import { IRecentCeleb } from '../../../apis/celeb/CelebService'
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
+import { IRecentCeleb } from '../../../apis/celeb/CelebService'
+import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
 import { createItemCelebState, createItemNewCelebState } from '../../../recoil/itemInfo'
-import useModals from '../../Modals/hooks/useModals'
+import Chip from '../../Chip/Chip'
 import { modals } from '../../Modals'
+import useModals from '../../Modals/hooks/useModals'
 import { selectedCelebState } from '../../SelectCeleb/SelectCeleb'
+import { Common, Pretendard } from '../../styles'
+import { ChipWrapper } from '../ItemBrandSelectModal/ItemBrandSelectModal'
 
 const RecentSelectCeleb = () => {
   const { closeModal } = useModals()
@@ -44,10 +43,12 @@ const RecentSelectCeleb = () => {
                 groupName: recentCeleb.parentCelebName,
                 soloId: recentCeleb.id,
                 soloName: recentCeleb.childCelebName,
+                isNewCeleb: false,
               })
               setCelebInCommunity({
                 id: recentCeleb.id,
                 celebNameKr: recentCeleb.childCelebName,
+                isNewCeleb: false,
               })
             })
           },
