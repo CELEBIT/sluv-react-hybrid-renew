@@ -77,8 +77,8 @@ export default class CelebService {
   // 유저가 최근 선택한 셀럽 등록
   async postRecentCeleb(celebId?: number | null, newCelebId?: number | null) {
     const data: ResponseType = await request.post(`${this.celebUrl}/recent`, {
-      celebId,
-      newCelebId,
+      celebId: celebId,
+      newCelebId: newCelebId,
     })
     return data
   }

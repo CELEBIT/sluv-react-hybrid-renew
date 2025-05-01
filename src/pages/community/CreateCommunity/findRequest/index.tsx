@@ -1,27 +1,27 @@
-import React, { useEffect, useState } from 'react'
-import { FindRequestContainer } from './styles'
+import { useEffect, useState } from 'react'
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
+import { ReactComponent as Error } from '../../../../assets/error_20.svg'
 import CommunityHeader from '../../../../components/Header/CommunityHeader/CommunityHeader'
-import {
-  ComponentContainer,
-  LabelContainer,
-  ComponentWrapper,
-  Label,
-} from '../../../item/create/styles'
 import SelectCeleb, {
   selectedCelebState,
   selectedGroupState,
 } from '../../../../components/SelectCeleb/SelectCeleb'
-import { ErrorText } from '../../../../components/TextField/DefaultTextfield/styles'
-import { ReactComponent as Error } from '../../../../assets/error_20.svg'
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
-import { HeaderWrapper } from '../../../item/addInfo/styles'
 import DefaultTextfield from '../../../../components/TextField/DefaultTextfield/DefaultTextfield'
+import { ErrorText } from '../../../../components/TextField/DefaultTextfield/styles'
 import TextArea from '../../../../components/TextField/TextArea/TextArea'
+import { HeaderWrapper } from '../../../item/addInfo/styles'
+import {
+  ComponentContainer,
+  ComponentWrapper,
+  Label,
+  LabelContainer,
+} from '../../../item/create/styles'
+import { FindRequestContainer } from './styles'
 
 import { useNavigate } from 'react-router-dom'
+import useCommunityImgUpload from '../../../../apis/s3/hooks/useCommunityImgUpload'
 import AddItemPhotos from '../../../../components/AddPhotos/AddItemPhotos'
 import { communityItemState, imgItemListState } from '../../../../recoil/communityInfo'
-import useCommunityImgUpload from '../../../../apis/s3/hooks/useCommunityImgUpload'
 import { createItemCelebState, createItemNewCelebState } from '../../../../recoil/itemInfo'
 
 const FindRequest = () => {
@@ -82,10 +82,10 @@ const FindRequest = () => {
   useEffect(() => {
     setFindRequestInfo({
       ...findRequestInfo,
-      celebId: newCeleb?.id ? null : celeb.id,
+      celebId: celeb.isNewCeleb ? null : celeb.id,
       title: title,
       content: content,
-      newCelebId: newCeleb?.id,
+      newCelebId: celeb.isNewCeleb ? celeb.id : newCeleb?.id,
     })
   }, [title, content, celeb, newCeleb])
 

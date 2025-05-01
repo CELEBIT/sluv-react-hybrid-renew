@@ -1,11 +1,10 @@
-import React from 'react'
-import { HomeTitle, HomeTitleWrapper, ScrollComponentWrapper } from '../../styles'
-import { ReactComponent as New } from '../../../../assets/badge_title_new.svg'
 import { useNavigate } from 'react-router-dom'
-import { ItemList } from '../../../../components/RecommendedItem/RecommendedItemList'
-import Item from '../../../../components/RecommendedItem/Item'
-import useNewItemQuery from '../../../../apis/item/hooks/useNewItemQuery'
 import { PreviewProps } from '../..'
+import useNewItemQuery from '../../../../apis/item/hooks/useNewItemQuery'
+import { ReactComponent as New } from '../../../../assets/badge_title_new.svg'
+import Item from '../../../../components/RecommendedItem/Item'
+import { ItemList } from '../../../../components/RecommendedItem/RecommendedItemList'
+import { HomeTitle, HomeTitleWrapper, ScrollComponentWrapper } from '../../styles'
 
 const NewItems = ({ isPreview }: PreviewProps) => {
   const navigate = useNavigate()
@@ -13,6 +12,7 @@ const NewItems = ({ isPreview }: PreviewProps) => {
   const { getNewItem } = useNewItemQuery()
   const { data } = getNewItem()
   const tempData = data?.pages[0].content
+  console.log(tempData)
 
   return (
     <ScrollComponentWrapper>

@@ -3,7 +3,6 @@ import {
   BottomWrapper,
   ComponentContainer,
   ComponentWrapper,
-  Dimmer,
   GalleryButton,
   SelectItemOrPhotoContainer,
 } from './styles'
@@ -16,6 +15,7 @@ import useRecentSearchQuery from '../../apis/search/hooks/useRecentSearchQuery'
 import { ReactComponent as Gallery } from '../../assets/gallery_24.svg'
 import { atomKeys } from '../../config/atomKeys'
 import { HeaderWrapper } from '../../pages/item/addInfo/styles'
+import { Dimmer } from '../../pages/selectInterestCeleb/styles'
 import {
   communityItemState,
   firstItemState,
@@ -368,7 +368,7 @@ const SelectItemOrPhoto = () => {
           </>
         )}
       </ComponentContainer>
-      <Dimmer></Dimmer>
+      <Dimmer />
       <BottomWrapper>
         <GalleryButton onClick={onClickOpenGallery}>
           <input

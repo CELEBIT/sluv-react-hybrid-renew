@@ -1,3 +1,4 @@
+import { TCeleb } from '../../pages/home/components/WeeklyTopUser/InterestCelebList/interestCelebList'
 import request from '../core'
 
 import { GetPaginationResult, ResponseType } from '../core/type'
@@ -7,6 +8,7 @@ import { SearchQuestionResult } from '../search/searchService'
 export interface ICelebResult {
   id: number
   celebNameKr: string
+  isNewCeleb: boolean
   celebCategory?: string
   subCelebList?: Array<ICelebResult>
 }
@@ -62,6 +64,11 @@ export interface ICommentResult {
 
 export interface ITermsAgreement {
   termsStatus: boolean
+}
+
+export interface IInterestCeleb {
+  celebIdList: number[]
+  celebNameList: string[]
 }
 
 export default class UserService {
@@ -230,20 +237,19 @@ export default class UserService {
     return data.result
   }
 
-  async getHotSluver(celebId: number | undefined) {
+  async getHotSluver(celebData: TCeleb | undefined) {
     const data: ResponseType<Array<IUserResult>> = await request.get(`${this.userUrl}/hotSluver`, {
       params: {
-        celebId: celebId,
+        celebId: celebData?.celebId,
+        isNewCeleb: celebData?.isNewCeleb,
       },
     })
     return data.result
   }
 
   // 유저 관심 셀럽 등록
-  async postInterestCeleb(celebIdList: Array<number>) {
-    const data: ResponseType = await request.post(`${this.userUrl}/celeb`, {
-      celebIdList,
-    })
+  async postInterestCeleb(celebList: IInterestCeleb) {
+    const data: ResponseType = await request.post(`${this.userUrl}/celeb`, celebList)
     return data
   }
 
@@ -253,7 +259,7 @@ export default class UserService {
     return data.result
   }
 
-  // 현재 유저 마이페이지 조회
+  // 다른른 유저 마이페이지 조회
   async getOtherUserMypageInfo(userId: number) {
     const data: ResponseType<IUserMypageInfo> = await request.get(
       `${this.userUrl}/${userId}/mypage`,

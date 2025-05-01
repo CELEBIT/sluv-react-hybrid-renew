@@ -135,7 +135,7 @@ const useUploadStateObserver = () => {
             ? Number(localStorage.getItem('tempItemId'))
             : null,
           imgList: debouncedTempS3ImgList ?? null,
-          celebId: celebInfoInItem?.soloId ?? null,
+          celebId: celebInfoInItem?.isNewCeleb ? null : celebInfoInItem?.soloId ?? null,
           whenDiscovery: whenDiscovery ? (whenDiscovery as Date).toISOString() : null,
           whereDiscovery: whereDiscovery ?? whereDiscovery,
           categoryId: category?.categoryId ?? null,
@@ -146,7 +146,7 @@ const useUploadStateObserver = () => {
           hashTagIdList: hashTagIdList ?? null,
           linkList: linkList,
           infoSource: source ?? null,
-          newCelebId: newCeleb?.id ?? null,
+          newCelebId: celebInfoInItem?.isNewCeleb ? celebInfoInItem.soloId : newCeleb?.id ?? null,
           newBrandId: newBrand?.brandId ?? null,
         }
         console.log('tempItem post 전 item', tempItem)

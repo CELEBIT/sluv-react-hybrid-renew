@@ -1,7 +1,7 @@
 import { atom } from 'recoil'
-import { atomKeys } from '../config/atomKeys'
 import { ImgResult, LinkResult } from '../apis/item/itemService.type'
 import { NewCeleb } from '../components/SelectCeleb/SelectCeleb'
+import { atomKeys } from '../config/atomKeys'
 
 export interface ICeleb {
   celebId: number
@@ -51,6 +51,7 @@ export interface IItemInfo {
 interface ICelebInfo {
   groupId?: number | null
   groupName?: string | null
+  isNewCeleb: boolean
   soloId: number | null
   soloName: string | null
 }

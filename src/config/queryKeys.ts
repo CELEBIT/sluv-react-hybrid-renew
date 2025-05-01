@@ -1,3 +1,5 @@
+import { TCeleb } from '../pages/home/components/WeeklyTopUser/InterestCelebList/interestCelebList'
+
 export const queryKeys = {
   termsAgree: ['termsAgree'] as const,
   getIdInfo: ['getIdInfo'] as const,
@@ -55,7 +57,7 @@ export const queryKeys = {
   newItem: ['newItem'] as const,
   efficientItem: ['efficientItem'] as const,
   hotCelebItem: (standard: string) => ['hotCelebItem', standard] as const,
-  getHotSluver: (celebId?: number) => ['getHotSluver', celebId] as const,
+  getHotSluver: (celebData?: TCeleb) => ['getHotSluver', celebData] as const,
   getQuestionTotalList: ['getQuestionTotalList'] as const,
   getQuestionHotList: ['getQuestionHotList'] as const,
   deleteQuestion: (questionId?: number) => ['deleteQuestion', questionId] as const,
@@ -80,7 +82,7 @@ export const queryKeys = {
   readNofitication: (notificationId: number) => ['readNofitication', notificationId] as const,
   getCommunityBannerItems: ['getCommunityBannerItems'] as const,
   getSearchRank: ['getSearchRank'] as const,
-  getQuestionFindList: (celebId?: number) => ['getQuestionFindList', celebId] as const,
+  getQuestionFindList: (celebData?: TCeleb) => ['getQuestionFindList', celebData] as const,
   getQuestionBuyList: (voteStatus?: string) => ['getQuestionBuyList', voteStatus] as const,
   getQuestionHowAboutList: (celebId?: number) => ['getQuestionHowAboutList', celebId] as const,
   getQuestionRecommendList: (hashtag?: string) => ['getQuestionRecommendList', hashtag] as const,

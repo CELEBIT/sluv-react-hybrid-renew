@@ -1,9 +1,9 @@
+import { TCeleb } from '../../pages/home/components/WeeklyTopUser/InterestCelebList/interestCelebList'
 import { CommunityItem } from '../../recoil/communityInfo'
 import request from '../core'
 import { GetPaginationResult, ResponseType } from '../core/type'
-import { CommunityBannerItem, QuestionResult } from './questionService.type'
 import { BuyHomeResult, SearchQuestionResult } from '../search/searchService'
-import dev from '../core/dev'
+import { CommunityBannerItem, QuestionResult } from './questionService.type'
 
 export interface questionUpload {
   id: number
@@ -27,7 +27,9 @@ export default class QuestionService {
   }
 
   async testQuestionDetail(questionId: number) {
-    const data: ResponseType<QuestionResult> = await dev.get(`${this.questionUrl}/${questionId}`)
+    const data: ResponseType<QuestionResult> = await request.get(
+      `${this.questionUrl}/${questionId}`,
+    )
 
     return data.result
   }
@@ -150,12 +152,13 @@ export default class QuestionService {
   }
 
   // 찾아주세요 홈 아이템 검색
-  async getQuestionFindList(page: number, celebId?: number) {
+  async getQuestionFindList(page: number, celebData?: TCeleb) {
     const data: ResponseType<GetPaginationResult<SearchQuestionResult>> = await request.get(
       `${this.questionUrl}/find`,
       {
         params: {
-          celebId: celebId,
+          celebId: celebData?.celebId,
+          isNewCeleb: celebData?.isNewCeleb,
           page,
           size: 20,
         },

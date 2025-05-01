@@ -47,6 +47,7 @@ const useCelebSearchQuery = () => {
           setSelectedCeleb({
             id: res?.newCelebId,
             celebNameKr: res.newCelebName,
+            isNewCeleb: true,
           })
           // setCelebInfoInItem({
           //   soloId: res?.newCelebId,

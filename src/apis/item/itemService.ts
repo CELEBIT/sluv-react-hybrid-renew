@@ -60,15 +60,11 @@ export default class ItemService {
 
   // 아이템 게시글 상세 조회
   async getItemDetail(itemId: number) {
-    const data: ResponseType<ItemDetailResult> = await request.get(`${this.itemUrl}/${itemId}`)
-
-    return data.result
-  }
-  async testItemDetail(itemId: number) {
     const data: ResponseType<ItemDetailResult> = await dev.get(`${this.itemUrl}/${itemId}`)
 
     return data.result
   }
+
   // 해시태그 검색
   async searchHashtag(name: string) {
     const data: ResponseType<GetPaginationResult<HashtagContent>> = await request.get(
@@ -140,7 +136,7 @@ export default class ItemService {
   }
   // 아이템 등록 및 수정
   async postItem(item: TempItemReq) {
-    const data: ResponseType<ItemId> = await request.post(`${this.itemUrl}`, item)
+    const data: ResponseType<ItemId> = await dev.post(`${this.itemUrl}`, item)
     return data.result
   }
 
@@ -151,7 +147,7 @@ export default class ItemService {
       {
         params: {
           page,
-          size: 21,
+          size: size ?? 21,
         },
       },
     )

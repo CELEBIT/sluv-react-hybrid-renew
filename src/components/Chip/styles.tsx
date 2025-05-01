@@ -62,7 +62,9 @@ export const ColorChipWrapper = styled.div<{
             ? '#F1EAD9'
             : props.color === 'green'
             ? '#DBF1D9'
-            : props.color === 'blue' && '#D9E5F1'
+            : props.color === 'blue'
+            ? '#D9E5F1'
+            : props.color === 'purple' && '#D2CAEC'
         }`
       : `1px solid ${Common.colors.GR300}`};
 
@@ -76,7 +78,9 @@ export const ColorChipWrapper = styled.div<{
         ? Common.colors.YL
         : props.color === 'green'
         ? Common.colors.GRN
-        : props.color === 'blue' && Common.colors.BL
+        : props.color === 'blue'
+        ? Common.colors.BL
+        : props.color === 'purple' && '#6C47FF'
       : Common.colors.GR600};
 
   font-family: Pretendard;

@@ -9,7 +9,7 @@ export const appStoreURL = 'https://apps.apple.com/us/app/%EC%8A%A4%EB%9F%BD/id1
 export const urlRegex =
   /(?:^|\s)(?:https?:\/\/)?[\w-]+(?:\.[\w-]+)+[\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-]+/
 
-export const colorList = ['pink', 'orange', 'yellow', 'green', 'blue'] as const
+export const colorList = ['pink', 'orange', 'yellow', 'green', 'blue', 'purple'] as const
 
 export const 약관목록 = [
   {
