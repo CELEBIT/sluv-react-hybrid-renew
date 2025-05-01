@@ -46,7 +46,6 @@ const InterestCelebList = () => {
     const {
       getInterestCeleb: { data: interestCelebList },
     } = useInterestCelebQuery()
-    console.log(interestCelebList)
     return (
       <ChipWrapper>
         {interestCelebList?.map((celeb) => {
