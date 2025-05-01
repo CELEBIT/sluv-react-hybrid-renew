@@ -1,6 +1,5 @@
 import { IHashTag } from '../../recoil/itemInfo'
 import request from '../core'
-import dev from '../core/dev'
 import { GetPaginationResult, ResponseType } from '../core/type'
 import {
   EditRequestedResult,
@@ -60,7 +59,7 @@ export default class ItemService {
 
   // 아이템 게시글 상세 조회
   async getItemDetail(itemId: number) {
-    const data: ResponseType<ItemDetailResult> = await dev.get(`${this.itemUrl}/${itemId}`)
+    const data: ResponseType<ItemDetailResult> = await request.get(`${this.itemUrl}/${itemId}`)
 
     return data.result
   }
@@ -136,7 +135,7 @@ export default class ItemService {
   }
   // 아이템 등록 및 수정
   async postItem(item: TempItemReq) {
-    const data: ResponseType<ItemId> = await dev.post(`${this.itemUrl}`, item)
+    const data: ResponseType<ItemId> = await request.post(`${this.itemUrl}`, item)
     return data.result
   }
 
