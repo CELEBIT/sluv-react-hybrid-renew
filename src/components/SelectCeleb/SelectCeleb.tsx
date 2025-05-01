@@ -48,7 +48,7 @@ const SelectCeleb = () => {
   } = useRecentCelebQuery()
 
   const [celebInfoInItem, setCelebInfoInItem] = useRecoilState(createItemCelebState)
-  console.log('celebInfoInItem', celebInfoInItem)
+  // console.log('celebInfoInItem', celebInfoInItem)
 
   const [newCeleb, setNewCeleb] = useRecoilState(createItemNewCelebState)
   const resetNewCeleb = useResetRecoilState(createItemNewCelebState)
@@ -141,7 +141,6 @@ const SelectCeleb = () => {
         }
       }
     }
-    console.log(celebInfoInItem)
   }
 
   useEffect(() => {
@@ -203,7 +202,6 @@ const SelectCeleb = () => {
       }
       return
     }
-    console.log(newCeleb)
   }, [celebInfoInItem, interestCelebList, newCeleb])
 
   return (

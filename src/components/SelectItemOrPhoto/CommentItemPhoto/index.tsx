@@ -8,6 +8,7 @@ import useRecentSearchQuery from '../../../apis/search/hooks/useRecentSearchQuer
 import { ReactComponent as Gallery } from '../../../assets/gallery_24.svg'
 import { commentState } from '../../../pages/community/detail/CommunityDetail'
 import { HeaderWrapper } from '../../../pages/item/addInfo/styles'
+import { Dimmer } from '../../../pages/selectInterestCeleb/styles'
 import { IselectedItem, imgItemListState } from '../../../recoil/communityInfo'
 import { convertToFile, openGallery } from '../../../utils/utility'
 import ButtonLarge from '../../ButtonLarge/ButtonLarge'
@@ -23,7 +24,6 @@ import {
   BottomWrapper,
   ComponentContainer,
   ComponentWrapper,
-  Dimmer,
   GalleryButton,
   SelectItemOrPhotoContainer,
 } from '../styles'
@@ -74,7 +74,6 @@ const CommentItemPhoto = () => {
   }
 
   const onComplete = () => {
-    console.log('imgItemList in commentItemPhoto', imgItemList)
     if (imgItemList.length > 0) {
       setImgItemList((prevList) => {
         const updatedList = prevList.map((item, index) => ({
@@ -145,7 +144,6 @@ const CommentItemPhoto = () => {
   }
 
   const onNativeImgUpload = (fileArr: File[]) => {
-    console.log('fileArr in onNativeImgUpload', fileArr)
     if (fileArr) {
       for (let i = 0; i < fileArr.length; i++) {
         const file = fileArr[i]
@@ -251,7 +249,7 @@ const CommentItemPhoto = () => {
           </>
         )}
       </ComponentContainer>
-      <Dimmer></Dimmer>
+      <Dimmer />
       <BottomWrapper>
         <GalleryButton onClick={onClickOpenGallery}>
           <input

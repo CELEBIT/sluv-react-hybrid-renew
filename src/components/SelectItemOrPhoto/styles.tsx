@@ -9,7 +9,7 @@ export const SelectItemOrPhotoContainer = styled.div`
   overflow-x: hidden;
   padding-left: 0;
   background-color: white;
-  padding-bottom: 2rem;
+  /* padding-bottom: 2rem; */
 
   ::-webkit-scrollbar {
     display: none;
@@ -74,12 +74,4 @@ export const GalleryButton = styled.div`
   input {
     display: 'none';
   }
-`
-
-export const Dimmer = styled.div`
-  position: absolute;
-  bottom: 5rem;
-  height: 1.25rem;
-  width: 100%;
-  background: linear-gradient(180deg, transparent, #ffffff 100%);
 `

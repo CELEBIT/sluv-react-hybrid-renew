@@ -108,7 +108,6 @@ const SelectInterestCeleb = ({
   const {
     getInterestCeleb: { data: interestCelebList },
   } = useInterestCelebQuery()
-
   const { openModal } = useModals()
   const [searchValue, setSearchValue] = useState<string>('')
   const [openCategories, setOpenCategories] = useState<number[]>([])
@@ -299,10 +298,9 @@ const SelectInterestCeleb = ({
             const updatedCelebList = interestCelebList
               .filter((celeb) => category.categoryName === celeb.celebCategory)
               .map((celeb) => {
-                const isAddedCeleb = celeb.celebCategory === '추가된 셀럽'
                 return {
-                  celebId: isAddedCeleb ? celeb.id : 0,
-                  celebName: isAddedCeleb ? celeb.celebNameKr : '',
+                  celebId: celeb.id,
+                  celebName: celeb.celebNameKr,
                 }
               })
 
