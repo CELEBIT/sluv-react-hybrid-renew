@@ -1,10 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
-import UserService from '../userService'
 import { queryKeys } from '../../../config/queryKeys'
+import { TCeleb } from '../../../pages/home/components/WeeklyTopUser/InterestCelebList/interestCelebList'
+import UserService from '../userService'
 
-const useGetHotSluverQuery = (celebId?: number) => {
+const useGetHotSluverQuery = (CelebData?: TCeleb) => {
   const user = new UserService()
-  const getHotSluver = useQuery(queryKeys.getHotSluver(celebId), () => user.getHotSluver(celebId))
+  const getHotSluver = useQuery(queryKeys.getHotSluver(CelebData), () =>
+    user.getHotSluver(CelebData),
+  )
   return { getHotSluver }
 }
 

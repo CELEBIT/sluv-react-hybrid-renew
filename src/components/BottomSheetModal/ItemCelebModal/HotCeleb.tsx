@@ -1,15 +1,14 @@
-import React from 'react'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import Chip from '../../Chip/Chip'
-import { ChipWrapper } from '../ItemBrandSelectModal/ItemBrandSelectModal'
-import { selectedCelebState, selectedGroupState } from '../../SelectCeleb/SelectCeleb'
-import { HotWrapper } from '../ItemBrandSelectModal/HotBrand'
+import { IHotCeleb } from '../../../apis/celeb/CelebService'
 import useHotCelebQuery from '../../../apis/celeb/hooks/useHotCelebQuery'
 import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
 import { createItemCelebState } from '../../../recoil/itemInfo'
-import { IHotCeleb } from '../../../apis/celeb/CelebService'
-import useModals from '../../Modals/hooks/useModals'
+import Chip from '../../Chip/Chip'
 import { modals } from '../../Modals'
+import useModals from '../../Modals/hooks/useModals'
+import { selectedCelebState, selectedGroupState } from '../../SelectCeleb/SelectCeleb'
+import { HotWrapper } from '../ItemBrandSelectModal/HotBrand'
+import { ChipWrapper } from '../ItemBrandSelectModal/ItemBrandSelectModal'
 
 const HotCeleb = () => {
   const { closeModal } = useModals()
@@ -39,6 +38,7 @@ const HotCeleb = () => {
                 soloName: celebData.celebChildNameKr,
                 groupId: celebData.parentId,
                 groupName: celebData.celebParentNameKr,
+                isNewCeleb: false,
               })
             } else {
               // 선택한 셀럽이 솔로인 경우
@@ -48,6 +48,7 @@ const HotCeleb = () => {
                 soloName: celebData.celebChildNameKr,
                 groupId: null,
                 groupName: null,
+                isNewCeleb: false,
               })
             }
           })
@@ -59,8 +60,9 @@ const HotCeleb = () => {
     setSelectedCeleb({
       id: celebData.id,
       celebNameKr: celebData.celebChildNameKr,
+      isNewCeleb: false,
     })
-    setSelectedGroup({ id: 0, celebNameKr: '' })
+    setSelectedGroup({ id: 0, celebNameKr: '', isNewCeleb: false })
   }
 
   return (

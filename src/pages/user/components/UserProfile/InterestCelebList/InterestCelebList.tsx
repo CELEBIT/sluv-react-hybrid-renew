@@ -17,6 +17,8 @@ const InterestCelebList = () => {
         return 'green'
       case '인플루언서':
         return 'blue'
+      case '추가된 셀럽':
+        return 'purple'
       default:
         return 'gray'
     }
@@ -24,13 +26,12 @@ const InterestCelebList = () => {
   if (id) {
     const { getOtherUserInterestCeleb } = useInterestCelebQuery()
     const { data: interestCelebList } = getOtherUserInterestCeleb(Number(id))
-
     return (
       <ChipWrapper>
         {interestCelebList?.map((celeb) => {
           return (
             <ColorChip
-              key={celeb.id}
+              key={celeb.id + celeb.isNewCeleb.toString()}
               color={getColorForCategory(celeb.celebCategory)}
               active={true}
               size='small'
@@ -45,12 +46,13 @@ const InterestCelebList = () => {
     const {
       getInterestCeleb: { data: interestCelebList },
     } = useInterestCelebQuery()
+    console.log(interestCelebList)
     return (
       <ChipWrapper>
         {interestCelebList?.map((celeb) => {
           return (
             <ColorChip
-              key={celeb.id}
+              key={celeb.id + celeb.isNewCeleb.toString()}
               color={getColorForCategory(celeb.celebCategory)}
               active={true}
               size='small'

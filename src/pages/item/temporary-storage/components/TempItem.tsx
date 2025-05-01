@@ -1,15 +1,13 @@
-import React, { useMemo, useState } from 'react'
 import styled from '@emotion/styled'
-import { Img } from '../../../../components/AddPhotos/Photo'
-import { Label } from '../../create/styles'
-import { Common, Pretendard } from '../../../../components/styles'
-import { ReactComponent as Check } from '../../../../assets/check_24.svg'
-import { formatUpdatedAt } from '../../../../utils/utility'
-import { filterRepresentImg, processTempTitle } from './TempItem.util'
+import React, { useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { checkListState } from '..'
 import { TempItemResult } from '../../../../apis/item/itemService.type'
-import { useNavigate } from 'react-router-dom'
+import { ReactComponent as Check } from '../../../../assets/check_24.svg'
+import { imgListState } from '../../../../components/AddPhotos/AddPhotos'
+import { Img } from '../../../../components/AddPhotos/Photo'
+import { Common, Pretendard } from '../../../../components/styles'
 import { localStorageKeys } from '../../../../config/localStorageKeys'
 import {
   IHashTag,
@@ -27,7 +25,9 @@ import {
   createItemWhenDateState,
   currentTempIdState,
 } from '../../../../recoil/itemInfo'
-import { imgListState } from '../../../../components/AddPhotos/AddPhotos'
+import { formatUpdatedAt } from '../../../../utils/utility'
+import { Label } from '../../create/styles'
+import { filterRepresentImg, processTempTitle } from './TempItem.util'
 
 import { hashTagState } from '../../addInfo/components/HashTags/HashTag'
 
@@ -112,6 +112,7 @@ const TempItem = ({ data, isFirst, isEditMode }: TempItemProps) => {
             groupName: data.celeb.parentCelebNameKr !== null ? data.celeb.parentCelebNameKr : null,
             soloId: data.celeb.id !== null ? data.celeb.id : null,
             soloName: data.celeb.celebNameKr !== null ? data.celeb.celebNameKr : null,
+            isNewCeleb: data.newCeleb.newCelebId ? true : false,
           }
         : null,
     )

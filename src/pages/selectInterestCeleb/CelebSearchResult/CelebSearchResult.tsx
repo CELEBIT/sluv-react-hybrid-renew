@@ -1,6 +1,11 @@
-import React from 'react'
-import useSelectCelebQuery from '../../../apis/celeb/hooks/useSelectCelebQuery'
+import { useMemo } from 'react'
+import { useRecoilState } from 'recoil'
 import { useDebounce } from 'use-debounce'
+import { selectInterestCelebState } from '..'
+import { ISelectCelebResult } from '../../../apis/celeb/CelebService'
+import useSelectCelebQuery from '../../../apis/celeb/hooks/useSelectCelebQuery'
+import ColorChip from '../../../components/Chip/ColorChip'
+import { colorList } from '../../../config/constant'
 import {
   CategoryContentWrapper,
   CategoryTitle,
@@ -8,11 +13,6 @@ import {
   CelebListWrapper,
   SearchResultContainer,
 } from '../styles'
-import ColorChip from '../../../components/Chip/ColorChip'
-import { ISelectCelebResult } from '../../../apis/celeb/CelebService'
-import { useRecoilState } from 'recoil'
-import { selectInterestCelebState } from '..'
-import { colorList } from '../../../config/constant'
 
 interface CelebSearchResultProps {
   celebName: string
@@ -58,6 +58,17 @@ const CelebSearchResult = ({ celebName }: CelebSearchResultProps) => {
       return updatedInterestCelebs
     })
   }
+
+  const isEmptyResult = !data || data.every((category) => category.celebList.length === 0)
+  const tempId = useMemo(() => (celebName ? -Math.abs(hashCode(celebName)) : null), [celebName])
+  const isSelected = tempId !== null && celebIds.includes(tempId)
+  function hashCode(str: string): number {
+    let hash = 0
+    for (let i = 0; i < str.length; i++) {
+      hash = str.charCodeAt(i) + ((hash << 5) - hash)
+    }
+    return hash
+  }
   return (
     <SearchResultContainer>
       {data?.map((Category, index) => {
@@ -95,6 +106,23 @@ const CelebSearchResult = ({ celebName }: CelebSearchResultProps) => {
           return null
         }
       })}
+      {isEmptyResult && celebName && tempId !== null && (
+        <CelebCategoryWrapper>
+          <CategoryContentWrapper>
+            <CelebListWrapper open={true}>
+              <ColorChip
+                color={colorList[5]}
+                active={isSelected}
+                onClick={() => {
+                  handleColorChipClick(7, tempId, celebName, isSelected)
+                }}
+              >
+                {celebName}
+              </ColorChip>
+            </CelebListWrapper>
+          </CategoryContentWrapper>
+        </CelebCategoryWrapper>
+      )}
     </SearchResultContainer>
   )
 }

@@ -116,7 +116,7 @@ const UserInterestCelebModal = ({ id }: userIdProps) => {
                         {Category.celebList.map((celeb) => {
                           return (
                             <ColorChip
-                              key={celeb.id}
+                              key={celeb.id + celeb.celebNameKr}
                               color={colorList[index]}
                               canDelete={false}
                               active={true}

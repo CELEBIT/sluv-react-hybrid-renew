@@ -40,6 +40,7 @@ import { toast } from 'react-toastify'
 import { atom, useRecoilState } from 'recoil'
 import { ISelectCelebResult } from '../../apis/celeb/CelebService'
 import useInterestCelebQuery from '../../apis/user/hooks/useInterestCelebQuery'
+import { IInterestCeleb } from '../../apis/user/userService'
 import ButtonLarge from '../../components/ButtonLarge/ButtonLarge'
 import { modals } from '../../components/Modals'
 import useModals from '../../components/Modals/hooks/useModals'
@@ -78,6 +79,11 @@ export const selectInterestCelebState = atom<Array<ISelectCelebResult>>({
       categoryName: '인플루언서',
       celebList: [],
     },
+    {
+      categoryId: 7,
+      categoryName: '추가된 셀럽',
+      celebList: [],
+    },
   ],
 })
 
@@ -102,7 +108,6 @@ const SelectInterestCeleb = ({
   const {
     getInterestCeleb: { data: interestCelebList },
   } = useInterestCelebQuery()
-
   const { openModal } = useModals()
   const [searchValue, setSearchValue] = useState<string>('')
   const [openCategories, setOpenCategories] = useState<number[]>([])
@@ -133,8 +138,13 @@ const SelectInterestCeleb = ({
   ]
 
   const onComplete = () => {
-    const updatedIdList = getSelectedCelebIds(selectedInterestCeleb)
-    mutateByPostInterestCeleb(updatedIdList)
+    const updatedIdList = getSelectedCelebIds(selectedInterestCeleb).filter((id) => id > 0)
+    const newCelebNameList = selectedInterestCeleb[5].celebList.map((celeb) => celeb.celebName)
+    const celebList: IInterestCeleb = {
+      celebIdList: updatedIdList,
+      celebNameList: newCelebNameList,
+    }
+    mutateByPostInterestCeleb(celebList)
 
     if (onNext !== undefined) {
       if (pathname == '/signup') {
@@ -146,8 +156,10 @@ const SelectInterestCeleb = ({
   const getSelectedCelebIds = (selectedCelebList: Array<ISelectCelebResult>): Array<number> => {
     const idList = []
     for (const category of selectedCelebList) {
-      for (const celeb of category.celebList) {
-        idList.push(celeb.celebId)
+      if (category.categoryId !== 7) {
+        for (const celeb of category.celebList) {
+          idList.push(celeb.celebId)
+        }
       }
     }
 
@@ -204,23 +216,37 @@ const SelectInterestCeleb = ({
     const categoryRef = celebRefs.current[categoryName]
     if (categoryRef) {
       categoryRef.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
-      // setIsFocused(false)
-      setTooltipContent(categoryName)
-      setTimeout(() => setTooltipContent(''), 3000)
+      // setTooltipContent(categoryName)
+      // setTimeout(() => setTooltipContent(''), 3000)
     }
   }
+  const contentWrapperRef = useRef<HTMLDivElement>(null)
 
   const tooltipTimeoutRef = useRef<number | null>(null)
   const handleScroll = () => {
     setSidebarSize('medium')
-    // setIsFocused(false)
     setShowSearch(false)
+    const midY = window.innerHeight / 2
     let visibleCategory = ''
+
+    // 뷰포트 중앙(midY)에 걸치는 섹션 찾기
     for (const [categoryName, ref] of Object.entries(celebRefs.current)) {
       const rect = ref?.getBoundingClientRect()
-      if (rect && rect.top >= 0 && rect.bottom <= window.innerHeight) {
+      if (rect && rect.top <= midY && rect.bottom >= midY) {
         visibleCategory = categoryName
         break
+      }
+    }
+
+    // 최하단 강제 인식 로직
+    if (!visibleCategory && data?.length) {
+      const contentWrapper = contentWrapperRef.current
+      if (contentWrapper) {
+        const { scrollTop, scrollHeight, clientHeight } = contentWrapper
+        const isAtBottom = scrollHeight - scrollTop <= clientHeight + 1
+        if (isAtBottom) {
+          visibleCategory = data[data.length - 1].categoryName
+        }
       }
     }
     setTooltipContent(visibleCategory)
@@ -230,7 +256,7 @@ const SelectInterestCeleb = ({
     tooltipTimeoutRef.current = window.setTimeout(() => {
       setTooltipContent('')
       tooltipTimeoutRef.current = null
-    }, 3000)
+    }, 2000)
   }
 
   const onClickSelectedCelebList = () => {
@@ -271,10 +297,12 @@ const SelectInterestCeleb = ({
           if (interestCelebList) {
             const updatedCelebList = interestCelebList
               .filter((celeb) => category.categoryName === celeb.celebCategory)
-              .map((celeb) => ({
-                celebId: celeb.id,
-                celebName: celeb.celebNameKr,
-              }))
+              .map((celeb) => {
+                return {
+                  celebId: celeb.id,
+                  celebName: celeb.celebNameKr,
+                }
+              })
 
             return {
               ...category,
@@ -330,7 +358,7 @@ const SelectInterestCeleb = ({
           )}
         </HeaderWrapper>
       )}
-      <ContentWrapper onScroll={handleScroll}>
+      <ContentWrapper ref={contentWrapperRef} onScroll={handleScroll}>
         <TitleSearchWrapper>
           <span>
             관심 있는 셀럽 태그를 <br />
@@ -427,8 +455,9 @@ const SelectInterestCeleb = ({
             })}
           </>
         )}
+        <Dimmer></Dimmer>
       </ContentWrapper>
-      <Dimmer></Dimmer>
+
       <BottomWrapper>
         <ListButtonWrapper>
           {selectedInterestCeleb.reduce((total, category) => total + category.celebList.length, 0) >

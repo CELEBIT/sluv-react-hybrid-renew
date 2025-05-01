@@ -1,10 +1,8 @@
-import React from 'react'
+import { useSetRecoilState } from 'recoil'
 import TwoButtonModal from '.'
-import { modals } from '../Modals'
-import useModals from '../Modals/hooks/useModals'
-import { BtnModalContent } from '../Modals/styles'
 import useTempItemQuery from '../../apis/item/hooks/useTempItemQuery'
 import { localStorageKeys } from '../../config/localStorageKeys'
+import { hashTagState } from '../../pages/item/addInfo/components/HashTags/HashTag'
 import {
   IHashTag,
   createItemAddInfoState,
@@ -21,9 +19,10 @@ import {
   createItemWhenDateState,
   currentTempIdState,
 } from '../../recoil/itemInfo'
-import { useSetRecoilState } from 'recoil'
 import { imgListState } from '../AddPhotos/AddPhotos'
-import { hashTagState } from '../../pages/item/addInfo/components/HashTags/HashTag'
+import { modals } from '../Modals'
+import useModals from '../Modals/hooks/useModals'
+import { BtnModalContent } from '../Modals/styles'
 
 const AskRecentPostWritingModal = () => {
   const { closeModal } = useModals()
@@ -86,6 +85,7 @@ const AskRecentPostWritingModal = () => {
             tempData.celeb.parentCelebNameKr !== null ? tempData.celeb.parentCelebNameKr : null,
           soloId: tempData.celeb.id !== null ? tempData.celeb.id : null,
           soloName: tempData.celeb.celebNameKr !== null ? tempData.celeb.celebNameKr : null,
+          isNewCeleb: tempData.newCeleb.newCelebId ? true : false,
         },
       )
       setNewCeleb(

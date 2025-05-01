@@ -1,17 +1,17 @@
 import styled from '@emotion/styled'
-import React, { useRef } from 'react'
-import { Common, Pretendard } from '../../styles'
-import HighlightedText from '../../HighlightedText/HighlightedText'
-import { useDebounce } from 'use-debounce'
-import useCelebSearchQuery from '../../../apis/celeb/hooks/useCelebSearchQuery'
-import { useObserver } from '../../../hooks/useObserver'
-import { ISearchCeleb } from '../../../apis/celeb/CelebService'
+import { useRef } from 'react'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { selectedCelebState, selectedGroupState } from '../../SelectCeleb/SelectCeleb'
-import { createItemCelebState, itemInfoState } from '../../../recoil/itemInfo'
+import { useDebounce } from 'use-debounce'
+import { ISearchCeleb } from '../../../apis/celeb/CelebService'
+import useCelebSearchQuery from '../../../apis/celeb/hooks/useCelebSearchQuery'
 import useRecentCelebQuery from '../../../apis/celeb/hooks/useRecentCelebQuery'
-import useModals from '../../Modals/hooks/useModals'
+import { useObserver } from '../../../hooks/useObserver'
+import { createItemCelebState, itemInfoState } from '../../../recoil/itemInfo'
+import HighlightedText from '../../HighlightedText/HighlightedText'
 import { modals } from '../../Modals'
+import useModals from '../../Modals/hooks/useModals'
+import { selectedCelebState, selectedGroupState } from '../../SelectCeleb/SelectCeleb'
+import { Common, Pretendard } from '../../styles'
 
 interface SearchCelebListProps {
   keyword: string
@@ -54,13 +54,15 @@ const SearchCelebList = ({ keyword }: SearchCelebListProps) => {
             setSelectedCeleb({
               id: celeb.id,
               celebNameKr: celeb.celebChildNameKr,
+              isNewCeleb: false,
             })
-            setSelectedGroup({ id: 0, celebNameKr: '' })
+            setSelectedGroup({ id: 0, celebNameKr: '', isNewCeleb: false })
             setCelebInfoInItem({
               soloId: celeb.id,
               soloName: celeb.celebChildNameKr,
               groupId: celeb.parentId,
               groupName: celeb.celebParentNameKr,
+              isNewCeleb: false,
             })
             setItemInfo({
               ...itemInfo,

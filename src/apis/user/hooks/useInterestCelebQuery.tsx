@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import UserService from '../userService'
+import UserService, { IInterestCeleb } from '../userService'
 import { queryKeys } from '../../../config/queryKeys'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -27,7 +27,7 @@ const useInterestCelebQuery = () => {
     )
 
   const postInterestCeleb = useMutation(
-    (celebIdList: Array<number>) => user.postInterestCeleb(celebIdList),
+    (celebList: IInterestCeleb) => user.postInterestCeleb(celebList),
     {
       onSuccess: () => {
         queryClient.invalidateQueries()

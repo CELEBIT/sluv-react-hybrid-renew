@@ -57,6 +57,7 @@ const ItemEdit = () => {
 
   // 1. 아이템 정보 불러오기
   const { data } = getItemDetail(Number(itemId))
+  console.log('data', data)
 
   // Item 이미지 리스트
   const [imgList, setImgList] = useRecoilState(imgListState)
@@ -90,25 +91,30 @@ const ItemEdit = () => {
     if (data) {
       setImgList(data.imgList ?? [])
       // 셀럽 설정
-      setCelebInfoInItem(
-        data.celeb
-          ? {
-              groupId: data.celeb.parentId !== null ? data.celeb.parentId : null,
-              groupName:
-                data.celeb.celebParentNameKr !== null ? data.celeb.celebParentNameKr : null,
-              soloId: data.celeb.id !== null ? data.celeb.id : null,
-              soloName: data.celeb.celebChildNameKr !== null ? data.celeb.celebChildNameKr : null,
-            }
-          : null,
-      )
-      setNewCeleb(
-        data.newCeleb
-          ? {
-              id: data.newCeleb.newCelebId,
-              newCelebName: data.newCeleb.newCelebName,
-            }
-          : null,
-      )
+
+      if (data.newCeleb) {
+        setNewCeleb(
+          data.newCeleb.newCelebId
+            ? {
+                id: data.newCeleb.newCelebId,
+                newCelebName: data.newCeleb.newCelebName,
+              }
+            : null,
+        )
+      } else {
+        setCelebInfoInItem(
+          data.celeb
+            ? {
+                groupId: data.celeb.parentId !== null ? data.celeb.parentId : null,
+                groupName:
+                  data.celeb.celebParentNameKr !== null ? data.celeb.celebParentNameKr : null,
+                soloId: data.celeb.id !== null ? data.celeb.id : null,
+                soloName: data.celeb.celebChildNameKr !== null ? data.celeb.celebChildNameKr : null,
+                isNewCeleb: false,
+              }
+            : null,
+        )
+      }
       setWhenDiscovery(data.whenDiscovery ? new Date(data.whenDiscovery) : null)
       setWhereDiscovery(data.whereDiscovery)
       setCategory(
@@ -298,7 +304,9 @@ const ItemEdit = () => {
           <CelebWrapper>
             <ButtonMedium
               text={
-                celebInfoInItem?.groupName
+                newCeleb?.newCelebName
+                  ? newCeleb.newCelebName
+                  : celebInfoInItem?.groupName
                   ? celebInfoInItem?.groupName + ' ' + celebInfoInItem.soloName
                   : celebInfoInItem?.soloName ?? ''
               }

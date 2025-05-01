@@ -9,7 +9,7 @@ export const SelectItemOrPhotoContainer = styled.div`
   overflow-x: hidden;
   padding-left: 0;
   background-color: white;
-  padding-bottom: 2rem;
+  /* padding-bottom: 2rem; */
 
   ::-webkit-scrollbar {
     display: none;
@@ -54,14 +54,12 @@ export const ComponentWrapper = styled.div`
 export const BottomWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  position: fixed;
-  bottom: 0;
   box-sizing: border-box;
   flex-grow: 0;
   gap: 0.625rem;
   width: 100%;
   padding: 0.75rem 0.9375rem;
-  background-color: white;
+  background: white;
 `
 
 export const GalleryButton = styled.div`
@@ -76,12 +74,4 @@ export const GalleryButton = styled.div`
   input {
     display: 'none';
   }
-`
-
-export const Dimmer = styled.div`
-  position: absolute;
-  bottom: 5rem;
-  height: 1.25rem;
-  width: 100%;
-  background: linear-gradient(180deg, transparent, #ffffff 100%);
 `

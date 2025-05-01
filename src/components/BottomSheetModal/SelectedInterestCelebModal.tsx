@@ -1,11 +1,8 @@
-import React, { useEffect } from 'react'
-import useModals from '../Modals/hooks/useModals'
-import { modals } from '../Modals'
-import BottomSheetModal from '.'
-import { ModalWrapper } from './ItemBrandSelectModal/ItemBrandSelectModal'
-import Header from '../Header/Header'
 import styled from '@emotion/styled'
+import { useEffect } from 'react'
 import { useRecoilState } from 'recoil'
+import BottomSheetModal from '.'
+import { colorList } from '../../config/constant'
 import { selectInterestCelebState } from '../../pages/selectInterestCeleb'
 import {
   CategoryTitle,
@@ -13,8 +10,11 @@ import {
   CelebListWrapper,
 } from '../../pages/selectInterestCeleb/styles'
 import ColorChip from '../Chip/ColorChip'
+import Header from '../Header/Header'
+import { modals } from '../Modals'
+import useModals from '../Modals/hooks/useModals'
 import { Common } from '../styles'
-import { colorList } from '../../config/constant'
+import { ModalWrapper } from './ItemBrandSelectModal/ItemBrandSelectModal'
 
 const SelectedInterestCelebModal = () => {
   const { closeModal } = useModals()
@@ -45,7 +45,6 @@ const SelectedInterestCelebModal = () => {
       closeModal(modals.SelectedInterestCelebModal)
     }
   }, [selectedCelebList])
-
   return (
     <BottomSheetModal>
       <ModalWrapper>
