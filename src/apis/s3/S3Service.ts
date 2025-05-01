@@ -154,7 +154,7 @@ export default class S3Service {
       {},
       { params: { imgExtension: String(img.type.split('/')[1]).toUpperCase() } },
     )
-    // const res = await this.uploadImg(data.result?.preSignedUrl ?? '', img)
+    await this.uploadImg(data.result?.preSignedUrl ?? '', img)
 
     return data.result?.preSignedUrl.split('?')[0] ?? ''
   }
@@ -165,7 +165,7 @@ export default class S3Service {
       {},
       { params: { imgExtension: String(img.type.split('/')[1]).toUpperCase() } },
     )
-    // const res = await this.uploadImg(data.result?.preSignedUrl ?? '', img)
+    await this.uploadImg(data.result?.preSignedUrl ?? '', img)
 
     return data.result?.preSignedUrl.split('?')[0] ?? ''
   }
