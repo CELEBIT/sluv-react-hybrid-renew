@@ -1,4 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { SearchQuestionResult } from '../../apis/search/searchService'
+import { ReactComponent as Like } from '../../assets/Like_18.svg'
+import { ReactComponent as CommentIcon } from '../../assets/comment_18.svg'
+import { ReactComponent as View } from '../../assets/page view_18.svg'
+import { ReactComponent as DefaultProfile } from '../../assets/profile_medium_74.svg'
 import {
   Category,
   DetailEach,
@@ -14,16 +20,10 @@ import {
   RecommendPhoto,
   RecommendVote,
 } from '../../pages/community/detail/styles'
-import { useNavigate } from 'react-router-dom'
-import { SearchQuestionResult } from '../../apis/search/searchService'
 import UserImage from '../UserImage/UserImage'
-import { ReactComponent as Like } from '../../assets/Like_18.svg'
-import { ReactComponent as CommentIcon } from '../../assets/comment_18.svg'
-import { ReactComponent as View } from '../../assets/page view_18.svg'
-import { ReactComponent as DefaultProfile } from '../../assets/profile_medium_74.svg'
 
-import { Dot } from '../Dot/Dot'
 import styled from '@emotion/styled'
+import { Dot } from '../Dot/Dot'
 
 interface QuestionItemProps {
   item: SearchQuestionResult
@@ -165,4 +165,7 @@ const QuestionTitle = styled.span`
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-all;
 `

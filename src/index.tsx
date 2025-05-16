@@ -56,6 +56,12 @@ export const StyledToastContainer = styled(ToastContainer)`
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
+window.addEventListener('error', (e) => {
+  if (e.message && e.message.includes('Loading chunk')) {
+    window.location.reload()
+  }
+})
+
 root.render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>

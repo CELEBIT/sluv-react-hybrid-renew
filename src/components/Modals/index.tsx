@@ -1,7 +1,8 @@
 import loadable from '@loadable/component'
 import PropTypes from 'prop-types'
-import { ComponentProps, FunctionComponent, memo } from 'react'
+import { ComponentProps, FunctionComponent, memo, Suspense } from 'react'
 import { CommunityMenu } from '../../config/communityMenu'
+import { retryLazy } from '../../utils/lazyUtil'
 import ClosetBoxCreateBottomSheetModal from '../BottomSheetModal/ClosetBoxCreateBottomSheetModal'
 import { userIdProps } from '../BottomSheetModal/UserInterestCelebModal'
 import { QuestionChangeModalProps } from '../TwoButtonModal/QuestionChangeModal'
@@ -55,11 +56,11 @@ const DeleteTempItemModal = loadable(() => import('../TwoButtonModal/DeleteTempI
 const DeleteQuestionModal = loadable(() => import('../TwoButtonModal/DeleteQuestionModal'))
 
 // 관심셀럽 선택 모달
-const SelectedInterestCelebModal = loadable(
+const SelectedInterestCelebModal = retryLazy(
   () => import('../BottomSheetModal/SelectedInterestCelebModal'),
 )
 
-const UserInterestCelebModal = loadable(() => import('../BottomSheetModal/UserInterestCelebModal'))
+const UserInterestCelebModal = retryLazy(() => import('../BottomSheetModal/UserInterestCelebModal'))
 const UserModal = loadable(() => import('../BottomSheetModal/UserModal'))
 const CommentEditModal = loadable(() => import('../BottomSheetModal/CommentEditModal'))
 const SubCommentEditModal = loadable(() => import('../BottomSheetModal/SubCommentEditModal'))
@@ -193,7 +194,9 @@ const Modals = () => {
         return (
           <Dimmer key={idx}>
             <Dimmed onClick={() => clickDimmed()} />
-            <Component {...restProps} onSubmit={handleSubmit} onClose={onClose} {...props} />
+            <Suspense fallback={null}>
+              <Component {...restProps} onSubmit={handleSubmit} onClose={onClose} {...props} />
+            </Suspense>
           </Dimmer>
         )
       })}

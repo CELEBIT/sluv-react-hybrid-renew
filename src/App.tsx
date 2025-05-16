@@ -92,11 +92,11 @@ const UserItem = React.lazy(() => import('./pages/user/components/UserItem/UserI
 const UserCommunity = React.lazy(
   () => import('./pages/user/components/UserCommunity/UserCommunity'),
 )
-const LikeItem = React.lazy(() => import('./pages/user/components/LikeItemList/LikeItemList'))
-const LikeCommunity = React.lazy(
+const LikeItem = retryLazy(() => import('./pages/user/components/LikeItemList/LikeItemList'))
+const LikeCommunity = retryLazy(
   () => import('./pages/user/components/LikeCommunityList/LIkeCommunityList'),
 )
-const RecentView = React.lazy(() => import('./pages/user/components/RecentView/RecentView'))
+const RecentView = retryLazy(() => import('./pages/user/components/RecentView/RecentView'))
 const Help = React.lazy(() => import('./pages/user/components/Help/Help'))
 const Notice = React.lazy(() => import('./pages/user/components/Notice/Notice'))
 const NoticeDetail = React.lazy(
@@ -122,6 +122,7 @@ const EditRequestDetail = React.lazy(() => import('./pages/notifications/EditReq
 import Modal from 'react-modal'
 import { StyledToastContainer } from '.'
 import MetaTag from './utils/Share/MetaTag'
+import { retryLazy } from './utils/lazyUtil'
 
 Modal.setAppElement('#root')
 const App = () => {
