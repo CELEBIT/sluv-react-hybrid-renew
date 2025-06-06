@@ -1,0 +1,8 @@
+export { ReactComponent as BeautyIcon } from './beauty_18.svg'
+export { ReactComponent as EtcIcon } from './etc_18.svg'
+export { ReactComponent as HeadphoneIcon } from './headphone_18.svg'
+export { ReactComponent as JacketIcon } from './jacket_18.svg'
+export { ReactComponent as JeansIcon } from './jeans_18.svg'
+export { ReactComponent as LifeIcon } from './life_18.svg'
+export { ReactComponent as SkirtIcon } from './skirt.svg'
+export { ReactComponent as TshirtIcon } from './t-shirt_18.svg'

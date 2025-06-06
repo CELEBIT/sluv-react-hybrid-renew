@@ -233,7 +233,7 @@ const SelectCeleb = () => {
         })}
       </div>
       <div className='search'>
-        <ButtonMedium text='검색' type='sec' icon={true} onClick={onSearchSelect}></ButtonMedium>
+        <ButtonMedium text='검색' type='sec' icon='search' onClick={onSearchSelect}></ButtonMedium>
       </div>
     </SelectCelebWrapper>
   )

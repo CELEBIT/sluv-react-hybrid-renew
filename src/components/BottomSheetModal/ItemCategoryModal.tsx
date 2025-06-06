@@ -61,17 +61,34 @@ const ItemCategoryModal = () => {
 
   const onComplete = () => {
     closeModal(modals.ItemCategoryModal, () => {
-      setCategory({
-        categoryId: selectedChild.id,
-        childName: selectedChild.name,
-        parentCategoryId: selectedParent.id,
-        parentName: selectedParent.name,
-      })
+      if (selectedParent.name === '기타') {
+        setsubCategory({
+          id: 0,
+          name: '',
+        })
+        setCategory({
+          categoryId: 9,
+          childName: '',
+          parentCategoryId: selectedParent.id,
+          parentName: selectedParent.name,
+        })
+      } else {
+        setCategory({
+          categoryId: selectedChild.id,
+          childName: selectedChild.name,
+          parentCategoryId: selectedParent.id,
+          parentName: selectedParent.name,
+        })
+      }
     })
   }
   const onParentClick = (category: Category) => {
     setSelectedParentCategory(category)
     setSelectedParent(category)
+    setSelectedChild({
+      id: 0,
+      name: '',
+    })
     setsubCategory({
       id: 0,
       name: '',
@@ -84,8 +101,10 @@ const ItemCategoryModal = () => {
   const {
     getItemCategory: { data },
   } = useItemCategoryQuery()
+  console.log('data', data)
 
   const subCategories = selectedParentCategory?.subCategoryList || []
+  console.log('🚀 ~ ItemCategoryModal ~ subCategories:', subCategories)
   const activeCategoryRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
