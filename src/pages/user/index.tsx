@@ -17,7 +17,10 @@ import {
 } from './styles'
 
 import useUserMypageQuery from '../../apis/user/hooks/useUserMypageQuery'
-import { ReactComponent as Heart } from '../../assets/like_off_24.svg'
+import { ReactComponent as Recent } from '../../assets/BottomModal/recent_24.svg'
+import { ReactComponent as Speaker } from '../../assets/BottomModal/speaker_24.svg'
+import { ReactComponent as Info } from '../../assets/info_24.svg'
+import { ReactComponent as Heart } from '../../assets/like_black_24.svg'
 import UserUpload from './components/UserUpload/UserUpload'
 
 import { useSetRecoilState } from 'recoil'
@@ -123,23 +126,23 @@ const User = () => {
           <EachContentWrapper>
             <ContentTitle>나의 활동</ContentTitle>
             <Menu onClick={() => navigate('./recent-view')}>
-              <Heart></Heart>최근 본 컨텐츠
+              <Recent></Recent>최근 본 컨텐츠
             </Menu>
             <Menu onClick={() => navigate('./like/item')}>
-              <Heart></Heart>좋아요한 아이템
+              <Heart fill={Common.colors.BK}></Heart>좋아요한 아이템
             </Menu>
             <Menu onClick={() => navigate('./like/community')}>
-              <Heart></Heart>좋아요한 커뮤니티
+              <Heart fill={Common.colors.BK}></Heart>좋아요한 커뮤니티
             </Menu>
           </EachContentWrapper>
           <Divider></Divider>
           <EachContentWrapper>
             <ContentTitle>도움</ContentTitle>
             <Menu onClick={() => navigate('/help')}>
-              <Heart></Heart>문의하기
+              <Info></Info>문의하기
             </Menu>
             <Menu onClick={() => navigate('/notice')}>
-              <Heart></Heart>공지사항
+              <Speaker></Speaker>공지사항
             </Menu>
           </EachContentWrapper>
         </ContentContainer>
