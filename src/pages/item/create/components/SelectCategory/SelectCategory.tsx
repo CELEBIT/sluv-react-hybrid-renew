@@ -1,22 +1,36 @@
 import { useEffect, useRef } from 'react'
-import useModals from '../../../../../components/Modals/hooks/useModals'
-import useItemCategoryQuery from '../../../../../apis/item/hooks/useItemCategoryQuery'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import useItemCategoryQuery from '../../../../../apis/item/hooks/useItemCategoryQuery'
 import {
   Category,
   parentCategoryState,
 } from '../../../../../components/BottomSheetModal/ItemCategoryModal'
-import ButtonMedium from '../../../../../components/ButtonMedium/ButtonMedium'
+import ButtonMedium, {
+  ButtonMediumProps,
+} from '../../../../../components/ButtonMedium/ButtonMedium'
 import { modals } from '../../../../../components/Modals'
-import { ChipWrapper } from './styles'
+import useModals from '../../../../../components/Modals/hooks/useModals'
 import { createItemCategoryState } from '../../../../../recoil/itemInfo'
+import { ChipWrapper } from './styles'
 
 function SelectCategory() {
   const { openModal } = useModals()
   const activeCategoryRef = useRef<HTMLDivElement>(null)
 
   const category = useRecoilValue(createItemCategoryState)
+  console.log('🚀 ~ SelectCategory ~ category:', category)
 
+  const iconTypes: ButtonMediumProps['icon'][] = [
+    'tshirt',
+    'jacket',
+    'jeans',
+    'skirt',
+    'skirt', // onepiece도 skirt 아이콘 사용
+    'beauty',
+    'headphone',
+    'life',
+    'etc',
+  ]
   const {
     getItemCategory: { data },
   } = useItemCategoryQuery()
@@ -55,26 +69,24 @@ function SelectCategory() {
 
   return (
     <ChipWrapper>
-      {data?.map((each) => {
-        return (
-          <ButtonMedium
-            key={each.id}
-            // 상위 + > + 하위
-            text={
-              category?.parentCategoryId &&
-              category.categoryId &&
-              each.id === category?.parentCategoryId
-                ? `${category.parentName}>${category.childName}`
-                : each.name
-            }
-            icon={true}
-            type='pri'
-            active={category?.parentCategoryId === each.id && category.categoryId !== 0}
-            onClick={() => onCategoryClick(each)}
-            ref={category?.parentCategoryId === each.id ? activeCategoryRef : null}
-          ></ButtonMedium>
-        )
-      })}
+      {data?.map((each, idx) => (
+        <ButtonMedium
+          key={each.id}
+          icon={iconTypes[idx]} // string 타입으로 전달
+          text={
+            category?.parentCategoryId &&
+            category.categoryId &&
+            each.id === category?.parentCategoryId &&
+            category.childName !== ''
+              ? `${category.parentName}>${category.childName}`
+              : each.name
+          }
+          type='pri'
+          active={category?.parentCategoryId === each.id}
+          onClick={() => onCategoryClick(each)}
+          ref={category?.parentCategoryId === each.id ? activeCategoryRef : null}
+        />
+      ))}
     </ChipWrapper>
   )
 }

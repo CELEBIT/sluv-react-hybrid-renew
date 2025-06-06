@@ -1,14 +1,14 @@
-import React from 'react'
-import BottomSheetModal from '.'
 import styled from '@emotion/styled'
+import BottomSheetModal from '.'
 
 // import { atomKeys } from '../../config/atomKeys'
-import Header from '../Header/Header'
-import useModals from '../Modals/hooks/useModals'
-import { modals } from '../Modals'
-import { Common, Pretendard } from '../styles'
 import { useNavigate } from 'react-router-dom'
-import { ReactComponent as Share } from '../../assets/share_24.svg'
+import { ReactComponent as Edit } from '../../assets/BottomModal/pencil_24.svg'
+import { ReactComponent as Delete } from '../../assets/BottomModal/trashCan_24.svg'
+import Header from '../Header/Header'
+import { modals } from '../Modals'
+import useModals from '../Modals/hooks/useModals'
+import { Common, Pretendard } from '../styles'
 
 export interface ItemEditModalProps {
   itemId: number
@@ -35,10 +35,10 @@ const ItemEditModal = ({ itemId }: ItemEditModalProps) => {
         <Header isModalHeader={true} modalCloseBtnClick={() => closeModal(modals.ItemEditModal)} />
         <MenuWrapper>
           <Menu onClick={onClickEdit}>
-            <Share stroke={Common.colors.BK}></Share>게시글 수정하기
+            <Edit stroke={Common.colors.BK}></Edit>게시글 수정하기
           </Menu>
           <Menu onClick={onClickDeleteItem}>
-            <Share stroke={Common.colors.BK}></Share>게시글 삭제하기
+            <Delete stroke={Common.colors.BK}></Delete>게시글 삭제하기
           </Menu>
         </MenuWrapper>
       </ModalWrapper>

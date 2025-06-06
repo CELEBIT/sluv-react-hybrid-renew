@@ -1,16 +1,16 @@
-import React from 'react'
-import BottomSheetModal from '.'
 import styled from '@emotion/styled'
+import BottomSheetModal from '.'
 
 import { useRecoilValue } from 'recoil'
 // import { atomKeys } from '../../config/atomKeys'
-import Header from '../Header/Header'
-import useModals from '../Modals/hooks/useModals'
-import { modals } from '../Modals'
-import { Common, Pretendard } from '../styles'
 import { useNavigate } from 'react-router-dom'
+import { ReactComponent as Report } from '../../assets/BottomModal/siren_24.svg'
+import { ReactComponent as Speaker } from '../../assets/BottomModal/speaker_24.svg'
 import { RequestEditItemState } from '../../pages/item/editRequest'
-import { ReactComponent as Share } from '../../assets/share_24.svg'
+import Header from '../Header/Header'
+import { modals } from '../Modals'
+import useModals from '../Modals/hooks/useModals'
+import { Common, Pretendard } from '../styles'
 
 const ItemEditRequestModal = () => {
   const navigate = useNavigate()
@@ -40,13 +40,13 @@ const ItemEditRequestModal = () => {
         />
         <MenuWrapper>
           <Menu onClick={onClickEditRequest}>
-            <Share stroke={Common.colors.BK}></Share>정보 수정 요청하기
+            <Speaker stroke={Common.colors.BK}></Speaker>정보 수정 요청하기
           </Menu>
           <Menu onClick={onClickReportItem}>
-            <Share stroke={Common.colors.BK}></Share>게시글 신고하기
+            <Report stroke={Common.colors.BK}></Report>게시글 신고하기
           </Menu>
           <Menu onClick={onClickReportUser}>
-            <Share stroke={Common.colors.BK}></Share>
+            <Report stroke={Common.colors.BK}></Report>
             &apos;{EditReportItem.itemWriterName}&apos;님 신고하기
           </Menu>
         </MenuWrapper>

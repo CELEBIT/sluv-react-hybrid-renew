@@ -1,10 +1,13 @@
-import React from 'react'
-import BottomSheetModal from './index'
 import styled from '@emotion/styled'
-import Header from '../Header/Header'
-import useModals from '../Modals/hooks/useModals'
+import { ReactComponent as Album } from '../../assets/BottomModal/album_24.svg'
+import { ReactComponent as Default } from '../../assets/BottomModal/cover_24.svg'
+import { ReactComponent as Edit } from '../../assets/BottomModal/pencil_24.svg'
+import { ReactComponent as Delete } from '../../assets/BottomModal/trashCan_24.svg'
 import { ReactComponent as ShareIcon } from '../../assets/share_24.svg'
 
+import Header from '../Header/Header'
+import useModals from '../Modals/hooks/useModals'
+import BottomSheetModal from './index'
 export interface ClosetBoxBottomSheetListItem {
   title: string
   callback: (...arg: any) => void
@@ -31,7 +34,19 @@ const ClosetBoxCreateBottomSheetModal = ({ items, title }: ClosetBoxBottomSheetM
         {items?.map((item) => {
           return (
             <ItemContainer key={item.title}>
-              <ShareIcon stroke={'black'} />
+              {item.title === '앨범에서 사진 선택' ? (
+                <Album />
+              ) : item.title === '기본 커버 선택' ? (
+                <Default />
+              ) : item.title === '옷장 수정하기' ? (
+                <Edit />
+              ) : item.title === '옷장 삭제하기' ? (
+                <Delete />
+              ) : item.title === '옷장 만들기' ? (
+                <Album />
+              ) : (
+                <ShareIcon />
+              )}
               <ItemTitle onClick={item.callback}>{item.title}</ItemTitle>
             </ItemContainer>
           )

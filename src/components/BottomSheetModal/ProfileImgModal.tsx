@@ -1,16 +1,18 @@
-import React, { ChangeEvent, useEffect, useRef } from 'react'
-import BottomSheetModal from '.'
 import styled from '@emotion/styled'
+import { ChangeEvent, useEffect, useRef } from 'react'
+import BottomSheetModal from '.'
 
+import { ReactComponent as Album } from '../../assets/BottomModal/album_24.svg'
+import { ReactComponent as Default } from '../../assets/BottomModal/cover_24.svg'
 import Header from '../Header/Header'
-import useModals from '../Modals/hooks/useModals'
 import { modals } from '../Modals'
+import useModals from '../Modals/hooks/useModals'
 import { Common, Pretendard } from '../styles'
-import { ReactComponent as Share } from '../../assets/share_24.svg'
-import { convertToFile, openGallery } from '../../utils/utility'
-import useUserMypageQuery from '../../apis/user/hooks/useUserMypageQuery'
-import S3Service from '../../apis/s3/S3Service'
+
 import { toast } from 'react-toastify'
+import S3Service from '../../apis/s3/S3Service'
+import useUserMypageQuery from '../../apis/user/hooks/useUserMypageQuery'
+import { convertToFile, openGallery } from '../../utils/utility'
 
 export interface ProfileImgModalProps {
   imgExist: boolean
@@ -98,11 +100,11 @@ const ProfileImgModal = ({ imgExist }: ProfileImgModalProps) => {
               max={1}
               ref={fileInputRef}
             ></input>
-            <Share stroke={Common.colors.BK}></Share>라이브러리에서 선택
+            <Album stroke={Common.colors.BK}></Album>앨범에서 사진 선택
           </Menu>
           {!imgExist && (
             <Menu onClick={onDeleteImg}>
-              <Share stroke={Common.colors.BK}></Share>프로필 사진 삭제
+              <Default stroke={Common.colors.BK}></Default>프로필 사진 삭제
             </Menu>
           )}
         </MenuWrapper>
